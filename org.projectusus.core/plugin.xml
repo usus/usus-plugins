@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+    <extension
+        id="checkstyle.CheckConfiguration"
+        point="net.sf.eclipsecs.core.configurations">
+        <check-configuration
+            name="ISIS"
+            location="isis_checkstyle_config.xml"
+            description="%isis-checks.description"/>
+    </extension>
+    <extension
+          point="org.eclipse.core.runtime.adapters">
+       <factory
+             adaptableType="org.eclipse.core.resources.IProject"
+             class="org.projectusus.core.internal.project.UsusProjectFactory">
+          <adapter
+                type="org.projectusus.core.internal.project.IUSUSProject">
+          </adapter>
+       </factory>
+    </extension>
+</plugin>
