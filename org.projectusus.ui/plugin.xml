@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<!-- Copyright (c) 2009 by USUS contributors -->
+<plugin>
+
+   <!-- Views -->
+   <extension point="org.eclipse.ui.views">
+      <category
+            id="org.projectusus.ui.viewCategory"
+            name="%viewCategory_name"/>
+      <view class="org.projectusus.ui.internal.yellowcount.YellowCountView"
+            icon="icons/full/eview16/yellowcount.gif"
+            id="org.projectusus.ui.internal.yellowcount.YellowCountView"
+            category="org.projectusus.ui.viewCategory"
+            name="%yellowcount_view_name"/>
+      <view class="org.projectusus.ui.internal.proportions.CodeProportionsCockpit"
+            icon="icons/full/eview16/proportions.gif"
+            id="org.projectusus.ui.internal.proportions.CodeProportionsCockpit"
+            category="org.projectusus.ui.viewCategory"
+            name="%proportions_view_name"/>
+      <view class="org.projectusus.ui.internal.coveredprojects.CoveredProjectsView"
+            icon="icons/full/eview16/coveredprojects.gif"
+            id="org.projectusus.ui.internal.coveredprojects.CoveredProjectsView"
+            category="org.projectusus.ui.viewCategory"
+            name="%coveredprojects_view_name"/>
+   </extension>
+   <extension point="org.eclipse.ui.viewActions">
+      <viewContribution
+            id="org.projectusus.ui.internal.proportions.CodeProportionsCockpit.ViewContribution"
+            targetID="org.projectusus.ui.internal.proportions.CodeProportionsCockpit">
+         <action
+               class="org.projectusus.ui.internal.proportions.RefreshCodeProportionsCockpit"
+               icon="icons/full/elcl16/refresh.gif"
+               id="org.projectusus.ui.internal.proportions.RefreshCodeProportionsCockpit"
+               label="%refreshCodeProportionsCockpit_label"
+               style="push"
+               toolbarPath="additions"
+               tooltip="%refreshCodeProportionsCockpit_tooltip"/>
+      </viewContribution>
+      <viewContribution
+            id="org.projectusus.ui.internal.yellowcount.YellowCountView.ViewContribution"
+            targetID="org.projectusus.ui.internal.yellowcount.YellowCountView">
+         <action
+               class="org.projectusus.ui.internal.yellowcount.actions.DeleteCheckpoints"
+               icon="icons/full/elcl16/delete_checkpoints.gif"
+               id="org.projectusus.ui.internal.yellowcount.actions.DeleteCheckpoints"
+               label="%yellowCount_deleteCheckpoints_label"
+               style="push"
+               toolbarPath="additions/handlelog"
+               tooltip="%yellowCount_deleteCheckpoints_tooltip"/>
+         <action
+               class="org.projectusus.ui.internal.yellowcount.actions.OpenCheckpoints"
+               icon="icons/full/elcl16/open_checkpoints.gif"
+               id="org.projectusus.ui.internal.yellowcount.actions.OpenCheckpoints"
+               label="%yellowCount_openCheckpoints_label"
+               style="push"
+               toolbarPath="additions/handlelog"
+               tooltip="%yellowCount_openCheckpoints_tooltip"/>
+         <action
+               class="org.projectusus.ui.internal.yellowcount.actions.AddCheckpoint"
+               icon="icons/full/elcl16/add_checkpoint.gif"
+               id="org.projectusus.ui.internal.yellowcount.actions.AddCheckpoint"
+               label="%yellowCount_addCheckpoint_label"
+               style="push"
+               toolbarPath="additions/add"
+               tooltip="%yellowCount_addCheckpoint_tooltip"/>
+      </viewContribution>
+   </extension>
+   
+   
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.projectusus.ui.internal.projectsettings.ApplyHandler"
+            commandId="org.eclipse.usus.projectsettings.apply">
+      </handler>
+   </extension>
+   <extension point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
+         <command
+               commandId="org.eclipse.usus.projectsettings.apply"
+               label="%packageExplorer_menu_apply"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension point="org.eclipse.ui.commands">
+      <command
+            id="org.eclipse.usus.projectsettings.apply"
+            name="%apply_command">
+      </command>
+   </extension>
+</plugin>

@@ -1,0 +1,7 @@
+
+Ideas:
+- test-case orphans (test cases with names XYZTest where XYZ has been 
+  renamed and the naming convention doesn't fit any more)
+- make the classpath suite selective (filter for project) -> Run As
+- Refactoring participant for moving class
+- Refactoring with an interface that has a single implementation

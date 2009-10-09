@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests for USUS UI
+Bundle-SymbolicName: org.projectusus.ui.test
+Bundle-Version: 0.0.1
+Bundle-Vendor: projectusus.org
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.junit4,
+ com.mountainminds.eclemma.core,
+ org.projectusus.ui

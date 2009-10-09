@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.projectusus"
+      label="Project USUS"
+      version="0.0.1"
+      provider-name="projectusus.org">
+
+   <description url="http://projectusus.org">
+      Common coding and design practices in software projects are a
+good thing. To support them, there is a number of helpful tools
+around, such as static code analyzers, test coverage tools, code
+formatters and so on.
+The goal of this project is to provide Eclipse Plug-Ins that
+help to integrate common compiler and formatter settings in the
+Eclipse workspace, support Checkstyle, EclEmma and other tools,
+and apply some OO design metrics to analyse weak spots in the
+code. These settings, tool configurations and metrics reflect
+the &apos;usus&apos; (common practice) in projects we&apos;ve worked in and
+have proved useful; we want to integrate them in order to have
+them handy all the time.
+   </description>
+
+   <copyright>
+      Copyright (c) 2009 by projectusus.org contributors
+   </copyright>
+
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      This software is made available by projectusus.org contributors
+under the terms of the Eclipse Public License, version 1.0 (EPL).
+A copy of the license text is provided with the software, or
+can be found at http://www.eclipse.org/legal/epl-v10.html.
+   </license>
+
+   <plugin
+         id="org.projectusus.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.1"
+         unpack="false"/>
+
+   <plugin
+         id="org.projectusus.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.1"
+         unpack="false"/>
+
+</feature>

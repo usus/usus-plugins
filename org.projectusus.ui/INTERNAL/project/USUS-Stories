@@ -1,0 +1,13 @@
+USUS Stories
+
+1) As user, I want to have the common USUS (compiler settings, save actions, 
+   checkstyle etc.) applied to any new Java project when I create it
+   - so that I don't have to apply the settings manually every time.
+
+2) As USUS-Developer, I want to be able to use USUS for USUS development
+   - so that I experience myself how well it does (eat your own dogfood)
+
+3) As user, I want to promote settings (compiler warnings, local checkstyle 
+   config, ...) from one project to another
+   - so that I don't have to make the settings on the Properties dialog for 
+   each project.
