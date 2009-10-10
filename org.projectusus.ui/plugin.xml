@@ -3,7 +3,14 @@
 <!-- Copyright (c) 2009 by USUS contributors -->
 <plugin>
 
-   <!-- Views -->
+   <!-- Perspective and Views -->
+   <extension point="org.eclipse.ui.perspectives">
+      <perspective
+            id="org.projectusus.ui.internal.perspective.USUSPerspective"
+            icon="icons/full/eview16/usus.gif"
+            class="org.projectusus.ui.internal.perspective.USUSPerspective"
+            name="%perspective_name"/>
+   </extension>
    <extension point="org.eclipse.ui.views">
       <category
             id="org.projectusus.ui.viewCategory"
@@ -101,4 +108,5 @@
             name="%apply_command">
       </command>
    </extension>
+
 </plugin>
