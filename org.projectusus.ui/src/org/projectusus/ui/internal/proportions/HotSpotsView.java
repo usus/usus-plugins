@@ -35,7 +35,7 @@ public class HotSpotsView extends ViewPart {
     private void createTableViewer( Composite parent ) {
         tableViewer = new TableViewer( parent );
         tableViewer.setLabelProvider( new LabelProvider() );
-        tableViewer.setContentProvider( new CodeProportionsCockpitCP() );
+        tableViewer.setContentProvider( new HotspotsCP() );
     }
 
     private void initSelectionListener() {

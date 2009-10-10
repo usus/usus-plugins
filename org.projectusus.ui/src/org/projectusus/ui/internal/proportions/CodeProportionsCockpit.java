@@ -25,6 +25,7 @@ public class CodeProportionsCockpit extends ViewPart {
     public void createPartControl( Composite parent ) {
         createTableViewer( parent );
         initListener();
+        getViewSite().setSelectionProvider( tableViewer );
     }
 
     @Override

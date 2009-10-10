@@ -39,6 +39,10 @@ public class CodeProportion {
 
     public IHotSpots getHotspots() {
         return new IHotSpots() {
+            @Override
+            public String toString() {
+                return "Hotspots for " + CodeProportion.this.toString();
+            }
         };
     }
 }
