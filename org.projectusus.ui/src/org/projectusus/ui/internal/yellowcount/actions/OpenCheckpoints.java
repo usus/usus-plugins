@@ -7,6 +7,8 @@ import static org.eclipse.swt.program.Program.findProgram;
 import static org.eclipse.swt.program.Program.launch;
 import static org.eclipse.ui.PlatformUI.getWorkbench;
 import static org.projectusus.core.internal.yellowcount.CheckPointUtil.getCheckpointsLog;
+import static org.projectusus.ui.internal.i18n.UITexts.openCheckpoints_noLog_msg;
+import static org.projectusus.ui.internal.i18n.UITexts.openCheckpoints_noLog_title;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -34,7 +36,7 @@ public class OpenCheckpoints implements IViewActionDelegate {
             }
         } else {
             Shell shell = getWorkbench().getActiveWorkbenchWindow().getShell();
-            openInformation( shell, "No log", "There are no checkpoints in the log." );
+            openInformation( shell, openCheckpoints_noLog_title, openCheckpoints_noLog_msg );
         }
     }
 

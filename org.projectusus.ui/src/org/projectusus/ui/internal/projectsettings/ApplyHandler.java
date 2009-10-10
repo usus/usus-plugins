@@ -47,7 +47,7 @@ public class ApplyHandler extends AbstractHandler {
 
     private IEclipsePreferences getJdtPreferences( IProject project ) {
         ProjectScope projectScope = new ProjectScope( project );
-        return projectScope.getNode( "org.eclipse.jdt.core" );
+        return projectScope.getNode( "org.eclipse.jdt.core" ); //$NON-NLS-1$
     }
 
     private List<IProject> getSelectedProjects( ExecutionEvent event ) {

@@ -13,7 +13,6 @@ import org.projectusus.core.internal.yellowcount.IYellowCountResult;
 import org.projectusus.core.internal.yellowcount.ResultFormatter;
 import org.projectusus.core.internal.yellowcount.YellowCount;
 
-
 /**
  * Action to add a checkpoint to the log. A checkpoint is a snapshot of the current yellow count, together with a timestamp. There is a central log where checkpoints are stored.
  * 
@@ -23,7 +22,7 @@ public class AddCheckpoint implements IViewActionDelegate {
 
     public void run( IAction action ) {
         IYellowCountResult count = YellowCount.getInstance().count();
-        String checkpoint = new Date().toString() + " " + new ResultFormatter().dump( count ) + "\r\n";
+        String checkpoint = new Date().toString() + " " + new ResultFormatter().dump( count ) + "\r\n"; //$NON-NLS-1$ //$NON-NLS-2$
         CheckPointUtil.addCheckpoint( checkpoint );
     }
 

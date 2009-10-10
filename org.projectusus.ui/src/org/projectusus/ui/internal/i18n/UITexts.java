@@ -8,8 +8,15 @@ import org.eclipse.osgi.util.NLS;
 
 public final class UITexts extends NLS {
 
+    public static String checkpointsHistoryChart_title;
+    public static String checkpointsHistoryChart_x;
+    public static String checkpointsHistoryChart_y;
+
     public static String columnDesc_covered;
     public static String columnDesc_project;
+
+    public static String openCheckpoints_noLog_title;
+    public static String openCheckpoints_noLog_msg;
 
     private static final String BUNDLE_NAME = UITexts.class.getPackage().getName() + ".uitexts"; //$NON-NLS-1$
 

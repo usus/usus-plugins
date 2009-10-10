@@ -31,17 +31,17 @@ public class USUSPerspective implements IPerspectiveFactory {
 
     private void layoutViews( IPageLayout layout ) {
         // left-hand side
-        IFolderLayout projects = layout.createFolder( "projects", LEFT, 0.4f, layout.getEditorArea() );
-        projects.addView( "org.eclipse.jdt.ui.PackageExplorer" );
+        IFolderLayout projects = layout.createFolder( "projects", LEFT, 0.4f, layout.getEditorArea() ); //$NON-NLS-1$
+        projects.addView( "org.eclipse.jdt.ui.PackageExplorer" ); //$NON-NLS-1$
         projects.addView( CoveredProjectsView.class.getName() );
-        layout.addView( CodeProportionsCockpit.class.getName(), BOTTOM, 0.5f, "projects" );
+        layout.addView( CodeProportionsCockpit.class.getName(), BOTTOM, 0.5f, "projects" ); //$NON-NLS-1$
         layout.addView( YellowCountView.class.getName(), BOTTOM, 0.8f, CodeProportionsCockpit.class.getName() );
 
         // right-hand side
-        IFolderLayout analysis = layout.createFolder( "analysis", BOTTOM, 0.33f, layout.getEditorArea() );
+        IFolderLayout analysis = layout.createFolder( "analysis", BOTTOM, 0.33f, layout.getEditorArea() ); //$NON-NLS-1$
         analysis.addView( HistoryView.class.getName() );
         analysis.addView( HotSpotsView.class.getName() );
-        IFolderLayout inputs = layout.createFolder( "inputs", BOTTOM, 0.5f, HistoryView.class.getName() );
+        IFolderLayout inputs = layout.createFolder( "inputs", BOTTOM, 0.5f, HistoryView.class.getName() ); //$NON-NLS-1$
         for( String viewId : INTERESTING_THIRD_PARTY_VIEWS ) {
             inputs.addView( viewId );
         }
@@ -57,23 +57,23 @@ public class USUSPerspective implements IPerspectiveFactory {
         for( String viewId : INTERESTING_THIRD_PARTY_VIEWS ) {
             layout.addShowViewShortcut( viewId );
         }
-        layout.addShowViewShortcut( "org.eclipse.jdt.ui.PackageExplorer" );
+        layout.addShowViewShortcut( "org.eclipse.jdt.ui.PackageExplorer" ); //$NON-NLS-1$
     }
 
     private void createPerspectiveShortcuts( IPageLayout layout ) {
-        layout.addPerspectiveShortcut( "org.eclipse.jdt.ui.JavaPerspective" );
-        layout.addPerspectiveShortcut( "org.eclipse.pde.ui.PDEPerspective" );
+        layout.addPerspectiveShortcut( "org.eclipse.jdt.ui.JavaPerspective" ); //$NON-NLS-1$
+        layout.addPerspectiveShortcut( "org.eclipse.pde.ui.PDEPerspective" ); //$NON-NLS-1$
     }
 
     private static List<String> collectInterestingViews() {
         List<String> result = new ArrayList<String>();
-        result.add( "org.eclipse.ui.views.TaskList" );
-        result.add( "org.eclipse.ui.views.ProblemView" );
-        result.add( "net.sf.eclipsecs.ui.duplicates.DuplicatedCodeView" );
-        result.add( "net.sf.eclipsecs.ui.stats.views.MarkerStatsView" );
-        result.add( "net.sf.eclipsecs.ui.stats.views.GraphStatsView" );
-        result.add( "org.eclipse.jdt.junit.ResultView" );
-        result.add( "com.mountainminds.eclemma.ui.CoverageView" );
+        result.add( "org.eclipse.ui.views.TaskList" ); //$NON-NLS-1$
+        result.add( "org.eclipse.ui.views.ProblemView" ); //$NON-NLS-1$
+        result.add( "net.sf.eclipsecs.ui.duplicates.DuplicatedCodeView" ); //$NON-NLS-1$
+        result.add( "net.sf.eclipsecs.ui.stats.views.MarkerStatsView" ); //$NON-NLS-1$
+        result.add( "net.sf.eclipsecs.ui.stats.views.GraphStatsView" ); //$NON-NLS-1$
+        result.add( "org.eclipse.jdt.junit.ResultView" ); //$NON-NLS-1$
+        result.add( "com.mountainminds.eclemma.ui.CoverageView" ); //$NON-NLS-1$
         return result;
     }
 }

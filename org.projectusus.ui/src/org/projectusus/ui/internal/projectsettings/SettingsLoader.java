@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class SettingsLoader {
 
-    private static final String CONFIG_COMPILER_DEFAULTS_PROPERTIES = "config/compiler_defaults.properties";
+    private static final String CONFIG_COMPILER_DEFAULTS_PROPERTIES = "config/compiler_defaults.properties"; //$NON-NLS-1$
 
     public Properties getCompilerWarningsDefaults() {
         return getDefaultsFrom( CONFIG_COMPILER_DEFAULTS_PROPERTIES );
