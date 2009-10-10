@@ -2,11 +2,11 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.coverage.emmadriver;
+package org.projectusus.core.internal.coverage;
 
 
 public interface ICoverageListener {
 
-    public void coverageChanged();
+    public void coverageChanged( TestCoverage coverage );
 
 }

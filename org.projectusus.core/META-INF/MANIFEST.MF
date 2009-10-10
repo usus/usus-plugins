@@ -64,6 +64,7 @@ Export-Package: antlr,
  org.projectusus.core.internal.coverage.emmadriver,
  org.projectusus.core.internal.project,
  org.projectusus.core.internal.proportions,
+ org.projectusus.core.internal.proportions.checkpoints,
  org.projectusus.core.internal.proportions.checkstyledriver;x-internal:=true,
  org.projectusus.core.internal.proportions.sqi,
  org.projectusus.core.internal.yellowcount

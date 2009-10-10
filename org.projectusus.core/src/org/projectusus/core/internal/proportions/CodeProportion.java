@@ -8,10 +8,24 @@ public class CodeProportion {
 
     private final IsisMetrics metric;
     private final String value;
+    private final Double graphValue;
 
-    CodeProportion( IsisMetrics metric, String value ) {
+    public CodeProportion( IsisMetrics metric, String value ) {
+        this( metric, value, new Double( 0.0 ) );
+    }
+
+    public CodeProportion( IsisMetrics metric, String value, int graphValue ) {
+        this( metric, value, new Double( graphValue ) );
+    }
+
+    public CodeProportion( IsisMetrics metric, String value, Double graphValue ) {
         this.metric = metric;
         this.value = value;
+        this.graphValue = graphValue;
+    }
+
+    public Double getGraphValue() {
+        return graphValue;
     }
 
     @Override
@@ -21,5 +35,10 @@ public class CodeProportion {
 
     public IsisMetrics getMetric() {
         return metric;
+    }
+
+    public IHotSpots getHotspots() {
+        return new IHotSpots() {
+        };
     }
 }

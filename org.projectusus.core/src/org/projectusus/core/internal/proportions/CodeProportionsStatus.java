@@ -9,7 +9,7 @@ import java.util.Date;
 class CodeProportionsStatus implements ICodeProportionsStatus {
 
     private Date lastComputerRun = new Date();
-    private Date lastTestRun = new Date();
+    private Date lastTestRun = null;
     private boolean lastComputationRunSuccessful = false;
 
     void setLastComputationRunSuccessful( boolean lastComputationRunSuccessful ) {

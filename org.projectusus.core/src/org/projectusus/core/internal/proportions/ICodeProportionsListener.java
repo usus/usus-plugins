@@ -4,6 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
+import java.util.List;
+
 public interface ICodeProportionsListener {
-    void codeProportionsChanged();
+    void codeProportionsChanged( ICodeProportionsStatus lastStatus, List<CodeProportion> entries );
 }

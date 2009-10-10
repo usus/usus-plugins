@@ -9,7 +9,6 @@ import static org.projectusus.core.internal.proportions.IsisMetrics.CC;
 import static org.projectusus.core.internal.proportions.IsisMetrics.CW;
 import static org.projectusus.core.internal.proportions.IsisMetrics.KG;
 import static org.projectusus.core.internal.proportions.IsisMetrics.ML;
-import static org.projectusus.core.internal.proportions.IsisMetrics.TA;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -18,17 +17,15 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
-import org.projectusus.core.internal.coverage.AggregateTestCoverageOverWorkspace;
-import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.checkstyledriver.CheckstyleDriver;
 import org.projectusus.core.internal.proportions.checkstyledriver.IIsisMetricsCheckResult;
 import org.projectusus.core.internal.proportions.checkstyledriver.ProjectCheckResult;
 import org.projectusus.core.internal.yellowcount.IYellowCountResult;
 import org.projectusus.core.internal.yellowcount.YellowCount;
 
-public class CodeProportionsComputerJob extends Job {
+class CodeProportionsComputerJob extends Job {
 
-    public CodeProportionsComputerJob() {
+    CodeProportionsComputerJob() {
         super( "Code proportions computer" );
     }
 
@@ -55,13 +52,7 @@ public class CodeProportionsComputerJob extends Job {
 
     private void performComputation( IProgressMonitor monitor ) throws CoreException {
         computeCW( new SubProgressMonitor( monitor, 128 ) );
-        collectTA( new SubProgressMonitor( monitor, 256 ) );
         computeCheckstyleBasedMetrics( new SubProgressMonitor( monitor, 512 ) );
-    }
-
-    private void collectTA( IProgressMonitor monitor ) {
-        TestCoverage testCoverage = new AggregateTestCoverageOverWorkspace().compute();
-        getModel().add( new CodeProportion( TA, testCoverage.toString() ) );
     }
 
     private void computeCheckstyleBasedMetrics( IProgressMonitor monitor ) throws CoreException {
@@ -71,17 +62,17 @@ public class CodeProportionsComputerJob extends Job {
         for( IsisMetrics metric : asList( CC, KG, ML ) ) {
             IIsisMetricsCheckResult result = cumulatedResult.get( metric );
             String label = result.getNumberOfViolations() + " violations in " + result.getNumberOfCases() + " files.";
-            getModel().add( new CodeProportion( metric, label ) );
+            getModel().add( new CodeProportion( metric, label, result.getNumberOfViolations() ) );
         }
     }
 
     private void computeCW( IProgressMonitor monitor ) {
         IYellowCountResult yellowCountResult = YellowCount.getInstance().count();
         String cwAsString = String.valueOf( yellowCountResult.getYellowCount() );
-        getModel().add( new CodeProportion( CW, cwAsString ) );
+        getModel().add( new CodeProportion( CW, cwAsString, yellowCountResult.getYellowCount() ) );
     }
 
     private CodeProportions getModel() {
-        return CodeProportions.getInstance();
+        return (CodeProportions)CodeProportions.getInstance();
     }
 }

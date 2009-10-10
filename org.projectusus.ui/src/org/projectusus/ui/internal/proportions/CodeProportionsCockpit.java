@@ -4,14 +4,17 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions;
 
+import java.util.List;
+
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
+import org.projectusus.core.internal.proportions.CodeProportion;
 import org.projectusus.core.internal.proportions.CodeProportions;
 import org.projectusus.core.internal.proportions.ICodeProportionsListener;
-
+import org.projectusus.core.internal.proportions.ICodeProportionsStatus;
 
 public class CodeProportionsCockpit extends ViewPart {
 
@@ -39,7 +42,7 @@ public class CodeProportionsCockpit extends ViewPart {
 
     private void initListener() {
         listener = new ICodeProportionsListener() {
-            public void codeProportionsChanged() {
+            public void codeProportionsChanged( ICodeProportionsStatus lastStatus, List<CodeProportion> entries ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         refresh();

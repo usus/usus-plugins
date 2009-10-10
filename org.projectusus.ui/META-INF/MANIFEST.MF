@@ -12,13 +12,15 @@ Require-Bundle: org.eclipse.ui,
  com.mountainminds.eclemma.core,
  org.eclipse.ui.forms,
  org.eclipse.core.resources,
- org.eclipse.ui.ide
+ org.eclipse.ui.ide,
+ org.swtchart
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.projectusus.ui.internal;x-internal:=true,
- org.projectusus.ui.internal.coveredprojects;x-internal:=true,
- org.projectusus.ui.internal.i18n;x-internal:=true,
- org.projectusus.ui.internal.projectsettings;x-internal:=true,
- org.projectusus.ui.internal.proportions;x-internal:=true,
- org.projectusus.ui.internal.yellowcount;x-internal:=true,
- org.projectusus.ui.internal.yellowcount.actions;x-internal:=true
+Export-Package: org.projectusus.ui.internal,
+ org.projectusus.ui.internal.coveredprojects,
+ org.projectusus.ui.internal.history,
+ org.projectusus.ui.internal.i18n,
+ org.projectusus.ui.internal.projectsettings,
+ org.projectusus.ui.internal.proportions,
+ org.projectusus.ui.internal.yellowcount,
+ org.projectusus.ui.internal.yellowcount.actions

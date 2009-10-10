@@ -7,4 +7,6 @@ Bundle-Vendor: projectusus.org
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.junit4,
  com.mountainminds.eclemma.core,
- org.projectusus.ui
+ org.projectusus.ui,
+ org.projectusus.core,
+ org.projectusus.core.test
