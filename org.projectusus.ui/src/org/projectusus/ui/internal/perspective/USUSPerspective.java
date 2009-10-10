@@ -7,6 +7,9 @@ package org.projectusus.ui.internal.perspective;
 import static org.eclipse.ui.IPageLayout.BOTTOM;
 import static org.eclipse.ui.IPageLayout.LEFT;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
@@ -16,6 +19,8 @@ import org.projectusus.ui.internal.proportions.CodeProportionsCockpit;
 import org.projectusus.ui.internal.yellowcount.YellowCountView;
 
 public class USUSPerspective implements IPerspectiveFactory {
+
+    private static final List<String> INTERESTING_THIRD_PARTY_VIEWS = collectInterestingViews();
 
     public void createInitialLayout( IPageLayout layout ) {
         layoutViews( layout );
@@ -34,10 +39,9 @@ public class USUSPerspective implements IPerspectiveFactory {
         // right-hand side
         layout.addView( HistoryView.class.getName(), BOTTOM, 0.33f, layout.getEditorArea() );
         IFolderLayout inputs = layout.createFolder( "inputs", BOTTOM, 0.5f, HistoryView.class.getName() );
-        inputs.addView( "org.eclipse.ui.views.TaskList" );
-        inputs.addView( "org.eclipse.ui.views.ProblemView" );
-        inputs.addView( "org.eclipse.jdt.junit.ResultView" );
-        inputs.addView( "com.mountainminds.eclemma.ui.CoverageView" );
+        for( String viewId : INTERESTING_THIRD_PARTY_VIEWS ) {
+            inputs.addView( viewId );
+        }
     }
 
     private void createViewShortcuts( IPageLayout layout ) {
@@ -46,15 +50,26 @@ public class USUSPerspective implements IPerspectiveFactory {
         layout.addShowViewShortcut( YellowCountView.class.getName() );
         layout.addShowViewShortcut( CoveredProjectsView.class.getName() );
 
-        layout.addShowViewShortcut( "org.eclipse.ui.views.TaskList" );
-        layout.addShowViewShortcut( "org.eclipse.ui.views.ProblemView" );
-        layout.addShowViewShortcut( "org.eclipse.jdt.junit.ResultView" );
-        layout.addShowViewShortcut( "com.mountainminds.eclemma.ui.CoverageView" );
+        for( String viewId : INTERESTING_THIRD_PARTY_VIEWS ) {
+            layout.addShowViewShortcut( viewId );
+        }
         layout.addShowViewShortcut( "org.eclipse.jdt.ui.PackageExplorer" );
     }
 
     private void createPerspectiveShortcuts( IPageLayout layout ) {
         layout.addPerspectiveShortcut( "org.eclipse.jdt.ui.JavaPerspective" );
         layout.addPerspectiveShortcut( "org.eclipse.pde.ui.PDEPerspective" );
+    }
+
+    private static List<String> collectInterestingViews() {
+        List<String> result = new ArrayList<String>();
+        result.add( "org.eclipse.ui.views.TaskList" );
+        result.add( "org.eclipse.ui.views.ProblemView" );
+        result.add( "net.sf.eclipsecs.ui.duplicates.DuplicatedCodeView" );
+        result.add( "net.sf.eclipsecs.ui.stats.views.MarkerStatsView" );
+        result.add( "net.sf.eclipsecs.ui.stats.views.GraphStatsView" );
+        result.add( "org.eclipse.jdt.junit.ResultView" );
+        result.add( "com.mountainminds.eclemma.ui.CoverageView" );
+        return result;
     }
 }
