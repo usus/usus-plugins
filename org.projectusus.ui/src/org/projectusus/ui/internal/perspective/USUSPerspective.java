@@ -15,8 +15,8 @@ import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 import org.projectusus.ui.internal.coveredprojects.CoveredProjectsView;
 import org.projectusus.ui.internal.history.HistoryView;
-import org.projectusus.ui.internal.proportions.CodeProportionsCockpit;
-import org.projectusus.ui.internal.proportions.HotSpotsView;
+import org.projectusus.ui.internal.hotspots.HotSpotsView;
+import org.projectusus.ui.internal.proportions.CockpitView;
 import org.projectusus.ui.internal.yellowcount.YellowCountView;
 
 public class USUSPerspective implements IPerspectiveFactory {
@@ -27,6 +27,7 @@ public class USUSPerspective implements IPerspectiveFactory {
         layoutViews( layout );
         createViewShortcuts( layout );
         createPerspectiveShortcuts( layout );
+        createActionSets( layout );
     }
 
     private void layoutViews( IPageLayout layout ) {
@@ -34,8 +35,8 @@ public class USUSPerspective implements IPerspectiveFactory {
         IFolderLayout projects = layout.createFolder( "projects", LEFT, 0.4f, layout.getEditorArea() ); //$NON-NLS-1$
         projects.addView( "org.eclipse.jdt.ui.PackageExplorer" ); //$NON-NLS-1$
         projects.addView( CoveredProjectsView.class.getName() );
-        layout.addView( CodeProportionsCockpit.class.getName(), BOTTOM, 0.5f, "projects" ); //$NON-NLS-1$
-        layout.addView( YellowCountView.class.getName(), BOTTOM, 0.8f, CodeProportionsCockpit.class.getName() );
+        layout.addView( CockpitView.class.getName(), BOTTOM, 0.5f, "projects" ); //$NON-NLS-1$
+        layout.addView( YellowCountView.class.getName(), BOTTOM, 0.8f, CockpitView.class.getName() );
 
         // right-hand side
         IFolderLayout analysis = layout.createFolder( "analysis", BOTTOM, 0.33f, layout.getEditorArea() ); //$NON-NLS-1$
@@ -49,7 +50,7 @@ public class USUSPerspective implements IPerspectiveFactory {
 
     private void createViewShortcuts( IPageLayout layout ) {
         layout.addShowViewShortcut( HistoryView.class.getName() );
-        layout.addShowViewShortcut( CodeProportionsCockpit.class.getName() );
+        layout.addShowViewShortcut( CockpitView.class.getName() );
         layout.addShowViewShortcut( HotSpotsView.class.getName() );
         layout.addShowViewShortcut( YellowCountView.class.getName() );
         layout.addShowViewShortcut( CoveredProjectsView.class.getName() );
@@ -63,6 +64,10 @@ public class USUSPerspective implements IPerspectiveFactory {
     private void createPerspectiveShortcuts( IPageLayout layout ) {
         layout.addPerspectiveShortcut( "org.eclipse.jdt.ui.JavaPerspective" ); //$NON-NLS-1$
         layout.addPerspectiveShortcut( "org.eclipse.pde.ui.PDEPerspective" ); //$NON-NLS-1$
+    }
+
+    private void createActionSets( IPageLayout layout ) {
+        layout.addActionSet( "com.mountainminds.eclemma.ui.CoverageActionSet" ); //$NON-NLS-1$
     }
 
     private static List<String> collectInterestingViews() {
