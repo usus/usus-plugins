@@ -2,15 +2,9 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.proportions;
+package org.projectusus.core.internal.proportions.model;
 
-import java.util.Date;
+public interface IWarnings extends IUsusElement {
 
-public interface ICodeProportionsStatus {
-
-    Date getLastComputerRun();
-
-    Date getLastTestRun();
-
-    boolean isLastComputationRunSuccessful();
+    // nothing special
 }

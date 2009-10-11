@@ -72,7 +72,7 @@ class CodeProportionsComputerJob extends Job {
         getModel().add( new CodeProportion( CW, cwAsString, yellowCountResult.getYellowCount() ) );
     }
 
-    private CodeProportions getModel() {
-        return (CodeProportions)CodeProportions.getInstance();
+    private UsusModel getModel() {
+        return (UsusModel)UsusModel.getInstance();
     }
 }

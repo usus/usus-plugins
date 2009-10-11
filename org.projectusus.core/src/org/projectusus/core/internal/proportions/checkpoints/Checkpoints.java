@@ -5,15 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 import org.projectusus.core.internal.proportions.CodeProportion;
-import org.projectusus.core.internal.proportions.ICodeProportions;
-import org.projectusus.core.internal.proportions.ICodeProportionsListener;
-import org.projectusus.core.internal.proportions.ICodeProportionsStatus;
+import org.projectusus.core.internal.proportions.IUsusModel;
+import org.projectusus.core.internal.proportions.IUsusModelListener;
+import org.projectusus.core.internal.proportions.IUsusModelStatus;
 
 public class Checkpoints {
 
     List<ICheckpoint> checkpoints = new ArrayList<ICheckpoint>();
 
-    public void createCheckpoint( ICodeProportionsStatus status, List<CodeProportion> entries ) {
+    public void createCheckpoint( IUsusModelStatus status, List<CodeProportion> entries ) {
         if( canCreate( status ) ) {
             checkpoints.add( new Checkpoint( status.getLastTestRun(), entries ) );
         }
@@ -23,19 +23,19 @@ public class Checkpoints {
         return checkpoints;
     }
 
-    public void connect( ICodeProportions codeProportions ) {
-        codeProportions.addCodeProportionsListener( new ICodeProportionsListener() {
-            public void codeProportionsChanged( ICodeProportionsStatus lastStatus, List<CodeProportion> entries ) {
+    public void connect( IUsusModel codeProportions ) {
+        codeProportions.addUsusModelListener( new IUsusModelListener() {
+            public void ususModelChanged( IUsusModelStatus lastStatus, List<CodeProportion> entries ) {
                 createCheckpoint( lastStatus, entries );
             }
         } );
     }
 
-    private boolean canCreate( ICodeProportionsStatus status ) {
+    private boolean canCreate( IUsusModelStatus status ) {
         return lastUpdateWasTestRun( status ) && computedBetweenLastTestRuns( status );
     }
 
-    private boolean computedBetweenLastTestRuns( ICodeProportionsStatus status ) {
+    private boolean computedBetweenLastTestRuns( IUsusModelStatus status ) {
         boolean result = true;
         if( !checkpoints.isEmpty() ) {
             ICheckpoint lastCheckPoint = checkpoints.get( checkpoints.size() - 1 );
@@ -45,7 +45,7 @@ public class Checkpoints {
         return result;
     }
 
-    private boolean lastUpdateWasTestRun( ICodeProportionsStatus status ) {
+    private boolean lastUpdateWasTestRun( IUsusModelStatus status ) {
         return status.isLastComputationRunSuccessful() && status.getLastTestRun() != null;
     }
 

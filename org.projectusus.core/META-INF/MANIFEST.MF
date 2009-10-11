@@ -66,6 +66,7 @@ Export-Package: antlr,
  org.projectusus.core.internal.proportions,
  org.projectusus.core.internal.proportions.checkpoints,
  org.projectusus.core.internal.proportions.checkstyledriver;x-internal:=true,
+ org.projectusus.core.internal.proportions.model,
  org.projectusus.core.internal.proportions.sqi,
  org.projectusus.core.internal.yellowcount
 Eclipse-RegisterBuddy: net.sf.eclipsecs.core

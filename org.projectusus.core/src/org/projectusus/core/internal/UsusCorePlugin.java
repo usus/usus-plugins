@@ -10,7 +10,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
-import org.projectusus.core.internal.proportions.CodeProportions;
+import org.projectusus.core.internal.proportions.UsusModel;
 
 public class UsusCorePlugin extends Plugin {
 
@@ -32,7 +32,7 @@ public class UsusCorePlugin extends Plugin {
 
     @Override
     public void stop( BundleContext context ) throws Exception {
-        ((CodeProportions)CodeProportions.getInstance()).dispose();
+        ((UsusModel)UsusModel.getInstance()).dispose();
         plugin = null;
         super.stop( context );
     }

@@ -6,7 +6,7 @@ package org.projectusus.core.internal.proportions;
 
 import java.util.Date;
 
-class CodeProportionsStatus implements ICodeProportionsStatus {
+class UsusModelStatus implements IUsusModelStatus {
 
     private Date lastComputerRun = new Date();
     private Date lastTestRun = null;
