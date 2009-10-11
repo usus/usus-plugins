@@ -4,9 +4,9 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.history;
 
-import static org.projectusus.ui.internal.i18n.UITexts.checkpointsHistoryChart_title;
-import static org.projectusus.ui.internal.i18n.UITexts.checkpointsHistoryChart_x;
-import static org.projectusus.ui.internal.i18n.UITexts.checkpointsHistoryChart_y;
+import static org.projectusus.ui.internal.util.UITexts.checkpointsHistoryChart_title;
+import static org.projectusus.ui.internal.util.UITexts.checkpointsHistoryChart_x;
+import static org.projectusus.ui.internal.util.UITexts.checkpointsHistoryChart_y;
 import static org.swtchart.IAxis.Position.Secondary;
 
 import org.eclipse.swt.SWT;

@@ -1,4 +1,4 @@
-package org.projectusus.ui.internal.proportions;
+package org.projectusus.ui.internal.hotspots;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;

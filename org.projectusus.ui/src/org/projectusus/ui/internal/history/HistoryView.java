@@ -12,10 +12,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.proportions.CodeProportion;
-import org.projectusus.core.internal.proportions.CodeProportions;
-import org.projectusus.core.internal.proportions.ICodeProportions;
-import org.projectusus.core.internal.proportions.ICodeProportionsListener;
-import org.projectusus.core.internal.proportions.ICodeProportionsStatus;
+import org.projectusus.core.internal.proportions.UsusModel;
+import org.projectusus.core.internal.proportions.IUsusModel;
+import org.projectusus.core.internal.proportions.IUsusModelListener;
+import org.projectusus.core.internal.proportions.IUsusModelStatus;
 import org.projectusus.core.internal.proportions.IsisMetrics;
 import org.projectusus.core.internal.proportions.checkpoints.ICheckpoint;
 import org.swtchart.Chart;
@@ -30,8 +30,8 @@ public class HistoryView extends ViewPart {
     @Override
     public void createPartControl( Composite parent ) {
         chart = new CheckpointsHistoryChart( parent );
-        getModel().addCodeProportionsListener( new ICodeProportionsListener() {
-            public void codeProportionsChanged( ICodeProportionsStatus lastStatus, List<CodeProportion> entries ) {
+        getModel().addUsusModelListener( new IUsusModelListener() {
+            public void ususModelChanged( IUsusModelStatus lastStatus, List<CodeProportion> entries ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         refresh();
@@ -74,8 +74,8 @@ public class HistoryView extends ViewPart {
         series.setSymbolSize( 2 );
     }
 
-    private ICodeProportions getModel() {
-        return CodeProportions.getInstance();
+    private IUsusModel getModel() {
+        return UsusModel.getInstance();
     }
 
     private void cleanOldValues( ISeriesSet seriesSet, IsisMetrics metric ) {

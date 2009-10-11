@@ -4,8 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.coveredprojects;
 
-import static org.projectusus.ui.internal.i18n.UITexts.columnDesc_covered;
-import static org.projectusus.ui.internal.i18n.UITexts.columnDesc_project;
+import static org.projectusus.ui.internal.util.UITexts.columnDesc_covered;
+import static org.projectusus.ui.internal.util.UITexts.columnDesc_project;
 
 enum ColumnDesc {
 

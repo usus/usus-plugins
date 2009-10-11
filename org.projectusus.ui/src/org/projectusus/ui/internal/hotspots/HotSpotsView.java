@@ -2,7 +2,7 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.ui.internal.proportions;
+package org.projectusus.ui.internal.hotspots;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -14,6 +14,7 @@ import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.proportions.CodeProportion;
+import org.projectusus.ui.internal.proportions.CockpitView;
 
 public class HotSpotsView extends ViewPart {
 
@@ -42,7 +43,7 @@ public class HotSpotsView extends ViewPart {
         ISelectionService service = getViewSite().getWorkbenchWindow().getSelectionService();
         service.addSelectionListener( new ISelectionListener() {
             public void selectionChanged( IWorkbenchPart part, ISelection selection ) {
-                if( part instanceof CodeProportionsCockpit && selection instanceof IStructuredSelection ) {
+                if( part instanceof CockpitView && selection instanceof IStructuredSelection ) {
                     IStructuredSelection ssel = (IStructuredSelection)selection;
                     Object element = ssel.getFirstElement();
                     if( element instanceof CodeProportion ) {

@@ -8,13 +8,13 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
-import org.projectusus.core.internal.proportions.CodeProportions;
+import org.projectusus.core.internal.proportions.UsusModel;
 
 
-public class RefreshCodeProportionsCockpit implements IViewActionDelegate {
+public class RefreshCockpitAction implements IViewActionDelegate {
 
     public void run( IAction action ) {
-        CodeProportions.getInstance().forceRecompute();
+        UsusModel.getInstance().forceRecompute();
     }
 
     public void init( IViewPart view ) {
