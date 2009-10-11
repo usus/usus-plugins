@@ -14,11 +14,11 @@ import org.junit.Test;
 
 public class CodeProportionsPDETest {
 
-    private CodeProportions model;
+    private UsusModel model;
 
     @Before
     public void setUp() {
-        model = (CodeProportions)CodeProportions.getInstance();
+        model = (UsusModel)UsusModel.getInstance();
     }
 
     @After
@@ -29,21 +29,21 @@ public class CodeProportionsPDETest {
     @Test
     public void listenerHandling() {
         DummyCodeProportionsListener listener = new DummyCodeProportionsListener();
-        model.addCodeProportionsListener( listener );
+        model.addUsusModelListener( listener );
         
         model.updateLastComputerRun();
         assertEquals(1, listener.getCallCount());
         
-        model.removeCodeProportionsListener( listener );
+        model.removeUsusModelListener( listener );
         model.updateLastComputerRun();
         // no more calls
         assertEquals(1, listener.getCallCount());
     }
 
-    private final class DummyCodeProportionsListener implements ICodeProportionsListener {
+    private final class DummyCodeProportionsListener implements IUsusModelListener {
         private int callCount;
 
-        public void codeProportionsChanged( ICodeProportionsStatus lastStatus, List<CodeProportion> entries ) {
+        public void ususModelChanged( IUsusModelStatus lastStatus, List<CodeProportion> entries ) {
           callCount++;
         }
         

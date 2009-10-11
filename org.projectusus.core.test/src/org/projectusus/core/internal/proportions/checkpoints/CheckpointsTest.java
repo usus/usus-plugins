@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.CodeProportion;
-import org.projectusus.core.internal.proportions.ICodeProportionsStatus;
+import org.projectusus.core.internal.proportions.IUsusModelStatus;
 
 
 public class CheckpointsTest {
@@ -15,7 +15,7 @@ public class CheckpointsTest {
     @Test
     public void noCreateWhenUnsuccessful() {
         Checkpoints checkpoints = new Checkpoints();
-        ICodeProportionsStatus status = new DummyStatus(false, new Date(), new Date());
+        IUsusModelStatus status = new DummyStatus(false, new Date(), new Date());
         checkpoints.createCheckpoint( status, new ArrayList<CodeProportion>() );
         
         assertEquals( 0, checkpoints.getCheckpoints().size());
@@ -24,7 +24,7 @@ public class CheckpointsTest {
     @Test
     public void noCreateWhenNoTestRunDate() {
         Checkpoints checkpoints = new Checkpoints();
-        ICodeProportionsStatus status = new DummyStatus(true, null, null);
+        IUsusModelStatus status = new DummyStatus(true, null, null);
         checkpoints.createCheckpoint( status, new ArrayList<CodeProportion>() );
         
         assertEquals( 0, checkpoints.getCheckpoints().size());
@@ -48,7 +48,7 @@ public class CheckpointsTest {
     @Test
     public void create() {
         Checkpoints checkpoints = new Checkpoints();
-        ICodeProportionsStatus status = new DummyStatus(true, new Date(), null);
+        IUsusModelStatus status = new DummyStatus(true, new Date(), null);
         checkpoints.createCheckpoint( status, new ArrayList<CodeProportion>() );
         
         assertEquals( 1, checkpoints.getCheckpoints().size());
@@ -57,7 +57,7 @@ public class CheckpointsTest {
     }
     
     
-    private class DummyStatus implements ICodeProportionsStatus {
+    private class DummyStatus implements IUsusModelStatus {
 
         private final Date lastTestRun;
         private final boolean success;
