@@ -20,14 +20,14 @@
             id="org.projectusus.ui.internal.yellowcount.YellowCountView"
             category="org.projectusus.ui.viewCategory"
             name="%yellowcount_view_name"/>
-      <view class="org.projectusus.ui.internal.proportions.CodeProportionsCockpit"
+      <view class="org.projectusus.ui.internal.proportions.CockpitView"
             icon="icons/full/eview16/cockpit.gif"
-            id="org.projectusus.ui.internal.proportions.CodeProportionsCockpit"
+            id="org.projectusus.ui.internal.proportions.CockpitView"
             category="org.projectusus.ui.viewCategory"
-            name="%proportions_view_name"/>
-      <view class="org.projectusus.ui.internal.proportions.HotSpotsView"
+            name="%cockpit_view_name"/>
+      <view class="org.projectusus.ui.internal.hotspots.HotSpotsView"
             icon="icons/full/eview16/hotspots.gif"
-            id="org.projectusus.ui.internal.proportions.HotSpotsView"
+            id="org.projectusus.ui.internal.hotspots.HotSpotsView"
             category="org.projectusus.ui.viewCategory"
             name="%hotspots_view_name"/>
       <view class="org.projectusus.ui.internal.history.HistoryView"
@@ -43,16 +43,16 @@
    </extension>
    <extension point="org.eclipse.ui.viewActions">
       <viewContribution
-            id="org.projectusus.ui.internal.proportions.CodeProportionsCockpit.ViewContribution"
-            targetID="org.projectusus.ui.internal.proportions.CodeProportionsCockpit">
+            id="org.projectusus.ui.internal.proportions.CockpitView.ViewContribution"
+            targetID="org.projectusus.ui.internal.proportions.CockpitView">
          <action
-               class="org.projectusus.ui.internal.proportions.RefreshCodeProportionsCockpit"
+               class="org.projectusus.ui.internal.proportions.RefreshCockpitAction"
                icon="icons/full/elcl16/refresh.gif"
-               id="org.projectusus.ui.internal.proportions.RefreshCodeProportionsCockpit"
-               label="%refreshCodeProportionsCockpit_label"
+               id="org.projectusus.ui.internal.proportions.RefreshCockpitAction"
+               label="%refreshCockpit_label"
                style="push"
                toolbarPath="additions"
-               tooltip="%refreshCodeProportionsCockpit_tooltip"/>
+               tooltip="%refreshCockpit_tooltip"/>
       </viewContribution>
       <viewContribution
             id="org.projectusus.ui.internal.yellowcount.YellowCountView.ViewContribution"
