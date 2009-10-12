@@ -6,8 +6,6 @@ package org.projectusus.ui.internal.projectsettings;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import java.util.Set;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -20,6 +18,10 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.osgi.service.prefs.BackingStoreException;
+import org.projectusus.core.projectsettings.CompilerWarningSetting;
+import org.projectusus.core.projectsettings.SettingsProvider;
+import org.projectusus.core.projectsettings.SettingsProviderExtension;
+import org.projectusus.core.projectsettings.ProjectSettings;
 
 public class ApplyHandler extends AbstractHandler {
 
@@ -33,16 +35,22 @@ public class ApplyHandler extends AbstractHandler {
 
     private void applySettings( IProject project ) {
         IEclipsePreferences jdtPrefercences = getJdtPreferences( project );
-        Properties preferences = new SettingsLoader().getCompilerWarningsDefaults();
-        Set<Object> keySet = preferences.keySet();
-        for( Object key : keySet ) {
-            jdtPrefercences.put( String.valueOf( key ), String.valueOf( preferences.get( key ) ) );
+
+        ProjectSettings ususSettings = selectSetting().getUsusProjectSettings();
+        List<CompilerWarningSetting> settings = ususSettings.getCompilerwarningSettings().getSettings();
+        for( CompilerWarningSetting setting : settings ) {
+            jdtPrefercences.put( setting.getCode().getSetting(), setting.getValue().name() );
+
         }
         try {
             jdtPrefercences.flush();
         } catch( BackingStoreException exception ) {
             exception.printStackTrace();
         }
+    }
+
+    private SettingsProvider selectSetting() {
+        return new SettingsProviderExtension().loadSettingsProvider().get( 0 );
     }
 
     private IEclipsePreferences getJdtPreferences( IProject project ) {

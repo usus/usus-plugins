@@ -68,7 +68,8 @@ Export-Package: antlr,
  org.projectusus.core.internal.proportions.checkstyledriver;x-internal:=true,
  org.projectusus.core.internal.proportions.model,
  org.projectusus.core.internal.proportions.sqi,
- org.projectusus.core.internal.yellowcount
+ org.projectusus.core.internal.yellowcount,
+ org.projectusus.core.projectsettings
 Eclipse-RegisterBuddy: net.sf.eclipsecs.core
 Bundle-ClassPath: lib/checkstyle-all-5.0.jar,
  .
