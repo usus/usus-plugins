@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="settingsprovider" name="%settingsprovider_name" schema="schema/settingsprovider.exsd"/>
     <extension
         id="checkstyle.CheckConfiguration"
         point="net.sf.eclipsecs.core.configurations">
@@ -18,5 +19,11 @@
                 type="org.projectusus.core.internal.project.IUSUSProject">
           </adapter>
        </factory>
+    </extension>
+    <extension
+          point="org.projectusus.core.settingsprovider">
+       <provider
+             clazz="org.projectusus.core.internal.projectsettings.UsusStandardSettingsLoader">
+       </provider>
     </extension>
 </plugin>
