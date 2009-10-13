@@ -26,6 +26,8 @@ public final class UITexts extends NLS {
     public static String openCheckpoints_noLog_title;
     public static String openCheckpoints_noLog_msg;
 
+    public static String projectsettings_select_message;
+    public static String projectsettings_select_title;
     private static final String BUNDLE_NAME = UITexts.class.getPackage().getName() + ".uitexts"; //$NON-NLS-1$
 
     static {

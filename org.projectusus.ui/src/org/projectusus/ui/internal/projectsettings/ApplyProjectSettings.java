@@ -11,51 +11,35 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ProjectScope;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.osgi.service.prefs.BackingStoreException;
-import org.projectusus.core.projectsettings.CompilerWarningSetting;
-import org.projectusus.core.projectsettings.SettingsProvider;
-import org.projectusus.core.projectsettings.SettingsProviderExtension;
 import org.projectusus.core.projectsettings.ProjectSettings;
+import org.projectusus.core.projectsettings.SettingsAccess;
+import org.projectusus.core.projectsettings.SettingsProvider;
 
-public class ApplyHandler extends AbstractHandler {
+public class ApplyProjectSettings extends AbstractHandler {
 
     public Object execute( ExecutionEvent event ) throws ExecutionException {
+        SettingsProvider settingsProvider = selectSettingsProvider( event );
         List<IProject> projects = getSelectedProjects( event );
-        for( IProject project : projects ) {
-            applySettings( project );
-        }
+        saveSettings( settingsProvider, projects );
         return null;
     }
 
-    private void applySettings( IProject project ) {
-        IEclipsePreferences jdtPrefercences = getJdtPreferences( project );
-
-        ProjectSettings ususSettings = selectSetting().getUsusProjectSettings();
-        List<CompilerWarningSetting> settings = ususSettings.getCompilerwarningSettings().getSettings();
-        for( CompilerWarningSetting setting : settings ) {
-            jdtPrefercences.put( setting.getCode().getSetting(), setting.getValue().name() );
-
-        }
-        try {
-            jdtPrefercences.flush();
-        } catch( BackingStoreException exception ) {
-            exception.printStackTrace();
-        }
+    private SettingsProvider selectSettingsProvider( ExecutionEvent event ) throws ExecutionException {
+        Shell shell = HandlerUtil.getActiveWorkbenchWindowChecked( event ).getShell();
+        SettingsProvider settingsProvider = new SettingsProviderSelector( shell ).selectSetting();
+        return settingsProvider;
     }
 
-    private SettingsProvider selectSetting() {
-        return new SettingsProviderExtension().loadSettingsProvider().get( 0 );
-    }
-
-    private IEclipsePreferences getJdtPreferences( IProject project ) {
-        ProjectScope projectScope = new ProjectScope( project );
-        return projectScope.getNode( "org.eclipse.jdt.core" ); //$NON-NLS-1$
+    private void saveSettings( SettingsProvider settingsProvider, List<IProject> projects ) {
+        if( settingsProvider != null ) {
+            ProjectSettings settings = settingsProvider.getUsusProjectSettings();
+            new SettingsAccess().save( projects, settings );
+        }
     }
 
     private List<IProject> getSelectedProjects( ExecutionEvent event ) {

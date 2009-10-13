@@ -88,7 +88,7 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="org.projectusus.ui.internal.projectsettings.ApplyHandler"
+            class="org.projectusus.ui.internal.projectsettings.ApplyProjectSettings"
             commandId="org.eclipse.usus.projectsettings.apply">
       </handler>
    </extension>
