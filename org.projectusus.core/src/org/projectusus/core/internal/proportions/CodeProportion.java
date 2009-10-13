@@ -4,33 +4,52 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
+import static org.projectusus.core.internal.proportions.IsisMetrics.CW;
+import static org.projectusus.core.internal.proportions.IsisMetrics.TA;
+
+import org.projectusus.core.internal.coverage.TestCoverage;
+import org.projectusus.core.internal.yellowcount.IYellowCountResult;
+
 public class CodeProportion {
 
     private final IsisMetrics metric;
-    private final String value;
-    private final Double graphValue;
+    private final int violations;
+    private final int basis;
 
-    public CodeProportion( IsisMetrics metric, String value ) {
-        this( metric, value, new Double( 0.0 ) );
+    public CodeProportion( IsisMetrics metric ) {
+        this( metric, 0, 0 );
     }
 
-    public CodeProportion( IsisMetrics metric, String value, int graphValue ) {
-        this( metric, value, new Double( graphValue ) );
-    }
-
-    public CodeProportion( IsisMetrics metric, String value, Double graphValue ) {
+    public CodeProportion( IsisMetrics metric, int violations, int basis ) {
         this.metric = metric;
-        this.value = value;
-        this.graphValue = graphValue;
+        this.violations = violations;
+        this.basis = basis;
+    }
+
+    public CodeProportion( TestCoverage coverage ) {
+        this( TA, coverage.getCoveredCount(), coverage.getTotalCount() );
+    }
+
+    public CodeProportion( IYellowCountResult yellowCountResult ) {
+        // TODO lf project count is not really the basis for CW
+        this( CW, yellowCountResult.getYellowCount(), yellowCountResult.getProjectCount() );
     }
 
     public Double getGraphValue() {
-        return graphValue;
+        return new Double( violations );
+    }
+
+    public int getViolations() {
+        return violations;
+    }
+
+    public int getBasis() {
+        return basis;
     }
 
     @Override
     public String toString() {
-        return metric.toString() + ": " + value;
+        return metric.toString() + ": " + violations + " / " + basis; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public IsisMetrics getMetric() {

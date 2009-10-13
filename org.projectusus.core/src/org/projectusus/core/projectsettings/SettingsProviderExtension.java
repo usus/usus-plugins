@@ -13,7 +13,7 @@ import org.eclipse.core.runtime.Platform;
 
 public class SettingsProviderExtension {
 
-    private static final String EXTENSION_POINT_ID = "org.projectusus.core.settingsprovider";
+    private static final String EXTENSION_POINT_ID = "org.projectusus.core.settingsprovider"; //$NON-NLS-1$
 
     public List<SettingsProvider> loadSettingsProvider() {
         List<SettingsProvider> result = new ArrayList<SettingsProvider>();
@@ -29,7 +29,7 @@ public class SettingsProviderExtension {
 
     private SettingsProvider getSettingsProvider( IConfigurationElement configurationElement ) {
         try {
-            Object object = configurationElement.createExecutableExtension( "clazz" );
+            Object object = configurationElement.createExecutableExtension( "clazz" ); //$NON-NLS-1$
             if( object instanceof SettingsProvider ) {
                 return (SettingsProvider)object;
             }

@@ -13,7 +13,7 @@ import org.projectusus.core.internal.proportions.CodeProportion;
 
 class TestCoverage implements ITestCoverage {
 
-    private CodeProportion entry = new CodeProportion( TA, "" );
+    private CodeProportion entry = new CodeProportion( TA );
 
     public List<CodeProportion> getEntries() {
         return asList( entry );

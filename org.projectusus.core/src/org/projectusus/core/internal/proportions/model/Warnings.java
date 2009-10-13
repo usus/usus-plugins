@@ -13,7 +13,7 @@ import org.projectusus.core.internal.proportions.CodeProportion;
 
 class Warnings implements IWarnings {
 
-    private CodeProportion entry = new CodeProportion( CW, "" );
+    private CodeProportion entry = new CodeProportion( CW );
 
     void update( CodeProportion entry ) {
         this.entry = entry;

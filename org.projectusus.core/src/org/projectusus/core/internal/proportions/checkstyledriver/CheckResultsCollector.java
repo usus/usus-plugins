@@ -11,7 +11,6 @@ import java.util.Map;
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.internal.proportions.IsisMetrics;
 
-
 class CheckResultsCollector {
 
     private final Map<IProject, ProjectCheckResult> projectResults = new HashMap<IProject, ProjectCheckResult>();
@@ -57,9 +56,9 @@ class CheckResultsCollector {
         StringBuilder result = new StringBuilder();
         for( IProject project : projectResults.keySet() ) {
             result.append( project.getName() );
-            result.append( "\n" );
+            result.append( "\n" ); //$NON-NLS-1$
             result.append( projectResults.get( project ) );
-            result.append( "\n\n" );
+            result.append( "\n\n" ); //$NON-NLS-1$
         }
         return result.toString();
     }

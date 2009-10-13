@@ -25,7 +25,7 @@ public enum CompilerWarningSettingCode {
     // unusedParameterWhenOverridingConcrete=disabled
     unusedPrivateMember, unusedWarningToken, varargsArgumentNeedCast;
 
-    private static final String ORG_ECLIPSE_JDT_CORE_COMPILER_PROBLEM = "org.eclipse.jdt.core.compiler.problem.";
+    private static final String ORG_ECLIPSE_JDT_CORE_COMPILER_PROBLEM = "org.eclipse.jdt.core.compiler.problem."; //$NON-NLS-1$
 
     public String getSetting() {
         return ORG_ECLIPSE_JDT_CORE_COMPILER_PROBLEM + name();

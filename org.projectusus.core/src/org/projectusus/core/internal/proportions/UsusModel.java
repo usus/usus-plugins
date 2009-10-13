@@ -5,7 +5,6 @@
 package org.projectusus.core.internal.proportions;
 
 import static java.util.Collections.unmodifiableList;
-import static org.projectusus.core.internal.proportions.IsisMetrics.TA;
 
 import java.util.HashSet;
 import java.util.List;
@@ -97,8 +96,7 @@ public class UsusModel implements IUsusModel {
     private ICoverageListener createCoverageListener() {
         return new ICoverageListener() {
             public void coverageChanged( TestCoverage coverage ) {
-                int value = coverage.getCoveredCount();
-                add( new CodeProportion( TA, coverage.toString(), value ) );
+                add( new CodeProportion( coverage ) );
                 status.updateLastTestRun();
                 notifyListeners();
             }

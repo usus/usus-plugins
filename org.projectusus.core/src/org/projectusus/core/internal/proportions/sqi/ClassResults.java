@@ -27,7 +27,7 @@ public class ClassResults extends ResultMapWrapper<MethodResults> {
 
     private String getNameOfMethod( DetailAST methodAST ) {
         if( methodAST == null ) {
-            return "";
+            return ""; //$NON-NLS-1$
         }
 
         return methodAST.findFirstToken( TokenTypes.IDENT ).getText();

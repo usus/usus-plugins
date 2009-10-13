@@ -9,7 +9,6 @@ import java.io.IOException;
 import org.eclipse.core.runtime.IPath;
 import org.projectusus.core.internal.UsusCorePlugin;
 
-
 /**
  * <p>
  * provides functionality to manage checkpoints.
@@ -19,7 +18,7 @@ import org.projectusus.core.internal.UsusCorePlugin;
  */
 public class CheckPointUtil {
 
-    private static final String LOG_FILE_NAME = "checkpoints.log";
+    private static final String LOG_FILE_NAME = "checkpoints.log"; //$NON-NLS-1$
 
     public static void addCheckpoint( final String content ) {
         try {

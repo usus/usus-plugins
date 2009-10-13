@@ -156,7 +156,7 @@ public class WorkspaceResults extends ResultMapWrapper<ClassResults> {
         for( ClassResults classResult : getAllResults() ) {
             for( MethodResults methodResult : classResult.getAllResults() ) {
                 if( methodResult.violates( test ) ) {
-                    violations.add( classResult.getFullClassName() + "." + methodResult.getMethodName() );
+                    violations.add( classResult.getFullClassName() + "." + methodResult.getMethodName() ); //$NON-NLS-1$
                 }
             }
         }
@@ -179,12 +179,12 @@ public class WorkspaceResults extends ResultMapWrapper<ClassResults> {
 
     private String getFullNameOfClassDef( DetailAST classDefNode ) {
         if( classDefNode == null ) {
-            return "";
+            return ""; //$NON-NLS-1$
         }
         String className = classDefNode.findFirstToken( TokenTypes.IDENT ).getText();
         String packageName = getPackageName( classDefNode );
-        if( packageName != "" ) {
-            packageName = packageName + ".";
+        if( packageName != "" ) { //$NON-NLS-1$
+            packageName = packageName + "."; //$NON-NLS-1$
         }
         return packageName + className;
     }
@@ -195,7 +195,7 @@ public class WorkspaceResults extends ResultMapWrapper<ClassResults> {
             packageNode = packageNode.getPreviousSibling();
         }
 
-        String packageName = "";
+        String packageName = ""; //$NON-NLS-1$
         if( packageNode != null ) {
             DetailAST dotNode = packageNode.findFirstToken( TokenTypes.DOT );
             if( dotNode != null ) {

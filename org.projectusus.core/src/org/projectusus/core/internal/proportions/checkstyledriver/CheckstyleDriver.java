@@ -22,6 +22,8 @@ import org.projectusus.core.internal.project.FindUsusProjects;
 
 public class CheckstyleDriver {
 
+    private static final String ISIS_CHECK_CONFIG = "ISIS"; //$NON-NLS-1$
+
     private final CheckResultsCollector collector = new CheckResultsCollector();
 
     public void buildAll( IProgressMonitor monitor ) throws CoreException {
@@ -46,12 +48,12 @@ public class CheckstyleDriver {
     }
 
     private void fireCoreException( Exception ex ) throws CoreException {
-        String msg = ex.getMessage() == null ? "[No details]" : ex.getMessage();
+        String msg = ex.getMessage() == null ? "[No details]" : ex.getMessage(); //$NON-NLS-1$
         throw new CoreException( new Status( ERROR, getPluginId(), msg, ex ) );
     }
 
     private ICheckConfiguration findISISConfig() {
-        return CheckConfigurationFactory.getByName( "ISIS" );
+        return CheckConfigurationFactory.getByName( ISIS_CHECK_CONFIG );
     }
 
     private List<IProject> getProjects() {

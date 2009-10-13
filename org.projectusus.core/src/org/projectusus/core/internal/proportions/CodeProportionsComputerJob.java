@@ -4,7 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
-import static org.projectusus.core.internal.proportions.IsisMetrics.CW;
+import static org.projectusus.core.internal.proportions.IsisMetrics.CC;
+import static org.projectusus.core.internal.proportions.IsisMetrics.KG;
+import static org.projectusus.core.internal.proportions.IsisMetrics.ML;
+import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_computing;
+import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_name;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -21,13 +25,13 @@ import org.projectusus.core.internal.yellowcount.YellowCount;
 class CodeProportionsComputerJob extends Job {
 
     CodeProportionsComputerJob() {
-        super( "Code proportions computer" );
+        super( codeProportionsComputerJob_name );
     }
 
     @Override
     protected IStatus run( IProgressMonitor mo ) {
         IProgressMonitor monitor = mo == null ? new NullProgressMonitor() : mo;
-        monitor.beginTask( "Computing code proportions (ISIS metrics)", 1024 );
+        monitor.beginTask( codeProportionsComputerJob_computing, 1024 );
         return performRun( monitor );
     }
 
@@ -56,24 +60,11 @@ class CodeProportionsComputerJob extends Job {
 
         WorkspaceResults results = WorkspaceResults.getInstance();
 
-        IsisMetrics metric = IsisMetrics.CC;
-        String ccLabel = results.getCCViolationCount() + " violations in " + results.getCCViolationBasis() + " methods: ";
-        for( String ccViolation : results.getCCViolationNames() ) {
-            ccLabel += ccViolation + " ";
-        }
-        getModel().add( new CodeProportion( metric, ccLabel, results.getCCViolationCount() ) );
+        getModel().add( new CodeProportion( CC, results.getCCViolationCount(), results.getCCViolationBasis() ) );
 
-        String mlLabel = results.getMLViolationCount() + " violations in " + results.getMLViolationBasis() + " methods: ";
-        for( String mlViolation : results.getMLViolationNames() ) {
-            mlLabel += mlViolation + " ";
-        }
-        getModel().add( new CodeProportion( IsisMetrics.ML, mlLabel, results.getMLViolationCount() ) );
+        getModel().add( new CodeProportion( ML, results.getMLViolationCount(), results.getMLViolationBasis() ) );
 
-        String kgLabel = results.getKGViolationCount() + " violations in " + results.getKGViolationBasis() + " classes: ";
-        for( String kgViolation : results.getKGViolationNames() ) {
-            kgLabel += kgViolation + " ";
-        }
-        getModel().add( new CodeProportion( IsisMetrics.KG, kgLabel, results.getKGViolationCount() ) );
+        getModel().add( new CodeProportion( KG, results.getKGViolationCount(), results.getKGViolationBasis() ) );
 
         // XXX hier ansetzen!
         // ProjectCheckResult cumulatedResult = driver.getCumulatedResult();
@@ -86,8 +77,7 @@ class CodeProportionsComputerJob extends Job {
 
     private void computeCW( IProgressMonitor monitor ) {
         IYellowCountResult yellowCountResult = YellowCount.getInstance().count();
-        String cwAsString = String.valueOf( yellowCountResult.getYellowCount() );
-        getModel().add( new CodeProportion( CW, cwAsString, yellowCountResult.getYellowCount() ) );
+        getModel().add( new CodeProportion( yellowCountResult ) );
     }
 
     private UsusModel getModel() {

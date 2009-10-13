@@ -24,6 +24,11 @@ class UsusModelStatus implements IUsusModelStatus {
         this.lastTestRun = new Date();
     }
 
+    @Override
+    public String toString() {
+        return (isStale() ? "Stale (re-run test suite)" : "OK") + " - " + dump();
+    }
+
     // interface methods
     // //////////////////
 
@@ -39,4 +44,14 @@ class UsusModelStatus implements IUsusModelStatus {
         return lastComputationRunSuccessful;
     }
 
+    // internal
+    // /////////
+
+    private String dump() {
+        return "Last run " + getLastComputerRun() + " / Last test run " + getLastTestRun();
+    }
+
+    private boolean isStale() {
+        return lastTestRun != null && lastComputationRunSuccessful && lastTestRun.before( lastComputerRun );
+    }
 }

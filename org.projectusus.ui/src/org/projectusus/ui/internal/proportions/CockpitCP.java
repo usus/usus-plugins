@@ -10,7 +10,6 @@ import java.util.List;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.projectusus.core.internal.proportions.IUsusModel;
-import org.projectusus.core.internal.proportions.IUsusModelStatus;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 
 class CockpitCP implements ITreeContentProvider {
@@ -22,9 +21,7 @@ class CockpitCP implements ITreeContentProvider {
             for( IUsusElement element : model.getElements() ) {
                 result.add( element );
             }
-            IUsusModelStatus status = model.getLastStatus();
-            result.add( "Last Run : " + formatLastTestRun( status ) );
-            result.add( "Last Test: " + status.getLastTestRun() );
+            result.add( model.getLastStatus() );
         }
         return result.toArray();
     }
@@ -53,13 +50,4 @@ class CockpitCP implements ITreeContentProvider {
     public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
         // unused
     }
-
-    // internal
-    // /////////
-
-    private String formatLastTestRun( IUsusModelStatus status ) {
-        String success = status.isLastComputationRunSuccessful() ? "OK" : "Not completed";
-        return status.getLastComputerRun() + " (" + success + ")";
-    }
-
 }

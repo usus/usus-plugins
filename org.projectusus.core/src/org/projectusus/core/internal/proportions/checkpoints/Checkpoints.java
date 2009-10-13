@@ -31,6 +31,11 @@ public class Checkpoints {
         } );
     }
 
+    @Override
+    public String toString() {
+        return "Checkpoints (" + checkpoints.size() + ")"; //$NON-NLS-1$//$NON-NLS-2$
+    }
+
     private boolean canCreate( IUsusModelStatus status ) {
         return lastUpdateWasTestRun( status ) && computedBetweenLastTestRuns( status );
     }
@@ -40,7 +45,7 @@ public class Checkpoints {
         if( !checkpoints.isEmpty() ) {
             ICheckpoint lastCheckPoint = checkpoints.get( checkpoints.size() - 1 );
             Date time = lastCheckPoint.getTime();
-            result = time.before( status.getLastComputerRun() );
+            result = time.before( status.getLastTestRun() );
         }
         return result;
     }
@@ -64,6 +69,11 @@ public class Checkpoints {
 
         public List<CodeProportion> getEntries() {
             return entries;
+        }
+
+        @Override
+        public String toString() {
+            return "Checkpoint " + time + " (" + entries.size() + " entries)"; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
         }
     }
 }

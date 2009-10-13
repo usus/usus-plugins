@@ -21,13 +21,13 @@ public class IsisMetricsCheckResult implements IIsisMetricsCheckResult {
     }
 
     public static IsisMetricsCheckResult fromString( String stringRepresentation ) {
-        String[] elems = stringRepresentation.split( ":" );
+        String[] elems = stringRepresentation.split( ":" ); //$NON-NLS-1$
         return new IsisMetricsCheckResult( readMetrics( elems[0] ), readInt( elems[1] ), readInt( elems[2] ) );
     }
 
     @Override
     public String toString() {
-        return metric.name() + ":" + cases + ":" + violations;
+        return metric.name() + ":" + cases + ":" + violations; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public IsisMetrics getMetric() {

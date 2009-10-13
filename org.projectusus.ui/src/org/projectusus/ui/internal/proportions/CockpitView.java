@@ -72,33 +72,35 @@ public class CockpitView extends ViewPart {
         treeViewer = new TreeViewer( createTree( parent ) );
         treeViewer.setUseHashlookup( true );
 
-        createColumns( new TreeColumn[0] );
+        createTreeTable( new TreeColumn[0] );
 
         treeViewer.setLabelProvider( new CockpitLP() );
         treeViewer.setContentProvider( new CockpitCP() );
         treeViewer.setInput( UsusModel.getInstance() );
     }
 
-    private void createColumns( TreeColumn[] currentColumns ) {
+    private void createTreeTable( TreeColumn[] currentColumns ) {
         Tree tree = treeViewer.getTree();
         TableLayout layout = new TableLayout();
         treeViewer.getTree().setLayout( layout );
-
-        TreeViewerColumn column = new TreeViewerColumn( treeViewer, SWT.NONE );
-        column.getColumn().setResizable( true );
-        column.getColumn().setMoveable( true );
-        column.getColumn().setText( "Latest analysis results" );
-        layout.addColumnData( new ColumnWeightData( 50 ) );
-
+        createColumns( layout );
         tree.setLinesVisible( true );
         tree.setHeaderVisible( true );
         tree.layout( true );
     }
 
+    private void createColumns( TableLayout layout ) {
+        for( CockpitColumnDesc desc : CockpitColumnDesc.values() ) {
+            TreeViewerColumn column = new TreeViewerColumn( treeViewer, SWT.NONE );
+            column.getColumn().setResizable( true );
+            column.getColumn().setMoveable( true );
+            column.getColumn().setText( desc.getHeadLabel() );
+            layout.addColumnData( new ColumnWeightData( desc.getWeight() ) );
+        }
+    }
+
     private Tree createTree( Composite parent ) {
         int style = SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION;
-        Tree tree = new Tree( parent, style );
-        tree.setLinesVisible( true );
-        return tree;
+        return new Tree( parent, style );
     }
 }

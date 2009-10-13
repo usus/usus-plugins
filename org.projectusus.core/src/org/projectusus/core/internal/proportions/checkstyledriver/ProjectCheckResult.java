@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.projectusus.core.internal.proportions.IsisMetrics;
 
-
 public class ProjectCheckResult {
 
     private final Map<IsisMetrics, IIsisMetricsCheckResult> results;
@@ -31,9 +30,9 @@ public class ProjectCheckResult {
         StringBuilder result = new StringBuilder();
         for( IsisMetrics metrics : results.keySet() ) {
             result.append( metrics.getLabel() );
-            result.append( metrics.getLabel().length() == 2 ? " : " : ": " ); // ;-)
+            result.append( metrics.getLabel().length() == 2 ? " : " : ": " ); // ;-)  //$NON-NLS-1$//$NON-NLS-2$
             result.append( results.get( metrics ) );
-            result.append( "\n" );
+            result.append( "\n" ); //$NON-NLS-1$
         }
         return result.toString();
     }

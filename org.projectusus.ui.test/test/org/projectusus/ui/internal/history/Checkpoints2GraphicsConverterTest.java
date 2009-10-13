@@ -67,7 +67,7 @@ public class Checkpoints2GraphicsConverterTest {
 		public List<CodeProportion> getEntries() {
 			List<CodeProportion> result = new ArrayList<CodeProportion>();
 			for (int value : values) {
-				result.add(new CodeProportion(metric, "", value));
+				result.add(new CodeProportion(metric, value, 42));
 			}
 			return result;
 		}

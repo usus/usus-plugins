@@ -12,6 +12,10 @@ public final class UITexts extends NLS {
     public static String checkpointsHistoryChart_x;
     public static String checkpointsHistoryChart_y;
 
+    public static String cockpitColumnDesc_cases;
+    public static String cockpitColumnDesc_indicator;
+    public static String cockpitColumnDesc_violations;
+
     public static String cockpitLP_codeProportions;
     public static String cockpitLP_testCoverage;
     public static String cockpitLP_warnings;
