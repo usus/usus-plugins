@@ -4,7 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.project;
 
-import org.projectusus.core.internal.coverage.TestCoverage;
 
 /**
  * adapter for IProjects (declared in plugin.xml); you can ask an IProject via getAdapter() for an object of this type and then query USUS-related info.
@@ -17,7 +16,4 @@ public interface IUSUSProject {
 
     void setUsusProject( boolean ususProject );
 
-    void setTestCoverage( TestCoverage testCoverage );
-
-    TestCoverage getTestCoverage();
 }

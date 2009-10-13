@@ -9,14 +9,10 @@ import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.coverage.TestCoverage;
-
 
 class UsusProject implements IUSUSProject {
 
-    private static final String ATT_USUS_PROJECT = "ususProject";
-    private static final String ATT_TEST_COVERAGE_TOTAL = "testCoverage.total";
-    private static final String ATT_TEST_COVERAGE_COVERED = "testCoverage.covered";
+    private static final String ATT_USUS_PROJECT = "ususProject"; //$NON-NLS-1$
     private final IProject project;
 
     UsusProject( IProject project ) {
@@ -35,24 +31,6 @@ class UsusProject implements IUSUSProject {
 
     public boolean isUsusProject() {
         return getProjectSettings().getBoolean( ATT_USUS_PROJECT, false );
-    }
-
-    public TestCoverage getTestCoverage() {
-        IEclipsePreferences node = getProjectSettings();
-        int total = node.getInt( ATT_TEST_COVERAGE_TOTAL, 0 );
-        int covered = node.getInt( ATT_TEST_COVERAGE_COVERED, 0 );
-        return new TestCoverage( covered, total );
-    }
-
-    public void setTestCoverage( TestCoverage testCoverage ) {
-        try {
-            IEclipsePreferences node = getProjectSettings();
-            node.putInt( ATT_TEST_COVERAGE_TOTAL, testCoverage.getTotalCount() );
-            node.putInt( ATT_TEST_COVERAGE_COVERED, testCoverage.getCoveredCount() );
-            node.flush();
-        } catch( BackingStoreException basex ) {
-            UsusCorePlugin.getDefault().log( basex );
-        }
     }
 
     // internal

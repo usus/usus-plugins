@@ -70,12 +70,12 @@ class ProjectAuditListener implements AuditListener {
     // /////////////////
 
     private void addNewStatusFrom( Throwable thr ) {
-        String msg = thr.getMessage() == null ? "[No details.]" : thr.getMessage();
+        String msg = thr.getMessage() == null ? "[No details.]" : thr.getMessage(); //$NON-NLS-1$
         errors.add( new Status( IStatus.ERROR, getPluginId(), msg, thr ) );
     }
 
     private IStatus createMultiStatusFrom( Set<IStatus> collectedErrors ) {
-        String message = "Errors occurred during ISIS computation.";
+        String message = "Errors occurred during ISIS computation."; //$NON-NLS-1$
         MultiStatus result = new MultiStatus( getPluginId(), ERROR, message, null );
         for( IStatus error : collectedErrors ) {
             result.add( error );

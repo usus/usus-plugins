@@ -50,7 +50,7 @@ public class TestCoverage {
         numberInstance.setMaximumIntegerDigits( 3 );
         numberInstance.setMaximumFractionDigits( 2 );
         numberInstance.setMinimumFractionDigits( 1 );
-        return numberInstance.format( coverageInPercent ) + " %";
+        return numberInstance.format( coverageInPercent ) + " %"; //$NON-NLS-1$
     }
 
     public TestCoverage add( TestCoverage other ) {
