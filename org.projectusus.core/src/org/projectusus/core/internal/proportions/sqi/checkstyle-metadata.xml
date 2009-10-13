@@ -3,14 +3,10 @@
 "-//eclipse-cs//DTD Check Metadata 1.1//EN"
 "http://eclipse-cs.sourceforge.net/dtds/checkstyle-metadata_1_1.dtd">
 <checkstyle-metadata>
-    <rule-group-metadata name="The ISIS Checks" priority="1600">
+    <rule-group-metadata name="The USUS Checks" priority="1600">
         <rule-metadata name="%CC.name" internal-name="CC" parent="TreeWalker">
             <alternative-name internal-name="org.projectusus.core.internal.proportions.sqi.CC"/>
             <description>%CC.desc</description>
-        </rule-metadata>
-        <rule-metadata name="%KG.name" internal-name="KG" parent="TreeWalker">
-            <alternative-name internal-name="org.projectusus.core.internal.proportions.sqi.KG"/>
-            <description>%KG.desc</description>
         </rule-metadata>
         <rule-metadata name="%ML.name" internal-name="ML" parent="TreeWalker">
             <alternative-name internal-name="org.projectusus.core.internal.proportions.sqi.ML"/>

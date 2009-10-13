@@ -4,18 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.sqi;
 
-import org.projectusus.core.internal.proportions.IsisMetrics;
-
+import com.puppycrawl.tools.checkstyle.api.Check;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-
-public class ML extends SQICheck {
-
-    @Override
-    protected IsisMetrics getMetrics() {
-        return IsisMetrics.ML;
-    }
+public class ML extends Check {
 
     @Override
     public int[] getDefaultTokens() {
@@ -28,13 +21,7 @@ public class ML extends SQICheck {
         if( openingBrace != null ) {
             DetailAST closingBrace = openingBrace.findFirstToken( TokenTypes.RCURLY );
             int length = calcMethodLength( openingBrace.getLineNo(), closingBrace.getLineNo() );
-            analyzeMethodLength( anAST, length );
-        }
-    }
-
-    private void analyzeMethodLength( DetailAST anAST, int length ) {
-        if( length > 15 ) {
-            increaseViolations( anAST );
+            WorkspaceResults.getInstance().setMLResult( anAST, length );
         }
     }
 

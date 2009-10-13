@@ -6,7 +6,6 @@
 
     <module name="TreeWalker">
         <module name="CC" />
-        <module name="KG" />
         <module name="ML" />
     </module>
 </module>

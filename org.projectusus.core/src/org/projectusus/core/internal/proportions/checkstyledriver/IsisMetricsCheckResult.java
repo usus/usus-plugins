@@ -7,7 +7,6 @@ package org.projectusus.core.internal.proportions.checkstyledriver;
 import static java.lang.Integer.parseInt;
 
 import org.projectusus.core.internal.proportions.IsisMetrics;
-import org.projectusus.core.internal.proportions.sqi.Violations;
 
 public class IsisMetricsCheckResult implements IIsisMetricsCheckResult {
 
@@ -19,10 +18,6 @@ public class IsisMetricsCheckResult implements IIsisMetricsCheckResult {
         this.metric = metric;
         this.cases = cases;
         this.violations = violations;
-    }
-
-    public IsisMetricsCheckResult( IsisMetrics metrics, Violations violations ) {
-        this( metrics, violations.getNumberOfClasses(), violations.getNumberOfViolations() );
     }
 
     public static IsisMetricsCheckResult fromString( String stringRepresentation ) {

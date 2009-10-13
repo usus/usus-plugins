@@ -4,13 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.sqi;
 
-import org.projectusus.core.internal.proportions.IsisMetrics;
-
+import com.puppycrawl.tools.checkstyle.api.Check;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-
-public class CC extends SQICheck {
+public class CC extends Check {
 
     private int currentCountForMethod;
 
@@ -46,19 +44,8 @@ public class CC extends SQICheck {
         case TokenTypes.METHOD_DEF:
         case TokenTypes.INSTANCE_INIT:
         case TokenTypes.STATIC_INIT:
-            analyzeCyclomaticComplexity( aAST );
+            WorkspaceResults.getInstance().setCCResult( aAST, currentCountForMethod );
         }
-    }
-
-    private void analyzeCyclomaticComplexity( DetailAST anAST ) {
-        if( currentCountForMethod > 5 ) {
-            increaseViolations( anAST );
-        }
-    }
-
-    @Override
-    protected IsisMetrics getMetrics() {
-        return IsisMetrics.CC;
     }
 
 }
