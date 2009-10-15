@@ -11,6 +11,14 @@ public final class CoreTexts extends NLS {
     public static String codeProportionsComputerJob_computing;
     public static String codeProportionsComputerJob_name;
 
+    public static String isisMetrics_acd;
+    public static String isisMetrics_cc;
+    public static String isisMetrics_cw;
+    public static String isisMetrics_kg;
+    public static String isisMetrics_ml;
+    public static String isisMetrics_pc;
+    public static String isisMetrics_ta;
+
     private static final String BUNDLE_NAME = CoreTexts.class.getPackage().getName() + ".coretexts"; //$NON-NLS-1$
 
     static {

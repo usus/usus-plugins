@@ -4,10 +4,18 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
+import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_acd;
+import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_cc;
+import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_kg;
+import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ml;
+import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_pc;
+import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ta;
+
+import org.projectusus.core.internal.util.CoreTexts;
+
 public enum IsisMetrics {
 
-    TA( "Test coverage" ), PC( "Package cycles" ), CC( "Cyclomatic complexity" ), ACD( "Average component dependency" ), KG( "Class size" ), ML( "Method length" ), CW(
-            "Compiler warnings" );
+    TA( isisMetrics_ta ), PC( isisMetrics_pc ), CC( isisMetrics_cc ), ACD( isisMetrics_acd ), KG( isisMetrics_kg ), ML( isisMetrics_ml ), CW( CoreTexts.isisMetrics_cw );
 
     private final String label;
 
