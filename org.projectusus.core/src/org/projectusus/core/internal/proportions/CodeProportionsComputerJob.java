@@ -24,8 +24,11 @@ import org.projectusus.core.internal.yellowcount.YellowCount;
 
 class CodeProportionsComputerJob extends Job {
 
-    CodeProportionsComputerJob() {
+    private final ICodeProportionComputationTarget target;
+
+    CodeProportionsComputerJob( ICodeProportionComputationTarget target ) {
         super( codeProportionsComputerJob_name );
+        this.target = target;
     }
 
     @Override
@@ -55,15 +58,11 @@ class CodeProportionsComputerJob extends Job {
     }
 
     private void computeCheckstyleBasedMetrics( IProgressMonitor monitor ) throws CoreException {
-        CheckstyleDriver driver = new CheckstyleDriver();
-        driver.buildAll( monitor );
+        new CheckstyleDriver( target ).run( monitor );
 
         WorkspaceResults results = WorkspaceResults.getInstance();
-
         getModel().add( new CodeProportion( CC, results.getCCViolationCount(), results.getCCViolationBasis() ) );
-
         getModel().add( new CodeProportion( ML, results.getMLViolationCount(), results.getMLViolationBasis() ) );
-
         getModel().add( new CodeProportion( KG, results.getKGViolationCount(), results.getKGViolationBasis() ) );
 
         // XXX hier ansetzen!

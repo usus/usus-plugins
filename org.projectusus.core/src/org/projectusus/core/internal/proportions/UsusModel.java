@@ -70,7 +70,8 @@ public class UsusModel implements IUsusModel {
     }
 
     public void forceRecompute() {
-        new CodeProportionsComputerJob().schedule();
+        ICodeProportionComputationTarget wsTarget = new WorkspaceCodeProportionComputationTarget();
+        new CodeProportionsComputerJob( wsTarget ).schedule();
     }
 
     public synchronized void dispose() {
