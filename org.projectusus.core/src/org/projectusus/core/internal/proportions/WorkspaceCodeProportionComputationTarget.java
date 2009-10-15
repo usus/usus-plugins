@@ -1,5 +1,6 @@
 package org.projectusus.core.internal.proportions;
 
+import static java.util.Collections.emptyList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 
 import java.util.ArrayList;
@@ -30,6 +31,10 @@ class WorkspaceCodeProportionComputationTarget implements ICodeProportionComputa
     public Collection<IProject> getProjects() {
         IWorkspaceRoot wsRoot = getWorkspace().getRoot();
         return new FindUsusProjects( wsRoot.getProjects() ).compute();
+    }
+
+    public Collection<IFile> getDeletedFiles( IProject project ) throws CoreException {
+        return emptyList();
     }
 
     // internal

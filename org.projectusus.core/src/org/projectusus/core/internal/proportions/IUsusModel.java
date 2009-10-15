@@ -22,4 +22,6 @@ public interface IUsusModel {
     void removeUsusModelListener( IUsusModelListener listener );
 
     void forceRecompute();
+
+    void setRecomputeOnResourceChange( boolean recomputeOnResourceChange );
 }
