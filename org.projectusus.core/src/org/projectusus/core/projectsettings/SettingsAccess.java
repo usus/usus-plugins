@@ -5,6 +5,7 @@
 package org.projectusus.core.projectsettings;
 
 import java.util.List;
+import java.util.Properties;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
@@ -22,16 +23,16 @@ public class SettingsAccess {
     }
 
     private void save( IProject project, ProjectSettings settings ) {
-        IEclipsePreferences jdtPrefercences = getJdtPreferences( project );
-
         List<CompilerWarningSetting> compilerWarningSettings = settings.getCompilerwarningSettings().getSettings();
-        for( CompilerWarningSetting setting : compilerWarningSettings ) {
-            jdtPrefercences.put( setting.getCode().getSetting(), setting.getValue().name() );
-        }
         try {
+            IEclipsePreferences jdtPrefercences = getJdtPreferences( project );
+            for( CompilerWarningSetting setting : compilerWarningSettings ) {
+                jdtPrefercences.put( setting.getCode().getSetting(), setting.getValue().name() );
+            }
             jdtPrefercences.flush();
         } catch( BackingStoreException exception ) {
             exception.printStackTrace();
+            throw new RuntimeException( "Could not save settings.", exception );
         }
     }
 
@@ -39,4 +40,27 @@ public class SettingsAccess {
         ProjectScope projectScope = new ProjectScope( project );
         return projectScope.getNode( JDT_CORE_NODE );
     }
+
+    public ProjectSettings loadSettings( IProject project ) {
+        ProjectSettings settings = new ProjectSettings( "Settings from " + project.getName() );
+        try {
+            IEclipsePreferences jdtPrefercences = getJdtPreferences( project );
+            Properties properties = convertToProperties( jdtPrefercences );
+            settings.getCompilerwarningSettings().loadValuesFromProperties( properties );
+        } catch( BackingStoreException exception ) {
+            exception.printStackTrace();
+            throw new RuntimeException( "Could not load Settings", exception );
+        }
+        return settings;
+    }
+
+    private Properties convertToProperties( IEclipsePreferences jdtPrefercences ) throws BackingStoreException {
+        Properties result = new Properties();
+        String[] keys = jdtPrefercences.keys();
+        for( String key : keys ) {
+            result.put( key, jdtPrefercences.get( key, null ) );
+        }
+        return result;
+    }
+
 }

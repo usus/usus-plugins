@@ -6,10 +6,10 @@ package org.projectusus.core.projectsettings;
 
 public enum CompilerWarningLevel {
 
-    IGNORE, WARNING, ERROR;
+    ignore, warning, error;
 
     public static CompilerWarningLevel from( String string ) {
-        return valueOf( string.toUpperCase() );
+        return valueOf( string.toLowerCase() );
     }
 
 }
