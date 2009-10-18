@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
-import org.projectusus.core.internal.proportions.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 
 class CheckResultsCollector {
 

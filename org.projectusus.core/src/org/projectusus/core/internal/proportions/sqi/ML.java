@@ -21,7 +21,7 @@ public class ML extends Check {
         if( openingBrace != null ) {
             DetailAST closingBrace = openingBrace.findFirstToken( TokenTypes.RCURLY );
             int length = calcMethodLength( openingBrace.getLineNo(), closingBrace.getLineNo() );
-            WorkspaceResults.getInstance().setMLResult( anAST, length );
+            NewWorkspaceResults.getInstance().getCurrentProjectResults().getCurrentFileResults().setMLResult( anAST, length );
         }
     }
 

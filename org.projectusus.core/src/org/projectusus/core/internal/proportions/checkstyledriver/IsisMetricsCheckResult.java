@@ -6,7 +6,7 @@ package org.projectusus.core.internal.proportions.checkstyledriver;
 
 import static java.lang.Integer.parseInt;
 
-import org.projectusus.core.internal.proportions.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 
 public class IsisMetricsCheckResult implements IIsisMetricsCheckResult {
 

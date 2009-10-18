@@ -4,11 +4,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class ResultMapWrapper<T> {
+public abstract class ResultMapWrapper<S, T> {
 
-    private final Map<String, T> resultMap = new HashMap<String, T>();
+    private final Map<S, T> resultMap = new HashMap<S, T>();
 
-    protected T getResults( String name, T newObject ) {
+    protected T getResults( S name, T newObject ) {
         T results = resultMap.get( name );
         if( results == null ) {
             results = newObject;
@@ -23,6 +23,10 @@ public abstract class ResultMapWrapper<T> {
 
     protected Collection<T> getAllResults() {
         return resultMap.values();
+    }
+
+    protected void remove( S key ) {
+        resultMap.remove( key );
     }
 
 }

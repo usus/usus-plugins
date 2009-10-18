@@ -5,7 +5,7 @@
 package org.projectusus.core.internal.proportions.model;
 
 import static java.util.Arrays.asList;
-import static org.projectusus.core.internal.proportions.IsisMetrics.CW;
+import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CW;
 
 import java.util.List;
 

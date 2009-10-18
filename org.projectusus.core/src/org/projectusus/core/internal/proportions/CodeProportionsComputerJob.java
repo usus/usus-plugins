@@ -4,11 +4,13 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
-import static org.projectusus.core.internal.proportions.IsisMetrics.CC;
-import static org.projectusus.core.internal.proportions.IsisMetrics.KG;
-import static org.projectusus.core.internal.proportions.IsisMetrics.ML;
+import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CC;
+import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.KG;
+import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_computing;
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_name;
+
+import java.util.Arrays;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -18,7 +20,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.projectusus.core.internal.proportions.checkstyledriver.CheckstyleDriver;
-import org.projectusus.core.internal.proportions.sqi.WorkspaceResults;
+import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
 import org.projectusus.core.internal.yellowcount.IYellowCountResult;
 import org.projectusus.core.internal.yellowcount.YellowCount;
 
@@ -60,11 +63,11 @@ class CodeProportionsComputerJob extends Job {
     private void computeCheckstyleBasedMetrics( IProgressMonitor monitor ) throws CoreException {
         new CheckstyleDriver( target ).run( monitor );
 
-        WorkspaceResults results = WorkspaceResults.getInstance();
-        getModel().add( new CodeProportion( CC, results.getCCViolationCount(), results.getCCViolationBasis() ) );
-        getModel().add( new CodeProportion( ML, results.getMLViolationCount(), results.getMLViolationBasis() ) );
-        getModel().add( new CodeProportion( KG, results.getKGViolationCount(), results.getKGViolationBasis() ) );
+        NewWorkspaceResults results = NewWorkspaceResults.getInstance();
 
+        for( IsisMetrics metric : Arrays.asList( CC, KG, ML ) ) {
+            getModel().add( new CodeProportion( metric, results.getViolationCount( metric ), results.getViolationBasis( metric ) ) );
+        }
         // XXX hier ansetzen!
         // ProjectCheckResult cumulatedResult = driver.getCumulatedResult();
         // for( IsisMetrics metric : asList( CC, KG, ML ) ) {

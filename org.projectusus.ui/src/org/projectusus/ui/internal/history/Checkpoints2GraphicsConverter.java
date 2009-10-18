@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.projectusus.core.internal.proportions.CodeProportion;
-import org.projectusus.core.internal.proportions.IsisMetrics;
 import org.projectusus.core.internal.proportions.checkpoints.ICheckpoint;
+import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 
 class Checkpoints2GraphicsConverter {
 

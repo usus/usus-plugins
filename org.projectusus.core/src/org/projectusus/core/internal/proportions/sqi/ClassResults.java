@@ -1,9 +1,11 @@
 package org.projectusus.core.internal.proportions.sqi;
 
+import java.util.List;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-public class ClassResults extends ResultMapWrapper<MethodResults> {
+public class ClassResults extends ResultMapWrapper<String, MethodResults> {
 
     private final String fullClassName;
 
@@ -45,8 +47,30 @@ public class ClassResults extends ResultMapWrapper<MethodResults> {
         return fullClassName;
     }
 
-    public boolean violates( ViolationTest test ) {
-        return test.isViolatedBy( this );
+    public int getViolations( IsisMetrics metric ) {
+        if( metric.isMethodTest() ) {
+            int violations = 0;
+            for( MethodResults methodResult : this.getAllResults() ) {
+                if( methodResult.violates( metric ) ) {
+                    violations++;
+                }
+            }
+            return violations;
+        }
+        return metric.isViolatedBy( this ) ? 1 : 0;
+    }
+
+    public void addViolatingTargets( IsisMetrics metric, List<String> violations ) {
+        if( metric.isMethodTest() ) {
+            for( MethodResults methodResult : this.getAllResults() ) {
+                if( methodResult.violates( metric ) ) {
+                    violations.add( this.getFullClassName() + "." + methodResult.getMethodName() ); //$NON-NLS-1$
+                }
+            }
+        }
+        if( metric.isViolatedBy( this ) ) {
+            violations.add( this.getFullClassName() );
+        }
     }
 
 }

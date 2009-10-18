@@ -7,7 +7,7 @@ package org.projectusus.ui.internal.history;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.projectusus.core.internal.proportions.IsisMetrics.ACD;
+import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ACD;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,8 +15,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.CodeProportion;
-import org.projectusus.core.internal.proportions.IsisMetrics;
 import org.projectusus.core.internal.proportions.checkpoints.ICheckpoint;
+import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 
 
 public class Checkpoints2GraphicsConverterTest {

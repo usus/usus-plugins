@@ -7,7 +7,7 @@ package org.projectusus.core.internal.proportions.checkstyledriver;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.projectusus.core.internal.proportions.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 
 public class ProjectCheckResult {
 

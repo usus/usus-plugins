@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.JavaCore;
+import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
 
 import com.puppycrawl.tools.checkstyle.Checker;
 
@@ -34,11 +35,24 @@ class ProjectAuditor {
         if( !files.isEmpty() ) {
             ProjectAuditListener listener = new ProjectAuditListener( collector.getProjectResult( project ) );
             Checker checker = null;
+            NewWorkspaceResults.getInstance().setCurrentProject( project );
             try {
                 checker = CheckerFactory.createChecker( checkConfiguration, project );
                 checker.addListener( listener );
                 reconfigureSharedClassLoader( project );
-                checker.process( convertToLocations( files ) );
+                // Experiment zum Festhalten des aktuellen Files NR
+                for( IFile currentFile : files ) {
+                    NewWorkspaceResults.getInstance().setCurrentFile( currentFile );
+                    List<File> tempFiles = new ArrayList<File>();
+                    tempFiles.add( currentFile.getLocation().toFile() );
+                    checker.process( tempFiles );
+                    NewWorkspaceResults.getInstance().setCurrentFile( null );
+
+                }
+
+                // vorher war es so und soll wieder so werden:
+                // checker.process( convertToLocations( files ) );
+
                 if( listener.hasErrors() ) {
                     throw new CoreException( listener.getErrors() );
                 }
@@ -46,6 +60,7 @@ class ProjectAuditor {
                 if( checker != null ) {
                     checker.removeListener( listener );
                 }
+                NewWorkspaceResults.getInstance().setCurrentProject( null );
             }
         }
     }

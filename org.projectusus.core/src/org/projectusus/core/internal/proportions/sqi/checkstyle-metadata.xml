@@ -4,6 +4,10 @@
 "http://eclipse-cs.sourceforge.net/dtds/checkstyle-metadata_1_1.dtd">
 <checkstyle-metadata>
     <rule-group-metadata name="The USUS Checks" priority="1600">
+        <rule-metadata name="%Classes.name" internal-name="Classes" parent="TreeWalker">
+            <alternative-name internal-name="org.projectusus.core.internal.proportions.sqi.Classes"/>
+            <description>%Classes.desc</description>
+        </rule-metadata>
         <rule-metadata name="%CC.name" internal-name="CC" parent="TreeWalker">
             <alternative-name internal-name="org.projectusus.core.internal.proportions.sqi.CC"/>
             <description>%CC.desc</description>

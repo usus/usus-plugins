@@ -4,10 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
-import static org.projectusus.core.internal.proportions.IsisMetrics.CW;
-import static org.projectusus.core.internal.proportions.IsisMetrics.TA;
+import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CW;
+import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
 
 import org.projectusus.core.internal.coverage.TestCoverage;
+import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 import org.projectusus.core.internal.yellowcount.IYellowCountResult;
 
 public class CodeProportion {

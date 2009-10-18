@@ -31,8 +31,8 @@ public class MethodResults {
         return methodName;
     }
 
-    public boolean violates( ViolationTest test ) {
-        return test.isViolatedBy( this );
+    public boolean violates( IsisMetrics metric ) {
+        return metric.isViolatedBy( this );
     }
 
 }
