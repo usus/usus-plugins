@@ -53,4 +53,13 @@ public class Setting<Code, Value> {
         this.link = link;
     }
 
+    @Override
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append( getCode() );
+        buffer.append( "=" );
+        buffer.append( value );
+        return buffer.toString();
+    }
+
 }

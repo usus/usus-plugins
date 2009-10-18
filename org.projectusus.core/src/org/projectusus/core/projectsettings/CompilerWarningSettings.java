@@ -51,4 +51,14 @@ public class CompilerWarningSettings {
         }
         throw new IllegalArgumentException();
     }
+
+    @Override
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        for( CompilerWarningSetting setting : settings ) {
+            buffer.append( setting );
+            buffer.append( "\n" );
+        }
+        return buffer.toString();
+    }
 }

@@ -22,4 +22,14 @@ public class ProjectSettings {
         return name;
     }
 
+    @Override
+    public String toString() {
+        StringBuffer result = new StringBuffer();
+        result.append( "name=" );
+        result.append( getName() );
+        result.append( "\nCompilerwarningSettings:\n" );
+        result.append( getCompilerwarningSettings() );
+        return result.toString();
+    }
+
 }
