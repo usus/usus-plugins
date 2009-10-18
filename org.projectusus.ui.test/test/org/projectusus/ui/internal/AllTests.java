@@ -10,10 +10,11 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.projectusus.core.internal.coverage.CoverageTest;
 import org.projectusus.core.internal.proportions.checkpoints.CheckpointsTest;
 import org.projectusus.core.internal.proportions.sqi.MLTest;
+import org.projectusus.core.internal.yellowcount.WiseCrackTest;
 import org.projectusus.ui.internal.history.Checkpoints2GraphicsConverterTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({Checkpoints2GraphicsConverterTest.class, CheckpointsTest.class, CoverageTest.class, MLTest.class})
+@SuiteClasses({Checkpoints2GraphicsConverterTest.class, CheckpointsTest.class, CoverageTest.class, MLTest.class, WiseCrackTest.class})
 public class AllTests {
 
 }

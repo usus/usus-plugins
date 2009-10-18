@@ -101,18 +101,6 @@ public class YellowCount {
     }
 
     private IYellowCountResult createResult( final int yellowCount, final int yellowProjectCount, final int projectCount ) {
-        return new IYellowCountResult() {
-            public int getYellowCount() {
-                return yellowCount;
-            }
-
-            public int getYellowProjectCount() {
-                return yellowProjectCount;
-            }
-
-            public int getProjectCount() {
-                return projectCount;
-            }
-        };
+        return new YellowCountResult( projectCount, yellowCount, yellowProjectCount );
     }
 }

@@ -2,15 +2,15 @@
 // All rights reserved.
 package org.projectusus.ui.internal.yellowcount.actions;
 
+import static org.projectusus.core.internal.yellowcount.CheckPointUtil.addCheckpoint;
+
 import java.util.Date;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
-import org.projectusus.core.internal.yellowcount.CheckPointUtil;
 import org.projectusus.core.internal.yellowcount.IYellowCountResult;
-import org.projectusus.core.internal.yellowcount.ResultFormatter;
 import org.projectusus.core.internal.yellowcount.YellowCount;
 
 /**
@@ -22,8 +22,8 @@ public class AddCheckpoint implements IViewActionDelegate {
 
     public void run( IAction action ) {
         IYellowCountResult count = YellowCount.getInstance().count();
-        String checkpoint = new Date().toString() + " " + new ResultFormatter().dump( count ) + "\r\n"; //$NON-NLS-1$ //$NON-NLS-2$
-        CheckPointUtil.addCheckpoint( checkpoint );
+        String checkpoint = new Date().toString() + " " + count.toString() + "\r\n"; //$NON-NLS-1$ //$NON-NLS-2$
+        addCheckpoint( checkpoint );
     }
 
     public void init( IViewPart view ) {

@@ -19,6 +19,11 @@ public final class CoreTexts extends NLS {
     public static String isisMetrics_pc;
     public static String isisMetrics_ta;
 
+    public static String wiseCrack_cool;
+    public static String wiseCrack_shame;
+
+    public static String yellowCountResult_msg;
+
     private static final String BUNDLE_NAME = CoreTexts.class.getPackage().getName() + ".coretexts"; //$NON-NLS-1$
 
     static {

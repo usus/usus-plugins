@@ -2,6 +2,8 @@
 // All rights reserved.
 package org.projectusus.ui.internal.yellowcount;
 
+import static org.eclipse.swt.SWT.BOLD;
+
 import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
@@ -13,7 +15,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.yellowcount.IYellowCountListener;
 import org.projectusus.core.internal.yellowcount.IYellowCountResult;
-import org.projectusus.core.internal.yellowcount.ResultFormatter;
 import org.projectusus.core.internal.yellowcount.YellowCount;
 
 /**
@@ -61,13 +62,12 @@ public class YellowCountView extends ViewPart {
     // ////////////////
 
     private void display( final IYellowCountResult countResult ) {
-        final String sCount = String.valueOf( countResult.getYellowCount() );
-        final String displayString = new ResultFormatter().dump( countResult );
+        final String displayString = countResult.toString();
         Display.getDefault().asyncExec( new Runnable() {
             public void run() {
                 if( styledText != null && !styledText.isDisposed() ) {
                     styledText.setText( displayString );
-                    styledText.setStyleRange( createStyleRange( sCount ) );
+                    styledText.setStyleRange( createStyleRange( countResult ) );
                     styledText.setBackground( getBackgroundColor() );
                     styledText.redraw();
                 }
@@ -85,7 +85,11 @@ public class YellowCountView extends ViewPart {
         return colorRegistry.get( rgb.toString() );
     }
 
-    private StyleRange createStyleRange( final String sCount ) {
-        return new StyleRange( (ResultFormatter.FIRST_TEXT.length()), sCount.length(), styledText.getForeground(), styledText.getBackground(), SWT.BOLD );
+    private StyleRange createStyleRange( IYellowCountResult countResult ) {
+        Color foreground = styledText.getForeground();
+        Color background = styledText.getBackground();
+        int position = countResult.getFormattedCountPosition();
+        int length = countResult.getFormattedCountLength();
+        return new StyleRange( position, length, foreground, background, BOLD );
     }
 }

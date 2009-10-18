@@ -12,4 +12,5 @@ Bundle-ClassPath: lib/mockito-all-1.8.0.jar,
  .
 Export-Package: org.projectusus.core.internal.coverage,
  org.projectusus.core.internal.proportions.checkpoints,
- org.projectusus.core.internal.proportions.sqi
+ org.projectusus.core.internal.proportions.sqi,
+ org.projectusus.core.internal.yellowcount
