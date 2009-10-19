@@ -66,7 +66,7 @@ class CodeProportionsComputerJob extends Job {
         NewWorkspaceResults results = NewWorkspaceResults.getInstance();
 
         for( IsisMetrics metric : Arrays.asList( CC, KG, ML ) ) {
-            getModel().add( new CodeProportion( metric, results.getViolationCount( metric ), results.getViolationBasis( metric ) ) );
+            getModel().add( results.getCodeProportion( metric ) );
         }
         // XXX hier ansetzen!
         // ProjectCheckResult cumulatedResult = driver.getCumulatedResult();

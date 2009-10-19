@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.projectusus.core.internal.proportions.CodeProportion;
 
 public class NewWorkspaceResults extends ResultMapWrapper<IProject, ProjectResults> {
 
@@ -21,6 +22,10 @@ public class NewWorkspaceResults extends ResultMapWrapper<IProject, ProjectResul
 
     public void setCurrentProject( IProject project ) {
         this.currentProject = project;
+    }
+
+    public CodeProportion getCodeProportion( IsisMetrics metric ) {
+        return new CodeProportion( metric, this.getViolationCount( metric ), this.getViolationBasis( metric ) );
     }
 
     public ProjectResults getCurrentProjectResults() {
