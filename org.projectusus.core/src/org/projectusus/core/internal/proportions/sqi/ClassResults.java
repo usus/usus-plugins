@@ -5,7 +5,7 @@ import java.util.List;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-public class ClassResults extends ResultMapWrapper<String, MethodResults> {
+public class ClassResults extends Results<String, MethodResults> {
 
     private final String fullClassName;
 
@@ -23,7 +23,7 @@ public class ClassResults extends ResultMapWrapper<String, MethodResults> {
 
     private MethodResults getResults( DetailAST methodAST ) {
         String methodName = getNameOfMethod( findEnclosingMethod( methodAST ) );
-        MethodResults methodResults = getResults( methodName, new MethodResults( methodName ) );
+        MethodResults methodResults = getResults( methodName, new MethodResults( getFullClassName(), methodName ) );
         return methodResults;
     }
 
@@ -47,28 +47,27 @@ public class ClassResults extends ResultMapWrapper<String, MethodResults> {
         return fullClassName;
     }
 
-    public int getViolations( IsisMetrics metric ) {
+    @Override
+    public int getViolationBasis( IsisMetrics metric ) {
         if( metric.isMethodTest() ) {
-            int violations = 0;
-            for( MethodResults methodResult : this.getAllResults() ) {
-                if( methodResult.violates( metric ) ) {
-                    violations++;
-                }
-            }
-            return violations;
+            return super.getViolationBasis( metric );
+        }
+        return 1;
+    }
+
+    @Override
+    public int getViolationCount( IsisMetrics metric ) {
+        if( metric.isMethodTest() ) {
+            return super.getViolationCount( metric );
         }
         return metric.isViolatedBy( this ) ? 1 : 0;
     }
 
-    public void addViolatingTargets( IsisMetrics metric, List<String> violations ) {
+    @Override
+    public void getViolationNames( IsisMetrics metric, List<String> violations ) {
         if( metric.isMethodTest() ) {
-            for( MethodResults methodResult : this.getAllResults() ) {
-                if( methodResult.violates( metric ) ) {
-                    violations.add( this.getFullClassName() + "." + methodResult.getMethodName() ); //$NON-NLS-1$
-                }
-            }
-        }
-        if( metric.isViolatedBy( this ) ) {
+            super.getViolationNames( metric, violations );
+        } else if( metric.isViolatedBy( this ) ) {
             violations.add( this.getFullClassName() );
         }
     }

@@ -1,12 +1,10 @@
 package org.projectusus.core.internal.proportions.sqi;
 
-import java.util.List;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.internal.proportions.CodeProportion;
 
-public class NewWorkspaceResults extends ResultMapWrapper<IProject, ProjectResults> {
+public class NewWorkspaceResults extends Results<IProject, ProjectResults> {
 
     private IProject currentProject;
 
@@ -43,29 +41,6 @@ public class NewWorkspaceResults extends ResultMapWrapper<IProject, ProjectResul
 
     public void dropResults( IFile file ) {
         getCurrentProjectResults().dropResults( file );
-    }
-
-    // FIXME: refactor, join with other classes
-    public int getViolationCount( IsisMetrics metric ) {
-        int violations = 0;
-        for( ProjectResults projectResult : getAllResults() ) {
-            violations = violations + projectResult.getViolationCount( metric );
-        }
-        return violations;
-    }
-
-    public int getViolationBasis( IsisMetrics metric ) {
-        int basis = 0;
-        for( ProjectResults projectResult : getAllResults() ) {
-            basis = basis + projectResult.getViolationBasis( metric );
-        }
-        return basis;
-    }
-
-    public void getViolationNames( IsisMetrics metric, List<String> violations ) {
-        for( ProjectResults projectResult : getAllResults() ) {
-            projectResult.getViolationNames( metric, violations );
-        }
     }
 
 }

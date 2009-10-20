@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class ResultMapWrapper<S, T> {
+public class ResultMapWrapper<S, T extends IResults> {
 
     private final Map<S, T> resultMap = new HashMap<S, T>();
 

@@ -1,12 +1,16 @@
 package org.projectusus.core.internal.proportions.sqi;
 
-public class MethodResults {
+import java.util.List;
 
+public class MethodResults implements IResults {
+
+    private final String fullClassName;
     private final String methodName;
     private int ccResult;
     private int mlResult;
 
-    public MethodResults( String methodName ) {
+    public MethodResults( String fullClassName, String methodName ) {
+        this.fullClassName = fullClassName;
         this.methodName = methodName;
     }
 
@@ -28,11 +32,26 @@ public class MethodResults {
     }
 
     public String getMethodName() {
-        return methodName;
+        return fullClassName + "." + methodName;
     }
 
     public boolean violates( IsisMetrics metric ) {
         return metric.isViolatedBy( this );
+    }
+
+    public int getViolationBasis( IsisMetrics metric ) {
+        return 1;
+    }
+
+    public int getViolationCount( IsisMetrics metric ) {
+        return metric.isViolatedBy( this ) ? 1 : 0;
+    }
+
+    public void getViolationNames( IsisMetrics metric, List<String> violations ) {
+        if( metric.isViolatedBy( this ) ) {
+            violations.add( this.getMethodName() );
+        }
+
     }
 
 }

@@ -4,15 +4,13 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.sqi;
 
-import java.util.List;
-
 import org.eclipse.core.resources.IFile;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-public class FileResults extends ResultMapWrapper<String, ClassResults> {
+public class FileResults extends Results<String, ClassResults> {
 
     private final IFile fileOfResults;
 
@@ -35,35 +33,6 @@ public class FileResults extends ResultMapWrapper<String, ClassResults> {
 
     public int getNumberOfClasses() {
         return getResultCount();
-    }
-
-    public int getNumberOfMethods() {
-        int methods = 0;
-        for( ClassResults classResult : getAllResults() ) {
-            methods += classResult.getResultCount();
-        }
-        return methods;
-    }
-
-    public int getViolationBasis( IsisMetrics metric ) {
-        if( metric.isMethodTest() ) {
-            return getNumberOfMethods();
-        }
-        return getNumberOfClasses();
-    }
-
-    public int getViolationCount( IsisMetrics metric ) {
-        int violations = 0;
-        for( ClassResults classResult : getAllResults() ) {
-            violations = violations + classResult.getViolations( metric );
-        }
-        return violations;
-    }
-
-    public void getViolationNames( IsisMetrics metric, List<String> violations ) {
-        for( ClassResults classResult : getAllResults() ) {
-            classResult.addViolatingTargets( metric, violations );
-        }
     }
 
     private ClassResults getResults( DetailAST methodAST ) {
