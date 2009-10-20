@@ -33,7 +33,7 @@ class WorkspaceCodeProportionComputationTarget implements ICodeProportionComputa
         return new FindUsusProjects( wsRoot.getProjects() ).compute();
     }
 
-    public Collection<IFile> getDeletedFiles( IProject project ) throws CoreException {
+    public Collection<IFile> getRemovedFiles( IProject project ) throws CoreException {
         return emptyList();
     }
 
@@ -65,5 +65,9 @@ class WorkspaceCodeProportionComputationTarget implements ICodeProportionComputa
 
     private void addFile( IFile file, Map<String, IFile> files ) {
         files.put( file.getLocation().toString(), file );
+    }
+
+    public Collection<IProject> getRemovedProjects() {
+        return new ArrayList<IProject>();
     }
 }

@@ -35,7 +35,7 @@ class DeltaCodeProportionComputationTarget implements ICodeProportionComputation
         return unmodifiableCollection( changes.keySet() );
     }
 
-    public Collection<IFile> getDeletedFiles( IProject project ) throws CoreException {
+    public Collection<IFile> getRemovedFiles( IProject project ) throws CoreException {
         return null;
     }
 
@@ -76,5 +76,10 @@ class DeltaCodeProportionComputationTarget implements ICodeProportionComputation
         private boolean isInteresting( int kind ) {
             return (kind & ADDED) != 0 || (kind & CHANGED) != 0;
         }
+    }
+
+    public Collection<IProject> getRemovedProjects() {
+        // TODO lf ergänzen
+        return new ArrayList<IProject>();
     }
 }
