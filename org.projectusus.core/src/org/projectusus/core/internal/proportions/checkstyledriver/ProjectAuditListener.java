@@ -6,25 +6,32 @@ package org.projectusus.core.internal.proportions.checkstyledriver;
 
 import static org.eclipse.core.runtime.IStatus.ERROR;
 import static org.projectusus.core.internal.UsusCorePlugin.getPluginId;
-import static org.projectusus.core.internal.proportions.checkstyledriver.IsisMetricsCheckResult.fromString;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
+import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
 
 class ProjectAuditListener implements AuditListener {
-    private final ProjectCheckResult projectResult;
     private final Set<IStatus> errors = new HashSet<IStatus>();
 
-    ProjectAuditListener( ProjectCheckResult projectResult ) {
-        this.projectResult = projectResult;
+    private final IProject currentProject;
+    private final Collection<IFile> currentFiles;
+
+    ProjectAuditListener( IProject project, Collection<IFile> files ) {
+        super();
+        this.currentProject = project;
+        this.currentFiles = files;
     }
 
     boolean hasErrors() {
@@ -38,24 +45,30 @@ class ProjectAuditListener implements AuditListener {
     // interface methods
     // //////////////////
 
-    public void addError( AuditEvent event ) {
-        projectResult.update( fromString( event.getMessage() ) );
+    public void addError( AuditEvent arg0 ) {
+        // unused
     }
 
     public void fileStarted( AuditEvent event ) {
-        // unused
+        String filename = event.getFileName();
+        for( IFile file : currentFiles ) {
+            // TODO so nicht! Aber wie dann??
+            if( file.getFullPath().toString().equals( filename ) ) {
+                NewWorkspaceResults.getInstance().setCurrentFile( file );
+            }
+        }
     }
 
     public void fileFinished( AuditEvent event ) {
-        // unused
+        NewWorkspaceResults.getInstance().setCurrentFile( null );
     }
 
     public void auditStarted( AuditEvent event ) {
-        // unused
+        NewWorkspaceResults.getInstance().setCurrentProject( currentProject );
     }
 
     public void auditFinished( AuditEvent event ) {
-        // unused
+        NewWorkspaceResults.getInstance().setCurrentProject( null );
     }
 
     public void addException( AuditEvent event, Throwable thr ) {

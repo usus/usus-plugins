@@ -9,17 +9,17 @@ import static org.projectusus.core.internal.UsusCorePlugin.getPluginId;
 import net.sf.eclipsecs.core.config.CheckConfigurationFactory;
 import net.sf.eclipsecs.core.config.ICheckConfiguration;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.projectusus.core.internal.proportions.ICodeProportionComputationTarget;
+import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
 
 public class CheckstyleDriver {
 
     private static final String ISIS_CHECK_CONFIG = "ISIS"; //$NON-NLS-1$
-
-    private final CheckResultsCollector collector = new CheckResultsCollector();
 
     private final ICodeProportionComputationTarget target;
 
@@ -28,18 +28,20 @@ public class CheckstyleDriver {
     }
 
     public void run( IProgressMonitor monitor ) throws CoreException {
+        for( IProject removedProject : target.getRemovedProjects() ) {
+            NewWorkspaceResults.getInstance().dropResults( removedProject );
+        }
         for( IProject project : target.getProjects() ) {
+            for( IFile removedFile : target.getRemovedFiles( project ) ) {
+                NewWorkspaceResults.getInstance().dropResults( removedFile );
+            }
             runCheckConfig( project, monitor );
         }
     }
 
-    public ProjectCheckResult getCumulatedResult() {
-        return collector.cumulate();
-    }
-
     private final void runCheckConfig( IProject project, IProgressMonitor monitor ) throws CoreException {
         try {
-            ProjectAuditor auditor = new ProjectAuditor( findISISConfig(), collector );
+            ProjectAuditor auditor = new ProjectAuditor( findISISConfig() );
             auditor.runAudit( project, target.getFiles( project ), monitor );
         } catch( CoreException cex ) {
             throw cex;

@@ -17,41 +17,37 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.JavaCore;
-import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
 
 import com.puppycrawl.tools.checkstyle.Checker;
 
 class ProjectAuditor {
 
-    private final CheckResultsCollector collector;
     private final ICheckConfiguration checkConfiguration;
 
-    ProjectAuditor( ICheckConfiguration checkConfiguration, CheckResultsCollector collector ) {
+    ProjectAuditor( ICheckConfiguration checkConfiguration ) {
         this.checkConfiguration = checkConfiguration;
-        this.collector = collector;
     }
 
     void runAudit( IProject project, Collection<IFile> files, IProgressMonitor monitor ) throws Exception {
         if( !files.isEmpty() ) {
-            ProjectAuditListener listener = new ProjectAuditListener( collector.getProjectResult( project ) );
+            ProjectAuditListener listener = new ProjectAuditListener( project, files );
             Checker checker = null;
-            NewWorkspaceResults.getInstance().setCurrentProject( project );
             try {
                 checker = CheckerFactory.createChecker( checkConfiguration, project );
                 checker.addListener( listener );
                 reconfigureSharedClassLoader( project );
-                // Experiment zum Festhalten des aktuellen Files NR
-                for( IFile currentFile : files ) {
-                    NewWorkspaceResults.getInstance().setCurrentFile( currentFile );
-                    List<File> tempFiles = new ArrayList<File>();
-                    tempFiles.add( currentFile.getLocation().toFile() );
-                    checker.process( tempFiles );
-                    NewWorkspaceResults.getInstance().setCurrentFile( null );
-
-                }
+                // // Experiment zum Festhalten des aktuellen Files NR
+                // for( IFile currentFile : files ) {
+                // NewWorkspaceResults.getInstance().setCurrentFile( currentFile );
+                // List<File> tempFiles = new ArrayList<File>();
+                // tempFiles.add( currentFile.getLocation().toFile() );
+                // checker.process( tempFiles );
+                // // done in ProjectAuditListener: NewWorkspaceResults.getInstance().setCurrentFile( null );
+                //
+                // }
 
                 // vorher war es so und soll wieder so werden:
-                // checker.process( convertToLocations( files ) );
+                checker.process( convertToLocations( files ) );
 
                 if( listener.hasErrors() ) {
                     throw new CoreException( listener.getErrors() );
@@ -60,7 +56,6 @@ class ProjectAuditor {
                 if( checker != null ) {
                     checker.removeListener( listener );
                 }
-                NewWorkspaceResults.getInstance().setCurrentProject( null );
             }
         }
     }

@@ -26,6 +26,7 @@ import org.projectusus.core.internal.yellowcount.IYellowCountResult;
 import org.projectusus.core.internal.yellowcount.YellowCount;
 
 class CodeProportionsComputerJob extends Job {
+    // TODO lf Benachrichtigung auch beim Lšschen, Entfernen etc. eines Projekts
 
     private final ICodeProportionComputationTarget target;
 
@@ -68,13 +69,6 @@ class CodeProportionsComputerJob extends Job {
         for( IsisMetrics metric : Arrays.asList( CC, KG, ML ) ) {
             getModel().add( results.getCodeProportion( metric ) );
         }
-        // XXX hier ansetzen!
-        // ProjectCheckResult cumulatedResult = driver.getCumulatedResult();
-        // for( IsisMetrics metric : asList( CC, KG, ML ) ) {
-        // IIsisMetricsCheckResult result = cumulatedResult.get( metric );
-        // String label = result.getNumberOfViolations() + " violations in " + result.getNumberOfCases() + " files.";
-        // getModel().add( new CodeProportion( metric, label, result.getNumberOfViolations() ) );
-        // }
     }
 
     private void computeCW( IProgressMonitor monitor ) {
