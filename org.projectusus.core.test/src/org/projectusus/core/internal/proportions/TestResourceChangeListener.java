@@ -1,0 +1,34 @@
+// Copyright (c) 2009 by the projectusus.org contributors
+// This software is released under the terms and conditions
+// of the Eclipse Public License (EPL) 1.0.
+// See http://www.eclipse.org/legal/epl-v10.html for details.
+package org.projectusus.core.internal.proportions;
+
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.runtime.CoreException;
+
+class TestResourceChangeListener implements IResourceChangeListener {
+    private DeltaCodeProportionComputationTarget target;
+    private Exception exception;
+
+    public void resourceChanged( IResourceChangeEvent event ) {
+        IResourceDelta delta = event.getDelta();
+        if( delta != null ) {
+            try {
+                target = new DeltaCodeProportionComputationTarget( delta );
+            } catch( CoreException cex ) {
+                exception = cex;
+            }
+        }
+    }
+    
+    ICodeProportionComputationTarget getTarget() {
+        return target;
+    }
+    
+    Exception getException() {
+        return exception;
+    }
+}

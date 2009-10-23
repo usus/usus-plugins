@@ -12,9 +12,6 @@ import static org.junit.Assert.assertEquals;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResourceChangeEvent;
-import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -24,13 +21,7 @@ import org.junit.After;
 import org.junit.Test;
 
 
-public class DeltaCodeProportionComputationTargetPDETest extends PDETestUsingWSProject {
-
-    // TODO lf test cases:
-    //
-    // project created, opened, closed, deleted
-    // project added and removed from usus projects
-
+public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
 
     private TestResourceChangeListener listener = new TestResourceChangeListener();
     
@@ -138,34 +129,5 @@ public class DeltaCodeProportionComputationTargetPDETest extends PDETestUsingWSP
         assertEquals( 3, target.getFiles( affectedProject ).size() );
         
         assertNoException( listener );
-    }
-    
-    private void assertNoException( TestResourceChangeListener li ) throws Exception {
-        // otherwise it would be lost somewhere in the log, we want it to make the test red
-        if( li.getException() != null ) {
-            throw li.getException();
-        }
-    }
-
-    private final class TestResourceChangeListener implements IResourceChangeListener {
-        private DeltaCodeProportionComputationTarget target;
-        private Exception exception;
-
-        public void resourceChanged( IResourceChangeEvent event ) {
-            IResourceDelta delta = event.getDelta();
-            try {
-                target = new DeltaCodeProportionComputationTarget( delta );
-            } catch( CoreException cex ) {
-                exception = cex;
-            }
-        }
-        
-        ICodeProportionComputationTarget getTarget() {
-            return target;
-        }
-        
-        Exception getException() {
-            return exception;
-        }
     }
 }

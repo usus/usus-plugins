@@ -26,7 +26,6 @@ import org.projectusus.core.internal.yellowcount.IYellowCountResult;
 import org.projectusus.core.internal.yellowcount.YellowCount;
 
 class CodeProportionsComputerJob extends Job {
-    // TODO lf Benachrichtigung auch beim Lšschen, Entfernen etc. eines Projekts
 
     private final ICodeProportionComputationTarget target;
 

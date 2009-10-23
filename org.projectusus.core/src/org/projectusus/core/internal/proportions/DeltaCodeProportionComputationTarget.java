@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
+import static java.util.Collections.unmodifiableList;
 import static org.eclipse.core.resources.IResourceDelta.ADDED;
 import static org.eclipse.core.resources.IResourceDelta.CHANGED;
 import static org.eclipse.core.resources.IResourceDelta.REMOVED;
@@ -27,6 +28,7 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
 
     private final Map<IProject, List<IFile>> changes = new HashMap<IProject, List<IFile>>();
     private final Map<IProject, List<IFile>> deletions = new HashMap<IProject, List<IFile>>();
+    public List<IProject> removedProjects = new ArrayList<IProject>();
 
     public DeltaCodeProportionComputationTarget( IResourceDelta delta ) throws CoreException {
         compute( delta );
@@ -48,8 +50,7 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
     }
 
     public Collection<IProject> getRemovedProjects() {
-        // TODO lf ergänzen
-        return new ArrayList<IProject>();
+        return unmodifiableList( removedProjects );
     }
 
     // internal
@@ -70,16 +71,32 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
     private final class ChangedCollector implements IResourceDeltaVisitor {
 
         public boolean visit( IResourceDelta delta ) throws CoreException {
+            boolean result = true;
             IResource resource = delta.getResource();
-            if( resource instanceof IFile ) {
-                if( isInteresting( delta.getKind() ) ) {
-                    addToMap( (IFile)resource, changes );
-                } else if( isDeleted( delta.getKind() ) ) {
-                    addToMap( (IFile)resource, deletions );
-                }
-
+            if( handleRemovedProject( delta ) ) {
+                removedProjects.add( (IProject)resource );
+                result = false; // do not visit children
+            } else if( resource instanceof IFile ) {
+                handleFileDelta( delta, (IFile)resource );
             }
-            return true; // always visit the children, until the bitter end on the ground
+            return result;
+        }
+
+        private boolean handleRemovedProject( IResourceDelta delta ) {
+            IResource resource = delta.getResource();
+            return resource instanceof IProject && (wasClosed( delta, (IProject)resource ) || isDeleted( delta.getKind() ));
+        }
+
+        private boolean wasClosed( IResourceDelta delta, IProject project ) {
+            return isOpenCloseStatusChanged( delta ) && !project.isOpen();
+        }
+
+        private void handleFileDelta( IResourceDelta delta, IFile file ) {
+            if( isInteresting( delta.getKind() ) ) {
+                addToMap( file, changes );
+            } else if( isDeleted( delta.getKind() ) ) {
+                addToMap( file, deletions );
+            }
         }
 
         private void addToMap( IFile file, Map<IProject, List<IFile>> collector ) {
@@ -88,6 +105,10 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
                 collector.put( project, new ArrayList<IFile>() );
             }
             collector.get( project ).add( file );
+        }
+
+        private boolean isOpenCloseStatusChanged( IResourceDelta delta ) {
+            return (delta.getFlags() & IResourceDelta.OPEN) != 0;
         }
 
         private boolean isDeleted( int kind ) {

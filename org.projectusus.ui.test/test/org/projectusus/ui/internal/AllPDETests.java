@@ -8,10 +8,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.projectusus.core.internal.proportions.CodeProportionsPDETest;
-import org.projectusus.core.internal.proportions.DeltaCodeProportionComputationTargetPDETest;
+import org.projectusus.core.internal.proportions.FileChangeNotificationsPDETest;
+import org.projectusus.core.internal.proportions.ProjectChangeNotificationsPDETest;
 
 @RunWith(Suite.class)
-@SuiteClasses({CodeProportionsPDETest.class, DeltaCodeProportionComputationTargetPDETest.class})
+@SuiteClasses({CodeProportionsPDETest.class, FileChangeNotificationsPDETest.class, ProjectChangeNotificationsPDETest.class})
 public class AllPDETests {
 
 }

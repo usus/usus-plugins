@@ -84,4 +84,11 @@ public class PDETestUsingWSProject {
     private InputStream createInputStream( String content ) {
         return new ByteArrayInputStream( content.getBytes() );
     }
+
+    protected void assertNoException( TestResourceChangeListener li ) throws Exception {
+        // otherwise it would be lost somewhere in the log, we want it to make the test red
+        if( li.getException() != null ) {
+            throw li.getException();
+        }
+    }
 }
