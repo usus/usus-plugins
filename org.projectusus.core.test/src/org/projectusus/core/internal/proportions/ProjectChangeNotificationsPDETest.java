@@ -4,8 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
-
-
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.junit.Assert.assertEquals;
 
@@ -20,10 +18,6 @@ import org.junit.Test;
 
 
 public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
-
-    // TODO lf test cases:
-    //
-    // project added and removed from usus projects
 
     private TestResourceChangeListener listener = new TestResourceChangeListener();
     

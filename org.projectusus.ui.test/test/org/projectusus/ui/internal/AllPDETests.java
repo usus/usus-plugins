@@ -10,9 +10,10 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.projectusus.core.internal.proportions.CodeProportionsPDETest;
 import org.projectusus.core.internal.proportions.FileChangeNotificationsPDETest;
 import org.projectusus.core.internal.proportions.ProjectChangeNotificationsPDETest;
+import org.projectusus.core.internal.proportions.UsusProjectNotificationsPDETest;
 
 @RunWith(Suite.class)
-@SuiteClasses({CodeProportionsPDETest.class, FileChangeNotificationsPDETest.class, ProjectChangeNotificationsPDETest.class})
+@SuiteClasses({CodeProportionsPDETest.class, FileChangeNotificationsPDETest.class, ProjectChangeNotificationsPDETest.class, UsusProjectNotificationsPDETest.class})
 public class AllPDETests {
 
 }
