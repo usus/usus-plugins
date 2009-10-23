@@ -57,7 +57,7 @@ public class Setting<Code, Value> {
     public String toString() {
         StringBuffer buffer = new StringBuffer();
         buffer.append( getCode() );
-        buffer.append( "=" );
+        buffer.append( "=" ); //$NON-NLS-1$
         buffer.append( value );
         return buffer.toString();
     }

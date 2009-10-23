@@ -4,6 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
+import static org.eclipse.osgi.util.NLS.bind;
+import static org.projectusus.core.internal.util.CoreTexts.ususModelStatus_info;
+import static org.projectusus.core.internal.util.CoreTexts.ususModelStatus_ok;
+import static org.projectusus.core.internal.util.CoreTexts.ususModelStatus_stale;
+
 import java.util.Date;
 
 class UsusModelStatus implements IUsusModelStatus {
@@ -26,7 +31,7 @@ class UsusModelStatus implements IUsusModelStatus {
 
     @Override
     public String toString() {
-        return (isStale() ? "Stale (re-run test suite)" : "OK") + " - " + dump();
+        return (isStale() ? ususModelStatus_stale : ususModelStatus_ok) + " - " + renderInfo(); //$NON-NLS-1$
     }
 
     // interface methods
@@ -47,8 +52,8 @@ class UsusModelStatus implements IUsusModelStatus {
     // internal
     // /////////
 
-    private String dump() {
-        return "Last run " + getLastComputerRun() + " / Last test run " + getLastTestRun();
+    private String renderInfo() {
+        return bind( ususModelStatus_info, getLastComputerRun(), getLastTestRun() );
     }
 
     private boolean isStale() {

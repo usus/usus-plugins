@@ -57,7 +57,7 @@ public class CompilerWarningSettings {
         StringBuffer buffer = new StringBuffer();
         for( CompilerWarningSetting setting : settings ) {
             buffer.append( setting );
-            buffer.append( "\n" );
+            buffer.append( "\n" ); //$NON-NLS-1$
         }
         return buffer.toString();
     }

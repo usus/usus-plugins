@@ -32,7 +32,7 @@ public class MethodResults implements IResults {
     }
 
     public String getMethodName() {
-        return fullClassName + "." + methodName;
+        return fullClassName + "." + methodName; //$NON-NLS-1$
     }
 
     public boolean violates( IsisMetrics metric ) {

@@ -19,6 +19,10 @@ public final class CoreTexts extends NLS {
     public static String isisMetrics_pc;
     public static String isisMetrics_ta;
 
+    public static String ususModelStatus_info;
+    public static String ususModelStatus_ok;
+    public static String ususModelStatus_stale;
+
     public static String wiseCrack_cool;
     public static String wiseCrack_shame;
 

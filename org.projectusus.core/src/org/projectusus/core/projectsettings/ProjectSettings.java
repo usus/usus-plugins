@@ -25,9 +25,9 @@ public class ProjectSettings {
     @Override
     public String toString() {
         StringBuffer result = new StringBuffer();
-        result.append( "name=" );
+        result.append( "name=" ); //$NON-NLS-1$
         result.append( getName() );
-        result.append( "\nCompilerwarningSettings:\n" );
+        result.append( "\nCompilerwarningSettings:\n" ); //$NON-NLS-1$
         result.append( getCompilerwarningSettings() );
         return result.toString();
     }
