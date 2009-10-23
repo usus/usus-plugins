@@ -39,8 +39,8 @@ public class CoverageTest {
 
 	@Test
 	public void getCoverageInPercentDisplayString() throws Exception {
-		assertEquals("43,0 %", new TestCoverage(43, 100).getCoverageInPercentDisplayString());
-		assertEquals("33,3 %", new TestCoverage(3, 9).getCoverageInPercentDisplayString());
+		assertEquals("43.0 %", new TestCoverage(43, 100).getCoverageInPercentDisplayString());
+		assertEquals("33.3 %", new TestCoverage(3, 9).getCoverageInPercentDisplayString());
 	}
 
 	@Test

@@ -4,6 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.coverage;
 
+import static java.text.NumberFormat.getNumberInstance;
+import static java.util.Locale.ENGLISH;
+import static org.eclipse.osgi.util.NLS.bind;
+import static org.projectusus.core.internal.util.CoreTexts.testCoverage;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
@@ -46,7 +51,7 @@ public class TestCoverage {
 
     public String getCoverageInPercentDisplayString() {
         BigDecimal coverageInPercent = getCoverageInPercent();
-        NumberFormat numberInstance = NumberFormat.getNumberInstance();
+        NumberFormat numberInstance = getNumberInstance( ENGLISH );
         numberInstance.setMaximumIntegerDigits( 3 );
         numberInstance.setMaximumFractionDigits( 2 );
         numberInstance.setMinimumFractionDigits( 1 );
@@ -72,7 +77,7 @@ public class TestCoverage {
 
     @Override
     public String toString() {
-        return String.format( "Coverage (coveredCount=%d totalCount=%d)", new Integer( getCoveredCount() ), new Integer( getTotalCount() ) );
+        return bind( testCoverage, new Integer( getCoveredCount() ), new Integer( getTotalCount() ) );
     }
 
     public static TestCoverage from( ICounter counter ) {
