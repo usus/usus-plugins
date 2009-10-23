@@ -49,14 +49,18 @@ class UsusModelStatus implements IUsusModelStatus {
         return lastComputationRunSuccessful;
     }
 
+    public boolean isStale() {
+        boolean result = true;
+        if( lastTestRun != null ) {
+            result = lastComputationRunSuccessful && lastTestRun.before( lastComputerRun );
+        }
+        return result;
+    }
+
     // internal
     // /////////
 
     private String renderInfo() {
         return bind( ususModelStatus_info, getLastComputerRun(), getLastTestRun() );
-    }
-
-    private boolean isStale() {
-        return lastTestRun != null && lastComputationRunSuccessful && lastTestRun.before( lastComputerRun );
     }
 }

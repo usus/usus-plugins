@@ -4,23 +4,28 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions;
 
+import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
+
 import java.util.List;
 
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.part.ViewPart;
-import org.projectusus.core.internal.proportions.CodeProportion;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.IUsusModelStatus;
 import org.projectusus.core.internal.proportions.UsusModel;
+import org.projectusus.core.internal.proportions.model.IUsusElement;
+import org.projectusus.ui.internal.util.ISharedUsusImages;
 
 public class CockpitView extends ViewPart {
 
@@ -32,6 +37,7 @@ public class CockpitView extends ViewPart {
         createViewer( parent );
         initListener();
         getViewSite().setSelectionProvider( treeViewer );
+        setMessage( UsusModel.getInstance().getLastStatus() );
     }
 
     @Override
@@ -49,15 +55,29 @@ public class CockpitView extends ViewPart {
 
     private void initListener() {
         listener = new IUsusModelListener() {
-            public void ususModelChanged( IUsusModelStatus lastStatus, List<CodeProportion> entries ) {
+            public void ususModelChanged( final IUsusModelStatus lastStatus, List<IUsusElement> elements ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         refresh();
+                        setMessage( lastStatus );
                     }
                 } );
             }
         };
         UsusModel.getInstance().addUsusModelListener( listener );
+    }
+
+    private void setMessage( IUsusModelStatus status ) {
+        Image image = status.isStale() ? getWarningImage() : null;
+        getStatusLine().setMessage( image, status.toString() );
+    }
+
+    private Image getWarningImage() {
+        return getSharedImages().getImage( ISharedUsusImages.OBJ_WARNINGS );
+    }
+
+    private IStatusLineManager getStatusLine() {
+        return getViewSite().getActionBars().getStatusLineManager();
     }
 
     private void refresh() {

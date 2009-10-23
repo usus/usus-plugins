@@ -17,5 +17,7 @@ public interface ISharedUsusImages {
     String OBJ_TEST_COVERAGE = ID + ".OBJ_TEST_COVERAGE"; //$NON-NLS-1$
     String OBJ_WARNINGS = ID + ".OBJ_WARNINGS"; //$NON-NLS-1$
 
+    String VIEW_WARNING = ID + ".VIEW_WARNING"; //$NON-NLS-1$
+
     Image getImage( String key );
 }

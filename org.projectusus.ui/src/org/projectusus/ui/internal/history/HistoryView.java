@@ -11,12 +11,12 @@ import java.util.List;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
-import org.projectusus.core.internal.proportions.CodeProportion;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.IUsusModelStatus;
 import org.projectusus.core.internal.proportions.UsusModel;
 import org.projectusus.core.internal.proportions.checkpoints.ICheckpoint;
+import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 import org.swtchart.Chart;
 import org.swtchart.ILineSeries;
@@ -32,7 +32,7 @@ public class HistoryView extends ViewPart {
         chart = new CheckpointsHistoryChart( parent );
         refresh();
         getModel().addUsusModelListener( new IUsusModelListener() {
-            public void ususModelChanged( IUsusModelStatus lastStatus, List<CodeProportion> entries ) {
+            public void ususModelChanged( IUsusModelStatus lastStatus, List<IUsusElement> entries ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         refresh();

@@ -13,4 +13,6 @@ public interface IUsusModelStatus {
     Date getLastTestRun();
 
     boolean isLastComputationRunSuccessful();
+
+    boolean isStale();
 }

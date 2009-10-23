@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 
@@ -124,10 +125,8 @@ public class UsusModel implements IUsusModel {
     private void notifyListeners() {
         IUsusModelStatus lastStatus = getLastStatus();
         IUsusElement[] elements = getElements();
-        for( IUsusElement element : elements ) {
-            for( IUsusModelListener listener : listeners ) {
-                listener.ususModelChanged( lastStatus, element.getEntries() );
-            }
+        for( IUsusModelListener listener : listeners ) {
+            listener.ususModelChanged( lastStatus, asList( elements ) );
         }
     }
 

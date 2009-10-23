@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.internal.proportions.model.IUsusElement;
 
 public class CodeProportionsPDETest {
 
@@ -43,7 +44,7 @@ public class CodeProportionsPDETest {
     private final class DummyCodeProportionsListener implements IUsusModelListener {
         private int callCount;
 
-        public void ususModelChanged( IUsusModelStatus lastStatus, List<CodeProportion> entries ) {
+        public void ususModelChanged( IUsusModelStatus lastStatus, List<IUsusElement> elements ) {
           callCount++;
         }
         

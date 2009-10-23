@@ -31,6 +31,7 @@ public class UsusUIImages implements ISharedUsusImages {
     }
 
     private final static String OBJECT = "obj16/"; // basic colors - size 16x16 //$NON-NLS-1$
+    private final static String VIEW = "eview16/"; // basic colors - size 16x16 //$NON-NLS-1$
 
     private UsusUIImages() {
         // no instantiation
@@ -49,6 +50,7 @@ public class UsusUIImages implements ISharedUsusImages {
         declare( OBJ_INFO, OBJECT + "info.gif" ); //$NON-NLS-1$
         declare( OBJ_TEST_COVERAGE, OBJECT + "testcoverage.gif" ); //$NON-NLS-1$
         declare( OBJ_WARNINGS, OBJECT + "warnings.gif" ); //$NON-NLS-1$
+        declare( VIEW_WARNING, VIEW + "warning.gif" ); //$NON-NLS-1$
     }
 
     private void declare( final String key, final String path ) {

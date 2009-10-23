@@ -21,7 +21,6 @@ class CockpitCP implements ITreeContentProvider {
             for( IUsusElement element : model.getElements() ) {
                 result.add( element );
             }
-            result.add( model.getLastStatus() );
         }
         return result.toArray();
     }

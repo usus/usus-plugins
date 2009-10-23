@@ -6,6 +6,8 @@ package org.projectusus.core.internal.proportions;
 
 import java.util.List;
 
+import org.projectusus.core.internal.proportions.model.IUsusElement;
+
 public interface IUsusModelListener {
-    void ususModelChanged( IUsusModelStatus lastStatus, List<CodeProportion> entries );
+    void ususModelChanged( IUsusModelStatus lastStatus, List<IUsusElement> elements );
 }

@@ -80,6 +80,10 @@ public class CheckpointsTest {
         public boolean isLastComputationRunSuccessful() {
             return success;
         }
+        
+        public boolean isStale() {
+            return false;
+        }
 
     }
 

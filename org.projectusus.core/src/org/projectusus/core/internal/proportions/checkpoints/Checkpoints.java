@@ -8,6 +8,7 @@ import org.projectusus.core.internal.proportions.CodeProportion;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.IUsusModelStatus;
+import org.projectusus.core.internal.proportions.model.IUsusElement;
 
 public class Checkpoints {
 
@@ -25,8 +26,8 @@ public class Checkpoints {
 
     public void connect( IUsusModel codeProportions ) {
         codeProportions.addUsusModelListener( new IUsusModelListener() {
-            public void ususModelChanged( IUsusModelStatus lastStatus, List<CodeProportion> entries ) {
-                createCheckpoint( lastStatus, entries );
+            public void ususModelChanged( IUsusModelStatus lastStatus, List<IUsusElement> elements ) {
+                createCheckpoint( lastStatus, cumulate( elements ) );
             }
         } );
     }
@@ -52,6 +53,14 @@ public class Checkpoints {
 
     private boolean lastUpdateWasTestRun( IUsusModelStatus status ) {
         return status.isLastComputationRunSuccessful() && status.getLastTestRun() != null;
+    }
+
+    private List<CodeProportion> cumulate( List<IUsusElement> elements ) {
+        List<CodeProportion> result = new ArrayList<CodeProportion>();
+        for( IUsusElement element : elements ) {
+            result.addAll( element.getEntries() );
+        }
+        return result;
     }
 
     private static class Checkpoint implements ICheckpoint {
