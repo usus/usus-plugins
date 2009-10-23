@@ -22,12 +22,12 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
 
-class DeltaCodeProportionComputationTarget implements ICodeProportionComputationTarget {
+public class DeltaCodeProportionComputationTarget implements ICodeProportionComputationTarget {
 
     private final Map<IProject, List<IFile>> changes = new HashMap<IProject, List<IFile>>();
     private final Map<IProject, List<IFile>> deletions = new HashMap<IProject, List<IFile>>();
 
-    DeltaCodeProportionComputationTarget( IResourceDelta delta ) throws CoreException {
+    public DeltaCodeProportionComputationTarget( IResourceDelta delta ) throws CoreException {
         compute( delta );
     }
 

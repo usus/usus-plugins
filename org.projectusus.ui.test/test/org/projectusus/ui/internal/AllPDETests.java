@@ -8,9 +8,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.projectusus.core.internal.proportions.CodeProportionsPDETest;
+import org.projectusus.core.internal.proportions.DeltaCodeProportionComputationTargetPDETest;
 
 @RunWith(Suite.class)
-@SuiteClasses({CodeProportionsPDETest.class})
+@SuiteClasses({CodeProportionsPDETest.class, DeltaCodeProportionComputationTargetPDETest.class})
 public class AllPDETests {
 
 }
