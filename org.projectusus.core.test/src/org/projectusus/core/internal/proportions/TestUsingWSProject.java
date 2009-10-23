@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -53,16 +54,33 @@ public class TestUsingWSProject {
                 // ignore and retry
             }
         }
-        System.out.print( " OK.\n" ); //$NON-NLS-1$
+        System.out.print( " OK.\n" );
     }
 
+    protected IFile createWSFilePlain( String fileName, String content ) throws CoreException {
+        IFile result = project.getFile( fileName );
+        result.create( createInputStream( content ), true, new NullProgressMonitor() );
+        return result;
+    }
+    
     protected IFile createWSFile( String fileName, String content ) throws CoreException {
-        IFile file = project.getFile( fileName );
-        file.create( createInputStream( content ), true, new NullProgressMonitor() );
+        IFile result = createWSFilePlain( fileName, content );
         waitForAutobuild();
-        return file;
+        return result;
     }
 
+    protected void updateFileContent( IFile file, String newContent ) throws CoreException {
+        file.setContents( createInputStream( newContent ), true, false, new NullProgressMonitor() );
+        waitForAutobuild();
+    }
+    
+    protected IFolder createWSFolder( String name ) throws CoreException {
+        IFolder result = project.getFolder( name );
+        result.create( true, true, new NullProgressMonitor() );
+        waitForAutobuild();
+        return result;
+    }
+    
     private InputStream createInputStream( String content ) {
         return new ByteArrayInputStream( content.getBytes() );
     }

@@ -4,7 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
-import static java.util.Collections.unmodifiableCollection;
 import static org.eclipse.core.resources.IResourceDelta.ADDED;
 import static org.eclipse.core.resources.IResourceDelta.CHANGED;
 import static org.eclipse.core.resources.IResourceDelta.REMOVED;
@@ -12,8 +11,10 @@ import static org.eclipse.core.resources.IResourceDelta.REMOVED;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -32,19 +33,35 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
     }
 
     public Collection<IFile> getFiles( IProject project ) throws CoreException {
-        return unmodifiableCollection( changes.get( project ) );
+        return getFilesFrom( project, changes );
     }
 
     public Collection<IProject> getProjects() {
-        return unmodifiableCollection( changes.keySet() );
+        Set<IProject> result = new HashSet<IProject>();
+        result.addAll( changes.keySet() );
+        result.addAll( deletions.keySet() );
+        return result;
     }
 
     public Collection<IFile> getRemovedFiles( IProject project ) throws CoreException {
-        return null;
+        return getFilesFrom( project, deletions );
+    }
+
+    public Collection<IProject> getRemovedProjects() {
+        // TODO lf ergänzen
+        return new ArrayList<IProject>();
     }
 
     // internal
     // /////////
+
+    private Collection<IFile> getFilesFrom( IProject project, Map<IProject, List<IFile>> collector ) {
+        List<IFile> result = new ArrayList<IFile>();
+        if( collector.containsKey( project ) ) {
+            result.addAll( collector.get( project ) );
+        }
+        return result;
+    }
 
     private void compute( IResourceDelta delta ) throws CoreException {
         delta.accept( new ChangedCollector() );
@@ -80,10 +97,5 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
         private boolean isInteresting( int kind ) {
             return (kind & ADDED) != 0 || (kind & CHANGED) != 0;
         }
-    }
-
-    public Collection<IProject> getRemovedProjects() {
-        // TODO lf ergänzen
-        return new ArrayList<IProject>();
     }
 }
