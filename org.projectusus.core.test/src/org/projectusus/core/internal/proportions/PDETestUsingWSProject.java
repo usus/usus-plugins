@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.After;
 import org.junit.Before;
 
-public class TestUsingWSProject {
+public class PDETestUsingWSProject {
 
     protected IProject project;
     

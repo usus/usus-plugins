@@ -24,7 +24,7 @@ import org.junit.After;
 import org.junit.Test;
 
 
-public class DeltaCodeProportionComputationTargetPDETest extends TestUsingWSProject {
+public class DeltaCodeProportionComputationTargetPDETest extends PDETestUsingWSProject {
 
     // TODO lf test cases:
     //
