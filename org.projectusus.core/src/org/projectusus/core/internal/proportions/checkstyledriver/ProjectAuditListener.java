@@ -45,15 +45,14 @@ class ProjectAuditListener implements AuditListener {
     // interface methods
     // //////////////////
 
-    public void addError( AuditEvent arg0 ) {
+    public void addError( AuditEvent event ) {
         // unused
     }
 
     public void fileStarted( AuditEvent event ) {
         String filename = event.getFileName();
         for( IFile file : currentFiles ) {
-            // TODO so nicht! Aber wie dann??
-            if( file.getFullPath().toString().equals( filename ) ) {
+            if( getFileSystemLocation( file ).equals( filename ) ) {
                 NewWorkspaceResults.getInstance().setCurrentFile( file );
             }
         }
@@ -96,4 +95,7 @@ class ProjectAuditListener implements AuditListener {
         return result;
     }
 
+    private String getFileSystemLocation( IFile file ) {
+        return file.getLocation().toOSString();
+    }
 }
