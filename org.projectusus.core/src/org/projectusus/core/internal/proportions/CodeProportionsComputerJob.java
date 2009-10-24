@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.projectusus.core.internal.proportions.checkstyledriver.CheckstyleDriver;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
@@ -27,11 +28,20 @@ import org.projectusus.core.internal.yellowcount.YellowCount;
 
 class CodeProportionsComputerJob extends Job {
 
+    private static final Object FAMILY = new Object();
+    private static final ISchedulingRule MUTEX = new MutexSchedulingRule();
     private final ICodeProportionComputationTarget target;
 
     CodeProportionsComputerJob( ICodeProportionComputationTarget target ) {
         super( codeProportionsComputerJob_name );
+        setRule( MUTEX );
+        setPriority( Job.DECORATE );
         this.target = target;
+    }
+
+    @Override
+    public boolean belongsTo( Object family ) {
+        return family == FAMILY;
     }
 
     @Override
@@ -77,5 +87,15 @@ class CodeProportionsComputerJob extends Job {
 
     private UsusModel getModel() {
         return (UsusModel)UsusModel.getInstance();
+    }
+
+    private static final class MutexSchedulingRule implements ISchedulingRule {
+        public boolean isConflicting( ISchedulingRule rule ) {
+            return rule == this;
+        }
+
+        public boolean contains( ISchedulingRule rule ) {
+            return rule == this;
+        }
     }
 }
