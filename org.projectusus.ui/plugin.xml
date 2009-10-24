@@ -46,21 +46,13 @@
             id="org.projectusus.ui.internal.proportions.CockpitView.ViewContribution"
             targetID="org.projectusus.ui.internal.proportions.CockpitView">
          <action
-               class="org.projectusus.ui.internal.proportions.RefreshCockpitAction"
+               class="org.projectusus.ui.internal.proportions.actions.RefreshCockpit"
                icon="icons/full/elcl16/refresh.gif"
-               id="org.projectusus.ui.internal.proportions.RefreshCockpitAction"
+               id="org.projectusus.ui.internal.proportions.actions.RefreshCockpit"
                label="%refreshCockpit_label"
                style="push"
                toolbarPath="additions"
                tooltip="%refreshCockpit_tooltip"/>
-         <action
-               class="org.projectusus.ui.internal.proportions.SetRecomputeAction"
-               icon="icons/full/elcl16/refresh.gif"
-               id="org.projectusus.ui.internal.proportions.SetRecomputeAction"
-               label="Recompute on resource change"
-               style="toggle"
-               toolbarPath="additions"
-               tooltip="Switches on or off a mode to recompute code proportion information when files change in the workspace."/>
       </viewContribution>
       <viewContribution
             id="org.projectusus.ui.internal.yellowcount.YellowCountView.ViewContribution"

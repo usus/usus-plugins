@@ -8,8 +8,13 @@ import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
 import java.util.List;
 
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.IOpenListener;
+import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
@@ -18,6 +23,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.part.ViewPart;
@@ -25,6 +31,7 @@ import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.IUsusModelStatus;
 import org.projectusus.core.internal.proportions.UsusModel;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
+import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
 import org.projectusus.ui.internal.util.ISharedUsusImages;
 
 public class CockpitView extends ViewPart {
@@ -35,7 +42,9 @@ public class CockpitView extends ViewPart {
     @Override
     public void createPartControl( Composite parent ) {
         createViewer( parent );
-        initListener();
+        initOpenBehavior();
+        initContextMenuBehavior();
+        initModelListener();
         getViewSite().setSelectionProvider( treeViewer );
         setMessage( UsusModel.getInstance().getLastStatus() );
     }
@@ -53,7 +62,28 @@ public class CockpitView extends ViewPart {
         super.dispose();
     }
 
-    private void initListener() {
+    private void initOpenBehavior() {
+        treeViewer.addOpenListener( new IOpenListener() {
+            public void open( OpenEvent event ) {
+                new OpenHotspots( treeViewer.getSelection() ).run();
+            }
+        } );
+    }
+
+    private void initContextMenuBehavior() {
+        MenuManager menuManager = new MenuManager( "#PopupMenu" ); //$NON-NLS-1$
+        menuManager.addMenuListener( new IMenuListener() {
+            public void menuAboutToShow( IMenuManager manager ) {
+                manager.add( new OpenHotspots( treeViewer.getSelection() ) );
+            }
+        } );
+        menuManager.setRemoveAllWhenShown( true );
+        Menu menu = menuManager.createContextMenu( treeViewer.getTree() );
+        treeViewer.getTree().setMenu( menu );
+        getSite().registerContextMenu( menuManager, treeViewer );
+    }
+
+    private void initModelListener() {
         listener = new IUsusModelListener() {
             public void ususModelChanged( final IUsusModelStatus lastStatus, List<IUsusElement> elements ) {
                 Display.getDefault().asyncExec( new Runnable() {

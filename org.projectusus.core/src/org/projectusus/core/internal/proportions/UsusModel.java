@@ -50,6 +50,7 @@ public class UsusModel implements IUsusModel {
         emmaDriver.addCoverageListener( coverageListener );
         checkpoints = new Checkpoints();
         checkpoints.connect( this );
+        getWorkspace().addResourceChangeListener( resourcelistener );
     }
 
     public static synchronized IUsusModel getInstance() {
@@ -84,17 +85,10 @@ public class UsusModel implements IUsusModel {
         new CodeProportionsComputerJob( wsTarget ).schedule();
     }
 
-    public void setRecomputeOnResourceChange( boolean recomputeOnResourceChange ) {
-        if( recomputeOnResourceChange ) {
-            getWorkspace().addResourceChangeListener( resourcelistener );
-        } else {
-            getWorkspace().removeResourceChangeListener( resourcelistener );
-        }
-    }
-
     public synchronized void dispose() {
         emmaDriver.removeCoverageListener( coverageListener );
         emmaDriver.dispose();
+        getWorkspace().removeResourceChangeListener( resourcelistener );
         _instance = null;
     }
 

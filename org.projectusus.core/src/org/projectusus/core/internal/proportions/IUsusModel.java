@@ -23,5 +23,4 @@ public interface IUsusModel {
 
     void forceRecompute();
 
-    void setRecomputeOnResourceChange( boolean recomputeOnResourceChange );
 }
