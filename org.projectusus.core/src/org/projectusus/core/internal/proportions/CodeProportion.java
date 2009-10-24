@@ -61,7 +61,7 @@ public class CodeProportion {
         return new IHotSpots() {
             @Override
             public String toString() {
-                return "Hotspots for " + CodeProportion.this.toString();
+                return CodeProportion.this.toString();
             }
         };
     }

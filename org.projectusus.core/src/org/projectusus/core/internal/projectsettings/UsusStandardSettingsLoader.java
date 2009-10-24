@@ -4,6 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.projectsettings;
 
+import static org.projectusus.core.internal.util.CoreTexts.projectSettings_defaultName;
+
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -15,7 +17,7 @@ public class UsusStandardSettingsLoader implements SettingsProvider {
     private static final String CONFIG_COMPILER_DEFAULTS_PROPERTIES = "config/compiler_defaults.properties"; //$NON-NLS-1$
 
     public ProjectSettings getUsusProjectSettings() {
-        ProjectSettings result = new ProjectSettings( "Usus Default Settings" );
+        ProjectSettings result = new ProjectSettings( projectSettings_defaultName );
         result.getCompilerwarningSettings().loadValuesFromProperties( getDefaultsFrom( CONFIG_COMPILER_DEFAULTS_PROPERTIES ) );
         return result;
     }

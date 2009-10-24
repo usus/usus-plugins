@@ -4,12 +4,15 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.projectsettings;
 
+import static org.projectusus.core.internal.util.CoreTexts.projectSettings_settingsName;
+
 import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.osgi.util.NLS;
 import org.osgi.service.prefs.BackingStoreException;
 
 public class SettingsAccess {
@@ -42,7 +45,8 @@ public class SettingsAccess {
     }
 
     public ProjectSettings loadSettings( IProject project ) {
-        ProjectSettings settings = new ProjectSettings( "Settings from " + project.getName() );
+        String title = NLS.bind( projectSettings_settingsName, project.getName() );
+        ProjectSettings settings = new ProjectSettings( title );
         try {
             IEclipsePreferences jdtPrefercences = getJdtPreferences( project );
             Properties properties = convertToProperties( jdtPrefercences );
