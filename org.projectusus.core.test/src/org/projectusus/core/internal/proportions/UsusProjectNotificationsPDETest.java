@@ -4,8 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
-
-
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.junit.Assert.assertEquals;
 
@@ -13,17 +11,12 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.After;
 import org.junit.Test;
-import org.projectusus.core.internal.project.IUSUSProject;
-
+import org.projectusus.core.internal.PDETestUsingWSProject;
 
 public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
 
-    // TODO lf test cases:
-    //
-    // project added and removed from usus projects
-
     private TestResourceChangeListener listener = new TestResourceChangeListener();
-    
+
     @After
     public void tearDown() throws CoreException {
         getWorkspace().removeResourceChangeListener( listener );
@@ -31,26 +24,59 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
     }
 
     // TODO lf same game as with project creation, is this enough?
-    
-    // TODO lf also: need we a usus project listener and send a special delta?
-    
+
     @Test
     public void projectAddedToUsus() throws Exception {
+        makeUsusProject( false );
+        createWSFile( "file", "created before adding project to usus" );
         getWorkspace().addResourceChangeListener( listener );
-        makeUsusProject();
-        waitForAutobuild();
-        
+        makeUsusProject( true );
+
+        listener.assertNoException();
+
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 0, target.getRemovedProjects().size() );
         assertEquals( 1, target.getProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
         assertEquals( project, affectedProject );
-        
-        assertNoException( listener );
     }
 
-    private void makeUsusProject() {
-        Object adapter = project.getAdapter( IUSUSProject.class );
-        ((IUSUSProject)adapter).setUsusProject( true );
+    @Test
+    public void projectRemovedFromUsus() throws Exception {
+        getWorkspace().addResourceChangeListener( listener );
+        createWSFile( "file", "created before removing project from usus" );
+        listener.assertNoException();
+        assertEquals( 1, listener.getTarget().getProjects().size() );
+
+        makeUsusProject( false );
+
+        listener.assertNoException();
+
+        ICodeProportionComputationTarget target = listener.getTarget();
+        assertEquals( 0, target.getProjects().size() );
+        assertRemovedProject( target );
+    }
+
+    @Test
+    public void excludeNonUsusProjects() throws Exception {
+        makeUsusProject( false );
+        getWorkspace().addResourceChangeListener( listener );
+        createWSFile( "file", "that is ignored because in non-usus project" );
+        waitForAutobuild();
+
+        listener.assertNoException();
+
+        ICodeProportionComputationTarget target = listener.getTarget();
+        // non-Usus projects always show up in the list of removed projects
+        // otherwise we would have a gap when switching a project from
+        // added-to-Usus to not-added-to-Usus
+        assertEquals( 1, target.getRemovedProjects().size() );
+        assertEquals( 0, target.getProjects().size() );
+    }
+
+    private void assertRemovedProject( ICodeProportionComputationTarget target ) {
+        assertEquals( 1, target.getRemovedProjects().size() );
+        IProject removedProject = target.getRemovedProjects().iterator().next();
+        assertEquals( project, removedProject );
     }
 }

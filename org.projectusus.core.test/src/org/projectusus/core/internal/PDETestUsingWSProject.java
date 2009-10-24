@@ -2,7 +2,7 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.proportions;
+package org.projectusus.core.internal;
 
 import static org.eclipse.core.resources.IncrementalProjectBuilder.CLEAN_BUILD;
 import static org.eclipse.core.resources.ResourcesPlugin.FAMILY_AUTO_BUILD;
@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.After;
 import org.junit.Before;
+import org.projectusus.core.internal.project.IUSUSProject;
 
 public class PDETestUsingWSProject {
 
@@ -31,6 +32,7 @@ public class PDETestUsingWSProject {
         project = getWorkspace().getRoot().getProject( "p" );
         project.create( new NullProgressMonitor() );
         project.open( new NullProgressMonitor() );
+        makeUsusProject( true );
         waitForAutobuild();
     }
 
@@ -81,14 +83,13 @@ public class PDETestUsingWSProject {
         return result;
     }
     
+    protected void makeUsusProject( boolean makeUsusProject ) throws CoreException {
+        Object adapter = project.getAdapter( IUSUSProject.class );
+        ((IUSUSProject)adapter).setUsusProject( makeUsusProject );
+        waitForAutobuild();
+    }
+    
     private InputStream createInputStream( String content ) {
         return new ByteArrayInputStream( content.getBytes() );
-    }
-
-    protected void assertNoException( TestResourceChangeListener li ) throws Exception {
-        // otherwise it would be lost somewhere in the log, we want it to make the test red
-        if( li.getException() != null ) {
-            throw li.getException();
-        }
     }
 }

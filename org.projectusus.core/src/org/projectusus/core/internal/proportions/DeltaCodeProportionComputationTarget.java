@@ -23,6 +23,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
+import org.projectusus.core.internal.project.IsUsusProject;
 
 public class DeltaCodeProportionComputationTarget implements ICodeProportionComputationTarget {
 
@@ -73,18 +74,27 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
         public boolean visit( IResourceDelta delta ) throws CoreException {
             boolean result = true;
             IResource resource = delta.getResource();
-            if( handleRemovedProject( delta ) ) {
+            if( handleRemovedProject( delta ) || isNonUsusProject( resource ) ) {
                 removedProjects.add( (IProject)resource );
-                result = false; // do not visit children
+                result = false; // ignore the entire delta
             } else if( resource instanceof IFile ) {
                 handleFileDelta( delta, (IFile)resource );
             }
             return result;
         }
 
+        private boolean isNonUsusProject( IResource resource ) {
+            return resource instanceof IProject && !(new IsUsusProject( (IProject)resource ).compute());
+        }
+
         private boolean handleRemovedProject( IResourceDelta delta ) {
+            boolean result = false;
             IResource resource = delta.getResource();
-            return resource instanceof IProject && (wasClosed( delta, (IProject)resource ) || isDeleted( delta.getKind() ));
+            if( resource instanceof IProject ) {
+                IProject project = (IProject)resource;
+                result = wasClosed( delta, project ) || isDeleted( delta.getKind() );
+            }
+            return result;
         }
 
         private boolean wasClosed( IResourceDelta delta, IProject project ) {

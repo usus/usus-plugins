@@ -31,22 +31,11 @@ public class FindUsusProjects {
     public List<IProject> compute() {
         List<IProject> result = new ArrayList<IProject>();
         for( IProject project : candidates ) {
-            if( isUsusProject( project ) ) {
+            if( new IsUsusProject( project ).compute() ) {
                 result.add( project );
             }
         }
         return unmodifiableList( result );
-    }
-
-    private boolean isUsusProject( IProject project ) {
-        boolean result = false;
-        if( project.isAccessible() ) {
-            Object adapter = project.getAdapter( IUSUSProject.class );
-            if( adapter instanceof IUSUSProject ) {
-                result = ((IUSUSProject)adapter).isUsusProject();
-            }
-        }
-        return result;
     }
 
     private List<IProject> asProjectList( Object[] elements ) {

@@ -15,6 +15,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.After;
 import org.junit.Test;
+import org.projectusus.core.internal.PDETestUsingWSProject;
+import org.projectusus.core.internal.project.IUSUSProject;
 
 
 public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
@@ -33,13 +35,13 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         IProject otherProject = createAdditionalProjectWithFile();
         waitForAutobuild();
         
+        listener.assertNoException();
+        
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 0, target.getRemovedProjects().size() );
         assertEquals( 1, target.getProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
         assertEquals( otherProject, affectedProject );
-        
-        assertNoException( listener );
     }
 
     
@@ -49,13 +51,13 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         project.close( new NullProgressMonitor() );
         waitForAutobuild();
         
+        listener.assertNoException();
+        
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 0, target.getProjects().size() );
         assertEquals( 1, target.getRemovedProjects().size() );
         IProject removedProject = target.getRemovedProjects().iterator().next();
         assertEquals( project, removedProject );
-        
-        assertNoException( listener );
     }
     
     // TODO lf will this be enough? if the project was removed from consideration,
@@ -69,13 +71,13 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         project.open( new NullProgressMonitor() );
         waitForAutobuild();
         
+        listener.assertNoException();
+        
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 1, target.getProjects().size() );
         assertEquals( 0, target.getRemovedProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
         assertEquals( project, affectedProject );
-        
-        assertNoException( listener );
     }
     
     @Test
@@ -85,21 +87,23 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         project.delete( true, new NullProgressMonitor() );
         waitForAutobuild();
         
+        listener.assertNoException();
+        
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 0, target.getProjects().size() );
         assertEquals( 1, target.getRemovedProjects().size() );
         IProject removedProject = target.getRemovedProjects().iterator().next();
         assertEquals( project, removedProject );
-        
-        assertNoException( listener );
     }
 
     private IProject createAdditionalProjectWithFile() throws CoreException {
-        IProject otherProject = getWorkspace().getRoot().getProject( "anotherProject" );
-        otherProject.create( new NullProgressMonitor() );
-        otherProject.open( new NullProgressMonitor() );
+        IProject result = getWorkspace().getRoot().getProject( "anotherProject" );
+        result.create( new NullProgressMonitor() );
+        result.open( new NullProgressMonitor() );
         InputStream is = new ByteArrayInputStream( new byte[0] );
-        otherProject.getFile( "blubb" ).create( is, true, new NullProgressMonitor() );
-        return otherProject;
+        result.getFile( "blubb" ).create( is, true, new NullProgressMonitor() );
+        IUSUSProject ususProject = (IUSUSProject)result.getAdapter( IUSUSProject.class );
+        ususProject.setUsusProject( true );
+        return result;
     }
 }

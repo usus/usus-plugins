@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.junit.After;
 import org.junit.Test;
+import org.projectusus.core.internal.PDETestUsingWSProject;
 
 
 public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
@@ -36,6 +37,8 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         getWorkspace().addResourceChangeListener( listener );
         IFile file = createWSFile( "bla", "really interesting stuff" );
         
+        listener.assertNoException();
+        
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 1, target.getProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
@@ -43,8 +46,6 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 1, target.getFiles( affectedProject ).size() );
         IFile affectedFile = target.getFiles( affectedProject ).iterator().next();
         assertEquals( file, affectedFile );
-        
-        assertNoException( listener );
     }
     
     @Test
@@ -55,6 +56,8 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         file.delete( true, new NullProgressMonitor() );
         waitForAutobuild();
         
+        listener.assertNoException();
+        
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 1, target.getProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
@@ -63,8 +66,6 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 1, target.getRemovedFiles( affectedProject ).size() );
         IFile affectedFile = target.getRemovedFiles( affectedProject ).iterator().next();
         assertEquals( file, affectedFile );
-        
-        assertNoException( listener );
     }
     
     @Test
@@ -74,6 +75,8 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         getWorkspace().addResourceChangeListener( listener );
         updateFileContent( file, "replacement" );
         
+        listener.assertNoException();
+        
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 1, target.getProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
@@ -82,8 +85,6 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 1, target.getFiles( affectedProject ).size() );
         IFile affectedFile = target.getFiles( affectedProject ).iterator().next();
         assertEquals( file, affectedFile );
-
-        assertNoException( listener );
     }
 
     @Test
@@ -94,6 +95,8 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         getWorkspace().addResourceChangeListener( listener );
         file.move( folder.getFullPath().append( file.getName() ), true, new NullProgressMonitor() );
         waitForAutobuild();
+        
+        listener.assertNoException();
         
         ICodeProportionComputationTarget target = listener.getTarget();
         IProject affectedProject = target.getProjects().iterator().next();
@@ -107,8 +110,6 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 1, target.getFiles( affectedProject ).size() );
         IFile affectedFile = target.getFiles( affectedProject ).iterator().next();
         assertEquals( new Path( "/p/dir/bla" ), affectedFile.getFullPath() );
-        
-        assertNoException( listener );
     }
 
     @Test
@@ -124,10 +125,10 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         }, new NullProgressMonitor());
         waitForAutobuild();
         
+        listener.assertNoException();
+        
         ICodeProportionComputationTarget target = listener.getTarget();
         IProject affectedProject = target.getProjects().iterator().next();
         assertEquals( 3, target.getFiles( affectedProject ).size() );
-        
-        assertNoException( listener );
     }
 }

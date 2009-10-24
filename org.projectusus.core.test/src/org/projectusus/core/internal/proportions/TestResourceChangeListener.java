@@ -8,6 +8,8 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.runtime.CoreException;
+import org.projectusus.core.internal.proportions.DeltaCodeProportionComputationTarget;
+import org.projectusus.core.internal.proportions.ICodeProportionComputationTarget;
 
 class TestResourceChangeListener implements IResourceChangeListener {
     private DeltaCodeProportionComputationTarget target;
@@ -28,7 +30,10 @@ class TestResourceChangeListener implements IResourceChangeListener {
         return target;
     }
     
-    Exception getException() {
-        return exception;
+    void assertNoException() throws Exception {
+        // otherwise it would be lost somewhere in the log, we want it to make the test red
+        if( exception != null ) {
+            throw exception;
+        }
     }
 }
