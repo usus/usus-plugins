@@ -21,7 +21,7 @@ public class OpenHotspots extends Action {
     private final ISelection selection;
 
     public OpenHotspots( ISelection selection ) {
-        super( openHotspots_label ); // TODO lf img desc
+        super( openHotspots_label );
         this.selection = selection;
     }
 

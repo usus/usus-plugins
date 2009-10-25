@@ -23,6 +23,7 @@ Export-Package: org.projectusus.ui.internal,
  org.projectusus.ui.internal.perspective;x-internal:=true,
  org.projectusus.ui.internal.projectsettings,
  org.projectusus.ui.internal.proportions,
+ org.projectusus.ui.internal.proportions.actions;x-internal:=true,
  org.projectusus.ui.internal.util,
  org.projectusus.ui.internal.yellowcount,
  org.projectusus.ui.internal.yellowcount.actions

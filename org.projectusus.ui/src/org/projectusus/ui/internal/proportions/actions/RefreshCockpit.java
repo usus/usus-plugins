@@ -14,7 +14,7 @@ import org.projectusus.core.internal.proportions.UsusModel;
 public class RefreshCockpit implements IViewActionDelegate {
 
     public void run( IAction action ) {
-        UsusModel.getInstance().forceRecompute();
+        UsusModel.getUsusModel().forceRecompute();
     }
 
     public void init( IViewPart view ) {

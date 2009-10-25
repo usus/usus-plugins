@@ -10,7 +10,9 @@ import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_computing;
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_name;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -21,6 +23,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.projectusus.core.internal.proportions.checkstyledriver.CheckstyleDriver;
+import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
 import org.projectusus.core.internal.yellowcount.IYellowCountResult;
@@ -53,40 +56,40 @@ class CodeProportionsComputerJob extends Job {
 
     private IStatus performRun( IProgressMonitor monitor ) {
         IStatus result = Status.OK_STATUS;
+        List<CodeProportion> collector = new ArrayList<CodeProportion>();
         try {
-            performComputation( monitor );
-            getModel().updateLastComputerRun();
+            performComputation( collector, monitor );
         } catch( CoreException cex ) {
-            getModel().updateLastComputerRun( false );
             result = cex.getStatus();
         } finally {
+            getModel().update( new ComputationRunModelUpdate( collector, result.isOK() ) );
             monitor.done();
         }
         return result;
     }
 
-    private void performComputation( IProgressMonitor monitor ) throws CoreException {
-        computeCW( new SubProgressMonitor( monitor, 128 ) );
-        computeCheckstyleBasedMetrics( new SubProgressMonitor( monitor, 512 ) );
+    private void performComputation( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
+        collector.add( computeCW( new SubProgressMonitor( monitor, 128 ) ) );
+        computeCheckstyleBasedMetrics( collector, new SubProgressMonitor( monitor, 512 ) );
     }
 
-    private void computeCheckstyleBasedMetrics( IProgressMonitor monitor ) throws CoreException {
+    private void computeCheckstyleBasedMetrics( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
         new CheckstyleDriver( target ).run( monitor );
 
         NewWorkspaceResults results = NewWorkspaceResults.getInstance();
 
         for( IsisMetrics metric : Arrays.asList( CC, KG, ML ) ) {
-            getModel().add( results.getCodeProportion( metric ) );
+            collector.add( results.getCodeProportion( metric ) );
         }
     }
 
-    private void computeCW( IProgressMonitor monitor ) {
+    private CodeProportion computeCW( IProgressMonitor monitor ) {
         IYellowCountResult yellowCountResult = YellowCount.getInstance().count();
-        getModel().add( new CodeProportion( yellowCountResult ) );
+        return new CodeProportion( yellowCountResult );
     }
 
     private UsusModel getModel() {
-        return (UsusModel)UsusModel.getInstance();
+        return (UsusModel)UsusModel.getUsusModel();
     }
 
     private static final class MutexSchedulingRule implements ISchedulingRule {

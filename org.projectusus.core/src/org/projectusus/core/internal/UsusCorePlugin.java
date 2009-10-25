@@ -32,7 +32,7 @@ public class UsusCorePlugin extends Plugin {
 
     @Override
     public void stop( BundleContext context ) throws Exception {
-        ((UsusModel)UsusModel.getInstance()).dispose();
+        ((UsusModel)UsusModel.getUsusModel()).dispose();
         plugin = null;
         super.stop( context );
     }

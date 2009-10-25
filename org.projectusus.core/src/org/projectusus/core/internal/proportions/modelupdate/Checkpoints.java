@@ -2,17 +2,13 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.proportions.checkpoints;
+package org.projectusus.core.internal.proportions.modelupdate;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.projectusus.core.internal.proportions.CodeProportion;
-import org.projectusus.core.internal.proportions.IUsusModel;
-import org.projectusus.core.internal.proportions.IUsusModelListener;
-import org.projectusus.core.internal.proportions.IUsusModelStatus;
-import org.projectusus.core.internal.proportions.model.IUsusElement;
 
 public class Checkpoints {
 
@@ -26,14 +22,6 @@ public class Checkpoints {
 
     public List<ICheckpoint> getCheckpoints() {
         return checkpoints;
-    }
-
-    public void connect( IUsusModel codeProportions ) {
-        codeProportions.addUsusModelListener( new IUsusModelListener() {
-            public void ususModelChanged( IUsusModelStatus lastStatus, List<IUsusElement> elements ) {
-                createCheckpoint( lastStatus, cumulate( elements ) );
-            }
-        } );
     }
 
     @Override
@@ -57,14 +45,6 @@ public class Checkpoints {
 
     private boolean lastUpdateWasTestRun( IUsusModelStatus status ) {
         return status.isLastComputationRunSuccessful() && status.getLastTestRun() != null;
-    }
-
-    private List<CodeProportion> cumulate( List<IUsusElement> elements ) {
-        List<CodeProportion> result = new ArrayList<CodeProportion>();
-        for( IUsusElement element : elements ) {
-            result.addAll( element.getEntries() );
-        }
-        return result;
     }
 
     private static class Checkpoint implements ICheckpoint {

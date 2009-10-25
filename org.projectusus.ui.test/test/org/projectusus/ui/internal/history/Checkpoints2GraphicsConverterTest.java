@@ -15,7 +15,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.CodeProportion;
-import org.projectusus.core.internal.proportions.checkpoints.ICheckpoint;
+import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 
 

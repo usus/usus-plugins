@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.history;
 
+import static org.projectusus.core.internal.proportions.UsusModel.getUsusModel;
 import static org.swtchart.ISeries.SeriesType.LINE;
 
 import java.util.List;
@@ -11,12 +12,10 @@ import java.util.List;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
-import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
-import org.projectusus.core.internal.proportions.IUsusModelStatus;
-import org.projectusus.core.internal.proportions.UsusModel;
-import org.projectusus.core.internal.proportions.checkpoints.ICheckpoint;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
+import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
+import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 import org.swtchart.Chart;
 import org.swtchart.ILineSeries;
@@ -31,8 +30,8 @@ public class HistoryView extends ViewPart {
     public void createPartControl( Composite parent ) {
         chart = new CheckpointsHistoryChart( parent );
         refresh();
-        getModel().addUsusModelListener( new IUsusModelListener() {
-            public void ususModelChanged( IUsusModelStatus lastStatus, List<IUsusElement> entries ) {
+        getUsusModel().addUsusModelListener( new IUsusModelListener() {
+            public void ususModelChanged( IUsusModelHistory history, List<IUsusElement> entries ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         refresh();
@@ -63,7 +62,7 @@ public class HistoryView extends ViewPart {
     }
 
     private double[] getValues( IsisMetrics metric ) {
-        List<ICheckpoint> checkpoints = getModel().getCheckpoints();
+        List<ICheckpoint> checkpoints = getUsusModel().getHistory().getCheckpoints();
         return new Checkpoints2GraphicsConverter( checkpoints ).get( metric );
     }
 
@@ -73,10 +72,6 @@ public class HistoryView extends ViewPart {
         series.setYSeries( values );
         series.setSymbolType( PlotSymbolType.DIAMOND );
         series.setSymbolSize( 2 );
-    }
-
-    private IUsusModel getModel() {
-        return UsusModel.getInstance();
     }
 
     private void cleanOldValues( ISeriesSet seriesSet, IsisMetrics metric ) {

@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions;
 
+import static org.projectusus.core.internal.proportions.UsusModel.getUsusModel;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
 import java.util.List;
@@ -28,9 +29,10 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
-import org.projectusus.core.internal.proportions.IUsusModelStatus;
 import org.projectusus.core.internal.proportions.UsusModel;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
+import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
+import org.projectusus.core.internal.proportions.modelupdate.IUsusModelStatus;
 import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
 import org.projectusus.ui.internal.util.ISharedUsusImages;
 
@@ -46,7 +48,7 @@ public class CockpitView extends ViewPart {
         initContextMenuBehavior();
         initModelListener();
         getViewSite().setSelectionProvider( treeViewer );
-        setMessage( UsusModel.getInstance().getLastStatus() );
+        setMessage( getUsusModel().getHistory().getLastStatus() );
     }
 
     @Override
@@ -58,7 +60,7 @@ public class CockpitView extends ViewPart {
 
     @Override
     public void dispose() {
-        UsusModel.getInstance().removeUsusModelListener( listener );
+        UsusModel.getUsusModel().removeUsusModelListener( listener );
         super.dispose();
     }
 
@@ -85,16 +87,16 @@ public class CockpitView extends ViewPart {
 
     private void initModelListener() {
         listener = new IUsusModelListener() {
-            public void ususModelChanged( final IUsusModelStatus lastStatus, List<IUsusElement> elements ) {
+            public void ususModelChanged( final IUsusModelHistory history, List<IUsusElement> elements ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         refresh();
-                        setMessage( lastStatus );
+                        setMessage( history.getLastStatus() );
                     }
                 } );
             }
         };
-        UsusModel.getInstance().addUsusModelListener( listener );
+        UsusModel.getUsusModel().addUsusModelListener( listener );
     }
 
     private void setMessage( IUsusModelStatus status ) {
@@ -126,7 +128,7 @@ public class CockpitView extends ViewPart {
 
         treeViewer.setLabelProvider( new CockpitLP() );
         treeViewer.setContentProvider( new CockpitCP() );
-        treeViewer.setInput( UsusModel.getInstance() );
+        treeViewer.setInput( UsusModel.getUsusModel() );
     }
 
     private void createTreeTable( TreeColumn[] currentColumns ) {

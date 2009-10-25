@@ -7,7 +7,8 @@ package org.projectusus.core.internal.proportions;
 import java.util.List;
 
 import org.projectusus.core.internal.proportions.model.IUsusElement;
+import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 
 public interface IUsusModelListener {
-    void ususModelChanged( IUsusModelStatus lastStatus, List<IUsusElement> elements );
+    void ususModelChanged( IUsusModelHistory history, List<IUsusElement> elements );
 }

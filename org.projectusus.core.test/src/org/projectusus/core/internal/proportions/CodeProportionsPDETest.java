@@ -4,14 +4,17 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
+import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
+import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 
 public class CodeProportionsPDETest {
 
@@ -19,7 +22,7 @@ public class CodeProportionsPDETest {
 
     @Before
     public void setUp() {
-        model = (UsusModel)UsusModel.getInstance();
+        model = (UsusModel)UsusModel.getUsusModel();
     }
 
     @After
@@ -32,11 +35,11 @@ public class CodeProportionsPDETest {
         DummyCodeProportionsListener listener = new DummyCodeProportionsListener();
         model.addUsusModelListener( listener );
         
-        model.updateLastComputerRun();
+        model.update( new ComputationRunModelUpdate( new ArrayList<CodeProportion>(), true ) );
         assertEquals(1, listener.getCallCount());
         
         model.removeUsusModelListener( listener );
-        model.updateLastComputerRun();
+        model.update( new ComputationRunModelUpdate( new ArrayList<CodeProportion>(), true ) );
         // no more calls
         assertEquals(1, listener.getCallCount());
     }
@@ -44,7 +47,7 @@ public class CodeProportionsPDETest {
     private final class DummyCodeProportionsListener implements IUsusModelListener {
         private int callCount;
 
-        public void ususModelChanged( IUsusModelStatus lastStatus, List<IUsusElement> elements ) {
+        public void ususModelChanged( IUsusModelHistory history, List<IUsusElement> elements ) {
           callCount++;
         }
         
