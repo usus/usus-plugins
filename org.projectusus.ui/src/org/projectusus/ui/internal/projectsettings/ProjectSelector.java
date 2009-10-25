@@ -4,6 +4,9 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.projectsettings;
 
+import static org.projectusus.ui.internal.util.UITexts.projectSelector_msg;
+import static org.projectusus.ui.internal.util.UITexts.projectSelector_title;
+
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
@@ -21,8 +24,8 @@ public class ProjectSelector {
 
     public IProject selectProject( List<IProject> projects ) {
         ElementListSelectionDialog dialog = new ElementListSelectionDialog( shell, new ProjectsLabelProvider() );
-        dialog.setTitle( "Select Project" );
-        dialog.setMessage( "Select Project" );
+        dialog.setTitle( projectSelector_title );
+        dialog.setMessage( projectSelector_msg );
         dialog.setElements( projects.toArray( new IProject[0] ) );
         dialog.open();
         if( dialog.getReturnCode() == Window.OK ) {

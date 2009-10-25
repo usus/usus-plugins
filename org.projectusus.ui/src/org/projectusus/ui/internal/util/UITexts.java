@@ -28,6 +28,9 @@ public final class UITexts extends NLS {
 
     public static String openHotspots_label;
 
+    public static String projectSelector_title;
+    public static String projectSelector_msg;
+
     public static String projectsettings_select_message;
     public static String projectsettings_select_title;
 
