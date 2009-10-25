@@ -6,6 +6,7 @@ package org.projectusus.core.internal.proportions.modelupdate;
 
 import static java.util.Arrays.asList;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,13 +27,8 @@ public class TestRunModelUpdate implements IUsusModelUpdate {
         this.time = new Date();
     }
 
-    public TestRunModelUpdate( CodeProportion entry, Date time ) {
-        this.entry = entry;
-        this.time = time;
-    }
-
     public List<CodeProportion> getEntries() {
-        return asList( entry );
+        return entry == null ? new ArrayList<CodeProportion>() : asList( entry );
     }
 
     public Date getTime() {

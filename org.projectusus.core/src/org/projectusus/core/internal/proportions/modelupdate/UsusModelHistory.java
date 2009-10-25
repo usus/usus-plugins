@@ -20,10 +20,13 @@ public class UsusModelHistory implements IUsusModelHistory {
     private UsusModelStatus status = new UsusModelStatus();
 
     public void add( IUsusModelUpdate modelUpdate ) {
-        checkpoints.createCheckpoint( status, modelUpdate.getEntries() );
         history.add( modelUpdate );
         updateStatus( modelUpdate );
+        createCheckpoint();
     }
+
+    // interface
+    // //////////
 
     public IUsusModelStatus getLastStatus() {
         return status;
@@ -33,11 +36,71 @@ public class UsusModelHistory implements IUsusModelHistory {
         return unmodifiableList( checkpoints.getCheckpoints() );
     }
 
+    // internal
+    // /////////
+
     private void updateStatus( IUsusModelUpdate modelUpdate ) {
-        status = new UsusModelStatus( findLast( COMPUTATION_RUN ), findLast( TEST_RUN ) );
+        status = new UsusModelStatus( last( COMPUTATION_RUN ), last( TEST_RUN ) );
     }
 
-    private IUsusModelUpdate findLast( Type type ) {
+    private void createCheckpoint() {
+        if( canCreate() ) {
+            checkpoints.createCheckpoint( last().getEntries() );
+        }
+    }
+
+    private boolean canCreate() {
+        return lastUpdateWasTestRun() && lastComputationRunWasSuccessful() && computedBetweenLastTestRuns();
+    }
+
+    private boolean lastComputationRunWasSuccessful() {
+        return last( COMPUTATION_RUN ) != null && last( COMPUTATION_RUN ).isSuccessful();
+    }
+
+    private boolean lastUpdateWasTestRun() {
+        return history.isEmpty() ? false : isTestRun( last() );
+    }
+
+    private boolean computedBetweenLastTestRuns() {
+        boolean result = true;
+        IUsusModelUpdate secondLastTestRun = findSecondLastTestRun();
+        if( secondLastTestRun != null ) {
+            result = existsLastSuccessfulComputationRunAfter( secondLastTestRun );
+        }
+        return result;
+    }
+
+    private boolean existsLastSuccessfulComputationRunAfter( IUsusModelUpdate start ) {
+        IUsusModelUpdate result = null;
+        boolean startEncountered = false;
+        for( IUsusModelUpdate historyElement : history ) {
+            startEncountered |= historyElement == start;
+            if( startEncountered && isSuccessfulComputation( historyElement ) ) {
+                result = historyElement;
+            }
+        }
+        return result != null;
+    }
+
+    private boolean isSuccessfulComputation( IUsusModelUpdate historyElement ) {
+        return historyElement.getType() == COMPUTATION_RUN && historyElement.isSuccessful();
+    }
+
+    private IUsusModelUpdate findSecondLastTestRun() {
+        IUsusModelUpdate result = null;
+        for( IUsusModelUpdate historyElement : history ) {
+            if( isTestRun( historyElement ) && !historyElement.equals( last() ) ) {
+                result = historyElement;
+            }
+        }
+        return result;
+    }
+
+    private boolean isTestRun( IUsusModelUpdate historyElement ) {
+        return historyElement.getType() == TEST_RUN;
+    }
+
+    private IUsusModelUpdate last( Type type ) {
         IUsusModelUpdate result = null;
         for( IUsusModelUpdate historyElement : history ) {
             if( historyElement.getType() == type ) {
@@ -45,5 +108,9 @@ public class UsusModelHistory implements IUsusModelHistory {
             }
         }
         return result;
+    }
+
+    private IUsusModelUpdate last() {
+        return history.get( history.size() - 1 );
     }
 }

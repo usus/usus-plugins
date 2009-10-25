@@ -14,13 +14,11 @@ public class Checkpoints {
 
     List<ICheckpoint> checkpoints = new ArrayList<ICheckpoint>();
 
-    public void createCheckpoint( IUsusModelStatus status, List<CodeProportion> entries ) {
-        if( canCreate( status ) ) {
-            checkpoints.add( new Checkpoint( status.getLastTestRun(), entries ) );
-        }
+    void createCheckpoint( List<CodeProportion> entries ) {
+        checkpoints.add( new Checkpoint( entries ) );
     }
 
-    public List<ICheckpoint> getCheckpoints() {
+    List<ICheckpoint> getCheckpoints() {
         return checkpoints;
     }
 
@@ -29,30 +27,12 @@ public class Checkpoints {
         return "Checkpoints (" + checkpoints.size() + ")"; //$NON-NLS-1$//$NON-NLS-2$
     }
 
-    private boolean canCreate( IUsusModelStatus status ) {
-        return lastUpdateWasTestRun( status ) && computedBetweenLastTestRuns( status );
-    }
-
-    private boolean computedBetweenLastTestRuns( IUsusModelStatus status ) {
-        boolean result = true;
-        if( !checkpoints.isEmpty() ) {
-            ICheckpoint lastCheckPoint = checkpoints.get( checkpoints.size() - 1 );
-            Date time = lastCheckPoint.getTime();
-            result = time.before( status.getLastTestRun() );
-        }
-        return result;
-    }
-
-    private boolean lastUpdateWasTestRun( IUsusModelStatus status ) {
-        return status.isLastComputationRunSuccessful() && status.getLastTestRun() != null;
-    }
-
     private static class Checkpoint implements ICheckpoint {
         private final Date time;
         private final List<CodeProportion> entries;
 
-        Checkpoint( Date time, List<CodeProportion> entries ) {
-            this.time = time;
+        Checkpoint( List<CodeProportion> entries ) {
+            this.time = new Date();
             this.entries = entries;
         }
 

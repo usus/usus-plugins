@@ -8,7 +8,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -24,10 +23,6 @@ public class UsusModelHistoryTest {
 
         history.add( new ComputationRunModelUpdate( dummyEntries(), false ) );
         assertFalse( history.getLastStatus().isLastComputationRunSuccessful() );
-
-        history.add( new TestRunModelUpdate( null, getSlightlyLaterDate() ) );
-        IUsusModelStatus lastStatus = history.getLastStatus();
-        assertTrue( lastStatus.getLastTestRun().after( lastStatus.getLastComputerRun() ) );
     }
 
     @Test
@@ -41,9 +36,5 @@ public class UsusModelHistoryTest {
 
     private List<CodeProportion> dummyEntries() {
         return new ArrayList<CodeProportion>();
-    }
-
-    private Date getSlightlyLaterDate() {
-        return new Date( new Date().getTime() + 42 );
     }
 }

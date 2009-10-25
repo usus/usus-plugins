@@ -33,11 +33,11 @@ class UsusModelStatus implements IUsusModelStatus {
     // interface methods
     // //////////////////
 
-    public Date getLastComputerRun() {
+    private Date getLastComputationTime() {
         return lastComputationRun.getTime();
     }
 
-    public Date getLastTestRun() {
+    private Date getLastTestTime() {
         return lastTestRun == null ? null : lastTestRun.getTime();
     }
 
@@ -47,8 +47,8 @@ class UsusModelStatus implements IUsusModelStatus {
 
     public boolean isStale() {
         boolean result = true;
-        if( getLastTestRun() != null ) {
-            result = isLastComputationRunSuccessful() && getLastTestRun().before( getLastComputerRun() );
+        if( getLastTestTime() != null ) {
+            result = isLastComputationRunSuccessful() && getLastTestTime().before( getLastComputationTime() );
         }
         return result;
     }
@@ -57,6 +57,6 @@ class UsusModelStatus implements IUsusModelStatus {
     // /////////
 
     private String renderInfo() {
-        return bind( ususModelStatus_info, getLastComputerRun(), getLastTestRun() );
+        return bind( ususModelStatus_info, getLastComputationTime(), getLastTestTime() );
     }
 }

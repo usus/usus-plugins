@@ -4,13 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.modelupdate;
 
-import java.util.Date;
 
 public interface IUsusModelStatus {
-
-    Date getLastComputerRun();
-
-    Date getLastTestRun();
 
     boolean isLastComputationRunSuccessful();
 
