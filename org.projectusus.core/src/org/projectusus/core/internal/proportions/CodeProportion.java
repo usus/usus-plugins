@@ -5,9 +5,7 @@
 package org.projectusus.core.internal.proportions;
 
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CW;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
 
-import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 import org.projectusus.core.internal.yellowcount.IYellowCountResult;
 
@@ -16,28 +14,26 @@ public class CodeProportion {
     private final IsisMetrics metric;
     private final int violations;
     private final int basis;
+    private final double sqi;
 
     public CodeProportion( IsisMetrics metric ) {
-        this( metric, 0, 0 );
+        this( metric, 0, 0, 0 );
     }
 
-    public CodeProportion( IsisMetrics metric, int violations, int basis ) {
+    public CodeProportion( IsisMetrics metric, int violations, int basis, double sqi ) {
         this.metric = metric;
         this.violations = violations;
         this.basis = basis;
-    }
-
-    public CodeProportion( TestCoverage coverage ) {
-        this( TA, coverage.getCoveredCount(), coverage.getTotalCount() );
+        this.sqi = sqi;
     }
 
     public CodeProportion( IYellowCountResult yellowCountResult ) {
-        // TODO lf project count is not really the basis for CW
-        this( CW, yellowCountResult.getYellowCount(), yellowCountResult.getProjectCount() );
+        // TODO lf project count is not really the basis for CW, and 42 is not always the answer
+        this( CW, yellowCountResult.getYellowCount(), yellowCountResult.getProjectCount(), 42.0 );
     }
 
-    public Double getGraphValue() {
-        return new Double( violations );
+    public Double getSQIValue() {
+        return new Double( sqi );
     }
 
     public int getViolations() {

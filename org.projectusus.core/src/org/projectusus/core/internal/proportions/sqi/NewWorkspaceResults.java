@@ -27,7 +27,10 @@ public class NewWorkspaceResults extends Results<IProject, ProjectResults> {
     }
 
     public CodeProportion getCodeProportion( IsisMetrics metric ) {
-        return new CodeProportion( metric, this.getViolationCount( metric ), this.getViolationBasis( metric ) );
+        int violations = getViolationCount( metric );
+        int basis = getViolationBasis( metric );
+        double sqi = new SQIComputer( basis, violations, metric.getCalibration() ).compute();
+        return new CodeProportion( metric, violations, basis, sqi );
     }
 
     public ProjectResults getCurrentProjectResults() {

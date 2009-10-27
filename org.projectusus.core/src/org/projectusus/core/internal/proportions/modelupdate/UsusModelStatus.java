@@ -33,14 +33,6 @@ class UsusModelStatus implements IUsusModelStatus {
     // interface methods
     // //////////////////
 
-    private Date getLastComputationTime() {
-        return lastComputationRun.getTime();
-    }
-
-    private Date getLastTestTime() {
-        return lastTestRun == null ? null : lastTestRun.getTime();
-    }
-
     public boolean isLastComputationRunSuccessful() {
         return lastComputationRun != null && lastComputationRun.isSuccessful();
     }
@@ -58,5 +50,17 @@ class UsusModelStatus implements IUsusModelStatus {
 
     private String renderInfo() {
         return bind( ususModelStatus_info, getLastComputationTime(), getLastTestTime() );
+    }
+
+    private Date getLastComputationTime() {
+        return nullSafeGetTime( lastComputationRun );
+    }
+
+    private Date getLastTestTime() {
+        return nullSafeGetTime( lastTestRun );
+    }
+
+    private Date nullSafeGetTime( IUsusModelUpdate modelUpdate ) {
+        return modelUpdate == null ? null : modelUpdate.getTime();
     }
 }

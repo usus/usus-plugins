@@ -15,6 +15,8 @@ import static org.projectusus.ui.internal.util.UITexts.cockpitLP_testCoverage;
 import static org.projectusus.ui.internal.util.UITexts.cockpitLP_warnings;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
+import java.text.DecimalFormat;
+
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -58,15 +60,19 @@ public class CockpitLP extends LabelProvider implements ITableLabelProvider {
     private String getColumnTextFor( CodeProportion element, int columnIndex ) {
         String result = null;
         switch( CockpitColumnDesc.values()[columnIndex] ) {
-        case INDICATOR:
-            result = element.getMetric().getLabel();
-            break;
-        case VIOLATIONS:
-            result = valueOf( element.getViolations() );
-            break;
-        case CASES:
-            result = valueOf( element.getBasis() );
-            break;
+            case INDICATOR:
+                result = element.getMetric().getLabel();
+                break;
+            case VIOLATIONS:
+                result = valueOf( element.getViolations() );
+                break;
+            case CASES:
+                result = valueOf( element.getBasis() );
+                break;
+            case SQI:
+                DecimalFormat formatter = new DecimalFormat( "#.##" ); //$NON-NLS-1$
+                result = valueOf( formatter.format( element.getSQIValue() ) );
+                break;
         }
         return result;
     }

@@ -14,6 +14,7 @@ public final class UITexts extends NLS {
 
     public static String cockpitColumnDesc_cases;
     public static String cockpitColumnDesc_indicator;
+    public static String cockpitColumnDesc_sqi;
     public static String cockpitColumnDesc_violations;
 
     public static String cockpitLP_codeProportions;

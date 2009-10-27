@@ -4,9 +4,12 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
+import static java.math.BigDecimal.ROUND_DOWN;
 import static java.util.Arrays.asList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -96,7 +99,16 @@ public class UsusModel implements IUsusModel {
     private ICoverageListener createCoverageListener() {
         return new ICoverageListener() {
             public void coverageChanged( TestCoverage coverage ) {
-                update( new TestRunModelUpdate( new CodeProportion( coverage ) ) );
+                int covered = coverage.getCoveredCount();
+                int total = coverage.getTotalCount();
+                double sqi = computeRatio( covered, total );
+                CodeProportion codeProportion = new CodeProportion( TA, covered, total, sqi );
+                update( new TestRunModelUpdate( codeProportion ) );
+            }
+
+            private double computeRatio( int covered, int total ) {
+                BigDecimal ratio = new BigDecimal( covered ).divide( new BigDecimal( total ), 5, ROUND_DOWN );
+                return ratio.doubleValue() * 100;
             }
         };
     }

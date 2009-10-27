@@ -30,7 +30,7 @@ public class Checkpoints2GraphicsConverterTest {
 
 	@Test
 	public void singleCheckpoint() {
-		ICheckpoint checkpoint = new DummyCheckpoint(42);
+		ICheckpoint checkpoint = new DummyCheckpoint(42.0);
 		Checkpoints2GraphicsConverter converter = create(asList(checkpoint));
 		assertEquals(1, converter.get(ACD).length);
 		assertEquals(42.0, converter.get(ACD)[0], 0.0);
@@ -52,22 +52,22 @@ public class Checkpoints2GraphicsConverterTest {
 	
 	private class DummyCheckpoint implements ICheckpoint {
 
-		private final int[] values;
+		private final double[] values;
 		private final IsisMetrics metric;
 
-		DummyCheckpoint(int value){
-			this(ACD, new int[]{value});
+		DummyCheckpoint(double value){
+			this(ACD, new double[]{value});
 		}
 		
-		DummyCheckpoint(IsisMetrics metric, int...values){
+		DummyCheckpoint(IsisMetrics metric, double...values){
 			this.values = values;
 			this.metric = metric;
 		}
 		
 		public List<CodeProportion> getEntries() {
 			List<CodeProportion> result = new ArrayList<CodeProportion>();
-			for (int value : values) {
-				result.add(new CodeProportion(metric, value, 42));
+			for (double value : values) {
+				result.add(new CodeProportion(metric, 0, 0, value));
 			}
 			return result;
 		}

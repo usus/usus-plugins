@@ -6,26 +6,24 @@ package org.projectusus.ui.internal.proportions;
 
 import static org.projectusus.ui.internal.util.UITexts.cockpitColumnDesc_cases;
 import static org.projectusus.ui.internal.util.UITexts.cockpitColumnDesc_indicator;
+import static org.projectusus.ui.internal.util.UITexts.cockpitColumnDesc_sqi;
 import static org.projectusus.ui.internal.util.UITexts.cockpitColumnDesc_violations;
 
 enum CockpitColumnDesc {
 
-    INDICATOR( cockpitColumnDesc_indicator, 72, true, true ), VIOLATIONS( cockpitColumnDesc_violations, 14, false, true ), CASES( cockpitColumnDesc_cases, 14, false, true );
+    INDICATOR( cockpitColumnDesc_indicator, 58, true ), //
+    SQI( cockpitColumnDesc_sqi, 14, false ), //
+    VIOLATIONS( cockpitColumnDesc_violations, 14, false ), //
+    CASES( cockpitColumnDesc_cases, 14, false );
 
     private final String headLabel;
     private final int weight;
     private final boolean hasImage;
-    private final boolean hasText;
 
-    CockpitColumnDesc( String headLabel, int weight ) {
-        this( headLabel, weight, false, false );
-    }
-
-    CockpitColumnDesc( String headLabel, int weight, boolean hasImage, boolean hasText ) {
+    CockpitColumnDesc( String headLabel, int weight, boolean hasImage ) {
         this.headLabel = headLabel;
         this.weight = weight;
         this.hasImage = hasImage;
-        this.hasText = hasText;
     }
 
     int getWeight() {
@@ -38,9 +36,5 @@ enum CockpitColumnDesc {
 
     boolean isHasImage() {
         return hasImage;
-    }
-
-    boolean isHasText() {
-        return hasText;
     }
 }

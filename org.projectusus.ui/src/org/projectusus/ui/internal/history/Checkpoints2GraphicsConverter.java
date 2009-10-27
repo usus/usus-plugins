@@ -29,7 +29,7 @@ class Checkpoints2GraphicsConverter {
 
     private Double computeValue( IsisMetrics metric, ICheckpoint checkpoint ) {
         CodeProportion codeProportion = find( metric, checkpoint.getEntries() );
-        return codeProportion == null ? new Double( 0.0 ) : codeProportion.getGraphValue();
+        return codeProportion == null ? new Double( 0.0 ) : codeProportion.getSQIValue();
     }
 
     private double[] convert( List<Double> values ) {
