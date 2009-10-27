@@ -11,8 +11,8 @@ import static org.projectusus.ui.internal.util.UITexts.cockpitColumnDesc_violati
 
 enum CockpitColumnDesc {
 
-    INDICATOR( cockpitColumnDesc_indicator, 58, true ), //
-    SQI( cockpitColumnDesc_sqi, 14, false ), //
+    INDICATOR( cockpitColumnDesc_indicator, 62, true ), //
+    SQI( cockpitColumnDesc_sqi, 10, false ), //
     VIOLATIONS( cockpitColumnDesc_violations, 14, false ), //
     CASES( cockpitColumnDesc_cases, 14, false );
 

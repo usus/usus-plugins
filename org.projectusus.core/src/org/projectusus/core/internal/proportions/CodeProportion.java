@@ -4,10 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CW;
-
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
-import org.projectusus.core.internal.yellowcount.IYellowCountResult;
 
 public class CodeProportion {
 
@@ -25,11 +22,6 @@ public class CodeProportion {
         this.violations = violations;
         this.basis = basis;
         this.sqi = sqi;
-    }
-
-    public CodeProportion( IYellowCountResult yellowCountResult ) {
-        // TODO lf project count is not really the basis for CW, and 42 is not always the answer
-        this( CW, yellowCountResult.getYellowCount(), yellowCountResult.getProjectCount(), 42.0 );
     }
 
     public Double getSQIValue() {

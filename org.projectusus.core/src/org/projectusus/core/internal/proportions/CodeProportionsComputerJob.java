@@ -5,6 +5,7 @@
 package org.projectusus.core.internal.proportions;
 
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CC;
+import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CW;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.KG;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_computing;
@@ -85,7 +86,11 @@ class CodeProportionsComputerJob extends Job {
 
     private CodeProportion computeCW( IProgressMonitor monitor ) {
         IYellowCountResult yellowCountResult = YellowCount.getInstance().count();
-        return new CodeProportion( yellowCountResult );
+        // more than Java classes! We receive warnings for other artifacts, too.
+        int basis = yellowCountResult.getFileCount();
+        int violations = yellowCountResult.getYellowCount();
+        double sqiValue = new CodeProportionsRatio( violations, basis ).computeReverseIndicator();
+        return new CodeProportion( CW, violations, basis, sqiValue );
     }
 
     private UsusModel getModel() {

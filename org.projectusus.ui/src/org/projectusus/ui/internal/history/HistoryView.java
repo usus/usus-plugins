@@ -41,8 +41,8 @@ import org.swtchart.ISeries.SeriesType;
 
 public class HistoryView extends ViewPart {
 
-    private Chart chart;
     private final Map<IsisMetrics, Color> colors = initColors();
+    private Chart chart;
 
     @Override
     public void createPartControl( Composite parent ) {

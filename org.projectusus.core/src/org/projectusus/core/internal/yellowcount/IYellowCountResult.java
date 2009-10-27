@@ -15,6 +15,8 @@ public interface IYellowCountResult {
 
     int getYellowCount();
 
+    int getFileCount();
+
     int getYellowProjectCount();
 
     int getProjectCount();
@@ -22,4 +24,5 @@ public interface IYellowCountResult {
     int getFormattedCountPosition();
 
     int getFormattedCountLength();
+
 }

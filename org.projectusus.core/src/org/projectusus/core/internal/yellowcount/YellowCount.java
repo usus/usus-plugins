@@ -72,7 +72,7 @@ public class YellowCount {
                 UsusCorePlugin.getDefault().getLog().log( cex.getStatus() );
             }
         }
-        return createResult( yellowCount, yellowProjectCount, projects.size() );
+        return createResult( yellowCount, yellowProjectCount, projects );
     }
 
     private List<IProject> getUsusProjects() {
@@ -102,7 +102,8 @@ public class YellowCount {
         }
     }
 
-    private IYellowCountResult createResult( final int yellowCount, final int yellowProjectCount, final int projectCount ) {
-        return new YellowCountResult( projectCount, yellowCount, yellowProjectCount );
+    private YellowCountResult createResult( int yellowCount, int yellowProjectCount, List<IProject> projects ) {
+        int fileCount = new CountWSFiles( projects ).compute();
+        return new YellowCountResult( projects.size(), fileCount, yellowCount, yellowProjectCount );
     }
 }
