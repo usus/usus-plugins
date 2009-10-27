@@ -11,6 +11,7 @@ import static org.projectusus.core.internal.proportions.modelupdate.IUsusModelUp
 import java.util.ArrayList;
 import java.util.List;
 
+import org.projectusus.core.internal.proportions.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate.Type;
 
 public class UsusModelHistory implements IUsusModelHistory {
@@ -45,7 +46,10 @@ public class UsusModelHistory implements IUsusModelHistory {
 
     private void createCheckpoint() {
         if( canCreate() ) {
-            checkpoints.createCheckpoint( last().getEntries() );
+            List<CodeProportion> entries = new ArrayList<CodeProportion>();
+            entries.addAll( last( COMPUTATION_RUN ).getEntries() );
+            entries.addAll( last( TEST_RUN ).getEntries() );
+            checkpoints.createCheckpoint( entries );
         }
     }
 
