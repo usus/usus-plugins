@@ -59,7 +59,7 @@ public class CodeProportion {
         collectViolations( metric, violations );
         List<IHotspot> result = new ArrayList<IHotspot>();
         for( IFile file : violations.keySet() ) {
-            new Hotspot( file, violations.get( file ) );
+            result.add( new Hotspot( file, violations.get( file ) ) );
         }
         return result;
     }
