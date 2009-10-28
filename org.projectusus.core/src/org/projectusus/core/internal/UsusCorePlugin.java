@@ -5,6 +5,7 @@
 package org.projectusus.core.internal;
 
 import static org.eclipse.core.runtime.IStatus.ERROR;
+import static org.projectusus.core.internal.proportions.UsusModel.getUsusModel;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
@@ -28,6 +29,7 @@ public class UsusCorePlugin extends Plugin {
     public void start( BundleContext context ) throws Exception {
         super.start( context );
         plugin = this;
+        getUsusModel().forceRecompute();
     }
 
     @Override
