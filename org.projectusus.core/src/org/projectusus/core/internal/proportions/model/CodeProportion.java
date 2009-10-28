@@ -11,11 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.PlatformObject;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
 import org.projectusus.core.internal.proportions.sqi.ProjectResults;
 
-public class CodeProportion {
+public class CodeProportion extends PlatformObject {
 
     private final IsisMetrics metric;
     private final int violations;
