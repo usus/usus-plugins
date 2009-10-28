@@ -4,11 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.model;
 
-import org.eclipse.core.resources.IFile;
 
 public interface IWarningsHotspot extends IHotspot {
-
-    IFile getFile();
 
     int getWarnings();
 }

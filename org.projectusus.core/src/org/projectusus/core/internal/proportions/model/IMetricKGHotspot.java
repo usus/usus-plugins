@@ -1,10 +1,7 @@
 package org.projectusus.core.internal.proportions.model;
 
-import org.eclipse.core.resources.IFile;
 
-public interface IMetricKGHotspot {
-
-    IFile getFile();
+public interface IMetricKGHotspot extends IHotspot {
 
     String getClassName();
 

@@ -6,17 +6,19 @@ package org.projectusus.core.internal.proportions.sqi;
 
 import java.util.List;
 
+import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.core.internal.proportions.model.MetricCCHotspot;
+import org.projectusus.core.internal.proportions.model.MetricMLHotspot;
+
 public class MethodResults implements IResults {
 
-    private final String packageName;
     private final String className;
     private final String methodName;
     private final int lineNo;
     private int ccResult;
     private int mlResult;
 
-    public MethodResults( String packageName, String className, String methodName, int lineNo ) {
-        this.packageName = packageName;
+    public MethodResults( String className, String methodName, int lineNo ) {
         this.className = className;
         this.methodName = methodName;
         this.lineNo = lineNo;
@@ -62,6 +64,18 @@ public class MethodResults implements IResults {
     public void getViolationNames( IsisMetrics metric, List<String> violations ) {
         if( metric.isViolatedBy( this ) ) {
             violations.add( this.getMethodName() );
+        }
+    }
+
+    public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
+        if( metric.isViolatedBy( this ) ) {
+            IHotspot hotspot = null;
+            if( metric.equals( IsisMetrics.CC ) ) {
+                hotspot = new MetricCCHotspot( className, getMethodName(), getCCResult() );
+            } else if( metric.equals( IsisMetrics.ML ) ) {
+                hotspot = new MetricMLHotspot( className, getMethodName(), getMLResult() );
+            }
+            hotspots.add( hotspot );
         }
     }
 

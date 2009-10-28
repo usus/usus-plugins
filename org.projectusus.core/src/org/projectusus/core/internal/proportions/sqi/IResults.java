@@ -6,6 +6,8 @@ package org.projectusus.core.internal.proportions.sqi;
 
 import java.util.List;
 
+import org.projectusus.core.internal.proportions.model.IHotspot;
+
 public interface IResults {
 
     public int getViolationCount( IsisMetrics metric );
@@ -15,5 +17,7 @@ public interface IResults {
     public void getViolationNames( IsisMetrics metric, List<String> violations );
 
     public void getViolationLineNumbers( IsisMetrics metric, List<Integer> violations );
+
+    public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots );
 
 }

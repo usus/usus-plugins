@@ -8,9 +8,8 @@ import org.eclipse.core.resources.IFile;
 
 public interface IHotspot {
 
-    String getLabel();
+    public void setFile( IFile file );
 
-    int getLine();
+    IFile getFile();
 
-    IFile getWorkspaceFile();
 }

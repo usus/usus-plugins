@@ -18,7 +18,7 @@ public class MethodResultsTest {
     
     @Before
     public void setup(){
-       methodResults = new MethodResults( PACKAGENAME, CLASSNAME, METHODNAME, LINENO  );
+       methodResults = new MethodResults( CLASSNAME, METHODNAME, LINENO  );
     }
     
     @Test

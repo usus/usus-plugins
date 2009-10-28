@@ -6,6 +6,9 @@ package org.projectusus.core.internal.proportions.sqi;
 
 import java.util.List;
 
+import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
+
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 public class ClassResults extends Results<String, MethodResults> {
@@ -31,7 +34,7 @@ public class ClassResults extends Results<String, MethodResults> {
     private MethodResults getResults( BetterDetailAST resultAST ) {
         BetterDetailAST methodAST = findEnclosingMethod( resultAST );
         String methodName = getNameOfMethod( methodAST );
-        MethodResults methodResults = getResults( methodName, new MethodResults( getPackageName(), getClassName(), methodName, methodAST.getLineNo() ) );
+        MethodResults methodResults = getResults( methodName, new MethodResults( getClassName(), methodName, methodAST.getLineNo() ) );
         return methodResults;
     }
 
@@ -90,6 +93,15 @@ public class ClassResults extends Results<String, MethodResults> {
             super.getViolationNames( metric, violations );
         } else if( metric.isViolatedBy( this ) ) {
             violations.add( this.getClassName() );
+        }
+    }
+
+    @Override
+    public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
+        if( metric.isMethodTest() ) {
+            super.addHotspots( metric, hotspots );
+        } else if( metric.isViolatedBy( this ) ) {
+            hotspots.add( new MetricKGHotspot( className, this.getResultCount() ) );
         }
     }
 

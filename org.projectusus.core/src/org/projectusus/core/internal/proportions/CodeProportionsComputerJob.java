@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.projectusus.core.internal.proportions.checkstyledriver.CheckstyleDriver;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
@@ -91,7 +92,8 @@ class CodeProportionsComputerJob extends Job {
         int basis = yellowCountResult.getFileCount();
         int violations = yellowCountResult.getYellowCount();
         double sqiValue = new CodeProportionsRatio( violations, basis ).computeReverseIndicator();
-        return new CodeProportion( CW, violations, basis, sqiValue );
+        return new CodeProportion( CW, violations, basis, sqiValue, new ArrayList<IHotspot>() );
+        // TODO add hotspots?
     }
 
     private UsusModel getModel() {

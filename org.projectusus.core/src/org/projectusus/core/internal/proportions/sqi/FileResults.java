@@ -4,7 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.sqi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.resources.IFile;
+import org.projectusus.core.internal.proportions.model.IHotspot;
 
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -35,6 +39,16 @@ public class FileResults extends Results<String, ClassResults> {
 
     public int getNumberOfClasses() {
         return getResultCount();
+    }
+
+    @Override
+    public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
+        List<IHotspot> localHotspots = new ArrayList<IHotspot>();
+        super.addHotspots( metric, localHotspots );
+        for( IHotspot hotspot : localHotspots ) {
+            hotspot.setFile( fileOfResults );
+        }
+        hotspots.addAll( localHotspots );
     }
 
     private ClassResults getResults( BetterDetailAST methodAST ) {

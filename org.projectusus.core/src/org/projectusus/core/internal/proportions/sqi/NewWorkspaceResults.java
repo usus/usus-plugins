@@ -4,11 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.sqi;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.model.IHotspot;
 
 public class NewWorkspaceResults extends Results<IProject, ProjectResults> {
 
@@ -36,7 +39,9 @@ public class NewWorkspaceResults extends Results<IProject, ProjectResults> {
         int violations = getViolationCount( metric );
         int basis = getViolationBasis( metric );
         double sqi = new SQIComputer( basis, violations, metric.getCalibration() ).compute();
-        return new CodeProportion( metric, violations, basis, sqi );
+        List<IHotspot> hotspots = new ArrayList<IHotspot>();
+        addHotspots( metric, hotspots );
+        return new CodeProportion( metric, violations, basis, sqi, hotspots );
     }
 
     public ProjectResults getCurrentProjectResults() {

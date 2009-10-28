@@ -75,7 +75,7 @@ public class HotSpotsView extends ViewPart {
     }
 
     private void openEditorAt( IHotspot hotspot ) {
-        ICompilationUnit compilationUnit = JavaCore.createCompilationUnitFrom( hotspot.getWorkspaceFile() );
+        ICompilationUnit compilationUnit = JavaCore.createCompilationUnitFrom( hotspot.getFile() );
         if( compilationUnit != null ) {
             try {
                 // TODO lf drive editor to line number/method element

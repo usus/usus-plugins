@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.projectusus.core.internal.proportions.model.IHotspot;
+
 public class Results<S, T extends IResults> implements IResults {
 
     private final ResultMapWrapper<S, T> wrapper;
@@ -53,6 +55,12 @@ public class Results<S, T extends IResults> implements IResults {
     public void getViolationLineNumbers( IsisMetrics metric, List<Integer> violations ) {
         for( T result : wrapper.getAllResults() ) {
             result.getViolationLineNumbers( metric, violations );
+        }
+    }
+
+    public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
+        for( T result : wrapper.getAllResults() ) {
+            result.addHotspots( metric, hotspots );
         }
     }
 

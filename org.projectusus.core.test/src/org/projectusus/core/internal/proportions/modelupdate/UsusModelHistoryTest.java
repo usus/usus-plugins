@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.model.IHotspot;
 
 public class UsusModelHistoryTest {
 
@@ -54,13 +55,13 @@ public class UsusModelHistoryTest {
     }
     
     private CodeProportion dummyEntryTa() {
-        return new CodeProportion( TA, 10, 100, 10.0);
+        return new CodeProportion( TA, 10, 100, 10.0, new ArrayList<IHotspot>());
     }
     
     private List<CodeProportion> dummyEntriesCp() {
-        CodeProportion kg = new CodeProportion( KG, 3, 10, 12.0);
-        CodeProportion cc = new CodeProportion( CC, 10, 42, 5.0);
-        CodeProportion ml = new CodeProportion( ML, 42, 42, 100.0);
+        CodeProportion kg = new CodeProportion( KG, 3, 10, 12.0, new ArrayList<IHotspot>());
+        CodeProportion cc = new CodeProportion( CC, 10, 42, 5.0, new ArrayList<IHotspot>());
+        CodeProportion ml = new CodeProportion( ML, 42, 42, 100.0, new ArrayList<IHotspot>());
         return asList( kg, ml, cc );
     }
 

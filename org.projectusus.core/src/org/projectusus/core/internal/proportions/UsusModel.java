@@ -8,6 +8,7 @@ import static java.util.Arrays.asList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +17,7 @@ import org.projectusus.core.internal.coverage.ICoverageListener;
 import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.coverage.emmadriver.EmmaDriver;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.model.UsusModelRootNode;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
@@ -101,7 +103,8 @@ public class UsusModel implements IUsusModel {
                 int covered = coverage.getCoveredCount();
                 int total = coverage.getTotalCount();
                 double sqi = new CodeProportionsRatio( covered, total ).compute();
-                CodeProportion codeProportion = new CodeProportion( TA, covered, total, sqi );
+                CodeProportion codeProportion = new CodeProportion( TA, covered, total, sqi, new ArrayList<IHotspot>() );
+                // TODO add hotspots?
                 update( new TestRunModelUpdate( codeProportion ) );
             }
         };

@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 
@@ -67,7 +68,7 @@ public class Checkpoints2GraphicsConverterTest {
 		public List<CodeProportion> getEntries() {
 			List<CodeProportion> result = new ArrayList<CodeProportion>();
 			for (double value : values) {
-				result.add(new CodeProportion(metric, 0, 0, value));
+				result.add(new CodeProportion(metric, 0, 0, value, new ArrayList<IHotspot>()));
 			}
 			return result;
 		}
