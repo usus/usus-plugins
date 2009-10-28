@@ -45,10 +45,15 @@ public class ClassResults extends Results<String, MethodResults> {
 
     private BetterDetailAST findEnclosingMethod( BetterDetailAST anAST ) {
         BetterDetailAST methodAST = anAST;
-        while( methodAST != null && TokenTypes.METHOD_DEF != methodAST.getType() ) {
+        while( methodAST != null && isNeitherMethodNorConstructor( methodAST ) ) {
             methodAST = methodAST.getParent();
         }
         return methodAST;
+    }
+
+    private boolean isNeitherMethodNorConstructor( BetterDetailAST methodAST ) {
+        int type = methodAST.getType();
+        return TokenTypes.METHOD_DEF != type && TokenTypes.CTOR_DEF != type;
     }
 
     public String getClassName() {
