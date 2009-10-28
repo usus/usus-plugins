@@ -36,4 +36,9 @@ public class MetricMLHotspot implements IMetricMLHotspot {
         return methodName;
     }
 
+    @Override
+    public String toString() {
+        return getClassName() + "." + getMethodName() + " (ML = " + getMethodLength() + ")"; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+    }
+
 }

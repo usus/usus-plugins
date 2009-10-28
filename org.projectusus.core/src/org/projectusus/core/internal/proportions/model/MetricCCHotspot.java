@@ -36,4 +36,8 @@ public class MetricCCHotspot implements IMetricCCHotspot {
         return methodName;
     }
 
+    @Override
+    public String toString() {
+        return getClassName() + "." + getMethodName() + " (CC = " + getCyclomaticComplexity() + ")"; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+    }
 }
