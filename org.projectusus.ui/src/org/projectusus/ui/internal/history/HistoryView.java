@@ -4,13 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.history;
 
-import static org.eclipse.swt.SWT.COLOR_BLACK;
-import static org.eclipse.swt.SWT.COLOR_BLUE;
-import static org.eclipse.swt.SWT.COLOR_GRAY;
-import static org.eclipse.swt.SWT.COLOR_GREEN;
-import static org.eclipse.swt.SWT.COLOR_MAGENTA;
-import static org.eclipse.swt.SWT.COLOR_RED;
-import static org.eclipse.swt.SWT.COLOR_YELLOW;
 import static org.projectusus.core.internal.proportions.UsusModel.getUsusModel;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ACD;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CC;
@@ -19,6 +12,13 @@ import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.KG;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.PC;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
+import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_ACD;
+import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_CC;
+import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_CW;
+import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_KG;
+import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_ML;
+import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_PC;
+import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_TA;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +33,7 @@ import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.ui.internal.util.UsusColors;
 import org.swtchart.Chart;
 import org.swtchart.ILineSeries;
 import org.swtchart.ISeriesSet;
@@ -101,17 +102,17 @@ public class HistoryView extends ViewPart {
 
     private Map<IsisMetrics, Color> initColors() {
         Map<IsisMetrics, Color> result = new HashMap<IsisMetrics, Color>();
-        result.put( TA, getColor( COLOR_GREEN ) );
-        result.put( CC, getColor( COLOR_BLUE ) );
-        result.put( PC, getColor( COLOR_BLACK ) );
-        result.put( ACD, getColor( COLOR_MAGENTA ) );
-        result.put( KG, getColor( COLOR_RED ) );
-        result.put( ML, getColor( COLOR_GRAY ) );
-        result.put( CW, getColor( COLOR_YELLOW ) );
+        result.put( TA, getColor( ISIS_METRIC_TA ) );
+        result.put( CC, getColor( ISIS_METRIC_CC ) );
+        result.put( PC, getColor( ISIS_METRIC_PC ) );
+        result.put( ACD, getColor( ISIS_METRIC_ACD ) );
+        result.put( KG, getColor( ISIS_METRIC_KG ) );
+        result.put( ML, getColor( ISIS_METRIC_ML ) );
+        result.put( CW, getColor( ISIS_METRIC_CW ) );
         return result;
     }
 
-    private Color getColor( int swtColorKey ) {
-        return Display.getDefault().getSystemColor( swtColorKey );
+    private Color getColor( String key ) {
+        return UsusColors.getSharedColors().getColor( key );
     }
 }
