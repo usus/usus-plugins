@@ -12,6 +12,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;

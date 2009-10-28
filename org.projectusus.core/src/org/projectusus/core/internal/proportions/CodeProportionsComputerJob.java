@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.projectusus.core.internal.proportions.checkstyledriver.CheckstyleDriver;
+import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;

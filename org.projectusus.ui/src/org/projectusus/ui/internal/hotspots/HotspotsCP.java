@@ -6,11 +6,17 @@ package org.projectusus.ui.internal.hotspots;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.projectusus.core.internal.proportions.model.CodeProportion;
 
 public class HotspotsCP implements IStructuredContentProvider {
 
     public Object[] getElements( Object inputElement ) {
-        return new Object[] { inputElement.toString() };
+        Object[] result = new Object[0];
+        if( inputElement instanceof CodeProportion ) {
+            CodeProportion codeProportion = (CodeProportion)inputElement;
+            result = codeProportion.getHotspots().toArray();
+        }
+        return result;
     }
 
     public void dispose() {

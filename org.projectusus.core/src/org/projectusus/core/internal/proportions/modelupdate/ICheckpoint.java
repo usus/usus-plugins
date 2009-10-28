@@ -7,7 +7,7 @@ package org.projectusus.core.internal.proportions.modelupdate;
 import java.util.Date;
 import java.util.List;
 
-import org.projectusus.core.internal.proportions.CodeProportion;
+import org.projectusus.core.internal.proportions.model.CodeProportion;
 
 public interface ICheckpoint {
 

@@ -20,7 +20,7 @@ import java.text.DecimalFormat;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.projectusus.core.internal.proportions.CodeProportion;
+import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.ICodeProportions;
 import org.projectusus.core.internal.proportions.model.ITestCoverage;
 import org.projectusus.core.internal.proportions.model.IWarnings;

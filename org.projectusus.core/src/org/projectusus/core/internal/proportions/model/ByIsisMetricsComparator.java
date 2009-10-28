@@ -6,7 +6,6 @@ package org.projectusus.core.internal.proportions.model;
 
 import java.util.Comparator;
 
-import org.projectusus.core.internal.proportions.CodeProportion;
 
 class ByIsisMetricsComparator implements Comparator<CodeProportion> {
 

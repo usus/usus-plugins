@@ -11,7 +11,7 @@ import static org.projectusus.core.internal.proportions.modelupdate.IUsusModelUp
 import java.util.ArrayList;
 import java.util.List;
 
-import org.projectusus.core.internal.proportions.CodeProportion;
+import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate.Type;
 
 public class UsusModelHistory implements IUsusModelHistory {

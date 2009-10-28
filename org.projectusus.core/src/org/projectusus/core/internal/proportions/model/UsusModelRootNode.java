@@ -7,7 +7,6 @@ package org.projectusus.core.internal.proportions.model;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CW;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
 
-import org.projectusus.core.internal.proportions.CodeProportion;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 
 public class UsusModelRootNode {

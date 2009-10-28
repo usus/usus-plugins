@@ -4,10 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.model;
 
-import java.util.List;
+public interface ITestCoverageHotspot extends IHotspot {
 
+    int getTotalLines();
 
-public interface IUsusElement {
+    int getCoveredLines();
 
-    List<CodeProportion> getEntries();
+    // TODO lf all the coverage types
 }

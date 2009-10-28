@@ -9,7 +9,6 @@ import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
 
 import java.util.List;
 
-import org.projectusus.core.internal.proportions.CodeProportion;
 
 class TestCoverage implements ITestCoverage {
 

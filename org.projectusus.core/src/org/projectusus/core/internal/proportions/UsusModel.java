@@ -15,6 +15,7 @@ import org.eclipse.core.resources.IResourceChangeListener;
 import org.projectusus.core.internal.coverage.ICoverageListener;
 import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.coverage.emmadriver.EmmaDriver;
+import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.model.UsusModelRootNode;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;

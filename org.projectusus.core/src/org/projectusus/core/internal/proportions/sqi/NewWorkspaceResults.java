@@ -8,7 +8,7 @@ import java.util.Collection;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.projectusus.core.internal.proportions.CodeProportion;
+import org.projectusus.core.internal.proportions.model.CodeProportion;
 
 public class NewWorkspaceResults extends Results<IProject, ProjectResults> {
 

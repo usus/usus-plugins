@@ -7,7 +7,7 @@ package org.projectusus.ui.internal.history;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.projectusus.core.internal.proportions.CodeProportion;
+import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 

@@ -9,7 +9,7 @@ import static java.util.Collections.unmodifiableList;
 import java.util.Date;
 import java.util.List;
 
-import org.projectusus.core.internal.proportions.CodeProportion;
+import org.projectusus.core.internal.proportions.model.CodeProportion;
 
 /**
  * update the Usus model with results from a metrics computation.

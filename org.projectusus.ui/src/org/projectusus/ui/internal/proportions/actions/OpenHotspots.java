@@ -12,7 +12,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
-import org.projectusus.core.internal.proportions.CodeProportion;
+import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.ui.internal.UsusUIPlugin;
 import org.projectusus.ui.internal.hotspots.HotSpotsView;
 
