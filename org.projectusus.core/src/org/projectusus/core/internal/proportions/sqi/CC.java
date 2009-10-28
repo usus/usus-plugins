@@ -44,7 +44,8 @@ public class CC extends Check {
         case TokenTypes.METHOD_DEF:
         case TokenTypes.INSTANCE_INIT:
         case TokenTypes.STATIC_INIT:
-            NewWorkspaceResults.getInstance().getCurrentProjectResults().getCurrentFileResults().setCCResult( aAST, currentCountForMethod );
+            FileResults currentFileResults = NewWorkspaceResults.getInstance().getCurrentProjectResults().getCurrentFileResults();
+            currentFileResults.setCCResult( new BetterDetailAST( aAST ), currentCountForMethod );
         }
     }
 

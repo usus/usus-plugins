@@ -14,4 +14,6 @@ public interface IResults {
 
     public void getViolationNames( IsisMetrics metric, List<String> violations );
 
+    public void getViolationLineNumbers( IsisMetrics metric, List<Integer> violations );
+
 }

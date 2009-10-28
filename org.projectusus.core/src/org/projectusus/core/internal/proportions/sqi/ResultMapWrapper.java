@@ -7,6 +7,7 @@ package org.projectusus.core.internal.proportions.sqi;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ResultMapWrapper<S, T extends IResults> {
 
@@ -33,4 +34,15 @@ public class ResultMapWrapper<S, T extends IResults> {
         resultMap.remove( key );
     }
 
+    protected Set<S> keySet() {
+        return resultMap.keySet();
+    }
+
+    protected T get( S key ) {
+        return resultMap.get( key );
+    }
+
+    protected Collection<T> values() {
+        return resultMap.values();
+    }
 }

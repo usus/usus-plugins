@@ -17,6 +17,7 @@ public class Classes extends Check {
 
     @Override
     public void visitToken( DetailAST anAST ) {
-        NewWorkspaceResults.getInstance().getCurrentProjectResults().getCurrentFileResults().addClass( anAST );
+        FileResults currentFileResults = NewWorkspaceResults.getInstance().getCurrentProjectResults().getCurrentFileResults();
+        currentFileResults.addClass( new BetterDetailAST( anAST ) );
     }
 }

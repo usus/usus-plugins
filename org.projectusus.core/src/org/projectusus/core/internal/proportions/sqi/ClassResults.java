@@ -6,32 +6,36 @@ package org.projectusus.core.internal.proportions.sqi;
 
 import java.util.List;
 
-import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 public class ClassResults extends Results<String, MethodResults> {
 
-    private final String fullClassName;
+    private final String packageName;
+    private final String className;
+    private final int lineNo;
 
-    public ClassResults( String className ) {
-        fullClassName = className;
+    public ClassResults( String packageName, String className, int lineNo ) {
+        this.packageName = packageName;
+        this.className = className;
+        this.lineNo = lineNo;
     }
 
-    public void setCCResult( DetailAST methodAST, int value ) {
+    public void setCCResult( BetterDetailAST methodAST, int value ) {
         getResults( methodAST ).setCCResult( value );
     }
 
-    public void setMLResult( DetailAST methodAST, int value ) {
+    public void setMLResult( BetterDetailAST methodAST, int value ) {
         getResults( methodAST ).setMLResult( value );
     }
 
-    private MethodResults getResults( DetailAST methodAST ) {
-        String methodName = getNameOfMethod( findEnclosingMethod( methodAST ) );
-        MethodResults methodResults = getResults( methodName, new MethodResults( getFullClassName(), methodName ) );
+    private MethodResults getResults( BetterDetailAST resultAST ) {
+        BetterDetailAST methodAST = findEnclosingMethod( resultAST );
+        String methodName = getNameOfMethod( methodAST );
+        MethodResults methodResults = getResults( methodName, new MethodResults( getPackageName(), getClassName(), methodName, methodAST.getLineNo() ) );
         return methodResults;
     }
 
-    private String getNameOfMethod( DetailAST methodAST ) {
+    private String getNameOfMethod( BetterDetailAST methodAST ) {
         if( methodAST == null ) {
             return ""; //$NON-NLS-1$
         }
@@ -39,16 +43,24 @@ public class ClassResults extends Results<String, MethodResults> {
         return methodAST.findFirstToken( TokenTypes.IDENT ).getText();
     }
 
-    private DetailAST findEnclosingMethod( DetailAST anAST ) {
-        DetailAST methodAST = anAST;
+    private BetterDetailAST findEnclosingMethod( BetterDetailAST anAST ) {
+        BetterDetailAST methodAST = anAST;
         while( methodAST != null && TokenTypes.METHOD_DEF != methodAST.getType() ) {
             methodAST = methodAST.getParent();
         }
         return methodAST;
     }
 
-    public String getFullClassName() {
-        return fullClassName;
+    public String getClassName() {
+        return className;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public int getLineNo() {
+        return lineNo;
     }
 
     @Override
@@ -72,8 +84,18 @@ public class ClassResults extends Results<String, MethodResults> {
         if( metric.isMethodTest() ) {
             super.getViolationNames( metric, violations );
         } else if( metric.isViolatedBy( this ) ) {
-            violations.add( this.getFullClassName() );
+            violations.add( this.getClassName() );
         }
+    }
+
+    @Override
+    public void getViolationLineNumbers( IsisMetrics metric, List<Integer> violations ) {
+        if( metric.isMethodTest() ) {
+            super.getViolationLineNumbers( metric, violations );
+        } else if( metric.isViolatedBy( this ) ) {
+            violations.add( new Integer( this.getLineNo() ) );
+        }
+
     }
 
 }

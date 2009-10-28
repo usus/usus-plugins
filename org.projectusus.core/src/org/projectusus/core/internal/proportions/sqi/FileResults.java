@@ -6,8 +6,6 @@ package org.projectusus.core.internal.proportions.sqi;
 
 import org.eclipse.core.resources.IFile;
 
-import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 public class FileResults extends Results<String, ClassResults> {
@@ -19,15 +17,19 @@ public class FileResults extends Results<String, ClassResults> {
         this.fileOfResults = file;
     }
 
-    public void setCCResult( DetailAST methodAST, int value ) {
+    public IFile getFileOfResults() {
+        return fileOfResults;
+    }
+
+    public void setCCResult( BetterDetailAST methodAST, int value ) {
         getResults( methodAST ).setCCResult( methodAST, value );
     }
 
-    public void setMLResult( DetailAST methodAST, int value ) {
+    public void setMLResult( BetterDetailAST methodAST, int value ) {
         getResults( methodAST ).setMLResult( methodAST, value );
     }
 
-    public void addClass( DetailAST classAST ) {
+    public void addClass( BetterDetailAST classAST ) {
         getResults( classAST );
     }
 
@@ -35,43 +37,42 @@ public class FileResults extends Results<String, ClassResults> {
         return getResultCount();
     }
 
-    private ClassResults getResults( DetailAST methodAST ) {
-        String className = getFullNameOfClassDef( findEnclosingClass( methodAST ) );
-        ClassResults classResults = getResults( className, new ClassResults( className ) );
+    private ClassResults getResults( BetterDetailAST methodAST ) {
+        String packageName = getPackageName( methodAST );
+        String className = getClassDefName( findEnclosingClass( methodAST ) );
+        ClassResults classResults = getResults( className, new ClassResults( packageName, className, methodAST.getLineNo() ) );
         return classResults;
     }
 
-    private DetailAST findEnclosingClass( DetailAST aAST ) {
-        DetailAST node = aAST;
+    private BetterDetailAST findEnclosingClass( BetterDetailAST aAST ) {
+        BetterDetailAST node = aAST;
         while( node != null && TokenTypes.CLASS_DEF != node.getType() ) {
             node = node.getParent();
         }
         return node;
     }
 
-    private String getFullNameOfClassDef( DetailAST classDefNode ) {
+    private String getClassDefName( BetterDetailAST classDefNode ) {
         if( classDefNode == null ) {
             return ""; //$NON-NLS-1$
         }
-        String className = classDefNode.findFirstToken( TokenTypes.IDENT ).getText();
-        String packageName = getPackageName( classDefNode );
-        if( packageName != "" ) { //$NON-NLS-1$
-            packageName = packageName + "."; //$NON-NLS-1$
-        }
-        return packageName + className;
+        return classDefNode.findFirstToken( TokenTypes.IDENT ).getText();
     }
 
-    private String getPackageName( DetailAST classDefNode ) {
-        DetailAST packageNode = classDefNode.getPreviousSibling();
+    private String getPackageName( BetterDetailAST classDefNode ) {
+        if( classDefNode == null ) {
+            return ""; //$NON-NLS-1$
+        }
+        BetterDetailAST packageNode = classDefNode.getPreviousSibling();
         while( packageNode != null && TokenTypes.PACKAGE_DEF != packageNode.getType() ) {
             packageNode = packageNode.getPreviousSibling();
         }
 
         String packageName = ""; //$NON-NLS-1$
         if( packageNode != null ) {
-            DetailAST dotNode = packageNode.findFirstToken( TokenTypes.DOT );
+            BetterDetailAST dotNode = packageNode.findFirstToken( TokenTypes.DOT );
             if( dotNode != null ) {
-                packageName = FullIdent.createFullIdent( dotNode ).getText();
+                packageName = dotNode.getFullIdentText();
             } else {
                 packageName = packageNode.findFirstToken( TokenTypes.IDENT ).getText();
             }

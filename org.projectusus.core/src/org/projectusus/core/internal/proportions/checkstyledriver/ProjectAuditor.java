@@ -36,17 +36,6 @@ class ProjectAuditor {
                 checker = CheckerFactory.createChecker( checkConfiguration, project );
                 checker.addListener( listener );
                 reconfigureSharedClassLoader( project );
-                // // Experiment zum Festhalten des aktuellen Files NR
-                // for( IFile currentFile : files ) {
-                // NewWorkspaceResults.getInstance().setCurrentFile( currentFile );
-                // List<File> tempFiles = new ArrayList<File>();
-                // tempFiles.add( currentFile.getLocation().toFile() );
-                // checker.process( tempFiles );
-                // // done in ProjectAuditListener: NewWorkspaceResults.getInstance().setCurrentFile( null );
-                //
-                // }
-
-                // vorher war es so und soll wieder so werden:
                 checker.process( convertToLocations( files ) );
 
                 if( listener.hasErrors() ) {

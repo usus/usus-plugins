@@ -8,14 +8,18 @@ import java.util.List;
 
 public class MethodResults implements IResults {
 
-    private final String fullClassName;
+    private final String packageName;
+    private final String className;
     private final String methodName;
+    private final int lineNo;
     private int ccResult;
     private int mlResult;
 
-    public MethodResults( String fullClassName, String methodName ) {
-        this.fullClassName = fullClassName;
+    public MethodResults( String packageName, String className, String methodName, int lineNo ) {
+        this.packageName = packageName;
+        this.className = className;
         this.methodName = methodName;
+        this.lineNo = lineNo;
     }
 
     public void setCCResult( int value ) {
@@ -36,7 +40,11 @@ public class MethodResults implements IResults {
     }
 
     public String getMethodName() {
-        return fullClassName + "." + methodName; //$NON-NLS-1$
+        return methodName;
+    }
+
+    public int getLineNo() {
+        return lineNo;
     }
 
     public boolean violates( IsisMetrics metric ) {
@@ -55,7 +63,12 @@ public class MethodResults implements IResults {
         if( metric.isViolatedBy( this ) ) {
             violations.add( this.getMethodName() );
         }
+    }
 
+    public void getViolationLineNumbers( IsisMetrics metric, List<Integer> violations ) {
+        if( metric.isViolatedBy( this ) ) {
+            violations.add( new Integer( this.getLineNo() ) );
+        }
     }
 
 }

@@ -4,6 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.sqi;
 
+import java.util.Collection;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.internal.proportions.CodeProportion;
@@ -24,6 +26,10 @@ public class NewWorkspaceResults extends Results<IProject, ProjectResults> {
 
     public void setCurrentProject( IProject project ) {
         this.currentProject = project;
+    }
+
+    public Collection<ProjectResults> getAllProjectResults() {
+        return this.values();
     }
 
     public CodeProportion getCodeProportion( IsisMetrics metric ) {
