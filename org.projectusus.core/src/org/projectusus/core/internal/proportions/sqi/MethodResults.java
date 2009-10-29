@@ -71,9 +71,9 @@ public class MethodResults implements IResults {
         if( metric.isViolatedBy( this ) ) {
             IHotspot hotspot = null;
             if( metric.equals( IsisMetrics.CC ) ) {
-                hotspot = new MetricCCHotspot( className, getMethodName(), getCCResult() );
+                hotspot = new MetricCCHotspot( className, getMethodName(), getCCResult(), getLineNo() );
             } else if( metric.equals( IsisMetrics.ML ) ) {
-                hotspot = new MetricMLHotspot( className, getMethodName(), getMLResult() );
+                hotspot = new MetricMLHotspot( className, getMethodName(), getMLResult(), getLineNo() );
             }
             hotspots.add( hotspot );
         }

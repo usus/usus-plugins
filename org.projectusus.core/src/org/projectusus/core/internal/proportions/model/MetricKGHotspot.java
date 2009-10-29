@@ -30,9 +30,12 @@ public class MetricKGHotspot implements IMetricKGHotspot {
         return file;
     }
 
+    public int getLine() {
+        return 0;
+    }
+
     @Override
     public String toString() {
         return getClassName() + " (KG = " + getClassSize() + ")"; //$NON-NLS-1$//$NON-NLS-2$ 
     }
-
 }

@@ -8,8 +8,11 @@ import org.eclipse.core.resources.IFile;
 
 public interface IHotspot {
 
-    public void setFile( IFile file );
+    void setFile( IFile file );
 
     IFile getFile();
+
+    // TODO lf temporarily only, helps with opening an editor
+    int getLine();
 
 }

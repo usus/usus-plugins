@@ -8,12 +8,14 @@ public class MetricCCHotspot implements IMetricCCHotspot {
     private final String methodName;
     private final int cyclomaticComplexity;
     private IFile file;
+    private final int line;
 
-    public MetricCCHotspot( String className, String methodName, int cyclomaticComplexity ) {
+    public MetricCCHotspot( String className, String methodName, int cyclomaticComplexity, int line ) {
         super();
         this.className = className;
         this.methodName = methodName;
         this.cyclomaticComplexity = cyclomaticComplexity;
+        this.line = line;
     }
 
     public void setFile( IFile file ) {
@@ -34,6 +36,10 @@ public class MetricCCHotspot implements IMetricCCHotspot {
 
     public String getMethodName() {
         return methodName;
+    }
+
+    public int getLine() {
+        return line;
     }
 
     @Override
