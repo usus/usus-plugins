@@ -4,14 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.yellowcount;
 
-import static org.eclipse.core.resources.IMarker.PROBLEM;
-import static org.eclipse.core.resources.IResource.DEPTH_INFINITE;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -58,42 +55,21 @@ public class YellowCount {
     }
 
     public IYellowCountResult count() {
-        int yellowCount = 0;
-        int yellowProjectCount = 0;
+        WorkspaceCount count = new WorkspaceCount();
         List<IProject> projects = getUsusProjects();
         for( IProject project : projects ) {
             try {
-                int projectYellowCount = getProjectYellowCount( project );
-                yellowCount += projectYellowCount;
-                if( projectYellowCount > 0 ) {
-                    yellowProjectCount++;
-                }
+                count.add( new ProjectCount( project ) );
             } catch( CoreException cex ) {
                 UsusCorePlugin.getDefault().getLog().log( cex.getStatus() );
             }
         }
-        return createResult( yellowCount, yellowProjectCount, projects );
+        return createResult( count.sum(), count.size(), projects );
     }
 
     private List<IProject> getUsusProjects() {
         IWorkspaceRoot wsRoot = getWorkspace().getRoot();
         return new FindUsusProjects( wsRoot.getProjects() ).compute();
-    }
-
-    private int getProjectYellowCount( IProject project ) throws CoreException {
-        int result = 0;
-        IMarker[] markers = project.findMarkers( PROBLEM, true, DEPTH_INFINITE );
-        for( IMarker marker : markers ) {
-            if( isWarning( marker ) ) {
-                result++;
-            }
-        }
-        return result;
-    }
-
-    private boolean isWarning( final IMarker marker ) throws CoreException {
-        Integer severity = (Integer)marker.getAttribute( IMarker.SEVERITY );
-        return severity != null && severity.intValue() == IMarker.SEVERITY_WARNING;
     }
 
     private void notifyListeners() {
