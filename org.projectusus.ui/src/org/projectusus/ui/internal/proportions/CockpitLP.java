@@ -4,7 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions;
 
-import static java.lang.String.valueOf;
 import static org.projectusus.ui.internal.proportions.CockpitColumnDesc.INDICATOR;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_CODE_PROPORTIONS;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_INFO;
@@ -14,8 +13,6 @@ import static org.projectusus.ui.internal.util.UITexts.cockpitLP_codeProportions
 import static org.projectusus.ui.internal.util.UITexts.cockpitLP_testCoverage;
 import static org.projectusus.ui.internal.util.UITexts.cockpitLP_warnings;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
-
-import java.text.DecimalFormat;
 
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -58,23 +55,7 @@ public class CockpitLP extends LabelProvider implements ITableLabelProvider {
     }
 
     private String getColumnTextFor( CodeProportion element, int columnIndex ) {
-        String result = null;
-        switch( CockpitColumnDesc.values()[columnIndex] ) {
-            case INDICATOR:
-                result = element.getMetric().getLabel();
-                break;
-            case VIOLATIONS:
-                result = valueOf( element.getViolations() );
-                break;
-            case CASES:
-                result = valueOf( element.getBasis() );
-                break;
-            case SQI:
-                DecimalFormat formatter = new DecimalFormat( "#.##" ); //$NON-NLS-1$
-                result = valueOf( formatter.format( element.getSQIValue() ) );
-                break;
-        }
-        return result;
+        return CockpitColumnDesc.values()[columnIndex].getLabel( element );
     }
 
     private Image getColumnImageFor( Object element ) {
