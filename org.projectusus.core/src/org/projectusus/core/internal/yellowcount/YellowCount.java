@@ -16,6 +16,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.project.FindUsusProjects;
+import org.projectusus.core.internal.proportions.model.CodeProportion;
 
 /**
  * <p>
@@ -54,9 +55,18 @@ public class YellowCount {
         listeners.remove( listener );
     }
 
-    public IYellowCountResult count() {
-        WorkspaceCount count = new WorkspaceCount();
+    public CodeProportion count() {
         List<IProject> projects = getUsusProjects();
+        return count( projects ).createCodeProportion();
+    }
+
+    public IYellowCountResult countOld() {
+        List<IProject> projects = getUsusProjects();
+        return convert( count( projects ), projects );
+    }
+
+    private WorkspaceCount count( List<IProject> projects ) {
+        WorkspaceCount count = new WorkspaceCount();
         for( IProject project : projects ) {
             try {
                 count.add( new ProjectCount( project ) );
@@ -64,7 +74,11 @@ public class YellowCount {
                 UsusCorePlugin.getDefault().getLog().log( cex.getStatus() );
             }
         }
-        return createResult( count.sum(), count.size(), projects );
+        return count;
+    }
+
+    private IYellowCountResult convert( WorkspaceCount count, List<IProject> projects ) {
+        return createResult( count.countViolations(), count.countProjectsWithViolations(), projects );
     }
 
     private List<IProject> getUsusProjects() {

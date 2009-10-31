@@ -18,6 +18,10 @@ public class MetricKGHotspot implements IMetricKGHotspot {
         this.file = file;
     }
 
+    public int getHotness() {
+        return classSize;
+    }
+
     public String getClassName() {
         return className;
     }

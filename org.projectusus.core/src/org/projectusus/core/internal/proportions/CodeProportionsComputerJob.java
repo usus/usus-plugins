@@ -6,7 +6,6 @@ package org.projectusus.core.internal.proportions;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CC;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CW;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.KG;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_computing;
@@ -25,11 +24,9 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.projectusus.core.internal.proportions.checkstyledriver.CheckstyleDriver;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
-import org.projectusus.core.internal.yellowcount.IYellowCountResult;
 import org.projectusus.core.internal.yellowcount.YellowCount;
 
 class CodeProportionsComputerJob extends Job {
@@ -71,7 +68,7 @@ class CodeProportionsComputerJob extends Job {
     }
 
     private void performComputation( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
-        collector.add( computeCW( new SubProgressMonitor( monitor, 128 ) ) );
+        collector.add( YellowCount.getInstance().count() );
         computeCheckstyleBasedMetrics( collector, new SubProgressMonitor( monitor, 512 ) );
     }
 
@@ -83,16 +80,6 @@ class CodeProportionsComputerJob extends Job {
         for( IsisMetrics metric : Arrays.asList( CC, KG, ML ) ) {
             collector.add( results.getCodeProportion( metric ) );
         }
-    }
-
-    private CodeProportion computeCW( IProgressMonitor monitor ) {
-        IYellowCountResult yellowCountResult = YellowCount.getInstance().count();
-        // more than Java classes! We receive warnings for other artifacts, too.
-        int basis = yellowCountResult.getFileCount();
-        int violations = yellowCountResult.getYellowCount();
-        double sqiValue = new CodeProportionsRatio( violations, basis ).computeReverseIndicator();
-        return new CodeProportion( CW, violations, basis, sqiValue, new ArrayList<IHotspot>() );
-        // TODO add hotspots?
     }
 
     private UsusModel getModel() {

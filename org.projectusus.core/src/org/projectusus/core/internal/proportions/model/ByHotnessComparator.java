@@ -4,9 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.model;
 
-public interface IMetricKGHotspot extends IHotspot {
+import java.util.Comparator;
 
-    String getClassName();
+public class ByHotnessComparator implements Comparator<IHotspot> {
 
-    int getClassSize();
+    public int compare( IHotspot left, IHotspot right ) {
+        return new Integer( right.getHotness() ).compareTo( new Integer( left.getHotness() ) );
+    }
 }

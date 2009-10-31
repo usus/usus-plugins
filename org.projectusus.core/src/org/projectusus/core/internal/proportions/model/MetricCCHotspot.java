@@ -18,6 +18,10 @@ public class MetricCCHotspot implements IMetricCCHotspot {
         this.line = line;
     }
 
+    public int getHotness() {
+        return cyclomaticComplexity;
+    }
+
     public void setFile( IFile file ) {
         this.file = file;
     }

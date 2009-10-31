@@ -15,4 +15,6 @@ public interface IHotspot {
     // TODO lf temporarily only, helps with opening an editor
     int getLine();
 
+    int getHotness();
+
 }

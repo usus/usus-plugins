@@ -22,6 +22,10 @@ public class MetricMLHotspot implements IMetricMLHotspot {
         this.file = file;
     }
 
+    public int getHotness() {
+        return methodLength;
+    }
+
     public String getClassName() {
         return className;
     }

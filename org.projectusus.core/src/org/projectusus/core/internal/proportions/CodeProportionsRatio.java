@@ -13,7 +13,7 @@ public class CodeProportionsRatio {
 
     private final double result;
 
-    CodeProportionsRatio( int part, int total ) {
+    public CodeProportionsRatio( int part, int total ) {
         result = total == 0 ? 0 : computeRatio( part, total );
     }
 

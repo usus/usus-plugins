@@ -23,7 +23,7 @@ import org.projectusus.core.internal.yellowcount.YellowCount;
 public class AddCheckpoint implements IViewActionDelegate {
 
     public void run( IAction action ) {
-        IYellowCountResult count = YellowCount.getInstance().count();
+        IYellowCountResult count = YellowCount.getInstance().countOld();
         String checkpoint = new Date().toString() + " " + count.toString() + "\r\n"; //$NON-NLS-1$ //$NON-NLS-2$
         addCheckpoint( checkpoint );
     }

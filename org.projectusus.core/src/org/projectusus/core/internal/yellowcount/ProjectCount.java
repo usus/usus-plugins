@@ -7,12 +7,16 @@ package org.projectusus.core.internal.yellowcount;
 import static org.eclipse.core.resources.IMarker.PROBLEM;
 import static org.eclipse.core.resources.IResource.DEPTH_INFINITE;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.projectusus.core.internal.proportions.model.IHotspot;
 
 class ProjectCount {
     private final IProject project;
@@ -32,6 +36,20 @@ class ProjectCount {
         int result = 0;
         for( IResource resource : counts.keySet() ) {
             result += counts.get( resource ).intValue();
+        }
+        return result;
+    }
+
+    int countFiles() {
+        return counts.size();
+    }
+
+    List<IHotspot> getHotspots() {
+        List<IHotspot> result = new ArrayList<IHotspot>();
+        for( IResource resource : counts.keySet() ) {
+            IFile file = (IFile)resource;
+            int count = counts.get( resource ).intValue();
+            result.add( new MetricCWHotspot( file, count ) );
         }
         return result;
     }
