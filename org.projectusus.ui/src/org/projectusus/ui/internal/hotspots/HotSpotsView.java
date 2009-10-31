@@ -65,13 +65,7 @@ public class HotSpotsView extends ViewPart {
             public void selectionChanged( IWorkbenchPart part, ISelection selection ) {
                 CodeProportion codeProportion = extractCodeProportion( selection );
                 if( codeProportion != null ) {
-                    IHotspotsPage page = createPage( part );
-                    if( page != null ) {
-                        page.setInput( codeProportion );
-                        showPage( page );
-                    } else {
-                        showPage( defaultPage );
-                    }
+                    updatePage( selection, codeProportion );
                 }
             }
         } );
@@ -105,12 +99,21 @@ public class HotSpotsView extends ViewPart {
         }
     }
 
-    private IHotspotsPage createPage( IWorkbenchPart part ) {
-        ISelection selection = part.getSite().getSelectionProvider().getSelection();
+    private IHotspotsPage createPage( ISelection selection ) {
         IHotspotsPage page = new ExtractHotspotsPage( selection ).compute();
         if( page != null && !page.isInitialized() ) {
             page.createControl( book );
         }
         return page;
+    }
+
+    private void updatePage( ISelection selection, CodeProportion codeProportion ) {
+        IHotspotsPage page = createPage( selection );
+        if( page != null ) {
+            page.setInput( codeProportion );
+            showPage( page );
+        } else {
+            showPage( defaultPage );
+        }
     }
 }
