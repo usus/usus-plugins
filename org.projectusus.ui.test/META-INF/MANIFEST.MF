@@ -9,4 +9,6 @@ Require-Bundle: org.junit4,
  com.mountainminds.eclemma.core,
  org.projectusus.ui,
  org.projectusus.core,
- org.projectusus.core.test
+ org.projectusus.core.test,
+ org.eclipse.ui,
+ org.eclipse.core.runtime

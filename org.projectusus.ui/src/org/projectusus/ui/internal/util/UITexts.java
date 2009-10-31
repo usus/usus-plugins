@@ -24,6 +24,17 @@ public final class UITexts extends NLS {
     public static String columnDesc_covered;
     public static String columnDesc_project;
 
+    public static String defaultHotspotsPage_info;
+
+    public static String hotspotsColumn_class;
+    public static String hotspotsColumn_cyclomaticComplexity;
+    public static String hotspotsColumn_length;
+    public static String hotspotsColumn_line;
+    public static String hotspotsColumn_method;
+    public static String hotspotsColumn_path;
+    public static String hotspotsColumn_size;
+    public static String hotspotsColumn_warnings;
+
     public static String openCheckpoints_noLog_title;
     public static String openCheckpoints_noLog_msg;
 

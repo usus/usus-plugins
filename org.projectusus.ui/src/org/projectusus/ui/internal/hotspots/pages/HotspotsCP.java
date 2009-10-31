@@ -2,13 +2,13 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.ui.internal.hotspots;
+package org.projectusus.ui.internal.hotspots.pages;
 
-import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 
-public class HotspotsCP implements IStructuredContentProvider {
+class HotspotsCP implements ITreeContentProvider {
 
     public Object[] getElements( Object inputElement ) {
         Object[] result = new Object[0];
@@ -25,5 +25,17 @@ public class HotspotsCP implements IStructuredContentProvider {
 
     public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
         // unused
+    }
+
+    public Object[] getChildren( Object parentElement ) {
+        return null;
+    }
+
+    public Object getParent( Object element ) {
+        return null;
+    }
+
+    public boolean hasChildren( Object element ) {
+        return getChildren( element ) != null && getChildren( element ).length > 0;
     }
 }

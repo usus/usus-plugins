@@ -26,7 +26,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.UsusModel;
@@ -124,14 +123,14 @@ public class CockpitView extends ViewPart {
         treeViewer = new TreeViewer( createTree( parent ) );
         treeViewer.setUseHashlookup( true );
 
-        createTreeTable( new TreeColumn[0] );
+        createTreeTable();
 
         treeViewer.setLabelProvider( new CockpitLP() );
         treeViewer.setContentProvider( new CockpitCP() );
         treeViewer.setInput( UsusModel.getUsusModel() );
     }
 
-    private void createTreeTable( TreeColumn[] currentColumns ) {
+    private void createTreeTable() {
         Tree tree = treeViewer.getTree();
         TableLayout layout = new TableLayout();
         treeViewer.getTree().setLayout( layout );
