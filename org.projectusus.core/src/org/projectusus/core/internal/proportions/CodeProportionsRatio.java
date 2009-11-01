@@ -22,7 +22,7 @@ public class CodeProportionsRatio {
     }
 
     public double computeReverseIndicator() {
-        return 100 - result;
+        return result == 0 ? 0 : 100 - result;
     }
 
     // internal
