@@ -24,6 +24,11 @@ public class ProjectResults extends Results<IFile, FileResults> {
         this.currentFile = currentFile;
     }
 
+    // for debugging!!
+    public IFile getCurrentFile() {
+        return currentFile;
+    }
+
     public FileResults getCurrentFileResults() {
         return getResults( currentFile, new FileResults( currentFile ) );
     }

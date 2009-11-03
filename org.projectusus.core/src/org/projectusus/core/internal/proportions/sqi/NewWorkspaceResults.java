@@ -5,7 +5,6 @@
 package org.projectusus.core.internal.proportions.sqi;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -31,19 +30,6 @@ public class NewWorkspaceResults extends Results<IProject, ProjectResults> {
         this.currentProject = project;
     }
 
-    public Collection<ProjectResults> getAllProjectResults() {
-        return this.values();
-    }
-
-    public CodeProportion getCodeProportion( IsisMetrics metric ) {
-        int violations = getViolationCount( metric );
-        int basis = getViolationBasis( metric );
-        double sqi = new SQIComputer( basis, violations, metric.getCalibration() ).compute();
-        List<IHotspot> hotspots = new ArrayList<IHotspot>();
-        addHotspots( metric, hotspots );
-        return new CodeProportion( metric, violations, basis, sqi, hotspots );
-    }
-
     public ProjectResults getCurrentProjectResults() {
         // log warning if currentProject == null
         return getResults( currentProject, new ProjectResults( currentProject ) );
@@ -59,6 +45,15 @@ public class NewWorkspaceResults extends Results<IProject, ProjectResults> {
 
     public void dropResults( IFile file ) {
         getCurrentProjectResults().dropResults( file );
+    }
+
+    public CodeProportion getCodeProportion( IsisMetrics metric ) {
+        int violations = getViolationCount( metric );
+        int basis = getViolationBasis( metric );
+        double sqi = new SQIComputer( basis, violations, metric.getCalibration() ).compute();
+        List<IHotspot> hotspots = new ArrayList<IHotspot>();
+        addHotspots( metric, hotspots );
+        return new CodeProportion( metric, violations, basis, sqi, hotspots );
     }
 
 }

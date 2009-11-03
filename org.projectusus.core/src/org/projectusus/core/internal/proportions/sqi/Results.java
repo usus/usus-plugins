@@ -4,9 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.sqi;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.projectusus.core.internal.proportions.model.IHotspot;
 
@@ -46,36 +44,9 @@ public class Results<S, T extends IResults> implements IResults {
         return basis;
     }
 
-    public void getViolationNames( IsisMetrics metric, List<String> violations ) {
-        for( T result : wrapper.getAllResults() ) {
-            result.getViolationNames( metric, violations );
-        }
-    }
-
-    public void getViolationLineNumbers( IsisMetrics metric, List<Integer> violations ) {
-        for( T result : wrapper.getAllResults() ) {
-            result.getViolationLineNumbers( metric, violations );
-        }
-    }
-
     public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
         for( T result : wrapper.getAllResults() ) {
             result.addHotspots( metric, hotspots );
         }
     }
-
-    // TODO verstecken
-    protected Set<S> keySet() {
-        return wrapper.keySet();
-    }
-
-    // TODO verstecken
-    protected T get( S key ) {
-        return wrapper.get( key );
-    }
-
-    protected Collection<T> values() {
-        return wrapper.values();
-    }
-
 }

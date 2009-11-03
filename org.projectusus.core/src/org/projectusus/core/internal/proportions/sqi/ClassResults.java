@@ -13,12 +13,10 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 public class ClassResults extends Results<String, MethodResults> {
 
-    private final String packageName;
     private final String className;
     private final int lineNo;
 
-    public ClassResults( String packageName, String className, int lineNo ) {
-        this.packageName = packageName;
+    public ClassResults( String className, int lineNo ) {
         this.className = className;
         this.lineNo = lineNo;
     }
@@ -63,10 +61,6 @@ public class ClassResults extends Results<String, MethodResults> {
         return className;
     }
 
-    public String getPackageName() {
-        return packageName;
-    }
-
     public int getLineNo() {
         return lineNo;
     }
@@ -88,15 +82,6 @@ public class ClassResults extends Results<String, MethodResults> {
     }
 
     @Override
-    public void getViolationNames( IsisMetrics metric, List<String> violations ) {
-        if( metric.isMethodTest() ) {
-            super.getViolationNames( metric, violations );
-        } else if( metric.isViolatedBy( this ) ) {
-            violations.add( this.getClassName() );
-        }
-    }
-
-    @Override
     public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
         if( metric.isMethodTest() ) {
             super.addHotspots( metric, hotspots );
@@ -104,15 +89,4 @@ public class ClassResults extends Results<String, MethodResults> {
             hotspots.add( new MetricKGHotspot( className, this.getResultCount() ) );
         }
     }
-
-    @Override
-    public void getViolationLineNumbers( IsisMetrics metric, List<Integer> violations ) {
-        if( metric.isMethodTest() ) {
-            super.getViolationLineNumbers( metric, violations );
-        } else if( metric.isViolatedBy( this ) ) {
-            violations.add( new Integer( this.getLineNo() ) );
-        }
-
-    }
-
 }

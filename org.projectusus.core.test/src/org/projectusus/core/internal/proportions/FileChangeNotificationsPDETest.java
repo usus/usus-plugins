@@ -43,8 +43,8 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 1, target.getProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
         assertEquals( project, affectedProject );
-        assertEquals( 1, target.getFiles( affectedProject ).size() );
-        IFile affectedFile = target.getFiles( affectedProject ).iterator().next();
+        assertEquals( 1, target.getJavaFiles( affectedProject ).size() );
+        IFile affectedFile = target.getJavaFiles( affectedProject ).iterator().next();
         assertEquals( file, affectedFile );
     }
     
@@ -62,7 +62,7 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 1, target.getProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
         assertEquals( project, affectedProject );
-        assertEquals( 0, target.getFiles( affectedProject ).size() );
+        assertEquals( 0, target.getJavaFiles( affectedProject ).size() );
         assertEquals( 1, target.getRemovedFiles( affectedProject ).size() );
         IFile affectedFile = target.getRemovedFiles( affectedProject ).iterator().next();
         assertEquals( file, affectedFile );
@@ -82,8 +82,8 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         IProject affectedProject = target.getProjects().iterator().next();
         assertEquals( project, affectedProject );
         assertEquals( 0, target.getRemovedFiles( affectedProject ).size() );
-        assertEquals( 1, target.getFiles( affectedProject ).size() );
-        IFile affectedFile = target.getFiles( affectedProject ).iterator().next();
+        assertEquals( 1, target.getJavaFiles( affectedProject ).size() );
+        IFile affectedFile = target.getJavaFiles( affectedProject ).iterator().next();
         assertEquals( file, affectedFile );
     }
 
@@ -107,8 +107,8 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( new Path( "/p/bla" ), removedFile.getFullPath() );
         
         // file at new location is registered as affected file
-        assertEquals( 1, target.getFiles( affectedProject ).size() );
-        IFile affectedFile = target.getFiles( affectedProject ).iterator().next();
+        assertEquals( 1, target.getJavaFiles( affectedProject ).size() );
+        IFile affectedFile = target.getJavaFiles( affectedProject ).iterator().next();
         assertEquals( new Path( "/p/dir/bla" ), affectedFile.getFullPath() );
     }
 
@@ -129,6 +129,6 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         
         ICodeProportionComputationTarget target = listener.getTarget();
         IProject affectedProject = target.getProjects().iterator().next();
-        assertEquals( 3, target.getFiles( affectedProject ).size() );
+        assertEquals( 3, target.getJavaFiles( affectedProject ).size() );
     }
 }

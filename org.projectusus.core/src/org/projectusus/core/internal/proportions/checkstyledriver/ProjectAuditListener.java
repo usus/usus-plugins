@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
+import org.projectusus.core.internal.proportions.sqi.ProjectResults;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
@@ -50,19 +51,35 @@ class ProjectAuditListener implements AuditListener {
     }
 
     public void fileStarted( AuditEvent event ) {
-        String filename = event.getFileName();
         for( IFile file : currentFiles ) {
-            if( getFileSystemLocation( file ).equals( filename ) ) {
+            if( getFileSystemLocation( file ).equals( event.getFileName() ) ) {
+                System.out.println( "fileStarted: " + event.getFileName() );
+                ProjectResults currentProjectResults = NewWorkspaceResults.getInstance().getCurrentProjectResults();
+                printResults( "Initial Results: ", file, currentProjectResults );
+                NewWorkspaceResults.getInstance().dropResults( file );
+                printResults( "Results after drop: ", file, currentProjectResults );
                 NewWorkspaceResults.getInstance().setCurrentFile( file );
+                printResults( "Results after set: ", file, currentProjectResults );
             }
         }
     }
 
+    private void printResults( String comment, IFile file, ProjectResults currentProjectResults ) {
+        // System.out.println( comment );
+        // FileResults results = currentProjectResults.getResults( file, new FileResults( file ) );
+        // System.out.println( "KG: " + results.getViolationBasis( IsisMetrics.KG ) + " " + results.getViolationCount( IsisMetrics.KG ) );
+        // System.out.println( "ML: " + results.getViolationBasis( IsisMetrics.ML ) + " " + results.getViolationCount( IsisMetrics.ML ) );
+        // System.out.println( "CC: " + results.getViolationBasis( IsisMetrics.CC ) + " " + results.getViolationCount( IsisMetrics.CC ) );
+    }
+
     public void fileFinished( AuditEvent event ) {
+        printResults( "Results after finished: ", NewWorkspaceResults.getInstance().getCurrentProjectResults().getCurrentFile(), NewWorkspaceResults.getInstance()
+                .getCurrentProjectResults() );
         NewWorkspaceResults.getInstance().setCurrentFile( null );
     }
 
     public void auditStarted( AuditEvent event ) {
+        System.out.println( "auditStarted: " + currentProject.toString() );
         NewWorkspaceResults.getInstance().setCurrentProject( currentProject );
     }
 

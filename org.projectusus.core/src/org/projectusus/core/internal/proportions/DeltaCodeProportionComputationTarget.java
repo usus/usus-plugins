@@ -35,7 +35,7 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
         compute( delta );
     }
 
-    public Collection<IFile> getFiles( IProject project ) throws CoreException {
+    public Collection<IFile> getJavaFiles( IProject project ) throws CoreException {
         return getFilesFrom( project, changes );
     }
 
@@ -78,7 +78,7 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
                 removedProjects.add( (IProject)resource );
                 result = false; // ignore the entire delta
             } else if( resource instanceof IFile ) {
-                handleFileDelta( delta, (IFile)resource );
+                handleJavaFileDelta( delta, (IFile)resource );
             }
             return result;
         }
@@ -101,11 +101,13 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
             return isOpenCloseStatusChanged( delta ) && !project.isOpen();
         }
 
-        private void handleFileDelta( IResourceDelta delta, IFile file ) {
-            if( isInteresting( delta.getKind() ) ) {
-                addToMap( file, changes );
-            } else if( isDeleted( delta.getKind() ) ) {
-                addToMap( file, deletions );
+        private void handleJavaFileDelta( IResourceDelta delta, IFile file ) {
+            if( IFileSupport.isJavaFile( file ) ) {
+                if( isInteresting( delta.getKind() ) ) {
+                    addToMap( file, changes );
+                } else if( isDeleted( delta.getKind() ) ) {
+                    addToMap( file, deletions );
+                }
             }
         }
 

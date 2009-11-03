@@ -10,6 +10,7 @@ public class BetterDetailAST {
 
     public BetterDetailAST( DetailAST ast ) {
         this.ast = ast;
+        // TODO am liebsten wuerde ich hier eine NPE werfen...
     }
 
     public BetterDetailAST findFirstToken( int type ) {
@@ -76,10 +77,8 @@ public class BetterDetailAST {
             if( other.ast != null ) {
                 return false;
             }
-        } else if( !ast.equals( other.ast ) ) {
-            return false;
         }
-        return true;
+        return ast.equals( other.ast );
     }
 
 }

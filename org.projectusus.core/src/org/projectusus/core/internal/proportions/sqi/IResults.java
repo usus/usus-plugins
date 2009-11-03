@@ -14,10 +14,6 @@ public interface IResults {
 
     public int getViolationBasis( IsisMetrics metric );
 
-    public void getViolationNames( IsisMetrics metric, List<String> violations );
-
-    public void getViolationLineNumbers( IsisMetrics metric, List<Integer> violations );
-
     public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots );
 
 }

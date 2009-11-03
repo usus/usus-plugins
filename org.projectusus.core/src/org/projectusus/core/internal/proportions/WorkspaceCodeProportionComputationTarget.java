@@ -28,8 +28,8 @@ import org.projectusus.core.internal.project.FindUsusProjects;
  */
 class WorkspaceCodeProportionComputationTarget implements ICodeProportionComputationTarget {
 
-    public Collection<IFile> getFiles( IProject project ) throws CoreException {
-        return collectFiles( project );
+    public Collection<IFile> getJavaFiles( IProject project ) throws CoreException {
+        return collectJavaFiles( project );
     }
 
     public Collection<IProject> getProjects() {
@@ -44,12 +44,12 @@ class WorkspaceCodeProportionComputationTarget implements ICodeProportionComputa
     // internal
     // /////////
 
-    private Collection<IFile> collectFiles( IProject project ) throws CoreException {
+    private Collection<IFile> collectJavaFiles( IProject project ) throws CoreException {
         Map<String, IFile> files = new HashMap<String, IFile>();
         List<IResource> resources = collectResources( project );
         for( IResource resource : resources ) {
             if( resource instanceof IFile ) {
-                addFile( (IFile)resource, files );
+                addJavaFile( (IFile)resource, files );
             }
         }
         return files.values();
@@ -67,8 +67,10 @@ class WorkspaceCodeProportionComputationTarget implements ICodeProportionComputa
         return resources;
     }
 
-    private void addFile( IFile file, Map<String, IFile> files ) {
-        files.put( file.getLocation().toString(), file );
+    private void addJavaFile( IFile file, Map<String, IFile> files ) {
+        if( IFileSupport.isJavaFile( file ) ) {
+            files.put( file.getLocation().toString(), file );
+        }
     }
 
     public Collection<IProject> getRemovedProjects() {

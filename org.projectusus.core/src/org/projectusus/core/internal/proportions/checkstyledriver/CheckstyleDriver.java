@@ -42,7 +42,7 @@ public class CheckstyleDriver {
     private final void runCheckConfig( IProject project, IProgressMonitor monitor ) throws CoreException {
         try {
             ProjectAuditor auditor = new ProjectAuditor( findISISConfig() );
-            auditor.runAudit( project, target.getFiles( project ), monitor );
+            auditor.runAudit( project, target.getJavaFiles( project ), monitor );
         } catch( CoreException cex ) {
             throw cex;
         } catch( Exception ex ) {

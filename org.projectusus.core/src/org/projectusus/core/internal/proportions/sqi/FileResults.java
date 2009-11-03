@@ -52,9 +52,8 @@ public class FileResults extends Results<String, ClassResults> {
     }
 
     private ClassResults getResults( BetterDetailAST methodAST ) {
-        String packageName = getPackageName( methodAST );
         String className = getClassDefName( findEnclosingClass( methodAST ) );
-        ClassResults classResults = getResults( className, new ClassResults( packageName, className, methodAST.getLineNo() ) );
+        ClassResults classResults = getResults( className, new ClassResults( className, methodAST.getLineNo() ) );
         return classResults;
     }
 
@@ -71,26 +70,5 @@ public class FileResults extends Results<String, ClassResults> {
             return ""; //$NON-NLS-1$
         }
         return classDefNode.findFirstToken( TokenTypes.IDENT ).getText();
-    }
-
-    private String getPackageName( BetterDetailAST classDefNode ) {
-        if( classDefNode == null ) {
-            return ""; //$NON-NLS-1$
-        }
-        BetterDetailAST packageNode = classDefNode.getPreviousSibling();
-        while( packageNode != null && TokenTypes.PACKAGE_DEF != packageNode.getType() ) {
-            packageNode = packageNode.getPreviousSibling();
-        }
-
-        String packageName = ""; //$NON-NLS-1$
-        if( packageNode != null ) {
-            BetterDetailAST dotNode = packageNode.findFirstToken( TokenTypes.DOT );
-            if( dotNode != null ) {
-                packageName = dotNode.getFullIdentText();
-            } else {
-                packageName = packageNode.findFirstToken( TokenTypes.IDENT ).getText();
-            }
-        }
-        return packageName;
     }
 }
