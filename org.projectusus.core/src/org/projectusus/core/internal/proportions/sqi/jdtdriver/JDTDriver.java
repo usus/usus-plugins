@@ -4,21 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.sqi.jdtdriver;
 
-import static org.eclipse.core.runtime.IStatus.ERROR;
-import static org.projectusus.core.internal.UsusCorePlugin.getPluginId;
 import static org.projectusus.core.internal.util.TracingOption.SQI;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.MultiStatus;
-import org.eclipse.core.runtime.Status;
 import org.projectusus.core.internal.proportions.ICodeProportionComputationTarget;
 import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
 
@@ -50,43 +43,27 @@ public class JDTDriver {
     }
 
     private void runDriver( IProject project, Collection<IFile> files ) throws CoreException {
-        Set<IStatus> errors = new HashSet<IStatus>();
+        StatusCollector statusCollector = new StatusCollector();
+        runDriver( project, files, statusCollector );
+        statusCollector.finish();
+    }
+
+    private void runDriver( IProject project, Collection<IFile> files, StatusCollector statusCollector ) {
         computationStarted( project );
         for( IFile file : files ) {
-            try {
-                fileStarted( file );
-                new FileDriver( file ).compute();
-                fileFinished();
-            } catch( Exception ex ) {
-                addException( errors, ex );
-            }
+            fileStarted( file );
+            runDriverOnFile( file, statusCollector );
+            fileFinished();
         }
         computationFinished();
-        if( !errors.isEmpty() ) {
-            throw new CoreException( createMultiStatusFrom( errors ) );
-        }
     }
 
-    private void addException( Set<IStatus> errors, Throwable thr ) {
-        if( thr instanceof CoreException ) {
-            errors.add( ((CoreException)thr).getStatus() );
-        } else {
-            addNewStatusFrom( errors, thr );
+    private void runDriverOnFile( IFile file, StatusCollector statusCollector ) {
+        try {
+            new FileDriver( file ).compute();
+        } catch( Exception ex ) {
+            statusCollector.add( ex );
         }
-    }
-
-    private void addNewStatusFrom( Set<IStatus> errors, Throwable thr ) {
-        String msg = thr.getMessage() == null ? "[No details.]" : thr.getMessage(); //$NON-NLS-1$
-        errors.add( new Status( IStatus.ERROR, getPluginId(), msg, thr ) );
-    }
-
-    private IStatus createMultiStatusFrom( Set<IStatus> collectedErrors ) {
-        String message = "Errors occurred during ISIS computation."; //$NON-NLS-1$
-        MultiStatus result = new MultiStatus( getPluginId(), ERROR, message, null );
-        for( IStatus error : collectedErrors ) {
-            result.add( error );
-        }
-        return result;
     }
 
     private void computationStarted( IProject project ) {

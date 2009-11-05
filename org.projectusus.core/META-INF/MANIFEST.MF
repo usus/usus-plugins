@@ -69,6 +69,7 @@ Export-Package: antlr,
  org.projectusus.core.internal.proportions.model,
  org.projectusus.core.internal.proportions.modelupdate,
  org.projectusus.core.internal.proportions.sqi,
+ org.projectusus.core.internal.proportions.sqi.jdtdriver,
  org.projectusus.core.internal.util;x-internal:=true,
  org.projectusus.core.internal.yellowcount,
  org.projectusus.core.projectsettings

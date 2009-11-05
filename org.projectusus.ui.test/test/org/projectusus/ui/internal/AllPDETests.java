@@ -13,10 +13,11 @@ import org.projectusus.core.internal.proportions.CodeProportionsPDETest;
 import org.projectusus.core.internal.proportions.FileChangeNotificationsPDETest;
 import org.projectusus.core.internal.proportions.ProjectChangeNotificationsPDETest;
 import org.projectusus.core.internal.proportions.UsusProjectNotificationsPDETest;
+import org.projectusus.core.internal.proportions.sqi.jdtdriver.StatusCollectorPDETest;
 import org.projectusus.ui.internal.hotspots.ExtractHotspotsPagePDETest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ExtractHotspotsPagePDETest.class, FindUsusProjectsPDETest.class, IsUsusProjectPDETest.class, CodeProportionsPDETest.class, FileChangeNotificationsPDETest.class, ProjectChangeNotificationsPDETest.class, UsusProjectNotificationsPDETest.class})
+@SuiteClasses({StatusCollectorPDETest.class, ExtractHotspotsPagePDETest.class, FindUsusProjectsPDETest.class, IsUsusProjectPDETest.class, CodeProportionsPDETest.class, FileChangeNotificationsPDETest.class, ProjectChangeNotificationsPDETest.class, UsusProjectNotificationsPDETest.class})
 public class AllPDETests {
 
 }
