@@ -27,6 +27,7 @@ import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
+import org.projectusus.core.internal.proportions.sqi.jdtdriver.JDTDriver;
 import org.projectusus.core.internal.yellowcount.YellowCount;
 
 class CodeProportionsComputerJob extends Job {
@@ -73,6 +74,7 @@ class CodeProportionsComputerJob extends Job {
     }
 
     private void computeCheckstyleBasedMetrics( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
+        new JDTDriver( target ).run( monitor );
         new CheckstyleDriver( target ).run( monitor );
 
         NewWorkspaceResults results = NewWorkspaceResults.getInstance();
