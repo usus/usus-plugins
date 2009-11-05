@@ -35,7 +35,7 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
     @Test
     public void fileAdded() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
-        IFile file = createWSFile( "bla", "really interesting stuff" );
+        IFile file = createWSFile( "Bla.java", "really interesting stuff" );
         
         listener.assertNoException();
         
@@ -50,7 +50,7 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
     
     @Test
     public void fileDeleted() throws Exception {
-        IFile file = createWSFile( "bla", "stuff that didn't survive" );
+        IFile file = createWSFile( "Bla.java", "stuff that didn't survive" );
         
         getWorkspace().addResourceChangeListener( listener );
         file.delete( true, new NullProgressMonitor() );
@@ -70,7 +70,7 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
     
     @Test
     public void fileChanged() throws Exception {
-        IFile file = createWSFile( "bla", "stuff that will be replaced" );
+        IFile file = createWSFile( "Bla.java", "stuff that will be replaced" );
         
         getWorkspace().addResourceChangeListener( listener );
         updateFileContent( file, "replacement" );
@@ -89,7 +89,7 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
 
     @Test
     public void fileMoved() throws Exception {
-        IFile file = createWSFile( "bla", "stuff that will be replaced" );
+        IFile file = createWSFile( "Bla.java", "stuff that will be replaced" );
         IFolder folder = createWSFolder( "dir" );
         
         getWorkspace().addResourceChangeListener( listener );
@@ -104,12 +104,12 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         // original file comes along as deleted
         assertEquals( 1, target.getRemovedFiles( affectedProject ).size() );
         IFile removedFile = target.getRemovedFiles( affectedProject ).iterator().next();
-        assertEquals( new Path( "/p/bla" ), removedFile.getFullPath() );
+        assertEquals( new Path( "/p/Bla.java" ), removedFile.getFullPath() );
         
         // file at new location is registered as affected file
         assertEquals( 1, target.getJavaFiles( affectedProject ).size() );
         IFile affectedFile = target.getJavaFiles( affectedProject ).iterator().next();
-        assertEquals( new Path( "/p/dir/bla" ), affectedFile.getFullPath() );
+        assertEquals( new Path( "/p/dir/Bla.java" ), affectedFile.getFullPath() );
     }
 
     @Test
@@ -118,9 +118,9 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         // run in batch so that we get only one cumulative notification
         getWorkspace().run( new IWorkspaceRunnable() {
             public void run( IProgressMonitor monitor ) throws CoreException {
-                createWSFilePlain( "a", "really" );
-                createWSFilePlain( "b", "interesting" );
-                createWSFilePlain( "c", "stuff" );
+                createWSFilePlain( "a.java", "really" );
+                createWSFilePlain( "b.java", "interesting" );
+                createWSFilePlain( "c.java", "stuff" );
             }
         }, new NullProgressMonitor());
         waitForAutobuild();

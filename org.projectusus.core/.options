@@ -5,3 +5,6 @@
 
 # traces SQI computation
 org.projectusus.core/SQI = false
+
+# traces resource changes registered by Usus
+org.projectusus.core/RESOURCE_CHANGES = false

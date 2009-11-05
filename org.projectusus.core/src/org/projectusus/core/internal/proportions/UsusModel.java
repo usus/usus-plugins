@@ -104,7 +104,7 @@ public class UsusModel implements IUsusModel {
                 int total = coverage.getTotalCount();
                 double sqi = new CodeProportionsRatio( covered, total ).compute();
                 CodeProportion codeProportion = new CodeProportion( TA, covered, total, sqi, new ArrayList<IHotspot>() );
-                // TODO add hotspots?
+                // TODO lf add hotspots?
                 update( new TestRunModelUpdate( codeProportion ) );
             }
         };

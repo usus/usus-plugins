@@ -28,7 +28,7 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
     @Test
     public void projectAddedToUsus() throws Exception {
         makeUsusProject( false );
-        createWSFile( "file", "created before adding project to usus" );
+        createWSFile( "a.java", "created before adding project to usus" );
         getWorkspace().addResourceChangeListener( listener );
         makeUsusProject( true );
 
@@ -44,7 +44,7 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
     @Test
     public void projectRemovedFromUsus() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
-        createWSFile( "file", "created before removing project from usus" );
+        createWSFile( "a.java", "created before removing project from usus" );
         listener.assertNoException();
         assertEquals( 1, listener.getTarget().getProjects().size() );
 
@@ -61,7 +61,7 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
     public void excludeNonUsusProjects() throws Exception {
         makeUsusProject( false );
         getWorkspace().addResourceChangeListener( listener );
-        createWSFile( "file", "that is ignored because in non-usus project" );
+        createWSFile( "a.java", "file that is ignored because in non-usus project" );
         waitForAutobuild();
 
         listener.assertNoException();

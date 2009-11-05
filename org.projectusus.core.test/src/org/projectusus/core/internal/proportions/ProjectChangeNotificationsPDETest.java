@@ -65,6 +65,7 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
     
     @Test
     public void projectOpened() throws Exception {
+        createWSFile( "someFile.java", "some content" );
         project.close( new NullProgressMonitor() );
         waitForAutobuild();
         getWorkspace().addResourceChangeListener( listener );
@@ -101,7 +102,7 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         result.create( new NullProgressMonitor() );
         result.open( new NullProgressMonitor() );
         InputStream is = new ByteArrayInputStream( new byte[0] );
-        result.getFile( "blubb" ).create( is, true, new NullProgressMonitor() );
+        result.getFile( "blubb.java" ).create( is, true, new NullProgressMonitor() );
         IUSUSProject ususProject = (IUSUSProject)result.getAdapter( IUSUSProject.class );
         ususProject.setUsusProject( true );
         return result;

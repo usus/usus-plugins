@@ -10,7 +10,8 @@ import org.projectusus.core.internal.UsusCorePlugin;
 
 public enum TracingOption {
 
-    SQI( "[SQI]" ); //$NON-NLS-1$
+    SQI( "[SQI]" ), //$NON-NLS-1$
+    RESOURCE_CHANGES( "[ResCh]" ); //$NON-NLS-1$ 
 
     private final String tracePrefix;
     private final boolean tracing;
