@@ -29,7 +29,7 @@ public class MetricCWHotspot implements IMetricCWHotspot {
     }
 
     public int getSourcePosition() {
-        return 0;
+        return 1;
     }
 
     public String getFileName() {
