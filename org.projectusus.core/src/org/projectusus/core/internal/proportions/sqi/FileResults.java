@@ -53,7 +53,7 @@ public class FileResults extends Results<AbstractTypeDeclaration, ClassResults> 
     }
 
     private ClassResults getResults( AbstractTypeDeclaration node ) {
-        return getResults( node, new ClassResults( node, 1 ) ); // TODO
+        return getResults( node, new ClassResults( node ) );
     }
 
     private ClassResults getResults( MethodDeclaration node ) {

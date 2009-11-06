@@ -15,13 +15,11 @@ import org.projectusus.core.internal.proportions.sqi.jdtdriver.ASTSupport;
 public class MethodResults implements IResults {
 
     private final MethodDeclaration methodDecl;
-    private final int lineNo;
     private int ccResult;
     private int mlResult;
 
-    public MethodResults( MethodDeclaration methodDecl, int lineNo ) {
+    public MethodResults( MethodDeclaration methodDecl ) {
         this.methodDecl = methodDecl;
-        this.lineNo = lineNo;
     }
 
     public void setCCResult( int value ) {
@@ -30,7 +28,6 @@ public class MethodResults implements IResults {
 
     public int getCCResult() {
         return ccResult;
-
     }
 
     public void setMLResult( int value ) {
@@ -45,8 +42,8 @@ public class MethodResults implements IResults {
         return methodDecl.getName().toString();
     }
 
-    public int getLineNo() {
-        return lineNo;
+    public int getSourcePosition() {
+        return methodDecl.getStartPosition();
     }
 
     public boolean violates( IsisMetrics metric ) {
@@ -61,29 +58,16 @@ public class MethodResults implements IResults {
         return metric.isViolatedBy( this ) ? 1 : 0;
     }
 
-    public void getViolationNames( IsisMetrics metric, List<String> violations ) {
-        if( metric.isViolatedBy( this ) ) {
-            violations.add( this.getMethodName() );
-        }
-    }
-
     public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
         if( metric.isViolatedBy( this ) ) {
             IHotspot hotspot = null;
             String className = ASTSupport.findEnclosingClass( methodDecl ).getName().toString();
             if( metric.equals( IsisMetrics.CC ) ) {
-                hotspot = new MetricCCHotspot( className, getMethodName(), getCCResult(), getLineNo() );
+                hotspot = new MetricCCHotspot( className, getMethodName(), getCCResult(), getSourcePosition() );
             } else if( metric.equals( IsisMetrics.ML ) ) {
-                hotspot = new MetricMLHotspot( className, getMethodName(), getMLResult(), getLineNo() );
+                hotspot = new MetricMLHotspot( className, getMethodName(), getMLResult(), getSourcePosition() );
             }
             hotspots.add( hotspot );
         }
     }
-
-    public void getViolationLineNumbers( IsisMetrics metric, List<Integer> violations ) {
-        if( metric.isViolatedBy( this ) ) {
-            violations.add( new Integer( this.getLineNo() ) );
-        }
-    }
-
 }

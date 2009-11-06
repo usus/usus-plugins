@@ -8,12 +8,12 @@ import org.eclipse.core.resources.IFile;
 
 public interface IHotspot {
 
+    // TODO lf setter for file still needed?
     void setFile( IFile file );
 
     IFile getFile();
 
-    // TODO lf temporarily only, helps with opening an editor
-    int getLine();
+    int getSourcePosition();
 
     int getHotness();
 

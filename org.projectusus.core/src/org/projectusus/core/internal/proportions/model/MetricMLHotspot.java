@@ -8,14 +8,14 @@ public class MetricMLHotspot implements IMetricMLHotspot {
     private final String methodName;
     private final int methodLength;
     private IFile file;
-    private final int line;
+    private final int sourcePosition;
 
-    public MetricMLHotspot( String className, String methodName, int methodLength, int line ) {
+    public MetricMLHotspot( String className, String methodName, int methodLength, int sourcePosition ) {
         super();
         this.className = className;
         this.methodName = methodName;
         this.methodLength = methodLength;
-        this.line = line;
+        this.sourcePosition = sourcePosition;
     }
 
     public void setFile( IFile file ) {
@@ -42,8 +42,8 @@ public class MetricMLHotspot implements IMetricMLHotspot {
         return methodName;
     }
 
-    public int getLine() {
-        return line;
+    public int getSourcePosition() {
+        return sourcePosition;
     }
 
     @Override

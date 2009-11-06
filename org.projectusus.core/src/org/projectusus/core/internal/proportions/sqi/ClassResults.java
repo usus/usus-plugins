@@ -14,11 +14,9 @@ import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
 public class ClassResults extends Results<MethodDeclaration, MethodResults> {
 
     private final AbstractTypeDeclaration typeDecl;
-    private final int lineNo;
 
-    public ClassResults( AbstractTypeDeclaration typeDecl, int lineNo ) {
+    public ClassResults( AbstractTypeDeclaration typeDecl ) {
         this.typeDecl = typeDecl;
-        this.lineNo = lineNo;
     }
 
     public void setCCResult( MethodDeclaration node, int value ) {
@@ -30,7 +28,7 @@ public class ClassResults extends Results<MethodDeclaration, MethodResults> {
     }
 
     private MethodResults getResults( MethodDeclaration node ) {
-        MethodResults methodResults = getResults( node, new MethodResults( node, 1 ) ); // TODO
+        MethodResults methodResults = getResults( node, new MethodResults( node ) );
         return methodResults;
     }
 
@@ -38,8 +36,8 @@ public class ClassResults extends Results<MethodDeclaration, MethodResults> {
         return typeDecl.getName().toString();
     }
 
-    public int getLineNo() {
-        return lineNo;
+    public int getSourcePosition() {
+        return typeDecl.getStartPosition();
     }
 
     @Override
@@ -63,7 +61,7 @@ public class ClassResults extends Results<MethodDeclaration, MethodResults> {
         if( metric.isMethodTest() ) {
             super.addHotspots( metric, hotspots );
         } else if( metric.isViolatedBy( this ) ) {
-            hotspots.add( new MetricKGHotspot( getClassName(), this.getResultCount() ) );
+            hotspots.add( new MetricKGHotspot( getClassName(), this.getResultCount(), getSourcePosition() ) );
         }
     }
 }

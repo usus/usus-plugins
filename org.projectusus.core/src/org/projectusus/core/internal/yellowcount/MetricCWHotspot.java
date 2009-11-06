@@ -28,7 +28,7 @@ public class MetricCWHotspot implements IMetricCWHotspot {
         return count;
     }
 
-    public int getLine() {
+    public int getSourcePosition() {
         return 0;
     }
 

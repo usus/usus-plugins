@@ -7,11 +7,13 @@ public class MetricKGHotspot implements IMetricKGHotspot {
     private final String className;
     private final int classSize;
     private IFile file;
+    private final int sourcePosition;
 
-    public MetricKGHotspot( String className, int classSize ) {
+    public MetricKGHotspot( String className, int classSize, int sourcePosition ) {
         super();
         this.className = className;
         this.classSize = classSize;
+        this.sourcePosition = sourcePosition;
     }
 
     public void setFile( IFile file ) {
@@ -34,8 +36,8 @@ public class MetricKGHotspot implements IMetricKGHotspot {
         return file;
     }
 
-    public int getLine() {
-        return 0;
+    public int getSourcePosition() {
+        return sourcePosition;
     }
 
     @Override
