@@ -10,6 +10,7 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.internal.proportions.model.Hotspot;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.sqi.jdtdriver.ASTSupport;
 
@@ -47,7 +48,7 @@ public class FileResults extends Results<AbstractTypeDeclaration, ClassResults> 
         List<IHotspot> localHotspots = new ArrayList<IHotspot>();
         super.addHotspots( metric, localHotspots );
         for( IHotspot hotspot : localHotspots ) {
-            hotspot.setFile( fileOfResults );
+            ((Hotspot)hotspot).setFile( fileOfResults );
         }
         hotspots.addAll( localHotspots );
     }

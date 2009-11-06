@@ -5,35 +5,20 @@
 package org.projectusus.core.internal.yellowcount;
 
 import org.eclipse.core.resources.IFile;
+import org.projectusus.core.internal.proportions.model.Hotspot;
 
-public class MetricCWHotspot implements IMetricCWHotspot {
+public class MetricCWHotspot extends Hotspot implements IMetricCWHotspot {
 
-    private IFile file;
     private final int count;
 
     public MetricCWHotspot( IFile file, int count ) {
-        this.file = file;
+        super( count, 1 );
+        setFile( file );
         this.count = count;
     }
 
-    public IFile getFile() {
-        return file;
-    }
-
-    public void setFile( IFile file ) {
-        this.file = file;
-    }
-
-    public int getHotness() {
-        return count;
-    }
-
-    public int getSourcePosition() {
-        return 1;
-    }
-
     public String getFileName() {
-        return file.getName();
+        return getFile().getName();
     }
 
     public int getWarningCount() {
@@ -42,6 +27,6 @@ public class MetricCWHotspot implements IMetricCWHotspot {
 
     @Override
     public String toString() {
-        return file.getName() + " (CW = " + getWarningCount() + ")"; //$NON-NLS-1$//$NON-NLS-2$ 
+        return getFileName() + " (CW = " + getWarningCount() + ")"; //$NON-NLS-1$//$NON-NLS-2$ 
     }
 }

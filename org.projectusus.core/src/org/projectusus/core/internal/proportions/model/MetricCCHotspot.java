@@ -1,29 +1,17 @@
 package org.projectusus.core.internal.proportions.model;
 
-import org.eclipse.core.resources.IFile;
 
-public class MetricCCHotspot implements IMetricCCHotspot {
+public class MetricCCHotspot extends Hotspot implements IMetricCCHotspot {
 
     private final String className;
     private final String methodName;
     private final int cyclomaticComplexity;
-    private IFile file;
-    private final int sourcePosition;
 
     public MetricCCHotspot( String className, String methodName, int cyclomaticComplexity, int sourcePosition ) {
-        super();
+        super( cyclomaticComplexity, sourcePosition );
         this.className = className;
         this.methodName = methodName;
         this.cyclomaticComplexity = cyclomaticComplexity;
-        this.sourcePosition = sourcePosition;
-    }
-
-    public int getHotness() {
-        return cyclomaticComplexity;
-    }
-
-    public void setFile( IFile file ) {
-        this.file = file;
     }
 
     public String getClassName() {
@@ -34,16 +22,8 @@ public class MetricCCHotspot implements IMetricCCHotspot {
         return cyclomaticComplexity;
     }
 
-    public IFile getFile() {
-        return file;
-    }
-
     public String getMethodName() {
         return methodName;
-    }
-
-    public int getSourcePosition() {
-        return sourcePosition;
     }
 
     @Override

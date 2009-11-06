@@ -8,9 +8,6 @@ import org.eclipse.core.resources.IFile;
 
 public interface IHotspot {
 
-    // TODO lf setter for file still needed?
-    void setFile( IFile file );
-
     IFile getFile();
 
     int getSourcePosition();
