@@ -42,7 +42,7 @@ public class StatusCollector {
     }
 
     private IStatus createMultiStatus() {
-        String message = "Errors occurred during ISIS computation."; //$NON-NLS-1$
+        String message = "Errors occurred during code proportions computation.";
         MultiStatus result = new MultiStatus( getPluginId(), ERROR, message, null );
         for( IStatus error : errors ) {
             result.add( error );

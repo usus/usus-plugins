@@ -19,6 +19,8 @@ public final class CoreTexts extends NLS {
     public static String isisMetrics_pc;
     public static String isisMetrics_ta;
 
+    public static String jdtDriver_computing;
+
     public static String projectSettings_defaultName;
     public static String projectSettings_settingsName;
 

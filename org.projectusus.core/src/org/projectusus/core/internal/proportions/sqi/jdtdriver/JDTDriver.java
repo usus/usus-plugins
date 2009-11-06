@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.sqi.jdtdriver;
 
+import static org.projectusus.core.internal.util.CoreTexts.jdtDriver_computing;
 import static org.projectusus.core.internal.util.TracingOption.SQI;
 
 import java.util.Collection;
@@ -27,42 +28,51 @@ public class JDTDriver {
         for( IProject removedProject : target.getRemovedProjects() ) {
             WorkspaceResults.getInstance().dropResults( removedProject );
         }
+        monitor.beginTask( jdtDriver_computing, countTicks( target.getProjects() ) );
         for( IProject project : target.getProjects() ) {
+            monitor.subTask( project.getName() );
             for( IFile removedFile : target.getRemovedFiles( project ) ) {
                 WorkspaceResults.getInstance().dropResults( removedFile );
             }
             runInternal( project, monitor );
         }
+        monitor.done();
+    }
+
+    private int countTicks( Collection<IProject> projects ) throws CoreException {
+        int result = 0;
+        for( IProject project : projects ) {
+            result += target.getJavaFiles( project ).size();
+        }
+        return result;
     }
 
     private void runInternal( IProject project, IProgressMonitor monitor ) throws CoreException {
         Collection<IFile> files = target.getJavaFiles( project );
         if( !files.isEmpty() ) {
-            runDriver( project, files );
+            StatusCollector statusCollector = new StatusCollector();
+            runDriver( project, files, statusCollector, monitor );
+            statusCollector.finish();
         }
     }
 
-    private void runDriver( IProject project, Collection<IFile> files ) throws CoreException {
-        StatusCollector statusCollector = new StatusCollector();
-        runDriver( project, files, statusCollector );
-        statusCollector.finish();
-    }
-
-    private void runDriver( IProject project, Collection<IFile> files, StatusCollector statusCollector ) {
+    private void runDriver( IProject project, Collection<IFile> files, StatusCollector statusCollector, IProgressMonitor monitor ) {
         computationStarted( project );
         for( IFile file : files ) {
             fileStarted( file );
-            runDriverOnFile( file, statusCollector );
+            runDriverOnFile( file, statusCollector, monitor );
             fileFinished();
         }
         computationFinished();
     }
 
-    private void runDriverOnFile( IFile file, StatusCollector statusCollector ) {
+    private void runDriverOnFile( IFile file, StatusCollector statusCollector, IProgressMonitor monitor ) {
         try {
             new FileDriver( file ).compute();
         } catch( Exception ex ) {
             statusCollector.add( ex );
+        } finally {
+            monitor.worked( 1 );
         }
     }
 

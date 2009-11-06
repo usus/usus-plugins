@@ -9,7 +9,6 @@ import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CC;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.KG;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
-import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_computing;
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_name;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
@@ -49,7 +47,6 @@ class CodeProportionsComputerJob extends Job {
     @Override
     protected IStatus run( IProgressMonitor mo ) {
         IProgressMonitor monitor = mo == null ? new NullProgressMonitor() : mo;
-        monitor.beginTask( codeProportionsComputerJob_computing, 1024 );
         return performRun( monitor );
     }
 
@@ -62,21 +59,19 @@ class CodeProportionsComputerJob extends Job {
             result = cex.getStatus();
         } finally {
             getModel().update( new ComputationRunModelUpdate( collector, result.isOK() ) );
-            monitor.done();
         }
         return result;
     }
 
     private void performComputation( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
         collector.add( YellowCount.getInstance().count() );
-        computeCheckstyleBasedMetrics( collector, new SubProgressMonitor( monitor, 512 ) );
+        computeCheckstyleBasedMetrics( collector, monitor );
     }
 
     private void computeCheckstyleBasedMetrics( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
         new JDTDriver( target ).run( monitor );
 
         WorkspaceResults results = WorkspaceResults.getInstance();
-
         for( IsisMetrics metric : asList( CC, KG, ML ) ) {
             collector.add( results.getCodeProportion( metric ) );
         }
