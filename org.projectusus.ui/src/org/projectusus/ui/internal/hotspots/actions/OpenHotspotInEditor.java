@@ -38,6 +38,11 @@ public class OpenHotspotInEditor extends Action {
 
     private void openJavaEditor( ICompilationUnit compilationUnit ) throws Exception {
         IJavaElement javaElement = compilationUnit.getElementAt( hotspot.getSourcePosition() );
-        openInEditor( javaElement, true, true );
+        if( javaElement == null ) {
+            javaElement = compilationUnit.getPrimaryElement();
+        }
+        if( javaElement != null ) {
+            openInEditor( javaElement, true, true );
+        }
     }
 }

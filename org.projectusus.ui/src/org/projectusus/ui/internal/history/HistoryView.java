@@ -53,7 +53,9 @@ public class HistoryView extends ViewPart {
             public void ususModelChanged( IUsusModelHistory history, List<IUsusElement> entries ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
-                        refresh();
+                        if( chart != null && !chart.isDisposed() ) {
+                            refresh();
+                        }
                     }
                 } );
             }
