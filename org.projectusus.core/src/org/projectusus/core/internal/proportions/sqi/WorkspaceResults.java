@@ -32,7 +32,11 @@ public class WorkspaceResults extends Results<IProject, ProjectResults> {
 
     public ProjectResults getCurrentProjectResults() {
         // log warning if currentProject == null
-        return getResults( currentProject, new ProjectResults( currentProject ) );
+        return getProjectResults( currentProject );
+    }
+
+    public ProjectResults getProjectResults( IProject project ) {
+        return getResults( project, new ProjectResults( project ) );
     }
 
     public void setCurrentFile( IFile currentFile ) {

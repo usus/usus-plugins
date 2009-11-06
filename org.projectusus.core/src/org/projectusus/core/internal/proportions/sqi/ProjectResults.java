@@ -20,6 +20,10 @@ public class ProjectResults extends Results<IFile, FileResults> {
         return projectOfResults;
     }
 
+    public FileResults getFileResults( IFile file ) {
+        return getResults( file, new FileResults( file ) );
+    }
+
     public void setCurrentFile( IFile currentFile ) {
         this.currentFile = currentFile;
     }
@@ -30,7 +34,7 @@ public class ProjectResults extends Results<IFile, FileResults> {
     }
 
     public FileResults getCurrentFileResults() {
-        return getResults( currentFile, new FileResults( currentFile ) );
+        return getFileResults( currentFile );
     }
 
     public void dropResults( IFile file ) {
