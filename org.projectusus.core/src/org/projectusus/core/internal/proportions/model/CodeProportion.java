@@ -5,8 +5,8 @@
 package org.projectusus.core.internal.proportions.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
 
 import org.eclipse.core.runtime.PlatformObject;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
@@ -28,7 +28,7 @@ public class CodeProportion extends PlatformObject {
         this.violations = violations;
         this.basis = basis;
         this.sqi = sqi;
-        this.hotspots = hotspots;
+        this.hotspots = sort( hotspots );
     }
 
     public Double getSQIValue() {
@@ -54,5 +54,12 @@ public class CodeProportion extends PlatformObject {
 
     public List<IHotspot> getHotspots() {
         return hotspots;
+    }
+
+    private List<IHotspot> sort( List<IHotspot> passedHotspots ) {
+        List<IHotspot> result = new ArrayList<IHotspot>();
+        result.addAll( passedHotspots );
+        Collections.sort( result, new ByHotnessComparator() );
+        return result;
     }
 }
