@@ -39,7 +39,7 @@ public class SaveCheckpointsJob extends Job {
         } catch( IOException ioex ) {
             // not directly displayed to the user, but into the error log
             String msg = "Unable to save code proportions checkpoints."; //$NON-NLS-1$
-            UsusCorePlugin.getDefault().log( msg, ioex );
+            UsusCorePlugin.log( msg, ioex );
         }
         return OK_STATUS;
     }

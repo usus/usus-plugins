@@ -25,7 +25,7 @@ class UsusProject implements IUSUSProject {
             node.putBoolean( ATT_USUS_PROJECT, ususProject );
             node.flush();
         } catch( BackingStoreException basex ) {
-            UsusCorePlugin.getDefault().log( basex );
+            UsusCorePlugin.log( basex );
         }
     }
 

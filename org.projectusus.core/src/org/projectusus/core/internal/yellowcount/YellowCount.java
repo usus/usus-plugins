@@ -71,7 +71,7 @@ public class YellowCount {
             try {
                 count.add( new ProjectCount( project ) );
             } catch( CoreException cex ) {
-                UsusCorePlugin.getDefault().getLog().log( cex.getStatus() );
+                UsusCorePlugin.log( cex );
             }
         }
         return count;

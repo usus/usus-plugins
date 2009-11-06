@@ -34,7 +34,7 @@ public class LoadCheckpoints {
             result.clear();
             // not directly displayed to the user, but into the error log
             String msg = "Unable to load code proportions checkpoints."; //$NON-NLS-1$
-            UsusCorePlugin.getDefault().log( msg, ex );
+            UsusCorePlugin.log( msg, ex );
         } finally {
             safeClose( reader );
         }

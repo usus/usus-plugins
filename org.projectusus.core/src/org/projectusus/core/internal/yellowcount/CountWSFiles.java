@@ -25,7 +25,7 @@ class CountWSFiles {
         try {
             result = countFiles( projects );
         } catch( CoreException cex ) {
-            UsusCorePlugin.getDefault().log( cex );
+            UsusCorePlugin.log( cex );
         }
         return result;
     }

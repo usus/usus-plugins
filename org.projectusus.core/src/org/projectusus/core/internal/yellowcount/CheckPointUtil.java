@@ -28,7 +28,7 @@ public class CheckPointUtil {
             fw.write( content );
             fw.close();
         } catch( IOException ioex ) {
-            UsusCorePlugin.getDefault().log( ioex );
+            UsusCorePlugin.log( ioex );
         }
     }
 
