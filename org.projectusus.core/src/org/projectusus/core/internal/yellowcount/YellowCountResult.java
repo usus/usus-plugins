@@ -47,6 +47,10 @@ class YellowCountResult implements IYellowCountResult {
 
     @Override
     public String toString() {
-        return format( yellowCountResult_msg, new Integer( yellowCount ), new Integer( yellowProjectCount ), new Integer( projectCount ) );
+        Integer iYellowCount = new Integer( yellowCount );
+        Integer iYellowProjectCount = new Integer( yellowProjectCount );
+        Integer iProjectCount = new Integer( projectCount );
+        String wiseCrack = new WiseCrack( yellowCount ).toString();
+        return format( yellowCountResult_msg, iYellowCount, iYellowProjectCount, iProjectCount ) + " " + wiseCrack; //$NON-NLS-1$
     }
 }
