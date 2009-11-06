@@ -2,7 +2,7 @@
 <feature
       id="org.projectusus"
       label="Project USUS"
-      version="0.0.1"
+      version="0.1.0"
       provider-name="projectusus.org">
 
    <description url="http://projectusus.org">
@@ -31,18 +31,30 @@ A copy of the license text is provided with the software, or
 can be found at http://www.eclipse.org/legal/epl-v10.html.
    </license>
 
+   <url>
+      <discovery label="EclEmma Update Site" url="http://update.eclemma.org/"/>
+      <discovery label="Eclipse-Checkstyle Update Site" url="http://eclipse-cs.sf.net/update/"/>
+   </url>
+
    <plugin
          id="org.projectusus.core"
          download-size="0"
          install-size="0"
-         version="0.0.1"
+         version="0.1.0"
          unpack="false"/>
 
    <plugin
          id="org.projectusus.ui"
          download-size="0"
          install-size="0"
-         version="0.0.1"
+         version="0.1.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.swtchart"
+         download-size="0"
+         install-size="0"
+         version="0.6.0"
          unpack="false"/>
 
 </feature>
