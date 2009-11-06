@@ -9,7 +9,7 @@ import static org.projectusus.core.internal.util.CoreTexts.ususModelStatus_info;
 import static org.projectusus.core.internal.util.CoreTexts.ususModelStatus_ok;
 import static org.projectusus.core.internal.util.CoreTexts.ususModelStatus_stale;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 class UsusModelStatus implements IUsusModelStatus {
 
@@ -40,7 +40,7 @@ class UsusModelStatus implements IUsusModelStatus {
     public boolean isStale() {
         boolean result = true;
         if( getLastTestTime() != null ) {
-            result = isLastComputationRunSuccessful() && getLastTestTime().before( getLastComputationTime() );
+            result = isLastComputationRunSuccessful() && getLastTestTime().isBefore( getLastComputationTime() );
         }
         return result;
     }
@@ -52,15 +52,15 @@ class UsusModelStatus implements IUsusModelStatus {
         return bind( ususModelStatus_info, getLastComputationTime(), getLastTestTime() );
     }
 
-    private Date getLastComputationTime() {
+    private DateTime getLastComputationTime() {
         return nullSafeGetTime( lastComputationRun );
     }
 
-    private Date getLastTestTime() {
+    private DateTime getLastTestTime() {
         return nullSafeGetTime( lastTestRun );
     }
 
-    private Date nullSafeGetTime( IUsusModelUpdate modelUpdate ) {
+    private DateTime nullSafeGetTime( IUsusModelUpdate modelUpdate ) {
         return modelUpdate == null ? null : modelUpdate.getTime();
     }
 }

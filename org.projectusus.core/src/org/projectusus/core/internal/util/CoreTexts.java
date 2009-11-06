@@ -22,6 +22,8 @@ public final class CoreTexts extends NLS {
     public static String projectSettings_defaultName;
     public static String projectSettings_settingsName;
 
+    public static String saveCheckpointsJob_name;
+
     public static String testCoverage;
 
     public static String ususModelStatus_info;

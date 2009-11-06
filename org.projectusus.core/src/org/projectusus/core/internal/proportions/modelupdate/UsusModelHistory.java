@@ -13,10 +13,13 @@ import java.util.List;
 
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate.Type;
+import org.projectusus.core.internal.proportions.modelupdate.checkpoints.LoadCheckpoints;
+import org.projectusus.core.internal.proportions.modelupdate.checkpoints.SaveCheckpointsJob;
 
 public class UsusModelHistory implements IUsusModelHistory {
 
-    private final Checkpoints checkpoints = new Checkpoints();
+    private final Checkpoints checkpoints = initCheckpoints();
+
     private final List<IUsusModelUpdate> history = new ArrayList<IUsusModelUpdate>();
     private UsusModelStatus status = new UsusModelStatus();
 
@@ -44,12 +47,17 @@ public class UsusModelHistory implements IUsusModelHistory {
         status = new UsusModelStatus( last( COMPUTATION_RUN ), last( TEST_RUN ) );
     }
 
+    private Checkpoints initCheckpoints() {
+        return new Checkpoints( new LoadCheckpoints().load() );
+    }
+
     private void createCheckpoint() {
         if( canCreate() ) {
             List<CodeProportion> entries = new ArrayList<CodeProportion>();
             entries.addAll( last( COMPUTATION_RUN ).getEntries() );
             entries.addAll( last( TEST_RUN ).getEntries() );
             checkpoints.createCheckpoint( entries );
+            new SaveCheckpointsJob( getCheckpoints() ).schedule();
         }
     }
 

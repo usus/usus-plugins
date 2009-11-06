@@ -10,9 +10,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ACD;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IHotspot;
@@ -73,7 +73,7 @@ public class Checkpoints2GraphicsConverterTest {
 			return result;
 		}
 
-		public Date getTime() {
+		public DateTime getTime() {
 			return null;
 		}
 	}

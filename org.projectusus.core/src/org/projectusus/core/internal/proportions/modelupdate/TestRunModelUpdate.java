@@ -7,9 +7,9 @@ package org.projectusus.core.internal.proportions.modelupdate;
 import static java.util.Arrays.asList;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 
 /**
@@ -19,19 +19,19 @@ import org.projectusus.core.internal.proportions.model.CodeProportion;
  */
 public class TestRunModelUpdate implements IUsusModelUpdate {
 
-    private final Date time;
+    private final DateTime time;
     private final CodeProportion entry;
 
     public TestRunModelUpdate( CodeProportion entry ) {
         this.entry = entry;
-        this.time = new Date();
+        this.time = new DateTime();
     }
 
     public List<CodeProportion> getEntries() {
         return entry == null ? new ArrayList<CodeProportion>() : asList( entry );
     }
 
-    public Date getTime() {
+    public DateTime getTime() {
         return time;
     }
 

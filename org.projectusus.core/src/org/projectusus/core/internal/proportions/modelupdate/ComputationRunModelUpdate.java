@@ -6,9 +6,9 @@ package org.projectusus.core.internal.proportions.modelupdate;
 
 import static java.util.Collections.unmodifiableList;
 
-import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 
 /**
@@ -18,21 +18,21 @@ import org.projectusus.core.internal.proportions.model.CodeProportion;
  */
 public class ComputationRunModelUpdate implements IUsusModelUpdate {
 
-    private final Date time;
+    private final DateTime time;
     private final boolean computationSuccessful;
     private final List<CodeProportion> entries;
 
     public ComputationRunModelUpdate( List<CodeProportion> entries, boolean computationSuccessful ) {
         this.entries = entries;
         this.computationSuccessful = computationSuccessful;
-        time = new Date();
+        time = new DateTime();
     }
 
     public List<CodeProportion> getEntries() {
         return unmodifiableList( entries );
     }
 
-    public Date getTime() {
+    public DateTime getTime() {
         return time;
     }
 

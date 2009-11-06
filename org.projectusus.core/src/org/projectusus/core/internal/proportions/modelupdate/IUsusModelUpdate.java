@@ -4,9 +4,9 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.modelupdate;
 
-import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 
 /**
@@ -22,7 +22,7 @@ public interface IUsusModelUpdate {
 
     List<CodeProportion> getEntries();
 
-    Date getTime();
+    DateTime getTime();
 
     boolean isSuccessful();
 
