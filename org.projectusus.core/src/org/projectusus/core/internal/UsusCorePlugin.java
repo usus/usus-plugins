@@ -41,6 +41,10 @@ public class UsusCorePlugin extends Plugin {
 
     public void log( Exception ex ) {
         String msg = ex.getMessage() == null ? "[No details.]" : ex.getMessage(); //$NON-NLS-1$
+        log( msg, ex );
+    }
+
+    public void log( String msg, Exception ex ) {
         IStatus status = new Status( ERROR, getPluginId(), 0, msg, ex );
         getDefault().getLog().log( status );
     }
