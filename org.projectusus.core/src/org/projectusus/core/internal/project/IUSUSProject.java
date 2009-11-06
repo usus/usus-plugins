@@ -4,9 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.project;
 
-
 /**
- * adapter for IProjects (declared in plugin.xml); you can ask an IProject via getAdapter() for an object of this type and then query USUS-related info.
+ * adapter for IProjects (declared in plugin.xml); you can ask an IProject via getAdapter() for an object of this type and then query Usus-related info.
  * 
  * @author leif
  */

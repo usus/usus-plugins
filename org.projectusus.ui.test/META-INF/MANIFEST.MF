@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Tests for USUS UI
+Bundle-Name: Tests for Usus UI
 Bundle-SymbolicName: org.projectusus.ui.test
 Bundle-Version: 0.1.0
 Bundle-Vendor: projectusus.org

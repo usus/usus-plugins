@@ -6,7 +6,7 @@ import static java.math.BigDecimal.ROUND_DOWN;
 import java.math.BigDecimal;
 
 /**
- * calculates ISIS-style SQI.
+ * calculates the software quality index (SQI).
  * 
  * @author leif
  */
