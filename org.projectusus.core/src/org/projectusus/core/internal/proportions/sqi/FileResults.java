@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.Hotspot;
@@ -59,5 +62,27 @@ public class FileResults extends Results<AbstractTypeDeclaration, ClassResults> 
 
     private ClassResults getResults( MethodDeclaration node ) {
         return getResults( ASTSupport.findEnclosingClass( node ) );
+    }
+
+    public ClassResults getResults( IJavaElement element ) {
+        if( element == null ) {
+            return null;
+        }
+        ICompilationUnit compilationUnit = JDTSupport.getCompilationUnit( element );
+        if( compilationUnit == null ) {
+            return null;
+        }
+
+        try {
+            for( AbstractTypeDeclaration typeDecl : getAllKeys() ) {
+                IJavaElement foundElement = compilationUnit.getElementAt( typeDecl.getStartPosition() );
+                if( element.equals( foundElement ) ) {
+                    return getResults( typeDecl );
+                }
+            }
+        } catch( JavaModelException e ) {
+            return null;
+        }
+        return null;
     }
 }

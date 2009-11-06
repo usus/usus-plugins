@@ -6,12 +6,18 @@ package org.projectusus.core.internal.proportions.sqi;
 
 import java.util.List;
 
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
 
 public class ClassResults extends Results<MethodDeclaration, MethodResults> {
+
+    // TODO getNumberOfMethods
 
     private final AbstractTypeDeclaration typeDecl;
 
@@ -30,6 +36,28 @@ public class ClassResults extends Results<MethodDeclaration, MethodResults> {
     private MethodResults getResults( MethodDeclaration node ) {
         MethodResults methodResults = getResults( node, new MethodResults( node ) );
         return methodResults;
+    }
+
+    public MethodResults getResults( IMethod method ) {
+        if( method == null ) {
+            return null;
+        }
+        ICompilationUnit compilationUnit = JDTSupport.getCompilationUnit( method );
+        if( compilationUnit == null ) {
+            return null;
+        }
+
+        try {
+            for( MethodDeclaration methodDecl : getAllKeys() ) {
+                IJavaElement foundElement = compilationUnit.getElementAt( methodDecl.getStartPosition() );
+                if( method.equals( foundElement ) ) {
+                    return getResults( methodDecl );
+                }
+            }
+        } catch( JavaModelException e ) {
+            return null;
+        }
+        return null;
     }
 
     public String getClassName() {
