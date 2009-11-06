@@ -38,7 +38,7 @@ public enum MLColumnDesc implements IHotspotsPageColumnDesc {
     },
     LINE( hotspotsColumn_line, 10, false ) {
         public String getLabel( IHotspot element ) {
-            return String.valueOf( ((IMetricMLHotspot)element).getLine() );
+            return String.valueOf( ((IMetricMLHotspot)element).getSourcePosition() );
         }
     };
 

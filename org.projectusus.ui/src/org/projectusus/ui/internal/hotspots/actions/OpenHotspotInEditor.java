@@ -10,9 +10,6 @@ import static org.eclipse.jdt.ui.JavaUI.openInEditor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.texteditor.ITextEditor;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.ui.internal.UsusUIPlugin;
 
@@ -40,19 +37,7 @@ public class OpenHotspotInEditor extends Action {
     }
 
     private void openJavaEditor( ICompilationUnit compilationUnit ) throws Exception {
-        IEditorPart editor = openInEditor( compilationUnit );
-        if( editor instanceof ITextEditor ) {
-            openAtElement( hotspot, compilationUnit, editor );
-        }
-    }
-
-    private void openAtElement( IHotspot hotspot, ICompilationUnit compilationUnit, IEditorPart editor ) throws Exception {
-        ITextEditor textEditor = (ITextEditor)editor;
-        IDocument document = textEditor.getDocumentProvider().getDocument( textEditor.getEditorInput() );
-        if( document != null ) {
-            int lineOffset = document.getLineOffset( hotspot.getLine() );
-            IJavaElement element = compilationUnit.getElementAt( lineOffset );
-            openInEditor( element, true, true );
-        }
+        IJavaElement javaElement = compilationUnit.getElementAt( hotspot.getSourcePosition() );
+        openInEditor( javaElement, true, true );
     }
 }
