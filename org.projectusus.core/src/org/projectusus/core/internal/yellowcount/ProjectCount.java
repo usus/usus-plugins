@@ -47,9 +47,11 @@ class ProjectCount {
     List<IHotspot> getHotspots() {
         List<IHotspot> result = new ArrayList<IHotspot>();
         for( IResource resource : counts.keySet() ) {
-            IFile file = (IFile)resource;
-            int count = counts.get( resource ).intValue();
-            result.add( new MetricCWHotspot( file, count ) );
+            if( resource instanceof IFile ) {
+                IFile file = (IFile)resource;
+                int count = counts.get( resource ).intValue();
+                result.add( new MetricCWHotspot( file, count ) );
+            }
         }
         return result;
     }
