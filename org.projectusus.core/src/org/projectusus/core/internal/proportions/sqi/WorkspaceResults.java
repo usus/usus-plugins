@@ -12,17 +12,17 @@ import org.eclipse.core.resources.IProject;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 
-public class NewWorkspaceResults extends Results<IProject, ProjectResults> {
+public class WorkspaceResults extends Results<IProject, ProjectResults> {
 
     private IProject currentProject;
 
-    private static final NewWorkspaceResults instance = new NewWorkspaceResults();
+    private static final WorkspaceResults instance = new WorkspaceResults();
 
-    private NewWorkspaceResults() {
+    private WorkspaceResults() {
         super();
     }
 
-    public static NewWorkspaceResults getInstance() {
+    public static WorkspaceResults getInstance() {
         return instance;
     }
 

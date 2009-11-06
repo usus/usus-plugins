@@ -6,59 +6,36 @@ package org.projectusus.core.internal.proportions.sqi;
 
 import java.util.List;
 
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
 
-import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+public class ClassResults extends Results<MethodDeclaration, MethodResults> {
 
-public class ClassResults extends Results<String, MethodResults> {
-
-    private final String className;
+    private final AbstractTypeDeclaration typeDecl;
     private final int lineNo;
 
-    public ClassResults( String className, int lineNo ) {
-        this.className = className;
+    public ClassResults( AbstractTypeDeclaration typeDecl, int lineNo ) {
+        this.typeDecl = typeDecl;
         this.lineNo = lineNo;
     }
 
-    public void setCCResult( BetterDetailAST methodAST, int value ) {
-        getResults( methodAST ).setCCResult( value );
+    public void setCCResult( MethodDeclaration node, int value ) {
+        getResults( node ).setCCResult( value );
     }
 
-    public void setMLResult( BetterDetailAST methodAST, int value ) {
-        getResults( methodAST ).setMLResult( value );
+    public void setMLResult( MethodDeclaration node, int value ) {
+        getResults( node ).setMLResult( value );
     }
 
-    private MethodResults getResults( BetterDetailAST resultAST ) {
-        BetterDetailAST methodAST = findEnclosingMethod( resultAST );
-        String methodName = getNameOfMethod( methodAST );
-        MethodResults methodResults = getResults( methodName, new MethodResults( getClassName(), methodName, methodAST.getLineNo() ) );
+    private MethodResults getResults( MethodDeclaration node ) {
+        MethodResults methodResults = getResults( node, new MethodResults( node, 1 ) ); // TODO
         return methodResults;
     }
 
-    private String getNameOfMethod( BetterDetailAST methodAST ) {
-        if( methodAST == null ) {
-            return ""; //$NON-NLS-1$
-        }
-
-        return methodAST.findFirstToken( TokenTypes.IDENT ).getText();
-    }
-
-    private BetterDetailAST findEnclosingMethod( BetterDetailAST anAST ) {
-        BetterDetailAST methodAST = anAST;
-        while( methodAST != null && isNeitherMethodNorConstructor( methodAST ) ) {
-            methodAST = methodAST.getParent();
-        }
-        return methodAST;
-    }
-
-    private boolean isNeitherMethodNorConstructor( BetterDetailAST methodAST ) {
-        int type = methodAST.getType();
-        return TokenTypes.METHOD_DEF != type && TokenTypes.CTOR_DEF != type;
-    }
-
     public String getClassName() {
-        return className;
+        return typeDecl.getName().toString();
     }
 
     public int getLineNo() {
@@ -86,7 +63,7 @@ public class ClassResults extends Results<String, MethodResults> {
         if( metric.isMethodTest() ) {
             super.addHotspots( metric, hotspots );
         } else if( metric.isViolatedBy( this ) ) {
-            hotspots.add( new MetricKGHotspot( className, this.getResultCount() ) );
+            hotspots.add( new MetricKGHotspot( getClassName(), this.getResultCount() ) );
         }
     }
 }

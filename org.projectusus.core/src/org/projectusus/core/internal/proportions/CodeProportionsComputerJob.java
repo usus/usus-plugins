@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
+import static java.util.Arrays.asList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CC;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.KG;
@@ -12,7 +13,6 @@ import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComput
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_name;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
@@ -22,11 +22,10 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
-import org.projectusus.core.internal.proportions.checkstyledriver.CheckstyleDriver;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
-import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
+import org.projectusus.core.internal.proportions.sqi.WorkspaceResults;
 import org.projectusus.core.internal.proportions.sqi.jdtdriver.JDTDriver;
 import org.projectusus.core.internal.yellowcount.YellowCount;
 
@@ -75,11 +74,10 @@ class CodeProportionsComputerJob extends Job {
 
     private void computeCheckstyleBasedMetrics( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
         new JDTDriver( target ).run( monitor );
-        new CheckstyleDriver( target ).run( monitor );
 
-        NewWorkspaceResults results = NewWorkspaceResults.getInstance();
+        WorkspaceResults results = WorkspaceResults.getInstance();
 
-        for( IsisMetrics metric : Arrays.asList( CC, KG, ML ) ) {
+        for( IsisMetrics metric : asList( CC, KG, ML ) ) {
             collector.add( results.getCodeProportion( metric ) );
         }
     }

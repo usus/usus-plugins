@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.core.internal.proportions.sqi.jdtdriver.ASTSupport;
 
-import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-
-public class FileResults extends Results<String, ClassResults> {
+public class FileResults extends Results<AbstractTypeDeclaration, ClassResults> {
 
     private final IFile fileOfResults;
 
@@ -25,16 +26,16 @@ public class FileResults extends Results<String, ClassResults> {
         return fileOfResults;
     }
 
-    public void setCCResult( BetterDetailAST methodAST, int value ) {
-        getResults( methodAST ).setCCResult( methodAST, value );
+    public void setCCResult( MethodDeclaration methodDecl, int value ) {
+        getResults( methodDecl ).setCCResult( methodDecl, value );
     }
 
-    public void setMLResult( BetterDetailAST methodAST, int value ) {
-        getResults( methodAST ).setMLResult( methodAST, value );
+    public void setMLResult( MethodDeclaration methodDecl, int value ) {
+        getResults( methodDecl ).setMLResult( methodDecl, value );
     }
 
-    public void addClass( BetterDetailAST classAST ) {
-        getResults( classAST );
+    public void addClass( AbstractTypeDeclaration node ) {
+        getResults( node );
     }
 
     public int getNumberOfClasses() {
@@ -51,24 +52,11 @@ public class FileResults extends Results<String, ClassResults> {
         hotspots.addAll( localHotspots );
     }
 
-    private ClassResults getResults( BetterDetailAST methodAST ) {
-        String className = getClassDefName( findEnclosingClass( methodAST ) );
-        ClassResults classResults = getResults( className, new ClassResults( className, methodAST.getLineNo() ) );
-        return classResults;
+    private ClassResults getResults( AbstractTypeDeclaration node ) {
+        return getResults( node, new ClassResults( node, 1 ) ); // TODO
     }
 
-    private BetterDetailAST findEnclosingClass( BetterDetailAST aAST ) {
-        BetterDetailAST node = aAST;
-        while( node != null && TokenTypes.CLASS_DEF != node.getType() ) {
-            node = node.getParent();
-        }
-        return node;
-    }
-
-    private String getClassDefName( BetterDetailAST classDefNode ) {
-        if( classDefNode == null ) {
-            return ""; //$NON-NLS-1$
-        }
-        return classDefNode.findFirstToken( TokenTypes.IDENT ).getText();
+    private ClassResults getResults( MethodDeclaration node ) {
+        return getResults( ASTSupport.findEnclosingClass( node ) );
     }
 }

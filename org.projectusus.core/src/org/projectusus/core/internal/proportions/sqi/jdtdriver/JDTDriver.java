@@ -13,7 +13,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.projectusus.core.internal.proportions.ICodeProportionComputationTarget;
-import org.projectusus.core.internal.proportions.sqi.NewWorkspaceResults;
+import org.projectusus.core.internal.proportions.sqi.WorkspaceResults;
 
 public class JDTDriver {
 
@@ -25,11 +25,11 @@ public class JDTDriver {
 
     public void run( IProgressMonitor monitor ) throws CoreException {
         for( IProject removedProject : target.getRemovedProjects() ) {
-            NewWorkspaceResults.getInstance().dropResults( removedProject );
+            WorkspaceResults.getInstance().dropResults( removedProject );
         }
         for( IProject project : target.getProjects() ) {
             for( IFile removedFile : target.getRemovedFiles( project ) ) {
-                NewWorkspaceResults.getInstance().dropResults( removedFile );
+                WorkspaceResults.getInstance().dropResults( removedFile );
             }
             runInternal( project, monitor );
         }
@@ -68,20 +68,20 @@ public class JDTDriver {
 
     private void computationStarted( IProject project ) {
         SQI.trace( "Computation started: " + project.toString() ); //$NON-NLS-1$
-        NewWorkspaceResults.getInstance().setCurrentProject( project );
+        WorkspaceResults.getInstance().setCurrentProject( project );
     }
 
     private void fileStarted( IFile file ) {
         SQI.trace( "File started: " + file.getFullPath() ); //$NON-NLS-1$
-        NewWorkspaceResults.getInstance().dropResults( file );
-        NewWorkspaceResults.getInstance().setCurrentFile( file );
+        WorkspaceResults.getInstance().dropResults( file );
+        WorkspaceResults.getInstance().setCurrentFile( file );
     }
 
     private void fileFinished() {
-        NewWorkspaceResults.getInstance().setCurrentFile( null );
+        WorkspaceResults.getInstance().setCurrentFile( null );
     }
 
     private void computationFinished() {
-        NewWorkspaceResults.getInstance().setCurrentProject( null );
+        WorkspaceResults.getInstance().setCurrentProject( null );
     }
 }

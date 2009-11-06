@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.sqi.jdtdriver;
 
+import static java.util.Arrays.asList;
 import static org.eclipse.jdt.core.JavaCore.createCompilationUnitFrom;
 import static org.eclipse.jdt.core.dom.ASTParser.newParser;
 import static org.projectusus.core.internal.util.TracingOption.SQI;
@@ -27,8 +28,10 @@ class FileDriver {
     void compute() {
         ICompilationUnit compilationUnit = createCompilationUnitFrom( file );
         CompilationUnit parse = parse( compilationUnit );
-        MethodVisitor visitor = new MethodVisitor();
-        parse.accept( visitor );
+
+        for( ASTVisitor visitor : asList( new MethodVisitor(), new ClassVisitor(), new ML(), new CC() ) ) {
+            parse.accept( visitor );
+        }
     }
 
     private CompilationUnit parse( ICompilationUnit unit ) {

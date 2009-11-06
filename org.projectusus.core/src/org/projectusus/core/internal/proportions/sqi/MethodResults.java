@@ -6,21 +6,21 @@ package org.projectusus.core.internal.proportions.sqi;
 
 import java.util.List;
 
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.MetricCCHotspot;
 import org.projectusus.core.internal.proportions.model.MetricMLHotspot;
+import org.projectusus.core.internal.proportions.sqi.jdtdriver.ASTSupport;
 
 public class MethodResults implements IResults {
 
-    private final String className;
-    private final String methodName;
+    private final MethodDeclaration methodDecl;
     private final int lineNo;
     private int ccResult;
     private int mlResult;
 
-    public MethodResults( String className, String methodName, int lineNo ) {
-        this.className = className;
-        this.methodName = methodName;
+    public MethodResults( MethodDeclaration methodDecl, int lineNo ) {
+        this.methodDecl = methodDecl;
         this.lineNo = lineNo;
     }
 
@@ -42,7 +42,7 @@ public class MethodResults implements IResults {
     }
 
     public String getMethodName() {
-        return methodName;
+        return methodDecl.getName().toString();
     }
 
     public int getLineNo() {
@@ -70,6 +70,7 @@ public class MethodResults implements IResults {
     public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
         if( metric.isViolatedBy( this ) ) {
             IHotspot hotspot = null;
+            String className = ASTSupport.findEnclosingClass( methodDecl ).getName().toString();
             if( metric.equals( IsisMetrics.CC ) ) {
                 hotspot = new MetricCCHotspot( className, getMethodName(), getCCResult(), getLineNo() );
             } else if( metric.equals( IsisMetrics.ML ) ) {
