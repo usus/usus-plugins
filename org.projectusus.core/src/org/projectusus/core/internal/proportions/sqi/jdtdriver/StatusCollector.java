@@ -6,6 +6,7 @@ package org.projectusus.core.internal.proportions.sqi.jdtdriver;
 
 import static org.eclipse.core.runtime.IStatus.ERROR;
 import static org.projectusus.core.internal.UsusCorePlugin.getPluginId;
+import static org.projectusus.core.internal.util.CoreTexts.jdtDriver_errors;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -42,8 +43,7 @@ public class StatusCollector {
     }
 
     private IStatus createMultiStatus() {
-        String message = "Errors occurred during code proportions computation.";
-        MultiStatus result = new MultiStatus( getPluginId(), ERROR, message, null );
+        MultiStatus result = new MultiStatus( getPluginId(), ERROR, jdtDriver_errors, null );
         for( IStatus error : errors ) {
             result.add( error );
         }
