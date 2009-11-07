@@ -13,10 +13,15 @@ import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 
 class Checkpoints2GraphicsConverter {
 
+    private static final int MAX_DISPLAYED_ENTRIES = 16;
     private final List<ICheckpoint> checkpoints;
 
     Checkpoints2GraphicsConverter( List<ICheckpoint> checkpoints ) {
-        this.checkpoints = checkpoints;
+        if( checkpoints.size() > MAX_DISPLAYED_ENTRIES ) {
+            this.checkpoints = cutToDisplaySize( checkpoints );
+        } else {
+            this.checkpoints = checkpoints;
+        }
     }
 
     double[] get( IsisMetrics metric ) {
@@ -50,4 +55,9 @@ class Checkpoints2GraphicsConverter {
         return result;
     }
 
+    private List<ICheckpoint> cutToDisplaySize( List<ICheckpoint> checkpoints ) {
+        int fromIndex = checkpoints.size() - (MAX_DISPLAYED_ENTRIES + 1);
+        int toIndex = checkpoints.size() - 1;
+        return checkpoints.subList( fromIndex, toIndex );
+    }
 }

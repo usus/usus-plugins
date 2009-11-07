@@ -47,6 +47,26 @@ public class Checkpoints2GraphicsConverterTest {
 		assertEquals(3, converter.get(ACD).length);
 	}
 	
+	@Test
+	public void checkpointSeriesExactlyMaxSize() {
+		List<ICheckpoint> checkpoints = new ArrayList<ICheckpoint>();
+		for (int i = 0; i < 16; i++) {
+			checkpoints.add(new DummyCheckpoint(i));
+		}
+		Checkpoints2GraphicsConverter converter = create(checkpoints);
+		assertEquals(16, converter.get(ACD).length);
+	}
+	
+	@Test
+	public void checkpointSeriesMoreThanMaxSize() {
+		List<ICheckpoint> checkpoints = new ArrayList<ICheckpoint>();
+		for (int i = 0; i < 20; i++) {
+			checkpoints.add(new DummyCheckpoint(i));
+		}
+		Checkpoints2GraphicsConverter converter = create(checkpoints);
+		assertEquals(16, converter.get(ACD).length);
+	}
+	
 	private Checkpoints2GraphicsConverter create(List<ICheckpoint> checkpoints) {
 		return new Checkpoints2GraphicsConverter(checkpoints);
 	}
