@@ -11,12 +11,7 @@ import org.eclipse.jface.viewers.Viewer;
 
 class CoveredProjectsCP implements IStructuredContentProvider {
 
-    private Viewer viewer;
     private IResourceChangeListener listener;
-
-    public CoveredProjectsCP() {
-        createListener();
-    }
 
     public Object[] getElements( Object input ) {
         Object[] result = new Object[0];
@@ -29,8 +24,7 @@ class CoveredProjectsCP implements IStructuredContentProvider {
 
     public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
         cleanListeners( oldInput );
-        connectListeners( newInput );
-        this.viewer = viewer;
+        connectListeners( newInput, viewer );
     }
 
     public void dispose() {
@@ -40,21 +34,23 @@ class CoveredProjectsCP implements IStructuredContentProvider {
     // internal
     // /////////
 
-    private void connectListeners( Object newInput ) {
+    private void connectListeners( Object newInput, Viewer viewer ) {
         if( newInput instanceof IWorkspaceRoot ) {
             IWorkspaceRoot wsRoot = (IWorkspaceRoot)newInput;
+            createListener( viewer );
             wsRoot.getWorkspace().addResourceChangeListener( listener );
         }
     }
 
     private void cleanListeners( Object oldInput ) {
-        if( oldInput instanceof IWorkspaceRoot ) {
+        if( oldInput instanceof IWorkspaceRoot && listener != null ) {
             IWorkspaceRoot wsRoot = (IWorkspaceRoot)oldInput;
             wsRoot.getWorkspace().removeResourceChangeListener( listener );
+            listener = null;
         }
     }
 
-    private void createListener() {
+    private void createListener( Viewer viewer ) {
         this.listener = new RefreshViewerOnResourceChange( viewer );
     }
 }
