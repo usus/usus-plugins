@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Unit tests for Usus core
 Bundle-SymbolicName: org.projectusus.core.test
-Bundle-Version: 0.1.1
+Bundle-Version: 0.2.0
 Bundle-Vendor: projectusus.org
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.projectusus.core,
