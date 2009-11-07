@@ -74,9 +74,6 @@ public class USUSPerspective implements IPerspectiveFactory {
         List<String> result = new ArrayList<String>();
         result.add( "org.eclipse.ui.views.TaskList" ); //$NON-NLS-1$
         result.add( "org.eclipse.ui.views.ProblemView" ); //$NON-NLS-1$
-        result.add( "net.sf.eclipsecs.ui.duplicates.DuplicatedCodeView" ); //$NON-NLS-1$
-        result.add( "net.sf.eclipsecs.ui.stats.views.MarkerStatsView" ); //$NON-NLS-1$
-        result.add( "net.sf.eclipsecs.ui.stats.views.GraphStatsView" ); //$NON-NLS-1$
         result.add( "org.eclipse.jdt.junit.ResultView" ); //$NON-NLS-1$
         result.add( "com.mountainminds.eclemma.ui.CoverageView" ); //$NON-NLS-1$
         return result;
