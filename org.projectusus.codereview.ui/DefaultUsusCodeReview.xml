@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet
+      title="Usus Code Review">
+   <intro>
+      <description>
+         <b>Welcome to the code review</b><br/><br/>
+
+Remember: get a second pair of eyes, and follow the steps below so that we don&apos;t overlook anything. <br/><br/>
+
+Never forget that common sense and good judgment is more important than technology or coolness.
+      </description>
+   </intro>
+   <item
+         skip="false"
+         title="Compute code proportions">
+      <description>
+         <b>Code proportions</b> are normally already computed. Press the button if you want to force a full re-compute.
+      </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.projectusus.ui.internal.proportions.CockpitView)"/>
+   </item>
+   <item
+         title="Run all unit tests">
+      <description>
+         <b>Run all unit tests</b> to make sure there is no problem in the workspace you are unaware of.
+      </description>
+      <command
+            required="false"
+            serialization="org.eclipse.jdt.junit.junitShortcut.run"/>
+   </item>
+</cheatsheet>

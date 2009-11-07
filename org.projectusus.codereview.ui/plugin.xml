@@ -22,4 +22,19 @@
                relative="org.eclipse.ui.views.ProblemView" />
       </perspectiveExtension>
    </extension>
+   
+   <!-- code reviews -->
+   <extension point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <category 
+            id="org.projectusus.codereview.ui.codeReviews"
+            name="Project Usus">
+      </category>
+      <cheatsheet
+            category="org.projectusus.codereview.ui.codeReviews"
+            composite="false"
+            contentFile="$nl$/DefaultUsusCodeReview.xml"
+            id="org.projectusus.codereview.ui.cheatsheet894506147"
+            name="Usus Code Review">
+      </cheatsheet>
+   </extension>
 </plugin>
