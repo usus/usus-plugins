@@ -31,7 +31,6 @@ import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.project.FindUsusProjects;
 import org.projectusus.core.internal.project.IUSUSProject;
 
-
 public class CoveredProjectsView extends ViewPart {
 
     private CheckboxTableViewer viewer;
@@ -102,7 +101,6 @@ public class CoveredProjectsView extends ViewPart {
             ColumnWeightData data = new ColumnWeightData( columnDesc.getWeight() );
             layout.setColumnData( column, data );
             column.setText( columnDesc.getHeadLabel() );
-            column.pack();
         }
     }
 
