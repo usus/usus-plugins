@@ -4,8 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.modelupdate;
 
-import static org.eclipse.osgi.util.NLS.bind;
-import static org.projectusus.core.internal.util.CoreTexts.ususModelStatus_info;
 import static org.projectusus.core.internal.util.CoreTexts.ususModelStatus_ok;
 import static org.projectusus.core.internal.util.CoreTexts.ususModelStatus_stale;
 
@@ -27,7 +25,7 @@ class UsusModelStatus implements IUsusModelStatus {
 
     @Override
     public String toString() {
-        return (isStale() ? ususModelStatus_stale : ususModelStatus_ok) + " - " + renderInfo(); //$NON-NLS-1$
+        return (isStale() ? ususModelStatus_stale : ususModelStatus_ok);
     }
 
     // interface methods
@@ -47,10 +45,6 @@ class UsusModelStatus implements IUsusModelStatus {
 
     // internal
     // /////////
-
-    private String renderInfo() {
-        return bind( ususModelStatus_info, getLastComputationTime(), getLastTestTime() );
-    }
 
     private DateTime getLastComputationTime() {
         return nullSafeGetTime( lastComputationRun );

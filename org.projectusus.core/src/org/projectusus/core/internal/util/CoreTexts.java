@@ -29,7 +29,6 @@ public final class CoreTexts extends NLS {
 
     public static String testCoverage;
 
-    public static String ususModelStatus_info;
     public static String ususModelStatus_ok;
     public static String ususModelStatus_stale;
 
