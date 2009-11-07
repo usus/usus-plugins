@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: org.projectusus.codereview.ui;singleton:=true
+Bundle-Version: 0.2
+Bundle-Activator: org.projectusus.codereview.internal.ui.CodeReviewUIPlugin
+Bundle-Vendor: %Bundle-Vendor
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Export-Package: org.projectusus.codereview.internal.ui;x-internal:=true
