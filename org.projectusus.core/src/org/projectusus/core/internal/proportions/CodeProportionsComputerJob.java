@@ -65,10 +65,10 @@ class CodeProportionsComputerJob extends Job {
 
     private void performComputation( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
         collector.add( YellowCount.getInstance().count() );
-        computeCheckstyleBasedMetrics( collector, monitor );
+        computeJavaCodeMetrics( collector, monitor );
     }
 
-    private void computeCheckstyleBasedMetrics( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
+    private void computeJavaCodeMetrics( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
         new JDTDriver( target ).run( monitor );
 
         WorkspaceResults results = WorkspaceResults.getInstance();
