@@ -9,6 +9,7 @@ import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CW;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
 import org.projectusus.core.internal.proportions.CodeProportionsRatio;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IHotspot;
@@ -16,6 +17,11 @@ import org.projectusus.core.internal.proportions.model.IHotspot;
 class WorkspaceCount {
 
     private final List<ProjectCount> projectCounts = new ArrayList<ProjectCount>();
+    private final List<IProject> ususProjects;
+
+    WorkspaceCount( List<IProject> ususProjects ) {
+        this.ususProjects = ususProjects;
+    }
 
     void add( ProjectCount projectCount ) {
         if( !projectCount.isEmpty() ) {
@@ -36,9 +42,9 @@ class WorkspaceCount {
     }
 
     CodeProportion createCodeProportion() {
-        int basis = countFiles();
+        int basis = new CountWSFiles( ususProjects ).compute();
         int violations = countViolations();
-        return new CodeProportion( CW, violations, basis, computeSqi(), getHotspots() );
+        return new CodeProportion( CW, violations, basis, computeSqi( basis ), getHotspots() );
     }
 
     private List<IHotspot> getHotspots() {
@@ -49,16 +55,7 @@ class WorkspaceCount {
         return result;
     }
 
-    private double computeSqi() {
-        return new CodeProportionsRatio( countViolations(), countFiles() ).computeReverseIndicator();
-    }
-
-    // more than Java classes! We receive warnings for other artifacts, too.
-    private int countFiles() {
-        int result = 0;
-        for( ProjectCount projectCount : projectCounts ) {
-            result += projectCount.countFiles();
-        }
-        return result;
+    private double computeSqi( int basis ) {
+        return new CodeProportionsRatio( countViolations(), basis ).computeReverseIndicator();
     }
 }

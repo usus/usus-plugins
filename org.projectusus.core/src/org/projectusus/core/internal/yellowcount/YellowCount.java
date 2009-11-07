@@ -66,7 +66,7 @@ public class YellowCount {
     }
 
     private WorkspaceCount count( List<IProject> projects ) {
-        WorkspaceCount count = new WorkspaceCount();
+        WorkspaceCount count = new WorkspaceCount( getUsusProjects() );
         for( IProject project : projects ) {
             try {
                 count.add( new ProjectCount( project ) );
