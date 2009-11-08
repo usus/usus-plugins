@@ -4,6 +4,9 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions;
 
+import static org.eclipse.swt.SWT.COLOR_GRAY;
+import static org.projectusus.core.internal.proportions.UsusModel.getUsusModel;
+import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
 import static org.projectusus.ui.internal.proportions.CockpitColumnDesc.INDICATOR;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_CODE_PROPORTIONS;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_INFO;
@@ -14,15 +17,18 @@ import static org.projectusus.ui.internal.util.UITexts.cockpitLP_testCoverage;
 import static org.projectusus.ui.internal.util.UITexts.cockpitLP_warnings;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.ICodeProportions;
 import org.projectusus.core.internal.proportions.model.ITestCoverage;
 import org.projectusus.core.internal.proportions.model.IWarnings;
 
-public class CockpitLP extends LabelProvider implements ITableLabelProvider {
+public class CockpitLP extends LabelProvider implements ITableLabelProvider, IColorProvider {
 
     public Image getColumnImage( Object element, int columnIndex ) {
         Image result = null;
@@ -40,6 +46,38 @@ public class CockpitLP extends LabelProvider implements ITableLabelProvider {
             result = getNodeTextFor( element );
         }
         return result;
+    }
+
+    public Color getBackground( Object element ) {
+        return null; // no special treatment
+    }
+
+    public Color getForeground( Object element ) {
+        Color result = null;
+        if( isStaleBecauseOfMissingTestCoverage( element ) ) {
+            result = Display.getDefault().getSystemColor( COLOR_GRAY );
+        }
+        return result;
+    }
+
+    // internal methods
+    // ////////////////
+
+    private boolean isStaleBecauseOfMissingTestCoverage( Object element ) {
+        boolean result = false;
+        if( element instanceof CodeProportion ) {
+            CodeProportion codeProportion = (CodeProportion)element;
+            result = isTestCoverageMetric( codeProportion ) && lastStatusIsStale();
+        }
+        return result;
+    }
+
+    private boolean lastStatusIsStale() {
+        return getUsusModel().getHistory().getLastStatus().isStale();
+    }
+
+    private boolean isTestCoverageMetric( CodeProportion codeProportion ) {
+        return codeProportion.getMetric() == TA;
     }
 
     private String getNodeTextFor( Object element ) {
