@@ -42,7 +42,7 @@ class CountWSFiles {
         int result = 0;
         IResource[] members = container.members();
         for( IResource resource : members ) {
-            if( canTouch( resource ) ) {
+            if( canTouch( resource ) && !resource.isDerived() ) {
                 if( resource instanceof IContainer ) {
                     result += countFilesRec( (IContainer)resource );
                 } else {
