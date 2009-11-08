@@ -16,15 +16,15 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
-class FileDriver {
+public class FileDriver {
 
     private final IFile file;
 
-    FileDriver( IFile file ) {
+    public FileDriver( IFile file ) {
         this.file = file;
     }
 
-    void compute() {
+    public void compute() {
         ICompilationUnit compilationUnit = createCompilationUnitFrom( file );
         CompilationUnit parse = parse( compilationUnit );
 
