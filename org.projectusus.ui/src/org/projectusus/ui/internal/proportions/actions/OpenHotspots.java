@@ -10,7 +10,8 @@ import static org.projectusus.ui.internal.util.UITexts.openHotspots_label;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.ui.internal.UsusUIPlugin;
@@ -38,21 +39,26 @@ public class OpenHotspots extends Action {
     @Override
     public void run() {
         if( !selection.isEmpty() && selection instanceof IStructuredSelection ) {
-            IStructuredSelection ssel = (IStructuredSelection)selection;
-            Object element = ssel.getFirstElement();
+            Object element = ((IStructuredSelection)selection).getFirstElement();
             if( element instanceof CodeProportion ) {
-                showHotspotsView();
+                showHotspotsView( (CodeProportion)element );
             }
         }
     }
 
-    private void showHotspotsView() {
+    private void showHotspotsView( CodeProportion codeProportion ) {
         try {
-            IWorkbenchWindow window = getWorkbench().getActiveWorkbenchWindow();
-            window.getActivePage().showView( HotSpotsView.class.getName() );
+            IViewPart viewPart = getPage().showView( HotSpotsView.class.getName() );
+            if( viewPart instanceof HotSpotsView ) {
+                HotSpotsView hotSpotsView = (HotSpotsView)viewPart;
+                hotSpotsView.update( codeProportion );
+            }
         } catch( PartInitException paix ) {
             UsusUIPlugin.getDefault().getLog().log( paix.getStatus() );
         }
     }
 
+    private IWorkbenchPage getPage() {
+        return getWorkbench().getActiveWorkbenchWindow().getActivePage();
+    }
 }

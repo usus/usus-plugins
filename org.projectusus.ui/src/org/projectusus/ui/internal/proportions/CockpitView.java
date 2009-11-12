@@ -5,6 +5,8 @@
 package org.projectusus.ui.internal.proportions;
 
 import static org.projectusus.core.internal.proportions.UsusModel.getUsusModel;
+import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CW;
+import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
 import java.util.List;
@@ -13,8 +15,10 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.IOpenListener;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -29,10 +33,13 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.UsusModel;
+import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelStatus;
 import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
+import org.projectusus.ui.internal.proportions.actions.ShowCoverageView;
+import org.projectusus.ui.internal.proportions.actions.ShowProblemsView;
 import org.projectusus.ui.internal.util.ISharedUsusImages;
 
 public class CockpitView extends ViewPart {
@@ -76,12 +83,25 @@ public class CockpitView extends ViewPart {
         menuManager.addMenuListener( new IMenuListener() {
             public void menuAboutToShow( IMenuManager manager ) {
                 manager.add( new OpenHotspots( treeViewer.getSelection() ) );
+                manager.add( new Separator() );
+                addContextActionsFor( manager, treeViewer.getSelection() );
             }
         } );
         menuManager.setRemoveAllWhenShown( true );
         Menu menu = menuManager.createContextMenu( treeViewer.getTree() );
         treeViewer.getTree().setMenu( menu );
         getSite().registerContextMenu( menuManager, treeViewer );
+    }
+
+    protected void addContextActionsFor( IMenuManager manager, ISelection selection ) {
+        CodeProportion codeProportion = new ExtractCodeProportion( selection ).compute();
+        if( codeProportion != null ) {
+            if( codeProportion.getMetric() == TA ) {
+                manager.add( new ShowCoverageView() );
+            } else if( codeProportion.getMetric() == CW ) {
+                manager.add( new ShowProblemsView() );
+            }
+        }
     }
 
     private void initModelListener() {
