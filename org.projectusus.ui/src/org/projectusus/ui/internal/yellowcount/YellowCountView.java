@@ -51,7 +51,9 @@ public class YellowCountView extends ViewPart {
 
     @Override
     public void setFocus() {
-        styledText.setFocus();
+        if( styledText != null && !styledText.isDisposed() ) {
+            styledText.setFocus();
+        }
     }
 
     @Override
