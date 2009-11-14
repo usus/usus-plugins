@@ -17,7 +17,7 @@ import org.projectusus.core.internal.proportions.model.Hotspot;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.sqi.jdtdriver.ASTSupport;
 
-public class FileResults extends Results<AbstractTypeDeclaration, ClassResults> {
+public class FileResults extends Results<Integer, ClassResults> {
 
     private final IFile fileOfResults;
 
@@ -42,6 +42,10 @@ public class FileResults extends Results<AbstractTypeDeclaration, ClassResults> 
         getResults( node );
     }
 
+    private ClassResults getResults( AbstractTypeDeclaration node ) {
+        return getResults( node.getStartPosition(), node.getName().toString() );
+    }
+
     public int getNumberOfClasses() {
         return getResultCount();
     }
@@ -56,8 +60,8 @@ public class FileResults extends Results<AbstractTypeDeclaration, ClassResults> 
         hotspots.addAll( localHotspots );
     }
 
-    private ClassResults getResults( AbstractTypeDeclaration node ) {
-        return getResults( node, new ClassResults( node ) );
+    private ClassResults getResults( int start, String name ) {
+        return getResults( new Integer( start ), new ClassResults( name, start ) );
     }
 
     private ClassResults getResults( MethodDeclaration node ) {
@@ -74,10 +78,10 @@ public class FileResults extends Results<AbstractTypeDeclaration, ClassResults> 
         }
 
         try {
-            for( AbstractTypeDeclaration typeDecl : getAllKeys() ) {
-                IJavaElement foundElement = compilationUnit.getElementAt( typeDecl.getStartPosition() );
+            for( Integer startPosition : getAllKeys() ) {
+                IJavaElement foundElement = compilationUnit.getElementAt( startPosition.intValue() );
                 if( element.equals( foundElement ) ) {
-                    return getResults( typeDecl );
+                    return getResults( startPosition.intValue(), "" ); //$NON-NLS-1$
                 }
             }
         } catch( JavaModelException e ) {

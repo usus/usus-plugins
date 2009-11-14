@@ -10,19 +10,20 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
 
-public class ClassResults extends Results<MethodDeclaration, MethodResults> {
+public class ClassResults extends Results<Integer, MethodResults> {
 
     // TODO getNumberOfMethods
 
-    private final AbstractTypeDeclaration typeDecl;
+    private final int startPosition;
+    private final String className;
 
-    public ClassResults( AbstractTypeDeclaration typeDecl ) {
-        this.typeDecl = typeDecl;
+    public ClassResults( String name, int startPosition ) {
+        this.className = name;
+        this.startPosition = startPosition;
     }
 
     public void setCCResult( MethodDeclaration node, int value ) {
@@ -34,8 +35,11 @@ public class ClassResults extends Results<MethodDeclaration, MethodResults> {
     }
 
     private MethodResults getResults( MethodDeclaration node ) {
-        MethodResults methodResults = getResults( node, new MethodResults( node ) );
-        return methodResults;
+        return getResults( node.getStartPosition(), node.getName().toString() );
+    }
+
+    private MethodResults getResults( int start, String methodName ) {
+        return getResults( new Integer( start ), new MethodResults( start, className, methodName ) );
     }
 
     public MethodResults getResults( IMethod method ) {
@@ -48,10 +52,10 @@ public class ClassResults extends Results<MethodDeclaration, MethodResults> {
         }
 
         try {
-            for( MethodDeclaration methodDecl : getAllKeys() ) {
-                IJavaElement foundElement = compilationUnit.getElementAt( methodDecl.getStartPosition() );
+            for( Integer start : getAllKeys() ) {
+                IJavaElement foundElement = compilationUnit.getElementAt( start.intValue() );
                 if( method.equals( foundElement ) ) {
-                    return getResults( methodDecl );
+                    return getResults( start.intValue(), "" ); //$NON-NLS-1$
                 }
             }
         } catch( JavaModelException e ) {
@@ -61,11 +65,11 @@ public class ClassResults extends Results<MethodDeclaration, MethodResults> {
     }
 
     public String getClassName() {
-        return typeDecl.getName().toString();
+        return className;
     }
 
     public int getSourcePosition() {
-        return typeDecl.getStartPosition();
+        return startPosition;
     }
 
     @Override
