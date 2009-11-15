@@ -9,7 +9,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-class CoveredProjectsCP implements IStructuredContentProvider {
+public class CoveredProjectsCP implements IStructuredContentProvider {
 
     private IResourceChangeListener listener;
 

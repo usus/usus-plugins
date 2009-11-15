@@ -8,6 +8,7 @@ import static org.eclipse.core.runtime.IStatus.ERROR;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -39,5 +40,9 @@ public class UsusUIPlugin extends AbstractUIPlugin {
         String msg = ex.getMessage() == null ? "[No details.]" : ex.getMessage(); //$NON-NLS-1$
         IStatus status = new Status( ERROR, getPluginId(), 0, msg, ex );
         getDefault().getLog().log( status );
+    }
+
+    public static ImageDescriptor getImageDescriptor( String imageFilePath ) {
+        return imageDescriptorFromPlugin( getPluginId(), imageFilePath );
     }
 }

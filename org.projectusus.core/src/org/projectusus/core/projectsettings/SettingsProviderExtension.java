@@ -38,4 +38,12 @@ public class SettingsProviderExtension {
         }
         return null;
     }
+
+    public List<ProjectSettings> loadSettings() {
+        List<ProjectSettings> result = new ArrayList<ProjectSettings>();
+        for( SettingsProvider settingsProvider : loadSettingsProvider() ) {
+            result.add( settingsProvider.getUsusProjectSettings() );
+        }
+        return result;
+    }
 }

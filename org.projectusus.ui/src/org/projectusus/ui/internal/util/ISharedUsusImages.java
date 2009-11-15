@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.util;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.ui.internal.UsusUIPlugin;
 
@@ -18,6 +19,9 @@ public interface ISharedUsusImages {
     String OBJ_WARNINGS = ID + ".OBJ_WARNINGS"; //$NON-NLS-1$
 
     String VIEW_WARNING = ID + ".VIEW_WARNING"; //$NON-NLS-1$
+    String WIZARD_REPORT_BUG = ID + ".WIZARD_REPORT_BUG"; //$NON-NLS-1$
 
     Image getImage( String key );
+
+    ImageDescriptor getDescriptor( String key );
 }

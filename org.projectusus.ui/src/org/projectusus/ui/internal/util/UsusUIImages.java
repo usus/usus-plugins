@@ -32,6 +32,7 @@ public class UsusUIImages implements ISharedUsusImages {
 
     private final static String OBJECT = "obj16/"; // basic colors - size 16x16 //$NON-NLS-1$
     private final static String VIEW = "eview16/"; // basic colors - size 16x16 //$NON-NLS-1$
+    private final static String WIZARDS = "wizban/"; //$NON-NLS-1$
 
     private UsusUIImages() {
         // no instantiation
@@ -45,12 +46,17 @@ public class UsusUIImages implements ISharedUsusImages {
         return getImageRegistry().get( key );
     }
 
+    public ImageDescriptor getDescriptor( String key ) {
+        return getImageRegistry().getDescriptor( key );
+    }
+
     private void declareImages() {
         declare( OBJ_CODE_PROPORTIONS, OBJECT + "codeproportions.gif" ); //$NON-NLS-1$
         declare( OBJ_INFO, OBJECT + "info.gif" ); //$NON-NLS-1$
         declare( OBJ_TEST_COVERAGE, OBJECT + "testcoverage.gif" ); //$NON-NLS-1$
         declare( OBJ_WARNINGS, OBJECT + "warnings.gif" ); //$NON-NLS-1$
         declare( VIEW_WARNING, VIEW + "warning.gif" ); //$NON-NLS-1$
+        declare( WIZARD_REPORT_BUG, WIZARDS + "report_bug.png" ); //$NON-NLS-1$
     }
 
     private void declare( final String key, final String path ) {
@@ -82,4 +88,5 @@ public class UsusUIImages implements ISharedUsusImages {
         }
         return new URL( baseUrl, iconPath );
     }
+
 }

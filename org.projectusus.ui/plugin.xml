@@ -39,6 +39,20 @@
             id="org.projectusus.ui.internal.coveredprojects.CoveredProjectsView"
             category="org.projectusus.ui.viewCategory"
             name="%coveredprojects_view_name"/>
+      <view
+            category="org.projectusus.ui.viewCategory"
+            class="org.projectusus.ui.internal.bugreport.BugsView"
+            icon="icons/full/eview16/bug.gif"
+            id="org.projectusus.ui.bugreport.bugsView"
+            name="%bugs_view">
+      </view>
+      <view
+            category="org.projectusus.ui.viewCategory"
+            class="org.projectusus.ui.internal.bugreport.AverageCodeProportionsView"
+            icon="icons/full/eview16/bug.gif"
+            id="org.projectusus.ui.bugreport.averageCodeProportionsView"
+            name="%average_code_proportions_view">
+      </view>
    </extension>
    <!-- register page book pages for model objects -->
    <extension point="org.eclipse.core.runtime.adapters">
@@ -92,39 +106,22 @@
       </viewContribution>
    </extension>
    <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            class="org.projectusus.ui.internal.projectsettings.ApplyProjectSettings"
-            commandId="org.projectusus.ui.projectsettings.apply">
-      </handler>
-      <handler
-            class="org.projectusus.ui.internal.projectsettings.CopySettingsFromProject"
-            commandId="org.projectusus.ui.projectsettings.copyFromProject">
-      </handler>
-   </extension>
-   <extension point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
-         <command
-               commandId="org.projectusus.ui.projectsettings.apply"
-               label="%packageExplorer_menu_apply"
-               style="push">
-         </command>
-         <command
-               commandId="org.projectusus.ui.projectsettings.copyFromProject"
-               label="%packageExplorer_copy_from_project_command"
-               style="push">
-         </command>
-      </menuContribution>
-   </extension>
-   <extension point="org.eclipse.ui.commands">
-      <command
-            id="org.projectusus.ui.projectsettings.apply"
-            name="%apply_command">
-      </command>
-      <command
-            id="org.projectusus.ui.projectsettings.copyFromProject"
-            name="%copy_from_project_command">
-      </command>
+         point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+            id="org.projectusus.ui.bugreport.javaEditorContribution"
+            targetID="#CompilationUnitEditorContext">
+         <action
+               class="org.projectusus.ui.internal.bugreport.ReportBugAction"
+               icon="icons/full/elcl16/report_bug.gif"
+               id="org.projectusus.ui.bugreport"
+               label="%report_bug"
+               menubarPath="additions">
+         </action>
+      </viewerContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.projectusus.ui.bugreport.reportBugForMethod"
+            objectClass="org.eclipse.jdt.core.IMethod">
+      </objectContribution>
    </extension>
 </plugin>
