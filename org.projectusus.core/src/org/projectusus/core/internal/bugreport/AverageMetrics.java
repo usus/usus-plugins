@@ -6,24 +6,42 @@ package org.projectusus.core.internal.bugreport;
 
 import static org.projectusus.core.internal.util.CoreTexts.AverageMetrics_overall;
 
+import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 import org.projectusus.core.internal.proportions.sqi.ProjectResults;
 
 public class AverageMetrics implements IAverageMetrics {
 
+    private int numberOfMethods;
+    private int totalCc;
+    private int totalML;
+    private int numberOfClasses;
+
     public double getAverageCyclomaticComplexity() {
-        return 0;
+        return calculateAverage( totalCc, numberOfMethods );
+    }
+
+    private double calculateAverage( int metricValue, int metricValueBasis ) {
+        if( metricValueBasis == 0 ) {
+            return 0.0;
+        }
+        return metricValue / metricValueBasis;
     }
 
     public double getAverageMethodLength() {
-        return 0;
+        return calculateAverage( totalML, numberOfMethods );
     }
 
     public double getAverageNumberOfMethodsInClass() {
-        return 0;
+        return calculateAverage( numberOfMethods, numberOfClasses );
     }
 
     public void addProjectResults( ProjectResults projectResults ) {
-        // TODO: Implement this
+        numberOfMethods += projectResults.getViolationBasis( IsisMetrics.CC );
+        numberOfClasses += projectResults.getViolationBasis( IsisMetrics.KG );
+
+        totalCc += projectResults.getOverallMetric( IsisMetrics.CC );
+        totalML += projectResults.getOverallMetric( IsisMetrics.ML );
+
     }
 
     public String getName() {

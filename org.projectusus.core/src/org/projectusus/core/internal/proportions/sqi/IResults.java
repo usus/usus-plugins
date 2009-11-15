@@ -16,4 +16,6 @@ public interface IResults {
 
     public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots );
 
+    public int getOverallMetric( IsisMetrics metric );
+
 }

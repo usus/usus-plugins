@@ -96,4 +96,5 @@ public class ClassResults extends Results<Integer, MethodResults> {
             hotspots.add( new MetricKGHotspot( getClassName(), this.getResultCount(), getSourcePosition() ) );
         }
     }
+
 }

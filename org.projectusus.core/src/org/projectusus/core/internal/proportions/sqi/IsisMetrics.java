@@ -31,6 +31,11 @@ public enum IsisMetrics {
         public double getCalibration() {
             return 100.0;
         }
+
+        @Override
+        public int getValueFor( MethodResults methodResults ) {
+            return methodResults.getCCResult();
+        }
     },
     ACD( isisMetrics_acd ), //
     KG( isisMetrics_kg ) {
@@ -64,6 +69,11 @@ public enum IsisMetrics {
         public double getCalibration() {
             return 25.0;
         }
+
+        @Override
+        public int getValueFor( MethodResults methodResults ) {
+            return methodResults.getMLResult();
+        }
     }, //
     CW( isisMetrics_cw );
 
@@ -91,5 +101,9 @@ public enum IsisMetrics {
 
     public double getCalibration() {
         throw new UnsupportedOperationException( "No computation yet for this metric." ); //$NON-NLS-1$
+    }
+
+    public int getValueFor( MethodResults methodResults ) {
+        return 0;
     }
 }

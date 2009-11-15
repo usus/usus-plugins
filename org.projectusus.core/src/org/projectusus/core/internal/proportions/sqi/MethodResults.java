@@ -72,4 +72,8 @@ public class MethodResults implements IResults {
             hotspots.add( hotspot );
         }
     }
+
+    public int getOverallMetric( IsisMetrics metric ) {
+        return metric.getValueFor( this );
+    }
 }

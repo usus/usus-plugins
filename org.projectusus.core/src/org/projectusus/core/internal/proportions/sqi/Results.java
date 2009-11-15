@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.sqi;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -51,7 +52,17 @@ public class Results<S, T extends IResults> implements IResults {
         }
     }
 
+    public int getOverallMetric( IsisMetrics metric ) {
+        int overallMetricValue = 0;
+        Collection<T> allResults = wrapper.getAllResults();
+        for( T currentResult : allResults ) {
+            overallMetricValue += currentResult.getOverallMetric( metric );
+        }
+        return overallMetricValue;
+    }
+
     protected Set<S> getAllKeys() {
         return wrapper.getAllKeys();
     }
+
 }
