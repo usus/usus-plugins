@@ -12,3 +12,4 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %Bundle-Vendor
+Export-Package: org.projectusus.projectsettings.ui.internal;x-internal:=true
