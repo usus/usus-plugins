@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: org.projectusus.projectsettings.ui;singleton:=true
+Bundle-Version: 0.2.0
+Bundle-Activator: org.projectusus.projectsettings.ui.internal.ProjectsettingsUIPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.projectusus.core;bundle-version="0.2.0",
+ org.eclipse.core.resources,
+ org.eclipse.jdt.core;bundle-version="3.5.1"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: %Bundle-Vendor
