@@ -5,13 +5,13 @@
 package org.projectusus.core.internal.proportions.sqi;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 
 public class ResultMapWrapper<S, T extends IResults> {
 
-    private final Map<S, T> resultMap = new HashMap<S, T>();
+    private final Map<S, T> resultMap = new Hashtable<S, T>();
 
     protected T getResults( S name, T newObject ) {
         T results = resultMap.get( name );
