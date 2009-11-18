@@ -76,34 +76,6 @@
                toolbarPath="additions"
                tooltip="%refreshCockpit_tooltip"/>
       </viewContribution>
-      <viewContribution
-            id="org.projectusus.ui.internal.yellowcount.YellowCountView.ViewContribution"
-            targetID="org.projectusus.ui.internal.yellowcount.YellowCountView">
-         <action
-               class="org.projectusus.ui.internal.yellowcount.actions.DeleteCheckpoints"
-               icon="icons/full/elcl16/delete_checkpoints.gif"
-               id="org.projectusus.ui.internal.yellowcount.actions.DeleteCheckpoints"
-               label="%yellowCount_deleteCheckpoints_label"
-               style="push"
-               toolbarPath="additions/handlelog"
-               tooltip="%yellowCount_deleteCheckpoints_tooltip"/>
-         <action
-               class="org.projectusus.ui.internal.yellowcount.actions.OpenCheckpoints"
-               icon="icons/full/elcl16/open_checkpoints.gif"
-               id="org.projectusus.ui.internal.yellowcount.actions.OpenCheckpoints"
-               label="%yellowCount_openCheckpoints_label"
-               style="push"
-               toolbarPath="additions/handlelog"
-               tooltip="%yellowCount_openCheckpoints_tooltip"/>
-         <action
-               class="org.projectusus.ui.internal.yellowcount.actions.AddCheckpoint"
-               icon="icons/full/elcl16/add_checkpoint.gif"
-               id="org.projectusus.ui.internal.yellowcount.actions.AddCheckpoint"
-               label="%yellowCount_addCheckpoint_label"
-               style="push"
-               toolbarPath="additions/add"
-               tooltip="%yellowCount_addCheckpoint_tooltip"/>
-      </viewContribution>
    </extension>
    <extension
          point="org.eclipse.ui.popupMenus">
@@ -123,5 +95,8 @@
             id="org.projectusus.ui.bugreport.reportBugForMethod"
             objectClass="org.eclipse.jdt.core.IMethod">
       </objectContribution>
+   </extension>
+   <extension point="org.projectusus.core.testSuiteSelectors">
+      <selector class="org.projectusus.ui.internal.coveredprojects.TestSuiteSelector"/>
    </extension>
 </plugin>

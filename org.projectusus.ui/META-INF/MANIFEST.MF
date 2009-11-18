@@ -16,7 +16,8 @@ Require-Bundle: org.eclipse.ui,
  org.swtchart,
  org.eclipse.jdt.ui,
  org.eclipse.ui.workbench.texteditor,
- org.eclipse.jface.text
+ org.eclipse.jface.text,
+ org.eclipse.debug.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.projectusus.ui.internal,
@@ -30,5 +31,4 @@ Export-Package: org.projectusus.ui.internal,
  org.projectusus.ui.internal.proportions,
  org.projectusus.ui.internal.proportions.actions;x-internal:=true,
  org.projectusus.ui.internal.util,
- org.projectusus.ui.internal.yellowcount,
- org.projectusus.ui.internal.yellowcount.actions
+ org.projectusus.ui.internal.yellowcount
