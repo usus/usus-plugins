@@ -2,6 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="settingsprovider" name="%settingsprovider_name" schema="schema/settingsprovider.exsd"/>
+   <extension-point id="testSuiteSelectors" name="%testSuiteSelectors_name" schema="schema/testSuiteSelectors.exsd"/>
     <extension
           point="org.eclipse.core.runtime.adapters">
        <factory

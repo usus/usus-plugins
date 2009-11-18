@@ -9,7 +9,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.eclipse.core.filebuffers,
  org.eclipse.jdt.core,
- com.mountainminds.eclemma.core;bundle-version="1.4.2"
+ com.mountainminds.eclemma.core,
+ org.eclipse.debug.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.joda.time,
@@ -46,6 +47,7 @@ Export-Package: org.joda.time,
  org.projectusus.core.internal.proportions.modelupdate.checkpoints,
  org.projectusus.core.internal.proportions.sqi,
  org.projectusus.core.internal.proportions.sqi.jdtdriver,
+ org.projectusus.core.internal.proportions.yellowcount,
  org.projectusus.core.internal.util;x-internal:=true,
  org.projectusus.core.internal.yellowcount,
  org.projectusus.core.projectsettings
