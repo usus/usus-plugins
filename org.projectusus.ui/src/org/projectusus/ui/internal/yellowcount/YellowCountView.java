@@ -41,12 +41,11 @@ public class YellowCountView extends ViewPart {
 
         listener = new IYellowCountListener() {
             public void yellowCountChanged() {
-                IYellowCountResult countResult = YellowCount.getInstance().countOld();
-                display( countResult );
+                display( YellowCount.getInstance().count() );
             }
         };
         YellowCount.getInstance().addYellowCountListener( listener );
-        display( YellowCount.getInstance().countOld() );
+        display( YellowCount.getInstance().count() );
     }
 
     @Override
@@ -80,7 +79,7 @@ public class YellowCountView extends ViewPart {
     }
 
     private Color getBackgroundColor() {
-        int fade = YellowCount.getInstance().countOld().getYellowCount();
+        int fade = YellowCount.getInstance().count().getYellowCount();
         fade = (fade > 255) ? 0 : 255 - fade;
         RGB rgb = new RGB( 255, 255, fade );
         if( !colorRegistry.hasValueFor( rgb.toString() ) ) {

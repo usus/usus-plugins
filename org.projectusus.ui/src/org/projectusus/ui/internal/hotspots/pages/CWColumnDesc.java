@@ -4,7 +4,7 @@ import static org.projectusus.ui.internal.util.UITexts.hotspotsColumn_class;
 import static org.projectusus.ui.internal.util.UITexts.hotspotsColumn_path;
 
 import org.projectusus.core.internal.proportions.model.IHotspot;
-import org.projectusus.core.internal.yellowcount.IMetricCWHotspot;
+import org.projectusus.core.internal.proportions.yellowcount.IMetricCWHotspot;
 import org.projectusus.ui.internal.util.UITexts;
 
 public enum CWColumnDesc implements IHotspotsPageColumnDesc {

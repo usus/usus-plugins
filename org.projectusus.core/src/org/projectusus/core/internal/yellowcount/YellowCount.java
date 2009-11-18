@@ -13,10 +13,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.runtime.CoreException;
-import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.project.FindUsusProjects;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.yellowcount.WorkspaceYellowCount;
 
 /**
  * <p>
@@ -55,30 +54,13 @@ public class YellowCount {
         listeners.remove( listener );
     }
 
-    public CodeProportion count() {
+    public IYellowCountResult count() {
         List<IProject> projects = getUsusProjects();
-        return count( projects ).createCodeProportion();
+        return convert( new WorkspaceYellowCount( getUsusProjects() ), projects );
     }
 
-    public IYellowCountResult countOld() {
-        List<IProject> projects = getUsusProjects();
-        return convert( count( projects ), projects );
-    }
-
-    private WorkspaceCount count( List<IProject> projects ) {
-        WorkspaceCount count = new WorkspaceCount( getUsusProjects() );
-        for( IProject project : projects ) {
-            try {
-                count.add( new ProjectCount( project ) );
-            } catch( CoreException cex ) {
-                UsusCorePlugin.log( cex );
-            }
-        }
-        return count;
-    }
-
-    private IYellowCountResult convert( WorkspaceCount count, List<IProject> projects ) {
-        return createResult( count.countViolations(), count.countProjectsWithViolations(), projects );
+    private IYellowCountResult convert( WorkspaceYellowCount count, List<IProject> projects ) {
+        return createResult( count.getCodeProportion(), projects.size(), count.countProjectsWithViolations() );
     }
 
     private List<IProject> getUsusProjects() {
@@ -92,8 +74,7 @@ public class YellowCount {
         }
     }
 
-    private YellowCountResult createResult( int yellowCount, int yellowProjectCount, List<IProject> projects ) {
-        int fileCount = new CountWSFiles( projects ).compute();
-        return new YellowCountResult( projects.size(), fileCount, yellowCount, yellowProjectCount );
+    private YellowCountResult createResult( CodeProportion codeProportion, int projectCount, int yellowProjectCount ) {
+        return new YellowCountResult( projectCount, codeProportion.getBasis(), codeProportion.getViolations(), yellowProjectCount );
     }
 }

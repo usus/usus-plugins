@@ -14,18 +14,21 @@ import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComput
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.projectusus.core.internal.project.FindUsusProjects;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 import org.projectusus.core.internal.proportions.sqi.WorkspaceResults;
 import org.projectusus.core.internal.proportions.sqi.jdtdriver.JDTDriver;
-import org.projectusus.core.internal.yellowcount.YellowCount;
+import org.projectusus.core.internal.proportions.yellowcount.WorkspaceYellowCount;
 
 class CodeProportionsComputerJob extends Job {
 
@@ -64,8 +67,16 @@ class CodeProportionsComputerJob extends Job {
     }
 
     private void performComputation( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
-        collector.add( YellowCount.getInstance().count() );
+        collector.add( new WorkspaceYellowCount( getUsusProjects() ).getCodeProportion() );
         computeJavaCodeMetrics( collector, monitor );
+    }
+
+    private List<IProject> getUsusProjects() {
+        return new FindUsusProjects( getWSRoot().getProjects() ).compute();
+    }
+
+    private IWorkspaceRoot getWSRoot() {
+        return getWorkspace().getRoot();
     }
 
     private void computeJavaCodeMetrics( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
