@@ -11,6 +11,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
+import org.osgi.framework.BundleListener;
 import org.projectusus.core.internal.coverage.LaunchObserver;
 import org.projectusus.core.internal.proportions.UsusModel;
 
@@ -31,8 +33,14 @@ public class UsusCorePlugin extends Plugin {
     public void start( BundleContext context ) throws Exception {
         super.start( context );
         plugin = this;
-        getUsusModel().forceRecompute();
-        launchObserver.connect();
+        context.addBundleListener( new BundleListener() {
+            public void bundleChanged( BundleEvent event ) {
+                if( event.getType() == BundleEvent.STARTED ) {
+                    getUsusModel().forceRecompute();
+                    launchObserver.connect();
+                }
+            }
+        } );
     }
 
     @Override
