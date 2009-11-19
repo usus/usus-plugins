@@ -68,7 +68,8 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
         try {
             IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
             IEditorInput editorInput = workbenchWindow.getActivePage().getActiveEditor().getEditorInput();
-            selectedJavaClass = (ICompilationUnit)JavaUI.getEditorInputTypeRoot( editorInput );
+            // Don't use JavaUI.getEditorInputTypeRoot because this only available since 3.4
+            selectedJavaClass = (ICompilationUnit)JavaUI.getEditorInputJavaElement( editorInput );
 
             ISelection selection = workbenchWindow.getSelectionService().getSelection();
             extractSelectedElement( selection );
