@@ -9,6 +9,4 @@ public interface ITestCoverageHotspot extends IHotspot {
     int getTotalLines();
 
     int getCoveredLines();
-
-    // TODO lf all the coverage types
 }
