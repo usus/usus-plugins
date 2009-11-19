@@ -21,7 +21,9 @@ import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.bugreport.BugFileReader;
 import org.projectusus.core.internal.bugreport.BugList;
+import org.projectusus.core.internal.bugreport.MethodLocation;
 import org.projectusus.core.internal.bugreport.SaveBugsJob;
+import org.projectusus.core.internal.bugreport.SourceCodeLocation;
 import org.projectusus.core.internal.proportions.sqi.ProjectRawData;
 import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
 import org.w3c.dom.Element;
@@ -100,6 +102,7 @@ class UsusProject implements IUSUSProject {
     public BugList getBugsFor( IMethod method ) {
         BugList bugs = getBugs();
 
-        return bugs;
+        MethodLocation methodLocation = SourceCodeLocation.getMethodLocation( method );
+        return bugs.filter( methodLocation );
     }
 }

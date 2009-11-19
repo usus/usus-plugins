@@ -48,8 +48,8 @@ public class BugsView extends TableViewPart<Bug> {
 
         try {
             IJavaModel model = JavaCore.create( getWorkspace().getRoot() );
-            IJavaProject javaProject = model.getJavaProject( bug.getProject() );
-            IType type = javaProject.findType( bug.getPackageName(), bug.getClassName(), new NullProgressMonitor() );
+            IJavaProject javaProject = model.getJavaProject( bug.getLocation().getProject() );
+            IType type = javaProject.findType( bug.getLocation().getPackageName(), bug.getLocation().getClassName(), new NullProgressMonitor() );
             JavaUI.openInEditor( type );
         } catch( Exception e ) {
             e.printStackTrace();

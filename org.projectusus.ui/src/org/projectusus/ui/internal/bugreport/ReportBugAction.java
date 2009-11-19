@@ -4,12 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.bugreport;
 
+import static org.projectusus.core.internal.bugreport.SourceCodeLocation.getClazz;
+import static org.projectusus.core.internal.bugreport.SourceCodeLocation.getMethod;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
-import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.Action;
@@ -22,6 +24,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.projectusus.core.internal.bugreport.Bug;
+import org.projectusus.core.internal.bugreport.MethodLocation;
+import org.projectusus.core.internal.bugreport.SourceCodeLocation;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.project.NullUsusProject;
 import org.projectusus.core.internal.proportions.sqi.ClassRawData;
@@ -62,8 +66,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
         try {
             IMethod method = getSelectedMethod();
             // TODO: use method.getDeclaringType
-            IJavaElement clazz = method.getParent();
-            IPackageFragment packageElement = getParent( clazz, IPackageFragment.class );
+            IJavaElement clazz = getClazz( method );
 
             IUSUSProject ususProject = getUsusProject();
             FileRawData fileResults = ususProject.getProjectResults().getFileResults( (IFile)selectedJavaClass.getUnderlyingResource() );
@@ -75,10 +78,8 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
             int numberOfMethods = classResults.getViolationBasis( IsisMetrics.CC );
             bug.getBugMetrics().setNumberOfMethods( numberOfMethods );
 
-            bug.setMethodName( method.getElementName() );
-            bug.setClassName( clazz.getElementName() );
-            bug.setPackageName( packageElement.getElementName() );
-            bug.setProject( ususProject.getProjectName() );
+            MethodLocation methodLocation = SourceCodeLocation.getMethodLocation( method );
+            bug.setLocation( methodLocation );
         } catch( JavaModelException e ) {
             UsusUIPlugin.getDefault().log( e );
         }
@@ -86,17 +87,8 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
         return bug;
     }
 
-    @SuppressWarnings( "unchecked" )
-    private <T> T getParent( IJavaElement element, Class<T> clazz ) {
-        IJavaElement result = element;
-        while( result != null && !(clazz.isAssignableFrom( result.getClass() )) ) {
-            result = result.getParent();
-        }
-        return (T)result;
-    }
-
     private IMethod getSelectedMethod() {
-        return getParent( selectedElement, IMethod.class );
+        return getMethod( selectedElement );
     }
 
     private boolean isMethodSelected() {

@@ -17,17 +17,17 @@ enum BugsColumnDesc implements IColumnDesc<Bug> {
     },
     PACKAGE( UITexts.BugsColumnDesc_package, 40, false, true ) {
         public String getLabel( Bug bug ) {
-            return bug.getPackageName();
+            return bug.getLocation().getPackageName();
         }
     },
     CLASS_NAME( UITexts.BugsColumnDesc_classname, 20, false, true ) {
         public String getLabel( Bug bug ) {
-            return bug.getClassName();
+            return bug.getLocation().getClassName();
         }
     },
     METHOD_NAME( UITexts.BugsColumnDesc_methodname, 20, false, true ) {
         public String getLabel( Bug bug ) {
-            return bug.getMethodName();
+            return bug.getLocation().getMethodName();
         }
     },
     METHOD_LENGTH( UITexts.BugsColumnDesc_methodlength, 20, false, true ) {

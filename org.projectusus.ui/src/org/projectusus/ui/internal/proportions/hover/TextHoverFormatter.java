@@ -12,6 +12,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
+import org.projectusus.core.internal.bugreport.BugList;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.proportions.sqi.ClassRawData;
 import org.projectusus.core.internal.proportions.sqi.FileRawData;
@@ -57,12 +58,22 @@ enum TextHoverFormatter {
         String result = null;
         try {
             IResource resource = methodElement.getUnderlyingResource();
-            FileRawData fileResults = findFileInfo( resource );
-            ClassRawData classResults = fileResults.getResults( methodElement.getDeclaringType() );
-            MethodRawData methodResults = classResults.getResults( methodElement );
-            result = new MethodFormatter( methodElement, methodResults, classResults ).format();
+            FileRawData fileRawData = findFileInfo( resource );
+            ClassRawData classRawData = fileRawData.getResults( methodElement.getDeclaringType() );
+            MethodRawData methodRawData = classRawData.getResults( methodElement );
+            BugList bugs = findBugInfo( methodElement );
+            result = new MethodFormatter( methodElement, methodRawData, classRawData, bugs ).format();
         } catch( JavaModelException jamox ) {
             // ignore
+        }
+        return result;
+    }
+
+    private static BugList findBugInfo( IMethod method ) {
+        BugList result = new BugList();
+        IUSUSProject ususProject = getUsusProject( method.getJavaProject().getProject() );
+        if( ususProject != null ) {
+            result = ususProject.getBugsFor( method );
         }
         return result;
     }

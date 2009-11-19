@@ -65,9 +65,9 @@ public class BugPage extends WizardPage {
 
     private void initView() {
         title.setText( bug.getTitle() );
-        packageName.setText( bug.getPackageName() );
-        className.setText( bug.getClassName() );
-        methodName.setText( bug.getMethodName() );
+        packageName.setText( bug.getLocation().getPackageName() );
+        className.setText( bug.getLocation().getClassName() );
+        methodName.setText( bug.getLocation().getMethodName() );
         cyclomaticComplexity.setText( valueOf( bug.getBugMetrics().getCyclomaticComplexity() ) );
         methodLength.setText( valueOf( bug.getBugMetrics().getMethodLength() ) );
         numberOfMethodsInClass.setText( valueOf( bug.getBugMetrics().getNumberOfMethods() ) );

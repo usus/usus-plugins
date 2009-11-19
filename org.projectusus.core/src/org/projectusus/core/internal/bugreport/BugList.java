@@ -41,4 +41,22 @@ public class BugList implements Serializable, Iterable<Bug> {
     public void addBugs( List<Bug> other ) {
         bugs.addAll( other );
     }
+
+    public BugList filter( MethodLocation methodLocation ) {
+        BugList result = new BugList();
+        for( Bug bug : this ) {
+            if( bug.getLocation().equals( methodLocation ) ) {
+                result.addBug( bug );
+            }
+        }
+        return result;
+    }
+
+    public int size() {
+        return bugs.size();
+    }
+
+    public boolean isEmpty() {
+        return bugs.isEmpty();
+    }
 }

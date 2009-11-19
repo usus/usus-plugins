@@ -28,9 +28,9 @@ public class BugsWriter extends UsusXmlWriter implements BugXmlNames {
     private void toXml( Bug bug, StringBuilder sb ) {
         sb.append( INDENT + tagStart( BUG_TAG ) );
         sb.append( att( TITLE_TAG, bug.getTitle() ) );
-        sb.append( att( PACKAGE_NAME_TAG, bug.getPackageName() ) );
-        sb.append( att( CLASS_NAME_TAG, bug.getClassName() ) );
-        sb.append( att( METHOD_NAME_TAG, bug.getMethodName() ) );
+        sb.append( att( PACKAGE_NAME_TAG, bug.getLocation().getPackageName() ) );
+        sb.append( att( CLASS_NAME_TAG, bug.getLocation().getClassName() ) );
+        sb.append( att( METHOD_NAME_TAG, bug.getLocation().getMethodName() ) );
         sb.append( att( CREATION_TIME_TAG, bug.getCreationTime() ) );
         sb.append( att( REPORT_TIME_TAG, bug.getReportTime() ) );
         BugMetrics bugMetrics = bug.getBugMetrics();

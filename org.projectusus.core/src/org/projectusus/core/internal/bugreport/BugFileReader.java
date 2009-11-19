@@ -18,7 +18,7 @@ import org.w3c.dom.Node;
 public class BugFileReader extends UsusXmlReader<Bug> implements BugXmlNames {
 
     public BugFileReader( Element rootElement ) {
-        super( rootElement, ROOT );
+        super( rootElement, BUG_TAG );
     }
 
     public void writToFile( IFile file, BugList bugList ) {
@@ -48,9 +48,9 @@ public class BugFileReader extends UsusXmlReader<Bug> implements BugXmlNames {
 
         Bug result = new Bug();
         result.setTitle( title );
-        result.setPackageName( packageName );
-        result.setClassName( className );
-        result.setMethodName( methodName );
+        result.getLocation().setPackageName( packageName );
+        result.getLocation().setClassName( className );
+        result.getLocation().setMethodName( methodName );
         result.setReportTime( reportTime );
         result.setCreationTime( creationTime );
         result.setBugMetrics( bugMetrics );
