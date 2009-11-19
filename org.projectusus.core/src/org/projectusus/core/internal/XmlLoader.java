@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,7 +34,9 @@ public abstract class XmlLoader<T> {
         ArrayList<T> result = new ArrayList<T>();
         Reader reader = null;
         try {
-            reader = loadElements( result );
+            if( new File( getFileName() ).exists() ) {
+                reader = loadElements( result );
+            }
         } catch( Exception ex ) {
             result.clear();
             // not directly displayed to the user, but into the error log
