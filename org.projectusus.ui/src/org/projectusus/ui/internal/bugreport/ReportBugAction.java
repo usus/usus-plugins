@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.Action;
@@ -103,8 +104,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
     }
 
     private ClassRawData getClassRawData( IMethod method ) throws JavaModelException {
-        // TODO: use method.getDeclaringType
-        IJavaElement clazz = getClazz( method );
+        IType clazz = getClazz( method );
         IUSUSProject ususProject = getUsusProject();
         FileRawData fileResults = ususProject.getProjectResults().getFileRawData( (IFile)selectedJavaClass.getUnderlyingResource() );
         ClassRawData classResults = fileResults.getRawData( clazz );

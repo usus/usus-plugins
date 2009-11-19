@@ -7,6 +7,7 @@ package org.projectusus.core.internal.bugreport;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.IType;
 
 public class SourceCodeLocation {
 
@@ -15,9 +16,8 @@ public class SourceCodeLocation {
 
     }
 
-    public static IJavaElement getClazz( IMethod method ) {
-        // TODO: use method.getDeclaringType
-        return method.getParent();
+    public static IType getClazz( IMethod method ) {
+        return method.getDeclaringType();
     }
 
     public static IMethod getMethod( IJavaElement javaElement ) {
