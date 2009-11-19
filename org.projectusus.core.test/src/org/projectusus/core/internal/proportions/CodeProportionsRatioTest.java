@@ -20,13 +20,11 @@ public class CodeProportionsRatioTest {
     }
 
     @Test
-    public void reverseIndicatorZeroWithZeroCases() {
-        assertEquals( 0, new CodeProportionsRatio( 0, 0 ).computeReverseIndicator(), 0.0 );
-    }
-
-    @Test
     public void testComputeReverseIndicator() {
+        assertEquals( 100, new CodeProportionsRatio( 0, 0 ).computeReverseIndicator(), 0.0 );
+        assertEquals( 100, new CodeProportionsRatio( 0, 10 ).computeReverseIndicator(), 0.0 );
         assertEquals( 0, new CodeProportionsRatio( 10, 10 ).computeReverseIndicator(), 0.0 );
         assertEquals( 90, new CodeProportionsRatio( 10, 100 ).computeReverseIndicator(), 0.0 );
+        assertEquals( 10, new CodeProportionsRatio( 9, 10 ).computeReverseIndicator(), 0.0 );
     }
 }
