@@ -6,82 +6,62 @@ package org.projectusus.core.internal.proportions.sqi;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.Initializer;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.internal.ReflectionUtil;
 import org.projectusus.core.internal.proportions.sqi.jdtdriver.ML;
 
 
 
 public class MLTest  {
 
+    private Block block;
+    
+    private ML mlChecker;
 
     @Before
     public void setup() {
+        block = mock(Block.class);
+        mlChecker = new ML();
     }
 
-//    @Override
-//    public BetterFileContents getBetterFileContents() {
-//        return contents;
-//    }
-//
+
     @Test
-    public void bracesOnSameLine() {
-        int expected = 1;
-        int actual = 1; // TODO this.calcMethodLength( 1, 1 );
+    public void methodSize() throws IllegalArgumentException, SecurityException, IllegalAccessException, NoSuchFieldException{
+        int expected = 7;
+        initBlock( expected );
+        mlChecker.visit( (MethodDeclaration)null );
+        mlChecker.visit( block );
+        int actual = ((Integer)(ReflectionUtil.getValue( mlChecker, "statementCount" ))).intValue();
         assertEquals( expected, actual );
     }
-//
-//    @Test
-//    public void bracesOnSameLine2() {
-//        int expected = 1;
-//        int actual = this.calcMethodLength( 147, 147 );
-//        assertEquals( expected, actual );
-//    }
-//
-//    @Test
-//    public void bracesOneLineApart() {
-//        int expected = 2;
-//        int actual = this.calcMethodLength( 14, 15 );
-//        assertEquals( expected, actual );
-//    }
-//
-//    @Test
-//    public void bracesSomeLinesApart() {
-//        int expected = 15;
-//        int actual = this.calcMethodLength( 1, 15 );
-//        assertEquals( expected, actual );
-//    }
-//
-//    @Test
-//    public void oneLineIsComment() {
-//        when( new Boolean( contents.lineIsComment( 7 ) ) ).thenReturn( Boolean.TRUE );
-//        int expected = 14;
-//        int actual = this.calcMethodLength( 1, 15 );
-//        assertEquals( expected, actual );
-//    }
-//
-//    @Test
-//    public void oneLineIsBlank() {
-//        when( new Boolean( contents.lineIsBlank( 7 ) ) ).thenReturn( Boolean.TRUE );
-//        int expected = 14;
-//        int actual = this.calcMethodLength( 1, 15 );
-//        assertEquals( expected, actual );
-//    }
-//
-//    @Test
-//    public void someLinesAreBlankOrComment() {
-//        when( new Boolean( contents.lineIsBlank( 4 ) ) ).thenReturn( Boolean.TRUE );
-//        when( new Boolean( contents.lineIsBlank( 7 ) ) ).thenReturn( Boolean.TRUE );
-//        when( new Boolean( contents.lineIsComment( 5 ) ) ).thenReturn( Boolean.TRUE );
-//        when( new Boolean( contents.lineIsComment( 6 ) ) ).thenReturn( Boolean.TRUE );
-//        when( new Boolean( contents.lineIsComment( 7 ) ) ).thenReturn( Boolean.TRUE );
-//        int expected = 11;
-//        int actual = this.calcMethodLength( 1, 15 );
-//        assertEquals( expected, actual );
-//    }
 
+    @Test
+    public void initializerSize() throws IllegalArgumentException, SecurityException, IllegalAccessException, NoSuchFieldException{
+        int expected = 17;
+        initBlock( expected );
+        mlChecker.visit( (Initializer)null );
+        mlChecker.visit( block );
+        int actual = ((Integer)(ReflectionUtil.getValue( mlChecker, "statementCount" ))).intValue();
+        assertEquals( expected, actual );
+    }
+
+
+    @SuppressWarnings( "unchecked" )
+    private void initBlock( int count ) {
+        List<Statement> statements = mock(ArrayList.class);
+        when(block.statements()).thenReturn( statements );
+        when(statements.size()).thenReturn( new Integer(count) );
+    }
+    
 }
