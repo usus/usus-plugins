@@ -10,7 +10,8 @@ Require-Bundle: org.projectusus.core,
  com.mountainminds.eclemma.core,
  org.eclipse.core.resources,
  org.eclipse.core.runtime,
- org.eclipse.jdt.core
+ org.eclipse.jdt.core,
+ org.eclipse.debug.core
 Bundle-ClassPath: lib/mockito-all-1.8.0.jar,
  .
 Export-Package: org.projectusus.core.internal.coverage,
@@ -19,4 +20,5 @@ Export-Package: org.projectusus.core.internal.coverage,
  org.projectusus.core.internal.proportions.modelupdate,
  org.projectusus.core.internal.proportions.sqi,
  org.projectusus.core.internal.proportions.sqi.jdtdriver,
+ org.projectusus.core.internal.proportions.yellowcount,
  org.projectusus.core.internal.yellowcount

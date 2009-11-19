@@ -99,4 +99,12 @@
    <extension point="org.projectusus.core.testSuiteSelectors">
       <selector class="org.projectusus.ui.internal.coveredprojects.TestSuiteSelector"/>
    </extension>
+   <extension point="org.eclipse.jdt.ui.javaEditorTextHovers">
+      <hover activate="false"
+             label="Code Proportions Info"
+             description="Show code proportions info about the element."
+             class="org.projectusus.ui.internal.proportions.hover.CodeProportionsTextHover"
+             id="org.projectusus.ui.internal.proportions.hover.CodeProportionsTextHover">
+      </hover>
+   </extension>
 </plugin>
