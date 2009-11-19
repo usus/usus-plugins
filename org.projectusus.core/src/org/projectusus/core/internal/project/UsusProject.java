@@ -71,7 +71,9 @@ class UsusProject implements IUSUSProject {
 
     public BugList getBugs() {
         IFile file = project.getFile( BUGS_FILENAME );
-        return loadFromFile( file );
+        BugList result = loadFromFile( file );
+        result.setProjectName( project.getName() );
+        return result;
     }
 
     public ProjectRawData getProjectResults() {

@@ -59,4 +59,10 @@ public class BugList implements Serializable, Iterable<Bug> {
     public boolean isEmpty() {
         return bugs.isEmpty();
     }
+
+    public void setProjectName( String projectName ) {
+        for( Bug bug : this ) {
+            bug.getLocation().setProject( projectName );
+        }
+    }
 }
