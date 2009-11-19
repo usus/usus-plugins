@@ -18,12 +18,12 @@ public class RawData<S, T extends IRawData> implements IRawData {
         wrapper = new RawDataMapWrapper<S, T>();
     }
 
-    public T getResults( S key, T newObject ) {
-        return wrapper.getResults( key, newObject );
+    public T getRawData( S key, T newObject ) {
+        return wrapper.getRawData( key, newObject );
     }
 
-    protected int getResultCount() {
-        return wrapper.getResultCount();
+    protected int getRawDataElementCount() {
+        return wrapper.getRawDataElementCount();
     }
 
     public void remove( S key ) {
@@ -32,7 +32,7 @@ public class RawData<S, T extends IRawData> implements IRawData {
 
     public int getViolationCount( IsisMetrics metric ) {
         int violations = 0;
-        for( T result : wrapper.getAllResults() ) {
+        for( T result : wrapper.getAllRawDataElements() ) {
             violations = violations + result.getViolationCount( metric );
         }
         return violations;
@@ -40,22 +40,22 @@ public class RawData<S, T extends IRawData> implements IRawData {
 
     public int getViolationBasis( IsisMetrics metric ) {
         int basis = 0;
-        for( T result : wrapper.getAllResults() ) {
+        for( T result : wrapper.getAllRawDataElements() ) {
             basis = basis + result.getViolationBasis( metric );
         }
         return basis;
     }
 
     public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
-        for( T result : wrapper.getAllResults() ) {
+        for( T result : wrapper.getAllRawDataElements() ) {
             result.addHotspots( metric, hotspots );
         }
     }
 
     public int getOverallMetric( IsisMetrics metric ) {
         int overallMetricValue = 0;
-        Collection<T> allResults = wrapper.getAllResults();
-        for( T currentResult : allResults ) {
+        Collection<T> allDataElements = wrapper.getAllRawDataElements();
+        for( T currentResult : allDataElements ) {
             overallMetricValue += currentResult.getOverallMetric( metric );
         }
         return overallMetricValue;

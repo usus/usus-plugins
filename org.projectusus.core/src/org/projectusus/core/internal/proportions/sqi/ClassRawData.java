@@ -29,35 +29,35 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
         this.startPosition = startPosition;
     }
 
-    public void setCCResult( MethodDeclaration node, int value ) {
-        getResults( node ).setCCResult( value );
+    public void setCCValue( MethodDeclaration node, int value ) {
+        getRawData( node ).setCCValue( value );
     }
 
-    public void setCCResult( Initializer node, int value ) {
-        getResults( node ).setCCResult( value );
+    public void setCCValue( Initializer node, int value ) {
+        getRawData( node ).setCCValue( value );
     }
 
-    public void setMLResult( MethodDeclaration node, int value ) {
-        getResults( node ).setMLResult( value );
+    public void setMLValue( MethodDeclaration node, int value ) {
+        getRawData( node ).setMLValue( value );
     }
 
-    public void setMLResult( Initializer node, int value ) {
-        getResults( node ).setMLResult( value );
+    public void setMLValue( Initializer node, int value ) {
+        getRawData( node ).setMLValue( value );
     }
 
-    private MethodRawData getResults( MethodDeclaration node ) {
-        return getResults( node.getStartPosition(), node.getName().toString() );
+    private MethodRawData getRawData( MethodDeclaration node ) {
+        return getRawData( node.getStartPosition(), node.getName().toString() );
     }
 
-    private MethodRawData getResults( Initializer node ) {
-        return getResults( node.getStartPosition(), "initializer" ); //$NON-NLS-1$
+    private MethodRawData getRawData( Initializer node ) {
+        return getRawData( node.getStartPosition(), "initializer" ); //$NON-NLS-1$
     }
 
-    private MethodRawData getResults( int start, String methodName ) {
-        return getResults( new Integer( start ), new MethodRawData( start, className, methodName ) );
+    private MethodRawData getRawData( int start, String methodName ) {
+        return getRawData( new Integer( start ), new MethodRawData( start, className, methodName ) );
     }
 
-    public MethodRawData getResults( IMethod method ) {
+    public MethodRawData getRawData( IMethod method ) {
         if( method == null ) {
             return null;
         }
@@ -70,7 +70,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
             for( Integer start : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( start.intValue() );
                 if( method.equals( foundElement ) ) {
-                    return getResults( start.intValue(), "" ); //$NON-NLS-1$
+                    return getRawData( start.intValue(), "" ); //$NON-NLS-1$
                 }
             }
         } catch( JavaModelException e ) {
@@ -121,7 +121,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
     }
 
     public int getNumberOfMethods() {
-        return getResultCount();
+        return getRawDataElementCount();
     }
 
     public int getCCDResult() {

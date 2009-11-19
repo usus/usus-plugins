@@ -65,7 +65,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
         try {
             IMethod method = getSelectedMethod();
             ClassRawData classRawData = getClassRawData( method );
-            MethodRawData methodResults = classRawData.getResults( method );
+            MethodRawData methodResults = classRawData.getRawData( method );
             fillMethodMetrics( bug, methodResults );
             fillClassMetrics( bug, classRawData );
             bug.setLocation( getMethodLocation( method ) );
@@ -82,16 +82,16 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
     }
 
     private void fillMethodMetrics( Bug bug, MethodRawData methodResults ) {
-        bug.getBugMetrics().setCyclomaticComplexity( methodResults.getCCResult() );
-        bug.getBugMetrics().setMethodLength( methodResults.getMLResult() );
+        bug.getBugMetrics().setCyclomaticComplexity( methodResults.getCCValue() );
+        bug.getBugMetrics().setMethodLength( methodResults.getMLValue() );
     }
 
     private ClassRawData getClassRawData( IMethod method ) throws JavaModelException {
         // TODO: use method.getDeclaringType
         IJavaElement clazz = getClazz( method );
         IUSUSProject ususProject = getUsusProject();
-        FileRawData fileResults = ususProject.getProjectResults().getFileResults( (IFile)selectedJavaClass.getUnderlyingResource() );
-        ClassRawData classResults = fileResults.getResults( clazz );
+        FileRawData fileResults = ususProject.getProjectResults().getFileRawData( (IFile)selectedJavaClass.getUnderlyingResource() );
+        ClassRawData classResults = fileResults.getRawData( clazz );
         return classResults;
     }
 

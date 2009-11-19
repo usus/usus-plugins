@@ -29,7 +29,7 @@ class ExtractRawData {
         FileRawData result = null;
         IUSUSProject ususProject = getUsusProject( resource );
         if( ususProject != null && resource instanceof IFile ) {
-            result = ususProject.getProjectResults().getFileResults( (IFile)resource );
+            result = ususProject.getProjectResults().getFileRawData( (IFile)resource );
         }
         return result;
     }

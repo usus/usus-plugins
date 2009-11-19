@@ -30,9 +30,9 @@ class MethodFormatter extends JavaElementFormatter {
     String format() {
         StringBuilder sb = new StringBuilder( method.getElementName() );
         sb.append( " [" ); //$NON-NLS-1$
-        formatMetric( CC, methodRawData.getCCResult(), sb );
+        formatMetric( CC, methodRawData.getCCValue(), sb );
         sb.append( ", " ); //$NON-NLS-1$
-        formatMetric( ML, methodRawData.getMLResult(), sb );
+        formatMetric( ML, methodRawData.getMLValue(), sb );
         sb.append( ", " ); //$NON-NLS-1$
         formatMetric( IsisMetrics.KG, classRawData.getNumberOfMethods(), sb );
         sb.append( ", " ); //$NON-NLS-1$

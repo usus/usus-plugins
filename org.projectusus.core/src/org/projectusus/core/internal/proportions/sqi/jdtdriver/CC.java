@@ -90,13 +90,13 @@ public class CC extends ASTVisitor {
     }
 
     private void submit( MethodDeclaration node ) {
-        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectResults().getCurrentFileResults();
-        currentFileResults.setCCResult( node, ccCount );
+        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectRawData().getCurrentFileRawData();
+        currentFileResults.setCCValue( node, ccCount );
     }
 
     private void submit( Initializer node ) {
-        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectResults().getCurrentFileResults();
-        currentFileResults.setCCResult( node, ccCount );
+        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectRawData().getCurrentFileRawData();
+        currentFileResults.setCCValue( node, ccCount );
     }
 
     private boolean increase() {

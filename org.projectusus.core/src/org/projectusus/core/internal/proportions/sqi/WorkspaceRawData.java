@@ -37,25 +37,25 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         this.currentProject = project;
     }
 
-    public ProjectRawData getCurrentProjectResults() {
+    public ProjectRawData getCurrentProjectRawData() {
         // log warning if currentProject == null
-        return getProjectResults( currentProject );
+        return getProjectRawData( currentProject );
     }
 
-    public ProjectRawData getProjectResults( IProject project ) {
-        return getResults( project, new ProjectRawData( project ) );
+    public ProjectRawData getProjectRawData( IProject project ) {
+        return getRawData( project, new ProjectRawData( project ) );
     }
 
     public void setCurrentFile( IFile currentFile ) {
-        getCurrentProjectResults().setCurrentFile( currentFile );
+        getCurrentProjectRawData().setCurrentFile( currentFile );
     }
 
-    public void dropResults( IProject project ) {
+    public void dropRawData( IProject project ) {
         remove( project );
     }
 
-    public void dropResults( IFile file ) {
-        getCurrentProjectResults().dropResults( file );
+    public void dropRawData( IFile file ) {
+        getCurrentProjectRawData().dropRawData( file );
     }
 
     public CodeProportion getCodeProportion( IsisMetrics metric ) {

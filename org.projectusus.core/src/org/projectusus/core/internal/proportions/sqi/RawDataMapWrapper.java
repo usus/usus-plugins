@@ -9,32 +9,32 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 
-public class RawDataMapWrapper<S, T extends IRawData> {
+class RawDataMapWrapper<S, T extends IRawData> {
 
-    private final Map<S, T> resultMap = new Hashtable<S, T>();
+    private final Map<S, T> rawDataMap = new Hashtable<S, T>();
 
-    protected T getResults( S name, T newObject ) {
-        T results = resultMap.get( name );
-        if( results == null ) {
-            results = newObject;
-            resultMap.put( name, results );
+    T getRawData( S name, T newObject ) {
+        T rawData = rawDataMap.get( name );
+        if( rawData == null ) {
+            rawData = newObject;
+            rawDataMap.put( name, rawData );
         }
-        return results;
+        return rawData;
     }
 
-    protected int getResultCount() {
-        return resultMap.size();
+    int getRawDataElementCount() {
+        return rawDataMap.size();
     }
 
-    protected Collection<T> getAllResults() {
-        return resultMap.values();
+    Collection<T> getAllRawDataElements() {
+        return rawDataMap.values();
     }
 
-    protected void remove( S key ) {
-        resultMap.remove( key );
+    void remove( S key ) {
+        rawDataMap.remove( key );
     }
 
-    public Set<S> getAllKeys() {
-        return resultMap.keySet();
+    Set<S> getAllKeys() {
+        return rawDataMap.keySet();
     }
 }

@@ -26,13 +26,13 @@ public class JDTDriver {
 
     public void run( IProgressMonitor monitor ) throws CoreException {
         for( IProject removedProject : target.getRemovedProjects() ) {
-            WorkspaceRawData.getInstance().dropResults( removedProject );
+            WorkspaceRawData.getInstance().dropRawData( removedProject );
         }
         monitor.beginTask( jdtDriver_computing, countTicks( target.getProjects() ) );
         for( IProject project : target.getProjects() ) {
             monitor.subTask( project.getName() );
             for( IFile removedFile : target.getRemovedFiles( project ) ) {
-                WorkspaceRawData.getInstance().dropResults( removedFile );
+                WorkspaceRawData.getInstance().dropRawData( removedFile );
             }
             runInternal( project, monitor );
         }
@@ -83,7 +83,7 @@ public class JDTDriver {
 
     private void fileStarted( IFile file ) {
         SQI.trace( "File started: " + file.getFullPath() ); //$NON-NLS-1$
-        WorkspaceRawData.getInstance().dropResults( file );
+        WorkspaceRawData.getInstance().dropRawData( file );
         WorkspaceRawData.getInstance().setCurrentFile( file );
     }
 

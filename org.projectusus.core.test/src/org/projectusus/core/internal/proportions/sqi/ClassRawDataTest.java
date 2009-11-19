@@ -49,7 +49,7 @@ public class ClassRawDataTest {
 
         @Test
     public void violationBasis1Method(){
-        classRawData.setCCResult( method1, 0 );
+        classRawData.setCCValue( method1, 0 );
         assertEquals( 1, classRawData.getViolationBasis( IsisMetrics.KG ) );
         assertEquals( 1, classRawData.getViolationBasis( IsisMetrics.CC ) );
         assertEquals( 1, classRawData.getViolationBasis( IsisMetrics.ML ) );
@@ -65,7 +65,7 @@ public class ClassRawDataTest {
     @Test
     public void violationCountCC1Method(){
         int value = 6;
-        classRawData.setCCResult( method1, value );
+        classRawData.setCCValue( method1, value );
         assertEquals( 0, classRawData.getViolationCount( IsisMetrics.KG ) );
         assertEquals( 1, classRawData.getViolationCount( IsisMetrics.CC ) );
         assertEquals( 0, classRawData.getViolationCount( IsisMetrics.ML ) );
@@ -73,7 +73,7 @@ public class ClassRawDataTest {
     @Test
     public void violationCountML1Method(){
         int value = 16;
-        classRawData.setMLResult( method1, value );
+        classRawData.setMLValue( method1, value );
         assertEquals( 0, classRawData.getViolationCount( IsisMetrics.KG ) );
         assertEquals( 0, classRawData.getViolationCount( IsisMetrics.CC ) );
         assertEquals( 1, classRawData.getViolationCount( IsisMetrics.ML ) );

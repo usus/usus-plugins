@@ -25,14 +25,14 @@ public class ML extends ASTVisitor {
 
     @Override
     public void endVisit( MethodDeclaration node ) {
-        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectResults().getCurrentFileResults();
-        currentFileResults.setMLResult( node, statementCount );
+        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectRawData().getCurrentFileRawData();
+        currentFileResults.setMLValue( node, statementCount );
     }
 
     @Override
     public void endVisit( Initializer node ) {
-        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectResults().getCurrentFileResults();
-        currentFileResults.setMLResult( node, statementCount );
+        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectRawData().getCurrentFileRawData();
+        currentFileResults.setMLValue( node, statementCount );
     }
 
     @Override

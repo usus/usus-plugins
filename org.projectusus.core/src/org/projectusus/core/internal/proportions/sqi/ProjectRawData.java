@@ -9,35 +9,30 @@ import org.eclipse.core.resources.IProject;
 
 public class ProjectRawData extends RawData<IFile, FileRawData> {
 
-    private final IProject projectOfResults;
+    private final IProject projectOfRawData;
     private IFile currentFile;
 
     public ProjectRawData( IProject project ) {
-        this.projectOfResults = project;
+        this.projectOfRawData = project;
     }
 
-    public IProject getProjectOfResults() {
-        return projectOfResults;
+    public IProject getProjectOfRawData() {
+        return projectOfRawData;
     }
 
-    public FileRawData getFileResults( IFile file ) {
-        return getResults( file, new FileRawData( file ) );
+    public FileRawData getFileRawData( IFile file ) {
+        return getRawData( file, new FileRawData( file ) );
     }
 
     public void setCurrentFile( IFile currentFile ) {
         this.currentFile = currentFile;
     }
 
-    // for debugging!!
-    public IFile getCurrentFile() {
-        return currentFile;
+    public FileRawData getCurrentFileRawData() {
+        return getFileRawData( currentFile );
     }
 
-    public FileRawData getCurrentFileResults() {
-        return getFileResults( currentFile );
-    }
-
-    public void dropResults( IFile file ) {
+    public void dropRawData( IFile file ) {
         remove( file );
     }
 

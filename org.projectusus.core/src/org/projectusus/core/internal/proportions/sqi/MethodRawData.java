@@ -16,8 +16,8 @@ public class MethodRawData implements IRawData {
     private final String className;
     private final String methodName;
 
-    private int ccResult;
-    private int mlResult;
+    private int ccValue;
+    private int mlValue;
 
     public MethodRawData( int startPosition, String className, String methodName ) {
         this.startPosition = startPosition;
@@ -25,20 +25,20 @@ public class MethodRawData implements IRawData {
         this.methodName = methodName;
     }
 
-    public void setCCResult( int value ) {
-        ccResult = value;
+    public void setCCValue( int value ) {
+        ccValue = value;
     }
 
-    public int getCCResult() {
-        return ccResult;
+    public int getCCValue() {
+        return ccValue;
     }
 
-    public void setMLResult( int value ) {
-        mlResult = value;
+    public void setMLValue( int value ) {
+        mlValue = value;
     }
 
-    public int getMLResult() {
-        return mlResult;
+    public int getMLValue() {
+        return mlValue;
     }
 
     public String getMethodName() {
@@ -64,9 +64,9 @@ public class MethodRawData implements IRawData {
     public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
         if( metric.isViolatedBy( this ) ) {
             if( metric.equals( IsisMetrics.CC ) ) {
-                hotspots.add( new MetricCCHotspot( className, getMethodName(), getCCResult(), getSourcePosition() ) );
+                hotspots.add( new MetricCCHotspot( className, getMethodName(), getCCValue(), getSourcePosition() ) );
             } else if( metric.equals( IsisMetrics.ML ) ) {
-                hotspots.add( new MetricMLHotspot( className, getMethodName(), getMLResult(), getSourcePosition() ) );
+                hotspots.add( new MetricMLHotspot( className, getMethodName(), getMLValue(), getSourcePosition() ) );
             }
         }
     }

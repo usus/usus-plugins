@@ -20,7 +20,7 @@ public enum IsisMetrics {
     CC( isisMetrics_cc ) {
         @Override
         public boolean isViolatedBy( MethodRawData methodResults ) {
-            return methodResults.getCCResult() > MetricsLimits.CC_LIMIT;
+            return methodResults.getCCValue() > MetricsLimits.CC_LIMIT;
         }
 
         @Override
@@ -35,7 +35,7 @@ public enum IsisMetrics {
 
         @Override
         public int getValueFor( MethodRawData methodResults ) {
-            return methodResults.getCCResult();
+            return methodResults.getCCValue();
         }
     },
     ACD( isisMetrics_acd ) {
@@ -63,7 +63,7 @@ public enum IsisMetrics {
     ML( isisMetrics_ml ) {
         @Override
         public boolean isViolatedBy( MethodRawData methodResults ) {
-            return methodResults.getMLResult() > MetricsLimits.ML_LIMIT;
+            return methodResults.getMLValue() > MetricsLimits.ML_LIMIT;
         }
 
         @Override
@@ -78,7 +78,7 @@ public enum IsisMetrics {
 
         @Override
         public int getValueFor( MethodRawData methodResults ) {
-            return methodResults.getMLResult();
+            return methodResults.getMLValue();
         }
     }, //
     CW( isisMetrics_cw );

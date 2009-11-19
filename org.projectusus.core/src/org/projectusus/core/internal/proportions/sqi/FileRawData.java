@@ -20,43 +20,43 @@ import org.projectusus.core.internal.proportions.sqi.jdtdriver.ASTSupport;
 
 public class FileRawData extends RawData<Integer, ClassRawData> {
 
-    private final IFile fileOfResults;
+    private final IFile fileOfRawData;
 
     public FileRawData( IFile file ) {
         super(); // sagt AL ;)
-        this.fileOfResults = file;
+        this.fileOfRawData = file;
     }
 
-    public IFile getFileOfResults() {
-        return fileOfResults;
+    public IFile getFileOfRawData() {
+        return fileOfRawData;
     }
 
-    public void setCCResult( MethodDeclaration methodDecl, int value ) {
-        getResults( methodDecl ).setCCResult( methodDecl, value );
+    public void setCCValue( MethodDeclaration methodDecl, int value ) {
+        getRawData( methodDecl ).setCCValue( methodDecl, value );
     }
 
-    public void setCCResult( Initializer initializer, int value ) {
-        getResults( initializer ).setCCResult( initializer, value );
+    public void setCCValue( Initializer initializer, int value ) {
+        getRawData( initializer ).setCCValue( initializer, value );
     }
 
-    public void setMLResult( MethodDeclaration methodDecl, int value ) {
-        getResults( methodDecl ).setMLResult( methodDecl, value );
+    public void setMLValue( MethodDeclaration methodDecl, int value ) {
+        getRawData( methodDecl ).setMLValue( methodDecl, value );
     }
 
-    public void setMLResult( Initializer initializer, int value ) {
-        getResults( initializer ).setMLResult( initializer, value );
+    public void setMLValue( Initializer initializer, int value ) {
+        getRawData( initializer ).setMLValue( initializer, value );
     }
 
     public void addClass( AbstractTypeDeclaration node ) {
-        getResults( node );
+        getRawData( node );
     }
 
-    private ClassRawData getResults( AbstractTypeDeclaration node ) {
-        return getResults( node.getStartPosition(), node.getName().toString(), node.resolveBinding().getQualifiedName() );
+    private ClassRawData getRawData( AbstractTypeDeclaration node ) {
+        return getRawData( node.getStartPosition(), node.getName().toString(), node.resolveBinding().getQualifiedName() );
     }
 
     public int getNumberOfClasses() {
-        return getResultCount();
+        return getRawDataElementCount();
     }
 
     @Override
@@ -64,24 +64,24 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
         List<IHotspot> localHotspots = new ArrayList<IHotspot>();
         super.addHotspots( metric, localHotspots );
         for( IHotspot hotspot : localHotspots ) {
-            ((Hotspot)hotspot).setFile( fileOfResults );
+            ((Hotspot)hotspot).setFile( fileOfRawData );
         }
         hotspots.addAll( localHotspots );
     }
 
-    private ClassRawData getResults( int start, String name, String qualifiedName ) {
-        return getResults( new Integer( start ), new ClassRawData( name, qualifiedName, start ) );
+    private ClassRawData getRawData( int start, String name, String qualifiedName ) {
+        return getRawData( new Integer( start ), new ClassRawData( name, qualifiedName, start ) );
     }
 
-    private ClassRawData getResults( MethodDeclaration node ) {
-        return getResults( ASTSupport.findEnclosingClass( node ) );
+    private ClassRawData getRawData( MethodDeclaration node ) {
+        return getRawData( ASTSupport.findEnclosingClass( node ) );
     }
 
-    private ClassRawData getResults( Initializer node ) {
-        return getResults( ASTSupport.findEnclosingClass( node ) );
+    private ClassRawData getRawData( Initializer node ) {
+        return getRawData( ASTSupport.findEnclosingClass( node ) );
     }
 
-    public ClassRawData getResults( IJavaElement element ) {
+    public ClassRawData getRawData( IJavaElement element ) {
         if( element == null ) {
             return null;
         }
@@ -94,7 +94,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
             for( Integer startPosition : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( startPosition.intValue() );
                 if( element.equals( foundElement ) ) {
-                    return getResults( startPosition.intValue(), "", "" ); //$NON-NLS-1$ //$NON-NLS-2$
+                    return getRawData( startPosition.intValue(), "", "" ); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             }
         } catch( JavaModelException e ) {

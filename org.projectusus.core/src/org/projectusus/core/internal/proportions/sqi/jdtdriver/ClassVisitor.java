@@ -29,7 +29,7 @@ public class ClassVisitor extends ASTVisitor {
     }
 
     private boolean addAbstractTypeDeclaration( AbstractTypeDeclaration node ) {
-        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectResults().getCurrentFileResults();
+        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectRawData().getCurrentFileRawData();
         currentFileResults.addClass( node );
         return true;
     }

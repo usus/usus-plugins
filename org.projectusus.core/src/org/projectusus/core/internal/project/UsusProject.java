@@ -75,7 +75,7 @@ class UsusProject implements IUSUSProject {
     }
 
     public ProjectRawData getProjectResults() {
-        return WorkspaceRawData.getInstance().getProjectResults( project );
+        return WorkspaceRawData.getInstance().getProjectRawData( project );
     }
 
     public String getProjectName() {

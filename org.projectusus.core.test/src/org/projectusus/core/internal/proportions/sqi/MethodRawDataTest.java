@@ -48,7 +48,7 @@ public class MethodRawDataTest {
     
     @Test
     public void ccResultNoViolation(){
-        assertEquals( 0, methodResults.getCCResult() );
+        assertEquals( 0, methodResults.getCCValue() );
         assertEquals( 0, methodResults.getViolationCount( IsisMetrics.CC ) );
         
         List<IHotspot> hotspots = new ArrayList<IHotspot>();
@@ -60,9 +60,9 @@ public class MethodRawDataTest {
     @Test
     public void ccResultViolation(){
         int value = 6;
-        methodResults.setCCResult( value );
+        methodResults.setCCValue( value );
         
-        assertEquals( value, methodResults.getCCResult() );
+        assertEquals( value, methodResults.getCCValue() );
         assertEquals( 1, methodResults.getViolationCount( IsisMetrics.CC ) );
         
         List<IHotspot> hotspots = new ArrayList<IHotspot>();
@@ -73,7 +73,7 @@ public class MethodRawDataTest {
     
     @Test
     public void mlResultNoViolation(){
-        assertEquals( 0, methodResults.getMLResult() );
+        assertEquals( 0, methodResults.getMLValue() );
         assertEquals( 0, methodResults.getViolationCount( IsisMetrics.ML ) );
         
         List<IHotspot> hotspots = new ArrayList<IHotspot>();
@@ -84,9 +84,9 @@ public class MethodRawDataTest {
     @Test
     public void mlResultViolation(){
         int value = 16;
-        methodResults.setMLResult( value );
+        methodResults.setMLValue( value );
         
-        assertEquals( value, methodResults.getMLResult() );
+        assertEquals( value, methodResults.getMLValue() );
         assertEquals( 1, methodResults.getViolationCount( IsisMetrics.ML ) );
         
         List<IHotspot> hotspots = new ArrayList<IHotspot>();
