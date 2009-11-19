@@ -6,6 +6,7 @@ package org.projectusus.ui.internal.bugreport;
 
 import static org.projectusus.core.internal.bugreport.SourceCodeLocation.getClazz;
 import static org.projectusus.core.internal.bugreport.SourceCodeLocation.getMethod;
+import static org.projectusus.core.internal.bugreport.SourceCodeLocation.getMethodLocation;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -24,8 +25,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.projectusus.core.internal.bugreport.Bug;
-import org.projectusus.core.internal.bugreport.MethodLocation;
-import org.projectusus.core.internal.bugreport.SourceCodeLocation;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.project.NullUsusProject;
 import org.projectusus.core.internal.proportions.sqi.ClassRawData;
@@ -65,26 +64,35 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
         Bug bug = new Bug();
         try {
             IMethod method = getSelectedMethod();
-            // TODO: use method.getDeclaringType
-            IJavaElement clazz = getClazz( method );
-
-            IUSUSProject ususProject = getUsusProject();
-            FileRawData fileResults = ususProject.getProjectResults().getFileResults( (IFile)selectedJavaClass.getUnderlyingResource() );
-            ClassRawData classResults = fileResults.getResults( clazz );
-            MethodRawData methodResults = classResults.getResults( method );
-            bug.getBugMetrics().setCyclomaticComplexity( methodResults.getCCResult() );
-            bug.getBugMetrics().setMethodLength( methodResults.getMLResult() );
-
-            int numberOfMethods = classResults.getViolationBasis( IsisMetrics.CC );
-            bug.getBugMetrics().setNumberOfMethods( numberOfMethods );
-
-            MethodLocation methodLocation = SourceCodeLocation.getMethodLocation( method );
-            bug.setLocation( methodLocation );
+            ClassRawData classRawData = getClassRawData( method );
+            MethodRawData methodResults = classRawData.getResults( method );
+            fillMethodMetrics( bug, methodResults );
+            fillClassMetrics( bug, classRawData );
+            bug.setLocation( getMethodLocation( method ) );
         } catch( JavaModelException e ) {
             UsusUIPlugin.getDefault().log( e );
         }
 
         return bug;
+    }
+
+    private void fillClassMetrics( Bug bug, ClassRawData classRawData ) {
+        int numberOfMethods = classRawData.getViolationBasis( IsisMetrics.CC );
+        bug.getBugMetrics().setNumberOfMethods( numberOfMethods );
+    }
+
+    private void fillMethodMetrics( Bug bug, MethodRawData methodResults ) {
+        bug.getBugMetrics().setCyclomaticComplexity( methodResults.getCCResult() );
+        bug.getBugMetrics().setMethodLength( methodResults.getMLResult() );
+    }
+
+    private ClassRawData getClassRawData( IMethod method ) throws JavaModelException {
+        // TODO: use method.getDeclaringType
+        IJavaElement clazz = getClazz( method );
+        IUSUSProject ususProject = getUsusProject();
+        FileRawData fileResults = ususProject.getProjectResults().getFileResults( (IFile)selectedJavaClass.getUnderlyingResource() );
+        ClassRawData classResults = fileResults.getResults( clazz );
+        return classResults;
     }
 
     private IMethod getSelectedMethod() {

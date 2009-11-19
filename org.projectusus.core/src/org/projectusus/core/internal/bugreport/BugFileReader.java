@@ -37,39 +37,43 @@ public class BugFileReader extends UsusXmlReader<Bug> implements BugXmlNames {
 
     @Override
     protected Bug readElement( Node node ) {
+        Bug result = new Bug();
+        insertBugMetrics( node, result );
+        insertLocationInfo( node, result );
+
         String title = loadStringValue( node, TITLE_TAG );
-        String packageName = loadStringValue( node, PACKAGE_NAME_TAG );
-        String className = loadStringValue( node, CLASS_NAME_TAG );
-        String methodName = loadStringValue( node, METHOD_NAME_TAG );
         DateTime reportTime = loadDateTime( node, REPORT_TIME_TAG );
         DateTime creationTime = loadDateTime( node, CREATION_TIME_TAG );
 
-        BugMetrics bugMetrics = loadBugMetrics( node );
-
-        Bug result = new Bug();
         result.setTitle( title );
-        result.getLocation().setPackageName( packageName );
-        result.getLocation().setClassName( className );
-        result.getLocation().setMethodName( methodName );
         result.setReportTime( reportTime );
         result.setCreationTime( creationTime );
-        result.setBugMetrics( bugMetrics );
 
         return result;
     }
 
-    private BugMetrics loadBugMetrics( Node node ) {
-        BugMetrics result = new BugMetrics();
+    private void insertLocationInfo( Node node, Bug result ) {
+        MethodLocation location = result.getLocation();
+        String packageName = loadStringValue( node, PACKAGE_NAME_TAG );
+        String className = loadStringValue( node, CLASS_NAME_TAG );
+        String methodName = loadStringValue( node, METHOD_NAME_TAG );
+        location.setPackageName( packageName );
+        location.setClassName( className );
+        location.setMethodName( methodName );
+    }
+
+    private void insertBugMetrics( Node node, Bug bug ) {
+        BugMetrics bugMetrics = new BugMetrics();
 
         int cyclomaticComplexity = loadInteger( node, CYCLOMATIC_COMPLEXITY_TAG );
         int methodLength = loadInteger( node, METHOD_LENGTH_TAG );
         int numberOfMethods = loadInteger( node, NUMBER_OF_METHODS_TAG );
 
-        result.setCyclomaticComplexity( cyclomaticComplexity );
-        result.setMethodLength( methodLength );
-        result.setNumberOfMethods( numberOfMethods );
+        bugMetrics.setCyclomaticComplexity( cyclomaticComplexity );
+        bugMetrics.setMethodLength( methodLength );
+        bugMetrics.setNumberOfMethods( numberOfMethods );
 
-        return result;
+        bug.setBugMetrics( bugMetrics );
     }
 
 }
