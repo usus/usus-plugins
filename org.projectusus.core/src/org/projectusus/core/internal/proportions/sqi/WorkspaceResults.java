@@ -63,7 +63,7 @@ public class WorkspaceResults extends Results<IProject, ProjectResults> {
         int basis = getViolationBasis( metric );
         double sqi = 0.0;
         if( metric == IsisMetrics.ACD ) {
-
+            sqi = 100.0 - acdModel.getRelativeACD() * 100.0;
         } else {
             sqi = new SQIComputer( basis, violations, metric.getCalibration() ).compute();
         }
