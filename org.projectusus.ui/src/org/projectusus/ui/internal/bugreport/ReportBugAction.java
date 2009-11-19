@@ -23,7 +23,10 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorActionDelegate;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.project.NullUsusProject;
@@ -39,12 +42,12 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
     private IJavaElement selectedElement;
 
     public void setActiveEditor( IAction action, IEditorPart targetEditor ) {
-        selectedJavaClass = null;
-        selectedJavaClass = (ICompilationUnit)JavaUI.getEditorInputTypeRoot( targetEditor.getEditorInput() );
-
+        // do nothing
     }
 
     public void run( IAction action ) {
+        init();
+
         if( getUsusProject().isUsusProject() && isMethodSelected() ) {
 
             ReportBugWizard wizard = new ReportBugWizard( initBugData() );
@@ -57,6 +60,19 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
                 getUsusProject().saveBug( bug );
             }
 
+        }
+    }
+
+    private void init() {
+        try {
+            IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+            IEditorInput editorInput = workbenchWindow.getActivePage().getActiveEditor().getEditorInput();
+            selectedJavaClass = (ICompilationUnit)JavaUI.getEditorInputTypeRoot( editorInput );
+
+            ISelection selection = workbenchWindow.getSelectionService().getSelection();
+            extractSelectedElement( selection );
+        } catch( Exception e ) {
+            UsusUIPlugin.getDefault().log( e );
         }
     }
 
@@ -112,6 +128,10 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
     }
 
     public void selectionChanged( IAction action, ISelection selection ) {
+        // do nothing
+    }
+
+    private void extractSelectedElement( ISelection selection ) {
         selectedElement = null;
         if( selection instanceof TextSelection ) {
             TextSelection textSelection = (TextSelection)selection;
