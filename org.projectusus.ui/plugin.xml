@@ -101,8 +101,8 @@
    </extension>
    <extension point="org.eclipse.jdt.ui.javaEditorTextHovers">
       <hover activate="false"
-             label="Code Proportions Info"
-             description="Show code proportions info about the element."
+             label="%codeProportionsTextHover_label"
+             description="%codeProportionsTextHover_desc"
              class="org.projectusus.ui.internal.proportions.hover.CodeProportionsTextHover"
              id="org.projectusus.ui.internal.proportions.hover.CodeProportionsTextHover">
       </hover>
