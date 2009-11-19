@@ -96,6 +96,4 @@ public class ClassRawDataTest {
             when(method.getName()).thenReturn( methodName );
             when(methodName.toString()).thenReturn( methodname );
         }
-
-
 }

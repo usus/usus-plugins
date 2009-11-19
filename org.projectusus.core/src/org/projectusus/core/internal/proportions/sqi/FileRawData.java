@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.Hotspot;
@@ -52,7 +53,15 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
     }
 
     private ClassRawData getRawData( AbstractTypeDeclaration node ) {
-        return getRawData( node.getStartPosition(), node.getName().toString(), node.resolveBinding().getQualifiedName() );
+        if( node == null ) {
+            return null;
+        }
+        ITypeBinding binding = node.resolveBinding();
+        String qualifiedName = ""; //$NON-NLS-1$
+        if( binding != null ) {
+            qualifiedName = binding.getQualifiedName();
+        }
+        return getRawData( node.getStartPosition(), node.getName().toString(), qualifiedName );
     }
 
     public int getNumberOfClasses() {
