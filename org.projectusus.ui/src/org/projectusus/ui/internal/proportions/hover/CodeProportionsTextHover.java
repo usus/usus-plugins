@@ -26,8 +26,8 @@ public class CodeProportionsTextHover implements IJavaEditorTextHover {
         String result = null;
         try {
             result = computeHoverInfo( hoverRegion );
-        } catch( JavaModelException jamox ) {
-            // ignore
+        } catch( Exception ex ) {
+            // ignore and/or suppress
         }
         return result;
     }
@@ -37,7 +37,7 @@ public class CodeProportionsTextHover implements IJavaEditorTextHover {
         try {
             result = computeHoverRegion( offset );
         } catch( JavaModelException jamox ) {
-            // ignore
+            // ignore and/or suppress
         }
         return result;
     }
