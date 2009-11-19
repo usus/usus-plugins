@@ -6,15 +6,20 @@ package org.projectusus.core.internal.bugreport;
 
 import java.io.Serializable;
 
+import org.joda.time.DateTime;
+
 public class Bug implements Serializable {
 
     private static final long serialVersionUID = -4147451314568950190L;
 
+    private String project = ""; //$NON-NLS-1$
     private String title = ""; //$NON-NLS-1$
     private String className = ""; //$NON-NLS-1$
     private String packageName = ""; //$NON-NLS-1$
     private String methodName = ""; //$NON-NLS-1$
     private BugMetrics bugMetrics = new BugMetrics();
+    private DateTime reportTime = new DateTime();
+    private DateTime creationTime = new DateTime();
 
     public String getTitle() {
         return title;
@@ -54,6 +59,30 @@ public class Bug implements Serializable {
 
     public void setBugMetrics( BugMetrics bugMetrics ) {
         this.bugMetrics = bugMetrics;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject( String javaProject ) {
+        this.project = javaProject;
+    }
+
+    public DateTime getReportTime() {
+        return reportTime;
+    }
+
+    public void setReportTime( DateTime reportTime ) {
+        this.reportTime = reportTime;
+    }
+
+    public DateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime( DateTime creationTime ) {
+        this.creationTime = creationTime;
     }
 
 }

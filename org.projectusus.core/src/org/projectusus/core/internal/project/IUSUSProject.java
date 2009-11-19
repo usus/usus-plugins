@@ -25,4 +25,6 @@ public interface IUSUSProject {
 
     ProjectResults getProjectResults();
 
+    String getProjectName();
+
 }

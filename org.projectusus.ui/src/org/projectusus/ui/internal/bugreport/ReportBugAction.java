@@ -28,6 +28,7 @@ import org.projectusus.core.internal.proportions.sqi.ClassResults;
 import org.projectusus.core.internal.proportions.sqi.FileResults;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
 import org.projectusus.core.internal.proportions.sqi.MethodResults;
+import org.projectusus.ui.internal.UsusUIPlugin;
 
 public class ReportBugAction extends Action implements IEditorActionDelegate {
 
@@ -60,6 +61,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
         Bug bug = new Bug();
         try {
             IMethod method = getSelectedMethod();
+            // TODO: use method.getDeclaringType
             IJavaElement clazz = method.getParent();
             IPackageFragment packageElement = getParent( clazz, IPackageFragment.class );
 
@@ -76,9 +78,9 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
             bug.setMethodName( method.getElementName() );
             bug.setClassName( clazz.getElementName() );
             bug.setPackageName( packageElement.getElementName() );
+            bug.setProject( ususProject.getProjectName() );
         } catch( JavaModelException e ) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            UsusUIPlugin.getDefault().log( e );
         }
 
         return bug;
@@ -117,7 +119,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
             try {
                 selectedElement = selectedJavaClass.getElementAt( offset );
             } catch( JavaModelException e ) {
-                e.printStackTrace();
+                UsusUIPlugin.getDefault().log( e );
             }
         }
     }

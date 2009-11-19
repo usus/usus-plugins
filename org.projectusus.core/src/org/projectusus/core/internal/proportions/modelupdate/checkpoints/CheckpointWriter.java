@@ -7,25 +7,24 @@ package org.projectusus.core.internal.proportions.modelupdate.checkpoints;
 import static java.lang.String.valueOf;
 import static java.util.Locale.ENGLISH;
 import static org.joda.time.format.DateTimeFormat.forPattern;
+import static org.projectusus.core.internal.UsusXmlNames.DATE_TIME_PATTERN;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_CASES;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_METRIC;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_SQI;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_TIME;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_VIOLATIONS;
-import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.DATE_TIME_PATTERN;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ELEM_CHECKPOINT;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ELEM_ENTRY;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ELEM_ROOT;
-import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.INDENT;
-import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.PREAMBLE;
 
 import java.util.List;
 
 import org.joda.time.format.DateTimeFormatter;
+import org.projectusus.core.internal.UsusXmlWriter;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
 
-class CheckpointWriter {
+class CheckpointWriter extends UsusXmlWriter {
 
     private final List<ICheckpoint> checkpoints;
 
@@ -69,27 +68,4 @@ class CheckpointWriter {
         sb.append( tagEndClosed() );
     }
 
-    private String att( String attributeName, String value ) {
-        return attributeName + "=\"" + value + "\" "; //$NON-NLS-1$//$NON-NLS-2$
-    }
-
-    private String tagStart( String elementName ) {
-        return "<" + elementName + " "; //$NON-NLS-1$//$NON-NLS-2$
-    }
-
-    private String tagEndClosed() {
-        return "/>\n"; //$NON-NLS-1$
-    }
-
-    private String tagEndOpen() {
-        return ">\n"; //$NON-NLS-1$
-    }
-
-    private String openTag( String elementName ) {
-        return "<" + elementName + ">\n"; //$NON-NLS-1$//$NON-NLS-2$
-    }
-
-    private String closeTag( String elementName ) {
-        return "</" + elementName + ">\n"; //$NON-NLS-1$//$NON-NLS-2$
-    }
 }

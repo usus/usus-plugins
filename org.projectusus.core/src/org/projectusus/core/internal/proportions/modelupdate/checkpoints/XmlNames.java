@@ -4,7 +4,9 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.modelupdate.checkpoints;
 
-class XmlNames {
+import org.projectusus.core.internal.UsusXmlNames;
+
+class XmlNames extends UsusXmlNames {
 
     static final String CHECKPOINTS_FILE = "checkpoints.xml"; //$NON-NLS-1$
 
@@ -18,7 +20,4 @@ class XmlNames {
     static final String ATT_VIOLATIONS = "violations"; //$NON-NLS-1$
     static final String ATT_SQI = "sqi"; //$NON-NLS-1$
 
-    static final String PREAMBLE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"; //$NON-NLS-1$
-    static final String INDENT = "  "; //$NON-NLS-1$
-    static final String DATE_TIME_PATTERN = "yyyyMMdd-HHmmss"; //$NON-NLS-1$
 }

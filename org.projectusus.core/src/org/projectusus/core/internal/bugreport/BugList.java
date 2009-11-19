@@ -37,4 +37,8 @@ public class BugList implements Serializable, Iterable<Bug> {
         }
         return result;
     }
+
+    public void addBugs( List<Bug> other ) {
+        bugs.addAll( other );
+    }
 }

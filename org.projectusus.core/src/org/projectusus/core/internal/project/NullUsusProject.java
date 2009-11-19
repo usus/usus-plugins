@@ -26,4 +26,8 @@ public class NullUsusProject implements IUSUSProject {
         return null;
     }
 
+    public String getProjectName() {
+        return ""; //$NON-NLS-1$
+    }
+
 }
