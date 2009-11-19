@@ -50,7 +50,7 @@ class TestSuiteSelectorDialogOpener {
         @Override
         protected void buttonPressed( int buttonId ) {
             if( buttonId == 2 ) { // 'No, but...' button
-                MessageDialog.openInformation( getShell(), "You wonder...", "Not yet implemented." );
+                new TestSuiteSelectionAction( getShell() ).run();
             }
             super.buttonPressed( buttonId );
         }

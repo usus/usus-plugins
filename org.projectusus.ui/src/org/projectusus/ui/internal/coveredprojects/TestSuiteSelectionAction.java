@@ -5,7 +5,18 @@
 package org.projectusus.ui.internal.coveredprojects;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
 
 public class TestSuiteSelectionAction extends Action {
+    private final Shell shell;
 
+    public TestSuiteSelectionAction( Shell shell ) {
+        this.shell = shell;
+    }
+
+    @Override
+    public void run() {
+        MessageDialog.openInformation( shell, "You wonder...", "Not yet implemented." );
+    }
 }
