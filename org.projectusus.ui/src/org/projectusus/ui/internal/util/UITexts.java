@@ -41,6 +41,8 @@ public final class UITexts extends NLS {
     public static String cockpitLP_testCoverage;
     public static String cockpitLP_warnings;
 
+    public static String cockpitView_noProjectsSelected;
+
     public static String columnDesc_covered;
     public static String columnDesc_project;
 

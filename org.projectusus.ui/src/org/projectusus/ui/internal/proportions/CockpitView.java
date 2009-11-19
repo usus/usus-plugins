@@ -4,33 +4,31 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions;
 
+import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.projectusus.core.internal.proportions.UsusModel.getUsusModel;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CW;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
+import static org.projectusus.ui.internal.util.UITexts.cockpitView_noProjectsSelected;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.OpenEvent;
-import org.eclipse.jface.viewers.TableLayout;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.TreeViewerColumn;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.part.ViewPart;
+import org.projectusus.core.internal.project.FindUsusProjects;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.UsusModel;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
@@ -44,7 +42,7 @@ import org.projectusus.ui.internal.util.ISharedUsusImages;
 
 public class CockpitView extends ViewPart {
 
-    private TreeViewer treeViewer;
+    private CockpitTreeViewer treeViewer;
     private IUsusModelListener listener;
 
     @Override
@@ -109,13 +107,34 @@ public class CockpitView extends ViewPart {
             public void ususModelChanged( final IUsusModelHistory history, List<IUsusElement> elements ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
-                        refresh();
-                        setMessage( history.getLastStatus() );
+                        handleUsusModelChanged( history );
                     }
                 } );
             }
         };
         UsusModel.getUsusModel().addUsusModelListener( listener );
+    }
+
+    private void handleUsusModelChanged( final IUsusModelHistory history ) {
+        if( hasUsusProjects() ) {
+            enableViewer( true );
+            refresh();
+            setMessage( history.getLastStatus() );
+        } else {
+            enableViewer( false );
+            getStatusLine().setMessage( getWarningImage(), cockpitView_noProjectsSelected );
+        }
+    }
+
+    private boolean hasUsusProjects() {
+        IProject[] wsProjects = getWorkspace().getRoot().getProjects();
+        return new FindUsusProjects( wsProjects ).compute().size() > 0;
+    }
+
+    private void enableViewer( boolean enabled ) {
+        if( treeViewer != null && !treeViewer.getControl().isDisposed() ) {
+            treeViewer.getControl().setEnabled( enabled );
+        }
     }
 
     private void setMessage( IUsusModelStatus status ) {
@@ -140,38 +159,7 @@ public class CockpitView extends ViewPart {
 
     private void createViewer( Composite parent ) {
         parent.setLayout( new FillLayout() );
-        treeViewer = new TreeViewer( createTree( parent ) );
-        treeViewer.setUseHashlookup( true );
-
-        createTreeTable();
-
-        treeViewer.setLabelProvider( new CockpitLP() );
-        treeViewer.setContentProvider( new CockpitCP() );
+        treeViewer = new CockpitTreeViewer( parent );
         treeViewer.setInput( UsusModel.getUsusModel() );
-    }
-
-    private void createTreeTable() {
-        Tree tree = treeViewer.getTree();
-        TableLayout layout = new TableLayout();
-        treeViewer.getTree().setLayout( layout );
-        createColumns( layout );
-        tree.setLinesVisible( true );
-        tree.setHeaderVisible( true );
-        tree.layout( true );
-    }
-
-    private void createColumns( TableLayout layout ) {
-        for( CockpitColumnDesc desc : CockpitColumnDesc.values() ) {
-            TreeViewerColumn column = new TreeViewerColumn( treeViewer, SWT.NONE );
-            column.getColumn().setResizable( true );
-            column.getColumn().setMoveable( true );
-            column.getColumn().setText( desc.getHeadLabel() );
-            layout.addColumnData( new ColumnWeightData( desc.getWeight() ) );
-        }
-    }
-
-    private Tree createTree( Composite parent ) {
-        int style = SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION;
-        return new Tree( parent, style );
     }
 }
