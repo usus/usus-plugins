@@ -82,15 +82,23 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
         try {
             IMethod method = getSelectedMethod();
             ClassRawData classRawData = getClassRawData( method );
-            MethodRawData methodResults = classRawData.getRawData( method );
-            fillMethodMetrics( bug, methodResults );
-            fillClassMetrics( bug, classRawData );
-            bug.setLocation( getMethodLocation( method ) );
+            if( classRawData != null ) {
+                initBugClassData( bug, classRawData );
+            }
         } catch( JavaModelException e ) {
             UsusUIPlugin.getDefault().log( e );
         }
 
         return bug;
+    }
+
+    private void initBugClassData( Bug bug, ClassRawData classRawData ) {
+        fillClassMetrics( bug, classRawData );
+        MethodRawData methodResults = classRawData.getRawData( getSelectedMethod() );
+        if( methodResults != null ) {
+            fillMethodMetrics( bug, methodResults );
+            bug.setLocation( getMethodLocation( getSelectedMethod() ) );
+        }
     }
 
     private void fillClassMetrics( Bug bug, ClassRawData classRawData ) {
