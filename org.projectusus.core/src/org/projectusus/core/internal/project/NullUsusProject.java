@@ -1,5 +1,6 @@
 package org.projectusus.core.internal.project;
 
+import org.eclipse.jdt.core.IMethod;
 import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.bugreport.BugList;
 import org.projectusus.core.internal.proportions.sqi.ProjectResults;
@@ -28,6 +29,10 @@ public class NullUsusProject implements IUSUSProject {
 
     public String getProjectName() {
         return ""; //$NON-NLS-1$
+    }
+
+    public BugList getBugsFor( IMethod method ) {
+        return new BugList();
     }
 
 }

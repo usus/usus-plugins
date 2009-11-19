@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.project;
 
+import org.eclipse.jdt.core.IMethod;
 import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.bugreport.BugList;
 import org.projectusus.core.internal.proportions.sqi.ProjectResults;
@@ -26,5 +27,7 @@ public interface IUSUSProject {
     ProjectResults getProjectResults();
 
     String getProjectName();
+
+    BugList getBugsFor( IMethod method );
 
 }

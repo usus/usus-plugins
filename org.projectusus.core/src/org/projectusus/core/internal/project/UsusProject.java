@@ -15,6 +15,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.jdt.core.IMethod;
 import org.osgi.service.prefs.BackingStoreException;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.bugreport.Bug;
@@ -94,5 +95,11 @@ class UsusProject implements IUSUSProject {
 
     public String getProjectName() {
         return project.getName();
+    }
+
+    public BugList getBugsFor( IMethod method ) {
+        BugList bugs = getBugs();
+
+        return bugs;
     }
 }
