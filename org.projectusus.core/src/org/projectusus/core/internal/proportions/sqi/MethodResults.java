@@ -63,13 +63,11 @@ public class MethodResults implements IResults {
 
     public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
         if( metric.isViolatedBy( this ) ) {
-            IHotspot hotspot = null;
             if( metric.equals( IsisMetrics.CC ) ) {
-                hotspot = new MetricCCHotspot( className, getMethodName(), getCCResult(), getSourcePosition() );
+                hotspots.add( new MetricCCHotspot( className, getMethodName(), getCCResult(), getSourcePosition() ) );
             } else if( metric.equals( IsisMetrics.ML ) ) {
-                hotspot = new MetricMLHotspot( className, getMethodName(), getMLResult(), getSourcePosition() );
+                hotspots.add( new MetricMLHotspot( className, getMethodName(), getMLResult(), getSourcePosition() ) );
             }
-            hotspots.add( hotspot );
         }
     }
 

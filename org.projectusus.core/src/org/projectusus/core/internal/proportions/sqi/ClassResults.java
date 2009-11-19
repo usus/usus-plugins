@@ -10,19 +10,22 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.core.internal.proportions.model.MetricACDHotspot;
 import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
+import org.projectusus.core.internal.proportions.sqi.acd.AcdModel;
 
 public class ClassResults extends Results<Integer, MethodResults> {
 
-    // TODO getNumberOfMethods
-
     private final int startPosition;
     private final String className;
+    private final String fullyQualifiedName;
 
-    public ClassResults( String name, int startPosition ) {
+    public ClassResults( String name, String fullyQualifiedName, int startPosition ) {
         this.className = name;
+        this.fullyQualifiedName = fullyQualifiedName;
         this.startPosition = startPosition;
     }
 
@@ -30,12 +33,24 @@ public class ClassResults extends Results<Integer, MethodResults> {
         getResults( node ).setCCResult( value );
     }
 
+    public void setCCResult( Initializer node, int value ) {
+        getResults( node ).setCCResult( value );
+    }
+
     public void setMLResult( MethodDeclaration node, int value ) {
+        getResults( node ).setMLResult( value );
+    }
+
+    public void setMLResult( Initializer node, int value ) {
         getResults( node ).setMLResult( value );
     }
 
     private MethodResults getResults( MethodDeclaration node ) {
         return getResults( node.getStartPosition(), node.getName().toString() );
+    }
+
+    private MethodResults getResults( Initializer node ) {
+        return getResults( node.getStartPosition(), "initializer" ); //$NON-NLS-1$
     }
 
     private MethodResults getResults( int start, String methodName ) {
@@ -92,9 +107,25 @@ public class ClassResults extends Results<Integer, MethodResults> {
     public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
         if( metric.isMethodTest() ) {
             super.addHotspots( metric, hotspots );
-        } else if( metric.isViolatedBy( this ) ) {
-            hotspots.add( new MetricKGHotspot( getClassName(), this.getResultCount(), getSourcePosition() ) );
+            return;
+        }
+
+        if( metric.isViolatedBy( this ) ) {
+            if( metric.equals( IsisMetrics.KG ) ) {
+                hotspots.add( new MetricKGHotspot( getClassName(), this.getNumberOfMethods(), getSourcePosition() ) );
+            }
+            if( metric.equals( IsisMetrics.ACD ) ) {
+                hotspots.add( new MetricACDHotspot( getClassName(), getCCDResult(), getSourcePosition() ) );
+            }
         }
     }
 
+    public int getNumberOfMethods() {
+        return getResultCount();
+    }
+
+    public int getCCDResult() {
+        AcdModel acdModel = WorkspaceResults.getInstance().getAcdModel();
+        return acdModel.getCCD( fullyQualifiedName );
+    }
 }

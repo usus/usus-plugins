@@ -11,6 +11,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.core.internal.proportions.sqi.acd.AcdModel;
 
 public class WorkspaceResults extends Results<IProject, ProjectResults> {
 
@@ -18,12 +19,18 @@ public class WorkspaceResults extends Results<IProject, ProjectResults> {
 
     private static final WorkspaceResults instance = new WorkspaceResults();
 
+    private final AcdModel acdModel = new AcdModel();
+
     private WorkspaceResults() {
         super();
     }
 
     public static WorkspaceResults getInstance() {
         return instance;
+    }
+
+    public AcdModel getAcdModel() {
+        return acdModel;
     }
 
     public void setCurrentProject( IProject project ) {
@@ -54,10 +61,14 @@ public class WorkspaceResults extends Results<IProject, ProjectResults> {
     public CodeProportion getCodeProportion( IsisMetrics metric ) {
         int violations = getViolationCount( metric );
         int basis = getViolationBasis( metric );
-        double sqi = new SQIComputer( basis, violations, metric.getCalibration() ).compute();
+        double sqi = 0.0;
+        if( metric == IsisMetrics.ACD ) {
+
+        } else {
+            sqi = new SQIComputer( basis, violations, metric.getCalibration() ).compute();
+        }
         List<IHotspot> hotspots = new ArrayList<IHotspot>();
         addHotspots( metric, hotspots );
         return new CodeProportion( metric, violations, basis, sqi, hotspots );
     }
-
 }

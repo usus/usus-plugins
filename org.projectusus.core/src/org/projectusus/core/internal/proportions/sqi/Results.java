@@ -22,7 +22,7 @@ public class Results<S, T extends IResults> implements IResults {
         return wrapper.getResults( key, newObject );
     }
 
-    public int getResultCount() {
+    protected int getResultCount() {
         return wrapper.getResultCount();
     }
 

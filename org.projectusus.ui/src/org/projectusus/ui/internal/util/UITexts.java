@@ -46,6 +46,7 @@ public final class UITexts extends NLS {
 
     public static String defaultHotspotsPage_info;
 
+    public static String hotspotsColumn_ccd;
     public static String hotspotsColumn_class;
     public static String hotspotsColumn_cyclomaticComplexity;
     public static String hotspotsColumn_length;

@@ -6,6 +6,7 @@ package org.projectusus.core.internal.proportions;
 
 import static java.util.Arrays.asList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ACD;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CC;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.KG;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
@@ -83,7 +84,7 @@ class CodeProportionsComputerJob extends Job {
         new JDTDriver( target ).run( monitor );
 
         WorkspaceResults results = WorkspaceResults.getInstance();
-        for( IsisMetrics metric : asList( CC, KG, ML ) ) {
+        for( IsisMetrics metric : asList( CC, KG, ML, ACD ) ) {
             collector.add( results.getCodeProportion( metric ) );
         }
     }

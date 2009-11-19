@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.Hotspot;
 import org.projectusus.core.internal.proportions.model.IHotspot;
@@ -34,8 +35,16 @@ public class FileResults extends Results<Integer, ClassResults> {
         getResults( methodDecl ).setCCResult( methodDecl, value );
     }
 
+    public void setCCResult( Initializer initializer, int value ) {
+        getResults( initializer ).setCCResult( initializer, value );
+    }
+
     public void setMLResult( MethodDeclaration methodDecl, int value ) {
         getResults( methodDecl ).setMLResult( methodDecl, value );
+    }
+
+    public void setMLResult( Initializer initializer, int value ) {
+        getResults( initializer ).setMLResult( initializer, value );
     }
 
     public void addClass( AbstractTypeDeclaration node ) {
@@ -43,7 +52,7 @@ public class FileResults extends Results<Integer, ClassResults> {
     }
 
     private ClassResults getResults( AbstractTypeDeclaration node ) {
-        return getResults( node.getStartPosition(), node.getName().toString() );
+        return getResults( node.getStartPosition(), node.getName().toString(), node.resolveBinding().getQualifiedName() );
     }
 
     public int getNumberOfClasses() {
@@ -60,11 +69,15 @@ public class FileResults extends Results<Integer, ClassResults> {
         hotspots.addAll( localHotspots );
     }
 
-    private ClassResults getResults( int start, String name ) {
-        return getResults( new Integer( start ), new ClassResults( name, start ) );
+    private ClassResults getResults( int start, String name, String qualifiedName ) {
+        return getResults( new Integer( start ), new ClassResults( name, qualifiedName, start ) );
     }
 
     private ClassResults getResults( MethodDeclaration node ) {
+        return getResults( ASTSupport.findEnclosingClass( node ) );
+    }
+
+    private ClassResults getResults( Initializer node ) {
         return getResults( ASTSupport.findEnclosingClass( node ) );
     }
 
@@ -81,7 +94,7 @@ public class FileResults extends Results<Integer, ClassResults> {
             for( Integer startPosition : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( startPosition.intValue() );
                 if( element.equals( foundElement ) ) {
-                    return getResults( startPosition.intValue(), "" ); //$NON-NLS-1$
+                    return getResults( startPosition.intValue(), "", "" ); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             }
         } catch( JavaModelException e ) {

@@ -37,16 +37,21 @@ public enum IsisMetrics {
             return methodResults.getCCResult();
         }
     },
-    ACD( isisMetrics_acd ), //
-    KG( isisMetrics_kg ) {
+    ACD( isisMetrics_acd ) {
         @Override
         public boolean isViolatedBy( ClassResults classResult ) {
-            return classResult.getResultCount() > MetricsLimits.KG_LIMIT;
+            return classResult.getCCDResult() > MetricsLimits.ACD_LIMIT;
         }
 
         @Override
-        public boolean isMethodTest() {
-            return false;
+        public double getCalibration() {
+            return 25.0;
+        }
+    }, //
+    KG( isisMetrics_kg ) {
+        @Override
+        public boolean isViolatedBy( ClassResults classResult ) {
+            return classResult.getNumberOfMethods() > MetricsLimits.KG_LIMIT;
         }
 
         @Override
