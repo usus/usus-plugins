@@ -24,10 +24,10 @@ import org.eclipse.ui.IEditorPart;
 import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.project.NullUsusProject;
-import org.projectusus.core.internal.proportions.sqi.ClassResults;
-import org.projectusus.core.internal.proportions.sqi.FileResults;
+import org.projectusus.core.internal.proportions.sqi.ClassRawData;
+import org.projectusus.core.internal.proportions.sqi.FileRawData;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
-import org.projectusus.core.internal.proportions.sqi.MethodResults;
+import org.projectusus.core.internal.proportions.sqi.MethodRawData;
 import org.projectusus.ui.internal.UsusUIPlugin;
 
 public class ReportBugAction extends Action implements IEditorActionDelegate {
@@ -66,9 +66,9 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
             IPackageFragment packageElement = getParent( clazz, IPackageFragment.class );
 
             IUSUSProject ususProject = getUsusProject();
-            FileResults fileResults = ususProject.getProjectResults().getFileResults( (IFile)selectedJavaClass.getUnderlyingResource() );
-            ClassResults classResults = fileResults.getResults( clazz );
-            MethodResults methodResults = classResults.getResults( method );
+            FileRawData fileResults = ususProject.getProjectResults().getFileResults( (IFile)selectedJavaClass.getUnderlyingResource() );
+            ClassRawData classResults = fileResults.getResults( clazz );
+            MethodRawData methodResults = classResults.getResults( method );
             bug.getBugMetrics().setCyclomaticComplexity( methodResults.getCCResult() );
             bug.getBugMetrics().setMethodLength( methodResults.getMLResult() );
 

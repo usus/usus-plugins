@@ -6,19 +6,19 @@ import java.util.List;
 public class AcdModel {
 
     // TODO Hashtable verwenden??
-    List<ILinkedNode> classes = new ArrayList<ILinkedNode>();
+    List<ClassNode> classes = new ArrayList<ClassNode>();
 
     public void addClassReference( String referencingClass, String referencedClass ) {
-        ILinkedNode startNode = findOrAdd( referencingClass );
-        ILinkedNode endNode = findOrAdd( referencedClass );
+        ClassNode startNode = findOrAdd( referencingClass );
+        ClassNode endNode = findOrAdd( referencedClass );
 
         if( (startNode != endNode) && !startNode.getChildren().contains( endNode ) ) {
             startNode.getChildren().add( endNode );
         }
     }
 
-    private ILinkedNode findOrAdd( String id ) {
-        for( ILinkedNode node : classes ) {
+    private ClassNode findOrAdd( String id ) {
+        for( ClassNode node : classes ) {
             if( node.getName().equals( id ) ) {
                 return node;
             }
@@ -26,8 +26,8 @@ public class AcdModel {
         return addNode( id );
     }
 
-    private ILinkedNode addNode( String id ) {
-        ILinkedNode newNode = new ClassNode( id );
+    private ClassNode addNode( String id ) {
+        ClassNode newNode = new ClassNode( id );
         classes.add( newNode );
         return newNode;
     }
@@ -65,7 +65,7 @@ public class AcdModel {
     // / <returns></returns>
     private int getCCD() {
         int allDependencies = 0;
-        for( ILinkedNode node : classes ) {
+        for( ClassNode node : classes ) {
             allDependencies += getCCD( node );
         }
         return allDependencies;
@@ -79,20 +79,20 @@ public class AcdModel {
     // / </summary>
     // / <param name="node">starting node for subsystem to analyze</param>
     // / <returns></returns>
-    public int getCCD( ILinkedNode node ) {
+    public int getCCD( ClassNode node ) {
         clearAllNodes(); // in markedNodeCount hineinziehen
         markReferencedNodes( node );
         return getMarkedNodeCount();
     }
 
     public int getCCD( String fullyQualifiedName ) {
-        ILinkedNode node = findOrAdd( fullyQualifiedName );
+        ClassNode node = findOrAdd( fullyQualifiedName );
         return getCCD( node );
     }
 
     private int getMarkedNodeCount() {
         int markedNodes = 0;
-        for( ILinkedNode node : classes ) {
+        for( ClassNode node : classes ) {
             if( node.isMarked() ) {
                 markedNodes++;
             }
@@ -101,18 +101,18 @@ public class AcdModel {
     }
 
     // Knoten durch Einfügen in Set markieren, damit Zählen + Löschen in O(1)
-    private void markReferencedNodes( ILinkedNode node ) {
+    private void markReferencedNodes( ClassNode node ) {
         if( node.isMarked() ) {
             return;
         }
         node.setMarked( true );
-        for( ILinkedNode childNode : node.getChildren() ) {
+        for( ClassNode childNode : node.getChildren() ) {
             markReferencedNodes( childNode );
         }
     }
 
     private void clearAllNodes() {
-        for( ILinkedNode node : classes ) {
+        for( ClassNode node : classes ) {
             node.setMarked( false );
         }
     }

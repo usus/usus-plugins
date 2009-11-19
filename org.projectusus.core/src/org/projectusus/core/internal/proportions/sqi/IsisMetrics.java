@@ -12,13 +12,14 @@ import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ml;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_pc;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ta;
 
+
 public enum IsisMetrics {
 
     TA( isisMetrics_ta ), //
     PC( isisMetrics_pc ), //
     CC( isisMetrics_cc ) {
         @Override
-        public boolean isViolatedBy( MethodResults methodResults ) {
+        public boolean isViolatedBy( MethodRawData methodResults ) {
             return methodResults.getCCResult() > MetricsLimits.CC_LIMIT;
         }
 
@@ -33,13 +34,13 @@ public enum IsisMetrics {
         }
 
         @Override
-        public int getValueFor( MethodResults methodResults ) {
+        public int getValueFor( MethodRawData methodResults ) {
             return methodResults.getCCResult();
         }
     },
     ACD( isisMetrics_acd ) {
         @Override
-        public boolean isViolatedBy( ClassResults classResult ) {
+        public boolean isViolatedBy( ClassRawData classResult ) {
             return classResult.getCCDResult() > MetricsLimits.ACD_LIMIT;
         }
 
@@ -50,7 +51,7 @@ public enum IsisMetrics {
     }, //
     KG( isisMetrics_kg ) {
         @Override
-        public boolean isViolatedBy( ClassResults classResult ) {
+        public boolean isViolatedBy( ClassRawData classResult ) {
             return classResult.getNumberOfMethods() > MetricsLimits.KG_LIMIT;
         }
 
@@ -61,7 +62,7 @@ public enum IsisMetrics {
     }, //
     ML( isisMetrics_ml ) {
         @Override
-        public boolean isViolatedBy( MethodResults methodResults ) {
+        public boolean isViolatedBy( MethodRawData methodResults ) {
             return methodResults.getMLResult() > MetricsLimits.ML_LIMIT;
         }
 
@@ -76,7 +77,7 @@ public enum IsisMetrics {
         }
 
         @Override
-        public int getValueFor( MethodResults methodResults ) {
+        public int getValueFor( MethodRawData methodResults ) {
             return methodResults.getMLResult();
         }
     }, //
@@ -92,11 +93,11 @@ public enum IsisMetrics {
         return label;
     }
 
-    public boolean isViolatedBy( MethodResults methodResult ) {
+    public boolean isViolatedBy( MethodRawData methodResult ) {
         return false;
     }
 
-    public boolean isViolatedBy( ClassResults methodResult ) {
+    public boolean isViolatedBy( ClassRawData methodResult ) {
         return false;
     }
 
@@ -108,7 +109,7 @@ public enum IsisMetrics {
         throw new UnsupportedOperationException( "No computation yet for this metric." ); //$NON-NLS-1$
     }
 
-    public int getValueFor( MethodResults methodResults ) {
+    public int getValueFor( MethodRawData methodResults ) {
         return 0;
     }
 }

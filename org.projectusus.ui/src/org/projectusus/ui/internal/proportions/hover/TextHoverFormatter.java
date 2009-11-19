@@ -13,9 +13,9 @@ import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
 import org.projectusus.core.internal.project.IUSUSProject;
-import org.projectusus.core.internal.proportions.sqi.ClassResults;
-import org.projectusus.core.internal.proportions.sqi.FileResults;
-import org.projectusus.core.internal.proportions.sqi.MethodResults;
+import org.projectusus.core.internal.proportions.sqi.ClassRawData;
+import org.projectusus.core.internal.proportions.sqi.FileRawData;
+import org.projectusus.core.internal.proportions.sqi.MethodRawData;
 
 enum TextHoverFormatter {
 
@@ -57,9 +57,9 @@ enum TextHoverFormatter {
         String result = null;
         try {
             IResource resource = methodElement.getUnderlyingResource();
-            FileResults fileResults = findFileInfo( resource );
-            ClassResults classResults = fileResults.getResults( methodElement.getDeclaringType() );
-            MethodResults methodResults = classResults.getResults( methodElement );
+            FileRawData fileResults = findFileInfo( resource );
+            ClassRawData classResults = fileResults.getResults( methodElement.getDeclaringType() );
+            MethodRawData methodResults = classResults.getResults( methodElement );
             result = new MethodFormatter( methodElement, methodResults, classResults ).format();
         } catch( JavaModelException jamox ) {
             // ignore
@@ -67,8 +67,8 @@ enum TextHoverFormatter {
         return result;
     }
 
-    private static FileResults findFileInfo( IResource resource ) {
-        FileResults result = null;
+    private static FileRawData findFileInfo( IResource resource ) {
+        FileRawData result = null;
         IUSUSProject ususProject = getUsusProject( resource );
         if( ususProject != null && resource instanceof IFile ) {
             result = ususProject.getProjectResults().getFileResults( (IFile)resource );

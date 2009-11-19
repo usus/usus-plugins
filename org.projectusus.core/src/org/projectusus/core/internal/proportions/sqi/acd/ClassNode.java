@@ -3,15 +3,15 @@ package org.projectusus.core.internal.proportions.sqi.acd;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassNode implements ILinkedNode {
+public class ClassNode {
 
     private final String name;
-    private final List<ILinkedNode> children;
+    private final List<ClassNode> children;
     private boolean marked;
 
     public ClassNode( String name ) {
         this.name = name;
-        children = new ArrayList<ILinkedNode>();
+        children = new ArrayList<ClassNode>();
         marked = false;
     }
 
@@ -19,7 +19,7 @@ public class ClassNode implements ILinkedNode {
         return children.size();
     }
 
-    public List<ILinkedNode> getChildren() {
+    public List<ClassNode> getChildren() {
         return children;
     }
 

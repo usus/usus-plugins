@@ -4,8 +4,8 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.projectusus.core.internal.proportions.sqi.FileResults;
-import org.projectusus.core.internal.proportions.sqi.WorkspaceResults;
+import org.projectusus.core.internal.proportions.sqi.FileRawData;
+import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
 
 public class ML extends ASTVisitor {
 
@@ -25,13 +25,13 @@ public class ML extends ASTVisitor {
 
     @Override
     public void endVisit( MethodDeclaration node ) {
-        FileResults currentFileResults = WorkspaceResults.getInstance().getCurrentProjectResults().getCurrentFileResults();
+        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectResults().getCurrentFileResults();
         currentFileResults.setMLResult( node, statementCount );
     }
 
     @Override
     public void endVisit( Initializer node ) {
-        FileResults currentFileResults = WorkspaceResults.getInstance().getCurrentProjectResults().getCurrentFileResults();
+        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectResults().getCurrentFileResults();
         currentFileResults.setMLResult( node, statementCount );
     }
 

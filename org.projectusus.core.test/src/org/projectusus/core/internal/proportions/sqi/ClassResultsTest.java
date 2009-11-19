@@ -15,7 +15,7 @@ public class ClassResultsTest {
     private final int METHOD1LINENO = 99;
     private final int METHOD2LINENO = 133;
 
-    private ClassResults classResults;
+    private ClassRawData classResults;
     
     
     @Before

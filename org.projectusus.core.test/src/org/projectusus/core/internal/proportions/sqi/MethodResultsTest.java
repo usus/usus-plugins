@@ -17,7 +17,7 @@ public class MethodResultsTest {
     private final String PACKAGENAME = "package.name";
     private final String CLASSNAME = "ClassName";
     private final String METHODNAME = "methodname";
-    private MethodResults methodResults;
+    private MethodRawData methodResults;
     private final int LINENO = 77;
     
     @Before

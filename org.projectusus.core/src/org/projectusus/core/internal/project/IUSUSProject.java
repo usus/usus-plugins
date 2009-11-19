@@ -7,7 +7,7 @@ package org.projectusus.core.internal.project;
 import org.eclipse.jdt.core.IMethod;
 import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.bugreport.BugList;
-import org.projectusus.core.internal.proportions.sqi.ProjectResults;
+import org.projectusus.core.internal.proportions.sqi.ProjectRawData;
 
 /**
  * adapter for IProjects (declared in plugin.xml); you can ask an IProject via getAdapter() for an object of this type and then query Usus-related info.
@@ -24,7 +24,7 @@ public interface IUSUSProject {
 
     BugList getBugs();
 
-    ProjectResults getProjectResults();
+    ProjectRawData getProjectResults();
 
     String getProjectName();
 

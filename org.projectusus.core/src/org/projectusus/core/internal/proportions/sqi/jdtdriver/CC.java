@@ -13,8 +13,8 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.projectusus.core.internal.proportions.sqi.FileResults;
-import org.projectusus.core.internal.proportions.sqi.WorkspaceResults;
+import org.projectusus.core.internal.proportions.sqi.FileRawData;
+import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
 
 public class CC extends ASTVisitor {
 
@@ -90,12 +90,12 @@ public class CC extends ASTVisitor {
     }
 
     private void submit( MethodDeclaration node ) {
-        FileResults currentFileResults = WorkspaceResults.getInstance().getCurrentProjectResults().getCurrentFileResults();
+        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectResults().getCurrentFileResults();
         currentFileResults.setCCResult( node, ccCount );
     }
 
     private void submit( Initializer node ) {
-        FileResults currentFileResults = WorkspaceResults.getInstance().getCurrentProjectResults().getCurrentFileResults();
+        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectResults().getCurrentFileResults();
         currentFileResults.setCCResult( node, ccCount );
     }
 

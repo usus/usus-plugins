@@ -27,7 +27,7 @@ import org.projectusus.core.internal.project.FindUsusProjects;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
-import org.projectusus.core.internal.proportions.sqi.WorkspaceResults;
+import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
 import org.projectusus.core.internal.proportions.sqi.jdtdriver.JDTDriver;
 import org.projectusus.core.internal.proportions.yellowcount.WorkspaceYellowCount;
 
@@ -83,7 +83,7 @@ class CodeProportionsComputerJob extends Job {
     private void computeJavaCodeMetrics( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
         new JDTDriver( target ).run( monitor );
 
-        WorkspaceResults results = WorkspaceResults.getInstance();
+        WorkspaceRawData results = WorkspaceRawData.getInstance();
         for( IsisMetrics metric : asList( CC, KG, ML, ACD ) ) {
             collector.add( results.getCodeProportion( metric ) );
         }

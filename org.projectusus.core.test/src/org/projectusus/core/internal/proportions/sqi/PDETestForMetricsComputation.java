@@ -25,7 +25,7 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject{
     public void simpleCase() throws Exception {
         IFile file = createWSFile( "A.java", loadContent("A.test") );
         new FileDriver( file ).compute();
-        ProjectResults results = WorkspaceResults.getInstance().getProjectResults( file.getProject() );
+        ProjectRawData results = WorkspaceRawData.getInstance().getProjectResults( file.getProject() );
         assertEquals( 1, results.getViolationCount( ML ) );
         assertEquals( 2, results.getViolationBasis( ML ) );
     }

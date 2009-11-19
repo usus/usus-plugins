@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.projectusus.core.internal.proportions.sqi.WorkspaceResults;
+import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
 
 public class ACD extends ASTVisitor {
 
@@ -57,7 +57,7 @@ public class ACD extends ASTVisitor {
         ITypeBinding binding = node.resolveBinding();
         if( binding != null ) {
             String fullyQualifiedTypeName = binding.getQualifiedName();
-            WorkspaceResults.getInstance().getAcdModel().addClassReference( currentType, fullyQualifiedTypeName );
+            WorkspaceRawData.getInstance().getAcdModel().addClassReference( currentType, fullyQualifiedTypeName );
         }
         return true;
     }

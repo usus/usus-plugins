@@ -5,8 +5,8 @@ import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.projectusus.core.internal.proportions.sqi.FileResults;
-import org.projectusus.core.internal.proportions.sqi.WorkspaceResults;
+import org.projectusus.core.internal.proportions.sqi.FileRawData;
+import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
 
 public class ClassVisitor extends ASTVisitor {
 
@@ -29,7 +29,7 @@ public class ClassVisitor extends ASTVisitor {
     }
 
     private boolean addAbstractTypeDeclaration( AbstractTypeDeclaration node ) {
-        FileResults currentFileResults = WorkspaceResults.getInstance().getCurrentProjectResults().getCurrentFileResults();
+        FileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectResults().getCurrentFileResults();
         currentFileResults.addClass( node );
         return true;
     }

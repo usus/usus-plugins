@@ -8,17 +8,17 @@ import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CC;
 import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
 
 import org.eclipse.jdt.core.IMethod;
-import org.projectusus.core.internal.proportions.sqi.ClassResults;
+import org.projectusus.core.internal.proportions.sqi.ClassRawData;
 import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
-import org.projectusus.core.internal.proportions.sqi.MethodResults;
+import org.projectusus.core.internal.proportions.sqi.MethodRawData;
 
 class MethodFormatter {
 
-    private final MethodResults methodResults;
+    private final MethodRawData methodResults;
     private final IMethod method;
-    private final ClassResults classResults;
+    private final ClassRawData classResults;
 
-    MethodFormatter( IMethod method, MethodResults methodResults, ClassResults classResults ) {
+    MethodFormatter( IMethod method, MethodRawData methodResults, ClassRawData classResults ) {
         this.method = method;
         this.methodResults = methodResults;
         this.classResults = classResults;

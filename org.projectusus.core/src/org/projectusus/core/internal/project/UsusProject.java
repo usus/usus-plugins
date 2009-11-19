@@ -22,8 +22,8 @@ import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.bugreport.BugFileReader;
 import org.projectusus.core.internal.bugreport.BugList;
 import org.projectusus.core.internal.bugreport.SaveBugsJob;
-import org.projectusus.core.internal.proportions.sqi.ProjectResults;
-import org.projectusus.core.internal.proportions.sqi.WorkspaceResults;
+import org.projectusus.core.internal.proportions.sqi.ProjectRawData;
+import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
@@ -89,8 +89,8 @@ class UsusProject implements IUSUSProject {
         return loadFromFile( file );
     }
 
-    public ProjectResults getProjectResults() {
-        return WorkspaceResults.getInstance().getProjectResults( project );
+    public ProjectRawData getProjectResults() {
+        return WorkspaceRawData.getInstance().getProjectResults( project );
     }
 
     public String getProjectName() {
