@@ -12,7 +12,6 @@ import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ml;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_pc;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ta;
 
-
 public enum IsisMetrics {
 
     TA( isisMetrics_ta ), //
@@ -41,7 +40,10 @@ public enum IsisMetrics {
     ACD( isisMetrics_acd ) {
         @Override
         public boolean isViolatedBy( ClassRawData classResult ) {
-            return classResult.getCCDResult() > MetricsLimits.ACD_LIMIT;
+            int classCount = WorkspaceRawData.getInstance().getViolationBasis( IsisMetrics.KG );
+            double factor = 1.5 * Math.log( 5 ) / Math.log( classCount );
+            double limit = factor * classCount * classCount;
+            return classResult.getCCDResult() > limit;
         }
 
         @Override
