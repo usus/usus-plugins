@@ -64,6 +64,10 @@ public final class UITexts extends NLS {
     public static String showCoverageView_label;
     public static String showProblemsView_label;
 
+    public static String testSuiteSelectorDialog_buttonLabel;
+    public static String testSuiteSelectorDialog_msg;
+    public static String testSuiteSelectorDialog_title;
+
     private static final String BUNDLE_NAME = UITexts.class.getPackage().getName() + ".uitexts"; //$NON-NLS-1$
 
     static {
