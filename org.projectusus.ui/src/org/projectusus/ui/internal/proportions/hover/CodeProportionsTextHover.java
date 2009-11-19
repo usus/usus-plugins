@@ -36,7 +36,7 @@ public class CodeProportionsTextHover implements IJavaEditorTextHover {
         IRegion result = null;
         try {
             result = computeHoverRegion( offset );
-        } catch( JavaModelException jamox ) {
+        } catch( Exception ex ) {
             // ignore and/or suppress
         }
         return result;
