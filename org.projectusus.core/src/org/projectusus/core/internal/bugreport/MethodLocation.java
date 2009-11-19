@@ -4,6 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.bugreport;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jdt.core.IMethod;
 
 public class MethodLocation {
@@ -53,56 +55,16 @@ public class MethodLocation {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((className == null) ? 0 : className.hashCode());
-        result = prime * result + ((methodName == null) ? 0 : methodName.hashCode());
-        result = prime * result + ((packageName == null) ? 0 : packageName.hashCode());
-        result = prime * result + ((project == null) ? 0 : project.hashCode());
-        return result;
+        return new HashCodeBuilder().append( project ).append( packageName ).append( className ).append( methodName ).toHashCode();
     }
 
     @Override
     public boolean equals( Object obj ) {
-        if( this == obj ) {
-            return true;
-        }
-        if( obj == null ) {
-            return false;
-        }
-        if( getClass() != obj.getClass() ) {
+        if( !(obj instanceof MethodLocation) ) {
             return false;
         }
         MethodLocation other = (MethodLocation)obj;
-        if( className == null ) {
-            if( other.className != null ) {
-                return false;
-            }
-        } else if( !className.equals( other.className ) ) {
-            return false;
-        }
-        if( methodName == null ) {
-            if( other.methodName != null ) {
-                return false;
-            }
-        } else if( !methodName.equals( other.methodName ) ) {
-            return false;
-        }
-        if( packageName == null ) {
-            if( other.packageName != null ) {
-                return false;
-            }
-        } else if( !packageName.equals( other.packageName ) ) {
-            return false;
-        }
-        if( project == null ) {
-            if( other.project != null ) {
-                return false;
-            }
-        } else if( !project.equals( other.project ) ) {
-            return false;
-        }
-        return true;
+        return new EqualsBuilder().append( getProject(), other.getProject() ).append( getPackageName(), other.getPackageName() ).append( getClassName(), other.getClassName() )
+                .append( methodName, other.getMethodName() ).isEquals();
     }
-
 }

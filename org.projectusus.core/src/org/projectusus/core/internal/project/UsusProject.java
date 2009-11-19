@@ -4,13 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.project;
 
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
@@ -19,15 +12,13 @@ import org.eclipse.jdt.core.IMethod;
 import org.osgi.service.prefs.BackingStoreException;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.bugreport.Bug;
-import org.projectusus.core.internal.bugreport.BugFileReader;
 import org.projectusus.core.internal.bugreport.BugList;
+import org.projectusus.core.internal.bugreport.LoadBugs;
 import org.projectusus.core.internal.bugreport.MethodLocation;
 import org.projectusus.core.internal.bugreport.SaveBugsJob;
 import org.projectusus.core.internal.bugreport.SourceCodeLocation;
 import org.projectusus.core.internal.proportions.sqi.ProjectRawData;
 import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
-import org.w3c.dom.Element;
-import org.xml.sax.InputSource;
 
 class UsusProject implements IUSUSProject {
 
@@ -70,20 +61,12 @@ class UsusProject implements IUSUSProject {
     }
 
     private BugList loadFromFile( IFile file ) {
-        BugList bugList = new BugList();
+        BugList result = new BugList();
         if( file.exists() ) {
-            try {
-                Reader reader = new InputStreamReader( file.getContents() );
-                DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-                Element rootElement = parser.parse( new InputSource( reader ) ).getDocumentElement();
-                ArrayList<Bug> bugs = new ArrayList<Bug>();
-                new BugFileReader( rootElement ).read( bugs );
-                bugList.addBugs( bugs );
-            } catch( Exception e ) {
-                UsusCorePlugin.log( e );
-            }
+            LoadBugs loadBugs = new LoadBugs( file.getLocation().toOSString() );
+            result.addBugs( loadBugs.load() );
         }
-        return bugList;
+        return result;
     }
 
     public BugList getBugs() {

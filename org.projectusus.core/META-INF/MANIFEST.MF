@@ -13,7 +13,15 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.debug.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.joda.time,
+Export-Package: org.apache.commons.lang,
+ org.apache.commons.lang.builder,
+ org.apache.commons.lang.enums,
+ org.apache.commons.lang.exception,
+ org.apache.commons.lang.math,
+ org.apache.commons.lang.mutable,
+ org.apache.commons.lang.text,
+ org.apache.commons.lang.time,
+ org.joda.time,
  org.joda.time.base,
  org.joda.time.chrono,
  org.joda.time.convert,
@@ -46,6 +54,7 @@ Export-Package: org.joda.time,
  org.projectusus.core.internal.proportions.modelupdate,
  org.projectusus.core.internal.proportions.modelupdate.checkpoints,
  org.projectusus.core.internal.proportions.sqi,
+ org.projectusus.core.internal.proportions.sqi.acd,
  org.projectusus.core.internal.proportions.sqi.jdtdriver,
  org.projectusus.core.internal.proportions.yellowcount,
  org.projectusus.core.internal.util;x-internal:=true,
@@ -53,4 +62,5 @@ Export-Package: org.joda.time,
  org.projectusus.core.projectsettings
 Eclipse-RegisterBuddy: net.sf.eclipsecs.core
 Bundle-ClassPath: lib/joda-time-1.6.jar,
- .
+ .,
+ lib/commons-lang-2.4.jar
