@@ -14,8 +14,18 @@ import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ta;
 
 public enum IsisMetrics {
 
-    TA( isisMetrics_ta ), //
-    PC( isisMetrics_pc ), //
+    TA( isisMetrics_ta ) {
+        @Override
+        public CodeProportionUnit getUnit() {
+            return CodeProportionUnit.METHOD;
+        }
+    }, //
+    PC( isisMetrics_pc ) {
+        @Override
+        public CodeProportionUnit getUnit() {
+            return CodeProportionUnit.PACKAGE;
+        }
+    }, //
     CC( isisMetrics_cc ) {
         @Override
         public boolean isViolatedBy( MethodRawData methodResults ) {
@@ -36,19 +46,25 @@ public enum IsisMetrics {
         public int getValueFor( MethodRawData methodResults ) {
             return methodResults.getCCValue();
         }
+
+        @Override
+        public CodeProportionUnit getUnit() {
+            return CodeProportionUnit.METHOD;
+        }
     },
     ACD( isisMetrics_acd ) {
         @Override
         public boolean isViolatedBy( ClassRawData classResult ) {
             int classCount = WorkspaceRawData.getInstance().getViolationBasis( IsisMetrics.KG );
-            double factor = 1.5 * Math.log( 5 ) / Math.log( classCount );
-            double limit = factor * classCount * classCount;
+            double log_5_classCount = Math.log( classCount ) / Math.log( 5 );
+            double factor = 1.5 / Math.pow( 2, log_5_classCount );
+            double limit = factor * classCount;
             return classResult.getCCDResult() > limit;
         }
 
         @Override
-        public double getCalibration() {
-            return 25.0;
+        public CodeProportionUnit getUnit() {
+            return CodeProportionUnit.CLASS;
         }
     }, //
     KG( isisMetrics_kg ) {
@@ -60,6 +76,11 @@ public enum IsisMetrics {
         @Override
         public double getCalibration() {
             return 25.0;
+        }
+
+        @Override
+        public CodeProportionUnit getUnit() {
+            return CodeProportionUnit.CLASS;
         }
     }, //
     ML( isisMetrics_ml ) {
@@ -82,8 +103,18 @@ public enum IsisMetrics {
         public int getValueFor( MethodRawData methodResults ) {
             return methodResults.getMLValue();
         }
+
+        @Override
+        public CodeProportionUnit getUnit() {
+            return CodeProportionUnit.METHOD;
+        }
     }, //
-    CW( isisMetrics_cw );
+    CW( isisMetrics_cw ) {
+        @Override
+        public CodeProportionUnit getUnit() {
+            return CodeProportionUnit.FILE;
+        }
+    };
 
     private final String label;
 
@@ -93,6 +124,10 @@ public enum IsisMetrics {
 
     public String getLabel() {
         return label;
+    }
+
+    public CodeProportionUnit getUnit() {
+        throw new UnsupportedOperationException( "No unit defined for this metric." ); //$NON-NLS-1$
     }
 
     public boolean isViolatedBy( MethodRawData methodResult ) {

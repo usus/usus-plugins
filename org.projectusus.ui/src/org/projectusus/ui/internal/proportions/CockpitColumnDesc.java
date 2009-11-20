@@ -37,7 +37,7 @@ enum CockpitColumnDesc {
     CASES( cockpitColumnDesc_cases, 14, false ) {
         @Override
         public String getLabel( CodeProportion element ) {
-            return String.valueOf( element.getBasis() );
+            return String.valueOf( element.getBasis() ) + " " + element.getMetric().getUnit().getLabel(); //$NON-NLS-1$
         }
     };
 
