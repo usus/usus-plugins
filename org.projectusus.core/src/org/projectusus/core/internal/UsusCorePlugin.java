@@ -30,7 +30,7 @@ public class UsusCorePlugin extends Plugin {
     }
 
     @Override
-    public void start( BundleContext context ) throws Exception {
+    public void start( final BundleContext context ) throws Exception {
         super.start( context );
         plugin = this;
         context.addBundleListener( new BundleListener() {
@@ -38,6 +38,7 @@ public class UsusCorePlugin extends Plugin {
                 if( event.getType() == BundleEvent.STARTED ) {
                     getUsusModel().forceRecompute();
                     launchObserver.connect();
+                    context.removeBundleListener( this );
                 }
             }
         } );
