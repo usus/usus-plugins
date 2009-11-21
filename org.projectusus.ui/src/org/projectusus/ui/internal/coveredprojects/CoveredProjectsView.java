@@ -88,8 +88,8 @@ public class CoveredProjectsView extends ViewPart {
         comp.setLayout( layout );
 
         result.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true ) );
-        result.setLinesVisible( true );
-        result.setHeaderVisible( true );
+        result.setLinesVisible( false );
+        result.setHeaderVisible( false );
 
         createColumns( result, layout );
         return result;
@@ -100,7 +100,6 @@ public class CoveredProjectsView extends ViewPart {
             TableColumn column = new TableColumn( table, SWT.NONE );
             ColumnWeightData data = new ColumnWeightData( columnDesc.getWeight() );
             layout.setColumnData( column, data );
-            column.setText( columnDesc.getHeadLabel() );
         }
     }
 
