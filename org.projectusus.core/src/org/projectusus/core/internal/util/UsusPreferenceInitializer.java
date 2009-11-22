@@ -28,7 +28,7 @@ public class UsusPreferenceInitializer extends AbstractPreferenceInitializer {
     }
 
     private IEclipsePreferences getPreferencesDefaults() {
-        return new DefaultScope().getNode( UsusCorePlugin.getPluginId() );
+        return new DefaultScope().getNode( UsusCorePlugin.PLUGIN_ID );
     }
 
     private void setDefaultValues( IEclipsePreferences prefs ) {

@@ -5,7 +5,7 @@
 package org.projectusus.core.internal.coverage;
 
 import static org.eclipse.core.runtime.Platform.getExtensionRegistry;
-import static org.projectusus.core.internal.UsusCorePlugin.getPluginId;
+import static org.projectusus.core.internal.UsusCorePlugin.PLUGIN_ID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ class ExtensionLoader {
     }
 
     private IConfigurationElement[] getConfigurationElements() {
-        return getExtensionRegistry().getConfigurationElementsFor( getPluginId(), EXT_PT_SELECTORS );
+        return getExtensionRegistry().getConfigurationElementsFor( PLUGIN_ID, EXT_PT_SELECTORS );
     }
 
     private void loadSelector( List<ITestSuiteForCoverageSelector> result, IConfigurationElement element ) {

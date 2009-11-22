@@ -49,7 +49,7 @@ class UsusProject implements IUSUSProject {
 
     private IEclipsePreferences getProjectSettings() {
         ProjectScope projectScope = new ProjectScope( project );
-        return projectScope.getNode( UsusCorePlugin.getPluginId() );
+        return projectScope.getNode( UsusCorePlugin.PLUGIN_ID );
     }
 
     public void saveBug( Bug bug ) {

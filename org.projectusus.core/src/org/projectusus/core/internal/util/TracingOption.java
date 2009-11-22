@@ -35,7 +35,7 @@ public enum TracingOption {
     }
 
     private boolean isTracing() {
-        String option = UsusCorePlugin.getPluginId() + "/" + toString(); //$NON-NLS-1$
+        String option = UsusCorePlugin.PLUGIN_ID + "/" + toString(); //$NON-NLS-1$
         String value = getDebugOption( option );
         return value != null && value.equalsIgnoreCase( "true" ); //$NON-NLS-1$
     }

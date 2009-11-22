@@ -5,7 +5,7 @@
 package org.projectusus.core.internal.proportions.sqi.jdtdriver;
 
 import static org.eclipse.core.runtime.IStatus.ERROR;
-import static org.projectusus.core.internal.UsusCorePlugin.getPluginId;
+import static org.projectusus.core.internal.UsusCorePlugin.PLUGIN_ID;
 import static org.projectusus.core.internal.util.CoreTexts.jdtDriver_errors;
 
 import java.util.HashSet;
@@ -39,11 +39,11 @@ public class StatusCollector {
 
     private void addNewStatusFrom( Throwable thr ) {
         String msg = thr.getMessage() == null ? "[No details.]" : thr.getMessage(); //$NON-NLS-1$
-        errors.add( new Status( IStatus.ERROR, getPluginId(), msg, thr ) );
+        errors.add( new Status( IStatus.ERROR, PLUGIN_ID, msg, thr ) );
     }
 
     private IStatus createMultiStatus() {
-        MultiStatus result = new MultiStatus( getPluginId(), ERROR, jdtDriver_errors, null );
+        MultiStatus result = new MultiStatus( PLUGIN_ID, ERROR, jdtDriver_errors, null );
         for( IStatus error : errors ) {
             result.add( error );
         }

@@ -32,6 +32,8 @@ public class UsusModel implements IUsusModel {
 
     private final IResourceChangeListener resourcelistener = new RunComputationOnResourceChange();
 
+    private boolean disposed = false;
+
     private UsusModel() {
         rootNode = new UsusModelRootNode();
         listeners = new HashSet<IUsusModelListener>();
@@ -47,6 +49,7 @@ public class UsusModel implements IUsusModel {
     }
 
     public void update( IUsusModelUpdate updateCommand ) {
+        checkDisposed();
         if( updateCommand == null || updateCommand.getType() == null ) {
             throw new IllegalArgumentException();
         }
@@ -55,7 +58,11 @@ public class UsusModel implements IUsusModel {
 
     public synchronized void dispose() {
         getWorkspace().removeResourceChangeListener( resourcelistener );
-        _instance = null;
+        disposed = true;
+    }
+
+    public boolean isDisposed() {
+        return disposed;
     }
 
     // interface of IUsusModel
@@ -70,14 +77,17 @@ public class UsusModel implements IUsusModel {
     }
 
     public void addUsusModelListener( IUsusModelListener listener ) {
+        checkDisposed();
         listeners.add( listener );
     }
 
     public void removeUsusModelListener( IUsusModelListener listener ) {
+        checkDisposed();
         listeners.remove( listener );
     }
 
     public void setAutoCompute( boolean autoCompute ) {
+        checkDisposed();
         try {
             IEclipsePreferences prefs = getPrefs();
             prefs.putBoolean( AUTO_COMPUTE, autoCompute );
@@ -127,5 +137,11 @@ public class UsusModel implements IUsusModel {
 
     private IEclipsePreferences getPrefs() {
         return UsusCorePlugin.getDefault().getPreferences();
+    }
+
+    private void checkDisposed() {
+        if( disposed ) {
+            throw new IllegalStateException( "Model is disposed (plug-in shutting down)." ); //$NON-NLS-1$
+        }
     }
 }

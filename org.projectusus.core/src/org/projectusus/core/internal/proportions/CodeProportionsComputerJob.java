@@ -62,9 +62,16 @@ class CodeProportionsComputerJob extends Job {
         } catch( CoreException cex ) {
             result = cex.getStatus();
         } finally {
-            getModel().update( new ComputationRunModelUpdate( collector, result.isOK() ) );
+            updateModel( result, collector );
         }
         return result;
+    }
+
+    private void updateModel( IStatus result, List<CodeProportion> collector ) {
+        UsusModel ususModel = (UsusModel)UsusModel.getUsusModel();
+        if( !ususModel.isDisposed() ) {
+            ususModel.update( new ComputationRunModelUpdate( collector, result.isOK() ) );
+        }
     }
 
     private void performComputation( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
@@ -87,9 +94,5 @@ class CodeProportionsComputerJob extends Job {
         for( IsisMetrics metric : asList( CC, KG, ML, ACD ) ) {
             collector.add( results.getCodeProportion( metric ) );
         }
-    }
-
-    private UsusModel getModel() {
-        return (UsusModel)UsusModel.getUsusModel();
     }
 }

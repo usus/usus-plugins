@@ -17,15 +17,15 @@ import org.projectusus.core.internal.proportions.UsusModel;
 
 public class UsusCorePlugin extends Plugin {
 
+    // using hard-coded string instead of bundle symbolic name, since we
+    // cannot rely on the bundle still being there during shutdown when
+    // some jobs still run
+    public static final String PLUGIN_ID = "org.projectusus.core"; //$NON-NLS-1$
     private static UsusCorePlugin plugin;
     private final LaunchObserver launchObserver = new LaunchObserver();
 
     public static UsusCorePlugin getDefault() {
         return plugin;
-    }
-
-    public static String getPluginId() {
-        return getDefault().getBundle().getSymbolicName();
     }
 
     public static void log( Exception ex ) {
@@ -35,13 +35,13 @@ public class UsusCorePlugin extends Plugin {
 
     public static void log( String msg, Exception ex ) {
         if( getDefault() != null ) {
-            IStatus status = new Status( ERROR, getPluginId(), 0, msg, ex );
+            IStatus status = new Status( ERROR, PLUGIN_ID, 0, msg, ex );
             getDefault().getLog().log( status );
         }
     }
 
     public IEclipsePreferences getPreferences() {
-        return new InstanceScope().getNode( getPluginId() );
+        return new InstanceScope().getNode( PLUGIN_ID );
     }
 
     @Override
