@@ -27,6 +27,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.project.FindUsusProjects;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
@@ -38,6 +39,7 @@ import org.projectusus.core.internal.proportions.modelupdate.IUsusModelStatus;
 import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
 import org.projectusus.ui.internal.proportions.actions.ShowCoverageView;
 import org.projectusus.ui.internal.proportions.actions.ShowProblemsView;
+import org.projectusus.ui.internal.proportions.actions.ToggleAutoCompute;
 import org.projectusus.ui.internal.util.ISharedUsusImages;
 
 public class CockpitView extends ViewPart {
@@ -49,6 +51,7 @@ public class CockpitView extends ViewPart {
     public void createPartControl( Composite parent ) {
         createViewer( parent );
         initOpenBehavior();
+        initActionBars();
         initContextMenuBehavior();
         initModelListener();
         getViewSite().setSelectionProvider( treeViewer );
@@ -100,6 +103,12 @@ public class CockpitView extends ViewPart {
                 manager.add( new ShowProblemsView() );
             }
         }
+    }
+
+    private void initActionBars() {
+        IMenuManager menuManager = getViewSite().getActionBars().getMenuManager();
+        menuManager.add( new ToggleAutoCompute() );
+        menuManager.add( new Separator( IWorkbenchActionConstants.MB_ADDITIONS ) );
     }
 
     private void initModelListener() {

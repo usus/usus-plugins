@@ -70,6 +70,8 @@ public final class UITexts extends NLS {
     public static String testSuiteSelectorDialog_msg;
     public static String testSuiteSelectorDialog_title;
 
+    public static String toggleAutoComplete_name; // Compute automatically
+
     private static final String BUNDLE_NAME = UITexts.class.getPackage().getName() + ".uitexts"; //$NON-NLS-1$
 
     static {

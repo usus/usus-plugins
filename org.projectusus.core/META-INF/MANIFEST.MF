@@ -57,7 +57,7 @@ Export-Package: org.apache.commons.lang,
  org.projectusus.core.internal.proportions.sqi.acd,
  org.projectusus.core.internal.proportions.sqi.jdtdriver,
  org.projectusus.core.internal.proportions.yellowcount,
- org.projectusus.core.internal.util;x-internal:=true,
+ org.projectusus.core.internal.util;x-friends:="org.projectusus.ui",
  org.projectusus.core.internal.yellowcount,
  org.projectusus.core.projectsettings
 Eclipse-RegisterBuddy: net.sf.eclipsecs.core

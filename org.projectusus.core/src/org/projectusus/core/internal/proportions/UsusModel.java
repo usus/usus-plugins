@@ -6,11 +6,15 @@ package org.projectusus.core.internal.proportions;
 
 import static java.util.Arrays.asList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+import static org.projectusus.core.internal.util.UsusPreferenceKeys.AUTO_COMPUTE;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.osgi.service.prefs.BackingStoreException;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.model.UsusModelRootNode;
@@ -32,7 +36,7 @@ public class UsusModel implements IUsusModel {
         rootNode = new UsusModelRootNode();
         listeners = new HashSet<IUsusModelListener>();
         history = new UsusModelHistory();
-        getWorkspace().addResourceChangeListener( resourcelistener );
+        initAutoCompute();
     }
 
     public static synchronized IUsusModel getUsusModel() {
@@ -73,6 +77,17 @@ public class UsusModel implements IUsusModel {
         listeners.remove( listener );
     }
 
+    public void setAutoCompute( boolean autoCompute ) {
+        try {
+            IEclipsePreferences prefs = getPrefs();
+            prefs.putBoolean( AUTO_COMPUTE, autoCompute );
+            prefs.flush();
+        } catch( BackingStoreException bastox ) {
+            UsusCorePlugin.log( bastox );
+        }
+        applyAutoCompute( autoCompute );
+    }
+
     public void forceRecompute() {
         ICodeProportionComputationTarget wsTarget = new WorkspaceCodeProportionComputationTarget();
         new CodeProportionsComputerJob( wsTarget ).schedule();
@@ -94,5 +109,23 @@ public class UsusModel implements IUsusModel {
         }
         history.add( updateCommand );
         notifyListeners();
+    }
+
+    private void initAutoCompute() {
+        boolean autoCompute = getPrefs().getBoolean( AUTO_COMPUTE, true );
+        applyAutoCompute( autoCompute );
+    }
+
+    private void applyAutoCompute( boolean autoCompute ) {
+        if( autoCompute ) {
+            getWorkspace().addResourceChangeListener( resourcelistener );
+            forceRecompute();
+        } else {
+            getWorkspace().removeResourceChangeListener( resourcelistener );
+        }
+    }
+
+    private IEclipsePreferences getPrefs() {
+        return UsusCorePlugin.getDefault().getPreferences();
     }
 }

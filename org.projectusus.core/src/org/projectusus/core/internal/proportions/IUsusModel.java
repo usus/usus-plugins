@@ -19,4 +19,5 @@ public interface IUsusModel {
 
     void forceRecompute();
 
+    void setAutoCompute( boolean autoCompute );
 }

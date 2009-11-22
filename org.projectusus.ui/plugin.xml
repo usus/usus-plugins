@@ -72,6 +72,7 @@
                icon="icons/full/elcl16/refresh.gif"
                id="org.projectusus.ui.internal.proportions.actions.RefreshCockpit"
                label="%refreshCockpit_label"
+               menubarPath="additions"
                style="push"
                toolbarPath="additions"
                tooltip="%refreshCockpit_tooltip"/>
