@@ -38,7 +38,7 @@ class CheckpointsHistoryChart extends Chart {
     private void initYAxis() {
         IAxis yAxis = getAxisSet().getYAxis( 0 );
         yAxis.getTitle().setText( checkpointsHistoryChart_y );
-        yAxis.setRange( new Range( 0, 100 ) );
+        yAxis.setRange( new Range( -5, 105 ) );
         yAxis.setPosition( Secondary );
     }
 }
