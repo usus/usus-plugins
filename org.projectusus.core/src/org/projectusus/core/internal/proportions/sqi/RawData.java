@@ -18,19 +18,19 @@ public class RawData<S, T extends IRawData> implements IRawData {
         wrapper = new RawDataMapWrapper<S, T>();
     }
 
-    public T getRawData( S key, T newObject ) {
+    public synchronized T getRawData( S key, T newObject ) {
         return wrapper.getRawData( key, newObject );
     }
 
-    protected int getRawDataElementCount() {
+    protected synchronized int getRawDataElementCount() {
         return wrapper.getRawDataElementCount();
     }
 
-    public void remove( S key ) {
+    public synchronized void remove( S key ) {
         wrapper.remove( key );
     }
 
-    public int getViolationCount( IsisMetrics metric ) {
+    public synchronized int getViolationCount( IsisMetrics metric ) {
         int violations = 0;
         for( T result : wrapper.getAllRawDataElements() ) {
             violations = violations + result.getViolationCount( metric );
@@ -38,7 +38,7 @@ public class RawData<S, T extends IRawData> implements IRawData {
         return violations;
     }
 
-    public int getViolationBasis( IsisMetrics metric ) {
+    public synchronized int getViolationBasis( IsisMetrics metric ) {
         int basis = 0;
         for( T result : wrapper.getAllRawDataElements() ) {
             basis = basis + result.getViolationBasis( metric );
@@ -46,13 +46,13 @@ public class RawData<S, T extends IRawData> implements IRawData {
         return basis;
     }
 
-    public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
+    public synchronized void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
         for( T result : wrapper.getAllRawDataElements() ) {
             result.addHotspots( metric, hotspots );
         }
     }
 
-    public int getOverallMetric( IsisMetrics metric ) {
+    public synchronized int getOverallMetric( IsisMetrics metric ) {
         int overallMetricValue = 0;
         Collection<T> allDataElements = wrapper.getAllRawDataElements();
         for( T currentResult : allDataElements ) {
@@ -61,7 +61,7 @@ public class RawData<S, T extends IRawData> implements IRawData {
         return overallMetricValue;
     }
 
-    protected Set<S> getAllKeys() {
+    protected synchronized Set<S> getAllKeys() {
         return wrapper.getAllKeys();
     }
 
