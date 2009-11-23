@@ -1,13 +1,12 @@
 package org.projectusus.core.internal.proportions.model;
 
-
 public class MetricKGHotspot extends Hotspot implements IMetricKGHotspot {
 
     private final String className;
     private final int classSize;
 
-    public MetricKGHotspot( String className, int classSize, int sourcePosition ) {
-        super( classSize, sourcePosition );
+    public MetricKGHotspot( String className, int classSize, int sourcePosition, int lineNumber ) {
+        super( classSize, sourcePosition, lineNumber );
         this.className = className;
         this.classSize = classSize;
     }

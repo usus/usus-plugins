@@ -38,7 +38,7 @@ public enum CCColumnDesc implements IHotspotsPageColumnDesc {
     },
     LINE( hotspotsColumn_line, 10, false ) {
         public String getLabel( IHotspot element ) {
-            return String.valueOf( element.getSourcePosition() );
+            return String.valueOf( element.getLineNumber() );
         }
     };
 

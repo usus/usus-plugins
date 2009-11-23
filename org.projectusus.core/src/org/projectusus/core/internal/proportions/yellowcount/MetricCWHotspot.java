@@ -12,7 +12,7 @@ public class MetricCWHotspot extends Hotspot implements IMetricCWHotspot {
     private final int count;
 
     public MetricCWHotspot( IFile file, int count ) {
-        super( count, 1 );
+        super( count, 1, 1 );
         setFile( file );
         this.count = count;
     }

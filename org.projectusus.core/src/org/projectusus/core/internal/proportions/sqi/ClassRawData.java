@@ -20,13 +20,15 @@ import org.projectusus.core.internal.proportions.sqi.acd.AcdModel;
 public class ClassRawData extends RawData<Integer, MethodRawData> {
 
     private final int startPosition;
+    private final int lineNumber;
     private final String className;
     private final String fullyQualifiedName;
 
-    public ClassRawData( String name, String fullyQualifiedName, int startPosition ) {
+    public ClassRawData( String name, String fullyQualifiedName, int startPosition, int line ) {
         this.className = name;
         this.fullyQualifiedName = fullyQualifiedName;
         this.startPosition = startPosition;
+        this.lineNumber = line;
     }
 
     public void setCCValue( MethodDeclaration node, int value ) {
@@ -46,15 +48,15 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
     }
 
     private MethodRawData getRawData( MethodDeclaration node ) {
-        return getRawData( node.getStartPosition(), node.getName().toString() );
+        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
     }
 
     private MethodRawData getRawData( Initializer node ) {
-        return getRawData( node.getStartPosition(), "initializer" ); //$NON-NLS-1$
+        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), "initializer" ); //$NON-NLS-1$
     }
 
-    private MethodRawData getRawData( int start, String methodName ) {
-        return getRawData( new Integer( start ), new MethodRawData( start, className, methodName ) );
+    private MethodRawData getRawData( int start, int lineNumber, String methodName ) {
+        return getRawData( new Integer( start ), new MethodRawData( start, lineNumber, className, methodName ) );
     }
 
     public MethodRawData getRawData( IMethod method ) {
@@ -70,7 +72,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
             for( Integer start : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( start.intValue() );
                 if( method.equals( foundElement ) ) {
-                    return getRawData( start.intValue(), "" ); //$NON-NLS-1$
+                    return getRawData( start.intValue(), 0, "" ); //$NON-NLS-1$
                 }
             }
         } catch( JavaModelException e ) {
@@ -85,6 +87,10 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
 
     public int getSourcePosition() {
         return startPosition;
+    }
+
+    public int getLineNumber() {
+        return lineNumber;
     }
 
     @Override
@@ -112,10 +118,10 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
 
         if( metric.isViolatedBy( this ) ) {
             if( metric.equals( IsisMetrics.KG ) ) {
-                hotspots.add( new MetricKGHotspot( getClassName(), this.getNumberOfMethods(), getSourcePosition() ) );
+                hotspots.add( new MetricKGHotspot( getClassName(), this.getNumberOfMethods(), getSourcePosition(), getLineNumber() ) );
             }
             if( metric.equals( IsisMetrics.ACD ) ) {
-                hotspots.add( new MetricACDHotspot( getClassName(), getCCDResult(), getSourcePosition() ) );
+                hotspots.add( new MetricACDHotspot( getClassName(), getCCDResult(), getSourcePosition(), getLineNumber() ) );
             }
         }
     }

@@ -61,7 +61,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
         if( binding != null ) {
             qualifiedName = binding.getQualifiedName();
         }
-        return getRawData( node.getStartPosition(), node.getName().toString(), qualifiedName );
+        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString(), qualifiedName );
     }
 
     public int getNumberOfClasses() {
@@ -78,8 +78,8 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
         hotspots.addAll( localHotspots );
     }
 
-    private ClassRawData getRawData( int start, String name, String qualifiedName ) {
-        return getRawData( new Integer( start ), new ClassRawData( name, qualifiedName, start ) );
+    private ClassRawData getRawData( int start, int line, String name, String qualifiedName ) {
+        return getRawData( new Integer( start ), new ClassRawData( name, qualifiedName, start, line ) );
     }
 
     private ClassRawData getRawData( MethodDeclaration node ) {
@@ -103,7 +103,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
             for( Integer startPosition : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( startPosition.intValue() );
                 if( element.equals( foundElement ) ) {
-                    return getRawData( startPosition.intValue(), "", "" ); //$NON-NLS-1$ //$NON-NLS-2$
+                    return getRawData( startPosition.intValue(), 0, "", "" ); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             }
         } catch( JavaModelException e ) {

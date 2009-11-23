@@ -1,14 +1,13 @@
 package org.projectusus.core.internal.proportions.model;
 
-
 public class MetricCCHotspot extends Hotspot implements IMetricCCHotspot {
 
     private final String className;
     private final String methodName;
     private final int cyclomaticComplexity;
 
-    public MetricCCHotspot( String className, String methodName, int cyclomaticComplexity, int sourcePosition ) {
-        super( cyclomaticComplexity, sourcePosition );
+    public MetricCCHotspot( String className, String methodName, int cyclomaticComplexity, int sourcePosition, int lineNumber ) {
+        super( cyclomaticComplexity, sourcePosition, lineNumber );
         this.className = className;
         this.methodName = methodName;
         this.cyclomaticComplexity = cyclomaticComplexity;

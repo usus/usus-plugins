@@ -19,10 +19,11 @@ public class MethodRawDataTest {
     private final String METHODNAME = "methodname";
     private MethodRawData methodResults;
     private final int SOURCEPOSITION = 77;
+    private final int LINENUMBER = 12;
     
     @Before
     public void setup(){
-        methodResults = new MethodRawData( SOURCEPOSITION, CLASSNAME, METHODNAME );
+        methodResults = new MethodRawData( SOURCEPOSITION, LINENUMBER, CLASSNAME, METHODNAME );
     }
     
     @Test

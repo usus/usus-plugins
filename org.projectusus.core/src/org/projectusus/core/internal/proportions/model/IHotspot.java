@@ -12,6 +12,8 @@ public interface IHotspot {
 
     int getSourcePosition();
 
+    int getLineNumber();
+
     int getHotness();
 
 }

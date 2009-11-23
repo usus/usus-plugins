@@ -5,8 +5,8 @@ public class MetricACDHotspot extends Hotspot implements IMetricACDHotspot {
     private final String className;
     private final int classCCD;
 
-    public MetricACDHotspot( String className, int classCCD, int sourcePosition ) {
-        super( classCCD, sourcePosition );
+    public MetricACDHotspot( String className, int classCCD, int sourcePosition, int lineNumber ) {
+        super( classCCD, sourcePosition, lineNumber );
         this.className = className;
         this.classCCD = classCCD;
     }

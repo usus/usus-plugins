@@ -23,6 +23,7 @@ public class ClassRawDataTest {
     private final String FULLNAME = "my.package.ClassName";
     private final String METHODNAME1 = "methodname1";
     private final int SOURCEPOSITION = 77;
+    private final int LINENUMBER = 12;
 
     private ClassRawData classRawData;
     private MethodDeclaration method1;
@@ -30,7 +31,7 @@ public class ClassRawDataTest {
     
     @Before
     public void setup(){
-        classRawData = new ClassRawData(  CLASSNAME, FULLNAME, SOURCEPOSITION );
+        classRawData = new ClassRawData(  CLASSNAME, FULLNAME, SOURCEPOSITION, LINENUMBER );
         method1 = mock( MethodDeclaration.class );
         initMethod( method1, METHODNAME1 );
     }

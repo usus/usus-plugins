@@ -6,8 +6,8 @@ public class MetricMLHotspot extends Hotspot implements IMetricMLHotspot {
     private final String methodName;
     private final int methodLength;
 
-    public MetricMLHotspot( String className, String methodName, int methodLength, int sourcePosition ) {
-        super( methodLength, sourcePosition );
+    public MetricMLHotspot( String className, String methodName, int methodLength, int sourcePosition, int lineNumber ) {
+        super( methodLength, sourcePosition, lineNumber );
         this.className = className;
         this.methodName = methodName;
         this.methodLength = methodLength;

@@ -18,9 +18,11 @@ public class MethodRawData implements IRawData {
 
     private int ccValue;
     private int mlValue;
+    private final int lineNumber;
 
-    public MethodRawData( int startPosition, String className, String methodName ) {
+    public MethodRawData( int startPosition, int lineNumber, String className, String methodName ) {
         this.startPosition = startPosition;
+        this.lineNumber = lineNumber;
         this.className = className;
         this.methodName = methodName;
     }
@@ -64,14 +66,18 @@ public class MethodRawData implements IRawData {
     public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
         if( metric.isViolatedBy( this ) ) {
             if( metric.equals( IsisMetrics.CC ) ) {
-                hotspots.add( new MetricCCHotspot( className, getMethodName(), getCCValue(), getSourcePosition() ) );
+                hotspots.add( new MetricCCHotspot( className, getMethodName(), getCCValue(), getSourcePosition(), getLineNumber() ) );
             } else if( metric.equals( IsisMetrics.ML ) ) {
-                hotspots.add( new MetricMLHotspot( className, getMethodName(), getMLValue(), getSourcePosition() ) );
+                hotspots.add( new MetricMLHotspot( className, getMethodName(), getMLValue(), getSourcePosition(), getLineNumber() ) );
             }
         }
     }
 
     public int getOverallMetric( IsisMetrics metric ) {
         return metric.getValueFor( this );
+    }
+
+    public int getLineNumber() {
+        return lineNumber;
     }
 }

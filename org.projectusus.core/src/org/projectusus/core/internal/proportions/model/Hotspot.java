@@ -11,10 +11,12 @@ public class Hotspot implements IHotspot {
     private IFile file;
     private final int hotness;
     private final int sourcePosition;
+    private final int lineNumber;
 
-    public Hotspot( int hotness, int sourcePosition ) {
+    public Hotspot( int hotness, int sourcePosition, int lineNumber ) {
         this.hotness = hotness;
         this.sourcePosition = sourcePosition;
+        this.lineNumber = lineNumber;
     }
 
     public IFile getFile() {
@@ -31,5 +33,9 @@ public class Hotspot implements IHotspot {
 
     public void setFile( IFile file ) {
         this.file = file;
+    }
+
+    public int getLineNumber() {
+        return lineNumber;
     }
 }
