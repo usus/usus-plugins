@@ -4,13 +4,12 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.projectsettings.ui.internal;
 
-
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 public class ProjectSelector {
 
@@ -21,16 +20,16 @@ public class ProjectSelector {
     }
 
     public IProject selectProject( List<IProject> projects ) {
-        ElementListSelectionDialog dialog = new ElementListSelectionDialog( shell, new ProjectsLabelProvider() );
-        dialog.setTitle( UITexts.projectSelector_title );
-        dialog.setMessage( UITexts.projectSelector_msg );
-        dialog.setElements( projects.toArray( new IProject[0] ) );
+        UnifyProjectSettingsWizard wizard = new UnifyProjectSettingsWizard( projects );
+
+        WizardDialog dialog = new WizardDialog( shell, wizard );
+        dialog.create();
         dialog.open();
+
         if( dialog.getReturnCode() == Window.OK ) {
-            return (IProject)dialog.getFirstResult();
+            return wizard.getSelectedProject();
         }
         return null;
 
     }
-
 }

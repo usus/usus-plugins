@@ -26,8 +26,8 @@ public class ApplyProjectSettings extends AbstractHandler {
 
     private ProjectSettings selectSettingsProvider( ExecutionEvent event ) throws ExecutionException {
         Shell shell = HandlerUtil.getActiveWorkbenchWindowChecked( event ).getShell();
-        ProjectSettings settingsProvider = new SettingsProviderSelector( shell ).selectSetting();
-        return settingsProvider;
+        ProjectSettings selectedProjectSetting = new SettingsProviderSelector( shell ).selectSetting();
+        return selectedProjectSetting;
     }
 
     private void saveSettings( ProjectSettings settings, List<IProject> projects ) {
