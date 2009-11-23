@@ -38,12 +38,21 @@ public class SelectSettingPage extends WizardPage {
         composite.setLayout( gridLayout );
         Label label = new Label( composite, SWT.NULL );
         label.setText( UITexts.SelectSettingPage_available_setting );
+        createSettingsList( composite );
+        setControl( composite );
+    }
+
+    private void createSettingsList( Composite composite ) {
         ListViewer list = new ListViewer( composite, SWT.SINGLE | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL );
         GridData gridData = new GridData( SWT.FILL, SWT.FILL, true, true );
         list.getList().setLayoutData( gridData );
         list.setContentProvider( new ArrayContentProvider() );
         list.setLabelProvider( new SettingsLabelProvider() );
         list.setInput( projectSettings );
+        initListener( list );
+    }
+
+    private void initListener( ListViewer list ) {
         list.addSelectionChangedListener( new ISelectionChangedListener() {
 
             public void selectionChanged( SelectionChangedEvent event ) {
@@ -52,7 +61,6 @@ public class SelectSettingPage extends WizardPage {
                 getWizard().getContainer().updateButtons();
             }
         } );
-        setControl( composite );
     }
 
     public ProjectSettings getSelectedSetting() {

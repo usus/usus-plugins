@@ -41,12 +41,21 @@ public class SelectProjectPage extends WizardPage {
         composite.setLayout( gridLayout );
         Label label = new Label( composite, SWT.NULL );
         label.setText( SelectProjectPage_description );
+        createProjectsList( composite );
+        setControl( composite );
+    }
+
+    private void createProjectsList( Composite composite ) {
         ListViewer list = new ListViewer( composite, SWT.SINGLE | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL );
         GridData gridData = new GridData( SWT.FILL, SWT.FILL, true, true );
         list.getList().setLayoutData( gridData );
         list.setContentProvider( new ArrayContentProvider() );
         list.setLabelProvider( new ProjectsLabelProvider() );
         list.setInput( projects );
+        initListener( list );
+    }
+
+    private void initListener( ListViewer list ) {
         list.addSelectionChangedListener( new ISelectionChangedListener() {
 
             public void selectionChanged( SelectionChangedEvent event ) {
@@ -55,7 +64,6 @@ public class SelectProjectPage extends WizardPage {
                 getWizard().getContainer().updateButtons();
             }
         } );
-        setControl( composite );
     }
 
     public IProject getSelectedProject() {
