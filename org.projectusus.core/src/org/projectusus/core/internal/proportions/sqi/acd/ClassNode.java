@@ -31,8 +31,14 @@ public class ClassNode {
         return marked;
     }
 
-    public void setMarked( boolean state ) {
-        marked = state;
+    public void mark() {
+        marked = true;
+    }
+
+    public int getCountAndClear() {
+        int value = marked ? 1 : 0;
+        marked = false;
+        return value;
     }
 
 }

@@ -80,7 +80,6 @@ public class AcdModel {
     // / <param name="node">starting node for subsystem to analyze</param>
     // / <returns></returns>
     public int getCCD( ClassNode node ) {
-        clearAllNodes(); // in markedNodeCount hineinziehen
         markReferencedNodes( node );
         return getMarkedNodeCount();
     }
@@ -93,28 +92,19 @@ public class AcdModel {
     private int getMarkedNodeCount() {
         int markedNodes = 0;
         for( ClassNode node : classes ) {
-            if( node.isMarked() ) {
-                markedNodes++;
-            }
+            markedNodes += node.getCountAndClear();
         }
         return markedNodes;
     }
 
-    // Knoten durch Einfügen in Set markieren, damit Zählen + Löschen in O(1)
+    // Knoten durch Einfuegen in Set markieren, damit Zaehlen + Loeschen in O(1) ??
     private void markReferencedNodes( ClassNode node ) {
         if( node.isMarked() ) {
             return;
         }
-        node.setMarked( true );
+        node.mark();
         for( ClassNode childNode : node.getChildren() ) {
             markReferencedNodes( childNode );
         }
     }
-
-    private void clearAllNodes() {
-        for( ClassNode node : classes ) {
-            node.setMarked( false );
-        }
-    }
-
 }
