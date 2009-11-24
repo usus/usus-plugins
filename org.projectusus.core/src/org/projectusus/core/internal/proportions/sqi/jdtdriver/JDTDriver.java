@@ -31,6 +31,7 @@ public class JDTDriver {
         monitor.beginTask( jdtDriver_computing, countTicks( target.getProjects() ) );
         for( IProject project : target.getProjects() ) {
             monitor.subTask( project.getName() );
+            WorkspaceRawData.getInstance().setCurrentProject( project );
             for( IFile removedFile : target.getRemovedFiles( project ) ) {
                 WorkspaceRawData.getInstance().dropRawData( removedFile );
             }
