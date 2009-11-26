@@ -7,10 +7,10 @@ package org.projectusus.core.internal.bugreport;
 import static org.eclipse.core.runtime.Status.OK_STATUS;
 import static org.projectusus.core.internal.util.CoreTexts.SaveBugsJob_title;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.Job;
@@ -30,13 +30,12 @@ public class SaveBugsJob extends Job {
     @Override
     protected IStatus run( IProgressMonitor monitor ) {
         try {
-            FileWriter writer = new FileWriter( file.getLocation().toOSString() );
-            writer.write( generateFileContent() );
-            writer.close();
-        } catch( IOException ioex ) {
+            byte[] content = generateFileContent().getBytes();
+            file.setContents( new ByteArrayInputStream( content ), true, true, monitor );
+        } catch( CoreException cex ) {
             // not directly displayed to the user, but into the error log
             String msg = "Unable to save bugs."; //$NON-NLS-1$
-            UsusCorePlugin.log( msg, ioex );
+            UsusCorePlugin.log( msg, cex );
         }
         return OK_STATUS;
     }
@@ -44,5 +43,4 @@ public class SaveBugsJob extends Job {
     private String generateFileContent() {
         return new BugsWriter( bugs ).toXml();
     }
-
 }
