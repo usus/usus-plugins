@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests for Usus UI
 Bundle-SymbolicName: org.projectusus.ui.test
-Bundle-Version: 0.2.6
+Bundle-Version: 0.3.0
 Bundle-Vendor: projectusus.org
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.junit4,
