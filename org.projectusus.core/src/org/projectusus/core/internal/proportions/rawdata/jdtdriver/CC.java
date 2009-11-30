@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.sqi.jdtdriver;
+package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CatchClause;

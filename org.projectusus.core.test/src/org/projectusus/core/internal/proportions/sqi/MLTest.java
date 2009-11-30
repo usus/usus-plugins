@@ -19,7 +19,7 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.ReflectionUtil;
-import org.projectusus.core.internal.proportions.sqi.jdtdriver.ML;
+import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ML;
 
 
 

@@ -19,7 +19,7 @@ import org.junit.Test;
 import org.projectusus.core.internal.PDETestUsingWSProject;
 import org.projectusus.core.internal.proportions.rawdata.ProjectRawData;
 import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
-import org.projectusus.core.internal.proportions.sqi.jdtdriver.FileDriver;
+import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
 
 public class PDETestForMetricsComputation extends PDETestUsingWSProject{
 

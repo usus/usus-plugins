@@ -17,7 +17,7 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.Hotspot;
 import org.projectusus.core.internal.proportions.model.IHotspot;
-import org.projectusus.core.internal.proportions.sqi.jdtdriver.ASTSupport;
+import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
 
 public class FileRawData extends RawData<Integer, ClassRawData> {
 

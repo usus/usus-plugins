@@ -12,6 +12,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.junit.Test;
+import org.projectusus.core.internal.proportions.rawdata.jdtdriver.StatusCollector;
 
 public class StatusCollectorPDETest {
 

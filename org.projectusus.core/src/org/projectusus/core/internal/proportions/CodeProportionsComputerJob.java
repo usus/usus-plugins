@@ -28,7 +28,7 @@ import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
-import org.projectusus.core.internal.proportions.sqi.jdtdriver.JDTDriver;
+import org.projectusus.core.internal.proportions.rawdata.jdtdriver.JDTDriver;
 import org.projectusus.core.internal.proportions.yellowcount.WorkspaceYellowCount;
 
 class CodeProportionsComputerJob extends Job {
