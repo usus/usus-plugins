@@ -13,8 +13,8 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.projectusus.core.internal.proportions.sqi.FileRawData;
-import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
+import org.projectusus.core.internal.proportions.rawdata.FileRawData;
+import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 public class CC extends ASTVisitor {
 

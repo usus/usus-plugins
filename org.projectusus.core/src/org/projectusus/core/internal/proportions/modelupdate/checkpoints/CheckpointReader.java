@@ -18,7 +18,7 @@ import org.projectusus.core.internal.UsusXmlReader;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
-import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

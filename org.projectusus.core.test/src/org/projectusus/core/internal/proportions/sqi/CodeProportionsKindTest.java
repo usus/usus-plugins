@@ -5,18 +5,22 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ACD;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CC;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CW;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.KG;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ML;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.PC;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.TA;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ACD;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CC;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.KG;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.PC;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.ReflectionUtil;
-import org.projectusus.core.internal.proportions.sqi.acd.AcdModel;
+import org.projectusus.core.internal.proportions.rawdata.AcdModel;
+import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
+import org.projectusus.core.internal.proportions.rawdata.MethodRawData;
+import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 public class CodeProportionsKindTest {
 

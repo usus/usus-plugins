@@ -4,8 +4,8 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.projectusus.core.internal.proportions.sqi.FileRawData;
-import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
+import org.projectusus.core.internal.proportions.rawdata.FileRawData;
+import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 public class ML extends ASTVisitor {
 

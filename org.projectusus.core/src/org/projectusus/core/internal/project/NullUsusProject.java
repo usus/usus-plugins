@@ -3,7 +3,7 @@ package org.projectusus.core.internal.project;
 import org.eclipse.jdt.core.IMethod;
 import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.bugreport.BugList;
-import org.projectusus.core.internal.proportions.sqi.ProjectRawData;
+import org.projectusus.core.internal.proportions.rawdata.ProjectRawData;
 
 public class NullUsusProject implements IUSUSProject {
 

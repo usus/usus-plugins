@@ -4,7 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.yellowcount;
 
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CW;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
 
 import java.util.ArrayList;
 import java.util.List;

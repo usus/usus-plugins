@@ -6,8 +6,8 @@ package org.projectusus.core.internal.bugreport;
 
 import static org.projectusus.core.internal.util.CoreTexts.AverageMetrics_overall;
 
-import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
-import org.projectusus.core.internal.proportions.sqi.ProjectRawData;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.ProjectRawData;
 
 public class AverageMetrics implements IAverageMetrics {
 

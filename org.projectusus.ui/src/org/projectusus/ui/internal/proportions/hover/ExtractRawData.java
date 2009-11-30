@@ -7,7 +7,7 @@ package org.projectusus.ui.internal.proportions.hover;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.projectusus.core.internal.project.IUSUSProject;
-import org.projectusus.core.internal.proportions.sqi.FileRawData;
+import org.projectusus.core.internal.proportions.rawdata.FileRawData;
 
 class ExtractRawData {
 

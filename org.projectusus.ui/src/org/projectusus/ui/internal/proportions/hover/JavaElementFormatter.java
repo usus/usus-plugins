@@ -6,7 +6,7 @@ package org.projectusus.ui.internal.proportions.hover;
 
 import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.bugreport.BugList;
-import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 abstract class JavaElementFormatter {
 

@@ -17,8 +17,8 @@ import org.projectusus.core.internal.bugreport.LoadBugs;
 import org.projectusus.core.internal.bugreport.MethodLocation;
 import org.projectusus.core.internal.bugreport.SaveBugsJob;
 import org.projectusus.core.internal.bugreport.SourceCodeLocation;
-import org.projectusus.core.internal.proportions.sqi.ProjectRawData;
-import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
+import org.projectusus.core.internal.proportions.rawdata.ProjectRawData;
+import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 class UsusProject implements IUSUSProject {
 

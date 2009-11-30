@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.PlatformObject;
-import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 public class CodeProportion extends PlatformObject {
 

@@ -1,17 +1,17 @@
 package org.projectusus.ui.internal.hotspots;
 
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ACD;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CC;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CW;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.KG;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ML;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ACD;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CC;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.KG;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.ui.internal.hotspots.pages.ACDColumnDesc;
 import org.projectusus.ui.internal.hotspots.pages.CCColumnDesc;
 import org.projectusus.ui.internal.hotspots.pages.CWColumnDesc;

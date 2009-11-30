@@ -1,17 +1,17 @@
-package org.projectusus.core.internal.proportions.sqi.acd;
+package org.projectusus.core.internal.proportions.rawdata;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassNode {
+public class AdjacencyNode {
 
     private final String name;
-    private final List<ClassNode> children;
+    private final List<AdjacencyNode> children;
     private boolean marked;
 
-    public ClassNode( String name ) {
+    public AdjacencyNode( String name ) {
         this.name = name;
-        children = new ArrayList<ClassNode>();
+        children = new ArrayList<AdjacencyNode>();
         marked = false;
     }
 
@@ -19,7 +19,7 @@ public class ClassNode {
         return children.size();
     }
 
-    public List<ClassNode> getChildren() {
+    public List<AdjacencyNode> getChildren() {
         return children;
     }
 

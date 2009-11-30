@@ -5,7 +5,7 @@
 package org.projectusus.core.internal.proportions.sqi;
 
 import static org.junit.Assert.*;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ML;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +17,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
 import org.junit.Test;
 import org.projectusus.core.internal.PDETestUsingWSProject;
+import org.projectusus.core.internal.proportions.rawdata.ProjectRawData;
+import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 import org.projectusus.core.internal.proportions.sqi.jdtdriver.FileDriver;
 
 public class PDETestForMetricsComputation extends PDETestUsingWSProject{

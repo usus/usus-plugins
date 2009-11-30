@@ -16,6 +16,8 @@ import org.eclipse.jdt.core.dom.SimpleName;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 public class ClassRawDataTest {
 

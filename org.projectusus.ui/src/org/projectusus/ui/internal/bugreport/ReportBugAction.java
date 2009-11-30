@@ -31,10 +31,10 @@ import org.eclipse.ui.PlatformUI;
 import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.project.NullUsusProject;
-import org.projectusus.core.internal.proportions.sqi.ClassRawData;
-import org.projectusus.core.internal.proportions.sqi.FileRawData;
-import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
-import org.projectusus.core.internal.proportions.sqi.MethodRawData;
+import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.FileRawData;
+import org.projectusus.core.internal.proportions.rawdata.MethodRawData;
 import org.projectusus.ui.internal.UsusUIPlugin;
 
 public class ReportBugAction extends Action implements IEditorActionDelegate {

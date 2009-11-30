@@ -4,14 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.hover;
 
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CC;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ML;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CC;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
 
 import org.eclipse.jdt.core.IMethod;
 import org.projectusus.core.internal.bugreport.BugList;
-import org.projectusus.core.internal.proportions.sqi.ClassRawData;
-import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
-import org.projectusus.core.internal.proportions.sqi.MethodRawData;
+import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.MethodRawData;
 
 class MethodFormatter extends JavaElementFormatter {
 

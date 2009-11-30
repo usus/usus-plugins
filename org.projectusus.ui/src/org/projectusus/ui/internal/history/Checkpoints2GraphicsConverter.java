@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
-import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 class Checkpoints2GraphicsConverter {
 

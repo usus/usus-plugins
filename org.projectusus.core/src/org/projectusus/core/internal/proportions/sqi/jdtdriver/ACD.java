@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
+import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 public class ACD extends ASTVisitor {
 

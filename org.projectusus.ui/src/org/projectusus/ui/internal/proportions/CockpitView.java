@@ -6,8 +6,8 @@ package org.projectusus.ui.internal.proportions;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.projectusus.core.internal.proportions.UsusModel.getUsusModel;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CW;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.TA;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
 import static org.projectusus.ui.internal.util.UITexts.cockpitView_noProjectsSelected;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 

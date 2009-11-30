@@ -14,9 +14,9 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.projectusus.core.internal.bugreport.BugList;
 import org.projectusus.core.internal.project.IUSUSProject;
-import org.projectusus.core.internal.proportions.sqi.ClassRawData;
-import org.projectusus.core.internal.proportions.sqi.FileRawData;
-import org.projectusus.core.internal.proportions.sqi.MethodRawData;
+import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
+import org.projectusus.core.internal.proportions.rawdata.FileRawData;
+import org.projectusus.core.internal.proportions.rawdata.MethodRawData;
 
 enum TextHoverFormatter {
 

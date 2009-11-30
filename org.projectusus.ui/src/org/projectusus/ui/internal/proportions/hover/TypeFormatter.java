@@ -5,8 +5,8 @@
 package org.projectusus.ui.internal.proportions.hover;
 
 import org.eclipse.jdt.core.IType;
-import org.projectusus.core.internal.proportions.sqi.ClassRawData;
-import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 class TypeFormatter extends JavaElementFormatter {
 

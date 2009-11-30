@@ -12,6 +12,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.MethodRawData;
 
 public class MethodRawDataTest {
 

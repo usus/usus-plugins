@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.sqi.acd;
+package org.projectusus.core.internal.proportions.rawdata;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,19 +6,19 @@ import java.util.List;
 public class AcdModel {
 
     // TODO Hashtable verwenden??
-    List<ClassNode> classes = new ArrayList<ClassNode>();
+    List<AdjacencyNode> classes = new ArrayList<AdjacencyNode>();
 
     public void addClassReference( String referencingClass, String referencedClass ) {
-        ClassNode startNode = findOrAdd( referencingClass );
-        ClassNode endNode = findOrAdd( referencedClass );
+        AdjacencyNode startNode = findOrAdd( referencingClass );
+        AdjacencyNode endNode = findOrAdd( referencedClass );
 
         if( (startNode != endNode) && !startNode.getChildren().contains( endNode ) ) {
             startNode.getChildren().add( endNode );
         }
     }
 
-    private ClassNode findOrAdd( String id ) {
-        for( ClassNode node : classes ) {
+    private AdjacencyNode findOrAdd( String id ) {
+        for( AdjacencyNode node : classes ) {
             if( node.getName().equals( id ) ) {
                 return node;
             }
@@ -26,8 +26,8 @@ public class AcdModel {
         return addNode( id );
     }
 
-    private ClassNode addNode( String id ) {
-        ClassNode newNode = new ClassNode( id );
+    private AdjacencyNode addNode( String id ) {
+        AdjacencyNode newNode = new AdjacencyNode( id );
         classes.add( newNode );
         return newNode;
     }
@@ -65,7 +65,7 @@ public class AcdModel {
     // / <returns></returns>
     private int getCCD() {
         int allDependencies = 0;
-        for( ClassNode node : classes ) {
+        for( AdjacencyNode node : classes ) {
             allDependencies += getCCD( node );
         }
         return allDependencies;
@@ -79,31 +79,31 @@ public class AcdModel {
     // / </summary>
     // / <param name="node">starting node for subsystem to analyze</param>
     // / <returns></returns>
-    public int getCCD( ClassNode node ) {
+    public int getCCD( AdjacencyNode node ) {
         markReferencedNodes( node );
         return getMarkedNodeCount();
     }
 
     public int getCCD( String fullyQualifiedName ) {
-        ClassNode node = findOrAdd( fullyQualifiedName );
+        AdjacencyNode node = findOrAdd( fullyQualifiedName );
         return getCCD( node );
     }
 
     private int getMarkedNodeCount() {
         int markedNodes = 0;
-        for( ClassNode node : classes ) {
+        for( AdjacencyNode node : classes ) {
             markedNodes += node.getCountAndClear();
         }
         return markedNodes;
     }
 
     // Knoten durch Einfuegen in Set markieren, damit Zaehlen + Loeschen in O(1) ??
-    private void markReferencedNodes( ClassNode node ) {
+    private void markReferencedNodes( AdjacencyNode node ) {
         if( node.isMarked() ) {
             return;
         }
         node.mark();
-        for( ClassNode childNode : node.getChildren() ) {
+        for( AdjacencyNode childNode : node.getChildren() ) {
             markReferencedNodes( childNode );
         }
     }

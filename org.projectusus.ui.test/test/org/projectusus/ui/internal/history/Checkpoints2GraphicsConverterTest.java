@@ -7,7 +7,7 @@ package org.projectusus.ui.internal.history;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ACD;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ACD;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
-import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 
 public class Checkpoints2GraphicsConverterTest {

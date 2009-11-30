@@ -5,8 +5,8 @@ import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.projectusus.core.internal.proportions.sqi.FileRawData;
-import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
+import org.projectusus.core.internal.proportions.rawdata.FileRawData;
+import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 public class ClassVisitor extends ASTVisitor {
 
