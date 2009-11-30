@@ -6,7 +6,7 @@ package org.projectusus.ui.internal.proportions.hover;
 
 import org.eclipse.jdt.core.IType;
 import org.projectusus.core.internal.proportions.sqi.ClassRawData;
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 
 class TypeFormatter extends JavaElementFormatter {
 
@@ -21,7 +21,7 @@ class TypeFormatter extends JavaElementFormatter {
     String format() {
         StringBuilder sb = new StringBuilder( typeElement.getElementName() );
         sb.append( " [" ); //$NON-NLS-1$
-        formatMetric( IsisMetrics.KG, classRawData.getNumberOfMethods(), sb );
+        formatMetric( CodeProportionKind.KG, classRawData.getNumberOfMethods(), sb );
         sb.append( "]" ); //$NON-NLS-1$
         return sb.toString();
     }

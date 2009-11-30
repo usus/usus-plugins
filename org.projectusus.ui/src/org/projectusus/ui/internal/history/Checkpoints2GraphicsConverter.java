@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 
 class Checkpoints2GraphicsConverter {
 
@@ -24,7 +24,7 @@ class Checkpoints2GraphicsConverter {
         }
     }
 
-    double[] get( IsisMetrics metric ) {
+    double[] get( CodeProportionKind metric ) {
         List<Double> values = new ArrayList<Double>();
         for( ICheckpoint checkpoint : checkpoints ) {
             values.add( computeValue( metric, checkpoint ) );
@@ -32,7 +32,7 @@ class Checkpoints2GraphicsConverter {
         return convert( values );
     }
 
-    private Double computeValue( IsisMetrics metric, ICheckpoint checkpoint ) {
+    private Double computeValue( CodeProportionKind metric, ICheckpoint checkpoint ) {
         CodeProportion codeProportion = find( metric, checkpoint.getEntries() );
         return codeProportion == null ? new Double( 0.0 ) : codeProportion.getSQIValue();
     }
@@ -45,7 +45,7 @@ class Checkpoints2GraphicsConverter {
         return result;
     }
 
-    private CodeProportion find( IsisMetrics metric, List<CodeProportion> entries ) {
+    private CodeProportion find( CodeProportionKind metric, List<CodeProportion> entries ) {
         CodeProportion result = null;
         for( CodeProportion codeProportion : entries ) {
             if( codeProportion.getMetric() == metric ) {

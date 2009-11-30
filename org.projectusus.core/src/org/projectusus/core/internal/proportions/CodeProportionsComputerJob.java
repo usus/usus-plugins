@@ -6,10 +6,10 @@ package org.projectusus.core.internal.proportions;
 
 import static java.util.Arrays.asList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ACD;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CC;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.KG;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ACD;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CC;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.KG;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ML;
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_name;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.projectusus.core.internal.project.FindUsusProjects;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 import org.projectusus.core.internal.proportions.sqi.WorkspaceRawData;
 import org.projectusus.core.internal.proportions.sqi.jdtdriver.JDTDriver;
 import org.projectusus.core.internal.proportions.yellowcount.WorkspaceYellowCount;
@@ -91,7 +91,7 @@ class CodeProportionsComputerJob extends Job {
         new JDTDriver( target ).run( monitor );
 
         WorkspaceRawData results = WorkspaceRawData.getInstance();
-        for( IsisMetrics metric : asList( CC, KG, ML, ACD ) ) {
+        for( CodeProportionKind metric : asList( CC, KG, ML, ACD ) ) {
             collector.add( results.getCodeProportion( metric ) );
         }
     }

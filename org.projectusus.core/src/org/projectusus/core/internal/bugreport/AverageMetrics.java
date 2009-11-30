@@ -6,7 +6,7 @@ package org.projectusus.core.internal.bugreport;
 
 import static org.projectusus.core.internal.util.CoreTexts.AverageMetrics_overall;
 
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 import org.projectusus.core.internal.proportions.sqi.ProjectRawData;
 
 public class AverageMetrics implements IAverageMetrics {
@@ -36,11 +36,11 @@ public class AverageMetrics implements IAverageMetrics {
     }
 
     public void addProjectResults( ProjectRawData projectResults ) {
-        numberOfMethods += projectResults.getViolationBasis( IsisMetrics.CC );
-        numberOfClasses += projectResults.getViolationBasis( IsisMetrics.KG );
+        numberOfMethods += projectResults.getViolationBasis( CodeProportionKind.CC );
+        numberOfClasses += projectResults.getViolationBasis( CodeProportionKind.KG );
 
-        totalCc += projectResults.getOverallMetric( IsisMetrics.CC );
-        totalML += projectResults.getOverallMetric( IsisMetrics.ML );
+        totalCc += projectResults.getOverallMetric( CodeProportionKind.CC );
+        totalML += projectResults.getOverallMetric( CodeProportionKind.ML );
 
     }
 

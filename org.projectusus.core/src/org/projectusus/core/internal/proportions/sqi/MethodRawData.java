@@ -51,29 +51,29 @@ public class MethodRawData implements IRawData {
         return startPosition;
     }
 
-    public boolean violates( IsisMetrics metric ) {
+    public boolean violates( CodeProportionKind metric ) {
         return metric.isViolatedBy( this );
     }
 
-    public int getViolationBasis( IsisMetrics metric ) {
+    public int getViolationBasis( CodeProportionKind metric ) {
         return 1;
     }
 
-    public int getViolationCount( IsisMetrics metric ) {
+    public int getViolationCount( CodeProportionKind metric ) {
         return metric.isViolatedBy( this ) ? 1 : 0;
     }
 
-    public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
+    public void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots ) {
         if( metric.isViolatedBy( this ) ) {
-            if( metric.equals( IsisMetrics.CC ) ) {
+            if( metric.equals( CodeProportionKind.CC ) ) {
                 hotspots.add( new MetricCCHotspot( className, getMethodName(), getCCValue(), getSourcePosition(), getLineNumber() ) );
-            } else if( metric.equals( IsisMetrics.ML ) ) {
+            } else if( metric.equals( CodeProportionKind.ML ) ) {
                 hotspots.add( new MetricMLHotspot( className, getMethodName(), getMLValue(), getSourcePosition(), getLineNumber() ) );
             }
         }
     }
 
-    public int getOverallMetric( IsisMetrics metric ) {
+    public int getOverallMetric( CodeProportionKind metric ) {
         return metric.getValueFor( this );
     }
 

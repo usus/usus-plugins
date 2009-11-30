@@ -30,7 +30,7 @@ public class RawData<S, T extends IRawData> implements IRawData {
         wrapper.remove( key );
     }
 
-    public synchronized int getViolationCount( IsisMetrics metric ) {
+    public synchronized int getViolationCount( CodeProportionKind metric ) {
         int violations = 0;
         for( T result : wrapper.getAllRawDataElements() ) {
             violations = violations + result.getViolationCount( metric );
@@ -38,7 +38,7 @@ public class RawData<S, T extends IRawData> implements IRawData {
         return violations;
     }
 
-    public synchronized int getViolationBasis( IsisMetrics metric ) {
+    public synchronized int getViolationBasis( CodeProportionKind metric ) {
         int basis = 0;
         for( T result : wrapper.getAllRawDataElements() ) {
             basis = basis + result.getViolationBasis( metric );
@@ -46,13 +46,13 @@ public class RawData<S, T extends IRawData> implements IRawData {
         return basis;
     }
 
-    public synchronized void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
+    public synchronized void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots ) {
         for( T result : wrapper.getAllRawDataElements() ) {
-            result.addHotspots( metric, hotspots );
+            result.addToHotspots( metric, hotspots );
         }
     }
 
-    public synchronized int getOverallMetric( IsisMetrics metric ) {
+    public synchronized int getOverallMetric( CodeProportionKind metric ) {
         int overallMetricValue = 0;
         Collection<T> allDataElements = wrapper.getAllRawDataElements();
         for( T currentResult : allDataElements ) {

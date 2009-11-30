@@ -15,7 +15,6 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.MetricACDHotspot;
 import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
-import org.projectusus.core.internal.proportions.sqi.acd.AcdModel;
 
 public class ClassRawData extends RawData<Integer, MethodRawData> {
 
@@ -94,33 +93,33 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
     }
 
     @Override
-    public int getViolationBasis( IsisMetrics metric ) {
-        if( metric.isMethodTest() ) {
+    public int getViolationBasis( CodeProportionKind metric ) {
+        if( metric.isMethodKind() ) {
             return super.getViolationBasis( metric );
         }
         return 1;
     }
 
     @Override
-    public int getViolationCount( IsisMetrics metric ) {
-        if( metric.isMethodTest() ) {
+    public int getViolationCount( CodeProportionKind metric ) {
+        if( metric.isMethodKind() ) {
             return super.getViolationCount( metric );
         }
         return metric.isViolatedBy( this ) ? 1 : 0;
     }
 
     @Override
-    public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
-        if( metric.isMethodTest() ) {
-            super.addHotspots( metric, hotspots );
+    public void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots ) {
+        if( metric.isMethodKind() ) {
+            super.addToHotspots( metric, hotspots );
             return;
         }
 
         if( metric.isViolatedBy( this ) ) {
-            if( metric.equals( IsisMetrics.KG ) ) {
+            if( metric.equals( CodeProportionKind.KG ) ) {
                 hotspots.add( new MetricKGHotspot( getClassName(), this.getNumberOfMethods(), getSourcePosition(), getLineNumber() ) );
             }
-            if( metric.equals( IsisMetrics.ACD ) ) {
+            if( metric.equals( CodeProportionKind.ACD ) ) {
                 hotspots.add( new MetricACDHotspot( getClassName(), getCCDResult(), getSourcePosition(), getLineNumber() ) );
             }
         }
@@ -131,7 +130,6 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
     }
 
     public int getCCDResult() {
-        AcdModel acdModel = WorkspaceRawData.getInstance().getAcdModel();
-        return acdModel.getCCD( fullyQualifiedName );
+        return WorkspaceRawData.getInstance().getAcdModel().getCCD( fullyQualifiedName );
     }
 }

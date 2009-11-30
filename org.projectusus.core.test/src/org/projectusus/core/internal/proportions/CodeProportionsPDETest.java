@@ -32,7 +32,7 @@ public class CodeProportionsPDETest {
     }
 
     @Test
-    public void listenerHandling() {
+    public void listenerHandling() throws InterruptedException {
         DummyCodeProportionsListener listener = new DummyCodeProportionsListener();
         model.addUsusModelListener( listener );
         

@@ -2,7 +2,13 @@ package org.projectusus.core.internal.proportions.sqi;
 
 public enum CodeProportionUnit {
 
-    METHOD( "methods" ), CLASS( "classes" ), PACKAGE( "packages" ), FILE( "files" ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    METHOD( "methods" ) { //$NON-NLS-1$
+        @Override
+        public boolean isMethodKind() {
+            return true;
+        }
+    }, //
+    CLASS( "classes" ), PACKAGE( "packages" ), FILE( "files" ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ 
 
     private final String label;
 
@@ -12,5 +18,9 @@ public enum CodeProportionUnit {
 
     public String getLabel() {
         return label;
+    }
+
+    public boolean isMethodKind() {
+        return false;
     }
 }

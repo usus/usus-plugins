@@ -4,13 +4,13 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.hover;
 
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CC;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CC;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ML;
 
 import org.eclipse.jdt.core.IMethod;
 import org.projectusus.core.internal.bugreport.BugList;
 import org.projectusus.core.internal.proportions.sqi.ClassRawData;
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 import org.projectusus.core.internal.proportions.sqi.MethodRawData;
 
 class MethodFormatter extends JavaElementFormatter {
@@ -34,7 +34,7 @@ class MethodFormatter extends JavaElementFormatter {
         sb.append( ", " ); //$NON-NLS-1$
         formatMetric( ML, methodRawData.getMLValue(), sb );
         sb.append( ", " ); //$NON-NLS-1$
-        formatMetric( IsisMetrics.KG, classRawData.getNumberOfMethods(), sb );
+        formatMetric( CodeProportionKind.KG, classRawData.getNumberOfMethods(), sb );
         sb.append( ", " ); //$NON-NLS-1$
         formatBugs( sb, bugs );
         sb.append( "]" ); //$NON-NLS-1$

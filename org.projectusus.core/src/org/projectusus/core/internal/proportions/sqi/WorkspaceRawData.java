@@ -17,7 +17,7 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
     private IProject currentProject;
 
-    private static final WorkspaceRawData instance = new WorkspaceRawData();
+    private static WorkspaceRawData instance = new WorkspaceRawData();
 
     private final AcdModel acdModel = new AcdModel();
 
@@ -58,17 +58,17 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         getCurrentProjectRawData().dropRawData( file );
     }
 
-    public CodeProportion getCodeProportion( IsisMetrics metric ) {
+    public CodeProportion getCodeProportion( CodeProportionKind metric ) {
         int violations = getViolationCount( metric );
         int basis = getViolationBasis( metric );
         double sqi = 0.0;
-        if( metric == IsisMetrics.ACD ) {
+        if( metric == CodeProportionKind.ACD ) {
             sqi = 100.0 - acdModel.getRelativeACD() * 100.0;
         } else {
             sqi = new SQIComputer( basis, violations, metric.getCalibration() ).compute();
         }
         List<IHotspot> hotspots = new ArrayList<IHotspot>();
-        addHotspots( metric, hotspots );
+        addToHotspots( metric, hotspots );
         return new CodeProportion( metric, violations, basis, sqi, hotspots );
     }
 }

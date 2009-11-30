@@ -9,21 +9,21 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.PlatformObject;
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 
 public class CodeProportion extends PlatformObject {
 
-    private final IsisMetrics metric;
+    private final CodeProportionKind metric;
     private final int violations;
     private final int basis;
     private final double sqi;
     private final List<IHotspot> hotspots;
 
-    public CodeProportion( IsisMetrics metric ) {
+    public CodeProportion( CodeProportionKind metric ) {
         this( metric, 0, 0, 0, new ArrayList<IHotspot>() );
     }
 
-    public CodeProportion( IsisMetrics metric, int violations, int basis, double sqi, List<IHotspot> hotspots ) {
+    public CodeProportion( CodeProportionKind metric, int violations, int basis, double sqi, List<IHotspot> hotspots ) {
         this.metric = metric;
         this.violations = violations;
         this.basis = basis;
@@ -48,7 +48,7 @@ public class CodeProportion extends PlatformObject {
         return metric.toString() + ": " + violations + " / " + basis; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public IsisMetrics getMetric() {
+    public CodeProportionKind getMetric() {
         return metric;
     }
 

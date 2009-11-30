@@ -6,7 +6,7 @@ package org.projectusus.ui.internal.proportions.hover;
 
 import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.bugreport.BugList;
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 
 abstract class JavaElementFormatter {
 
@@ -17,7 +17,7 @@ abstract class JavaElementFormatter {
         }
     }
 
-    void formatMetric( IsisMetrics metric, int value, StringBuilder sb ) {
+    void formatMetric( CodeProportionKind metric, int value, StringBuilder sb ) {
         sb.append( metric.getLabel() );
         sb.append( ":" ); //$NON-NLS-1$
         sb.append( value );

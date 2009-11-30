@@ -28,13 +28,13 @@ public class MethodRawDataTest {
     
     @Test
     public void basisIs1(){
-        assertEquals( 1, methodResults.getViolationBasis( IsisMetrics.ACD ) );
-        assertEquals( 1, methodResults.getViolationBasis( IsisMetrics.CC ) );
-        assertEquals( 1, methodResults.getViolationBasis( IsisMetrics.CW ) );
-        assertEquals( 1, methodResults.getViolationBasis( IsisMetrics.KG ) );
-        assertEquals( 1, methodResults.getViolationBasis( IsisMetrics.ML ) );
-        assertEquals( 1, methodResults.getViolationBasis( IsisMetrics.PC ) );
-        assertEquals( 1, methodResults.getViolationBasis( IsisMetrics.TA ) );
+        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.ACD ) );
+        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.CC ) );
+        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.CW ) );
+        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.KG ) );
+        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.ML ) );
+        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.PC ) );
+        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.TA ) );
     }
     
     @Test
@@ -50,10 +50,10 @@ public class MethodRawDataTest {
     @Test
     public void ccResultNoViolation(){
         assertEquals( 0, methodResults.getCCValue() );
-        assertEquals( 0, methodResults.getViolationCount( IsisMetrics.CC ) );
+        assertEquals( 0, methodResults.getViolationCount( CodeProportionKind.CC ) );
         
         List<IHotspot> hotspots = new ArrayList<IHotspot>();
-        methodResults.addHotspots( IsisMetrics.CC, hotspots );
+        methodResults.addToHotspots( CodeProportionKind.CC, hotspots );
         assertEquals(0, hotspots.size());
     }
 
@@ -64,10 +64,10 @@ public class MethodRawDataTest {
         methodResults.setCCValue( value );
         
         assertEquals( value, methodResults.getCCValue() );
-        assertEquals( 1, methodResults.getViolationCount( IsisMetrics.CC ) );
+        assertEquals( 1, methodResults.getViolationCount( CodeProportionKind.CC ) );
         
         List<IHotspot> hotspots = new ArrayList<IHotspot>();
-        methodResults.addHotspots( IsisMetrics.CC, hotspots );
+        methodResults.addToHotspots( CodeProportionKind.CC, hotspots );
         assertEquals(1, hotspots.size());
         assertEquals(SOURCEPOSITION, hotspots.get( 0 ).getSourcePosition());
     }
@@ -75,10 +75,10 @@ public class MethodRawDataTest {
     @Test
     public void mlResultNoViolation(){
         assertEquals( 0, methodResults.getMLValue() );
-        assertEquals( 0, methodResults.getViolationCount( IsisMetrics.ML ) );
+        assertEquals( 0, methodResults.getViolationCount( CodeProportionKind.ML ) );
         
         List<IHotspot> hotspots = new ArrayList<IHotspot>();
-        methodResults.addHotspots( IsisMetrics.ML, hotspots );
+        methodResults.addToHotspots( CodeProportionKind.ML, hotspots );
         assertEquals(0, hotspots.size());
     }
     
@@ -88,10 +88,10 @@ public class MethodRawDataTest {
         methodResults.setMLValue( value );
         
         assertEquals( value, methodResults.getMLValue() );
-        assertEquals( 1, methodResults.getViolationCount( IsisMetrics.ML ) );
+        assertEquals( 1, methodResults.getViolationCount( CodeProportionKind.ML ) );
         
         List<IHotspot> hotspots = new ArrayList<IHotspot>();
-        methodResults.addHotspots( IsisMetrics.ML, hotspots );
+        methodResults.addToHotspots( CodeProportionKind.ML, hotspots );
         assertEquals(1, hotspots.size());
         assertEquals(SOURCEPOSITION, hotspots.get( 0 ).getSourcePosition());
     }

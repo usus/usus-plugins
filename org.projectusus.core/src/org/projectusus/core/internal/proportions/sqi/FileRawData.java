@@ -69,9 +69,9 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
     }
 
     @Override
-    public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots ) {
+    public void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots ) {
         List<IHotspot> localHotspots = new ArrayList<IHotspot>();
-        super.addHotspots( metric, localHotspots );
+        super.addToHotspots( metric, localHotspots );
         for( IHotspot hotspot : localHotspots ) {
             ((Hotspot)hotspot).setFile( fileOfRawData );
         }

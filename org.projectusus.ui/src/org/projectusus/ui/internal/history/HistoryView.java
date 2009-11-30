@@ -5,13 +5,13 @@
 package org.projectusus.ui.internal.history;
 
 import static org.projectusus.core.internal.proportions.UsusModel.getUsusModel;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ACD;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CC;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CW;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.KG;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.PC;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ACD;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CC;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CW;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.KG;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ML;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.PC;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.TA;
 import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_ACD;
 import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_CC;
 import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_CW;
@@ -32,7 +32,7 @@ import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 import org.projectusus.ui.internal.util.UsusColors;
 import org.swtchart.Chart;
 import org.swtchart.ILineSeries;
@@ -42,7 +42,7 @@ import org.swtchart.ISeries.SeriesType;
 
 public class HistoryView extends ViewPart {
 
-    private final Map<IsisMetrics, Color> colors = initColors();
+    private final Map<CodeProportionKind, Color> colors = initColors();
     private Chart chart;
 
     @Override
@@ -70,24 +70,24 @@ public class HistoryView extends ViewPart {
     }
 
     private void refresh() {
-        for( IsisMetrics metric : IsisMetrics.values() ) {
+        for( CodeProportionKind metric : CodeProportionKind.values() ) {
             updateSeries( metric );
         }
         chart.redraw();
     }
 
-    private void updateSeries( IsisMetrics metric ) {
+    private void updateSeries( CodeProportionKind metric ) {
         ISeriesSet seriesSet = chart.getSeriesSet();
         cleanOldValues( seriesSet, metric );
         createSeries( seriesSet, metric, getValues( metric ) );
     }
 
-    private double[] getValues( IsisMetrics metric ) {
+    private double[] getValues( CodeProportionKind metric ) {
         List<ICheckpoint> checkpoints = getUsusModel().getHistory().getCheckpoints();
         return new Checkpoints2GraphicsConverter( checkpoints ).get( metric );
     }
 
-    private void createSeries( ISeriesSet seriesSet, IsisMetrics metric, double[] values ) {
+    private void createSeries( ISeriesSet seriesSet, CodeProportionKind metric, double[] values ) {
         String seriesId = metric.toString();
         ILineSeries series = (ILineSeries)seriesSet.createSeries( SeriesType.LINE, seriesId );
         series.setYSeries( values );
@@ -96,14 +96,14 @@ public class HistoryView extends ViewPart {
         series.setLineColor( colors.get( metric ) );
     }
 
-    private void cleanOldValues( ISeriesSet seriesSet, IsisMetrics metric ) {
+    private void cleanOldValues( ISeriesSet seriesSet, CodeProportionKind metric ) {
         if( seriesSet.getSeries( metric.toString() ) != null ) {
             seriesSet.deleteSeries( metric.toString() );
         }
     }
 
-    private Map<IsisMetrics, Color> initColors() {
-        Map<IsisMetrics, Color> result = new HashMap<IsisMetrics, Color>();
+    private Map<CodeProportionKind, Color> initColors() {
+        Map<CodeProportionKind, Color> result = new HashMap<CodeProportionKind, Color>();
         result.put( TA, getColor( ISIS_METRIC_TA ) );
         result.put( CC, getColor( ISIS_METRIC_CC ) );
         result.put( PC, getColor( ISIS_METRIC_PC ) );

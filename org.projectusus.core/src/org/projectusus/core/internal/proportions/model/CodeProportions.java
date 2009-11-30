@@ -12,14 +12,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 
 class CodeProportions implements ICodeProportions {
 
-    private final Map<IsisMetrics, CodeProportion> isisMetricsValues;
+    private final Map<CodeProportionKind, CodeProportion> isisMetricsValues;
 
     CodeProportions() {
-        isisMetricsValues = new HashMap<IsisMetrics, CodeProportion>();
+        isisMetricsValues = new HashMap<CodeProportionKind, CodeProportion>();
     }
 
     void update( CodeProportion proportion ) {

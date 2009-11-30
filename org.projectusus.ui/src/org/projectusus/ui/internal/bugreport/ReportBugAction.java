@@ -33,7 +33,7 @@ import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.project.NullUsusProject;
 import org.projectusus.core.internal.proportions.sqi.ClassRawData;
 import org.projectusus.core.internal.proportions.sqi.FileRawData;
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 import org.projectusus.core.internal.proportions.sqi.MethodRawData;
 import org.projectusus.ui.internal.UsusUIPlugin;
 
@@ -103,7 +103,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
     }
 
     private void fillClassMetrics( Bug bug, ClassRawData classRawData ) {
-        int numberOfMethods = classRawData.getViolationBasis( IsisMetrics.CC );
+        int numberOfMethods = classRawData.getViolationBasis( CodeProportionKind.CC );
         bug.getBugMetrics().setNumberOfMethods( numberOfMethods );
     }
 

@@ -7,7 +7,7 @@ package org.projectusus.core.internal.coverage.emmadriver;
 import static com.mountainminds.eclemma.core.CoverageTools.addJavaCoverageListener;
 import static com.mountainminds.eclemma.core.CoverageTools.getJavaModelCoverage;
 import static com.mountainminds.eclemma.core.CoverageTools.removeJavaCoverageListener;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.TA;
 
 import java.util.ArrayList;
 

@@ -5,7 +5,7 @@
 package org.projectusus.core.internal.proportions.sqi;
 
 import static org.junit.Assert.*;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ML;
 
 import java.io.IOException;
 import java.io.InputStream;

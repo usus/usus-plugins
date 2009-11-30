@@ -43,51 +43,51 @@ public class ClassRawDataTest {
     
     @Test
     public void violationBasisNoMethods(){
-        assertEquals( 1, classRawData.getViolationBasis( IsisMetrics.KG ) );
-        assertEquals( 0, classRawData.getViolationBasis( IsisMetrics.CC ) );
-        assertEquals( 0, classRawData.getViolationBasis( IsisMetrics.ML ) );
+        assertEquals( 1, classRawData.getViolationBasis( CodeProportionKind.KG ) );
+        assertEquals( 0, classRawData.getViolationBasis( CodeProportionKind.CC ) );
+        assertEquals( 0, classRawData.getViolationBasis( CodeProportionKind.ML ) );
     }
 
         @Test
     public void violationBasis1Method(){
         classRawData.setCCValue( method1, 0 );
-        assertEquals( 1, classRawData.getViolationBasis( IsisMetrics.KG ) );
-        assertEquals( 1, classRawData.getViolationBasis( IsisMetrics.CC ) );
-        assertEquals( 1, classRawData.getViolationBasis( IsisMetrics.ML ) );
+        assertEquals( 1, classRawData.getViolationBasis( CodeProportionKind.KG ) );
+        assertEquals( 1, classRawData.getViolationBasis( CodeProportionKind.CC ) );
+        assertEquals( 1, classRawData.getViolationBasis( CodeProportionKind.ML ) );
     }
         
     @Test
     public void violationCountNoMethods(){
-        assertEquals(0, classRawData.getViolationCount( IsisMetrics.KG ));
-        assertEquals(0, classRawData.getViolationCount( IsisMetrics.CC ));
-        assertEquals(0, classRawData.getViolationCount( IsisMetrics.ML ));
+        assertEquals(0, classRawData.getViolationCount( CodeProportionKind.KG ));
+        assertEquals(0, classRawData.getViolationCount( CodeProportionKind.CC ));
+        assertEquals(0, classRawData.getViolationCount( CodeProportionKind.ML ));
     }
     
     @Test
     public void violationCountCC1Method(){
         int value = 6;
         classRawData.setCCValue( method1, value );
-        assertEquals( 0, classRawData.getViolationCount( IsisMetrics.KG ) );
-        assertEquals( 1, classRawData.getViolationCount( IsisMetrics.CC ) );
-        assertEquals( 0, classRawData.getViolationCount( IsisMetrics.ML ) );
+        assertEquals( 0, classRawData.getViolationCount( CodeProportionKind.KG ) );
+        assertEquals( 1, classRawData.getViolationCount( CodeProportionKind.CC ) );
+        assertEquals( 0, classRawData.getViolationCount( CodeProportionKind.ML ) );
     }
     @Test
     public void violationCountML1Method(){
         int value = 16;
         classRawData.setMLValue( method1, value );
-        assertEquals( 0, classRawData.getViolationCount( IsisMetrics.KG ) );
-        assertEquals( 0, classRawData.getViolationCount( IsisMetrics.CC ) );
-        assertEquals( 1, classRawData.getViolationCount( IsisMetrics.ML ) );
+        assertEquals( 0, classRawData.getViolationCount( CodeProportionKind.KG ) );
+        assertEquals( 0, classRawData.getViolationCount( CodeProportionKind.CC ) );
+        assertEquals( 1, classRawData.getViolationCount( CodeProportionKind.ML ) );
     }
     
     @Test
     public void addHotspotsNoMethods(){
         List<IHotspot> nameList = new ArrayList<IHotspot>();
-        classRawData.addHotspots( IsisMetrics.KG, nameList );
+        classRawData.addToHotspots( CodeProportionKind.KG, nameList );
         assertEquals(0, nameList.size());
-        classRawData.addHotspots( IsisMetrics.CC, nameList );
+        classRawData.addToHotspots( CodeProportionKind.CC, nameList );
         assertEquals(0, nameList.size());
-        classRawData.addHotspots( IsisMetrics.ML, nameList );
+        classRawData.addToHotspots( CodeProportionKind.ML, nameList );
         assertEquals(0, nameList.size());
     }
 //    // TODO missing: KG tests

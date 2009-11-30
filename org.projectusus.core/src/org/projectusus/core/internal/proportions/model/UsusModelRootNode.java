@@ -4,10 +4,10 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.model;
 
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CW;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CW;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.TA;
 
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 
 public class UsusModelRootNode {
 
@@ -20,7 +20,7 @@ public class UsusModelRootNode {
     }
 
     public void add( CodeProportion proportion ) {
-        IsisMetrics metric = proportion.getMetric();
+        CodeProportionKind metric = proportion.getMetric();
         if( metric == TA ) {
             testCoverage.update( proportion );
         } else if( metric == CW ) {

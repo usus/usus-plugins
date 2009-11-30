@@ -10,12 +10,12 @@ import org.projectusus.core.internal.proportions.model.IHotspot;
 
 public interface IRawData {
 
-    public int getViolationCount( IsisMetrics metric );
+    public int getViolationCount( CodeProportionKind metric );
 
-    public int getViolationBasis( IsisMetrics metric );
+    public int getViolationBasis( CodeProportionKind metric );
 
-    public void addHotspots( IsisMetrics metric, List<IHotspot> hotspots );
+    public void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots );
 
-    public int getOverallMetric( IsisMetrics metric );
+    public int getOverallMetric( CodeProportionKind metric );
 
 }

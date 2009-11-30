@@ -1,17 +1,17 @@
 package org.projectusus.ui.internal.hotspots;
 
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ACD;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CC;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CW;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.KG;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ACD;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CC;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CW;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.KG;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ML;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 import org.projectusus.ui.internal.hotspots.pages.ACDColumnDesc;
 import org.projectusus.ui.internal.hotspots.pages.CCColumnDesc;
 import org.projectusus.ui.internal.hotspots.pages.CWColumnDesc;
@@ -22,10 +22,10 @@ import org.projectusus.ui.internal.hotspots.pages.MLColumnDesc;
 
 public class PageFactory implements IAdapterFactory {
 
-    private final Map<IsisMetrics, IHotspotsPage> pages;
+    private final Map<CodeProportionKind, IHotspotsPage> pages;
 
     public PageFactory() {
-        pages = new HashMap<IsisMetrics, IHotspotsPage>();
+        pages = new HashMap<CodeProportionKind, IHotspotsPage>();
         initPages();
     }
 

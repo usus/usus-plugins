@@ -8,10 +8,10 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.CC;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.KG;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ML;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.TA;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.CC;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.KG;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ML;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.TA;
 
 import java.util.ArrayList;
 import java.util.List;

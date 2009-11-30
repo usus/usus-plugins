@@ -7,7 +7,7 @@ package org.projectusus.ui.internal.history;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.projectusus.core.internal.proportions.sqi.IsisMetrics.ACD;
+import static org.projectusus.core.internal.proportions.sqi.CodeProportionKind.ACD;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 
 
 public class Checkpoints2GraphicsConverterTest {
@@ -74,13 +74,13 @@ public class Checkpoints2GraphicsConverterTest {
 	private class DummyCheckpoint implements ICheckpoint {
 
 		private final double[] values;
-		private final IsisMetrics metric;
+		private final CodeProportionKind metric;
 
 		DummyCheckpoint(double value){
 			this(ACD, new double[]{value});
 		}
 		
-		DummyCheckpoint(IsisMetrics metric, double...values){
+		DummyCheckpoint(CodeProportionKind metric, double...values){
 			this.values = values;
 			this.metric = metric;
 		}

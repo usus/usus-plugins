@@ -18,7 +18,7 @@ import org.projectusus.core.internal.UsusXmlReader;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
-import org.projectusus.core.internal.proportions.sqi.IsisMetrics;
+import org.projectusus.core.internal.proportions.sqi.CodeProportionKind;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -51,7 +51,7 @@ class CheckpointReader extends UsusXmlReader<ICheckpoint> {
         int cases = loadInteger( child, ATT_CASES );
         int violations = loadInteger( child, ATT_VIOLATIONS );
         Double sqi = loadDouble( child, ATT_SQI );
-        IsisMetrics metric = loadMetric( child, XmlNames.ATT_METRIC );
+        CodeProportionKind metric = loadMetric( child, XmlNames.ATT_METRIC );
         if( cases != UNDEFINED && violations != UNDEFINED && sqi != null && metric != null ) {
             ArrayList<IHotspot> hotspots = new ArrayList<IHotspot>();
             double sqiValue = sqi.doubleValue();
@@ -59,9 +59,9 @@ class CheckpointReader extends UsusXmlReader<ICheckpoint> {
         }
     }
 
-    private IsisMetrics loadMetric( Node child, String attributeName ) {
+    private CodeProportionKind loadMetric( Node child, String attributeName ) {
         String text = loadStringValue( child, attributeName );
-        return IsisMetrics.valueOf( text );
+        return CodeProportionKind.valueOf( text );
     }
 
 }
