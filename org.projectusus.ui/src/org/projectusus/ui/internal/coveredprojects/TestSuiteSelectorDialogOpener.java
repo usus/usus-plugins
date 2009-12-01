@@ -44,7 +44,7 @@ class TestSuiteSelectorDialogOpener {
         private static final String[] BUTTON_LABELS = new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL };
 
         public TestSuiteSelectorDialog( Shell parentShell ) {
-            super( parentShell, testSuiteSelectorDialog_title, null, testSuiteSelectorDialog_msg, CONFIRM, BUTTON_LABELS, 0 );
+            super( parentShell, testSuiteSelectorDialog_title, null, testSuiteSelectorDialog_msg, QUESTION, BUTTON_LABELS, 0 );
         }
 
         @Override
