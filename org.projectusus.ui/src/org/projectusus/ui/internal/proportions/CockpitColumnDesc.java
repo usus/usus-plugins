@@ -12,30 +12,27 @@ import static org.projectusus.ui.internal.util.UITexts.cockpitColumnDesc_violati
 import java.text.DecimalFormat;
 
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.ui.internal.viewer.IColumnDesc;
 
-enum CockpitColumnDesc {
+enum CockpitColumnDesc implements IColumnDesc<CodeProportion> {
 
     INDICATOR( cockpitColumnDesc_indicator, 62, true ) {
-        @Override
         public String getLabel( CodeProportion element ) {
             return element.getMetric().getLabel();
         }
     },
     SQI( cockpitColumnDesc_sqi, 10, false ) {
-        @Override
         public String getLabel( CodeProportion element ) {
             DecimalFormat formatter = new DecimalFormat( "#.##" ); //$NON-NLS-1$
             return String.valueOf( formatter.format( element.getSQIValue() ) );
         }
     },
     VIOLATIONS( cockpitColumnDesc_violations, 14, false ) {
-        @Override
         public String getLabel( CodeProportion element ) {
             return String.valueOf( element.getViolations() );
         }
     },
     CASES( cockpitColumnDesc_cases, 14, false ) {
-        @Override
         public String getLabel( CodeProportion element ) {
             return String.valueOf( element.getBasis() ) + " " + element.getMetric().getUnit().getLabel(); //$NON-NLS-1$
         }
@@ -51,17 +48,15 @@ enum CockpitColumnDesc {
         this.hasImage = hasImage;
     }
 
-    int getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    String getHeadLabel() {
+    public String getHeadLabel() {
         return headLabel;
     }
 
-    boolean isHasImage() {
+    public boolean hasImage() {
         return hasImage;
     }
-
-    abstract String getLabel( CodeProportion element );
 }

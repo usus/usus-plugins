@@ -32,7 +32,7 @@ public class CockpitLP extends LabelProvider implements ITableLabelProvider, ICo
 
     public Image getColumnImage( Object element, int columnIndex ) {
         Image result = null;
-        if( CockpitColumnDesc.values()[columnIndex].isHasImage() ) {
+        if( CockpitColumnDesc.values()[columnIndex].hasImage() ) {
             result = getColumnImageFor( element );
         }
         return result;
