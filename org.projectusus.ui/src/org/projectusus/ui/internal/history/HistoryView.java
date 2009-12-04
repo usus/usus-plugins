@@ -93,6 +93,7 @@ public class HistoryView extends ViewPart {
         series.setYSeries( values );
         series.setSymbolType( PlotSymbolType.DIAMOND );
         series.setSymbolSize( 2 );
+        series.setLineWidth( 2 );
         series.setLineColor( colors.get( metric ) );
     }
 
