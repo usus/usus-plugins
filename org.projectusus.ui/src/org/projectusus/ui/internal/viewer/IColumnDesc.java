@@ -2,8 +2,7 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.ui.internal;
-
+package org.projectusus.ui.internal.viewer;
 
 public interface IColumnDesc<T> {
 
@@ -11,7 +10,7 @@ public interface IColumnDesc<T> {
 
     boolean hasImage();
 
-    // column weight (percentage of overall width in the table that this column takes
+    // column weight (percentage of overall width in the table that this column takes)
     int getWeight();
 
     String getLabel( T element );

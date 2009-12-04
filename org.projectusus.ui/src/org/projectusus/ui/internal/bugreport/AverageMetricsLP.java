@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.projectusus.core.internal.bugreport.IAverageMetrics;
 import org.projectusus.ui.internal.ColumnDescLabelProvider;
-import org.projectusus.ui.internal.IColumnDesc;
+import org.projectusus.ui.internal.viewer.IColumnDesc;
 
 public class AverageMetricsLP extends ColumnDescLabelProvider<IAverageMetrics> {
 

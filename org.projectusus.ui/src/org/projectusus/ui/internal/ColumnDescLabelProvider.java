@@ -5,6 +5,7 @@ import java.util.List;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.projectusus.ui.internal.viewer.IColumnDesc;
 
 public abstract class ColumnDescLabelProvider<T> extends LabelProvider implements ITableLabelProvider {
 

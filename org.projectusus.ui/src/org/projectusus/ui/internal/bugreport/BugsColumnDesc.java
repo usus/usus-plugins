@@ -5,8 +5,8 @@
 package org.projectusus.ui.internal.bugreport;
 
 import org.projectusus.core.internal.bugreport.Bug;
-import org.projectusus.ui.internal.IColumnDesc;
 import org.projectusus.ui.internal.util.UITexts;
+import org.projectusus.ui.internal.viewer.IColumnDesc;
 
 enum BugsColumnDesc implements IColumnDesc<Bug> {
 

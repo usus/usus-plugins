@@ -5,8 +5,9 @@
 package org.projectusus.ui.internal.hotspots.pages;
 
 import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.ui.internal.viewer.IColumnDesc;
 
-public interface IHotspotsPageColumnDesc {
+public interface IHotspotsPageColumnDesc extends IColumnDesc<IHotspot> {
 
     String getHeadLabel();
 

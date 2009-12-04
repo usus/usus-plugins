@@ -10,7 +10,7 @@ import static org.projectusus.ui.internal.util.UITexts.AverageMetricsColumns_nam
 import static org.projectusus.ui.internal.util.UITexts.AverageMetricsColumns_number_of_methos_in_class;
 
 import org.projectusus.core.internal.bugreport.IAverageMetrics;
-import org.projectusus.ui.internal.IColumnDesc;
+import org.projectusus.ui.internal.viewer.IColumnDesc;
 
 public enum AverageMetricsColumns implements IColumnDesc<IAverageMetrics> {
     NAME( AverageMetricsColumns_name, 15, false, true ) {

@@ -24,7 +24,6 @@ class CockpitTreeViewer extends TreeViewer {
 
         setLabelProvider( new CockpitLP() );
         setContentProvider( new CockpitCP() );
-
     }
 
     private void createTreeTable() {
