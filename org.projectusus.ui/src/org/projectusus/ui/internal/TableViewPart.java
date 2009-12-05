@@ -67,5 +67,4 @@ public abstract class TableViewPart<T> extends ViewPart {
             control.setFocus();
         }
     }
-
 }
