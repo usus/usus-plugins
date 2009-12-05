@@ -1,0 +1,185 @@
+// Copyright (c) 2009 by the projectusus.org contributors
+// This software is released under the terms and conditions
+// of the Eclipse Public License (EPL) 1.0.
+// See http://www.eclipse.org/legal/epl-v10.html for details.
+package org.projectusus.ui.internal.proportions.infopresenter;
+
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ShellAdapter;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+
+class LightWeightDialog extends Dialog {
+
+    // needed for the typical light-weight control behaviour (go out of the way
+    // if focus is lost). We need it for avoiding that the Shell closes already
+    // when it loses focus at opening time.
+    private boolean decativateListenerActive;
+    private Composite area;
+    private Text txtSomeExampleControl;
+    private Font boldLabelFont;
+    private IJavaElement method;
+
+    LightWeightDialog( Shell parentShell ) {
+        super( parentShell );
+        // This has not for the user a 'blocking' effect, i.e. if the user
+        // clicks on the screen outside, this dialog will disapper (lightweight
+        // behaviour). But we need it to ensure that all events (e.g. selection)
+        // on this dialog have been dispatched when the dialog is closed.
+        setBlockOnOpen( true );
+    }
+
+    void setInput( IJavaElement method ) {
+        this.method = method;
+    }
+
+    // interface methods of Dialog
+    // ////////////////////////////
+
+    @Override
+    protected int getShellStyle() {
+        return SWT.NO_TRIM;
+    }
+
+    @Override
+    protected void configureShell( Shell newShell ) {
+        applyInfoColors( newShell );
+        newShell.setLayout( new GridLayout() );
+        initializeDeactivationHandling( newShell );
+    }
+
+    @Override
+    protected Point getInitialSize() {
+        // arbitrary default value
+        return new Point( 430, 180 );
+    }
+
+    @Override
+    protected Control createButtonBar( Composite parent ) {
+        return null;
+    }
+
+    @Override
+    protected Control createDialogArea( Composite parent ) {
+        area = (Composite)super.createDialogArea( parent );
+        applyInfoColors( area );
+        createTitleArea();
+        createSomeExampleControl();
+        initializeKeyHandling();
+        txtSomeExampleControl.setFocus();
+        return area;
+    }
+
+    @Override
+    public boolean close() {
+        boldLabelFont.dispose();
+        boldLabelFont = null;
+        return super.close();
+    }
+
+    // internal
+    // ////////
+
+    private void initializeKeyHandling() {
+        KeyAdapter listener = new KeyHandler();
+        txtSomeExampleControl.addKeyListener( listener );
+        txtSomeExampleControl.getShell().addKeyListener( listener );
+    }
+
+    private void createTitleArea() {
+        Label lblTitle = new Label( area, SWT.NONE );
+        applyInfoColors( lblTitle );
+        lblTitle.setLayoutData( new GridData( GridData.FILL_HORIZONTAL ) );
+        lblTitle.setText( "TITLE (is bold)" );
+        makeBold( lblTitle );
+
+        StyledText txtContent = new StyledText( area, SWT.MULTI | SWT.WRAP );
+        applyInfoColors( txtContent );
+        txtContent.setEditable( false );
+        GridData gridData = new GridData( GridData.FILL_HORIZONTAL );
+        gridData.heightHint = 30;
+        txtContent.setLayoutData( gridData );
+        txtContent.setText( "Content (not bold, but selectable)" );
+    }
+
+    private void makeBold( Control control ) {
+        if( boldLabelFont == null ) {
+            Font initialFont = control.getFont();
+            FontData[] fontData = initialFont.getFontData();
+            for( FontData element : fontData ) {
+                element.setStyle( SWT.BOLD );
+            }
+            boldLabelFont = new Font( control.getDisplay(), fontData );
+        }
+        control.setFont( boldLabelFont );
+    }
+
+    private void createSomeExampleControl() {
+        txtSomeExampleControl = new Text( area, SWT.BORDER | SWT.MULTI | SWT.WRAP );
+        txtSomeExampleControl.setLayoutData( new GridData( GridData.FILL_HORIZONTAL ) );
+        txtSomeExampleControl.addModifyListener( new ModifyListener() {
+            public void modifyText( final ModifyEvent event ) {
+                // shall we do something here? ;-)
+            }
+        } );
+    }
+
+    private void applyInfoColors( Control control ) {
+        Display display = Display.getCurrent();
+        control.setBackground( display.getSystemColor( SWT.COLOR_INFO_BACKGROUND ) );
+        control.setForeground( display.getSystemColor( SWT.COLOR_INFO_FOREGROUND ) );
+    }
+
+    private void initializeDeactivationHandling( final Shell newShell ) {
+        Listener deactivateListener = new Listener() {
+            public void handleEvent( final Event event ) {
+                if( decativateListenerActive ) {
+                    newShell.dispose();
+                }
+            }
+        };
+        newShell.addListener( SWT.Deactivate, deactivateListener );
+        decativateListenerActive = true;
+        newShell.addShellListener( new ShellAdapter() {
+            @Override
+            public void shellActivated( final ShellEvent event ) {
+                if( event.widget == newShell && newShell.getShells().length == 0 ) {
+                    decativateListenerActive = true;
+                }
+            }
+        } );
+    }
+
+    private final class KeyHandler extends KeyAdapter {
+        @Override
+        public void keyReleased( final KeyEvent event ) {
+            // return key
+            if( event.keyCode == 0x0D ) {
+                close();
+            }
+            // ESC
+            if( event.character == 0x1B ) {
+                close();
+            }
+        }
+    }
+}
