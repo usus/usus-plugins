@@ -6,6 +6,7 @@ package org.projectusus.ui.internal.coveredprojects;
 
 import static org.eclipse.jface.window.Window.OK;
 import static org.eclipse.ui.PlatformUI.getWorkbench;
+import static org.projectusus.ui.internal.util.UITexts.testSuiteSelectorDialog_buttonLabel;
 import static org.projectusus.ui.internal.util.UITexts.testSuiteSelectorDialog_msg;
 import static org.projectusus.ui.internal.util.UITexts.testSuiteSelectorDialog_title;
 
@@ -39,9 +40,7 @@ class TestSuiteSelectorDialogOpener {
     }
 
     private static class TestSuiteSelectorDialog extends MessageDialog {
-        // TODO lf continue here
-        // private static final String[] BUTTON_LABELS = new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, testSuiteSelectorDialog_buttonLabel };
-        private static final String[] BUTTON_LABELS = new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL };
+        private static final String[] BUTTON_LABELS = new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, testSuiteSelectorDialog_buttonLabel };
 
         public TestSuiteSelectorDialog( Shell parentShell ) {
             super( parentShell, testSuiteSelectorDialog_title, null, testSuiteSelectorDialog_msg, QUESTION, BUTTON_LABELS, 0 );
@@ -50,7 +49,7 @@ class TestSuiteSelectorDialogOpener {
         @Override
         protected void buttonPressed( int buttonId ) {
             if( buttonId == 2 ) { // 'No, but...' button
-                // new TestSuiteSelectionAction( getShell() ).run();
+                new TestSuiteSelectionAction( getShell() ).run();
             }
             super.buttonPressed( buttonId );
         }

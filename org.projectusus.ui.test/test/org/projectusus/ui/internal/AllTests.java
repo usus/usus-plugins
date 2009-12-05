@@ -14,9 +14,10 @@ import org.projectusus.core.internal.proportions.modelupdate.UsusModelStatusTest
 import org.projectusus.core.internal.proportions.sqi.MLTest;
 import org.projectusus.core.internal.yellowcount.WiseCrackTest;
 import org.projectusus.ui.internal.history.Checkpoints2GraphicsConverterTest;
+import org.projectusus.ui.internal.selection.EditorInputAnalysisTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({UsusModelHistoryTest.class, Checkpoints2GraphicsConverterTest.class, CheckpointsTest.class, CoverageTest.class, MLTest.class, WiseCrackTest.class, UsusModelStatusTest.class})
+@SuiteClasses({EditorInputAnalysisTest.class, UsusModelHistoryTest.class, Checkpoints2GraphicsConverterTest.class, CheckpointsTest.class, CoverageTest.class, MLTest.class, WiseCrackTest.class, UsusModelStatusTest.class})
 public class AllTests {
 
 }

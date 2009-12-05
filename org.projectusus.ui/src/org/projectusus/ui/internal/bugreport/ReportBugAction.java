@@ -15,10 +15,8 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -36,6 +34,8 @@ import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.core.internal.proportions.rawdata.FileRawData;
 import org.projectusus.core.internal.proportions.rawdata.MethodRawData;
 import org.projectusus.ui.internal.UsusUIPlugin;
+import org.projectusus.ui.internal.selection.EditorInputAnalysis;
+import org.projectusus.ui.internal.selection.JDTWorkspaceEditorInputAnalysis;
 
 public class ReportBugAction extends Action implements IEditorActionDelegate {
 
@@ -68,11 +68,11 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
         try {
             IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
             IEditorInput editorInput = workbenchWindow.getActivePage().getActiveEditor().getEditorInput();
-            // Don't use JavaUI.getEditorInputTypeRoot because this only available since 3.4
-            selectedJavaClass = (ICompilationUnit)JavaUI.getEditorInputJavaElement( editorInput );
 
+            EditorInputAnalysis analysis = new JDTWorkspaceEditorInputAnalysis( editorInput );
+            selectedJavaClass = analysis.getCompilationUnit();
             ISelection selection = workbenchWindow.getSelectionService().getSelection();
-            extractSelectedElement( selection );
+            selectedElement = analysis.getSelectedMethod( selection );
         } catch( Exception e ) {
             UsusUIPlugin.getDefault().log( e );
         }
@@ -138,18 +138,5 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
 
     public void selectionChanged( IAction action, ISelection selection ) {
         // do nothing
-    }
-
-    private void extractSelectedElement( ISelection selection ) {
-        selectedElement = null;
-        if( selection instanceof TextSelection ) {
-            TextSelection textSelection = (TextSelection)selection;
-            int offset = textSelection.getOffset();
-            try {
-                selectedElement = selectedJavaClass.getElementAt( offset );
-            } catch( JavaModelException e ) {
-                UsusUIPlugin.getDefault().log( e );
-            }
-        }
     }
 }

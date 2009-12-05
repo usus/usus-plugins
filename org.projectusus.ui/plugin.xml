@@ -65,7 +65,7 @@
    <!-- view actions --> 
    <extension point="org.eclipse.ui.viewActions">
       <viewContribution
-            id="org.projectusus.ui.internal.proportions.CockpitView.ViewContribution"
+            id="org.projectusus.ui.internal.viewContribution_CockpitView"
             targetID="org.projectusus.ui.internal.proportions.CockpitView">
          <action
                class="org.projectusus.ui.internal.proportions.actions.RefreshCockpit"
@@ -77,6 +77,34 @@
                toolbarPath="additions"
                tooltip="%refreshCockpit_tooltip"/>
       </viewContribution>
+   </extension>
+   <!-- editor actions -->
+   <extension point="org.eclipse.ui.commands">
+      <category 
+            id="org.projectusus.ui.commandCategory"
+            name="%commandCategory_name" />
+      <command
+            id="org.projectusus.ui.internal.proportions.infopresenter.ShowUsusInfo"
+            name="%showUsusInfo_name"
+            categoryId="org.projectusus.ui.commandCategory"/>
+   </extension>
+   <extension point="org.eclipse.ui.handlers">
+      <handler
+            class="org.projectusus.ui.internal.proportions.infopresenter.ShowUsusInfo"
+            commandId="org.projectusus.ui.internal.proportions.infopresenter.ShowUsusInfo" />
+   </extension>
+   <extension point="org.eclipse.ui.menus">
+      <menuContribution locationURI="popup:#CompilationUnitEditorContext">
+         <command commandId="org.projectusus.ui.internal.proportions.infopresenter.ShowUsusInfo" />
+      </menuContribution>
+   </extension>
+   <extension point="org.eclipse.ui.bindings">
+      <!--  win32:  M1=CTRL,    M2=SHIFT, M3=ALT, M4=-
+            carbon: M1=COMMAND, M2=SHIFT, M3=ALT, M4=CTRL -->
+      <key sequence="M1+U"
+           contextId="org.eclipse.jdt.ui.javaEditorScope"
+           commandId="org.projectusus.ui.internal.proportions.infopresenter.ShowUsusInfo"
+           schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
    </extension>
    <extension
          point="org.eclipse.ui.popupMenus">
