@@ -7,8 +7,7 @@ package org.projectusus.ui.internal.hotspots.pages;
 import static java.util.Arrays.asList;
 
 import org.eclipse.jface.viewers.IOpenListener;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -17,6 +16,7 @@ import org.eclipse.ui.part.Page;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.ui.internal.hotspots.actions.OpenHotspotInEditor;
+import org.projectusus.ui.internal.selection.ExtractHotspot;
 import org.projectusus.ui.internal.viewer.UsusTreeViewer;
 
 public class HotspotsPage extends Page implements IHotspotsPage {
@@ -32,17 +32,21 @@ public class HotspotsPage extends Page implements IHotspotsPage {
         return viewer != null;
     }
 
-    protected void createViewer( Composite parent ) {
+    protected IStructuredContentProvider createContentProvider() {
+        return new HotspotsCP();
+    }
+
+    private void createViewer( Composite parent ) {
         int style = SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION;
         viewer = new UsusTreeViewer<IHotspot>( parent, style, columnDescs );
         viewer.setLabelProvider( new HotspotsLP( asList( columnDescs ) ) );
-        viewer.setContentProvider( new HotspotsCP() );
+        viewer.setContentProvider( createContentProvider() );
     }
 
     protected void initOpenListener() {
         viewer.addOpenListener( new IOpenListener() {
             public void open( OpenEvent event ) {
-                IHotspot hotspot = extractHotspot( event.getSelection() );
+                IHotspot hotspot = new ExtractHotspot( event.getSelection() ).compute();
                 if( hotspot != null ) {
                     new OpenHotspotInEditor( hotspot ).run();
                 }
@@ -70,16 +74,5 @@ public class HotspotsPage extends Page implements IHotspotsPage {
         if( viewer != null && !viewer.getControl().isDisposed() ) {
             viewer.getControl().setFocus();
         }
-    }
-
-    private IHotspot extractHotspot( ISelection selection ) {
-        IHotspot result = null;
-        if( !selection.isEmpty() && selection instanceof IStructuredSelection ) {
-            Object element = ((IStructuredSelection)selection).getFirstElement();
-            if( element instanceof IHotspot ) {
-                result = (IHotspot)element;
-            }
-        }
-        return result;
     }
 }

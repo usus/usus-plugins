@@ -39,6 +39,7 @@ import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
 import org.projectusus.ui.internal.proportions.actions.ShowCoverageView;
 import org.projectusus.ui.internal.proportions.actions.ShowProblemsView;
 import org.projectusus.ui.internal.proportions.actions.ToggleAutoCompute;
+import org.projectusus.ui.internal.selection.ExtractCodeProportion;
 import org.projectusus.ui.internal.util.ISharedUsusImages;
 
 public class CockpitView extends ViewPart {

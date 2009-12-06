@@ -16,7 +16,7 @@ import java.util.Map;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
-import org.projectusus.ui.internal.hotspots.pages.ACDColumnDesc;
+import org.projectusus.ui.internal.hotspots.pages.ACDHotspotsPage;
 import org.projectusus.ui.internal.hotspots.pages.CCColumnDesc;
 import org.projectusus.ui.internal.hotspots.pages.CWColumnDesc;
 import org.projectusus.ui.internal.hotspots.pages.HotspotsPage;
@@ -56,6 +56,6 @@ public class PageFactory implements IAdapterFactory {
         pages.put( ML, new HotspotsPage( MLColumnDesc.values() ) );
         pages.put( CW, new HotspotsPage( CWColumnDesc.values() ) );
         pages.put( KG, new HotspotsPage( KGColumnDesc.values() ) );
-        pages.put( ACD, new HotspotsPage( ACDColumnDesc.values() ) );
+        pages.put( ACD, new ACDHotspotsPage() );
     }
 }
