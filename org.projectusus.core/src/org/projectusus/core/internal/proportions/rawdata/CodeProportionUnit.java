@@ -4,18 +4,24 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
+import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_CLASS_label;
+import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_FILE_label;
+import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_LINE_label;
+import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_METHOD_label;
+import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_PACKAGE_label;
+
 public enum CodeProportionUnit {
 
-    METHOD( "methods" ) {
+    METHOD( codeProportionUnit_METHOD_label ) {
         @Override
         public boolean isMethodKind() {
             return true;
         }
     }, //
-    CLASS( "classes" ), //
-    PACKAGE( "packages" ), //
-    LINE( "lines" ), //
-    FILE( "files" );
+    CLASS( codeProportionUnit_CLASS_label ), //
+    PACKAGE( codeProportionUnit_PACKAGE_label ), //
+    LINE( codeProportionUnit_LINE_label ), //
+    FILE( codeProportionUnit_FILE_label );
 
     private final String label;
 

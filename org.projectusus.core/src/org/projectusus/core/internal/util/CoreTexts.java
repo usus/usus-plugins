@@ -10,8 +10,15 @@ public final class CoreTexts extends NLS {
 
     public static String AverageBugMetrics_allBugs;
     public static String AverageMetrics_overall;
+
     public static String codeProportionsComputerJob_computing;
     public static String codeProportionsComputerJob_name;
+
+    public static String codeProportionUnit_CLASS_label;
+    public static String codeProportionUnit_FILE_label;
+    public static String codeProportionUnit_LINE_label;
+    public static String codeProportionUnit_METHOD_label;
+    public static String codeProportionUnit_PACKAGE_label;
 
     public static String isisMetrics_acd;
     public static String isisMetrics_cc;
@@ -25,11 +32,15 @@ public final class CoreTexts extends NLS {
     public static String jdtDriver_errors;
 
     public static String projectSettings_defaultName;
+    public static String projectSettings_settingsName;
+
     public static String saveCheckpointsJob_name;
 
     public static String SaveBugsJob_title;
+
     public static String SettingsAccess_load_settings;
     public static String SettingsAccess_save_settings;
+
     public static String testCoverage;
 
     public static String ususModelStatus_ok;
@@ -39,7 +50,6 @@ public final class CoreTexts extends NLS {
     public static String wiseCrack_shame;
 
     public static String yellowCountResult_msg;
-    public static String projectSettings_settingsName;
 
     private static final String BUNDLE_NAME = CoreTexts.class.getPackage().getName() + ".coretexts"; //$NON-NLS-1$
 
