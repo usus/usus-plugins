@@ -12,12 +12,13 @@ import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKi
 import java.util.ArrayList;
 
 import org.eclipse.jdt.core.IJavaProject;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.coverage.IEmmaDriver;
 import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.CodeProportionsRatio;
-import org.projectusus.core.internal.proportions.UsusModel;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate;
 import org.projectusus.core.internal.proportions.modelupdate.TestRunModelUpdate;
 
 import com.mountainminds.eclemma.core.analysis.IJavaCoverageListener;
@@ -62,8 +63,8 @@ public class EmmaDriver implements IEmmaDriver {
         int total = coverage.getTotalCount();
         double sqi = new CodeProportionsRatio( covered, total ).compute();
         CodeProportion codeProportion = new CodeProportion( TA, covered, total, sqi, new ArrayList<IHotspot>() );
-        // TODO lf add hotspots?
-        getUsusModel().update( new TestRunModelUpdate( codeProportion ) );
+        // TODO lf add hotspots
+        updateModel( codeProportion );
     }
 
     private IJavaCoverageListener createEmmaListener() {
@@ -77,8 +78,12 @@ public class EmmaDriver implements IEmmaDriver {
         };
     }
 
-    private UsusModel getUsusModel() {
-        return ((UsusModel)UsusModel.getUsusModel());
+    private void updateModel( CodeProportion codeProportion ) {
+        UsusCorePlugin ususCorePlugin = UsusCorePlugin.getDefault();
+        if( ususCorePlugin != null ) {
+            IUsusModelUpdate updateCommand = new TestRunModelUpdate( codeProportion );
+            ususCorePlugin.getUsusModelWriteAccess().update( updateCommand );
+        }
     }
 
     public void setActive( boolean active ) {

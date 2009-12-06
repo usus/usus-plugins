@@ -8,8 +8,8 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.runtime.CoreException;
-import org.projectusus.core.internal.proportions.DeltaCodeProportionComputationTarget;
-import org.projectusus.core.internal.proportions.ICodeProportionComputationTarget;
+import org.projectusus.core.internal.proportions.modelcomputation.DeltaCodeProportionComputationTarget;
+import org.projectusus.core.internal.proportions.modelcomputation.ICodeProportionComputationTarget;
 
 class TestResourceChangeListener implements IResourceChangeListener {
     private DeltaCodeProportionComputationTarget target;

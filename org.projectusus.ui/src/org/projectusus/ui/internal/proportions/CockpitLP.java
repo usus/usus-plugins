@@ -5,7 +5,7 @@
 package org.projectusus.ui.internal.proportions;
 
 import static org.eclipse.swt.SWT.COLOR_GRAY;
-import static org.projectusus.core.internal.proportions.UsusModel.getUsusModel;
+import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
 import static org.projectusus.ui.internal.proportions.CockpitColumnDesc.INDICATOR;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_CODE_PROPORTIONS;

@@ -4,45 +4,46 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
+import static org.eclipse.core.runtime.jobs.Job.getJobManager;
 import static org.junit.Assert.assertEquals;
+import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
+import org.projectusus.core.internal.proportions.modelcomputation.CodeProportionsComputerJob;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 
 public class CodeProportionsPDETest {
 
-    private UsusModel model;
-
     @Before
-    public void setUp() {
-        model = (UsusModel)UsusModel.getUsusModel();
+    public void setUp() throws Exception {
+        getJobManager().join( CodeProportionsComputerJob.FAMILY, new NullProgressMonitor() );
     }
-
-    @After
-    public void tearDown() {
-        model.dispose();
-    }
-
+    
     @Test
     public void listenerHandling() throws InterruptedException {
         DummyCodeProportionsListener listener = new DummyCodeProportionsListener();
-        model.addUsusModelListener( listener );
-        
-        model.update( new ComputationRunModelUpdate( new ArrayList<CodeProportion>(), true ) );
-        assertEquals(1, listener.getCallCount());
-        
-        model.removeUsusModelListener( listener );
-        model.update( new ComputationRunModelUpdate( new ArrayList<CodeProportion>(), true ) );
+        getUsusModel().addUsusModelListener( listener );
+
+        getUsusModelWriteAccess().update( new ComputationRunModelUpdate( new ArrayList<CodeProportion>(), true ) );
+        assertEquals( 1, listener.getCallCount() );
+
+        getUsusModel().removeUsusModelListener( listener );
+        getUsusModelWriteAccess().update( new ComputationRunModelUpdate( new ArrayList<CodeProportion>(), true ) );
         // no more calls
-        assertEquals(1, listener.getCallCount());
+        assertEquals( 1, listener.getCallCount() );
+    }
+
+    private IUsusModelWriteAccess getUsusModelWriteAccess() {
+        return UsusCorePlugin.getDefault().getUsusModelWriteAccess();
     }
 
     private final class DummyCodeProportionsListener implements IUsusModelListener {
@@ -51,7 +52,7 @@ public class CodeProportionsPDETest {
         public void ususModelChanged( IUsusModelHistory history, List<IUsusElement> elements ) {
           callCount++;
         }
-        
+
         public int getCallCount() {
             return callCount;
         }

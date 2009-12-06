@@ -17,6 +17,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.projectusus.core.internal.PDETestUsingWSProject;
 import org.projectusus.core.internal.project.IUSUSProject;
+import org.projectusus.core.internal.proportions.modelcomputation.ICodeProportionComputationTarget;
 
 
 public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {

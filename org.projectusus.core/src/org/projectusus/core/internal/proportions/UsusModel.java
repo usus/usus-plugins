@@ -5,16 +5,10 @@
 package org.projectusus.core.internal.proportions;
 
 import static java.util.Arrays.asList;
-import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
-import static org.projectusus.core.internal.util.UsusPreferenceKeys.AUTO_COMPUTE;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.osgi.service.prefs.BackingStoreException;
-import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.model.UsusModelRootNode;
@@ -22,47 +16,26 @@ import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate;
 import org.projectusus.core.internal.proportions.modelupdate.UsusModelHistory;
 
-public class UsusModel implements IUsusModel {
-
-    private static UsusModel _instance;
+public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
 
     private final Set<IUsusModelListener> listeners;
     private final UsusModelHistory history;
     private final UsusModelRootNode rootNode;
 
-    private final IResourceChangeListener resourcelistener = new RunComputationOnResourceChange();
-
-    private boolean disposed = false;
-
-    private UsusModel() {
+    public UsusModel() {
         rootNode = new UsusModelRootNode();
         listeners = new HashSet<IUsusModelListener>();
         history = new UsusModelHistory();
-        initAutoCompute();
     }
 
-    public static synchronized IUsusModel getUsusModel() {
-        if( _instance == null ) {
-            _instance = new UsusModel();
-        }
-        return _instance;
-    }
+    // interface of IUsusModelWriteAccess
+    // //////////////////////////////////
 
     public void update( IUsusModelUpdate updateCommand ) {
-        checkDisposed();
         if( updateCommand == null || updateCommand.getType() == null ) {
             throw new IllegalArgumentException();
         }
         doUpdate( updateCommand );
-    }
-
-    public synchronized void dispose() {
-        getWorkspace().removeResourceChangeListener( resourcelistener );
-        disposed = true;
-    }
-
-    public boolean isDisposed() {
-        return disposed;
     }
 
     // interface of IUsusModel
@@ -77,34 +50,15 @@ public class UsusModel implements IUsusModel {
     }
 
     public void addUsusModelListener( IUsusModelListener listener ) {
-        checkDisposed();
         listeners.add( listener );
     }
 
     public void removeUsusModelListener( IUsusModelListener listener ) {
-        checkDisposed();
         listeners.remove( listener );
     }
 
-    public void setAutoCompute( boolean autoCompute ) {
-        checkDisposed();
-        try {
-            IEclipsePreferences prefs = getPrefs();
-            prefs.putBoolean( AUTO_COMPUTE, autoCompute );
-            prefs.flush();
-        } catch( BackingStoreException bastox ) {
-            UsusCorePlugin.log( bastox );
-        }
-        applyAutoCompute( autoCompute );
-    }
-
-    public void forceRecompute() {
-        ICodeProportionComputationTarget wsTarget = new WorkspaceCodeProportionComputationTarget();
-        new CodeProportionsComputerJob( wsTarget ).schedule();
-    }
-
     // internal
-    // /////////
+    // ////////
 
     private void notifyListeners() {
         IUsusElement[] elements = getElements();
@@ -119,29 +73,5 @@ public class UsusModel implements IUsusModel {
         }
         history.add( updateCommand );
         notifyListeners();
-    }
-
-    private void initAutoCompute() {
-        boolean autoCompute = getPrefs().getBoolean( AUTO_COMPUTE, true );
-        applyAutoCompute( autoCompute );
-    }
-
-    private void applyAutoCompute( boolean autoCompute ) {
-        if( autoCompute ) {
-            getWorkspace().addResourceChangeListener( resourcelistener );
-            forceRecompute();
-        } else {
-            getWorkspace().removeResourceChangeListener( resourcelistener );
-        }
-    }
-
-    private IEclipsePreferences getPrefs() {
-        return UsusCorePlugin.getDefault().getPreferences();
-    }
-
-    private void checkDisposed() {
-        if( disposed ) {
-            throw new IllegalStateException( "Model is disposed (plug-in shutting down)." ); //$NON-NLS-1$
-        }
     }
 }

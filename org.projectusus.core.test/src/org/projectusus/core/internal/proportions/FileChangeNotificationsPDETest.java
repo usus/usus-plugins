@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Path;
 import org.junit.After;
 import org.junit.Test;
 import org.projectusus.core.internal.PDETestUsingWSProject;
+import org.projectusus.core.internal.proportions.modelcomputation.ICodeProportionComputationTarget;
 
 
 public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {

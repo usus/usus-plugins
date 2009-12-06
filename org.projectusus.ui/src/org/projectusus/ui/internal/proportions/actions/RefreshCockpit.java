@@ -8,13 +8,12 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
-import org.projectusus.core.internal.proportions.UsusModel;
-
+import org.projectusus.core.internal.proportions.modelcomputation.ForcedRecompute;
 
 public class RefreshCockpit implements IViewActionDelegate {
 
     public void run( IAction action ) {
-        UsusModel.getUsusModel().forceRecompute();
+        new ForcedRecompute().schedule();
     }
 
     public void init( IViewPart view ) {

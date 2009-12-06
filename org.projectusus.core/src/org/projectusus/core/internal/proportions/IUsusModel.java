@@ -16,8 +16,4 @@ public interface IUsusModel {
     void addUsusModelListener( IUsusModelListener listener );
 
     void removeUsusModelListener( IUsusModelListener listener );
-
-    void forceRecompute();
-
-    void setAutoCompute( boolean autoCompute );
 }

@@ -4,7 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.history;
 
-import static org.projectusus.core.internal.proportions.UsusModel.getUsusModel;
+import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ACD;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CC;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;

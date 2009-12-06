@@ -12,8 +12,13 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
+import org.osgi.framework.BundleListener;
 import org.projectusus.core.internal.coverage.LaunchObserver;
+import org.projectusus.core.internal.proportions.IUsusModel;
+import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.UsusModel;
+import org.projectusus.core.internal.proportions.modelcomputation.AutoComputeSetting;
 
 public class UsusCorePlugin extends Plugin {
 
@@ -23,9 +28,23 @@ public class UsusCorePlugin extends Plugin {
     public static final String PLUGIN_ID = "org.projectusus.core"; //$NON-NLS-1$
     private static UsusCorePlugin plugin;
     private final LaunchObserver launchObserver = new LaunchObserver();
+    private UsusModel ususModel;
+    private AutoComputeSetting autoComputer;
 
     public static UsusCorePlugin getDefault() {
         return plugin;
+    }
+
+    public static synchronized IUsusModel getUsusModel() {
+        return getDefault().ususModel;
+    }
+
+    public synchronized IUsusModelWriteAccess getUsusModelWriteAccess() {
+        return ususModel;
+    }
+
+    public void setAutoCompute( boolean autoCompute ) {
+        autoComputer.setAutoCompute( autoCompute );
     }
 
     public static void log( Exception ex ) {
@@ -48,14 +67,27 @@ public class UsusCorePlugin extends Plugin {
     public void start( final BundleContext context ) throws Exception {
         super.start( context );
         plugin = this;
-        launchObserver.connect();
+        ususModel = new UsusModel();
+        context.addBundleListener( new BundleListener() {
+            public void bundleChanged( BundleEvent event ) {
+                if( event.getType() == BundleEvent.STARTED ) {
+                    context.removeBundleListener( this );
+                    performInits();
+                }
+            }
+        } );
     }
 
     @Override
     public void stop( BundleContext context ) throws Exception {
         launchObserver.dispose();
-        ((UsusModel)UsusModel.getUsusModel()).dispose();
+        autoComputer.dispose();
         plugin = null;
         super.stop( context );
+    }
+
+    private synchronized void performInits() {
+        autoComputer = new AutoComputeSetting();
+        launchObserver.connect();
     }
 }

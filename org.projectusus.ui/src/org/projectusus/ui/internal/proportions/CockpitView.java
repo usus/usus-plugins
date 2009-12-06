@@ -5,7 +5,7 @@
 package org.projectusus.ui.internal.proportions;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
-import static org.projectusus.core.internal.proportions.UsusModel.getUsusModel;
+import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
 import static org.projectusus.ui.internal.util.UITexts.cockpitView_noProjectsSelected;
@@ -31,7 +31,6 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.project.FindUsusProjects;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
-import org.projectusus.core.internal.proportions.UsusModel;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
@@ -67,7 +66,7 @@ public class CockpitView extends ViewPart {
 
     @Override
     public void dispose() {
-        UsusModel.getUsusModel().removeUsusModelListener( listener );
+        getUsusModel().removeUsusModelListener( listener );
         super.dispose();
     }
 
@@ -121,7 +120,7 @@ public class CockpitView extends ViewPart {
                 } );
             }
         };
-        UsusModel.getUsusModel().addUsusModelListener( listener );
+        getUsusModel().addUsusModelListener( listener );
     }
 
     private void handleUsusModelChanged( final IUsusModelHistory history ) {
@@ -169,6 +168,6 @@ public class CockpitView extends ViewPart {
     private void createViewer( Composite parent ) {
         parent.setLayout( new FillLayout() );
         treeViewer = new CockpitTreeViewer( parent );
-        treeViewer.setInput( UsusModel.getUsusModel() );
+        treeViewer.setInput( getUsusModel() );
     }
 }

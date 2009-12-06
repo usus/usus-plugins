@@ -4,7 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.actions;
 
-import static org.projectusus.core.internal.proportions.UsusModel.getUsusModel;
 import static org.projectusus.core.internal.util.UsusPreferenceKeys.AUTO_COMPUTE;
 import static org.projectusus.ui.internal.util.UITexts.toggleAutoComplete_name;
 
@@ -21,11 +20,16 @@ public class ToggleAutoCompute extends Action {
 
     @Override
     public void run() {
-        getUsusModel().setAutoCompute( isChecked() );
+        getUsusCorePlugin().setAutoCompute( isChecked() );
     }
 
     private void init() {
-        IEclipsePreferences prefs = UsusCorePlugin.getDefault().getPreferences();
+        IEclipsePreferences prefs = getUsusCorePlugin().getPreferences();
         setChecked( prefs.getBoolean( AUTO_COMPUTE, true ) );
     }
+
+    private UsusCorePlugin getUsusCorePlugin() {
+        return UsusCorePlugin.getDefault();
+    }
+
 }

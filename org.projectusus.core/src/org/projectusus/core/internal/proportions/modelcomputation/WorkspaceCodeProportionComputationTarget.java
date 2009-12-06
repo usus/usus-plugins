@@ -2,7 +2,7 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.proportions;
+package org.projectusus.core.internal.proportions.modelcomputation;
 
 import static java.util.Collections.emptyList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
@@ -20,6 +20,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.projectusus.core.internal.project.FindUsusProjects;
+import org.projectusus.core.internal.proportions.IFileSupport;
 
 /**
  * convenience implementation of target that runs over the whole workspace.

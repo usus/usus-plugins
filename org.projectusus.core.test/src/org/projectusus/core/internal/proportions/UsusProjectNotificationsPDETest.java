@@ -12,6 +12,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.junit.After;
 import org.junit.Test;
 import org.projectusus.core.internal.PDETestUsingWSProject;
+import org.projectusus.core.internal.proportions.modelcomputation.ICodeProportionComputationTarget;
 
 public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
 

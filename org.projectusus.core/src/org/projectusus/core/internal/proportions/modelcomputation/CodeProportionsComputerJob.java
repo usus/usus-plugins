@@ -2,7 +2,7 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.proportions;
+package org.projectusus.core.internal.proportions.modelcomputation;
 
 import static java.util.Arrays.asList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
@@ -23,7 +23,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.project.FindUsusProjects;
+import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
@@ -31,12 +33,12 @@ import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.JDTDriver;
 import org.projectusus.core.internal.proportions.yellowcount.WorkspaceYellowCount;
 
-class CodeProportionsComputerJob extends Job {
+public class CodeProportionsComputerJob extends Job {
 
-    private static final Object FAMILY = new Object();
+    public static final Object FAMILY = new Object();
     private final ICodeProportionComputationTarget target;
 
-    CodeProportionsComputerJob( ICodeProportionComputationTarget target ) {
+    public CodeProportionsComputerJob( ICodeProportionComputationTarget target ) {
         super( codeProportionsComputerJob_name );
         setRule( getWorkspace().getRoot() );
         setPriority( Job.DECORATE );
@@ -68,8 +70,11 @@ class CodeProportionsComputerJob extends Job {
     }
 
     private void updateModel( IStatus result, List<CodeProportion> collector ) {
-        UsusModel ususModel = (UsusModel)UsusModel.getUsusModel();
-        if( !ususModel.isDisposed() ) {
+        UsusCorePlugin ususCorePlugin = UsusCorePlugin.getDefault();
+        // we are inside a background job, and the plugin might have been
+        // shut down meanwhile
+        if( ususCorePlugin != null ) {
+            IUsusModelWriteAccess ususModel = ususCorePlugin.getUsusModelWriteAccess();
             ususModel.update( new ComputationRunModelUpdate( collector, result.isOK() ) );
         }
     }
