@@ -14,7 +14,7 @@ import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ta;
 
 public enum CodeProportionKind {
 
-    TA( isisMetrics_ta, CodeProportionUnit.METHOD, 1.0 ), //
+    TA( isisMetrics_ta, CodeProportionUnit.LINE, 1.0 ), //
     PC( isisMetrics_pc, CodeProportionUnit.PACKAGE, 1.0 ), //
     CC( isisMetrics_cc, CodeProportionUnit.METHOD, 100.0 ) {
         @Override

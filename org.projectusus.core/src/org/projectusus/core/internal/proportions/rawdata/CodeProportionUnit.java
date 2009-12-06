@@ -6,13 +6,16 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 public enum CodeProportionUnit {
 
-    METHOD( "methods" ) { //$NON-NLS-1$
+    METHOD( "methods" ) {
         @Override
         public boolean isMethodKind() {
             return true;
         }
     }, //
-    CLASS( "classes" ), PACKAGE( "packages" ), FILE( "files" ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ 
+    CLASS( "classes" ), //
+    PACKAGE( "packages" ), //
+    LINE( "lines" ), //
+    FILE( "files" );
 
     private final String label;
 
