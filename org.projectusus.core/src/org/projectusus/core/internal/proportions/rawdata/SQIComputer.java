@@ -18,8 +18,8 @@ class SQIComputer {
 
     private final double sqi;
 
-    SQIComputer( int basis, int violations, double calibration ) {
-        this.sqi = basis == 0 ? 0.0 : doCompute( basis, violations, calibration );
+    SQIComputer( int basis, int violations, CodeProportionKind kind ) {
+        this.sqi = basis == 0 ? 0.0 : doCompute( basis, violations, kind.getCalibration() );
     }
 
     double compute() {

@@ -60,14 +60,24 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
     public CodeProportion getCodeProportion( CodeProportionKind metric ) {
         int violations = getViolationCount( metric );
         int basis = getViolationBasis( metric );
-        double sqi = 0.0;
+        double sqi = computeSQI( metric, violations, basis );
+        List<IHotspot> hotspots = computeHotspots( metric );
+        return new CodeProportion( metric, violations, basis, sqi, hotspots );
+    }
+
+    private List<IHotspot> computeHotspots( CodeProportionKind metric ) {
+        List<IHotspot> hotspots = new ArrayList<IHotspot>();
+        addToHotspots( metric, hotspots );
+        return hotspots;
+    }
+
+    private double computeSQI( CodeProportionKind metric, int violations, int basis ) {
+        double sqi;
         if( metric == CodeProportionKind.ACD ) {
             sqi = 100.0 - acdModel.getRelativeACD() * 100.0;
         } else {
-            sqi = new SQIComputer( basis, violations, metric.getCalibration() ).compute();
+            sqi = new SQIComputer( basis, violations, metric ).compute();
         }
-        List<IHotspot> hotspots = new ArrayList<IHotspot>();
-        addToHotspots( metric, hotspots );
-        return new CodeProportion( metric, violations, basis, sqi, hotspots );
+        return sqi;
     }
 }

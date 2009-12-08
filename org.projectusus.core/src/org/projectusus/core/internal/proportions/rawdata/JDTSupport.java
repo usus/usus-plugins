@@ -10,14 +10,10 @@ import org.eclipse.jdt.core.IOpenable;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
-public abstract class JDTSupport {
+public class JDTSupport {
 
     public static ICompilationUnit getCompilationUnit( IJavaElement element ) {
-        IOpenable openable = element.getOpenable();
-        if( !(openable instanceof ICompilationUnit) ) {
-            return null;
-        }
-        return (ICompilationUnit)openable;
+        return toCompilationUnit( element.getOpenable() );
     }
 
     public static int calcLineNumber( ASTNode node ) {
@@ -29,4 +25,7 @@ public abstract class JDTSupport {
         return 0;
     }
 
+    private static ICompilationUnit toCompilationUnit( IOpenable openable ) {
+        return openable instanceof ICompilationUnit ? (ICompilationUnit)openable : null;
+    }
 }
