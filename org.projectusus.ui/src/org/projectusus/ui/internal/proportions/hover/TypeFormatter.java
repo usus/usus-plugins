@@ -5,17 +5,17 @@
 package org.projectusus.ui.internal.proportions.hover;
 
 import org.eclipse.jdt.core.IType;
-import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.IClassRawData;
 
 class TypeFormatter extends JavaElementFormatter {
 
     private final IType typeElement;
-    private final ClassRawData classRawData;
+    private final IClassRawData classRawData;
 
-    TypeFormatter( IType typeElement, ClassRawData classRawData ) {
+    TypeFormatter( IType typeElement, IClassRawData classData ) {
         this.typeElement = typeElement;
-        this.classRawData = classRawData;
+        this.classRawData = classData;
     }
 
     String format() {

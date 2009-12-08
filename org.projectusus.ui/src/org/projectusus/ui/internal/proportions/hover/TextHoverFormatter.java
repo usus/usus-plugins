@@ -14,9 +14,9 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.projectusus.core.internal.bugreport.BugList;
 import org.projectusus.core.internal.project.IUSUSProject;
-import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
-import org.projectusus.core.internal.proportions.rawdata.FileRawData;
-import org.projectusus.core.internal.proportions.rawdata.MethodRawData;
+import org.projectusus.core.internal.proportions.rawdata.IClassRawData;
+import org.projectusus.core.internal.proportions.rawdata.IFileRawData;
+import org.projectusus.core.internal.proportions.rawdata.IMethodRawData;
 
 enum TextHoverFormatter {
 
@@ -59,8 +59,8 @@ enum TextHoverFormatter {
             IResource resource = typeElement.getUnderlyingResource();
             ExtractRawData extractor = new ExtractRawData( resource );
             if( extractor.isDataAvailable() ) {
-                FileRawData fileData = extractor.getFileRawData();
-                ClassRawData classData = fileData.getRawData( typeElement );
+                IFileRawData fileData = extractor.getFileRawData();
+                IClassRawData classData = fileData.getRawData( typeElement );
                 if( classData != null ) {
                     result = new TypeFormatter( typeElement, classData ).format();
                 }
@@ -77,8 +77,8 @@ enum TextHoverFormatter {
             IResource resource = methodElement.getUnderlyingResource();
             ExtractRawData extractor = new ExtractRawData( resource );
             if( extractor.isDataAvailable() ) {
-                ClassRawData classRawData = extractor.getFileRawData().getRawData( methodElement.getDeclaringType() );
-                MethodRawData methodRawData = classRawData.getRawData( methodElement );
+                IClassRawData classRawData = extractor.getFileRawData().getRawData( methodElement.getDeclaringType() );
+                IMethodRawData methodRawData = classRawData.getRawData( methodElement );
                 BugList bugs = findBugInfo( methodElement );
                 result = new MethodFormatter( methodElement, methodRawData, classRawData, bugs ).format();
             }

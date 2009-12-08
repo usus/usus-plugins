@@ -19,7 +19,7 @@ import org.projectusus.core.internal.proportions.model.Hotspot;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
 
-public class FileRawData extends RawData<Integer, ClassRawData> {
+public class FileRawData extends RawData<Integer, ClassRawData> implements IFileRawData {
 
     private final IFile fileOfRawData;
 
@@ -90,7 +90,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
         return getRawData( ASTSupport.findEnclosingClass( node ) );
     }
 
-    public ClassRawData getRawData( IJavaElement element ) {
+    public IClassRawData getRawData( IJavaElement element ) {
         if( element == null ) {
             return null;
         }

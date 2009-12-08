@@ -9,18 +9,18 @@ import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKi
 
 import org.eclipse.jdt.core.IMethod;
 import org.projectusus.core.internal.bugreport.BugList;
-import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
-import org.projectusus.core.internal.proportions.rawdata.MethodRawData;
+import org.projectusus.core.internal.proportions.rawdata.IClassRawData;
+import org.projectusus.core.internal.proportions.rawdata.IMethodRawData;
 
 class MethodFormatter extends JavaElementFormatter {
 
-    private final MethodRawData methodRawData;
+    private final IMethodRawData methodRawData;
     private final IMethod method;
-    private final ClassRawData classRawData;
+    private final IClassRawData classRawData;
     private final BugList bugs;
 
-    MethodFormatter( IMethod method, MethodRawData methodRawData, ClassRawData classRawData, BugList bugs ) {
+    MethodFormatter( IMethod method, IMethodRawData methodRawData, IClassRawData classRawData, BugList bugs ) {
         this.method = method;
         this.methodRawData = methodRawData;
         this.classRawData = classRawData;

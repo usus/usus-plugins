@@ -41,7 +41,7 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         return getProjectRawData( currentProject );
     }
 
-    public ProjectRawData getProjectRawData( IProject project ) {
+    ProjectRawData getProjectRawData( IProject project ) {
         return getRawData( project, new ProjectRawData( project ) );
     }
 

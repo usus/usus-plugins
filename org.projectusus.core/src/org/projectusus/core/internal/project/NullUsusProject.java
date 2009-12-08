@@ -27,7 +27,7 @@ public class NullUsusProject implements IUSUSProject {
         // can't make this project an usus project
     }
 
-    public ProjectRawData getProjectResults() {
+    public ProjectRawData getProjectRawData() {
         return null;
     }
 

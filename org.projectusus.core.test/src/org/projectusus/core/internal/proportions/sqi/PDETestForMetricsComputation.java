@@ -4,7 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.sqi;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
 
 import java.io.IOException;
@@ -17,8 +17,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
 import org.junit.Test;
 import org.projectusus.core.internal.PDETestUsingWSProject;
-import org.projectusus.core.internal.proportions.rawdata.ProjectRawData;
-import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
+import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
 
 public class PDETestForMetricsComputation extends PDETestUsingWSProject{
@@ -27,7 +26,7 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject{
     public void simpleCase() throws Exception {
         IFile file = createWSFile( "A.java", loadContent("A.test") );
         new FileDriver( file ).compute();
-        ProjectRawData results = WorkspaceRawData.getInstance().getProjectRawData( file.getProject() );
+        IProjectRawData results = (IProjectRawData)file.getProject().getAdapter( IProjectRawData.class );
         assertEquals( 1, results.getViolationCount( ML ) );
         assertEquals( 2, results.getViolationBasis( ML ) );
     }

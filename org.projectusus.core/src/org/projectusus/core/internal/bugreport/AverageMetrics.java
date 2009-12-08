@@ -7,17 +7,17 @@ package org.projectusus.core.internal.bugreport;
 import static org.projectusus.core.internal.util.CoreTexts.AverageMetrics_overall;
 
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
-import org.projectusus.core.internal.proportions.rawdata.ProjectRawData;
+import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 
 public class AverageMetrics implements IAverageMetrics {
 
     private int numberOfMethods;
-    private int totalCc;
+    private int totalCC;
     private int totalML;
     private int numberOfClasses;
 
     public double getAverageCyclomaticComplexity() {
-        return calculateAverage( totalCc, numberOfMethods );
+        return calculateAverage( totalCC, numberOfMethods );
     }
 
     private double calculateAverage( int metricValue, int metricValueBasis ) {
@@ -35,13 +35,12 @@ public class AverageMetrics implements IAverageMetrics {
         return calculateAverage( numberOfMethods, numberOfClasses );
     }
 
-    public void addProjectResults( ProjectRawData projectResults ) {
+    public void addProjectResults( IProjectRawData projectResults ) {
         numberOfMethods += projectResults.getViolationBasis( CodeProportionKind.CC );
         numberOfClasses += projectResults.getViolationBasis( CodeProportionKind.KG );
 
-        totalCc += projectResults.getOverallMetric( CodeProportionKind.CC );
+        totalCC += projectResults.getOverallMetric( CodeProportionKind.CC );
         totalML += projectResults.getOverallMetric( CodeProportionKind.ML );
-
     }
 
     public String getName() {

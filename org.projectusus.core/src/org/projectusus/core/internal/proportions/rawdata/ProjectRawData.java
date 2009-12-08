@@ -7,7 +7,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 
-public class ProjectRawData extends RawData<IFile, FileRawData> {
+public class ProjectRawData extends RawData<IFile, FileRawData> implements IProjectRawData {
 
     private final IProject projectOfRawData;
     private IFile currentFile;
@@ -16,12 +16,12 @@ public class ProjectRawData extends RawData<IFile, FileRawData> {
         this.projectOfRawData = project;
     }
 
-    public IProject getProjectOfRawData() {
-        return projectOfRawData;
+    public IFileRawData getFileRawData( IFile file ) {
+        return getRawData( file, new FileRawData( file ) );
     }
 
-    public FileRawData getFileRawData( IFile file ) {
-        return getRawData( file, new FileRawData( file ) );
+    public IProject getProjectOfRawData() {
+        return projectOfRawData;
     }
 
     public void setCurrentFile( IFile currentFile ) {
@@ -29,11 +29,10 @@ public class ProjectRawData extends RawData<IFile, FileRawData> {
     }
 
     public FileRawData getCurrentFileRawData() {
-        return getFileRawData( currentFile );
+        return getRawData( currentFile, new FileRawData( currentFile ) );
     }
 
     public void dropRawData( IFile file ) {
         remove( file );
     }
-
 }

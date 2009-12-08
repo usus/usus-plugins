@@ -17,8 +17,7 @@ import org.projectusus.core.internal.bugreport.LoadBugs;
 import org.projectusus.core.internal.bugreport.MethodLocation;
 import org.projectusus.core.internal.bugreport.SaveBugsJob;
 import org.projectusus.core.internal.bugreport.SourceCodeLocation;
-import org.projectusus.core.internal.proportions.rawdata.ProjectRawData;
-import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
+import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 
 class UsusProject implements IUSUSProject {
 
@@ -76,8 +75,8 @@ class UsusProject implements IUSUSProject {
         return result;
     }
 
-    public ProjectRawData getProjectResults() {
-        return WorkspaceRawData.getInstance().getProjectRawData( project );
+    public IProjectRawData getProjectRawData() {
+        return (IProjectRawData)project.getAdapter( IProjectRawData.class );
     }
 
     public String getProjectName() {

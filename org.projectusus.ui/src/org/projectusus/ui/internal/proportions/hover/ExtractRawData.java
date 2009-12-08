@@ -7,17 +7,17 @@ package org.projectusus.ui.internal.proportions.hover;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.projectusus.core.internal.project.IUSUSProject;
-import org.projectusus.core.internal.proportions.rawdata.FileRawData;
+import org.projectusus.core.internal.proportions.rawdata.IFileRawData;
 
 class ExtractRawData {
 
-    private final FileRawData fileRawData;
+    private final IFileRawData fileRawData;
 
     ExtractRawData( IResource resource ) {
         fileRawData = findFileInfo( resource );
     }
 
-    FileRawData getFileRawData() {
+    IFileRawData getFileRawData() {
         return fileRawData;
     }
 
@@ -25,11 +25,11 @@ class ExtractRawData {
         return fileRawData != null;
     }
 
-    private FileRawData findFileInfo( IResource resource ) {
-        FileRawData result = null;
+    private IFileRawData findFileInfo( IResource resource ) {
+        IFileRawData result = null;
         IUSUSProject ususProject = getUsusProject( resource );
         if( ususProject != null && resource instanceof IFile ) {
-            result = ususProject.getProjectResults().getFileRawData( (IFile)resource );
+            result = ususProject.getProjectRawData().getFileRawData( (IFile)resource );
         }
         return result;
     }

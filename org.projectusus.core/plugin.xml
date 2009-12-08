@@ -3,23 +3,26 @@
 <plugin>
    <extension-point id="settingsprovider" name="%settingsprovider_name" schema="schema/settingsprovider.exsd"/>
    <extension-point id="testSuiteSelectors" name="%testSuiteSelectors_name" schema="schema/testSuiteSelectors.exsd"/>
-    <extension
-          point="org.eclipse.core.runtime.adapters">
-       <factory
-             adaptableType="org.eclipse.core.resources.IProject"
-             class="org.projectusus.core.internal.project.UsusProjectFactory">
-          <adapter
-                type="org.projectusus.core.internal.project.IUSUSProject">
-          </adapter>
-       </factory>
-    </extension>
     <extension point="org.eclipse.core.runtime.preferences">
        <initializer class="org.projectusus.core.internal.util.UsusPreferenceInitializer"/>
     </extension>
-    <extension
-          point="org.projectusus.core.settingsprovider">
+    <extension point="org.projectusus.core.settingsprovider">
        <provider
              clazz="org.projectusus.core.internal.projectsettings.UsusStandardSettingsLoader">
        </provider>
+    </extension>
+    
+    <!-- adapt resources and model objects -->
+    <extension point="org.eclipse.core.runtime.adapters">
+       <factory
+             adaptableType="org.eclipse.core.resources.IProject"
+             class="org.projectusus.core.internal.project.UsusProjectFactory">
+          <adapter type="org.projectusus.core.internal.project.IUSUSProject" />
+       </factory>
+       <factory
+             adaptableType="org.eclipse.core.resources.IProject"
+             class="org.projectusus.core.internal.proportions.rawdata.RawDataFactory">
+          <adapter type="org.projectusus.core.internal.project.IUSUSProject" />
+       </factory>
     </extension>
 </plugin>
