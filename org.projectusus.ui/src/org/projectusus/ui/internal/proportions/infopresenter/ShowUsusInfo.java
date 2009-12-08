@@ -29,7 +29,7 @@ public class ShowUsusInfo extends AbstractHandler {
             dialog.setInput( method );
             dialog.open();
         }
-        return null; // must return null by contract
+        return null; // must return null by IHandler contract
     }
 
     private IJavaElement extractSelectedMethod( ExecutionEvent event, IEditorPart editor ) {

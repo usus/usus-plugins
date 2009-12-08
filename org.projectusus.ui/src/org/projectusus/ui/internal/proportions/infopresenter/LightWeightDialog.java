@@ -137,7 +137,7 @@ class LightWeightDialog extends Dialog {
         txtSomeExampleControl = new Text( area, SWT.BORDER | SWT.MULTI | SWT.WRAP );
         txtSomeExampleControl.setLayoutData( new GridData( GridData.FILL_HORIZONTAL ) );
         txtSomeExampleControl.addModifyListener( new ModifyListener() {
-            public void modifyText( final ModifyEvent event ) {
+            public void modifyText( ModifyEvent event ) {
                 // shall we do something here? ;-)
             }
         } );
@@ -151,7 +151,7 @@ class LightWeightDialog extends Dialog {
 
     private void initializeDeactivationHandling( final Shell newShell ) {
         Listener deactivateListener = new Listener() {
-            public void handleEvent( final Event event ) {
+            public void handleEvent( Event event ) {
                 if( decativateListenerActive ) {
                     newShell.dispose();
                 }
@@ -161,7 +161,7 @@ class LightWeightDialog extends Dialog {
         decativateListenerActive = true;
         newShell.addShellListener( new ShellAdapter() {
             @Override
-            public void shellActivated( final ShellEvent event ) {
+            public void shellActivated( ShellEvent event ) {
                 if( event.widget == newShell && newShell.getShells().length == 0 ) {
                     decativateListenerActive = true;
                 }
@@ -169,9 +169,9 @@ class LightWeightDialog extends Dialog {
         } );
     }
 
-    private final class KeyHandler extends KeyAdapter {
+    private class KeyHandler extends KeyAdapter {
         @Override
-        public void keyReleased( final KeyEvent event ) {
+        public void keyReleased( KeyEvent event ) {
             // return key
             if( event.keyCode == 0x0D ) {
                 close();
