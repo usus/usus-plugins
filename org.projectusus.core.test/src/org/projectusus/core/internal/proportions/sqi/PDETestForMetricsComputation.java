@@ -22,8 +22,7 @@ import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
 
 public class PDETestForMetricsComputation extends PDETestUsingWSProject{
 
-    @Test
-    public void simpleCase() throws Exception {
+    public void simpleCaseTestDemo() throws Exception {
         IFile file = createWSFile( "A.java", loadContent("A.test") );
         new FileDriver( file ).compute();
         IProjectRawData results = (IProjectRawData)file.getProject().getAdapter( IProjectRawData.class );
