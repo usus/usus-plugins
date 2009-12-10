@@ -18,8 +18,12 @@ public class RawData<S, T extends IRawData> implements IRawData {
         wrapper = new RawDataMapWrapper<S, T>();
     }
 
-    public synchronized T getRawData( S key, T newObject ) {
-        return wrapper.getRawData( key, newObject );
+    public synchronized T getRawData( S key ) {
+        return wrapper.getRawData( key );
+    }
+
+    protected synchronized void addRawData( S key, T newObject ) {
+        wrapper.addRawData( key, newObject );
     }
 
     protected synchronized int getRawDataElementCount() {

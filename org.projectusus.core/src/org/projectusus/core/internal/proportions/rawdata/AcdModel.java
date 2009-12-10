@@ -9,31 +9,10 @@ import java.util.List;
 
 public class AcdModel {
 
-    // TODO Hashtable verwenden??
-    List<AdjacencyNode> classes = new ArrayList<AdjacencyNode>();
+    private List<AdjacencyNode> classes = new ArrayList<AdjacencyNode>();
 
-    public void addClassReference( String referencingClass, String referencedClass ) {
-        AdjacencyNode startNode = findOrAdd( referencingClass );
-        AdjacencyNode endNode = findOrAdd( referencedClass );
-
-        if( (startNode != endNode) && !startNode.getChildren().contains( endNode ) ) {
-            startNode.getChildren().add( endNode );
-        }
-    }
-
-    private AdjacencyNode findOrAdd( String id ) {
-        for( AdjacencyNode node : classes ) {
-            if( node.getName().equals( id ) ) {
-                return node;
-            }
-        }
-        return addNode( id );
-    }
-
-    private AdjacencyNode addNode( String id ) {
-        AdjacencyNode newNode = new AdjacencyNode( id );
-        classes.add( newNode );
-        return newNode;
+    public void add( AdjacencyNode node ) {
+        classes.add( node );
     }
 
     // / <summary>
@@ -84,13 +63,8 @@ public class AcdModel {
     // / <param name="node">starting node for subsystem to analyze</param>
     // / <returns></returns>
     public int getCCD( AdjacencyNode node ) {
-        markReferencedNodes( node );
+        node.markReferencedNodes();
         return getMarkedNodeCount();
-    }
-
-    public int getCCD( String fullyQualifiedName ) {
-        AdjacencyNode node = findOrAdd( fullyQualifiedName );
-        return getCCD( node );
     }
 
     private int getMarkedNodeCount() {
@@ -99,16 +73,5 @@ public class AcdModel {
             markedNodes += node.getCountAndClear();
         }
         return markedNodes;
-    }
-
-    // Knoten durch Einfuegen in Set markieren, damit Zaehlen + Loeschen in O(1) ??
-    private void markReferencedNodes( AdjacencyNode node ) {
-        if( node.isMarked() ) {
-            return;
-        }
-        node.mark();
-        for( AdjacencyNode childNode : node.getChildren() ) {
-            markReferencedNodes( childNode );
-        }
     }
 }

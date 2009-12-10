@@ -13,13 +13,12 @@ class RawDataMapWrapper<S, T extends IRawData> {
 
     private final Map<S, T> rawDataMap = new Hashtable<S, T>();
 
-    T getRawData( S name, T newObject ) {
-        T rawData = rawDataMap.get( name );
-        if( rawData == null ) {
-            rawData = newObject;
-            rawDataMap.put( name, rawData );
-        }
-        return rawData;
+    T getRawData( S name ) {
+        return rawDataMap.get( name );
+    }
+
+    void addRawData( S key, T newObject ) {
+        rawDataMap.put( key, newObject );
     }
 
     int getRawDataElementCount() {

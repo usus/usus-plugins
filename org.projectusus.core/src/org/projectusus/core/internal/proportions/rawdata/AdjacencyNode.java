@@ -9,26 +9,30 @@ import java.util.List;
 
 public class AdjacencyNode {
 
-    private final String name;
-    private final List<AdjacencyNode> children;
+    private final List<ClassRawData> children;
+    private final List<ClassRawData> parents;
     private boolean marked;
 
-    public AdjacencyNode( String name ) {
-        this.name = name;
-        children = new ArrayList<AdjacencyNode>();
+    public AdjacencyNode() {
+        children = new ArrayList<ClassRawData>();
+        parents = new ArrayList<ClassRawData>();
         marked = false;
+    }
+
+    public void addChild( ClassRawData child ) {
+        children.add( child );
+    }
+
+    public void addParent( ClassRawData parent ) {
+        parents.add( parent );
     }
 
     public int getChildCount() {
         return children.size();
     }
 
-    public List<AdjacencyNode> getChildren() {
+    public List<ClassRawData> getChildren() {
         return children;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public boolean isMarked() {
@@ -45,4 +49,22 @@ public class AdjacencyNode {
         return value;
     }
 
+    public boolean containsChild( ClassRawData referencedRawData ) {
+        return children.contains( referencedRawData );
+    }
+
+    public boolean containsParent( ClassRawData classRawData ) {
+        return parents.contains( classRawData );
+    }
+
+    // Knoten durch Einfuegen in Set markieren, damit Zaehlen + Loeschen in O(1) ??
+    public void markReferencedNodes() {
+        if( this.isMarked() ) {
+            return;
+        }
+        this.mark();
+        for( ClassRawData childNode : this.getChildren() ) {
+            childNode.markReferencedNodes();
+        }
+    }
 }

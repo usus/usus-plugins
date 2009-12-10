@@ -40,7 +40,7 @@ public class CodeProportionsKindTest {
 
         ReflectionUtil.setValue( WorkspaceRawData.class, WorkspaceRawData.class, mock( WorkspaceRawData.class ), "instance" );
         when( WorkspaceRawData.getInstance().getViolationBasis( KG ) ).thenReturn( 100 );
-        when( WorkspaceRawData.getInstance().getAcdModel() ).thenReturn( new AcdModel() );
+        when( ClassRawData.getAcdModel() ).thenReturn( new AcdModel() );
         
         classRawDataOK = mock( ClassRawData.class );
         when( classRawDataOK.getNumberOfMethods() ).thenReturn( 1 );

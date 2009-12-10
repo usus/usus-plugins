@@ -18,16 +18,32 @@ import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
 
 public class ClassRawData extends RawData<Integer, MethodRawData> implements IClassRawData {
 
+    private static AcdModel acdModel = new AcdModel();
+
     private final int startPosition;
     private final int lineNumber;
     private final String className;
-    private final String fullyQualifiedName;
+    private AdjacencyNode adjacencyNode;
 
-    public ClassRawData( String name, String fullyQualifiedName, int startPosition, int line ) {
+    public ClassRawData( String name, int startPosition, int line ) {
         this.className = name;
-        this.fullyQualifiedName = fullyQualifiedName;
         this.startPosition = startPosition;
         this.lineNumber = line;
+        addAdjacencyNode();
+    }
+
+    // for tests...
+    public static void resetAcdModel() {
+        acdModel = new AcdModel();
+    }
+
+    private void addAdjacencyNode() {
+        adjacencyNode = new AdjacencyNode();
+        acdModel.add( adjacencyNode );
+    }
+
+    public static AcdModel getAcdModel() {
+        return acdModel;
     }
 
     public void setCCValue( MethodDeclaration node, int value ) {
@@ -55,7 +71,13 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     private MethodRawData getRawData( int start, int lineNumber, String methodName ) {
-        return getRawData( new Integer( start ), new MethodRawData( start, lineNumber, className, methodName ) );
+        Integer startObject = new Integer( start );
+        MethodRawData rawData = super.getRawData( startObject );
+        if( rawData == null ) {
+            rawData = new MethodRawData( start, lineNumber, className, methodName );
+            super.addRawData( startObject, rawData );
+        }
+        return rawData;
     }
 
     public IMethodRawData getRawData( IMethod method ) {
@@ -130,6 +152,22 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     public int getCCDResult() {
-        return WorkspaceRawData.getInstance().getAcdModel().getCCD( fullyQualifiedName );
+        return acdModel.getCCD( adjacencyNode );
+    }
+
+    public void addReferencedType( ClassRawData referencedRawData ) {
+        if( this == referencedRawData ) {
+            return;
+        }
+        if( !this.adjacencyNode.containsChild( referencedRawData ) ) {
+            this.adjacencyNode.addChild( referencedRawData );
+        }
+        if( !referencedRawData.adjacencyNode.containsParent( this ) ) {
+            referencedRawData.adjacencyNode.addParent( this );
+        }
+    }
+
+    public void markReferencedNodes() {
+        adjacencyNode.markReferencedNodes();
     }
 }

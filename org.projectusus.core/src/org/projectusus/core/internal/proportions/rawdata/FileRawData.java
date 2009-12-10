@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.Hotspot;
@@ -49,19 +50,14 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
     }
 
     public void addClass( AbstractTypeDeclaration node ) {
-        getRawData( node );
+        getClassRawData( node );
     }
 
-    private ClassRawData getRawData( AbstractTypeDeclaration node ) {
+    public ClassRawData getClassRawData( AbstractTypeDeclaration node ) {
         if( node == null ) {
             return null;
         }
-        ITypeBinding binding = node.resolveBinding();
-        String qualifiedName = ""; //$NON-NLS-1$
-        if( binding != null ) {
-            qualifiedName = binding.getQualifiedName();
-        }
-        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString(), qualifiedName );
+        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
     }
 
     public int getNumberOfClasses() {
@@ -78,16 +74,22 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
         hotspots.addAll( localHotspots );
     }
 
-    private ClassRawData getRawData( int start, int line, String name, String qualifiedName ) {
-        return getRawData( new Integer( start ), new ClassRawData( name, qualifiedName, start, line ) );
+    private ClassRawData getRawData( int start, int line, String name ) {
+        Integer startObject = new Integer( start );
+        ClassRawData rawData = super.getRawData( startObject );
+        if( rawData == null ) {
+            rawData = new ClassRawData( name, start, line );
+            super.addRawData( startObject, rawData );
+        }
+        return rawData;
     }
 
     private ClassRawData getRawData( MethodDeclaration node ) {
-        return getRawData( ASTSupport.findEnclosingClass( node ) );
+        return getClassRawData( ASTSupport.findEnclosingClass( node ) );
     }
 
     private ClassRawData getRawData( Initializer node ) {
-        return getRawData( ASTSupport.findEnclosingClass( node ) );
+        return getClassRawData( ASTSupport.findEnclosingClass( node ) );
     }
 
     public IClassRawData getRawData( IJavaElement element ) {
@@ -103,12 +105,23 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
             for( Integer startPosition : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( startPosition.intValue() );
                 if( element.equals( foundElement ) ) {
-                    return getRawData( startPosition.intValue(), 0, "", "" ); //$NON-NLS-1$ //$NON-NLS-2$
+                    return getRawData( startPosition.intValue(), 0, "" ); //$NON-NLS-1$ 
                 }
             }
         } catch( JavaModelException e ) {
             return null;
         }
         return null;
+    }
+
+    public void addClassReference( AbstractTypeDeclaration referencingType, IJavaElement referencedElement ) {
+        IResource resource = referencedElement.getResource();
+        if( !(resource instanceof IFile) ) {
+            return;
+        }
+        ClassRawData referencingRawData = getClassRawData( referencingType );
+        IProject project = resource.getProject();
+        ClassRawData referencedRawData = WorkspaceRawData.getInstance().getProjectRawData( project ).getFileRawData( (IFile)resource ).getRawData( referencedElement );
+        referencingRawData.addReferencedType( referencedRawData );
     }
 }

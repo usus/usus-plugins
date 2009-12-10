@@ -18,18 +18,12 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
     private static WorkspaceRawData instance = new WorkspaceRawData();
 
-    private final AcdModel acdModel = new AcdModel();
-
     private WorkspaceRawData() {
         super();
     }
 
     public static WorkspaceRawData getInstance() {
         return instance;
-    }
-
-    public AcdModel getAcdModel() {
-        return acdModel;
     }
 
     public void setCurrentProject( IProject project ) {
@@ -42,7 +36,12 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
     }
 
     ProjectRawData getProjectRawData( IProject project ) {
-        return getRawData( project, new ProjectRawData( project ) );
+        ProjectRawData rawData = super.getRawData( project );
+        if( rawData == null ) {
+            rawData = new ProjectRawData( project );
+            super.addRawData( project, rawData );
+        }
+        return rawData;
     }
 
     public void setCurrentFile( IFile currentFile ) {
@@ -74,7 +73,7 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
     private double computeSQI( CodeProportionKind metric, int violations, int basis ) {
         double sqi;
         if( metric == CodeProportionKind.ACD ) {
-            sqi = 100.0 - acdModel.getRelativeACD() * 100.0;
+            sqi = 100.0; // TODO - acdModel.getRelativeACD() * 100.0;
         } else {
             sqi = new SQIComputer( basis, violations, metric ).compute();
         }

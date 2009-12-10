@@ -1,5 +1,6 @@
 package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
 
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
@@ -9,11 +10,12 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.projectusus.core.internal.proportions.rawdata.FileRawData;
 import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 public class ACD extends ASTVisitor {
 
-    private String currentType;
+    private AbstractTypeDeclaration currentType;
 
     // current type
 
@@ -55,10 +57,12 @@ public class ACD extends ASTVisitor {
             return true;
         }
         ITypeBinding binding = node.resolveBinding();
-        if( binding != null ) {
-            String fullyQualifiedTypeName = binding.getQualifiedName();
-            WorkspaceRawData.getInstance().getAcdModel().addClassReference( currentType, fullyQualifiedTypeName );
+        if( binding == null ) {
+            return true;
         }
+        IJavaElement javaElement = binding.getJavaElement();
+        FileRawData fileRawData = WorkspaceRawData.getInstance().getCurrentProjectRawData().getCurrentFileRawData();
+        fileRawData.addClassReference( currentType, javaElement );
         return true;
     }
 
@@ -77,10 +81,7 @@ public class ACD extends ASTVisitor {
      */
 
     private void setCurrentType( AbstractTypeDeclaration node ) {
-        ITypeBinding binding = node.resolveBinding();
-        if( binding != null ) {
-            currentType = binding.getQualifiedName();
-        }
+        currentType = node;
     }
 
 }

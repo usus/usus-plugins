@@ -22,7 +22,6 @@ import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 public class ClassRawDataTest {
 
     private final String CLASSNAME = "ClassName";
-    private final String FULLNAME = "my.package.ClassName";
     private final String METHODNAME1 = "methodname1";
     private final int SOURCEPOSITION = 77;
     private final int LINENUMBER = 12;
@@ -33,7 +32,7 @@ public class ClassRawDataTest {
     
     @Before
     public void setup(){
-        classRawData = new ClassRawData(  CLASSNAME, FULLNAME, SOURCEPOSITION, LINENUMBER );
+        classRawData = new ClassRawData(  CLASSNAME, SOURCEPOSITION, LINENUMBER );
         method1 = mock( MethodDeclaration.class );
         initMethod( method1, METHODNAME1 );
     }

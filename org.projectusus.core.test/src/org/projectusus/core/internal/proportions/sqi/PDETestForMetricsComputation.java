@@ -15,7 +15,6 @@ import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
-import org.junit.Test;
 import org.projectusus.core.internal.PDETestUsingWSProject;
 import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
@@ -24,13 +23,19 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject{
 
     public void simpleCaseTestDemo() throws Exception {
         IFile file = createWSFile( "A.java", loadContent("A.test") );
-        new FileDriver( file ).compute();
+        computeFile(file);
         IProjectRawData results = (IProjectRawData)file.getProject().getAdapter( IProjectRawData.class );
         assertEquals( 1, results.getViolationCount( ML ) );
         assertEquals( 2, results.getViolationBasis( ML ) );
     }
     
-    private String loadContent(String fileName) throws Exception {
+    protected void computeFile(IFile file){
+        WorkspaceRawData.getInstance().setCurrentProject( file.getProject() );
+        WorkspaceRawData.getInstance().setCurrentFile( file );
+        new FileDriver( file ).compute();
+    }
+    
+    protected String loadContent(String fileName) throws Exception {
         URL entry = loadEntry( fileName );
         return readPreservingBinaryIdentity( entry.openStream());
     }
