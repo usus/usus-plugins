@@ -1,0 +1,10 @@
+public class Acd6 {
+Helper1 h1;
+}
+
+class Helper1 {
+}
+
+class Helper2 {
+Helper1 h1;
+}

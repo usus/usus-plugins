@@ -1,0 +1,36 @@
+public class Acd9 {
+Helper1 h;
+Helper2 h2;
+}
+
+class Helper1 {
+Helper3 h;
+Helper4 h2;
+}
+
+class Helper2 {
+Helper5 h;
+Helper6 h2;
+}
+
+class Helper3 {
+}
+
+class Helper4 {
+}
+
+class Helper5 {
+}
+
+class Helper6 {
+}
+
+class Helper7 {
+}
+
+class Helper8 {
+}
+
+class Helper9 {
+}
+
