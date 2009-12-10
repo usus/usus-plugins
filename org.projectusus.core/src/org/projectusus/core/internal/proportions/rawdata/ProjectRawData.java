@@ -16,12 +16,17 @@ public class ProjectRawData extends RawData<IFile, FileRawData> implements IProj
         this.projectOfRawData = project;
     }
 
-    public IFileRawData getFileRawData( IFile file ) {
-        return getRawData( file, new FileRawData( file ) );
-    }
-
     public IProject getProjectOfRawData() {
         return projectOfRawData;
+    }
+
+    public IFileRawData getFileRawData( IFile file ) {
+        FileRawData rawData = super.getRawData( file );
+        if( rawData == null ) {
+            rawData = new FileRawData( file );
+            super.addRawData( file, rawData );
+        }
+        return rawData;
     }
 
     public void setCurrentFile( IFile currentFile ) {
