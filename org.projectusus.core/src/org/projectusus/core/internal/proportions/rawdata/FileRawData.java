@@ -119,11 +119,8 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
             return;
         }
         ClassRawData referencingRawData = getClassRawData( referencingType );
-        // TODO lf die folgende Zeile liefert NULL:
-        // IProjectRawData results = (IProjectRawData)resource.getProject().getAdapter( IProjectRawData.class );
-        IProjectRawData results = WorkspaceRawData.getInstance().getProjectRawData( resource.getProject() );
+        IProjectRawData results = (IProjectRawData)resource.getProject().getAdapter( IProjectRawData.class );
         ClassRawData referencedRawData = (ClassRawData)results.getFileRawData( (IFile)resource ).getRawData( referencedElement );
-        // TODO why can referencedRawData be null? It was not null before...
         referencingRawData.addReferencedType( referencedRawData );
     }
 }
