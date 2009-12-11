@@ -6,6 +6,7 @@ package org.projectusus.ui.internal.selection;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
@@ -27,23 +28,26 @@ public class EditorInputAnalysis {
         return compilationUnit;
     }
 
-    public IJavaElement getSelectedMethod( ISelection selection ) {
+    public IMethod getSelectedMethod( ISelection selection ) {
         return extractSelectedElement( selection );
     }
 
-    private IJavaElement extractSelectedElement( ISelection selection ) {
-        IJavaElement result = null;
+    private IMethod extractSelectedElement( ISelection selection ) {
+        IMethod result = null;
         if( selection instanceof TextSelection ) {
             result = extractSelectedMethod( compilationUnit, (TextSelection)selection );
         }
         return result;
     }
 
-    private IJavaElement extractSelectedMethod( ICompilationUnit compilationUnit, TextSelection textSelection ) {
-        IJavaElement result = null;
+    private IMethod extractSelectedMethod( ICompilationUnit compilationUnit, TextSelection textSelection ) {
+        IMethod result = null;
         try {
             int offset = textSelection.getOffset();
-            result = compilationUnit.getElementAt( offset );
+            IJavaElement element = compilationUnit.getElementAt( offset );
+            if( element instanceof IMethod ) {
+                result = (IMethod)element;
+            }
         } catch( JavaModelException jamox ) {
             UsusUIPlugin.getDefault().log( jamox );
         }

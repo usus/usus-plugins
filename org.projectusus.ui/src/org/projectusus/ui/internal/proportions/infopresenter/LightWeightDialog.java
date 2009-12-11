@@ -4,14 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter;
 
-import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Font;
@@ -37,7 +34,7 @@ class LightWeightDialog extends Dialog {
     private Composite area;
     private Text txtSomeExampleControl;
     private Font boldLabelFont;
-    private IJavaElement method;
+    private MethodFormatter methodFormatter;
 
     LightWeightDialog( Shell parentShell ) {
         super( parentShell );
@@ -48,8 +45,8 @@ class LightWeightDialog extends Dialog {
         setBlockOnOpen( true );
     }
 
-    void setInput( IJavaElement method ) {
-        this.method = method;
+    void setInput( IMethod method ) {
+        methodFormatter = new MethodFormatter( method );
     }
 
     // interface methods of Dialog
@@ -109,16 +106,8 @@ class LightWeightDialog extends Dialog {
         Label lblTitle = new Label( area, SWT.NONE );
         applyInfoColors( lblTitle );
         lblTitle.setLayoutData( new GridData( GridData.FILL_HORIZONTAL ) );
-        lblTitle.setText( "TITLE (is bold)" );
+        lblTitle.setText( methodFormatter.formatHeadInfo() );
         makeBold( lblTitle );
-
-        StyledText txtContent = new StyledText( area, SWT.MULTI | SWT.WRAP );
-        applyInfoColors( txtContent );
-        txtContent.setEditable( false );
-        GridData gridData = new GridData( GridData.FILL_HORIZONTAL );
-        gridData.heightHint = 30;
-        txtContent.setLayoutData( gridData );
-        txtContent.setText( "Content (not bold, but selectable)" );
     }
 
     private void makeBold( Control control ) {
@@ -136,11 +125,7 @@ class LightWeightDialog extends Dialog {
     private void createSomeExampleControl() {
         txtSomeExampleControl = new Text( area, SWT.BORDER | SWT.MULTI | SWT.WRAP );
         txtSomeExampleControl.setLayoutData( new GridData( GridData.FILL_HORIZONTAL ) );
-        txtSomeExampleControl.addModifyListener( new ModifyListener() {
-            public void modifyText( ModifyEvent event ) {
-                // shall we do something here? ;-)
-            }
-        } );
+        txtSomeExampleControl.setVisible( false );
     }
 
     private void applyInfoColors( Control control ) {

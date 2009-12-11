@@ -4,35 +4,40 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter;
 
+import static org.eclipse.ui.handlers.HandlerUtil.getActiveEditor;
+import static org.eclipse.ui.handlers.HandlerUtil.getActiveShell;
 import static org.eclipse.ui.handlers.HandlerUtil.getCurrentSelection;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IMethod;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.handlers.HandlerUtil;
 import org.projectusus.ui.internal.selection.EditorInputAnalysis;
 import org.projectusus.ui.internal.selection.JDTWorkspaceEditorInputAnalysis;
 
 public class ShowUsusInfo extends AbstractHandler {
 
     public Object execute( ExecutionEvent event ) throws ExecutionException {
-        IEditorPart activeEditor = HandlerUtil.getActiveEditor( event );
+        IEditorPart activeEditor = getActiveEditor( event );
         if( activeEditor != null ) {
-            // TODO CCD session continue here:
-            // probably we want to use the method object, get some Usus info
-            // related to it, and present the stuff on the lightweight dialog
-            IJavaElement method = extractSelectedMethod( event, activeEditor );
-            LightWeightDialog dialog = new LightWeightDialog( HandlerUtil.getActiveShell( event ) );
-            dialog.setInput( method );
-            dialog.open();
+            IMethod method = extractSelectedMethod( event, activeEditor );
+            if( method != null ) {
+                openLightWeightDialog( method, getActiveShell( event ) );
+            }
         }
         return null; // must return null by IHandler contract
     }
 
-    private IJavaElement extractSelectedMethod( ExecutionEvent event, IEditorPart editor ) {
+    private void openLightWeightDialog( IMethod method, Shell shell ) {
+        LightWeightDialog dialog = new LightWeightDialog( shell );
+        dialog.setInput( method );
+        dialog.open();
+    }
+
+    private IMethod extractSelectedMethod( ExecutionEvent event, IEditorPart editor ) {
         IEditorInput editorInput = editor.getEditorInput();
         EditorInputAnalysis analysis = new JDTWorkspaceEditorInputAnalysis( editorInput );
         return analysis.getSelectedMethod( getCurrentSelection( event ) );
