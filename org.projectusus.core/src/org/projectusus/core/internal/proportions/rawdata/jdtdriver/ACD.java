@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.projectusus.core.internal.proportions.rawdata.FileRawData;
+import org.projectusus.core.internal.proportions.rawdata.IFileRawData;
 import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 public class ACD extends ASTVisitor {
@@ -61,7 +61,7 @@ public class ACD extends ASTVisitor {
             return true;
         }
         IJavaElement javaElement = binding.getJavaElement();
-        FileRawData fileRawData = WorkspaceRawData.getInstance().getCurrentProjectRawData().getCurrentFileRawData();
+        IFileRawData fileRawData = WorkspaceRawData.getInstance().getCurrentProjectRawData().getCurrentFileRawData();
         fileRawData.addClassReference( currentType, javaElement );
         return true;
     }

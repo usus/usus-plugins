@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
@@ -120,8 +119,11 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
             return;
         }
         ClassRawData referencingRawData = getClassRawData( referencingType );
-        IProject project = resource.getProject();
-        ClassRawData referencedRawData = WorkspaceRawData.getInstance().getProjectRawData( project ).getFileRawData( (IFile)resource ).getRawData( referencedElement );
+        // TODO lf die folgende Zeile liefert NULL:
+        // IProjectRawData results = (IProjectRawData)resource.getProject().getAdapter( IProjectRawData.class );
+        IProjectRawData results = WorkspaceRawData.getInstance().getProjectRawData( resource.getProject() );
+        ClassRawData referencedRawData = (ClassRawData)results.getFileRawData( (IFile)resource ).getRawData( referencedElement );
+        // TODO why can referencedRawData be null? It was not null before...
         referencingRawData.addReferencedType( referencedRawData );
     }
 }

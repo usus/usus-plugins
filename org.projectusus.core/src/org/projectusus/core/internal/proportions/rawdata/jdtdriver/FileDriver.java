@@ -28,9 +28,10 @@ public class FileDriver {
         ICompilationUnit compilationUnit = createCompilationUnitFrom( file );
         CompilationUnit parse = parse( compilationUnit );
 
-        for( ASTVisitor visitor : asList( new ClassVisitor(), new ML(), new CC(), new ACD() ) ) {
+        for( ASTVisitor visitor : asList( new ClassVisitor(), new ML(), new CC() ) ) {
             parse.accept( visitor );
         }
+        parse.accept( new ACD() ); // ACD must run after ClassVisitor!
     }
 
     private CompilationUnit parse( ICompilationUnit unit ) {

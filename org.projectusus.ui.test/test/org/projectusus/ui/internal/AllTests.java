@@ -19,7 +19,7 @@ import org.projectusus.ui.internal.selection.EditorInputAnalysisTest;
 @RunWith( Suite.class )
 @SuiteClasses( { SQIComputerTest.class, EditorInputAnalysisTest.class, UsusModelHistoryTest.class, Checkpoints2GraphicsConverterTest.class, CheckpointsTest.class,
         CoverageTest.class, WiseCrackTest.class, UsusModelStatusTest.class } )
-// MLTest.class, 
+        // TODO add MLTest.class
 public class AllTests {
 
 }

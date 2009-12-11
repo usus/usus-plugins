@@ -156,7 +156,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     public void addReferencedType( ClassRawData referencedRawData ) {
-        if( this == referencedRawData ) {
+        if( referencedRawData == null || this == referencedRawData ) {
             return;
         }
         if( !this.adjacencyNode.containsChild( referencedRawData ) ) {

@@ -33,8 +33,8 @@ public class ProjectRawData extends RawData<IFile, FileRawData> implements IProj
         this.currentFile = currentFile;
     }
 
-    public FileRawData getCurrentFileRawData() {
-        return getRawData( currentFile, new FileRawData( currentFile ) );
+    public IFileRawData getCurrentFileRawData() {
+        return getFileRawData( currentFile );
     }
 
     public void dropRawData( IFile file ) {
