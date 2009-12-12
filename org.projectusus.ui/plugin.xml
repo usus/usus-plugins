@@ -19,9 +19,9 @@
             id="org.projectusus.ui.internal.yellowcount.YellowCountView"
             category="org.projectusus.ui.viewCategory"
             name="%yellowcount_view_name"/>
-      <view class="org.projectusus.ui.internal.proportions.CockpitView"
+      <view class="org.projectusus.ui.internal.proportions.cockpit.CockpitView"
             icon="icons/full/eview16/cockpit.gif"
-            id="org.projectusus.ui.internal.proportions.CockpitView"
+            id="org.projectusus.ui.internal.proportions.cockpit.CockpitView"
             category="org.projectusus.ui.viewCategory"
             name="%cockpit_view_name"/>
       <view class="org.projectusus.ui.internal.hotspots.HotSpotsView"
@@ -66,7 +66,7 @@
    <extension point="org.eclipse.ui.viewActions">
       <viewContribution
             id="org.projectusus.ui.internal.viewContribution_CockpitView"
-            targetID="org.projectusus.ui.internal.proportions.CockpitView">
+            targetID="org.projectusus.ui.internal.proportions.cockpit.CockpitView">
          <action
                class="org.projectusus.ui.internal.proportions.actions.RefreshCockpit"
                icon="icons/full/elcl16/refresh.gif"

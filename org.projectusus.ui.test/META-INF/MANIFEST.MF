@@ -13,4 +13,5 @@ Require-Bundle: org.junit4,
  org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.jdt.core,
- org.eclipse.jface.text
+ org.eclipse.jface.text,
+ org.eclipse.core.resources

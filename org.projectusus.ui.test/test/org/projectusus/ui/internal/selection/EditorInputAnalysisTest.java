@@ -13,6 +13,7 @@ import static org.mockito.Mockito.when;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorInput;
@@ -32,7 +33,7 @@ public class EditorInputAnalysisTest {
         loader = mock( ICompilationUnitInputLoader.class );
         editorInput = mock( IEditorInput.class );
         compilationUnit = mock( ICompilationUnit.class );
-        javaElement = mock( IJavaElement.class );
+        javaElement = mock( IMethod.class );
         when( loader.loadCompilationUnit( editorInput ) ).thenReturn( compilationUnit );
         when( compilationUnit.getElementAt( 1 ) ).thenReturn( javaElement );
 

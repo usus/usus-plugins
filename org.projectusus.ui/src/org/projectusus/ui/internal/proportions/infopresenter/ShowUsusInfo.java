@@ -15,8 +15,11 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.projectusus.ui.internal.proportions.infopresenter.infomodel.IUsusInfo;
+import org.projectusus.ui.internal.proportions.infopresenter.infomodel.UsusInfoBuilder;
 import org.projectusus.ui.internal.selection.EditorInputAnalysis;
 import org.projectusus.ui.internal.selection.JDTWorkspaceEditorInputAnalysis;
+import org.projectusus.ui.internal.viewer.LightweightDialog;
 
 public class ShowUsusInfo extends AbstractHandler {
 
@@ -24,16 +27,17 @@ public class ShowUsusInfo extends AbstractHandler {
         IEditorPart activeEditor = getActiveEditor( event );
         if( activeEditor != null ) {
             IMethod method = extractSelectedMethod( event, activeEditor );
-            if( method != null ) {
-                openLightWeightDialog( method, getActiveShell( event ) );
+            IUsusInfo ususInfo = new UsusInfoBuilder( method ).create();
+            if( ususInfo != null ) {
+                openLightWeightDialog( ususInfo, getActiveShell( event ) );
             }
         }
         return null; // must return null by IHandler contract
     }
 
-    private void openLightWeightDialog( IMethod method, Shell shell ) {
-        LightWeightDialog dialog = new LightWeightDialog( shell );
-        dialog.setInput( method );
+    private void openLightWeightDialog( IUsusInfo ususInfo, Shell shell ) {
+        LightweightDialog dialog = new UsusInfoLightweightDialog( shell );
+        dialog.setInput( ususInfo );
         dialog.open();
     }
 

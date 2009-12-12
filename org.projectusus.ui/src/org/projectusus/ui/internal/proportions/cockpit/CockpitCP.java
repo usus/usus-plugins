@@ -2,7 +2,7 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.ui.internal.proportions;
+package org.projectusus.ui.internal.proportions.cockpit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 
-class CockpitCP implements ITreeContentProvider {
+public class CockpitCP implements ITreeContentProvider {
 
     public Object[] getElements( Object inputElement ) {
         List<Object> result = new ArrayList<Object>();

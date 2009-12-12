@@ -17,6 +17,7 @@ import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.proportions.rawdata.IClassRawData;
 import org.projectusus.core.internal.proportions.rawdata.IFileRawData;
 import org.projectusus.core.internal.proportions.rawdata.IMethodRawData;
+import org.projectusus.ui.internal.selection.ExtractFileRawData;
 
 enum TextHoverFormatter {
 
@@ -57,7 +58,7 @@ enum TextHoverFormatter {
         String result = null;
         try {
             IResource resource = typeElement.getUnderlyingResource();
-            ExtractRawData extractor = new ExtractRawData( resource );
+            ExtractFileRawData extractor = new ExtractFileRawData( resource );
             if( extractor.isDataAvailable() ) {
                 IFileRawData fileData = extractor.getFileRawData();
                 IClassRawData classData = fileData.getRawData( typeElement );
@@ -75,7 +76,7 @@ enum TextHoverFormatter {
         String result = null;
         try {
             IResource resource = methodElement.getUnderlyingResource();
-            ExtractRawData extractor = new ExtractRawData( resource );
+            ExtractFileRawData extractor = new ExtractFileRawData( resource );
             if( extractor.isDataAvailable() ) {
                 IClassRawData classRawData = extractor.getFileRawData().getRawData( methodElement.getDeclaringType() );
                 IMethodRawData methodRawData = classRawData.getRawData( methodElement );

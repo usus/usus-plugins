@@ -16,7 +16,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 import org.projectusus.ui.internal.coveredprojects.CoveredProjectsView;
 import org.projectusus.ui.internal.history.HistoryView;
 import org.projectusus.ui.internal.hotspots.HotSpotsView;
-import org.projectusus.ui.internal.proportions.CockpitView;
+import org.projectusus.ui.internal.proportions.cockpit.CockpitView;
 import org.projectusus.ui.internal.yellowcount.YellowCountView;
 
 public class USUSPerspective implements IPerspectiveFactory {

@@ -2,9 +2,8 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.ui.internal.proportions.infopresenter;
+package org.projectusus.ui.internal.viewer;
 
-import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -14,29 +13,31 @@ import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
-class LightWeightDialog extends Dialog {
+/**
+ * dialog that implements the 'lightweight' behavior known from UI controls in the JDT editor (e.g. Quick Outline).
+ * 
+ * Subclass to provide controls for the interface of the dialog.
+ * 
+ * @author leif
+ */
+public abstract class LightweightDialog extends Dialog {
 
     // needed for the typical light-weight control behaviour (go out of the way
     // if focus is lost). We need it for avoiding that the Shell closes already
     // when it loses focus at opening time.
     private boolean decativateListenerActive;
     private Composite area;
-    private Text txtSomeExampleControl;
     private Font boldLabelFont;
-    private MethodFormatter methodFormatter;
 
-    LightWeightDialog( Shell parentShell ) {
+    public LightweightDialog( Shell parentShell ) {
         super( parentShell );
         // This has not for the user a 'blocking' effect, i.e. if the user
         // clicks on the screen outside, this dialog will disapper (lightweight
@@ -45,8 +46,30 @@ class LightWeightDialog extends Dialog {
         setBlockOnOpen( true );
     }
 
-    void setInput( IMethod method ) {
-        methodFormatter = new MethodFormatter( method );
+    public abstract void setInput( Object input );
+
+    protected abstract void createTitleArea( Composite area );
+
+    protected abstract void createMainArea( Composite area );
+
+    protected abstract void setFocus();
+
+    protected void makeBold( Control control ) {
+        if( boldLabelFont == null ) {
+            Font initialFont = control.getFont();
+            FontData[] fontData = initialFont.getFontData();
+            for( FontData element : fontData ) {
+                element.setStyle( SWT.BOLD );
+            }
+            boldLabelFont = new Font( control.getDisplay(), fontData );
+        }
+        control.setFont( boldLabelFont );
+    }
+
+    protected void applyInfoColors( Control control ) {
+        Display display = Display.getCurrent();
+        control.setBackground( display.getSystemColor( SWT.COLOR_INFO_BACKGROUND ) );
+        control.setForeground( display.getSystemColor( SWT.COLOR_INFO_FOREGROUND ) );
     }
 
     // interface methods of Dialog
@@ -67,7 +90,7 @@ class LightWeightDialog extends Dialog {
     @Override
     protected Point getInitialSize() {
         // arbitrary default value
-        return new Point( 430, 180 );
+        return new Point( 360, 240 );
     }
 
     @Override
@@ -79,10 +102,10 @@ class LightWeightDialog extends Dialog {
     protected Control createDialogArea( Composite parent ) {
         area = (Composite)super.createDialogArea( parent );
         applyInfoColors( area );
-        createTitleArea();
-        createSomeExampleControl();
+        createTitleArea( area );
+        createMainArea( area );
         initializeKeyHandling();
-        txtSomeExampleControl.setFocus();
+        setFocus();
         return area;
     }
 
@@ -98,40 +121,8 @@ class LightWeightDialog extends Dialog {
 
     private void initializeKeyHandling() {
         KeyAdapter listener = new KeyHandler();
-        txtSomeExampleControl.addKeyListener( listener );
-        txtSomeExampleControl.getShell().addKeyListener( listener );
-    }
-
-    private void createTitleArea() {
-        Label lblTitle = new Label( area, SWT.NONE );
-        applyInfoColors( lblTitle );
-        lblTitle.setLayoutData( new GridData( GridData.FILL_HORIZONTAL ) );
-        lblTitle.setText( methodFormatter.formatHeadInfo() );
-        makeBold( lblTitle );
-    }
-
-    private void makeBold( Control control ) {
-        if( boldLabelFont == null ) {
-            Font initialFont = control.getFont();
-            FontData[] fontData = initialFont.getFontData();
-            for( FontData element : fontData ) {
-                element.setStyle( SWT.BOLD );
-            }
-            boldLabelFont = new Font( control.getDisplay(), fontData );
-        }
-        control.setFont( boldLabelFont );
-    }
-
-    private void createSomeExampleControl() {
-        txtSomeExampleControl = new Text( area, SWT.BORDER | SWT.MULTI | SWT.WRAP );
-        txtSomeExampleControl.setLayoutData( new GridData( GridData.FILL_HORIZONTAL ) );
-        txtSomeExampleControl.setVisible( false );
-    }
-
-    private void applyInfoColors( Control control ) {
-        Display display = Display.getCurrent();
-        control.setBackground( display.getSystemColor( SWT.COLOR_INFO_BACKGROUND ) );
-        control.setForeground( display.getSystemColor( SWT.COLOR_INFO_FOREGROUND ) );
+        area.addKeyListener( listener );
+        area.getShell().addKeyListener( listener );
     }
 
     private void initializeDeactivationHandling( final Shell newShell ) {
