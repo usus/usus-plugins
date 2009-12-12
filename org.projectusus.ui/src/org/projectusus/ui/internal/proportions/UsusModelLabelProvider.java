@@ -4,13 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions;
 
+import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_BUGS;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_CODE_PROPORTIONS;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_INFO;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_TEST_COVERAGE;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_WARNINGS;
-import static org.projectusus.ui.internal.util.UITexts.cockpitLP_codeProportions;
-import static org.projectusus.ui.internal.util.UITexts.cockpitLP_testCoverage;
-import static org.projectusus.ui.internal.util.UITexts.cockpitLP_warnings;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
 import org.eclipse.jface.viewers.IColorProvider;
@@ -18,6 +16,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.model.IBugs;
 import org.projectusus.core.internal.proportions.model.ICodeProportions;
 import org.projectusus.core.internal.proportions.model.ITestCoverage;
 import org.projectusus.core.internal.proportions.model.IWarnings;
@@ -32,11 +31,13 @@ public abstract class UsusModelLabelProvider extends LabelProvider implements IC
     protected String getNodeTextFor( Object element ) {
         String result = super.getText( element );
         if( element instanceof ICodeProportions ) {
-            result = cockpitLP_codeProportions;
+            result = "Code proportions";
         } else if( element instanceof ITestCoverage ) {
-            result = cockpitLP_testCoverage;
+            result = "Test coverage (Red-/Greenness)";
         } else if( element instanceof IWarnings ) {
-            result = cockpitLP_warnings;
+            result = "Static analysis warnings (Yellowness)";
+        } else if( element instanceof IBugs ) {
+            result = "Bugs";
         }
         return result;
     }
@@ -49,6 +50,8 @@ public abstract class UsusModelLabelProvider extends LabelProvider implements IC
             result = getSharedImages().getImage( OBJ_TEST_COVERAGE );
         } else if( element instanceof IWarnings ) {
             result = getSharedImages().getImage( OBJ_WARNINGS );
+        } else if( element instanceof IBugs ) {
+            result = getSharedImages().getImage( OBJ_BUGS );
         } else if( !(element instanceof CodeProportion) ) {
             result = getSharedImages().getImage( OBJ_INFO );
         }

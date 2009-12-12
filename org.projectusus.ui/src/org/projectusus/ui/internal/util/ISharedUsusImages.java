@@ -13,6 +13,7 @@ public interface ISharedUsusImages {
     // prefix all constants with the plugin id
     String ID = UsusUIPlugin.getPluginId();
 
+    String OBJ_BUGS = ID + ".OBJ_BUGS"; //$NON-NLS-1$
     String OBJ_CODE_PROPORTIONS = ID + ".OBJ_CODE_PROPORTIONS"; //$NON-NLS-1$
     String OBJ_INFO = ID + ".OBJ_INFO"; //$NON-NLS-1$
     String OBJ_TEST_COVERAGE = ID + ".OBJ_TEST_COVERAGE"; //$NON-NLS-1$

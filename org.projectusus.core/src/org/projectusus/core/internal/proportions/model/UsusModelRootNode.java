@@ -14,9 +14,10 @@ public class UsusModelRootNode {
     private final TestCoverage testCoverage = new TestCoverage();
     private final CodeProportions codeProportions = new CodeProportions();
     private final Warnings warnings = new Warnings();
+    private final Bugs bugs = new Bugs();
 
     public IUsusElement[] getElements() {
-        return new IUsusElement[] { codeProportions, warnings, testCoverage };
+        return new IUsusElement[] { codeProportions, warnings, testCoverage, bugs };
     }
 
     public void add( CodeProportion proportion ) {

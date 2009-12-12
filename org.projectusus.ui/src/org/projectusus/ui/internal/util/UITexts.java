@@ -37,10 +37,6 @@ public final class UITexts extends NLS {
     public static String cockpitColumnDesc_sqi;
     public static String cockpitColumnDesc_violations;
 
-    public static String cockpitLP_codeProportions;
-    public static String cockpitLP_testCoverage;
-    public static String cockpitLP_warnings;
-
     public static String cockpitView_noProjectsSelected;
 
     public static String columnDesc_covered;

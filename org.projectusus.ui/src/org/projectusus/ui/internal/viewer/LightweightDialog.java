@@ -90,7 +90,7 @@ public abstract class LightweightDialog extends Dialog {
     @Override
     protected Point getInitialSize() {
         // arbitrary default value
-        return new Point( 360, 240 );
+        return new Point( 360, 280 );
     }
 
     @Override

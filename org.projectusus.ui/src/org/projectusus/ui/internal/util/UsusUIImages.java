@@ -51,6 +51,7 @@ public class UsusUIImages implements ISharedUsusImages {
     }
 
     private void declareImages() {
+        declare( OBJ_BUGS, OBJECT + "bugs.gif" ); //$NON-NLS-1$
         declare( OBJ_CODE_PROPORTIONS, OBJECT + "codeproportions.gif" ); //$NON-NLS-1$
         declare( OBJ_INFO, OBJECT + "info.gif" ); //$NON-NLS-1$
         declare( OBJ_TEST_COVERAGE, OBJECT + "testcoverage.gif" ); //$NON-NLS-1$
