@@ -8,51 +8,47 @@
             id="org.projectusus.ui.internal.perspective.USUSPerspective"
             icon="icons/full/eview16/usus.gif"
             class="org.projectusus.ui.internal.perspective.USUSPerspective"
-            name="%perspective_name"/>
+            name="Project Usus"/>
    </extension>
    <extension point="org.eclipse.ui.views">
       <category
             id="org.projectusus.ui.viewCategory"
-            name="%viewCategory_name"/>
+            name="Project Usus"/>
       <view class="org.projectusus.ui.internal.yellowcount.YellowCountView"
             icon="icons/full/eview16/yellowcount.gif"
             id="org.projectusus.ui.internal.yellowcount.YellowCountView"
             category="org.projectusus.ui.viewCategory"
-            name="%yellowcount_view_name"/>
+            name="Yellow Count"/>
       <view class="org.projectusus.ui.internal.proportions.cockpit.CockpitView"
             icon="icons/full/eview16/cockpit.gif"
             id="org.projectusus.ui.internal.proportions.cockpit.CockpitView"
             category="org.projectusus.ui.viewCategory"
-            name="%cockpit_view_name"/>
+            name="Usus Cockpit"/>
       <view class="org.projectusus.ui.internal.hotspots.HotSpotsView"
             icon="icons/full/eview16/hotspots.gif"
             id="org.projectusus.ui.internal.hotspots.HotSpotsView"
             category="org.projectusus.ui.viewCategory"
-            name="%hotspots_view_name"/>
+            name="Usus Hotspots"/>
       <view class="org.projectusus.ui.internal.history.HistoryView"
             icon="icons/full/eview16/history.gif"
             id="org.projectusus.ui.internal.history.HistoryView"
             category="org.projectusus.ui.viewCategory"
-            name="%history_view_name"/>
+            name="Usus History"/>
       <view class="org.projectusus.ui.internal.coveredprojects.CoveredProjectsView"
             icon="icons/full/eview16/coveredprojects.gif"
             id="org.projectusus.ui.internal.coveredprojects.CoveredProjectsView"
             category="org.projectusus.ui.viewCategory"
-            name="%coveredprojects_view_name"/>
-      <view
-            category="org.projectusus.ui.viewCategory"
+            name="Projects covered by Usus"/>
+      <view category="org.projectusus.ui.viewCategory"
             class="org.projectusus.ui.internal.bugreport.BugsView"
             icon="icons/full/eview16/bug.gif"
             id="org.projectusus.ui.bugreport.bugsView"
-            name="%bugs_view">
-      </view>
-      <view
-            category="org.projectusus.ui.viewCategory"
+            name="Bugs" />
+      <view category="org.projectusus.ui.viewCategory"
             class="org.projectusus.ui.internal.bugreport.AverageCodeProportionsView"
             icon="icons/full/eview16/bug.gif"
             id="org.projectusus.ui.bugreport.averageCodeProportionsView"
-            name="%average_code_proportions_view">
-      </view>
+            name="Average Code Proportions" />
    </extension>
    <!-- register page book pages for model objects -->
    <extension point="org.eclipse.core.runtime.adapters">
@@ -71,21 +67,21 @@
                class="org.projectusus.ui.internal.proportions.actions.RefreshCockpit"
                icon="icons/full/elcl16/refresh.gif"
                id="org.projectusus.ui.internal.proportions.actions.RefreshCockpit"
-               label="%refreshCockpit_label"
+               label="Refresh"
                menubarPath="additions"
                style="push"
                toolbarPath="additions"
-               tooltip="%refreshCockpit_tooltip"/>
+               tooltip="Run proportions analysis over the workspace and refresh the data shown on this view."/>
       </viewContribution>
    </extension>
    <!-- editor actions -->
    <extension point="org.eclipse.ui.commands">
       <category 
             id="org.projectusus.ui.commandCategory"
-            name="%commandCategory_name" />
+            name="Project Usus" />
       <command
             id="org.projectusus.ui.internal.proportions.infopresenter.ShowUsusInfo"
-            name="%showUsusInfo_name"
+            name="Show Info"
             categoryId="org.projectusus.ui.commandCategory"/>
    </extension>
    <extension point="org.eclipse.ui.handlers">
@@ -115,7 +111,7 @@
                class="org.projectusus.ui.internal.bugreport.ReportBugAction"
                icon="icons/full/elcl16/report_bug.gif"
                id="org.projectusus.ui.bugreport"
-               label="%report_bug"
+               label="Report Bug"
                menubarPath="additions">
          </action>
       </viewerContribution>

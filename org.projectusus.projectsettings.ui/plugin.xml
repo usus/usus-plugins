@@ -19,12 +19,12 @@
             locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
          <command
                commandId="org.projectusus.ui.projectsettings.apply"
-               label="%packageExplorer_menu_apply"
+               label="Apply Usus Compiler Warning Settings"
                style="push">
          </command>
          <command
                commandId="org.projectusus.ui.projectsettings.copyFromProject"
-               label="%packageExplorer_copy_from_project_command"
+               label="Copy Settings from Project"
                style="push">
          </command>
       </menuContribution>
@@ -32,11 +32,11 @@
    <extension point="org.eclipse.ui.commands">
       <command
             id="org.projectusus.ui.projectsettings.apply"
-            name="%apply_command">
+            name="Apply Compiler Warning Settings">
       </command>
       <command
             id="org.projectusus.ui.projectsettings.copyFromProject"
-            name="%copy_from_project_command">
+            name="Copy Settings from Project">
       </command>
    </extension>
 </plugin>

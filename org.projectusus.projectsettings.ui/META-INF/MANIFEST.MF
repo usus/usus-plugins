@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %Bundle-Name
+Bundle-Name: Usus Projectsettings UI
 Bundle-SymbolicName: org.projectusus.projectsettings.ui;singleton:=true
 Bundle-Version: 0.3.1
 Bundle-Activator: org.projectusus.projectsettings.ui.internal.ProjectsettingsUIPlugin
@@ -11,5 +11,5 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.core
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-Vendor: %Bundle-Vendor
+Bundle-Vendor: projectusus.org
 Export-Package: org.projectusus.projectsettings.ui.internal;x-internal:=true

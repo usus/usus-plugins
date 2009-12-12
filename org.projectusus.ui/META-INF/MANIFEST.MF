@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %Bundle-Name
+Bundle-Name: Usus UI
 Bundle-SymbolicName: org.projectusus.ui;singleton:=true
 Bundle-Version: 0.3.1
 Bundle-Activator: org.projectusus.ui.internal.UsusUIPlugin
-Bundle-Vendor: %Bundle-Vendor
+Bundle-Vendor: projectusus.org
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.projectusus.core,
