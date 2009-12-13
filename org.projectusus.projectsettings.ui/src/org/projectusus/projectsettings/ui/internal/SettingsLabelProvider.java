@@ -16,7 +16,7 @@ public class SettingsLabelProvider extends LabelProvider {
             return settings.getName();
 
         }
-        return ""; //$NON-NLS-1$
+        return "";
     }
 
 }

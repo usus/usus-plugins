@@ -25,10 +25,10 @@ public class SelectSettingPage extends WizardPage {
     private ProjectSettings selectedSetting;
 
     protected SelectSettingPage( List<ProjectSettings> projectSettings ) {
-        super( "" ); //$NON-NLS-1$
+        super( "" );
         this.projectSettings = projectSettings;
-        setTitle( UITexts.SelectSettingPage_title );
-        setDescription( UITexts.SelectSettingPage_description );
+        setTitle( "Select Settings" );
+        setDescription( "Select one of the following settings" );
     }
 
     public void createControl( Composite parent ) {
@@ -37,7 +37,7 @@ public class SelectSettingPage extends WizardPage {
         gridLayout.numColumns = 1;
         composite.setLayout( gridLayout );
         Label label = new Label( composite, SWT.NULL );
-        label.setText( UITexts.SelectSettingPage_available_setting );
+        label.setText( "Available Settings" );
         createSettingsList( composite );
         setControl( composite );
     }

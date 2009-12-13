@@ -4,9 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.projectsettings.ui.internal;
 
-import static org.projectusus.projectsettings.ui.internal.UITexts.SelectProjectPage_description;
-import static org.projectusus.projectsettings.ui.internal.UITexts.SelectProject_title;
-
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
@@ -28,10 +25,14 @@ public class SelectProjectPage extends WizardPage {
     private IProject selectedProject;
 
     public SelectProjectPage( List<IProject> projects ) {
-        super( "SelectProjectPage" ); //$NON-NLS-1$
+        super( "SelectProjectPage" );
         this.projects = projects;
-        setTitle( SelectProject_title );
-        setDescription( SelectProjectPage_description );
+        setTitle( "Select Project" );
+        setDescription( getDescriptionText() );
+    }
+
+    private String getDescriptionText() {
+        return "Select a master project. Compiler warning settings will be copied to the other projects.";
     }
 
     public void createControl( Composite parent ) {
@@ -40,7 +41,7 @@ public class SelectProjectPage extends WizardPage {
         gridLayout.numColumns = 1;
         composite.setLayout( gridLayout );
         Label label = new Label( composite, SWT.NULL );
-        label.setText( SelectProjectPage_description );
+        label.setText( getDescriptionText() );
         createProjectsList( composite );
         setControl( composite );
     }
