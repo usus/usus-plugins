@@ -44,7 +44,7 @@ public class PDETestUsingWSProject {
 
     protected void waitForAutobuild() throws CoreException {
         getWorkspace().build( CLEAN_BUILD, new NullProgressMonitor() );
-        System.out.print( "  Waiting for autobuild to complete ..." ); //$NON-NLS-1$
+        System.out.print( "  Waiting for autobuild to complete ..." );
         boolean retry = true;
         while( retry ) {
             try {
