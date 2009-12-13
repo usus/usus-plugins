@@ -17,7 +17,7 @@ public class MethodFormatter {
     }
 
     public String formatHeadInfo() {
-        String result = ""; //$NON-NLS-1$
+        String result = ""; 
         try {
             result = formatSignature();
         } catch( JavaModelException jamox ) {
@@ -31,6 +31,6 @@ public class MethodFormatter {
         String name = method.getElementName();
         String params = Signature.toString( method.getSignature() );
         params = params.substring( returnType.length() ).trim();
-        return returnType + " " + name + params; //$NON-NLS-1$
+        return returnType + " " + name + params; 
     }
 }

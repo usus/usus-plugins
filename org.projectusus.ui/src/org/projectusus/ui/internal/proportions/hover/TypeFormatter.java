@@ -20,9 +20,9 @@ class TypeFormatter extends JavaElementFormatter {
 
     String format() {
         StringBuilder sb = new StringBuilder( typeElement.getElementName() );
-        sb.append( " [" ); //$NON-NLS-1$
+        sb.append( " [" ); 
         formatMetric( CodeProportionKind.KG, classRawData.getNumberOfMethods(), sb );
-        sb.append( "]" ); //$NON-NLS-1$
+        sb.append( "]" ); 
         return sb.toString();
     }
 }

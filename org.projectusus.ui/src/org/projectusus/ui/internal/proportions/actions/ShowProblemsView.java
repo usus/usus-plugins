@@ -4,11 +4,9 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.actions;
 
-import static org.projectusus.ui.internal.util.UITexts.showProblemsView_label;
-
 public class ShowProblemsView extends ShowViewById {
 
     public ShowProblemsView() {
-        super( showProblemsView_label, "org.eclipse.ui.views.ProblemView" ); //$NON-NLS-1$
+        super( "Show Problems View", "org.eclipse.ui.views.ProblemView" );
     }
 }

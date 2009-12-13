@@ -37,7 +37,7 @@ public class UsusUIPlugin extends AbstractUIPlugin {
     }
 
     public void log( Exception ex ) {
-        String msg = ex.getMessage() == null ? "[No details.]" : ex.getMessage(); //$NON-NLS-1$
+        String msg = ex.getMessage() == null ? "[No details.]" : ex.getMessage(); 
         IStatus status = new Status( ERROR, getPluginId(), 0, msg, ex );
         getDefault().getLog().log( status );
     }

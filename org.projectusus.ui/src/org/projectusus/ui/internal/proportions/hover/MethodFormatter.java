@@ -29,15 +29,15 @@ class MethodFormatter extends JavaElementFormatter {
 
     String format() {
         StringBuilder sb = new StringBuilder( method.getElementName() );
-        sb.append( " [" ); //$NON-NLS-1$
+        sb.append( " [" ); 
         formatMetric( CC, methodRawData.getCCValue(), sb );
-        sb.append( ", " ); //$NON-NLS-1$
+        sb.append( ", " ); 
         formatMetric( ML, methodRawData.getMLValue(), sb );
-        sb.append( ", " ); //$NON-NLS-1$
+        sb.append( ", " ); 
         formatMetric( CodeProportionKind.KG, classRawData.getNumberOfMethods(), sb );
-        sb.append( ", " ); //$NON-NLS-1$
+        sb.append( ", " ); 
         formatBugs( sb, bugs );
-        sb.append( "]" ); //$NON-NLS-1$
+        sb.append( "]" ); 
         return sb.toString();
     }
 

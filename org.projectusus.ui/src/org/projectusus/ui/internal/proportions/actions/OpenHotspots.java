@@ -5,7 +5,6 @@
 package org.projectusus.ui.internal.proportions.actions;
 
 import static org.eclipse.ui.PlatformUI.getWorkbench;
-import static org.projectusus.ui.internal.util.UITexts.openHotspots_label;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ISelection;
@@ -22,7 +21,7 @@ public class OpenHotspots extends Action {
     private final ISelection selection;
 
     public OpenHotspots( ISelection selection ) {
-        super( openHotspots_label );
+        super( "Open Hotspots" );
         this.selection = selection;
     }
 

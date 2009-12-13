@@ -6,9 +6,6 @@ package org.projectusus.ui.internal.coveredprojects;
 
 import static org.eclipse.jface.window.Window.OK;
 import static org.eclipse.ui.PlatformUI.getWorkbench;
-import static org.projectusus.ui.internal.util.UITexts.testSuiteSelectorDialog_buttonLabel;
-import static org.projectusus.ui.internal.util.UITexts.testSuiteSelectorDialog_msg;
-import static org.projectusus.ui.internal.util.UITexts.testSuiteSelectorDialog_title;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -40,10 +37,10 @@ class TestSuiteSelectorDialogOpener {
     }
 
     private static class TestSuiteSelectorDialog extends MessageDialog {
-        private static final String[] BUTTON_LABELS = new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, testSuiteSelectorDialog_buttonLabel };
+        private static final String[] BUTTON_LABELS = new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, "Not really, but..." };
 
         public TestSuiteSelectorDialog( Shell parentShell ) {
-            super( parentShell, testSuiteSelectorDialog_title, null, testSuiteSelectorDialog_msg, QUESTION, BUTTON_LABELS, 0 );
+            super( parentShell, "Select coverage suite for Usus", null, getDialogMessage(), QUESTION, BUTTON_LABELS, 0 );
         }
 
         @Override
@@ -52,6 +49,10 @@ class TestSuiteSelectorDialogOpener {
                 new TestSuiteSelectionAction( getShell() ).run();
             }
             super.buttonPressed( buttonId );
+        }
+
+        private static String getDialogMessage() {
+            return "You are running a code coverage session. Would you like to make this the default launch configuration for taking code coverage measurements in Usus?";
         }
     }
 }

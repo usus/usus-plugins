@@ -4,11 +4,10 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.actions;
 
-import static org.projectusus.ui.internal.util.UITexts.showCoverageView_label;
 
 public class ShowCoverageView extends ShowViewById {
 
     public ShowCoverageView() {
-        super( showCoverageView_label, "com.mountainminds.eclemma.ui.CoverageView" ); //$NON-NLS-1$
+        super( "Show Coverage", "com.mountainminds.eclemma.ui.CoverageView" );
     }
 }

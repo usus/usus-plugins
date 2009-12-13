@@ -26,7 +26,7 @@ class UsusModelElementFormatter {
 
     private void formatKeyValue( String key, String value, StringBuilder sb ) {
         sb.append( key );
-        sb.append( ": " ); //$NON-NLS-1$
+        sb.append( ": " ); 
         sb.append( value );
     }
 }

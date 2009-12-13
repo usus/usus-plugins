@@ -4,8 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.hotspots.pages;
 
-import static org.projectusus.ui.internal.util.UITexts.defaultHotspotsPage_info;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -20,7 +18,7 @@ public class DefaultHotspotsPage extends Page implements IHotspotsPage {
     @Override
     public void createControl( Composite parent ) {
         control = new Label( parent, SWT.NONE );
-        control.setText( defaultHotspotsPage_info );
+        control.setText( getInfoText() );
     }
 
     @Override
@@ -41,5 +39,9 @@ public class DefaultHotspotsPage extends Page implements IHotspotsPage {
 
     public boolean isInitialized() {
         return control != null;
+    }
+
+    private String getInfoText() {
+        return "No content to display at this time.\nSelect an entry on the Cockpit view and choose 'Open Hotspots'.";
     }
 }

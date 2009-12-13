@@ -5,14 +5,6 @@
 package org.projectusus.ui.internal.bugreport;
 
 import static java.lang.String.valueOf;
-import static org.projectusus.ui.internal.util.UITexts.BugPage_classname;
-import static org.projectusus.ui.internal.util.UITexts.BugPage_cyclomatic_complexity;
-import static org.projectusus.ui.internal.util.UITexts.BugPage_method_length;
-import static org.projectusus.ui.internal.util.UITexts.BugPage_methodname;
-import static org.projectusus.ui.internal.util.UITexts.BugPage_number_of_methods_in_class;
-import static org.projectusus.ui.internal.util.UITexts.BugPage_packagename;
-import static org.projectusus.ui.internal.util.UITexts.BugPage_report_bug;
-import static org.projectusus.ui.internal.util.UITexts.BugPage_title;
 
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.WizardPage;
@@ -25,7 +17,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.projectusus.core.internal.bugreport.Bug;
-import org.projectusus.ui.internal.util.UITexts;
 
 public class BugPage extends WizardPage {
 
@@ -39,9 +30,9 @@ public class BugPage extends WizardPage {
     private Text numberOfMethodsInClass;
 
     public BugPage( Bug bug ) {
-        super( "" ); //$NON-NLS-1$
-        setTitle( BugPage_report_bug );
-        setDescription( BugPage_report_bug );
+        super( "" );
+        setTitle( "Report Bug" );
+        setDescription( "Report Bug" );
         // setImageDescriptor( getSharedImages().getDescriptor( WIZARD_REPORT_BUG ) );
         this.bug = bug;
     }
@@ -51,13 +42,13 @@ public class BugPage extends WizardPage {
         GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 2;
         composite.setLayout( gridLayout );
-        title = createEditableText( composite, BugPage_title );
-        packageName = createNotEditableText( composite, BugPage_packagename );
-        className = createNotEditableText( composite, BugPage_classname );
-        methodName = createNotEditableText( composite, BugPage_methodname );
-        cyclomaticComplexity = createNotEditableText( composite, BugPage_cyclomatic_complexity );
-        methodLength = createNotEditableText( composite, BugPage_method_length );
-        numberOfMethodsInClass = createNotEditableText( composite, BugPage_number_of_methods_in_class );
+        title = createEditableText( composite, "Title" );
+        packageName = createNotEditableText( composite, "Packagename" );
+        className = createNotEditableText( composite, "Classname" );
+        methodName = createNotEditableText( composite, "MethodName" );
+        cyclomaticComplexity = createNotEditableText( composite, "Cyclomatic complexity" );
+        methodLength = createNotEditableText( composite, "Method length" );
+        numberOfMethodsInClass = createNotEditableText( composite, "Number of methods in class" );
 
         initView();
         setControl( composite );
@@ -91,7 +82,7 @@ public class BugPage extends WizardPage {
     private void updateModel() {
         bug.setTitle( title.getText() );
         if( bug.getTitle().length() == 0 ) {
-            setMessage( UITexts.BugPage_insert_title, IMessageProvider.WARNING );
+            setMessage( "Please insert title", IMessageProvider.WARNING );
         } else {
             setMessage( null );
         }

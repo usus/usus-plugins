@@ -4,9 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.history;
 
-import static org.projectusus.ui.internal.util.UITexts.checkpointsHistoryChart_title;
-import static org.projectusus.ui.internal.util.UITexts.checkpointsHistoryChart_x;
-import static org.projectusus.ui.internal.util.UITexts.checkpointsHistoryChart_y;
 import static org.swtchart.IAxis.Position.Secondary;
 
 import org.eclipse.swt.SWT;
@@ -23,7 +20,7 @@ class CheckpointsHistoryChart extends Chart {
     }
 
     private void init() {
-        getTitle().setText( checkpointsHistoryChart_title );
+        getTitle().setText( "Usus code proportions history" );
         getLegend().setPosition( SWT.LEFT );
         initXAxis();
         initYAxis();
@@ -31,13 +28,13 @@ class CheckpointsHistoryChart extends Chart {
 
     private void initXAxis() {
         IAxis xAxis = getAxisSet().getXAxis( 0 );
-        xAxis.getTitle().setText( checkpointsHistoryChart_x );
+        xAxis.getTitle().setText( "Recent checkpoints" );
         xAxis.setRange( new Range( 0, 16 ) );
     }
 
     private void initYAxis() {
         IAxis yAxis = getAxisSet().getYAxis( 0 );
-        yAxis.getTitle().setText( checkpointsHistoryChart_y );
+        yAxis.getTitle().setText( "Quality" );
         yAxis.setRange( new Range( -5, 105 ) );
         yAxis.setPosition( Secondary );
     }

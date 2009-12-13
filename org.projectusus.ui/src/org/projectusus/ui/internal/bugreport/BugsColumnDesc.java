@@ -5,42 +5,41 @@
 package org.projectusus.ui.internal.bugreport;
 
 import org.projectusus.core.internal.bugreport.Bug;
-import org.projectusus.ui.internal.util.UITexts;
 import org.projectusus.ui.internal.viewer.IColumnDesc;
 
 enum BugsColumnDesc implements IColumnDesc<Bug> {
 
-    COVERED( UITexts.BugsColumnDesc_title, 15, false, true ) {
+    COVERED( "Title", 15, false, true ) {
         public String getLabel( Bug bug ) {
             return bug.getTitle();
         }
     },
-    PACKAGE( UITexts.BugsColumnDesc_package, 40, false, true ) {
+    PACKAGE( "Package", 40, false, true ) {
         public String getLabel( Bug bug ) {
             return bug.getLocation().getPackageName();
         }
     },
-    CLASS_NAME( UITexts.BugsColumnDesc_classname, 20, false, true ) {
+    CLASS_NAME( "Classname", 20, false, true ) {
         public String getLabel( Bug bug ) {
             return bug.getLocation().getClassName();
         }
     },
-    METHOD_NAME( UITexts.BugsColumnDesc_methodname, 20, false, true ) {
+    METHOD_NAME( "Methodname", 20, false, true ) {
         public String getLabel( Bug bug ) {
             return bug.getLocation().getMethodName();
         }
     },
-    METHOD_LENGTH( UITexts.BugsColumnDesc_methodlength, 20, false, true ) {
+    METHOD_LENGTH( "Methodlength", 20, false, true ) {
         public String getLabel( Bug bug ) {
             return String.valueOf( bug.getBugMetrics().getMethodLength() );
         }
     },
-    CYCLOMATIC_COMPLEXITY( UITexts.BugsColumnDesc_cyclomatic_complexity, 20, false, true ) {
+    CYCLOMATIC_COMPLEXITY( "Cyclomatic complexity", 20, false, true ) {
         public String getLabel( Bug bug ) {
             return String.valueOf( bug.getBugMetrics().getCyclomaticComplexity() );
         }
     },
-    NUMBER_OF_METHOS_IN_CLASS( UITexts.BugsColumnDesc_number_of_methods_in_class, 20, false, true ) {
+    NUMBER_OF_METHOS_IN_CLASS( "# methods in class", 20, false, true ) {
         public String getLabel( Bug bug ) {
             return String.valueOf( bug.getBugMetrics().getNumberOfMethods() );
         }

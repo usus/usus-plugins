@@ -8,7 +8,6 @@ import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
-import static org.projectusus.ui.internal.util.UITexts.cockpitView_noProjectsSelected;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
 import java.util.List;
@@ -80,7 +79,7 @@ public class CockpitView extends ViewPart {
     }
 
     private void initContextMenuBehavior() {
-        MenuManager menuManager = new MenuManager( "#PopupMenu" ); //$NON-NLS-1$
+        MenuManager menuManager = new MenuManager( "#PopupMenu" ); 
         menuManager.addMenuListener( new IMenuListener() {
             public void menuAboutToShow( IMenuManager manager ) {
                 manager.add( new OpenHotspots( treeViewer.getSelection() ) );
@@ -131,7 +130,7 @@ public class CockpitView extends ViewPart {
             setMessage( history.getLastStatus() );
         } else {
             enableViewer( false );
-            getStatusLine().setMessage( getWarningImage(), cockpitView_noProjectsSelected );
+            getStatusLine().setMessage( getWarningImage(), "No projects selected for use with Usus." );
         }
     }
 

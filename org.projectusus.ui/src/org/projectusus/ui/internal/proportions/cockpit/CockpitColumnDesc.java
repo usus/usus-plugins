@@ -4,11 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.cockpit;
 
-import static org.projectusus.ui.internal.util.UITexts.cockpitColumnDesc_cases;
-import static org.projectusus.ui.internal.util.UITexts.cockpitColumnDesc_indicator;
-import static org.projectusus.ui.internal.util.UITexts.cockpitColumnDesc_sqi;
-import static org.projectusus.ui.internal.util.UITexts.cockpitColumnDesc_violations;
-
 import java.text.DecimalFormat;
 
 import org.projectusus.core.internal.proportions.model.CodeProportion;
@@ -16,25 +11,25 @@ import org.projectusus.ui.internal.viewer.IColumnDesc;
 
 enum CockpitColumnDesc implements IColumnDesc<CodeProportion> {
 
-    INDICATOR( cockpitColumnDesc_indicator, 62, true ) {
+    INDICATOR( "Indicator", 56, true ) {
         public String getLabel( CodeProportion element ) {
             return element.getMetric().getLabel();
         }
     },
-    SQI( cockpitColumnDesc_sqi, 10, false ) {
+    SQI( "SQI", 10, false ) {
         public String getLabel( CodeProportion element ) {
-            DecimalFormat formatter = new DecimalFormat( "#.##" ); //$NON-NLS-1$
+            DecimalFormat formatter = new DecimalFormat( "#.##" ); 
             return String.valueOf( formatter.format( element.getSQIValue() ) );
         }
     },
-    VIOLATIONS( cockpitColumnDesc_violations, 14, false ) {
+    VIOLATIONS( "Violations", 14, false ) {
         public String getLabel( CodeProportion element ) {
             return String.valueOf( element.getViolations() );
         }
     },
-    CASES( cockpitColumnDesc_cases, 14, false ) {
+    CASES( "Total", 20, false ) {
         public String getLabel( CodeProportion element ) {
-            return String.valueOf( element.getBasis() ) + " " + element.getMetric().getUnit().getLabel(); //$NON-NLS-1$
+            return String.valueOf( element.getBasis() ) + " " + element.getMetric().getUnit().getLabel(); 
         }
     };
 

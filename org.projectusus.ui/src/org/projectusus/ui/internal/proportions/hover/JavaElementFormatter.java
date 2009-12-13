@@ -12,14 +12,14 @@ abstract class JavaElementFormatter {
 
     void formatBugs( StringBuilder sb, BugList bugs ) {
         for( Bug bug : bugs ) {
-            sb.append( "Bug: " ); //$NON-NLS-1$
+            sb.append( "Bug: " ); 
             sb.append( bug.getTitle() );
         }
     }
 
     void formatMetric( CodeProportionKind metric, int value, StringBuilder sb ) {
         sb.append( metric.getLabel() );
-        sb.append( ":" ); //$NON-NLS-1$
+        sb.append( ":" ); 
         sb.append( value );
     }
 }

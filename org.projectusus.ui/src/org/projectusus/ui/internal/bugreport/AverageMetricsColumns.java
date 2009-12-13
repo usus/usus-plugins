@@ -4,31 +4,26 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.bugreport;
 
-import static org.projectusus.ui.internal.util.UITexts.AverageMetricsColumns_CC;
-import static org.projectusus.ui.internal.util.UITexts.AverageMetricsColumns_ML;
-import static org.projectusus.ui.internal.util.UITexts.AverageMetricsColumns_name;
-import static org.projectusus.ui.internal.util.UITexts.AverageMetricsColumns_number_of_methos_in_class;
-
 import org.projectusus.core.internal.bugreport.IAverageMetrics;
 import org.projectusus.ui.internal.viewer.IColumnDesc;
 
 public enum AverageMetricsColumns implements IColumnDesc<IAverageMetrics> {
-    NAME( AverageMetricsColumns_name, 15, false, true ) {
+    NAME( "Name", 15, false, true ) {
         public String getLabel( IAverageMetrics element ) {
             return element.getName();
         }
     },
-    AVG_CC( AverageMetricsColumns_CC, 15, false, true ) {
+    AVG_CC( "Avg. CC", 15, false, true ) {
         public String getLabel( IAverageMetrics metrics ) {
             return String.valueOf( metrics.getAverageCyclomaticComplexity() );
         }
     },
-    AVG_ML( AverageMetricsColumns_ML, 40, false, true ) {
+    AVG_ML( "Avg. ML", 40, false, true ) {
         public String getLabel( IAverageMetrics metrics ) {
             return String.valueOf( metrics.getAverageMethodLength() );
         }
     },
-    AVG_NUMBER_OF_METHOS_IN_CLASS( AverageMetricsColumns_number_of_methos_in_class, 20, false, true ) {
+    AVG_NUMBER_OF_METHOS_IN_CLASS( "Avg. methods in class", 20, false, true ) {
         public String getLabel( IAverageMetrics metrics ) {
             return String.valueOf( metrics.getAverageNumberOfMethodsInClass() );
         }
