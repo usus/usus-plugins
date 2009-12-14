@@ -20,31 +20,31 @@ import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
 
-public class PDETestForMetricsComputation extends PDETestUsingWSProject{
+public class PDETestForMetricsComputation extends PDETestUsingWSProject {
 
     public void simpleCaseTestDemo() throws Exception {
-        IFile file = createWSFile( "A.java", loadContent("A.test") );
-        computeFile(file);
+        IFile file = createWSFile( "A.java", loadContent( "A.test" ) );
+        computeFile( file );
         IProjectRawData results = (IProjectRawData)file.getProject().getAdapter( IProjectRawData.class );
         assertEquals( 1, results.getViolationCount( ML ) );
         assertEquals( 2, results.getViolationBasis( ML ) );
     }
-    
-    protected void computeFile(IFile file){
+
+    protected void computeFile( IFile file ) {
         WorkspaceRawData.getInstance().setCurrentProject( file.getProject() );
         WorkspaceRawData.getInstance().setCurrentFile( file );
         new FileDriver( file ).compute();
     }
-    
-    protected String loadContent(String fileName) throws Exception {
+
+    protected String loadContent( String fileName ) throws Exception {
         URL entry = loadEntry( fileName );
-        return readPreservingBinaryIdentity( entry.openStream());
+        return readPreservingBinaryIdentity( entry.openStream() );
     }
 
     private URL loadEntry( String fileName ) {
         return Platform.getBundle( "org.projectusus.core.test" ).getEntry( "resources/" + fileName );
     }
-    
+
     private String readPreservingBinaryIdentity( InputStream is ) throws IOException {
         StringBuffer result = new StringBuffer();
         Reader reader = new InputStreamReader( is );

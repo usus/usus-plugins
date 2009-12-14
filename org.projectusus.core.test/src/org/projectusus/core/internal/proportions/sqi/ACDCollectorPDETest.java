@@ -38,7 +38,8 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     
     @Test
     public void twoRelatedClasses1knows2() throws Exception {
-        IFile file = createWSFile( "Acd3_1.java", loadContent("Acd3_1.test") );
+        addJavaNature();
+        IFile file = createWSFile( "Acd2.java", loadContent("Acd3_1.test") );
         computeFile(file);
         assertEquals( 2, getAdjacencyList().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
