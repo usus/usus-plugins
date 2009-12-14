@@ -17,8 +17,10 @@ import java.io.InputStream;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jdt.core.JavaCore;
 import org.junit.After;
 import org.junit.Before;
 import org.projectusus.core.internal.project.IUSUSProject;
@@ -86,6 +88,13 @@ public class PDETestUsingWSProject {
     protected void makeUsusProject( boolean makeUsusProject ) throws CoreException {
         Object adapter = project.getAdapter( IUSUSProject.class );
         ((IUSUSProject)adapter).setUsusProject( makeUsusProject );
+        waitForAutobuild();
+    }
+    
+    protected void addJavaNature() throws CoreException {
+        IProjectDescription description = project.getDescription();
+        description.setNatureIds( new String[] { JavaCore.NATURE_ID } );
+        project.setDescription( description, new NullProgressMonitor() );
         waitForAutobuild();
     }
     
