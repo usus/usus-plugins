@@ -31,7 +31,6 @@ public class JDTDriver {
         monitor.beginTask( jdtDriver_computing, countTicks( target.getProjects() ) );
         for( IProject project : target.getProjects() ) {
             monitor.subTask( project.getName() );
-            WorkspaceRawData.getInstance().setCurrentProject( project );
             for( IFile removedFile : target.getRemovedFiles( project ) ) {
                 WorkspaceRawData.getInstance().dropRawData( removedFile );
             }
@@ -62,9 +61,7 @@ public class JDTDriver {
         for( IFile file : files ) {
             fileStarted( file );
             runDriverOnFile( file, statusCollector, monitor );
-            fileFinished();
         }
-        computationFinished();
     }
 
     private void runDriverOnFile( IFile file, StatusCollector statusCollector, IProgressMonitor monitor ) {
@@ -79,20 +76,10 @@ public class JDTDriver {
 
     private void computationStarted( IProject project ) {
         SQI.trace( "Computation started: " + project.toString() ); //$NON-NLS-1$
-        WorkspaceRawData.getInstance().setCurrentProject( project );
     }
 
     private void fileStarted( IFile file ) {
         SQI.trace( "File started: " + file.getFullPath() ); //$NON-NLS-1$
         WorkspaceRawData.getInstance().dropRawData( file );
-        WorkspaceRawData.getInstance().setCurrentFile( file );
-    }
-
-    private void fileFinished() {
-        WorkspaceRawData.getInstance().setCurrentFile( null );
-    }
-
-    private void computationFinished() {
-        WorkspaceRawData.getInstance().setCurrentProject( null );
     }
 }

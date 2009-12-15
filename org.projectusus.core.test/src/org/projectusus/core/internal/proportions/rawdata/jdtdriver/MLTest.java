@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -19,7 +20,6 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.ReflectionUtil;
-import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ML;
 
 
 
@@ -32,7 +32,7 @@ public class MLTest  {
     @Before
     public void setup() {
         block = mock(Block.class);
-        mlChecker = new ML();
+        mlChecker = new ML(mock(IFile.class));
     }
 
 

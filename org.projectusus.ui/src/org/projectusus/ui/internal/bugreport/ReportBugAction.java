@@ -95,7 +95,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
 
     private void initBugClassData( Bug bug, IClassRawData classRawData ) {
         fillClassMetrics( bug, classRawData );
-        IMethodRawData methodResults = classRawData.getRawData( getSelectedMethod() );
+        IMethodRawData methodResults = classRawData.getMethodRawData( getSelectedMethod() );
         if( methodResults != null ) {
             fillMethodMetrics( bug, methodResults );
             bug.setLocation( getMethodLocation( getSelectedMethod() ) );

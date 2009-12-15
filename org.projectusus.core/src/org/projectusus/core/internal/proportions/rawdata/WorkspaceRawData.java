@@ -14,8 +14,6 @@ import org.projectusus.core.internal.proportions.model.IHotspot;
 
 public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
-    private IProject currentProject;
-
     private static WorkspaceRawData instance = new WorkspaceRawData();
 
     private WorkspaceRawData() {
@@ -24,15 +22,6 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
     public static WorkspaceRawData getInstance() {
         return instance;
-    }
-
-    public void setCurrentProject( IProject project ) {
-        this.currentProject = project;
-    }
-
-    public ProjectRawData getCurrentProjectRawData() {
-        // log warning if currentProject == null
-        return getProjectRawData( currentProject );
     }
 
     ProjectRawData getProjectRawData( IProject project ) {
@@ -44,16 +33,12 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         return rawData;
     }
 
-    public void setCurrentFile( IFile currentFile ) {
-        getCurrentProjectRawData().setCurrentFile( currentFile );
-    }
-
     public void dropRawData( IProject project ) {
         remove( project );
     }
 
     public void dropRawData( IFile file ) {
-        getCurrentProjectRawData().dropRawData( file );
+        ((ProjectRawData)file.getProject().getAdapter( IProjectRawData.class )).dropRawData( file );
     }
 
     public CodeProportion getCodeProportion( CodeProportionKind metric ) {

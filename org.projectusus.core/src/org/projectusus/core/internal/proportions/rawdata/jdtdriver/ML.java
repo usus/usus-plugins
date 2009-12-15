@@ -1,15 +1,17 @@
 package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
 
-import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.projectusus.core.internal.proportions.rawdata.IFileRawData;
-import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
-public class ML extends ASTVisitor {
+public class ML extends MetricsCollector {
 
     private int statementCount;
+
+    public ML( IFile file ) {
+        super( file );
+    }
 
     @Override
     public boolean visit( MethodDeclaration node ) {
@@ -25,14 +27,12 @@ public class ML extends ASTVisitor {
 
     @Override
     public void endVisit( MethodDeclaration node ) {
-        IFileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectRawData().getCurrentFileRawData();
-        currentFileResults.setMLValue( node, statementCount );
+        getFileRawData().setMLValue( node, statementCount );
     }
 
     @Override
     public void endVisit( Initializer node ) {
-        IFileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectRawData().getCurrentFileRawData();
-        currentFileResults.setMLValue( node, statementCount );
+        getFileRawData().setMLValue( node, statementCount );
     }
 
     @Override

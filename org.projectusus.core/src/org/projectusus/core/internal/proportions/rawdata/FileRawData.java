@@ -115,7 +115,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
 
     public void addClassReference( AbstractTypeDeclaration referencingType, IJavaElement referencedElement ) {
         IResource resource = referencedElement.getResource();
-        if( !(resource instanceof IFile) ) {
+        if( !(resource instanceof IFile) || !resource.getFileExtension().equals( "java" ) ) { //$NON-NLS-1$
             return;
         }
         ClassRawData referencingRawData = getClassRawData( referencingType );

@@ -29,17 +29,13 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         this.className = name;
         this.startPosition = startPosition;
         this.lineNumber = line;
-        addAdjacencyNode();
+        this.adjacencyNode = new AdjacencyNode();
+        acdModel.add( this.adjacencyNode );
     }
 
     // for tests...
     public static void resetAcdModel() {
         acdModel = new AcdModel();
-    }
-
-    private void addAdjacencyNode() {
-        adjacencyNode = new AdjacencyNode();
-        acdModel.add( adjacencyNode );
     }
 
     public static AcdModel getAcdModel() {
@@ -80,7 +76,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         return rawData;
     }
 
-    public IMethodRawData getRawData( IMethod method ) {
+    public IMethodRawData getMethodRawData( IMethod method ) {
         if( method == null ) {
             return null;
         }

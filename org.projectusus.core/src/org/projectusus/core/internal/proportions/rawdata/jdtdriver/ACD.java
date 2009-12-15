@@ -1,7 +1,7 @@
 package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.ArrayType;
@@ -10,14 +10,16 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.projectusus.core.internal.proportions.rawdata.IFileRawData;
-import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
-public class ACD extends ASTVisitor {
+public class ACD extends MetricsCollector {
 
     private AbstractTypeDeclaration currentType;
 
     // current type
+
+    public ACD( IFile file ) {
+        super( file );
+    }
 
     @Override
     public boolean visit( TypeDeclaration node ) {
@@ -61,8 +63,7 @@ public class ACD extends ASTVisitor {
             return true;
         }
         IJavaElement javaElement = binding.getJavaElement();
-        IFileRawData fileRawData = WorkspaceRawData.getInstance().getCurrentProjectRawData().getCurrentFileRawData();
-        fileRawData.addClassReference( currentType, javaElement );
+        getFileRawData().addClassReference( currentType, javaElement );
         return true;
     }
 

@@ -10,5 +10,5 @@ public interface IClassRawData extends IRawData {
 
     int getNumberOfMethods();
 
-    IMethodRawData getRawData( IMethod method );
+    IMethodRawData getMethodRawData( IMethod method );
 }

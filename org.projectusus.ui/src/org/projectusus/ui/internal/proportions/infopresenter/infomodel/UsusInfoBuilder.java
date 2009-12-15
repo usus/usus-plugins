@@ -52,7 +52,7 @@ public class UsusInfoBuilder {
     }
 
     private IMethodRawData findMethodRawData( IClassRawData classRawData ) {
-        return classRawData.getRawData( method );
+        return classRawData.getMethodRawData( method );
     }
 
     private BugList findBugInfo( IMethod method ) throws JavaModelException {

@@ -79,7 +79,7 @@ enum TextHoverFormatter {
             ExtractFileRawData extractor = new ExtractFileRawData( resource );
             if( extractor.isDataAvailable() ) {
                 IClassRawData classRawData = extractor.getFileRawData().getRawData( methodElement.getDeclaringType() );
-                IMethodRawData methodRawData = classRawData.getRawData( methodElement );
+                IMethodRawData methodRawData = classRawData.getMethodRawData( methodElement );
                 BugList bugs = findBugInfo( methodElement );
                 result = new MethodFormatter( methodElement, methodRawData, classRawData, bugs ).format();
             }

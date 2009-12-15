@@ -11,6 +11,9 @@ import static org.eclipse.jdt.core.dom.ASTParser.newParser;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
@@ -27,11 +30,18 @@ public class FileDriver {
     public void compute() {
         ICompilationUnit compilationUnit = createCompilationUnitFrom( file );
         CompilationUnit parse = parse( compilationUnit );
+        IJavaProject javaProject = compilationUnit.getJavaProject();
+        try {
+            IPackageFragmentRoot packageFragmentRoot = javaProject.getPackageFragmentRoot( compilationUnit.getUnderlyingResource() );
+            // if( packageFragmentRoot.getKind() == IPackageFragmentRoot.K_SOURCE ) {
 
-        for( ASTVisitor visitor : asList( new ClassVisitor(), new ML(), new CC() ) ) {
-            parse.accept( visitor );
+            for( ASTVisitor visitor : asList( new ClassVisitor( file ), new ML( file ), new CC( file ), new ACD( file ) ) ) {
+                parse.accept( visitor );
+            }
+            // }
+        } catch( JavaModelException jme ) {
+            // ignore for the time being
         }
-        parse.accept( new ACD() ); // ACD must run after ClassVisitor!
     }
 
     private CompilationUnit parse( ICompilationUnit unit ) {

@@ -95,9 +95,8 @@ public class CodeProportionsComputerJob extends Job {
     private void computeJavaCodeMetrics( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
         new JDTDriver( target ).run( monitor );
 
-        WorkspaceRawData results = WorkspaceRawData.getInstance();
         for( CodeProportionKind metric : asList( CC, KG, ML, ACD ) ) {
-            collector.add( results.getCodeProportion( metric ) );
+            collector.add( WorkspaceRawData.getInstance().getCodeProportion( metric ) );
         }
     }
 }

@@ -17,7 +17,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
 import org.projectusus.core.internal.PDETestUsingWSProject;
 import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
-import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
 
 public class PDETestForMetricsComputation extends PDETestUsingWSProject {
@@ -29,11 +28,9 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
         assertEquals( 1, results.getViolationCount( ML ) );
         assertEquals( 2, results.getViolationBasis( ML ) );
     }
-
-    protected void computeFile( IFile file ) {
-        WorkspaceRawData.getInstance().setCurrentProject( file.getProject() );
-        WorkspaceRawData.getInstance().setCurrentFile( file );
-        new FileDriver( file ).compute();
+    
+    protected void computeFile(IFile file){
+       new FileDriver( file ).compute();
     }
 
     protected String loadContent( String fileName ) throws Exception {

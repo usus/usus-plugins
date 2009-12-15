@@ -72,7 +72,7 @@ public class UsusInfoBuilderTest {
         IClassRawData classRawData = mock( IClassRawData.class );
         when( fileRawData.getRawData( method.getDeclaringType() ) ).thenReturn( classRawData );
         IMethodRawData methodRawData = mock( IMethodRawData.class );
-        when( classRawData.getRawData( method ) ).thenReturn( methodRawData );
+        when( classRawData.getMethodRawData( method ) ).thenReturn( methodRawData );
     }
 
     private void setUpRawDataHierarchy() throws JavaModelException {

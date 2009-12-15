@@ -18,7 +18,7 @@ public class RawData<S, T extends IRawData> implements IRawData {
         wrapper = new RawDataMapWrapper<S, T>();
     }
 
-    public synchronized T getRawData( S key ) {
+    protected synchronized T getRawData( S key ) {
         return wrapper.getRawData( key );
     }
 
@@ -30,7 +30,7 @@ public class RawData<S, T extends IRawData> implements IRawData {
         return wrapper.getRawDataElementCount();
     }
 
-    public synchronized void remove( S key ) {
+    protected synchronized void remove( S key ) {
         wrapper.remove( key );
     }
 

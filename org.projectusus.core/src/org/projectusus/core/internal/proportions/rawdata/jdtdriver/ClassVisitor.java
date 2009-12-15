@@ -1,14 +1,16 @@
 package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
 
-import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.projectusus.core.internal.proportions.rawdata.IFileRawData;
-import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
-public class ClassVisitor extends ASTVisitor {
+public class ClassVisitor extends MetricsCollector {
+
+    public ClassVisitor( IFile file ) {
+        super( file );
+    }
 
     @Override
     public boolean visit( TypeDeclaration node ) {
@@ -29,8 +31,7 @@ public class ClassVisitor extends ASTVisitor {
     }
 
     private boolean addAbstractTypeDeclaration( AbstractTypeDeclaration node ) {
-        IFileRawData currentFileResults = WorkspaceRawData.getInstance().getCurrentProjectRawData().getCurrentFileRawData();
-        currentFileResults.addClass( node );
+        getFileRawData().addClass( node );
         return true;
     }
 }
