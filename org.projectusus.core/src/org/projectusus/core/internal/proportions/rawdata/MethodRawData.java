@@ -15,10 +15,10 @@ public class MethodRawData implements IRawData, IMethodRawData {
     private final int startPosition;
     private final String className;
     private final String methodName;
+    private final int lineNumber;
 
     private int ccValue;
     private int mlValue;
-    private final int lineNumber;
 
     public MethodRawData( int startPosition, int lineNumber, String className, String methodName ) {
         this.startPosition = startPosition;
@@ -79,5 +79,10 @@ public class MethodRawData implements IRawData, IMethodRawData {
 
     public int getLineNumber() {
         return lineNumber;
+    }
+
+    public void resetRawData() {
+        ccValue = 0;
+        mlValue = 0;
     }
 }

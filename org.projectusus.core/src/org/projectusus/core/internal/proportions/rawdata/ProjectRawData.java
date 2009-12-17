@@ -9,6 +9,7 @@ import org.eclipse.core.resources.IProject;
 
 public class ProjectRawData extends RawData<IFile, FileRawData> implements IProjectRawData {
 
+    // TODO wird nicht gebraucht:
     private final IProject projectOfRawData;
 
     public ProjectRawData( IProject project ) {

@@ -1,0 +1,27 @@
+public class Reset1 {
+
+	private String string;
+	
+	public void otherMethod(){
+	}
+	
+	public String method(){
+	if(true){}
+	if(true){}
+	if(true){}
+	if(true){}
+	if(true){}
+	if(true){}
+		string = "x";
+		string = "x";
+		string = "x";
+		string = "x";
+		string = "x";
+		string = "x";
+		string = "x";
+		string = "x";
+		string = "x";
+		return string;
+	}
+	
+}

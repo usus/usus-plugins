@@ -155,15 +155,17 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         if( referencedRawData == null || this == referencedRawData ) {
             return;
         }
-        if( !this.adjacencyNode.containsChild( referencedRawData ) ) {
-            this.adjacencyNode.addChild( referencedRawData );
-        }
-        if( !referencedRawData.adjacencyNode.containsParent( this ) ) {
-            referencedRawData.adjacencyNode.addParent( this );
-        }
+        this.adjacencyNode.addChild( referencedRawData );
+        referencedRawData.adjacencyNode.addParent( this );
     }
 
     public void markReferencedNodes() {
         adjacencyNode.markReferencedNodes();
+    }
+
+    @Override
+    public void resetRawData() {
+        // ACD model bereinigen, parent- und child-Listen bereinigen
+        super.resetRawData();
     }
 }

@@ -1,0 +1,9 @@
+public class Reset2 {
+
+	private Reset1 string;
+	
+	public String getString(){
+		return null;
+	}
+	
+}

@@ -4,18 +4,18 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AdjacencyNode {
 
-    private final List<ClassRawData> children;
-    private final List<ClassRawData> parents;
+    private final Set<ClassRawData> children;
+    private final Set<ClassRawData> parents;
     private boolean marked;
 
     public AdjacencyNode() {
-        children = new ArrayList<ClassRawData>();
-        parents = new ArrayList<ClassRawData>();
+        children = new HashSet<ClassRawData>();
+        parents = new HashSet<ClassRawData>();
         marked = false;
     }
 
@@ -31,7 +31,7 @@ public class AdjacencyNode {
         return children.size();
     }
 
-    public List<ClassRawData> getChildren() {
+    public Set<ClassRawData> getChildren() {
         return children;
     }
 
@@ -49,21 +49,13 @@ public class AdjacencyNode {
         return value;
     }
 
-    public boolean containsChild( ClassRawData referencedRawData ) {
-        return children.contains( referencedRawData );
-    }
-
-    public boolean containsParent( ClassRawData classRawData ) {
-        return parents.contains( classRawData );
-    }
-
     // Knoten durch Einfuegen in Set markieren, damit Zaehlen + Loeschen in O(1) ??
     public void markReferencedNodes() {
-        if( this.isMarked() ) {
+        if( isMarked() ) {
             return;
         }
-        this.mark();
-        for( ClassRawData childNode : this.getChildren() ) {
+        mark();
+        for( ClassRawData childNode : getChildren() ) {
             childNode.markReferencedNodes();
         }
     }

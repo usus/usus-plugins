@@ -2,15 +2,11 @@ package org.projectusus.core.internal.proportions.sqi;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.internal.ReflectionUtil;
-import org.projectusus.core.internal.proportions.rawdata.AcdModel;
-import org.projectusus.core.internal.proportions.rawdata.AdjacencyNode;
 import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
@@ -95,25 +91,29 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 0.2, getACD(), 0.0001 );
     }
     
+    @Test
+    public void twoFilesTheSecondKnowsTheFirst() throws Exception {
+        IFile file = createWSFile( "Acd11a.java", loadContent("Acd11a.test") );
+        createAndCompute("11b");
+        computeFile( file );
+        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 0.75, getACD(), 0.0001 );
+    }
+    
+    @Test
+    public void twoFilesKnowEachOther() throws Exception {
+        IFile file = createWSFile( "Acd10a.java", loadContent("Acd10a.test") );
+        createAndCompute("10b");
+        computeFile( file );
+        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 1.0, getACD(), 0.0001 );
+    }
+    
     private double getACD() {
         return ClassRawData.getAcdModel().getRelativeACD();
     }
 
-    private void createAndCompute( String filenumber ) throws CoreException, Exception {
-        IFile file = createWSFile( "Acd"+filenumber +".java", loadContent("Acd"+filenumber+".test") );
-        computeFile(file);
+    private IFile createAndCompute( String filenumber ) throws CoreException, Exception {
+        return createAndCompute( filenumber, "Acd" );
     }
-
-    @SuppressWarnings( "unchecked" )
-    private List<AdjacencyNode> getAdjacencyList() {
-        AcdModel acdModel = ClassRawData.getAcdModel();
-        try {
-            return (List<AdjacencyNode>)ReflectionUtil.getValue( acdModel, "classes" );
-        } catch( Throwable e ) {
-            // nothing
-        }
-        return null;
-    }
-
-    
 }

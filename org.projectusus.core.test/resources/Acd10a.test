@@ -1,0 +1,4 @@
+public class Acd10a {
+
+	private Acd10b i;
+}

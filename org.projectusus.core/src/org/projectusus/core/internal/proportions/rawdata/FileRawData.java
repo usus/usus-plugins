@@ -11,6 +11,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
@@ -73,11 +74,11 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
         hotspots.addAll( localHotspots );
     }
 
-    private ClassRawData getRawData( int start, int line, String name ) {
+    private ClassRawData getRawData( int start, int lineNumber, String name ) {
         Integer startObject = new Integer( start );
         ClassRawData rawData = super.getRawData( startObject );
         if( rawData == null ) {
-            rawData = new ClassRawData( name, start, line );
+            rawData = new ClassRawData( name, start, lineNumber );
             super.addRawData( startObject, rawData );
         }
         return rawData;
@@ -104,11 +105,28 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
             for( Integer startPosition : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( startPosition.intValue() );
                 if( element.equals( foundElement ) ) {
-                    return getRawData( startPosition.intValue(), 0, "" ); //$NON-NLS-1$ 
+                    return super.getRawData( startPosition );
                 }
             }
         } catch( JavaModelException e ) {
             return null;
+        }
+        return createClassRawDataFor( element );
+    }
+
+    private IClassRawData createClassRawDataFor( IJavaElement element ) {
+        if( element instanceof IType ) {
+            String name = element.getElementName();
+            IType type = (IType)element;
+            try {
+                int lineNumber = JDTSupport.calcLineNumber( type );
+                int startPosition = type.getSourceRange().getOffset();
+                ClassRawData rawData = new ClassRawData( name, startPosition, lineNumber );
+                super.addRawData( new Integer( startPosition ), rawData );
+                return rawData;
+            } catch( JavaModelException e ) {
+                // do nothing
+            }
         }
         return null;
     }
@@ -119,8 +137,8 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
             return;
         }
         ClassRawData referencingRawData = getClassRawData( referencingType );
-        IProjectRawData results = (IProjectRawData)resource.getProject().getAdapter( IProjectRawData.class );
-        ClassRawData referencedRawData = (ClassRawData)results.getFileRawData( (IFile)resource ).getRawData( referencedElement );
+        IFileRawData fileRawData = JDTSupport.getFileRawDataFor( (IFile)resource );
+        ClassRawData referencedRawData = (ClassRawData)fileRawData.getRawData( referencedElement );
         referencingRawData.addReferencedType( referencedRawData );
     }
 }

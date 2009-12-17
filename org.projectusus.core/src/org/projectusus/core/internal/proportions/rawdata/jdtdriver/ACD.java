@@ -59,7 +59,7 @@ public class ACD extends MetricsCollector {
             return true;
         }
         ITypeBinding binding = node.resolveBinding();
-        if( binding == null ) {
+        if( binding == null || !binding.isFromSource() ) {
             return true;
         }
         IJavaElement javaElement = binding.getJavaElement();

@@ -33,12 +33,20 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         return rawData;
     }
 
+    public void resetRawData( IProject project ) {
+        ProjectRawData rawData = super.getRawData( project );
+        if( rawData != null ) {
+            rawData.resetRawData();
+        }
+    }
+
     public void dropRawData( IProject project ) {
+        resetRawData( project );
         remove( project );
     }
 
     public void dropRawData( IFile file ) {
-        ((ProjectRawData)file.getProject().getAdapter( IProjectRawData.class )).dropRawData( file );
+        ((ProjectRawData)JDTSupport.getProjectRawDataFor( file )).dropRawData( file );
     }
 
     public CodeProportion getCodeProportion( CodeProportionKind metric ) {
