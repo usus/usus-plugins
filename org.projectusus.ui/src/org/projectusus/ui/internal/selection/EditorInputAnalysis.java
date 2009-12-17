@@ -29,10 +29,6 @@ public class EditorInputAnalysis {
     }
 
     public IMethod getSelectedMethod( ISelection selection ) {
-        return extractSelectedElement( selection );
-    }
-
-    private IMethod extractSelectedElement( ISelection selection ) {
         IMethod result = null;
         if( selection instanceof TextSelection ) {
             result = extractSelectedMethod( compilationUnit, (TextSelection)selection );
