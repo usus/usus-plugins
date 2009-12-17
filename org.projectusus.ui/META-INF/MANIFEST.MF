@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Usus UI
 Bundle-SymbolicName: org.projectusus.ui;singleton:=true
-Bundle-Version: 0.3.2
+Bundle-Version: 0.3.3
 Bundle-Activator: org.projectusus.ui.internal.UsusUIPlugin
 Bundle-Vendor: projectusus.org
 Require-Bundle: org.eclipse.ui,
@@ -31,7 +31,6 @@ Export-Package: org.projectusus.ui.internal,
  org.projectusus.ui.internal.proportions,
  org.projectusus.ui.internal.proportions.actions;x-internal:=true,
  org.projectusus.ui.internal.proportions.cockpit;x-internal:=true,
- org.projectusus.ui.internal.proportions.hover;x-internal:=true,
  org.projectusus.ui.internal.proportions.infopresenter;x-friends:="org.projectusus.ui.test",
  org.projectusus.ui.internal.proportions.infopresenter.infomodel,
  org.projectusus.ui.internal.selection,
