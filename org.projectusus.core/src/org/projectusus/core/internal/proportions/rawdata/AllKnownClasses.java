@@ -8,10 +8,8 @@ import java.util.TreeSet;
 public class AllKnownClasses {
 
     private final Set<ClassRawData> allKnownClasses;
-    private boolean knownClassesAreUpToDate;
 
     public AllKnownClasses() {
-        knownClassesAreUpToDate = false;
         allKnownClasses = new TreeSet<ClassRawData>( new Comparator<ClassRawData>() {
             public int compare( ClassRawData o1, ClassRawData o2 ) {
                 if( o1 == o2 ) {
@@ -23,7 +21,7 @@ public class AllKnownClasses {
     }
 
     public void invalidate() {
-        knownClassesAreUpToDate = false;
+        allKnownClasses.clear();
     }
 
     public Set<ClassRawData> getClasses() {
@@ -31,11 +29,10 @@ public class AllKnownClasses {
     }
 
     public boolean areUpToDate() {
-        return knownClassesAreUpToDate;
+        return size() > 0;
     }
 
     public void startInitialization( ClassRawData data ) {
-        knownClassesAreUpToDate = true; // here already, to avoid infinite loops
         allKnownClasses.clear();
         allKnownClasses.add( data );
     }
