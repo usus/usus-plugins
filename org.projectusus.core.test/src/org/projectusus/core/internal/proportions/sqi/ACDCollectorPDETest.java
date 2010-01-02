@@ -93,11 +93,63 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     
     @Test
     public void twoFilesTheSecondKnowsTheFirst() throws Exception {
-        IFile file = createWSFile( "Acd11a.java", loadContent("Acd11a.test") );
+        IFile firstFile = createWSFile( "Acd11a.java", loadContent("Acd11a.test") );
         createAndCompute("11b");
-        computeFile( file );
+        computeFile( firstFile );
         assertEquals( 2, getAdjacencyList().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
+    }
+    
+    @Test
+    public void x_twoFiles_TheFirstKnowsTheSecond_SecondIsDeleted() throws Exception {
+        IFile firstFile = createWSFile( "Acd11a.java", loadContent("Acd11a.test") );
+        IFile secondFile = createAndCompute("11b");
+        computeFile( firstFile );
+        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 0.75, getACD(), 0.0001 );
+        WorkspaceRawData.getInstance().dropRawData( secondFile );
+        assertEquals( 1, getAdjacencyList().size() );
+        assertEquals( 1.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    public void oneFile_ItKnowsAnotherWhichIsMissing() throws Exception {
+        createAndCompute( "11a" );
+        assertEquals( 1, getAdjacencyList().size() );
+        assertEquals( 1.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    public void x_oneFile_ItKnowsAnotherWhichIsCreatedLater() throws Exception {
+        createAndCompute( "11a" );
+        assertEquals( 1, getAdjacencyList().size() );
+        assertEquals( 1.0, getACD(), 0.0001 );
+        createAndCompute("11b");
+        // dieses Problem muss man durch geeignete Change-Sets loesen -> Leif fragen
+        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 0.75, getACD(), 0.0001 );
+    }
+    
+    @Test
+    public void oneFile_ItIsKnownByAnotherWhichIsCreatedLater() throws Exception {
+        createAndCompute( "11b" );
+        assertEquals( 1, getAdjacencyList().size() );
+        assertEquals( 1.0, getACD(), 0.0001 );
+        createAndCompute("11a");
+        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 0.75, getACD(), 0.0001 );
+    }
+    
+    @Test
+    public void twoFiles_TheFirstKnowsTheSecond_FirstIsDeleted() throws Exception {
+        IFile firstFile = createWSFile( "Acd11a.java", loadContent("Acd11a.test") );
+        createAndCompute("11b");
+        computeFile( firstFile );
+        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 0.75, getACD(), 0.0001 );
+        WorkspaceRawData.getInstance().dropRawData( firstFile );
+        assertEquals( 1, getAdjacencyList().size() );
+        assertEquals( 1.0, getACD(), 0.0001 );
     }
     
     @Test
@@ -106,6 +158,18 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         createAndCompute("10b");
         computeFile( file );
         assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 1.0, getACD(), 0.0001 );
+    }
+    
+    @Test
+    public void x_twoFilesKnowEachOtherTheSecondIsDeleted() throws Exception {
+        IFile firstFile = createWSFile( "Acd10a.java", loadContent("Acd10a.test") );
+        IFile secondFile = createAndCompute("10b");
+        computeFile( firstFile );
+        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 1.0, getACD(), 0.0001 );
+        WorkspaceRawData.getInstance().dropRawData( secondFile );
+        assertEquals( 1, getAdjacencyList().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
     

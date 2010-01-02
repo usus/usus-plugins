@@ -15,6 +15,10 @@ public class AcdModel {
         classes.add( node );
     }
 
+    public void remove( AdjacencyNode node ) {
+        classes.remove( node );
+    }
+
     // / <summary>
     // / The relative ACD of a system with n components is ACD/n.
     // / Thus it is a percentage value in range [0%, 100%].
@@ -49,29 +53,8 @@ public class AcdModel {
     private int getCCD() {
         int allDependencies = 0;
         for( AdjacencyNode node : classes ) {
-            allDependencies += getCCD( node );
+            allDependencies += node.getCCD();
         }
         return allDependencies;
-    }
-
-    // / <summary>
-    // / The cumulative component dependency (CCD) of a (sub)system is the sum
-    // over all
-    // / components Ci of the (sub)system of the number of components needed to
-    // test each Ci incrementally.
-    // / </summary>
-    // / <param name="node">starting node for subsystem to analyze</param>
-    // / <returns></returns>
-    public int getCCD( AdjacencyNode node ) {
-        node.markReferencedNodes();
-        return getMarkedNodeCount();
-    }
-
-    private int getMarkedNodeCount() {
-        int markedNodes = 0;
-        for( AdjacencyNode node : classes ) {
-            markedNodes += node.getCountAndClear();
-        }
-        return markedNodes;
     }
 }

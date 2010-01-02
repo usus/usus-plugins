@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -29,7 +30,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         this.className = name;
         this.startPosition = startPosition;
         this.lineNumber = line;
-        this.adjacencyNode = new AdjacencyNode();
+        this.adjacencyNode = new AdjacencyNode( this );
         acdModel.add( this.adjacencyNode );
     }
 
@@ -148,7 +149,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     public int getCCDResult() {
-        return acdModel.getCCD( adjacencyNode );
+        return adjacencyNode.getCCD();
     }
 
     public void addReferencedType( ClassRawData referencedRawData ) {
@@ -159,13 +160,26 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         referencedRawData.adjacencyNode.addParent( this );
     }
 
-    public void markReferencedNodes() {
-        adjacencyNode.markReferencedNodes();
-    }
-
     @Override
     public void resetRawData() {
-        // ACD model bereinigen, parent- und child-Listen bereinigen
+        adjacencyNode.removeNode( this );
+        acdModel.remove( adjacencyNode );
         super.resetRawData();
+    }
+
+    void removeParent( ClassRawData classRawData ) {
+        adjacencyNode.removeParent( this );
+    }
+
+    void removeChild( ClassRawData classRawData ) {
+        adjacencyNode.removeChild( this );
+    }
+
+    public Collection<? extends ClassRawData> getAllKnownClasses() {
+        return adjacencyNode.getAllKnownClasses();
+    }
+
+    public void invalidateAcd() {
+        adjacencyNode.invalidate();
     }
 }

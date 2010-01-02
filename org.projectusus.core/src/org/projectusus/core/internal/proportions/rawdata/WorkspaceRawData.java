@@ -40,12 +40,20 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         }
     }
 
+    public void resetRawData( IFile file ) {
+        FileRawData rawData = ((ProjectRawData)JDTSupport.getProjectRawDataFor( file )).getRawData( file );
+        if( rawData != null ) {
+            rawData.resetRawData();
+        }
+    }
+
     public void dropRawData( IProject project ) {
         resetRawData( project );
         remove( project );
     }
 
     public void dropRawData( IFile file ) {
+        resetRawData( file );
         ((ProjectRawData)JDTSupport.getProjectRawDataFor( file )).dropRawData( file );
     }
 

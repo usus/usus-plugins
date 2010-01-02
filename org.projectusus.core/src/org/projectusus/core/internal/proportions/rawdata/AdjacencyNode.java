@@ -4,59 +4,89 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 public class AdjacencyNode {
 
-    private final Set<ClassRawData> children;
-    private final Set<ClassRawData> parents;
-    private boolean marked;
+    private final Set<ClassRawData> directChildren = new HashSet<ClassRawData>();
+    private final Set<ClassRawData> directParents = new HashSet<ClassRawData>();
+    private final AllKnownClasses allKnownClasses = new AllKnownClasses();
+    private final ClassRawData self;
 
-    public AdjacencyNode() {
-        children = new HashSet<ClassRawData>();
-        parents = new HashSet<ClassRawData>();
-        marked = false;
+    public AdjacencyNode( ClassRawData self ) {
+        this.self = self;
     }
 
     public void addChild( ClassRawData child ) {
-        children.add( child );
+        allKnownClasses.invalidate();
+        directChildren.add( child );
     }
 
     public void addParent( ClassRawData parent ) {
-        parents.add( parent );
+        directParents.add( parent );
     }
 
     public int getChildCount() {
-        return children.size();
+        return directChildren.size();
     }
 
     public Set<ClassRawData> getChildren() {
-        return children;
+        return Collections.unmodifiableSet( directChildren );
     }
 
-    public boolean isMarked() {
-        return marked;
+    public Set<ClassRawData> getParents() {
+        return Collections.unmodifiableSet( directParents );
     }
 
-    public void mark() {
-        marked = true;
+    public Set<ClassRawData> getAllKnownClasses() {
+        updateKnownClasses();
+        return allKnownClasses.getClasses();
     }
 
-    public int getCountAndClear() {
-        int value = marked ? 1 : 0;
-        marked = false;
-        return value;
-    }
-
-    // Knoten durch Einfuegen in Set markieren, damit Zaehlen + Loeschen in O(1) ??
-    public void markReferencedNodes() {
-        if( isMarked() ) {
+    private void updateKnownClasses() {
+        if( allKnownClasses.areUpToDate() ) {
             return;
         }
-        mark();
-        for( ClassRawData childNode : getChildren() ) {
-            childNode.markReferencedNodes();
+        allKnownClasses.startInitialization( self );
+        for( ClassRawData child : directChildren ) {
+            allKnownClasses.addKnownClassesOf( child );
         }
     }
+
+    public void removeParent( ClassRawData classRawData ) {
+        directParents.remove( classRawData );
+    }
+
+    public void removeChild( ClassRawData classRawData ) {
+        allKnownClasses.invalidate();
+        directChildren.remove( classRawData );
+    }
+
+    public int getCCD() {
+        updateKnownClasses();
+        return allKnownClasses.size();
+    }
+
+    public void invalidate() {
+        if( !allKnownClasses.areUpToDate() ) {
+            return; // already invalidated
+        }
+        allKnownClasses.invalidate();
+        for( ClassRawData parent : directParents ) {
+            parent.invalidateAcd();
+        }
+    }
+
+    public void removeNode( ClassRawData classRawData ) {
+        invalidate();
+        for( ClassRawData parent : getParents() ) {
+            parent.removeChild( classRawData );
+        }
+        for( ClassRawData child : getChildren() ) {
+            child.removeParent( classRawData );
+        }
+    }
+
 }
