@@ -27,11 +27,12 @@ import org.projectusus.core.internal.project.IUSUSProject;
 
 public class PDETestUsingWSProject {
 
+    protected static final String PROJECT_NAME = "p";
     protected IProject project;
     
     @Before
     public void setUp() throws CoreException {
-        project = getWorkspace().getRoot().getProject( "p" );
+        project = getWorkspace().getRoot().getProject( PROJECT_NAME );
         project.create( new NullProgressMonitor() );
         project.open( new NullProgressMonitor() );
         makeUsusProject( true );
@@ -86,9 +87,12 @@ public class PDETestUsingWSProject {
     }
     
     protected void makeUsusProject( boolean makeUsusProject ) throws CoreException {
-        Object adapter = project.getAdapter( IUSUSProject.class );
-        ((IUSUSProject)adapter).setUsusProject( makeUsusProject );
+        getUsusProjectAdapter().setUsusProject( makeUsusProject );
         waitForAutobuild();
+    }
+
+    protected IUSUSProject getUsusProjectAdapter() {
+        return (IUSUSProject)project.getAdapter( IUSUSProject.class );
     }
     
     protected void addJavaNature() throws CoreException {
