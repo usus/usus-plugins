@@ -30,14 +30,23 @@ public class SaveBugsJob extends Job {
     @Override
     protected IStatus run( IProgressMonitor monitor ) {
         try {
-            byte[] content = generateFileContent().getBytes();
-            file.setContents( new ByteArrayInputStream( content ), true, true, monitor );
+            String stringContent = generateFileContent();
+            saveToFile( monitor, stringContent );
         } catch( CoreException cex ) {
             // not directly displayed to the user, but into the error log
             String msg = "Unable to save bugs."; //$NON-NLS-1$
             UsusCorePlugin.log( msg, cex );
         }
         return OK_STATUS;
+    }
+
+    private void saveToFile( IProgressMonitor monitor, String stringContent ) throws CoreException {
+        ByteArrayInputStream inputStream = new ByteArrayInputStream( stringContent.getBytes() );
+        if( !file.exists() ) {
+            file.create( inputStream, true, monitor );
+        } else {
+            file.setContents( inputStream, true, true, monitor );
+        }
     }
 
     private String generateFileContent() {
