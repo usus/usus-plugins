@@ -18,6 +18,7 @@ import org.projectusus.core.internal.UsusCorePlugin;
 
 public class SaveBugsJob extends Job {
 
+    public static final Object FAMILY = new Object();
     private final BugList bugs;
     private final IFile file;
 
@@ -51,5 +52,10 @@ public class SaveBugsJob extends Job {
 
     private String generateFileContent() {
         return new BugsWriter( bugs ).toXml();
+    }
+
+    @Override
+    public boolean belongsTo( Object family ) {
+        return family == FAMILY;
     }
 }
