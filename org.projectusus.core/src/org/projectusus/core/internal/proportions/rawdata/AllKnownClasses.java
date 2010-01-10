@@ -33,7 +33,7 @@ public class AllKnownClasses {
     }
 
     public void startInitialization( ClassRawData data ) {
-        allKnownClasses.clear();
+        invalidate();
         allKnownClasses.add( data );
     }
 

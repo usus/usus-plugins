@@ -1,7 +1,6 @@
 package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.ArrayType;
@@ -14,8 +13,6 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 public class ACD extends MetricsCollector {
 
     private AbstractTypeDeclaration currentType;
-
-    // current type
 
     public ACD( IFile file ) {
         super( file );
@@ -62,8 +59,7 @@ public class ACD extends MetricsCollector {
         if( binding == null || !binding.isFromSource() ) {
             return true;
         }
-        IJavaElement javaElement = binding.getJavaElement();
-        getFileRawData().addClassReference( currentType, javaElement );
+        getFileRawData().addClassReference( currentType, binding.getJavaElement() );
         return true;
     }
 

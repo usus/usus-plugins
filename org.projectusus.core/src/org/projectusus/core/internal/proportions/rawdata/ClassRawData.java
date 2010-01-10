@@ -6,6 +6,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
@@ -34,11 +35,13 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         acdModel.add( this.adjacencyNode );
     }
 
-    // for tests...
-    public static void resetAcdModel() {
-        acdModel = new AcdModel();
+    // for debugging:
+    @Override
+    public String toString() {
+        return "Class " + className + " in line " + lineNumber + " with " + getNumberOfMethods() + " methods."; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
 
+    // for tests:
     public static AcdModel getAcdModel() {
         return acdModel;
     }
@@ -99,18 +102,6 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         return null;
     }
 
-    public String getClassName() {
-        return className;
-    }
-
-    public int getSourcePosition() {
-        return startPosition;
-    }
-
-    public int getLineNumber() {
-        return lineNumber;
-    }
-
     @Override
     public int getViolationBasis( CodeProportionKind metric ) {
         if( metric.isMethodKind() ) {
@@ -136,10 +127,10 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
 
         if( metric.isViolatedBy( this ) ) {
             if( metric.equals( CodeProportionKind.KG ) ) {
-                hotspots.add( new MetricKGHotspot( getClassName(), this.getNumberOfMethods(), getSourcePosition(), getLineNumber() ) );
+                hotspots.add( new MetricKGHotspot( className, getNumberOfMethods(), startPosition, lineNumber ) );
             }
             if( metric.equals( CodeProportionKind.ACD ) ) {
-                hotspots.add( new MetricACDHotspot( getClassName(), getCCDResult(), getSourcePosition(), getLineNumber() ) );
+                hotspots.add( new MetricACDHotspot( className, getCCDResult(), startPosition, lineNumber ) );
             }
         }
     }
@@ -168,11 +159,15 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     void removeParent( ClassRawData classRawData ) {
-        adjacencyNode.removeParent( this );
+        adjacencyNode.removeParent( classRawData );
     }
 
     void removeChild( ClassRawData classRawData ) {
-        adjacencyNode.removeChild( this );
+        adjacencyNode.removeChild( classRawData );
+    }
+
+    public Set<ClassRawData> getChildren() {
+        return adjacencyNode.getChildren();
     }
 
     public Collection<? extends ClassRawData> getAllKnownClasses() {

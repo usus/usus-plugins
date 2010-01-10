@@ -17,7 +17,6 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     public void setup() throws CoreException{
         WorkspaceRawData.getInstance().dropRawData( project );
         makeUsusProject( false );
-        ClassRawData.resetAcdModel();
         addJavaNature();
    }
     
@@ -101,7 +100,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     }
     
     @Test
-    public void x_twoFiles_TheFirstKnowsTheSecond_SecondIsDeleted() throws Exception {
+    public void twoFiles_TheFirstKnowsTheSecond_SecondIsDeleted() throws Exception {
         IFile firstFile = createWSFile( "Acd11a.java", loadContent("Acd11a.test") );
         IFile secondFile = createAndCompute("11b");
         computeFile( firstFile );
@@ -162,7 +161,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     }
     
     @Test
-    public void x_twoFilesKnowEachOtherTheSecondIsDeleted() throws Exception {
+    public void twoFilesKnowEachOtherTheSecondIsDeleted() throws Exception {
         IFile firstFile = createWSFile( "Acd10a.java", loadContent("Acd10a.test") );
         IFile secondFile = createAndCompute("10b");
         computeFile( firstFile );

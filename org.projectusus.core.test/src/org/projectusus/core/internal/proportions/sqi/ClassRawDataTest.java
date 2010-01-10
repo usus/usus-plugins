@@ -38,11 +38,6 @@ public class ClassRawDataTest {
     }
 
     @Test
-    public void className(){
-        assertEquals( CLASSNAME, classRawData.getClassName() );
-    }
-    
-    @Test
     public void violationBasisNoMethods(){
         assertEquals( 1, classRawData.getViolationBasis( CodeProportionKind.KG ) );
         assertEquals( 0, classRawData.getViolationBasis( CodeProportionKind.CC ) );

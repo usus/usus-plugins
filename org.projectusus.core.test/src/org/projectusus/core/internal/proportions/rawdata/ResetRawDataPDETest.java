@@ -16,7 +16,6 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
     public void setup() throws CoreException{
         WorkspaceRawData.getInstance().dropRawData( project );
         makeUsusProject( false );
-        ClassRawData.resetAcdModel();
         addJavaNature();
    }
 

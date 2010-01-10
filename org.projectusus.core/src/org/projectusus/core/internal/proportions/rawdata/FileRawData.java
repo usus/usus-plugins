@@ -33,6 +33,11 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
         return fileOfRawData;
     }
 
+    @Override
+    public String toString() {
+        return "Data for " + fileOfRawData.getFullPath() + ", " + getNumberOfClasses() + " classes"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    }
+
     public void setCCValue( MethodDeclaration methodDecl, int value ) {
         getRawData( methodDecl ).setCCValue( methodDecl, value );
     }
