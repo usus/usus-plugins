@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
+package org.projectusus.core.internal.proportions.rawdata.collectors;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
@@ -6,9 +6,9 @@ import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
-public class ClassVisitor extends MetricsCollector {
+public class ClassCollector extends Collector {
 
-    public ClassVisitor( IFile file ) {
+    public ClassCollector( IFile file ) {
         super( file );
     }
 

@@ -20,6 +20,7 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.ReflectionUtil;
+import org.projectusus.core.internal.proportions.rawdata.collectors.MLCollector;
 
 
 
@@ -27,12 +28,12 @@ public class MLTest  {
 
     private Block block;
     
-    private ML mlChecker;
+    private MLCollector mlChecker;
 
     @Before
     public void setup() {
         block = mock(Block.class);
-        mlChecker = new ML(mock(IFile.class));
+        mlChecker = new MLCollector(mock(IFile.class));
     }
 
 

@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
+package org.projectusus.core.internal.proportions.rawdata.collectors;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.CatchClause;
@@ -14,11 +14,11 @@ import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
-public class CC extends MetricsCollector {
+public class CCCollector extends Collector {
 
     private int ccCount;
 
-    public CC( IFile file ) {
+    public CCCollector( IFile file ) {
         super( file );
     }
 

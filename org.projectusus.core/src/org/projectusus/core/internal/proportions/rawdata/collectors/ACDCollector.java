@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
+package org.projectusus.core.internal.proportions.rawdata.collectors;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
@@ -10,11 +10,11 @@ import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
-public class ACD extends MetricsCollector {
+public class ACDCollector extends Collector {
 
     private AbstractTypeDeclaration currentType;
 
-    public ACD( IFile file ) {
+    public ACDCollector( IFile file ) {
         super( file );
     }
 

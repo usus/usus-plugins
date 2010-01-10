@@ -1,15 +1,15 @@
-package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
+package org.projectusus.core.internal.proportions.rawdata.collectors;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.projectusus.core.internal.proportions.rawdata.IFileRawData;
 import org.projectusus.core.internal.proportions.rawdata.JDTSupport;
 
-public abstract class MetricsCollector extends ASTVisitor {
+public abstract class Collector extends ASTVisitor {
 
     private final IFile file;
 
-    public MetricsCollector( IFile file ) {
+    public Collector( IFile file ) {
         super();
         this.file = file;
     }

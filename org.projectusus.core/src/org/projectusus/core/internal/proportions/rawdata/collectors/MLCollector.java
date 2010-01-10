@@ -1,15 +1,15 @@
-package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
+package org.projectusus.core.internal.proportions.rawdata.collectors;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-public class ML extends MetricsCollector {
+public class MLCollector extends Collector {
 
     private int statementCount;
 
-    public ML( IFile file ) {
+    public MLCollector( IFile file ) {
         super( file );
     }
 

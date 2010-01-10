@@ -15,6 +15,10 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.projectusus.core.internal.proportions.rawdata.collectors.ACDCollector;
+import org.projectusus.core.internal.proportions.rawdata.collectors.CCCollector;
+import org.projectusus.core.internal.proportions.rawdata.collectors.ClassCollector;
+import org.projectusus.core.internal.proportions.rawdata.collectors.MLCollector;
 
 public class FileDriver {
 
@@ -27,7 +31,7 @@ public class FileDriver {
     public void compute() {
         ICompilationUnit compilationUnit = createCompilationUnitFrom( file );
         CompilationUnit parse = parse( compilationUnit );
-        for( ASTVisitor visitor : asList( new ClassVisitor( file ), new ML( file ), new CC( file ), new ACD( file ) ) ) {
+        for( ASTVisitor visitor : asList( new ClassCollector( file ), new MLCollector( file ), new CCCollector( file ), new ACDCollector( file ) ) ) {
             parse.accept( visitor );
         }
     }
