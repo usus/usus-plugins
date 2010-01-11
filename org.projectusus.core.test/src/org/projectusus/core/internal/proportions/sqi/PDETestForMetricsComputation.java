@@ -12,16 +12,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
-import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
 import org.projectusus.core.internal.PDETestUsingWSProject;
-import org.projectusus.core.internal.ReflectionUtil;
-import org.projectusus.core.internal.proportions.rawdata.AcdModel;
-import org.projectusus.core.internal.proportions.rawdata.AdjacencyNode;
-import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
@@ -66,16 +61,4 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
         computeFile(file);
         return file;
     }
-
-    @SuppressWarnings( "unchecked" )
-    protected List<AdjacencyNode> getAdjacencyList() {
-        AcdModel acdModel = ClassRawData.getAcdModel();
-        try {
-            return (List<AdjacencyNode>)ReflectionUtil.getValue( acdModel, "classes" );
-        } catch( Throwable e ) {
-            // nothing
-        }
-        return null;
-    }
-
 }

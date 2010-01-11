@@ -2,11 +2,13 @@ package org.projectusus.core.internal.proportions.sqi;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.internal.proportions.model.AcdSQIComputer;
 import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
@@ -23,70 +25,70 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     @Test
     public void singleClass() throws Exception {
         createAndCompute( "1" );
-        assertEquals( 1, getAdjacencyList().size() );
+        assertEquals( 1, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
 
     @Test
     public void twoUnrelatedClasses() throws Exception {
         createAndCompute( "2" );
-        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 2, getClasses().size() );
         assertEquals( 0.5, getACD(), 0.0001 );
     }
     
     @Test
     public void twoRelatedClasses1knows2() throws Exception {
         createAndCompute( "3_1" );
-        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 2, getClasses().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
     }
 
     @Test
     public void twoRelatedClasses2know2() throws Exception {
         createAndCompute( "3_2" );
-        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 2, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
     
     @Test
     public void threeUnrelatedClasses() throws Exception {
         createAndCompute( "4" );
-        assertEquals( 3, getAdjacencyList().size() );
+        assertEquals( 3, getClasses().size() );
         assertEquals( 0.3333, getACD(), 0.0001 );
     }
     
     @Test
     public void threeRelatedClasses1knows2() throws Exception {
         createAndCompute( "5" );
-        assertEquals( 3, getAdjacencyList().size() );
+        assertEquals( 3, getClasses().size() );
         assertEquals( 4/9.0, getACD(), 0.0001 );
     }
 
     @Test
     public void threeRelatedClasses2know2() throws Exception {
         createAndCompute( "6" );
-        assertEquals( 3, getAdjacencyList().size() );
+        assertEquals( 3, getClasses().size() );
         assertEquals( 5/9.0, getACD(), 0.0001 );
     }
     
     @Test
     public void threeRelatedClasses3know2() throws Exception {
         createAndCompute( "7" );
-        assertEquals( 3, getAdjacencyList().size() );
+        assertEquals( 3, getClasses().size() );
         assertEquals( 7/9.0, getACD(), 0.0001 );
     }
     
     @Test
     public void tenRelatedClasses1knows2() throws Exception {
         createAndCompute( "8" );
-        assertEquals( 10, getAdjacencyList().size() );
+        assertEquals( 10, getClasses().size() );
         assertEquals( 0.11, getACD(), 0.0001 );
     }
     
     @Test
     public void tenRelatedClasses1knows2know2() throws Exception {
         createAndCompute( "9" );
-        assertEquals( 10, getAdjacencyList().size() );
+        assertEquals( 10, getClasses().size() );
         assertEquals( 0.2, getACD(), 0.0001 );
     }
     
@@ -95,7 +97,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         IFile firstFile = createWSFile( "Acd11a.java", loadContent("Acd11a.test") );
         createAndCompute("11b");
         computeFile( firstFile );
-        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 2, getClasses().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
     }
     
@@ -104,38 +106,38 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         IFile firstFile = createWSFile( "Acd11a.java", loadContent("Acd11a.test") );
         IFile secondFile = createAndCompute("11b");
         computeFile( firstFile );
-        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 2, getClasses().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
         WorkspaceRawData.getInstance().dropRawData( secondFile );
-        assertEquals( 1, getAdjacencyList().size() );
+        assertEquals( 1, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
 
     @Test
     public void oneFile_ItKnowsAnotherWhichIsMissing() throws Exception {
         createAndCompute( "11a" );
-        assertEquals( 1, getAdjacencyList().size() );
+        assertEquals( 1, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
 
     @Test
     public void x_oneFile_ItKnowsAnotherWhichIsCreatedLater() throws Exception {
         createAndCompute( "11a" );
-        assertEquals( 1, getAdjacencyList().size() );
+        assertEquals( 1, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
         createAndCompute("11b");
         // dieses Problem muss man durch geeignete Change-Sets loesen -> Leif fragen
-        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 2, getClasses().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
     }
     
     @Test
     public void oneFile_ItIsKnownByAnotherWhichIsCreatedLater() throws Exception {
         createAndCompute( "11b" );
-        assertEquals( 1, getAdjacencyList().size() );
+        assertEquals( 1, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
         createAndCompute("11a");
-        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 2, getClasses().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
     }
     
@@ -144,10 +146,10 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         IFile firstFile = createWSFile( "Acd11a.java", loadContent("Acd11a.test") );
         createAndCompute("11b");
         computeFile( firstFile );
-        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 2, getClasses().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
         WorkspaceRawData.getInstance().dropRawData( firstFile );
-        assertEquals( 1, getAdjacencyList().size() );
+        assertEquals( 1, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
     
@@ -156,7 +158,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         IFile file = createWSFile( "Acd10a.java", loadContent("Acd10a.test") );
         createAndCompute("10b");
         computeFile( file );
-        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 2, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
     
@@ -165,15 +167,19 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         IFile firstFile = createWSFile( "Acd10a.java", loadContent("Acd10a.test") );
         IFile secondFile = createAndCompute("10b");
         computeFile( firstFile );
-        assertEquals( 2, getAdjacencyList().size() );
+        assertEquals( 2, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
         WorkspaceRawData.getInstance().dropRawData( secondFile );
-        assertEquals( 1, getAdjacencyList().size() );
+        assertEquals( 1, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
     
+    private Set<ClassRawData> getClasses() {
+        return WorkspaceRawData.getInstance().getAllClassRawData();
+    }
+
     private double getACD() {
-        return ClassRawData.getAcdModel().getRelativeACD();
+        return new AcdSQIComputer().getRelativeACD();
     }
 
     private IFile createAndCompute( String filenumber ) throws CoreException, Exception {

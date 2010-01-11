@@ -1,30 +1,32 @@
-// Copyright (c) 2009 by the projectusus.org contributors
-// This software is released under the terms and conditions
-// of the Eclipse Public License (EPL) 1.0.
-// See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.internal.proportions.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
-public class AcdModel {
+import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
+import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
-    private List<AdjacencyNode> classes = new ArrayList<AdjacencyNode>();
+public class AcdSQIComputer {
 
-    public void add( AdjacencyNode node ) {
-        classes.add( node );
+    private Set<ClassRawData> classes;
+
+    public double compute( WorkspaceRawData workspace ) {
+        classes = workspace.getAllClassRawData();
+        return 100.0 - getRelativeACD_internal() * 100.0;
     }
 
-    public void remove( AdjacencyNode node ) {
-        classes.remove( node );
+    public double getRelativeACD() {
+        classes = WorkspaceRawData.getInstance().getAllClassRawData();
+        return getRelativeACD_internal();
     }
+
+    // internal
 
     // / <summary>
     // / The relative ACD of a system with n components is ACD/n.
     // / Thus it is a percentage value in range [0%, 100%].
     // / </summary>
     // / <returns></returns>
-    public double getRelativeACD() {
+    private double getRelativeACD_internal() {
         if( classes.size() == 0 ) {
             return 0.0;
         }
@@ -52,8 +54,8 @@ public class AcdModel {
     // / <returns></returns>
     private int getCCD() {
         int allDependencies = 0;
-        for( AdjacencyNode node : classes ) {
-            allDependencies += node.getCCD();
+        for( ClassRawData node : classes ) {
+            allDependencies += node.getCCDResult();
         }
         return allDependencies;
     }

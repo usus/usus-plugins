@@ -20,8 +20,6 @@ import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
 
 public class ClassRawData extends RawData<Integer, MethodRawData> implements IClassRawData {
 
-    private static AcdModel acdModel = new AcdModel();
-
     private final int startPosition;
     private final int lineNumber;
     private final String className;
@@ -32,18 +30,12 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         this.startPosition = startPosition;
         this.lineNumber = line;
         this.adjacencyNode = new AdjacencyNode( this );
-        acdModel.add( this.adjacencyNode );
     }
 
     // for debugging:
     @Override
     public String toString() {
         return "Class " + className + " in line " + lineNumber + " with " + getNumberOfMethods() + " methods."; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-    }
-
-    // for tests:
-    public static AcdModel getAcdModel() {
-        return acdModel;
     }
 
     public void setCCValue( MethodDeclaration node, int value ) {
@@ -154,7 +146,6 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     @Override
     public void resetRawData() {
         adjacencyNode.removeNode( this );
-        acdModel.remove( adjacencyNode );
         super.resetRawData();
     }
 

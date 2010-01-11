@@ -13,10 +13,11 @@ import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKi
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.PC;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
 
+import java.util.HashSet;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.ReflectionUtil;
-import org.projectusus.core.internal.proportions.rawdata.AcdModel;
 import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 import org.projectusus.core.internal.proportions.rawdata.MethodRawData;
@@ -40,7 +41,7 @@ public class CodeProportionsKindTest {
 
         ReflectionUtil.setValue( WorkspaceRawData.class, WorkspaceRawData.class, mock( WorkspaceRawData.class ), "instance" );
         when( WorkspaceRawData.getInstance().getNumberOf( CodeProportionUnit.CLASS ) ).thenReturn( 100 );
-        when( ClassRawData.getAcdModel() ).thenReturn( new AcdModel() );
+        when( WorkspaceRawData.getInstance().getAllClassRawData() ).thenReturn( new HashSet<ClassRawData>() );
         
         classRawDataOK = mock( ClassRawData.class );
         when( classRawDataOK.getNumberOfMethods() ).thenReturn( 1 );
