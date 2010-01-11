@@ -8,10 +8,14 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 public interface ICheckpoint {
 
     DateTime getTime();
 
     List<CodeProportion> getEntries();
+
+    CodeProportion findCodeProportion( CodeProportionKind kind );
+
 }

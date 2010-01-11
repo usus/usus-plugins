@@ -9,6 +9,7 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 public class Checkpoint implements ICheckpoint {
 
@@ -35,5 +36,14 @@ public class Checkpoint implements ICheckpoint {
     @Override
     public String toString() {
         return "Checkpoint " + time + " (" + entries.size() + " entries)"; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+    }
+
+    public CodeProportion findCodeProportion( CodeProportionKind kind ) {
+        for( CodeProportion codeProportion : getEntries() ) {
+            if( kind.equals( codeProportion.getMetric() ) ) {
+                return codeProportion;
+            }
+        }
+        throw new IllegalArgumentException( "Code proportion " + kind + "not found" ); //$NON-NLS-1$//$NON-NLS-2$
     }
 }
