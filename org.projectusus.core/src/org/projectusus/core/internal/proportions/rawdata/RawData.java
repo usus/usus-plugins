@@ -75,4 +75,8 @@ public class RawData<S, T extends IRawData> implements IRawData {
         }
 
     }
+
+    protected synchronized Collection<T> getAllRawDataElements() {
+        return wrapper.getAllRawDataElements();
+    }
 }

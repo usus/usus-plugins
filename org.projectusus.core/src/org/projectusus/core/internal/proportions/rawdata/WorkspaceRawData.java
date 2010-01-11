@@ -5,7 +5,9 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -79,5 +81,15 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
             sqi = new SQIComputer( basis, violations, metric ).compute();
         }
         return sqi;
+    }
+
+    public Set<ClassRawData> getAllClassRawData() {
+        Set<ClassRawData> allClassRawData = new HashSet<ClassRawData>();
+        for( ProjectRawData projectRD : getAllRawDataElements() ) {
+            for( FileRawData fileRD : projectRD.getAllRawDataElements() ) {
+                allClassRawData.addAll( fileRD.getAllRawDataElements() );
+            }
+        }
+        return allClassRawData;
     }
 }
