@@ -30,7 +30,7 @@ public enum CodeProportionKind {
     ACD( isisMetrics_acd, CodeProportionUnit.CLASS, 1.0 ) {
         @Override
         public boolean isViolatedBy( ClassRawData rawData ) {
-            int classCount = WorkspaceRawData.getInstance().getViolationBasis( CodeProportionKind.KG );
+            int classCount = WorkspaceRawData.getInstance().getNumberOf( CodeProportionUnit.CLASS );
             double log_5_classCount = Math.log( classCount ) / Math.log( 5 );
             double factor = 1.5 / Math.pow( 2, log_5_classCount );
             double limit = factor * classCount;

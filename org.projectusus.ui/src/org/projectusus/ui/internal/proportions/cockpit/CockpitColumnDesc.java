@@ -18,7 +18,7 @@ enum CockpitColumnDesc implements IColumnDesc<CodeProportion> {
     },
     SQI( "SQI", 10, false ) {
         public String getLabel( CodeProportion element ) {
-            DecimalFormat formatter = new DecimalFormat( "#.##" ); 
+            DecimalFormat formatter = new DecimalFormat( "#.##" );
             return String.valueOf( formatter.format( element.getSQIValue() ) );
         }
     },
@@ -29,7 +29,7 @@ enum CockpitColumnDesc implements IColumnDesc<CodeProportion> {
     },
     CASES( "Total", 20, false ) {
         public String getLabel( CodeProportion element ) {
-            return String.valueOf( element.getBasis() ) + " " + element.getMetric().getUnit().getLabel(); 
+            return String.valueOf( element.getBasis() );
         }
     };
 

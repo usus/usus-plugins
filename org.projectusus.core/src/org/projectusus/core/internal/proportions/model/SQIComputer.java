@@ -2,12 +2,14 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.internal.proportions.model;
 
 import static java.lang.Math.pow;
 import static java.math.BigDecimal.ROUND_DOWN;
 
 import java.math.BigDecimal;
+
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 /**
  * calculates the software quality index (SQI).
@@ -18,8 +20,8 @@ class SQIComputer {
 
     private final double sqi;
 
-    SQIComputer( int basis, int violations, CodeProportionKind kind ) {
-        this.sqi = basis == 0 ? 0.0 : doCompute( basis, violations, kind.getCalibration() );
+    SQIComputer( CodeStatistic basis, int violations, CodeProportionKind kind ) {
+        this.sqi = basis.isEmpty() ? 0.0 : doCompute( basis, violations, kind.getCalibration() );
     }
 
     double compute() {
@@ -28,13 +30,13 @@ class SQIComputer {
 
     // internal
 
-    private double doCompute( int basis, int violations, double calibration ) {
+    private double doCompute( CodeStatistic basis, int violations, double calibration ) {
         BigDecimal exponent = computeExponent( basis, violations, calibration );
         return doPowerOp( exponent.doubleValue() );
     }
 
-    private BigDecimal computeExponent( int basis, int violations, double calibration ) {
-        BigDecimal beforeCalibration = new BigDecimal( violations ).divide( new BigDecimal( basis ), 5, ROUND_DOWN );
+    private BigDecimal computeExponent( CodeStatistic basis, int violations, double calibration ) {
+        BigDecimal beforeCalibration = new BigDecimal( violations ).divide( basis.asBigDecimal(), 5, ROUND_DOWN );
         return beforeCalibration.multiply( new BigDecimal( calibration ) );
     }
 

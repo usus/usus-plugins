@@ -14,6 +14,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.CodeProportionsRatio;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.model.CodeStatistic;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 
 public class WorkspaceYellowCount {
@@ -47,7 +48,8 @@ public class WorkspaceYellowCount {
     private CodeProportion createCodeProportion( List<IProject> ususProjects ) {
         int basis = new CountWSFiles( ususProjects ).compute();
         int violations = countViolations();
-        return new CodeProportion( CW, violations, basis, computeSqi( basis ), getHotspots() );
+        CodeStatistic statistic = new CodeStatistic( CW.getUnit(), basis );
+        return new CodeProportion( CW, violations, statistic, computeSqi( basis ), getHotspots() );
     }
 
     private List<IHotspot> getHotspots() {

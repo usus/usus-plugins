@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 import org.projectusus.core.internal.proportions.rawdata.MethodRawData;
 
 public class MethodRawDataTest {
@@ -30,13 +31,11 @@ public class MethodRawDataTest {
     
     @Test
     public void basisIs1(){
-        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.ACD ) );
-        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.CC ) );
-        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.CW ) );
-        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.KG ) );
-        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.ML ) );
-        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.PC ) );
-        assertEquals( 1, methodResults.getViolationBasis( CodeProportionKind.TA ) );
+        assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.FILE ) );
+        assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.PACKAGE ) );
+        assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.LINE ) );
     }
     
     @Test

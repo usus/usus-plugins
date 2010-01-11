@@ -103,9 +103,9 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     @Override
-    public int getViolationBasis( CodeProportionKind metric ) {
-        if( metric.isMethodKind() ) {
-            return super.getViolationBasis( metric );
+    public int getNumberOf( CodeProportionUnit unit ) {
+        if( unit.isMethodKind() ) {
+            return super.getNumberOf( unit );
         }
         return 1;
     }

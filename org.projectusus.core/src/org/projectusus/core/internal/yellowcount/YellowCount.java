@@ -75,6 +75,6 @@ public class YellowCount {
     }
 
     private YellowCountResult createResult( CodeProportion codeProportion, int projectCount, int yellowProjectCount ) {
-        return new YellowCountResult( projectCount, codeProportion.getBasis(), codeProportion.getViolations(), yellowProjectCount );
+        return new YellowCountResult( projectCount, codeProportion.getBasis().getValue(), codeProportion.getViolations(), yellowProjectCount );
     }
 }

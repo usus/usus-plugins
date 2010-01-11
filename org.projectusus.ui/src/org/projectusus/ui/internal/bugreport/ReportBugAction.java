@@ -29,7 +29,7 @@ import org.eclipse.ui.PlatformUI;
 import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.project.NullUsusProject;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 import org.projectusus.core.internal.proportions.rawdata.IClassRawData;
 import org.projectusus.core.internal.proportions.rawdata.IFileRawData;
 import org.projectusus.core.internal.proportions.rawdata.IMethodRawData;
@@ -103,7 +103,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
     }
 
     private void fillClassMetrics( Bug bug, IClassRawData classRawData ) {
-        int numberOfMethods = classRawData.getViolationBasis( CodeProportionKind.CC );
+        int numberOfMethods = classRawData.getNumberOf( CodeProportionUnit.METHOD );
         bug.getBugMetrics().setNumberOfMethods( numberOfMethods );
     }
 

@@ -42,10 +42,11 @@ public class RawData<S, T extends IRawData> implements IRawData {
         return violations;
     }
 
-    public synchronized int getViolationBasis( CodeProportionKind metric ) {
+    // TODO protected
+    public synchronized int getNumberOf( CodeProportionUnit unit ) {
         int basis = 0;
         for( T result : wrapper.getAllRawDataElements() ) {
-            basis = basis + result.getViolationBasis( metric );
+            basis = basis + result.getNumberOf( unit );
         }
         return basis;
     }

@@ -22,6 +22,7 @@ import org.projectusus.core.internal.ReflectionUtil;
 import org.projectusus.core.internal.proportions.rawdata.AcdModel;
 import org.projectusus.core.internal.proportions.rawdata.AdjacencyNode;
 import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
 
@@ -32,7 +33,7 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
         computeFile( file );
         IProjectRawData results = (IProjectRawData)file.getProject().getAdapter( IProjectRawData.class );
         assertEquals( 1, results.getViolationCount( ML ) );
-        assertEquals( 2, results.getViolationBasis( ML ) );
+        assertEquals( 2, results.getNumberOf( CodeProportionUnit.METHOD ) );
     }
     
     protected void computeFile(IFile file){

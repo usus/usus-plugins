@@ -10,25 +10,41 @@ import java.util.List;
 
 import org.eclipse.core.runtime.PlatformObject;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 
 public class CodeProportion extends PlatformObject {
 
     private final CodeProportionKind metric;
     private final int violations;
-    private final int basis;
+    private final CodeStatistic basis;
     private final double sqi;
     private final List<IHotspot> hotspots;
 
     public CodeProportion( CodeProportionKind metric ) {
-        this( metric, 0, 0, 0, new ArrayList<IHotspot>() );
+        this( metric, 0, new CodeStatistic( CodeProportionUnit.CLASS ), new ArrayList<IHotspot>() );
     }
 
-    public CodeProportion( CodeProportionKind metric, int violations, int basis, double sqi, List<IHotspot> hotspots ) {
+    public CodeProportion( CodeProportionKind metric, int violations, CodeStatistic basis, List<IHotspot> hotspots ) {
+        this( metric, violations, basis, computeSQI( metric, violations, basis ), hotspots );
+    }
+
+    public CodeProportion( CodeProportionKind metric, int violations, CodeStatistic basis, double sqiValue, List<IHotspot> hotspots ) {
         this.metric = metric;
         this.violations = violations;
         this.basis = basis;
-        this.sqi = sqi;
         this.hotspots = sort( hotspots );
+        this.sqi = sqiValue;
+    }
+
+    private static double computeSQI( CodeProportionKind metric, int violations, CodeStatistic basis ) {
+        double sqi;
+        if( metric == CodeProportionKind.ACD ) {
+            sqi = 100.0; // TODO - acdModel.getRelativeACD() * 100.0;
+            // sqi = metric.computeSQI(basis, violations);
+        } else {
+            sqi = new SQIComputer( basis, violations, metric ).compute();
+        }
+        return sqi;
     }
 
     public Double getSQIValue() {
@@ -39,7 +55,7 @@ public class CodeProportion extends PlatformObject {
         return violations;
     }
 
-    public int getBasis() {
+    public CodeStatistic getBasis() {
         return basis;
     }
 

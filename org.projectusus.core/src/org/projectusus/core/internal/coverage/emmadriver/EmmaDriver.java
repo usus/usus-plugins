@@ -17,6 +17,7 @@ import org.projectusus.core.internal.coverage.IEmmaDriver;
 import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.CodeProportionsRatio;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.model.CodeStatistic;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate;
 import org.projectusus.core.internal.proportions.modelupdate.TestRunModelUpdate;
@@ -62,7 +63,8 @@ public class EmmaDriver implements IEmmaDriver {
         int covered = coverage.getCoveredCount();
         int total = coverage.getTotalCount();
         double sqi = new CodeProportionsRatio( covered, total ).compute();
-        CodeProportion codeProportion = new CodeProportion( TA, covered, total, sqi, new ArrayList<IHotspot>() );
+        CodeStatistic statistic = new CodeStatistic( TA.getUnit(), total );
+        CodeProportion codeProportion = new CodeProportion( TA, covered, statistic, sqi, new ArrayList<IHotspot>() );
         // TODO lf add hotspots
         updateModel( codeProportion );
     }

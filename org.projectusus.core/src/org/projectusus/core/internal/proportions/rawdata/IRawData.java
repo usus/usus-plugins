@@ -12,7 +12,7 @@ public interface IRawData {
 
     int getViolationCount( CodeProportionKind metric );
 
-    int getViolationBasis( CodeProportionKind metric );
+    int getNumberOf( CodeProportionUnit unit );
 
     void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots );
 

@@ -62,7 +62,7 @@ class CheckpointWriter extends UsusXmlWriter {
         sb.append( INDENT + INDENT );
         sb.append( tagStart( ELEM_ENTRY ) );
         sb.append( att( ATT_METRIC, codeProportion.getMetric().toString() ) );
-        sb.append( att( ATT_CASES, valueOf( codeProportion.getBasis() ) ) );
+        sb.append( att( ATT_CASES, valueOf( codeProportion.getBasis().getValue() ) ) );
         sb.append( att( ATT_VIOLATIONS, valueOf( codeProportion.getViolations() ) ) );
         sb.append( att( ATT_SQI, codeProportion.getSQIValue().toString() ) );
         sb.append( tagEndClosed() );

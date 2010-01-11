@@ -55,7 +55,7 @@ public class MethodRawData implements IRawData, IMethodRawData {
         return metric.isViolatedBy( this );
     }
 
-    public int getViolationBasis( CodeProportionKind metric ) {
+    public int getNumberOf( CodeProportionUnit unit ) {
         return 1;
     }
 

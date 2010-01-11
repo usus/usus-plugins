@@ -47,33 +47,30 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
    }
     
     private void checkProjectRawDataIsEmpty1File( IProjectRawData projectRawData ) {
-        assertEquals( 1, projectRawData.getViolationBasis( CodeProportionKind.KG ));
+        assertEquals( 1, projectRawData.getNumberOf( CodeProportionUnit.CLASS ));
+        assertEquals( 2, projectRawData.getNumberOf( CodeProportionUnit.METHOD ));
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.KG ) );
-        assertEquals( 2, projectRawData.getViolationBasis( CodeProportionKind.ML ));
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.ML ) );
-        assertEquals( 2, projectRawData.getViolationBasis( CodeProportionKind.CC ));
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.CC ) );
-        assertEquals( 1, getAdjacencyList().size() );
+//        TODO assertEquals( 1, getAdjacencyList().size() );
     }
 
     private void checkProjectRawDataIsEmpty2Files( IProjectRawData projectRawData ) {
-        assertEquals( 2, projectRawData.getViolationBasis( CodeProportionKind.KG ));
+        assertEquals( 2, projectRawData.getNumberOf( CodeProportionUnit.CLASS ));
+        assertEquals( 3, projectRawData.getNumberOf( CodeProportionUnit.METHOD ));
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.KG ) );
-        assertEquals( 3, projectRawData.getViolationBasis( CodeProportionKind.ML ));
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.ML ) );
-        assertEquals( 3, projectRawData.getViolationBasis( CodeProportionKind.CC ));
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.CC ) );
-        assertEquals( 2, getAdjacencyList().size() );
+//        TODO assertEquals( 2, getAdjacencyList().size() );
     }
     
     private void computeFile1AndCheckPreconditions() throws Exception {
         IFile file = createAndCompute( "1", "Reset" );
         projectRawData = JDTSupport.getProjectRawDataFor( file );
-        assertEquals( 1, projectRawData.getViolationBasis( CodeProportionKind.KG ));
+        assertEquals( 1, projectRawData.getNumberOf( CodeProportionUnit.CLASS ));
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.KG ) );
-        assertEquals( 2, projectRawData.getViolationBasis( CodeProportionKind.ML ));
+        assertEquals( 2, projectRawData.getNumberOf( CodeProportionUnit.METHOD ));
         assertEquals( 1, projectRawData.getViolationCount( CodeProportionKind.ML ) );
-        assertEquals( 2, projectRawData.getViolationBasis( CodeProportionKind.CC ));
         assertEquals( 1, projectRawData.getViolationCount( CodeProportionKind.CC ) );
         assertEquals( 1, getAdjacencyList().size() );
     }   
@@ -83,11 +80,10 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
         IFile file1 = createAndCompute( "1", "Reset" );
         computeFile(file2);
         projectRawData = JDTSupport.getProjectRawDataFor( file1 );
-        assertEquals( 2, projectRawData.getViolationBasis( CodeProportionKind.KG ));
+        assertEquals( 2, projectRawData.getNumberOf( CodeProportionUnit.CLASS ));
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.KG ) );
-        assertEquals( 3, projectRawData.getViolationBasis( CodeProportionKind.ML ));
+        assertEquals( 3, projectRawData.getNumberOf( CodeProportionUnit.METHOD ));
         assertEquals( 1, projectRawData.getViolationCount( CodeProportionKind.ML ) );
-        assertEquals( 3, projectRawData.getViolationBasis( CodeProportionKind.CC ));
         assertEquals( 1, projectRawData.getViolationCount( CodeProportionKind.CC ) );
         assertEquals( 2, getAdjacencyList().size() );
     }   

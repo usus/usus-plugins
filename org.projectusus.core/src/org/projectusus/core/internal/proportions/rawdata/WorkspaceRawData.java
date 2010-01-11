@@ -12,6 +12,7 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.model.CodeStatistic;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 
 public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
@@ -61,26 +62,20 @@ public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
     public CodeProportion getCodeProportion( CodeProportionKind metric ) {
         int violations = getViolationCount( metric );
-        int basis = getViolationBasis( metric );
-        double sqi = computeSQI( metric, violations, basis );
+        CodeStatistic basis = getCodeStatistic( metric.getUnit() );
         List<IHotspot> hotspots = computeHotspots( metric );
-        return new CodeProportion( metric, violations, basis, sqi, hotspots );
+        return new CodeProportion( metric, violations, basis, hotspots );
+    }
+
+    public CodeStatistic getCodeStatistic( CodeProportionUnit unit ) {
+        int basis = getNumberOf( unit );
+        return new CodeStatistic( unit, basis );
     }
 
     private List<IHotspot> computeHotspots( CodeProportionKind metric ) {
         List<IHotspot> hotspots = new ArrayList<IHotspot>();
         addToHotspots( metric, hotspots );
         return hotspots;
-    }
-
-    private double computeSQI( CodeProportionKind metric, int violations, int basis ) {
-        double sqi;
-        if( metric == CodeProportionKind.ACD ) {
-            sqi = 100.0; // TODO - acdModel.getRelativeACD() * 100.0;
-        } else {
-            sqi = new SQIComputer( basis, violations, metric ).compute();
-        }
-        return sqi;
     }
 
     public Set<ClassRawData> getAllClassRawData() {

@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 
 public class ClassRawDataTest {
 
@@ -38,18 +39,16 @@ public class ClassRawDataTest {
     }
 
     @Test
-    public void violationBasisNoMethods(){
-        assertEquals( 1, classRawData.getViolationBasis( CodeProportionKind.KG ) );
-        assertEquals( 0, classRawData.getViolationBasis( CodeProportionKind.CC ) );
-        assertEquals( 0, classRawData.getViolationBasis( CodeProportionKind.ML ) );
+    public void numberOfNoMethods(){
+        assertEquals( 1, classRawData.getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 0, classRawData.getNumberOf( CodeProportionUnit.METHOD ) );
     }
 
         @Test
-    public void violationBasis1Method(){
+    public void numberOf1Method(){
         classRawData.setCCValue( method1, 0 );
-        assertEquals( 1, classRawData.getViolationBasis( CodeProportionKind.KG ) );
-        assertEquals( 1, classRawData.getViolationBasis( CodeProportionKind.CC ) );
-        assertEquals( 1, classRawData.getViolationBasis( CodeProportionKind.ML ) );
+        assertEquals( 1, classRawData.getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 1, classRawData.getNumberOf( CodeProportionUnit.METHOD ) );
     }
         
     @Test

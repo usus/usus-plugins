@@ -16,6 +16,7 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.projectusus.core.internal.UsusXmlReader;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.model.CodeStatistic;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
@@ -55,7 +56,8 @@ class CheckpointReader extends UsusXmlReader<ICheckpoint> {
         if( cases != UNDEFINED && violations != UNDEFINED && sqi != null && metric != null ) {
             ArrayList<IHotspot> hotspots = new ArrayList<IHotspot>();
             double sqiValue = sqi.doubleValue();
-            entries.add( new CodeProportion( metric, violations, cases, sqiValue, hotspots ) );
+            CodeStatistic statistic = new CodeStatistic( metric.getUnit(), cases );
+            entries.add( new CodeProportion( metric, violations, statistic, sqiValue, hotspots ) );
         }
     }
 

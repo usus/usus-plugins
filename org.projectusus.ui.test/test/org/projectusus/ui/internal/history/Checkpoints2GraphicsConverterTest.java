@@ -15,6 +15,7 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.model.CodeStatistic;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
@@ -31,7 +32,7 @@ public class Checkpoints2GraphicsConverterTest {
 
 	@Test
 	public void singleCheckpoint() {
-		ICheckpoint checkpoint = new DummyCheckpoint(42.0);
+		ICheckpoint checkpoint = new DummyCheckpoint(42);
 		Checkpoints2GraphicsConverter converter = create(asList(checkpoint));
 		assertEquals(1, converter.get(ACD).length);
 		assertEquals(42.0, converter.get(ACD)[0], 0.0);
@@ -73,22 +74,22 @@ public class Checkpoints2GraphicsConverterTest {
 	
 	private class DummyCheckpoint implements ICheckpoint {
 
-		private final double[] values;
+		private final int[] values;
 		private final CodeProportionKind metric;
 
-		DummyCheckpoint(double value){
-			this(ACD, new double[]{value});
+		DummyCheckpoint(int value){
+			this(ACD, new int[]{value});
 		}
 		
-		DummyCheckpoint(CodeProportionKind metric, double...values){
+		DummyCheckpoint(CodeProportionKind metric, int...values){
 			this.values = values;
 			this.metric = metric;
 		}
 		
 		public List<CodeProportion> getEntries() {
 			List<CodeProportion> result = new ArrayList<CodeProportion>();
-			for (double value : values) {
-				result.add(new CodeProportion(metric, 0, 0, value, new ArrayList<IHotspot>()));
+			for (int value : values) {
+				result.add(new CodeProportion(metric, 0, new CodeStatistic( metric.getUnit(), value), new ArrayList<IHotspot>()));
 			}
 			return result;
 		}
