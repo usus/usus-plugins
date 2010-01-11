@@ -4,10 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.selection;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -56,17 +54,17 @@ public class EditorInputAnalysisTest {
 
     @Test
     public void extractCompilationUnitFromInput() {
-        assertThat( inputAnalysis.getCompilationUnit(), is( compilationUnit ) );
+        assertEquals( compilationUnit, inputAnalysis.getCompilationUnit()  );
     }
 
     @Test
     public void ignoreNullSelection() {
-        assertThat( inputAnalysis.getSelectedMethod( null ), is( nullValue() ) );
+        assertNull( inputAnalysis.getSelectedMethod( null ) );
     }
 
     @Test
     public void extractMethodFromTextSelection() {
         ISelection selection = new TextSelection( 1, 1 );
-        assertThat( inputAnalysis.getSelectedMethod( selection ), is( javaElement ) );
+        assertEquals( javaElement, inputAnalysis.getSelectedMethod( selection ) );
     }
 }

@@ -4,9 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter.infomodel;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -31,7 +30,7 @@ public class UsusInfoBuilderTest {
     @Test
     public void unavailableMethodYieldsNull() throws Exception {
         IUsusInfo info = new UsusInfoBuilder( null ).create();
-        assertThat( info, is( nullValue() ) );
+        assertNull( info );
     }
 
     @Test
@@ -39,7 +38,7 @@ public class UsusInfoBuilderTest {
         when( method.getUnderlyingResource() ).thenReturn( null );
 
         IUsusInfo info = new UsusInfoBuilder( method ).create();
-        assertThat( info, is( UnavailableUsusInfo.class ) );
+        assertEquals( UnavailableUsusInfo.class , info );
     }
 
     @Test
@@ -48,7 +47,7 @@ public class UsusInfoBuilderTest {
         when( file.getProject() ).thenReturn( project );
 
         IUsusInfo info = new UsusInfoBuilder( method ).create();
-        assertThat( info, is( UnavailableUsusInfo.class ) );
+        assertEquals( UnavailableUsusInfo.class, info );
     }
 
     @Test
@@ -56,7 +55,7 @@ public class UsusInfoBuilderTest {
         setUpRawDataHierarchy();
 
         IUsusInfo info = new UsusInfoBuilder( method ).create();
-        assertThat( info, is( UnavailableUsusInfo.class ) );
+        assertEquals( UnavailableUsusInfo.class, info );
     }
 
     @Test
@@ -65,7 +64,7 @@ public class UsusInfoBuilderTest {
         setupJavaElementRawData();
 
         IUsusInfo info = new UsusInfoBuilder( method ).create();
-        assertThat( info, is( UsusInfo.class ) );
+        assertEquals( UsusInfo.class, info );
     }
 
     private void setupJavaElementRawData() {

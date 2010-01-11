@@ -4,8 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter.infomodel;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -21,7 +20,7 @@ public class MethodFormatterTest {
         prepareExpectations( "([Ljava.lang.String;)QString;", "QString;" );
 
         MethodFormatter formatter = new MethodFormatter( javaElement );
-        assertThat( formatter.formatHeadInfo(), is( "String n(java.lang.String[])" ) );
+        assertEquals( "String n(java.lang.String[])", formatter.formatHeadInfo() );
     }
 
     @Test
@@ -29,7 +28,7 @@ public class MethodFormatterTest {
         prepareExpectations( "(QString;I)V", "V" );
 
         MethodFormatter formatter = new MethodFormatter( javaElement );
-        assertThat( formatter.formatHeadInfo(), is( "void n(String, int)" ) );
+        assertEquals( "void n(String, int)", formatter.formatHeadInfo() );
     }
 
     @Test
@@ -37,7 +36,7 @@ public class MethodFormatterTest {
         prepareExpectations( "()I", "I" );
 
         MethodFormatter formatter = new MethodFormatter( javaElement );
-        assertThat( formatter.formatHeadInfo(), is( "int n()" ) );
+        assertEquals( "int n()", formatter.formatHeadInfo() );
     }
 
     private void prepareExpectations( String signature, String returnType ) throws Exception {

@@ -97,5 +97,9 @@ public class Checkpoints2GraphicsConverterTest {
 		public DateTime getTime() {
 			return null;
 		}
+
+                public CodeProportion findCodeProportion( CodeProportionKind kind ) {
+                    return null;
+                }
 	}
 }
