@@ -177,4 +177,8 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     public void invalidateAcd() {
         adjacencyNode.invalidate();
     }
+
+    public String getClassName() {
+        return className;
+    }
 }
