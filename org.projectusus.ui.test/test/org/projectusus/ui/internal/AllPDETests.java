@@ -14,7 +14,7 @@ import org.projectusus.core.internal.proportions.FileChangeNotificationsPDETest;
 import org.projectusus.core.internal.proportions.ProjectChangeNotificationsPDETest;
 import org.projectusus.core.internal.proportions.UsusProjectNotificationsPDETest;
 import org.projectusus.core.internal.proportions.rawdata.ResetRawDataPDETest;
-import org.projectusus.core.internal.proportions.sqi.ACDCollectorPDETest;
+import org.projectusus.core.internal.proportions.rawdata.collectors.ACDCollectorPDETest;
 import org.projectusus.core.internal.proportions.sqi.jdtdriver.StatusCollectorPDETest;
 import org.projectusus.core.internal.proportions.yellowcount.ProjectYellowCountPDETest;
 

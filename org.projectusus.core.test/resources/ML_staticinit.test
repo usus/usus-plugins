@@ -1,0 +1,10 @@
+
+public class ML {
+
+	static int i;
+
+static {
+	i = 0;
+}
+
+}

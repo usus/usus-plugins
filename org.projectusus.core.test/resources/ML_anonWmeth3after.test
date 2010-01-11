@@ -1,0 +1,13 @@
+public class Class1 {
+
+    public void m(){
+        Object o = new Object(){
+        	public void x(){}
+        };
+
+        int i = 1;
+        i = 2;
+        i = 3;
+    }
+    
+}

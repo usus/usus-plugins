@@ -128,7 +128,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     public int getNumberOfMethods() {
-        return getRawDataElementCount();
+        return getNumberOf( CodeProportionUnit.METHOD );
     }
 
     public int getCCDResult() {

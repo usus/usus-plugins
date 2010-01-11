@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 public class MLCollector extends Collector {
 
-    private int statementCount;
+    private Counter statementCount = new Counter();
 
     public MLCollector( IFile file ) {
         super( file );
@@ -15,33 +15,29 @@ public class MLCollector extends Collector {
 
     @Override
     public boolean visit( MethodDeclaration node ) {
-        init();
+        statementCount.initCount();
         return true;
     }
 
     @Override
     public boolean visit( Initializer node ) {
-        init();
+        statementCount.initCount();
         return true;
     }
 
     @Override
     public void endVisit( MethodDeclaration node ) {
-        getFileRawData().setMLValue( node, statementCount );
+        getFileRawData().setMLValue( node, statementCount.getAndClearCount() );
     }
 
     @Override
     public void endVisit( Initializer node ) {
-        getFileRawData().setMLValue( node, statementCount );
+        getFileRawData().setMLValue( node, statementCount.getAndClearCount() );
     }
 
     @Override
     public boolean visit( Block node ) {
-        statementCount += node.statements().size();
+        statementCount.increaseLastCountBy( node.statements().size() );
         return true;
-    }
-
-    private void init() {
-        statementCount = 0;
     }
 }

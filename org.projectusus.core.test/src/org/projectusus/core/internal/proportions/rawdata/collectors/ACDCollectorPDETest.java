@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.sqi;
+package org.projectusus.core.internal.proportions.rawdata.collectors;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.AcdSQIComputer;
 import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
+import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
 import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 

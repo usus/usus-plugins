@@ -8,7 +8,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.internal.proportions.sqi.PDETestForMetricsComputation;
 
 public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
 

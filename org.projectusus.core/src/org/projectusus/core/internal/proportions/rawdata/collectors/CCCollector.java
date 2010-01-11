@@ -105,7 +105,7 @@ public class CCCollector extends Collector {
     }
 
     private boolean init() {
-        ccCount = 0;
+        ccCount = 1;
         return true;
     }
 

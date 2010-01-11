@@ -2,7 +2,7 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.proportions.sqi;
+package org.projectusus.core.internal.proportions.rawdata;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;

@@ -1,0 +1,24 @@
+public class Class1 {
+
+    public void m(){
+    	int i = 0;
+    
+        Object o = new Object(){
+        	public void x(){
+        		int i = 0;
+        	}
+        	public void y(){
+        		int i = 0;
+        	}
+        	public void z(){
+        		int i = 0;
+        	}
+        	public void w(){
+        		int i = 0;
+        	}
+        };
+        
+        int j = 0;
+    }
+    
+}

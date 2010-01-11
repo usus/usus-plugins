@@ -1,0 +1,7 @@
+public class Class1 {
+
+    public void m(){
+        Object o = new Object(){};
+    }
+    
+}

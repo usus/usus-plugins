@@ -1,0 +1,8 @@
+
+public class CC_foreach {
+
+public void m1(List l){
+	for(Object c : l) ;
+}
+
+}

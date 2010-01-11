@@ -1,0 +1,6 @@
+public class Class1 {
+
+	private static class Class2 {
+	}
+
+}

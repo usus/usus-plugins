@@ -1,0 +1,9 @@
+
+public class CC_do {
+
+public void m1(){
+	if(true){}
+	if(false){}else{}
+}
+
+}

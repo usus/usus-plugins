@@ -1,0 +1,12 @@
+
+public class ML {
+
+public void m1(){
+if(true){
+int i = 0;
+}else{
+int j = 1;
+}
+}
+
+}

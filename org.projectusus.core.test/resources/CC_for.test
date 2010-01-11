@@ -1,0 +1,8 @@
+
+public class CC_for {
+
+public void m1(){
+	for(;;) ;
+}
+
+}
