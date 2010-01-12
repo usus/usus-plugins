@@ -6,6 +6,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.GraphViewer;
+import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 
@@ -21,6 +22,7 @@ public class AcdView extends ViewPart {
 		composite.setLayout(new FillLayout());
 		composite.setSize(400, 400);
 		graphViewer = new GraphViewer(composite, SWT.NONE);
+		graphViewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
 		graphViewer.setContentProvider(new AcdNodeContentProvider());
 		graphViewer.setLabelProvider(new AcdLabelProvider());
 		graphViewer.setInput(AcdModel.getInstance().getRawData());
