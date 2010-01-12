@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+           <view class="org.projectusus.ui.dependencygraph.AcdView"
+            icon="icons/refresh.gif"
+            id="org.projectusus.ui.dependencygraph.AcdView"
+            category="org.projectusus.ui.viewCategory"
+            name="Usus Acd Graph"/>
+   </extension>
+   <extension point="org.eclipse.ui.viewActions">
+      <viewContribution
+            id="org.projectusus.ui.internal.viewContribution_AcdView"
+            targetID="org.projectusus.ui.dependencygraph.AcdView">
+         <action
+               class="org.projectusus.ui.dependencygraph.RefreshAcdView"
+               icon="icons/full/elcl16/refresh.gif"
+               id="org.projectusus.ui.dependencygraph.RefreshAcdView"
+               label="Refresh"
+               menubarPath="additions"
+               style="push"
+               toolbarPath="additions"
+               tooltip="Redraws the dependecy graph."/>
+      </viewContribution>
+   </extension>
+
+</plugin>
