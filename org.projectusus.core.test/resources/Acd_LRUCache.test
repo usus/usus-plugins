@@ -1,0 +1,5 @@
+package org.doublemill.model.util;
+
+
+public class LRUCache<K, V> extends LinkedHashMap<K, V> {
+}

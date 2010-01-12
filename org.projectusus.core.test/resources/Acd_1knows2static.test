@@ -1,0 +1,20 @@
+public class Acd2 {
+
+	private String string;
+	
+	public String getString(){
+		return string;
+	}
+	
+}
+
+class Acd2Helper {
+
+	private String string;
+	private static Acd2 acd2;
+	
+	public String getString(){
+		return string;
+	}
+	
+}

@@ -1,16 +1,17 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class AllKnownClasses {
+public class SetOfClasses {
 
-    private final Set<ClassRawData> allKnownClasses;
+    private final Set<ClassRawData> allClasses;
 
-    public AllKnownClasses() {
-        allKnownClasses = new TreeSet<ClassRawData>( new Comparator<ClassRawData>() {
+    public SetOfClasses() {
+        allClasses = new TreeSet<ClassRawData>( new Comparator<ClassRawData>() {
             public int compare( ClassRawData o1, ClassRawData o2 ) {
                 if( o1 == o2 ) {
                     return 0;
@@ -21,11 +22,11 @@ public class AllKnownClasses {
     }
 
     public void invalidate() {
-        allKnownClasses.clear();
+        allClasses.clear();
     }
 
     public Set<ClassRawData> getClasses() {
-        return Collections.unmodifiableSet( allKnownClasses );
+        return Collections.unmodifiableSet( allClasses );
     }
 
     public boolean areUpToDate() {
@@ -34,16 +35,16 @@ public class AllKnownClasses {
 
     public void startInitialization( ClassRawData data ) {
         invalidate();
-        allKnownClasses.add( data );
+        allClasses.add( data );
     }
 
-    public void addKnownClassesOf( ClassRawData data ) {
-        if( !allKnownClasses.contains( data ) ) {
-            allKnownClasses.addAll( data.getAllKnownClasses() );
+    public void addAllClassesDependingOn( ClassRawData clazz, Collection<ClassRawData> dependingClasses ) {
+        if( !allClasses.contains( clazz ) ) {
+            allClasses.addAll( dependingClasses );
         }
     }
 
     public int size() {
-        return allKnownClasses.size();
+        return allClasses.size();
     }
 }

@@ -161,8 +161,16 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         return adjacencyNode.getChildren();
     }
 
-    public Collection<? extends ClassRawData> getAllKnownClasses() {
-        return adjacencyNode.getAllKnownClasses();
+    public Set<ClassRawData> getParents() {
+        return adjacencyNode.getParents();
+    }
+
+    public Collection<ClassRawData> getAllChildren() {
+        return adjacencyNode.getAllChildren();
+    }
+
+    public Collection<ClassRawData> getAllParents() {
+        return adjacencyNode.getAllParents();
     }
 
     public void invalidateAcd() {

@@ -45,6 +45,27 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
+    public void twoRelatedClasses1knows2Statically() throws Exception {
+        createAndCompute( "_1knows2static" );
+        assertEquals( 2, getClasses().size() );
+        assertEquals( 0.75, getACD(), 0.0001 );
+    }
+    
+    @Test
+    public void twoRelatedClasses1knows2Generic() throws Exception {
+        createAndCompute( "_1knows2generic" );
+        assertEquals( 2, getClasses().size() );
+        assertEquals( 0.75, getACD(), 0.0001 );
+    }
+    
+    @Test
+    public void twoRelatedClasses1knows2InGenericArgument() throws Exception {
+        createAndCompute( "_1knows2InGenericArg" );
+        assertEquals( 2, getClasses().size() );
+        assertEquals( 0.75, getACD(), 0.0001 );
+    }
+    
+    @Test
     public void twoRelatedClasses2know2() throws Exception {
         createAndCompute( "3_2" );
         assertEquals( 2, getClasses().size() );
@@ -100,6 +121,52 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         computeFile( firstFile );
         assertEquals( 2, getClasses().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
+    }
+    
+    @Test
+    public void twoFilesTheFirstKnowsTheSecondWithPackages() throws Exception {
+        createWSFolder( "org" );
+        createWSFolder( "org/doublemill" );
+        createWSFolder( "org/doublemill/model" );
+        createWSFolder( "org/doublemill/model/ai" );
+        createWSFolder( "org/doublemill/model/util" );
+        IFile firstFile = createWSFile( "org/doublemill/model/ai/Acd_GameStateAI.java", loadContent("Acd_GameStateAI.test") );
+        IFile secondFile = createWSFile( "org/doublemill/model/util/Acd_LRUCache.java", loadContent("Acd_LRUCache.test") );
+        computeFile( secondFile );
+        computeFile( firstFile );
+        assertEquals( 2, getClasses().size() );
+        assertEquals( 0.75, getACD(), 0.0001 );
+        int sumDirectChildren = 0;
+        int sumKnownClasses = 0;
+        for(ClassRawData clazz : getClasses()){
+            sumDirectChildren += clazz.getChildren().size();
+            sumKnownClasses += clazz.getAllChildren().size();
+        }
+        assertEquals(1, sumDirectChildren);
+        assertEquals( 3, sumKnownClasses );
+    }
+    
+    @Test
+    public void twoFilesTheSecondKnowsTheFirstWithPackages() throws Exception {
+        createWSFolder( "org" );
+        createWSFolder( "org/doublemill" );
+        createWSFolder( "org/doublemill/model" );
+        createWSFolder( "org/doublemill/model/ai" );
+        createWSFolder( "org/doublemill/model/util" );
+        IFile firstFile = createWSFile( "org/doublemill/model/ai/Acd_GameStateAI.java", loadContent("Acd_GameStateAI.test") );
+        IFile secondFile = createWSFile( "org/doublemill/model/util/Acd_LRUCache.java", loadContent("Acd_LRUCache.test") );
+        computeFile( firstFile );
+        computeFile( secondFile );
+        assertEquals( 2, getClasses().size() );
+        assertEquals( 0.75, getACD(), 0.0001 );
+        int sumDirectChildren = 0;
+        int sumKnownClasses = 0;
+        for(ClassRawData clazz : getClasses()){
+            sumDirectChildren += clazz.getChildren().size();
+            sumKnownClasses += clazz.getAllChildren().size();
+        }
+        assertEquals(1, sumDirectChildren);
+        assertEquals( 3, sumKnownClasses );
     }
     
     @Test
@@ -161,6 +228,14 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         computeFile( file );
         assertEquals( 2, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
+        int sumDirectChildren = 0;
+        int sumKnownClasses = 0;
+        for(ClassRawData clazz : getClasses()){
+            sumDirectChildren += clazz.getChildren().size();
+            sumKnownClasses += clazz.getAllChildren().size();
+        }
+        assertEquals( 2, sumDirectChildren );
+        assertEquals( 4, sumKnownClasses );
     }
     
     @Test

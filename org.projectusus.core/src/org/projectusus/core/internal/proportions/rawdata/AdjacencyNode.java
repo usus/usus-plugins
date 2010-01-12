@@ -11,8 +11,9 @@ import java.util.Set;
 public class AdjacencyNode {
 
     private final Set<ClassRawData> directChildren = new HashSet<ClassRawData>();
+    private final SetOfClasses transitiveChildren = new SetOfClasses();
     private final Set<ClassRawData> directParents = new HashSet<ClassRawData>();
-    private final AllKnownClasses allKnownClasses = new AllKnownClasses();
+    private final SetOfClasses transitiveParents = new SetOfClasses();
     private final ClassRawData self;
 
     public AdjacencyNode( ClassRawData self ) {
@@ -20,11 +21,12 @@ public class AdjacencyNode {
     }
 
     public void addChild( ClassRawData child ) {
-        allKnownClasses.invalidate();
+        transitiveChildren.invalidate();
         directChildren.add( child );
     }
 
     public void addParent( ClassRawData parent ) {
+        transitiveParents.invalidate();
         directParents.add( parent );
     }
 
@@ -40,40 +42,56 @@ public class AdjacencyNode {
         return Collections.unmodifiableSet( directParents );
     }
 
-    public Set<ClassRawData> getAllKnownClasses() {
-        updateKnownClasses();
-        return allKnownClasses.getClasses();
+    public Set<ClassRawData> getAllChildren() {
+        updateChildren();
+        return transitiveChildren.getClasses();
     }
 
-    private void updateKnownClasses() {
-        if( allKnownClasses.areUpToDate() ) {
+    public Set<ClassRawData> getAllParents() {
+        updateKnowingClasses();
+        return transitiveParents.getClasses();
+    }
+
+    private void updateChildren() {
+        if( transitiveChildren.areUpToDate() ) {
             return;
         }
-        allKnownClasses.startInitialization( self );
+        transitiveChildren.startInitialization( self );
         for( ClassRawData child : directChildren ) {
-            allKnownClasses.addKnownClassesOf( child );
+            transitiveChildren.addAllClassesDependingOn( child, child.getAllChildren() );
+        }
+    }
+
+    private void updateKnowingClasses() {
+        if( transitiveParents.areUpToDate() ) {
+            return;
+        }
+        transitiveParents.startInitialization( self );
+        for( ClassRawData parent : directParents ) {
+            transitiveChildren.addAllClassesDependingOn( parent, parent.getAllParents() );
         }
     }
 
     public void removeParent( ClassRawData classRawData ) {
+        transitiveParents.invalidate();
         directParents.remove( classRawData );
     }
 
     public void removeChild( ClassRawData classRawData ) {
-        allKnownClasses.invalidate();
+        transitiveChildren.invalidate();
         directChildren.remove( classRawData );
     }
 
     public int getCCD() {
-        updateKnownClasses();
-        return allKnownClasses.size();
+        updateChildren();
+        return transitiveChildren.size();
     }
 
-    public void invalidate() {
-        if( !allKnownClasses.areUpToDate() ) {
+    public void invalidate() { // TODO what needs to be done for the parents?
+        if( !transitiveChildren.areUpToDate() ) {
             return; // already invalidated
         }
-        allKnownClasses.invalidate();
+        transitiveChildren.invalidate();
         for( ClassRawData parent : directParents ) {
             parent.invalidateAcd();
         }
@@ -88,5 +106,4 @@ public class AdjacencyNode {
             child.removeParent( classRawData );
         }
     }
-
 }
