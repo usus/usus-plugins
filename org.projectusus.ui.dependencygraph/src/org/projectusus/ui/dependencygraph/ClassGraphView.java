@@ -1,5 +1,6 @@
 package org.projectusus.ui.dependencygraph;
 
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -10,10 +11,10 @@ import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 
-public class AcdView extends ViewPart {
+public class ClassGraphView extends ViewPart {
 
 	private Composite composite;
-	private IAcdModelListener listener;
+	private IGraphModelListener listener;
 	private GraphViewer graphViewer;
 
 	@Override
@@ -23,18 +24,20 @@ public class AcdView extends ViewPart {
 		composite.setSize(400, 400);
 		graphViewer = new GraphViewer(composite, SWT.NONE);
 		graphViewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
-		graphViewer.setContentProvider(new AcdNodeContentProvider());
-		graphViewer.setLabelProvider(new AcdLabelProvider());
-		graphViewer.setInput(AcdModel.getInstance().getRawData());
+		graphViewer.setContentProvider(new ClassNodeContentProvider());
+		graphViewer.setLabelProvider(new ClassNodeLabelProvider());
+		graphViewer.setInput(GraphModel.getInstance().getRawData());
 		SpringLayoutAlgorithm layoutAlgorithm = new SpringLayoutAlgorithm(
 				LayoutStyles.NO_LAYOUT_NODE_RESIZING);
+		graphViewer.setFilters(new ViewerFilter[] { new ClassNodeFilter() });
+
 		graphViewer.setLayoutAlgorithm(layoutAlgorithm, true);
 		initModelListener();
 		drawGraph();
 	}
 
 	private void initModelListener() {
-		listener = new IAcdModelListener() {
+		listener = new IGraphModelListener() {
 			public void ususModelChanged() {
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
@@ -44,7 +47,7 @@ public class AcdView extends ViewPart {
 			}
 
 		};
-		AcdModel.getInstance().addAcdModelListener(listener);
+		GraphModel.getInstance().addAcdModelListener(listener);
 
 	}
 
@@ -53,7 +56,7 @@ public class AcdView extends ViewPart {
 	}
 
 	private void drawGraph() {
-		graphViewer.setInput(AcdModel.getInstance().getRawData());
+		graphViewer.setInput(GraphModel.getInstance().getRawData());
 	}
 
 	@Override

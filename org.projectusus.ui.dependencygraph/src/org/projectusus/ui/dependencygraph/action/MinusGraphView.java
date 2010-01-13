@@ -1,20 +1,14 @@
-package org.projectusus.ui.dependencygraph;
+package org.projectusus.ui.dependencygraph.action;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
+import org.projectusus.ui.dependencygraph.GraphModel;
 
-/**
- * Refresh action for acd view.
- * 
- * @author Joachim Meyer - meyer.joachim@gmail.com
- * 
- */
-public class RefreshAcdView implements IViewActionDelegate {
-
+public class MinusGraphView implements IViewActionDelegate {
 	public void run(IAction arg0) {
-		AcdModel.getInstance().update();
+		GraphModel.getInstance().decreaseLimit();
 	}
 
 	public void init(IViewPart arg0) {
@@ -24,5 +18,4 @@ public class RefreshAcdView implements IViewActionDelegate {
 	public void selectionChanged(IAction arg0, ISelection arg1) {
 		// unused
 	}
-
 }

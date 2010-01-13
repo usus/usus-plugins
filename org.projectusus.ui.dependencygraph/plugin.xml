@@ -1,28 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
-         point="org.eclipse.ui.views">
-           <view class="org.projectusus.ui.dependencygraph.AcdView"
-            icon="icons/refresh.gif"
-            id="org.projectusus.ui.dependencygraph.AcdView"
+   <extension point="org.eclipse.ui.views">
+       <view class="org.projectusus.ui.dependencygraph.ClassGraphView"
+            icon="icons/graph.gif"
+            id="org.projectusus.ui.dependencygraph.ClassGraphView"
             category="org.projectusus.ui.viewCategory"
-            name="Usus Acd Graph"/>
+            name="Usus Class Graph"/>
    </extension>
    <extension point="org.eclipse.ui.viewActions">
       <viewContribution
-            id="org.projectusus.ui.internal.viewContribution_AcdView"
-            targetID="org.projectusus.ui.dependencygraph.AcdView">
+            id="org.projectusus.ui.internal.viewContribution_ClassView_Refresh"
+            targetID="org.projectusus.ui.dependencygraph.ClassGraphView">
          <action
-               class="org.projectusus.ui.dependencygraph.RefreshAcdView"
-               icon="icons/full/elcl16/refresh.gif"
-               id="org.projectusus.ui.dependencygraph.RefreshAcdView"
+               class="org.projectusus.ui.dependencygraph.action.RefreshGraphView"
+               icon="icons/refresh.gif"
+               id="org.projectusus.ui.dependencygraph.action.RefreshGraphView"
                label="Refresh"
                menubarPath="additions"
                style="push"
                toolbarPath="additions"
-               tooltip="Redraws the dependecy graph."/>
+               tooltip="Redraws the class dependecy graph."/>
+      </viewContribution>
+      <viewContribution
+            id="org.projectusus.ui.internal.viewContribution_ClassView_Plus"
+            targetID="org.projectusus.ui.dependencygraph.ClassGraphView">
+         <action
+               class="org.projectusus.ui.dependencygraph.action.PlusGraphView"
+               icon="icons/plus.gif"
+               id="org.projectusus.ui.dependencygraph.action.PlusGraphView"
+               label="Plus"
+               menubarPath="additions"
+               style="push"
+               toolbarPath="additions"
+               tooltip="Increase minimal amount of edges for an node."/>
+      </viewContribution>
+      <viewContribution
+            id="org.projectusus.ui.internal.viewContribution_ClassView_Minus"
+            targetID="org.projectusus.ui.dependencygraph.ClassGraphView">
+         <action
+               class="org.projectusus.ui.dependencygraph.action.MinusGraphView"
+               icon="icons/minus.gif"
+               id="org.projectusus.ui.dependencygraph.action.MinusGraphView"
+               label="Minus"
+               menubarPath="additions"
+               style="push"
+               toolbarPath="additions"
+               tooltip="Decrease minimal amount of edges for an node."/>
       </viewContribution>
    </extension>
+   
 
 </plugin>

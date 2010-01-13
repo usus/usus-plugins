@@ -1,6 +1,6 @@
 package org.projectusus.ui.dependencygraph;
 
 
-public interface IAcdModelListener {
+public interface IGraphModelListener {
 	void ususModelChanged();
 }

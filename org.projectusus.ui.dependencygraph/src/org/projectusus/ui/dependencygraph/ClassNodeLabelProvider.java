@@ -4,7 +4,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.zest.core.viewers.EntityConnectionData;
 import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 
-public class AcdLabelProvider extends LabelProvider {
+public class ClassNodeLabelProvider extends LabelProvider {
 	@Override
 	public String getText(Object element) {
 		if (element instanceof ClassRawData) {

@@ -4,7 +4,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.zest.core.viewers.IGraphEntityContentProvider;
 import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 
-public class AcdNodeContentProvider extends ArrayContentProvider implements
+public class ClassNodeContentProvider extends ArrayContentProvider implements
 		IGraphEntityContentProvider {
 
 	public Object[] getConnectedTo(Object entity) {
