@@ -49,6 +49,18 @@
                tooltip="Decrease minimal amount of edges for an node."/>
       </viewContribution>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.projectusus.ui.internal.perspective.USUSPerspective">
+         <view
+               id="org.projectusus.ui.dependencygraph.ClassGraphView"
+               minimized="false"
+               relationship="stack"
+               relative="org.projectusus.ui.internal.history.HistoryView">
+         </view>
+      </perspectiveExtension>
+   </extension>
    
 
 </plugin>

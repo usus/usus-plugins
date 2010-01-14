@@ -63,4 +63,8 @@ public class GraphModel {
 		return minimumEdges;
 	}
 
+	public void setMinimumEdges(Integer minimumEdges) {
+		this.minimumEdges = minimumEdges;
+	}
+
 }
