@@ -66,8 +66,11 @@ public class ClassGraphView extends ViewPart {
 			
 			
 			public void modifyText(ModifyEvent e) {
-				GraphModel.getInstance().setMinimumEdges(Integer.valueOf(spinner.getText()));
+				String spinnerText = spinner.getText();
+				if (spinnerText != null && spinnerText.length() > 0) {
+				GraphModel.getInstance().setMinimumEdges(Integer.valueOf(spinnerText));
 				refresh();
+				}
 			}
 		});
 	}
