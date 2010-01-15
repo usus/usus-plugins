@@ -7,12 +7,10 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.ZestStyles;
@@ -21,17 +19,24 @@ import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 
 public class ClassGraphView extends ViewPart {
 
+	private static final String SPINNER_TOOLTIP_TEXT = "Threshold for product of incoming and outgoing edges";
+	private static final String SPINNER_TEXT = "Threshold ";
 	private IGraphModelListener listener;
 	private GraphViewer graphViewer;
+	private GraphModel model;
+
+	public ClassGraphView() {
+		model = GraphModel.getInstance();
+	}
 
 	@Override
 	public void createPartControl(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));
-		
+
 		createFilterArea(composite);
 		createGraphArea(composite);
-		
+
 		initModelListener();
 		drawGraph();
 	}
@@ -44,7 +49,7 @@ public class ClassGraphView extends ViewPart {
 		graphViewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
 		graphViewer.setContentProvider(new ClassNodeContentProvider());
 		graphViewer.setLabelProvider(new ClassNodeLabelProvider());
-		graphViewer.setInput(GraphModel.getInstance().getRawData());
+		graphViewer.setInput(model.getRawData());
 		SpringLayoutAlgorithm layoutAlgorithm = new SpringLayoutAlgorithm(
 				LayoutStyles.NO_LAYOUT_NODE_RESIZING);
 		graphViewer.setFilters(new ViewerFilter[] { new ClassNodeFilter() });
@@ -58,18 +63,18 @@ public class ClassGraphView extends ViewPart {
 		layout.numColumns = 2;
 		filterArea.setLayout(layout);
 		Label filterText = new Label(filterArea, SWT.NONE);
-		filterText.setToolTipText("genaue erklärung");
-		filterText.setText("Minimale Kanten");
-		
+		filterText.setToolTipText(SPINNER_TOOLTIP_TEXT);
+		filterText.setText(SPINNER_TEXT);
+
 		final Spinner spinner = new Spinner(filterArea, SWT.BORDER);
+		spinner.setSelection(model.getMinimumEdges());
 		spinner.addModifyListener(new ModifyListener() {
-			
-			
 			public void modifyText(ModifyEvent e) {
 				String spinnerText = spinner.getText();
 				if (spinnerText != null && spinnerText.length() > 0) {
-				GraphModel.getInstance().setMinimumEdges(Integer.valueOf(spinnerText));
-				refresh();
+					GraphModel.getInstance().setMinimumEdges(
+							Integer.valueOf(spinnerText));
+					refresh();
 				}
 			}
 		});
@@ -86,7 +91,7 @@ public class ClassGraphView extends ViewPart {
 			}
 
 		};
-		GraphModel.getInstance().addAcdModelListener(listener);
+		model.addAcdModelListener(listener);
 
 	}
 
@@ -95,7 +100,7 @@ public class ClassGraphView extends ViewPart {
 	}
 
 	private void drawGraph() {
-		graphViewer.setInput(GraphModel.getInstance().getRawData());
+		graphViewer.setInput(model.getRawData());
 	}
 
 	@Override

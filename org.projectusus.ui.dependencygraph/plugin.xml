@@ -22,32 +22,6 @@
                toolbarPath="additions"
                tooltip="Redraws the class dependecy graph."/>
       </viewContribution>
-      <viewContribution
-            id="org.projectusus.ui.internal.viewContribution_ClassView_Plus"
-            targetID="org.projectusus.ui.dependencygraph.ClassGraphView">
-         <action
-               class="org.projectusus.ui.dependencygraph.action.PlusGraphView"
-               icon="icons/plus.gif"
-               id="org.projectusus.ui.dependencygraph.action.PlusGraphView"
-               label="Plus"
-               menubarPath="additions"
-               style="push"
-               toolbarPath="additions"
-               tooltip="Increase minimal amount of edges for an node."/>
-      </viewContribution>
-      <viewContribution
-            id="org.projectusus.ui.internal.viewContribution_ClassView_Minus"
-            targetID="org.projectusus.ui.dependencygraph.ClassGraphView">
-         <action
-               class="org.projectusus.ui.dependencygraph.action.MinusGraphView"
-               icon="icons/minus.gif"
-               id="org.projectusus.ui.dependencygraph.action.MinusGraphView"
-               label="Minus"
-               menubarPath="additions"
-               style="push"
-               toolbarPath="additions"
-               tooltip="Decrease minimal amount of edges for an node."/>
-      </viewContribution>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
