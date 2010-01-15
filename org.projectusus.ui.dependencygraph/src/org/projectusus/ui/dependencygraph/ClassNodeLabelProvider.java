@@ -12,7 +12,9 @@ public class ClassNodeLabelProvider extends LabelProvider {
 			return acdNode.getClassName();
 		}
 		if (element instanceof EntityConnectionData) {
-			return "";
+			EntityConnectionData data = (EntityConnectionData) element;
+			ClassRawData dest = (ClassRawData) data.dest;
+			return String.valueOf(dest.getAllChildren().size());
 		}
 		throw new RuntimeException("Type not supported");
 	}
