@@ -5,7 +5,7 @@
 package org.projectusus.core.internal.proportions.modelcomputation;
 
 import static java.util.Collections.unmodifiableList;
-import static org.projectusus.core.internal.proportions.IFileSupport.isJavaFile;
+import static org.projectusus.core.internal.proportions.FileSupport.isJavaFile;
 
 import java.util.ArrayList;
 import java.util.Collection;

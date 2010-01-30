@@ -20,7 +20,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.projectusus.core.internal.project.FindUsusProjects;
-import org.projectusus.core.internal.proportions.IFileSupport;
+import org.projectusus.core.internal.proportions.FileSupport;
 
 /**
  * convenience implementation of target that runs over the whole workspace.
@@ -69,7 +69,7 @@ class WorkspaceCodeProportionComputationTarget implements ICodeProportionComputa
     }
 
     private void addJavaFile( IFile file, Map<String, IFile> files ) {
-        if( IFileSupport.isJavaFile( file ) ) {
+        if( FileSupport.isJavaFile( file ) ) {
             files.put( file.getLocation().toString(), file );
         }
     }
