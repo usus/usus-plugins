@@ -5,6 +5,8 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,19 +25,17 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     private final int startPosition;
     private final int lineNumber;
     private final String className;
-    private AdjacencyNode adjacencyNode;
 
     public ClassRawData( String name, int startPosition, int line ) {
         this.className = name;
         this.startPosition = startPosition;
         this.lineNumber = line;
-        this.adjacencyNode = new AdjacencyNode( this );
     }
 
     // for debugging:
     @Override
     public String toString() {
-        return "Class " + className + " in line " + lineNumber + " with " + getNumberOfMethods() + " methods."; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        return "Class " + className + " in line " + lineNumber + " with " + getNumberOfMethods() + " methods.";
     }
 
     public void setCCValue( MethodDeclaration node, int value ) {
@@ -59,7 +59,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     private MethodRawData getRawData( Initializer node ) {
-        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), "initializer" ); //$NON-NLS-1$
+        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), "initializer" );
     }
 
     private MethodRawData getRawData( int start, int lineNumber, String methodName ) {
@@ -85,7 +85,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
             for( Integer start : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( start.intValue() );
                 if( method.equals( foundElement ) ) {
-                    return getRawData( start.intValue(), 0, "" ); //$NON-NLS-1$
+                    return getRawData( start.intValue(), 0, "" );
                 }
             }
         } catch( JavaModelException e ) {
@@ -132,52 +132,147 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     public int getCCDResult() {
-        return adjacencyNode.getCCD();
+        return a_getCCD();
     }
 
-    public void addReferencedType( ClassRawData referencedRawData ) {
-        if( referencedRawData == null || this == referencedRawData ) {
+    public void addChild( ClassRawData child ) {
+        if( child == null || this == child ) {
             return;
         }
-        this.adjacencyNode.addChild( referencedRawData );
-        referencedRawData.adjacencyNode.addParent( this );
+        a_addChild( child );
+        child.a_addParent( this );
     }
 
     @Override
     public void resetRawData() {
-        adjacencyNode.removeNode( this );
+        a_removeNode( this );
         super.resetRawData();
     }
 
     void removeParent( ClassRawData classRawData ) {
-        adjacencyNode.removeParent( classRawData );
+        a_removeParent( classRawData );
     }
 
     void removeChild( ClassRawData classRawData ) {
-        adjacencyNode.removeChild( classRawData );
+        a_removeChild( classRawData );
     }
 
     public Set<ClassRawData> getChildren() {
-        return adjacencyNode.getChildren();
+        return a_getChildren();
     }
 
     public Set<ClassRawData> getParents() {
-        return adjacencyNode.getParents();
+        return a_getParents();
     }
 
     public Collection<ClassRawData> getAllChildren() {
-        return adjacencyNode.getAllChildren();
+        return a_getAllChildren();
     }
 
     public Collection<ClassRawData> getAllParents() {
-        return adjacencyNode.getAllParents();
+        return a_getAllParents();
     }
 
     public void invalidateAcd() {
-        adjacencyNode.invalidate();
+        a_invalidate();
     }
 
     public String getClassName() {
         return className;
     }
+
+    // aus AdjacencyNode
+
+    private final Set<ClassRawData> directChildren = new HashSet<ClassRawData>();
+    private final SetOfClasses transitiveChildren = new SetOfClasses();
+    private final Set<ClassRawData> directParents = new HashSet<ClassRawData>();
+    private final SetOfClasses transitiveParents = new SetOfClasses();
+
+    private void a_addChild( ClassRawData child ) {
+        transitiveChildren.invalidate();
+        directChildren.add( child );
+    }
+
+    private void a_addParent( ClassRawData parent ) {
+        transitiveParents.invalidate();
+        directParents.add( parent );
+    }
+
+    public int getChildCount() {
+        return directChildren.size();
+    }
+
+    private Set<ClassRawData> a_getChildren() {
+        return Collections.unmodifiableSet( directChildren );
+    }
+
+    private Set<ClassRawData> a_getParents() {
+        return Collections.unmodifiableSet( directParents );
+    }
+
+    private Set<ClassRawData> a_getAllChildren() {
+        a_updateChildren();
+        return transitiveChildren.getClasses();
+    }
+
+    private Set<ClassRawData> a_getAllParents() {
+        a_updateParents();
+        return transitiveParents.getClasses();
+    }
+
+    private void a_updateChildren() {
+        if( transitiveChildren.areUpToDate() ) {
+            return;
+        }
+        transitiveChildren.startInitialization( this );
+        for( ClassRawData child : directChildren ) {
+            transitiveChildren.addAllClassesDependingOn( child, child.getAllChildren() );
+        }
+    }
+
+    private void a_updateParents() {
+        if( transitiveParents.areUpToDate() ) {
+            return;
+        }
+        transitiveParents.startInitialization( this );
+        for( ClassRawData parent : directParents ) {
+            transitiveChildren.addAllClassesDependingOn( parent, parent.getAllParents() );
+        }
+    }
+
+    private void a_removeParent( ClassRawData classRawData ) {
+        transitiveParents.invalidate();
+        directParents.remove( classRawData );
+    }
+
+    private void a_removeChild( ClassRawData classRawData ) {
+        transitiveChildren.invalidate();
+        directChildren.remove( classRawData );
+    }
+
+    private int a_getCCD() {
+        a_updateChildren();
+        return transitiveChildren.size();
+    }
+
+    private void a_invalidate() { // TODO what needs to be done for the parents?
+        if( !transitiveChildren.areUpToDate() ) {
+            return; // already invalidated
+        }
+        transitiveChildren.invalidate();
+        for( ClassRawData parent : directParents ) {
+            parent.invalidateAcd();
+        }
+    }
+
+    private void a_removeNode( ClassRawData classRawData ) {
+        a_invalidate();
+        for( ClassRawData parent : getParents() ) {
+            parent.removeChild( classRawData );
+        }
+        for( ClassRawData child : getChildren() ) {
+            child.removeParent( classRawData );
+        }
+    }
+
 }

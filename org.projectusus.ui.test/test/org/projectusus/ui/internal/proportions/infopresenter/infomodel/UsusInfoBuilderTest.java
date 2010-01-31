@@ -69,7 +69,7 @@ public class UsusInfoBuilderTest {
 
     private void setupJavaElementRawData() {
         IClassRawData classRawData = mock( IClassRawData.class );
-        when( fileRawData.getRawData( method.getDeclaringType() ) ).thenReturn( classRawData );
+        when( fileRawData.getOrCreateRawData( method.getDeclaringType() ) ).thenReturn( classRawData );
         IMethodRawData methodRawData = mock( IMethodRawData.class );
         when( classRawData.getMethodRawData( method ) ).thenReturn( methodRawData );
     }

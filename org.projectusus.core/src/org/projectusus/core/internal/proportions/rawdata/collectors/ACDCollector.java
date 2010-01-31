@@ -56,10 +56,9 @@ public class ACDCollector extends Collector {
             return true;
         }
         ITypeBinding binding = node.resolveBinding();
-        if( binding == null || !binding.isFromSource() ) {
-            return true;
+        if( binding != null && binding.isFromSource() ) {
+            getFileRawData().addClassReference( currentType, binding.getJavaElement() );
         }
-        getFileRawData().addClassReference( currentType, binding.getJavaElement() );
         return true;
     }
 

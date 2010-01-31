@@ -45,6 +45,21 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
+    public void twoRelatedClassesKnowEachOther() throws Exception {
+        createAndCompute( "_twoKnowEachOther" );
+        assertEquals( 2, getClasses().size() );
+        assertEquals( 1.0, getACD(), 0.0001 );
+        int sumDirectChildren = 0;
+        int sumKnownClasses = 0;
+        for(ClassRawData clazz : getClasses()){
+            sumDirectChildren += clazz.getChildren().size();
+            sumKnownClasses += clazz.getAllChildren().size();
+        }
+        assertEquals( 2, sumDirectChildren );
+        assertEquals( 4, sumKnownClasses );
+    }
+    
+    @Test
     public void twoRelatedClasses1knows2Statically() throws Exception {
         createAndCompute( "_1knows2static" );
         assertEquals( 2, getClasses().size() );

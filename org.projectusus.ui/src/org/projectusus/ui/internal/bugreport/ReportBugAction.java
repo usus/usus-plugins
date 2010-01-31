@@ -116,7 +116,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
         IType clazz = getClazz( method );
         IUSUSProject ususProject = getUsusProject();
         IFileRawData fileResults = ususProject.getProjectRawData().getFileRawData( (IFile)selectedJavaClass.getUnderlyingResource() );
-        return fileResults.getRawData( clazz );
+        return fileResults.getOrCreateRawData( clazz );
     }
 
     private IMethod getSelectedMethod() {

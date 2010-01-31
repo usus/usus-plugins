@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 public interface IFileRawData {
 
-    IClassRawData getRawData( IJavaElement javaElement );
+    IClassRawData getOrCreateRawData( IJavaElement javaElement );
 
     void addClassReference( AbstractTypeDeclaration referencingType, IJavaElement referencedElement );
 

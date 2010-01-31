@@ -97,7 +97,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
         return getClassRawData( ASTSupport.findEnclosingClass( node ) );
     }
 
-    public IClassRawData getRawData( IJavaElement element ) {
+    public IClassRawData getOrCreateRawData( IJavaElement element ) {
         if( element == null ) {
             return null;
         }
@@ -143,7 +143,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
         }
         ClassRawData referencingRawData = getClassRawData( referencingType );
         IFileRawData fileRawData = JDTSupport.getFileRawDataFor( (IFile)resource );
-        ClassRawData referencedRawData = (ClassRawData)fileRawData.getRawData( referencedElement );
-        referencingRawData.addReferencedType( referencedRawData );
+        ClassRawData referencedRawData = (ClassRawData)fileRawData.getOrCreateRawData( referencedElement );
+        referencingRawData.addChild( referencedRawData );
     }
 }

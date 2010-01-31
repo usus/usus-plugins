@@ -14,7 +14,7 @@ public class RawData<S, T extends IRawData> implements IRawData {
 
     private final RawDataMapWrapper<S, T> wrapper;
 
-    public RawData() {
+    protected RawData() {
         wrapper = new RawDataMapWrapper<S, T>();
     }
 
