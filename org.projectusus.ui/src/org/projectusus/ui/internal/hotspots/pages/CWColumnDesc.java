@@ -4,11 +4,15 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.hotspots.pages;
 
+import static org.projectusus.ui.internal.viewer.ColumnAlignment.LEFT;
+import static org.projectusus.ui.internal.viewer.ColumnAlignment.RIGHT;
+
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.yellowcount.IMetricCWHotspot;
+import org.projectusus.ui.internal.viewer.ColumnAlignment;
 
 public enum CWColumnDesc implements IHotspotsPageColumnDesc {
-    WARNINGS( "Warnings", 10, false ) {
+    WARNINGS( "Warnings", RIGHT, 10, false ) {
         public String getLabel( IHotspot element ) {
             IMetricCWHotspot hotspot = (IMetricCWHotspot)element;
             return String.valueOf( hotspot.getWarningCount() );
@@ -28,11 +32,17 @@ public enum CWColumnDesc implements IHotspotsPageColumnDesc {
     private final String headLabel;
     private final int weight;
     private final boolean hasImage;
+    private final ColumnAlignment align;
 
-    private CWColumnDesc( String headLabel, int weight, boolean hasImage ) {
+    private CWColumnDesc( String headLabel, ColumnAlignment align, int weight, boolean hasImage ) {
         this.headLabel = headLabel;
+        this.align = align;
         this.weight = weight;
         this.hasImage = hasImage;
+    }
+
+    private CWColumnDesc( String headLabel, int weight, boolean hasImage ) {
+        this( headLabel, LEFT, weight, hasImage );
     }
 
     public int getWeight() {
@@ -45,5 +55,9 @@ public enum CWColumnDesc implements IHotspotsPageColumnDesc {
 
     public boolean hasImage() {
         return hasImage;
+    }
+
+    public ColumnAlignment getColumnAlignment() {
+        return align;
     }
 }

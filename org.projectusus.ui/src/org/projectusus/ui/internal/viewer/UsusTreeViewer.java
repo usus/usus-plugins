@@ -17,8 +17,10 @@ import org.eclipse.swt.widgets.Tree;
 
 public class UsusTreeViewer<T> extends TreeViewer {
 
-    public UsusTreeViewer( Composite parent, int style, IColumnDesc<T>[] columns ) {
-        super( new Tree( parent, style ) );
+    private final static int STYLE = SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION;
+
+    public UsusTreeViewer( Composite parent, IColumnDesc<T>[] columns ) {
+        super( new Tree( parent, STYLE ) );
         TableLayout layout = createTree();
         createColumns( layout, columns );
     }
@@ -38,7 +40,8 @@ public class UsusTreeViewer<T> extends TreeViewer {
 
     private void createColumns( TableLayout layout, IColumnDesc<T>[] columns ) {
         for( IColumnDesc<T> desc : columns ) {
-            TreeViewerColumn column = new TreeViewerColumn( this, SWT.NONE );
+            int style = desc.getColumnAlignment().toSwtStyle();
+            TreeViewerColumn column = new TreeViewerColumn( this, style );
             column.getColumn().setResizable( true );
             column.getColumn().setMoveable( true );
             column.getColumn().setText( desc.getHeadLabel() );

@@ -4,11 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.hotspots.pages;
 
+import static org.projectusus.ui.internal.viewer.ColumnAlignment.RIGHT;
+
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.IMetricKGHotspot;
+import org.projectusus.ui.internal.viewer.ColumnAlignment;
 
 public enum KGColumnDesc implements IHotspotsPageColumnDesc {
-    SIZE( "Size", 10, false ) {
+    SIZE( "Size", RIGHT, 10, false ) {
         public String getLabel( IHotspot element ) {
             IMetricKGHotspot hotspot = (IMetricKGHotspot)element;
             return String.valueOf( hotspot.getClassSize() );
@@ -28,11 +31,17 @@ public enum KGColumnDesc implements IHotspotsPageColumnDesc {
     private final String headLabel;
     private final int weight;
     private final boolean hasImage;
+    private final ColumnAlignment align;
 
-    private KGColumnDesc( String headLabel, int weight, boolean hasImage ) {
+    private KGColumnDesc( String headLabel, ColumnAlignment align, int weight, boolean hasImage ) {
         this.headLabel = headLabel;
+        this.align = align;
         this.weight = weight;
         this.hasImage = hasImage;
+    }
+
+    private KGColumnDesc( String headLabel, int weight, boolean hasImage ) {
+        this( headLabel, ColumnAlignment.LEFT, weight, hasImage );
     }
 
     public int getWeight() {
@@ -45,5 +54,9 @@ public enum KGColumnDesc implements IHotspotsPageColumnDesc {
 
     public boolean hasImage() {
         return hasImage;
+    }
+
+    public ColumnAlignment getColumnAlignment() {
+        return align;
     }
 }

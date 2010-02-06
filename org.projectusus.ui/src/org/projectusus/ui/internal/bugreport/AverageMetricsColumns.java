@@ -5,6 +5,7 @@
 package org.projectusus.ui.internal.bugreport;
 
 import org.projectusus.core.internal.bugreport.IAverageMetrics;
+import org.projectusus.ui.internal.viewer.ColumnAlignment;
 import org.projectusus.ui.internal.viewer.IColumnDesc;
 
 public enum AverageMetricsColumns implements IColumnDesc<IAverageMetrics> {
@@ -12,11 +13,17 @@ public enum AverageMetricsColumns implements IColumnDesc<IAverageMetrics> {
         public String getLabel( IAverageMetrics element ) {
             return element.getName();
         }
+
+        @Override
+        public ColumnAlignment getColumnAlignment() {
+            return ColumnAlignment.LEFT;
+        }
     },
     AVG_CC( "Avg. CC", 15, false, true ) {
         public String getLabel( IAverageMetrics metrics ) {
             return String.valueOf( metrics.getAverageCyclomaticComplexity() );
         }
+
     },
     AVG_ML( "Avg. ML", 40, false, true ) {
         public String getLabel( IAverageMetrics metrics ) {
@@ -55,6 +62,10 @@ public enum AverageMetricsColumns implements IColumnDesc<IAverageMetrics> {
 
     public boolean hasImage() {
         return hasImage;
+    }
+
+    public ColumnAlignment getColumnAlignment() {
+        return ColumnAlignment.RIGHT;
     }
 
     public boolean isHasText() {

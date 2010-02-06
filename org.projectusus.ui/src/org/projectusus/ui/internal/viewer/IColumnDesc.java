@@ -15,4 +15,6 @@ public interface IColumnDesc<T> {
 
     String getLabel( T element );
 
+    ColumnAlignment getColumnAlignment();
+
 }

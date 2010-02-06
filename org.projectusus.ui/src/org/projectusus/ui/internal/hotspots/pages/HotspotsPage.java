@@ -9,7 +9,6 @@ import static java.util.Arrays.asList;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.part.Page;
@@ -37,8 +36,7 @@ public class HotspotsPage extends Page implements IHotspotsPage {
     }
 
     private void createViewer( Composite parent ) {
-        int style = SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION;
-        viewer = new UsusTreeViewer<IHotspot>( parent, style, columnDescs );
+        viewer = new UsusTreeViewer<IHotspot>( parent, columnDescs );
         viewer.setLabelProvider( new HotspotsLP( asList( columnDescs ) ) );
         viewer.setContentProvider( createContentProvider() );
     }
