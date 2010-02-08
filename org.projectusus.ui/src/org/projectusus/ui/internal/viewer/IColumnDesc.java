@@ -6,15 +6,8 @@ package org.projectusus.ui.internal.viewer;
 
 public interface IColumnDesc<T> {
 
-    String getHeadLabel();
-
     boolean hasImage();
 
-    // column weight (percentage of overall width in the table that this column takes)
-    int getWeight();
-
     String getLabel( T element );
-
-    ColumnAlignment getColumnAlignment();
 
 }

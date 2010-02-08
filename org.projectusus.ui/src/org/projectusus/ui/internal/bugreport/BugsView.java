@@ -20,8 +20,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.projectusus.core.internal.bugreport.Bug;
-import org.projectusus.ui.internal.TableViewPart;
 import org.projectusus.ui.internal.viewer.IColumnDesc;
+import org.projectusus.ui.internal.viewer.TableViewPart;
 
 public class BugsView extends TableViewPart<Bug> {
 

@@ -8,66 +8,43 @@ import static org.projectusus.ui.internal.viewer.ColumnAlignment.RIGHT;
 
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.IMetricCCHotspot;
-import org.projectusus.ui.internal.viewer.ColumnAlignment;
+import org.projectusus.ui.internal.viewer.UsusTreeColumn;
 
 public enum CCColumnDesc implements IHotspotsPageColumnDesc {
 
-    COMPLEXITY( "Cyclomatic complexity", RIGHT, 10, false ) {
+    @UsusTreeColumn( header = "Cyclomatic complexity", align = RIGHT, weight = 10 )
+    COMPLEXITY {
         public String getLabel( IHotspot element ) {
             IMetricCCHotspot hotspot = (IMetricCCHotspot)element;
             return String.valueOf( hotspot.getCyclomaticComplexity() );
         }
     },
-    METHOD( "Method", 35, false ) {
+    @UsusTreeColumn( header = "Method", weight = 35 )
+    METHOD {
         public String getLabel( IHotspot element ) {
             return ((IMetricCCHotspot)element).getMethodName();
         }
     },
-    CLASS( "Class", 25, false ) {
+    @UsusTreeColumn( header = "Class", weight = 25 )
+    CLASS {
         public String getLabel( IHotspot element ) {
             return ((IMetricCCHotspot)element).getClassName();
         }
     },
-    PATH( "Path", 20, false ) {
+    @UsusTreeColumn( header = "Path", weight = 20 )
+    PATH {
         public String getLabel( IHotspot element ) {
             return element.getFile().getFullPath().removeLastSegments( 1 ).toOSString();
         }
     },
-    LINE( "Line", RIGHT, 10, false ) {
+    @UsusTreeColumn( header = "Line", align = RIGHT, weight = 10 )
+    LINE {
         public String getLabel( IHotspot element ) {
             return String.valueOf( element.getLineNumber() );
         }
     };
 
-    private final String headLabel;
-    private final int weight;
-    private final boolean hasImage;
-    private final ColumnAlignment align;
-
-    private CCColumnDesc( String headLabel, ColumnAlignment align, int weight, boolean hasImage ) {
-        this.headLabel = headLabel;
-        this.weight = weight;
-        this.hasImage = hasImage;
-        this.align = align;
-    }
-
-    private CCColumnDesc( String headLabel, int weight, boolean hasImage ) {
-        this( headLabel, ColumnAlignment.LEFT, weight, hasImage );
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public String getHeadLabel() {
-        return headLabel;
-    }
-
     public boolean hasImage() {
-        return hasImage;
-    }
-
-    public ColumnAlignment getColumnAlignment() {
-        return align;
+        return false;
     }
 }

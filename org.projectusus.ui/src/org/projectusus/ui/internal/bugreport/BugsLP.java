@@ -7,7 +7,7 @@ package org.projectusus.ui.internal.bugreport;
 import java.util.List;
 
 import org.projectusus.core.internal.bugreport.Bug;
-import org.projectusus.ui.internal.ColumnDescLabelProvider;
+import org.projectusus.ui.internal.viewer.ColumnDescLabelProvider;
 import org.projectusus.ui.internal.viewer.IColumnDesc;
 
 public class BugsLP extends ColumnDescLabelProvider<Bug> {

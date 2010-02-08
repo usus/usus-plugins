@@ -40,12 +40,17 @@ public class UsusTreeViewer<T> extends TreeViewer {
 
     private void createColumns( TableLayout layout, IColumnDesc<T>[] columns ) {
         for( IColumnDesc<T> desc : columns ) {
-            int style = desc.getColumnAlignment().toSwtStyle();
-            TreeViewerColumn column = new TreeViewerColumn( this, style );
-            column.getColumn().setResizable( true );
-            column.getColumn().setMoveable( true );
-            column.getColumn().setText( desc.getHeadLabel() );
-            layout.addColumnData( new ColumnWeightData( desc.getWeight() ) );
+            UsusTreeColumn ususTreeColumn = new AnnotationReader( desc ).compute();
+            TreeViewerColumn column = createColumn( ususTreeColumn.align().toSwtStyle() );
+            column.getColumn().setText( ususTreeColumn.header() );
+            layout.addColumnData( new ColumnWeightData( ususTreeColumn.weight() ) );
         }
+    }
+
+    private TreeViewerColumn createColumn( int style ) {
+        TreeViewerColumn column = new TreeViewerColumn( this, style );
+        column.getColumn().setResizable( true );
+        column.getColumn().setMoveable( true );
+        return column;
     }
 }

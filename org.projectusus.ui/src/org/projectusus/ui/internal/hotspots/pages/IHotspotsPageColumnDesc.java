@@ -9,12 +9,6 @@ import org.projectusus.ui.internal.viewer.IColumnDesc;
 
 public interface IHotspotsPageColumnDesc extends IColumnDesc<IHotspot> {
 
-    String getHeadLabel();
-
     String getLabel( IHotspot element );
 
-    boolean hasImage();
-
-    // column weight (percentage of overall width in the table that this column takes
-    int getWeight();
 }

@@ -12,9 +12,9 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.swt.widgets.Composite;
 import org.projectusus.core.internal.bugreport.IAverageMetrics;
-import org.projectusus.ui.internal.ColumnDescLabelProvider;
-import org.projectusus.ui.internal.TableViewPart;
+import org.projectusus.ui.internal.viewer.ColumnDescLabelProvider;
 import org.projectusus.ui.internal.viewer.IColumnDesc;
+import org.projectusus.ui.internal.viewer.TableViewPart;
 
 public class AverageCodeProportionsView extends TableViewPart<IAverageMetrics> {
 

@@ -4,71 +4,47 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.hotspots.pages;
 
-import static org.projectusus.ui.internal.viewer.ColumnAlignment.LEFT;
 import static org.projectusus.ui.internal.viewer.ColumnAlignment.RIGHT;
 
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.IMetricMLHotspot;
-import org.projectusus.ui.internal.viewer.ColumnAlignment;
+import org.projectusus.ui.internal.viewer.UsusTreeColumn;
 
 public enum MLColumnDesc implements IHotspotsPageColumnDesc {
 
-    LENGTH( "Length", RIGHT, 10, false ) {
+    @UsusTreeColumn( header = "Length", align = RIGHT, weight = 10 )
+    LENGTH {
         public String getLabel( IHotspot element ) {
             IMetricMLHotspot hotspot = (IMetricMLHotspot)element;
             return String.valueOf( hotspot.getMethodLength() );
         }
     },
-    METHOD( "Method", 35, false ) {
+    @UsusTreeColumn( header = "Method", weight = 35 )
+    METHOD {
         public String getLabel( IHotspot element ) {
             return ((IMetricMLHotspot)element).getMethodName();
         }
     },
-    CLASS( "Class", 25, false ) {
+    @UsusTreeColumn( header = "Class", weight = 25 )
+    CLASS {
         public String getLabel( IHotspot element ) {
             return ((IMetricMLHotspot)element).getClassName();
         }
     },
-    PATH( "Path", 20, false ) {
+    @UsusTreeColumn( header = "Path", weight = 20 )
+    PATH {
         public String getLabel( IHotspot element ) {
             return ((IMetricMLHotspot)element).getFile().getFullPath().removeLastSegments( 1 ).toOSString();
         }
     },
-    LINE( "Line", RIGHT, 10, false ) {
+    @UsusTreeColumn( header = "Line", align = RIGHT, weight = 10 )
+    LINE {
         public String getLabel( IHotspot element ) {
             return String.valueOf( ((IMetricMLHotspot)element).getLineNumber() );
         }
     };
 
-    private final String headLabel;
-    private final int weight;
-    private final boolean hasImage;
-    private final ColumnAlignment align;
-
-    private MLColumnDesc( String headLabel, ColumnAlignment align, int weight, boolean hasImage ) {
-        this.headLabel = headLabel;
-        this.align = align;
-        this.weight = weight;
-        this.hasImage = hasImage;
-    }
-
-    private MLColumnDesc( String headLabel, int weight, boolean hasImage ) {
-        this( headLabel, LEFT, weight, hasImage );
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public String getHeadLabel() {
-        return headLabel;
-    }
-
     public boolean hasImage() {
-        return hasImage;
-    }
-
-    public ColumnAlignment getColumnAlignment() {
-        return align;
+        return false;
     }
 }

@@ -2,7 +2,7 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.ui.internal;
+package org.projectusus.ui.internal.viewer;
 
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -15,7 +15,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.part.ViewPart;
-import org.projectusus.ui.internal.viewer.IColumnDesc;
 
 public abstract class TableViewPart<T> extends ViewPart {
 
@@ -52,11 +51,11 @@ public abstract class TableViewPart<T> extends ViewPart {
 
     protected void createColumns( Table table, TableColumnLayout layout ) {
         for( IColumnDesc<T> columnDesc : getColumns() ) {
-            TableColumn column = new TableColumn( table, SWT.NONE );
-            ColumnWeightData data = new ColumnWeightData( columnDesc.getWeight() );
+            UsusTreeColumn ususTreeColumn = new AnnotationReader( columnDesc ).compute();
+            TableColumn column = new TableColumn( table, ususTreeColumn.align().toSwtStyle() );
+            ColumnWeightData data = new ColumnWeightData( ususTreeColumn.weight() );
             layout.setColumnData( column, data );
-            column.setText( columnDesc.getHeadLabel() );
-            column.pack();
+            column.setText( ususTreeColumn.header() );
         }
     }
 
