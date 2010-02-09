@@ -38,19 +38,19 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         return "Class " + className + " in line " + lineNumber + " with " + getNumberOfMethods() + " methods.";
     }
 
-    public void setCCValue( MethodDeclaration node, int value ) {
+    void setCCValue( MethodDeclaration node, int value ) {
         getRawData( node ).setCCValue( value );
     }
 
-    public void setCCValue( Initializer node, int value ) {
+    void setCCValue( Initializer node, int value ) {
         getRawData( node ).setCCValue( value );
     }
 
-    public void setMLValue( MethodDeclaration node, int value ) {
+    void setMLValue( MethodDeclaration node, int value ) {
         getRawData( node ).setMLValue( value );
     }
 
-    public void setMLValue( Initializer node, int value ) {
+    void setMLValue( Initializer node, int value ) {
         getRawData( node ).setMLValue( value );
     }
 
