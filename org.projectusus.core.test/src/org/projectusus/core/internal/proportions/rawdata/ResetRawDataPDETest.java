@@ -8,6 +8,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.internal.UsusCorePlugin;
 
 public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
 
@@ -15,7 +16,7 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
 
     @Before
     public void setup() throws CoreException{
-        WorkspaceRawData.getInstance().dropRawData( project );
+        UsusCorePlugin.getUsusModel().dropRawData( project );
         makeUsusProject( false );
         addJavaNature();
    }
@@ -24,7 +25,7 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
     public void resetWorkspaceWithFile1() throws Exception {
         computeFile1AndCheckPreconditions();
         
-        WorkspaceRawData.getInstance().resetRawData(project);
+        UsusCorePlugin.getUsusModel().resetRawData(project);
         
         checkProjectRawDataIsEmpty1File( projectRawData );
    }
@@ -90,6 +91,6 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
     }   
     
     private Set<ClassRawData> getClasses() {
-        return  WorkspaceRawData.getInstance().getAllClassRawData();
+        return  UsusCorePlugin.getUsusModel().getAllClassRawData();
     }
 }

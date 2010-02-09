@@ -8,17 +8,17 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.model.AcdSQIComputer;
 import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
-import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 
 public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Before
     public void setup() throws CoreException{
-        WorkspaceRawData.getInstance().dropRawData( project );
+        UsusCorePlugin.getUsusModel().dropRawData( project );
         makeUsusProject( false );
         addJavaNature();
    }
@@ -191,7 +191,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         computeFile( firstFile );
         assertEquals( 2, getClasses().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
-        WorkspaceRawData.getInstance().dropRawData( secondFile );
+        UsusCorePlugin.getUsusModel().dropRawData( secondFile );
         assertEquals( 1, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
@@ -231,7 +231,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         computeFile( firstFile );
         assertEquals( 2, getClasses().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
-        WorkspaceRawData.getInstance().dropRawData( firstFile );
+        UsusCorePlugin.getUsusModel().dropRawData( firstFile );
         assertEquals( 1, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
@@ -260,13 +260,13 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         computeFile( firstFile );
         assertEquals( 2, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
-        WorkspaceRawData.getInstance().dropRawData( secondFile );
+        UsusCorePlugin.getUsusModel().dropRawData( secondFile );
         assertEquals( 1, getClasses().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
     
     private Set<ClassRawData> getClasses() {
-        return WorkspaceRawData.getInstance().getAllClassRawData();
+        return UsusCorePlugin.getUsusModel().getAllClassRawData();
     }
 
     private double getACD() {

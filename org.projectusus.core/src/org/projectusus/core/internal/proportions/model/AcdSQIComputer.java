@@ -2,20 +2,20 @@ package org.projectusus.core.internal.proportions.model;
 
 import java.util.Set;
 
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
-import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 public class AcdSQIComputer {
 
     private Set<ClassRawData> classes;
 
-    public double compute( WorkspaceRawData workspace ) {
-        classes = workspace.getAllClassRawData();
+    public double compute( Set<ClassRawData> classes ) {
+        this.classes = classes;
         return 100.0 - getRelativeACD_internal() * 100.0;
     }
 
     public double getRelativeACD() {
-        classes = WorkspaceRawData.getInstance().getAllClassRawData();
+        classes = UsusCorePlugin.getUsusModel().getAllClassRawData();
         return getRelativeACD_internal();
     }
 

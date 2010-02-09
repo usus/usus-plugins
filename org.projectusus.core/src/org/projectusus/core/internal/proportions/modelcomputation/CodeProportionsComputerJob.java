@@ -29,7 +29,6 @@ import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
-import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.JDTDriver;
 import org.projectusus.core.internal.proportions.yellowcount.WorkspaceYellowCount;
 
@@ -96,7 +95,7 @@ public class CodeProportionsComputerJob extends Job {
         new JDTDriver( target ).run( monitor );
 
         for( CodeProportionKind metric : asList( CC, KG, ML, ACD ) ) {
-            collector.add( WorkspaceRawData.getInstance().getCodeProportion( metric ) );
+            collector.add( UsusCorePlugin.getUsusModel().getCodeProportion( metric ) );
         }
     }
 }

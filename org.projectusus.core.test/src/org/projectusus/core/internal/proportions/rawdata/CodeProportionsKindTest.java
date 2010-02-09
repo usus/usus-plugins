@@ -17,14 +17,10 @@ import java.util.HashSet;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.internal.ReflectionUtil;
-import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
-import org.projectusus.core.internal.proportions.rawdata.MethodRawData;
-import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 public class CodeProportionsKindTest {
 
+    private UsusModel ususModel;
     private MethodRawData methodRawDataOK;
     private MethodRawData methodRawDataFailing;
     private ClassRawData classRawDataOK;
@@ -39,9 +35,9 @@ public class CodeProportionsKindTest {
         methodRawDataOK.setMLValue( 1 );
         methodRawDataOK.setCCValue( 2 );
 
-        ReflectionUtil.setValue( WorkspaceRawData.class, WorkspaceRawData.class, mock( WorkspaceRawData.class ), "instance" );
-        when( WorkspaceRawData.getInstance().getNumberOf( CodeProportionUnit.CLASS ) ).thenReturn( 100 );
-        when( WorkspaceRawData.getInstance().getAllClassRawData() ).thenReturn( new HashSet<ClassRawData>() );
+        ususModel = mock(UsusModel.class);
+        when( ususModel.getNumberOf( CodeProportionUnit.CLASS ) ).thenReturn( 100 );
+        when( ususModel.getAllClassRawData() ).thenReturn( new HashSet<ClassRawData>() );
         
         classRawDataOK = mock( ClassRawData.class );
         when( classRawDataOK.getNumberOfMethods() ).thenReturn( 1 );

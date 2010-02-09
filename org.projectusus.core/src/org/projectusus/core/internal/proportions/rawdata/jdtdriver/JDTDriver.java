@@ -13,8 +13,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.modelcomputation.ICodeProportionComputationTarget;
-import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 public class JDTDriver {
 
@@ -26,13 +26,13 @@ public class JDTDriver {
 
     public void run( IProgressMonitor monitor ) throws CoreException {
         for( IProject removedProject : target.getRemovedProjects() ) {
-            WorkspaceRawData.getInstance().dropRawData( removedProject );
+            UsusCorePlugin.getUsusModel().dropRawData( removedProject );
         }
         monitor.beginTask( jdtDriver_computing, countTicks( target.getProjects() ) );
         for( IProject project : target.getProjects() ) {
             monitor.subTask( project.getName() );
             for( IFile removedFile : target.getRemovedFiles( project ) ) {
-                WorkspaceRawData.getInstance().dropRawData( removedFile );
+                UsusCorePlugin.getUsusModel().dropRawData( removedFile );
             }
             runInternal( project, monitor );
         }
@@ -80,6 +80,6 @@ public class JDTDriver {
 
     private void fileStarted( IFile file ) {
         SQI.trace( "File started: " + file.getFullPath() ); //$NON-NLS-1$
-        WorkspaceRawData.getInstance().dropRawData( file );
+        UsusCorePlugin.getUsusModel().dropRawData( file );
     }
 }

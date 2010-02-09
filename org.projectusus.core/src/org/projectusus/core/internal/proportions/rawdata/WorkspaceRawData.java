@@ -15,16 +15,10 @@ import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.CodeStatistic;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 
-public class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
+class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
-    private static WorkspaceRawData instance = new WorkspaceRawData();
-
-    private WorkspaceRawData() {
+    public WorkspaceRawData() {
         super();
-    }
-
-    public static WorkspaceRawData getInstance() {
-        return instance;
     }
 
     ProjectRawData getProjectRawData( IProject project ) {

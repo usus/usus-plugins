@@ -12,6 +12,8 @@ import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ml;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_pc;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ta;
 
+import org.projectusus.core.internal.UsusCorePlugin;
+
 public enum CodeProportionKind {
 
     TA( isisMetrics_ta, CodeProportionUnit.LINE, 1.0 ), //
@@ -30,7 +32,7 @@ public enum CodeProportionKind {
     ACD( isisMetrics_acd, CodeProportionUnit.CLASS, 1.0 ) {
         @Override
         public boolean isViolatedBy( ClassRawData rawData ) {
-            int classCount = WorkspaceRawData.getInstance().getNumberOf( CodeProportionUnit.CLASS );
+            int classCount = UsusCorePlugin.getUsusModel().getNumberOf( CodeProportionUnit.CLASS );
             double log_5_classCount = Math.log( classCount ) / Math.log( 5 );
             double factor = 1.5 / Math.pow( 2, log_5_classCount );
             double limit = factor * classCount;

@@ -9,9 +9,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.PlatformObject;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
-import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
 
 public class CodeProportion extends PlatformObject {
 
@@ -40,7 +40,7 @@ public class CodeProportion extends PlatformObject {
     private static double computeSQI( CodeProportionKind metric, int violations, CodeStatistic basis ) {
         double sqi;
         if( metric == CodeProportionKind.ACD ) {
-            sqi = new AcdSQIComputer().compute( WorkspaceRawData.getInstance() );
+            sqi = new AcdSQIComputer().compute( UsusCorePlugin.getUsusModel().getAllClassRawData() );
         } else {
             sqi = new SQIComputer( basis, violations, metric ).compute();
         }

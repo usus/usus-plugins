@@ -6,6 +6,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IAdapterFactory;
+import org.projectusus.core.internal.UsusCorePlugin;
 
 public class RawDataFactory implements IAdapterFactory {
 
@@ -15,7 +16,7 @@ public class RawDataFactory implements IAdapterFactory {
         Object result = null;
         if( adapterType == IProjectRawData.class && adaptableObject instanceof IProject ) {
             IProject project = (IProject)adaptableObject;
-            result = WorkspaceRawData.getInstance().getProjectRawData( project );
+            result = UsusCorePlugin.getUsusModel().getProjectRawData( project );
         }
         return result;
     }
