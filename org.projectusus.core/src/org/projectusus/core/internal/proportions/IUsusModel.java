@@ -5,6 +5,7 @@
 package org.projectusus.core.internal.proportions;
 
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -17,6 +18,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
+import org.projectusus.core.internal.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 import org.projectusus.core.internal.proportions.rawdata.IClassRawData;
@@ -69,4 +71,6 @@ public interface IUsusModel {
     void setMLValue( IFile file, MethodDeclaration methodDecl, int value );
 
     void setMLValue( IFile file, Initializer initializer, int value );
+
+    Set<ClassRepresenter> getAllClassRepresenters();
 }

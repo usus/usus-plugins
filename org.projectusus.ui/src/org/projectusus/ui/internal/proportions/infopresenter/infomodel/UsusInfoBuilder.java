@@ -36,7 +36,7 @@ public class UsusInfoBuilder {
                 IFileRawData fileRawData = extractor.getFileRawData();
                 if( rawDataAvailable( fileRawData ) ) {
                     IClassRawData classRawData = fileRawData.getOrCreateRawData( method.getDeclaringType() );
-                    IMethodRawData methodRawData = findMethodRawData( classRawData );
+                    IMethodRawData methodRawData = classRawData.getMethodRawData( method );
                     result = new UsusInfo( method, methodRawData, classRawData, findBugInfo( method ) );
                 }
             }
@@ -48,11 +48,7 @@ public class UsusInfoBuilder {
 
     private boolean rawDataAvailable( IFileRawData fileRawData ) {
         IClassRawData classRawData = fileRawData.getOrCreateRawData( method.getDeclaringType() );
-        return classRawData != null && findMethodRawData( classRawData ) != null;
-    }
-
-    private IMethodRawData findMethodRawData( IClassRawData classRawData ) {
-        return classRawData.getMethodRawData( method );
+        return classRawData != null && classRawData.getMethodRawData( method ) != null;
     }
 
     private BugList findBugInfo( IMethod method ) throws JavaModelException {

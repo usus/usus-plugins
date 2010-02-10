@@ -4,7 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -25,17 +24,23 @@ class ClassRawData extends RawData<Integer, MethodRawData> implements IClassRawD
     private final int startPosition;
     private final int lineNumber;
     private final String className;
+    private final ClassRepresenter representer;
 
     public ClassRawData( String name, int startPosition, int line ) {
         this.className = name;
         this.startPosition = startPosition;
         this.lineNumber = line;
+        this.representer = new ClassRepresenter( this );
     }
 
     // for debugging:
     @Override
     public String toString() {
         return "Class " + className + " in line " + lineNumber + " with " + getNumberOfMethods() + " methods."; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    }
+
+    public ClassRepresenter getRepresenter() {
+        return representer;
     }
 
     void setCCValue( MethodDeclaration node, int value ) {
@@ -165,11 +170,11 @@ class ClassRawData extends RawData<Integer, MethodRawData> implements IClassRawD
         return a_getParents();
     }
 
-    public Collection<ClassRawData> getAllChildren() {
+    public Set<ClassRawData> getAllChildren() {
         return a_getAllChildren();
     }
 
-    public Collection<ClassRawData> getAllParents() {
+    public Set<ClassRawData> getAllParents() {
         return a_getAllParents();
     }
 
@@ -274,5 +279,4 @@ class ClassRawData extends RawData<Integer, MethodRawData> implements IClassRawD
             child.removeParent( classRawData );
         }
     }
-
 }

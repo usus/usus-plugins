@@ -108,6 +108,11 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
         return ccdList;
     }
 
+    public Set<ClassRepresenter> getAllClassRepresenters() {
+        Set<ClassRawData> classes = workspaceRawData.getAllClassRawData();
+        return ClassRepresenter.transformToRepresenterSet( classes );
+    }
+
     public int getSumOfAllDirectChildrenOfAllClasses() {
         int sumDirectChildren = 0;
         for( ClassRawData clazz : workspaceRawData.getAllClassRawData() ) {

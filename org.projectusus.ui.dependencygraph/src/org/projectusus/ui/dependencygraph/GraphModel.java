@@ -3,8 +3,8 @@ package org.projectusus.ui.dependencygraph;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
-import org.projectusus.core.internal.proportions.rawdata.WorkspaceRawData;
+import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.proportions.rawdata.ClassRepresenter;
 
 public class GraphModel {
 
@@ -33,8 +33,8 @@ public class GraphModel {
 		listeners.remove(listener);
 	}
 
-	public Set<ClassRawData> getRawData() {
-		return WorkspaceRawData.getInstance().getAllClassRawData();
+	public Set<ClassRepresenter> getRawData() {
+		return UsusCorePlugin.getUsusModel().getAllClassRepresenters();
 	}
 
 	public void update() {

@@ -11,8 +11,4 @@ public abstract class Collector extends ASTVisitor {
         super();
         this.file = file;
     }
-
-    // protected IFileRawData getFileRawData() {
-    // return JDTSupport.getFileRawDataFor( file );
-    // }
 }
