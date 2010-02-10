@@ -3,6 +3,7 @@ package org.projectusus.core.internal.proportions.model;
 import java.util.List;
 
 import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 
 public class AcdSQIComputer {
 
@@ -16,7 +17,7 @@ public class AcdSQIComputer {
     }
 
     public double getRelativeACD() {
-        numberOfClasses = UsusCorePlugin.getUsusModel().getAllClassRawDataCount();
+        numberOfClasses = UsusCorePlugin.getUsusModel().getNumberOf( CodeProportionUnit.CLASS );
         ccdResults = UsusCorePlugin.getUsusModel().getAllClassesCCDResults();
         return getRelativeACD_internal();
     }

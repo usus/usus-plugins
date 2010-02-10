@@ -20,7 +20,7 @@ import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.MetricACDHotspot;
 import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
 
-public class ClassRawData extends RawData<Integer, MethodRawData> implements IClassRawData {
+class ClassRawData extends RawData<Integer, MethodRawData> implements IClassRawData {
 
     private final int startPosition;
     private final int lineNumber;
@@ -35,7 +35,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     // for debugging:
     @Override
     public String toString() {
-        return "Class " + className + " in line " + lineNumber + " with " + getNumberOfMethods() + " methods.";
+        return "Class " + className + " in line " + lineNumber + " with " + getNumberOfMethods() + " methods."; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
 
     void setCCValue( MethodDeclaration node, int value ) {
@@ -59,7 +59,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     private MethodRawData getRawData( Initializer node ) {
-        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), "initializer" );
+        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), "initializer" ); //$NON-NLS-1$
     }
 
     private MethodRawData getRawData( int start, int lineNumber, String methodName ) {
@@ -85,7 +85,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
             for( Integer start : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( start.intValue() );
                 if( method.equals( foundElement ) ) {
-                    return getRawData( start.intValue(), 0, "" );
+                    return getRawData( start.intValue(), 0, "" ); //$NON-NLS-1$
                 }
             }
         } catch( JavaModelException e ) {

@@ -83,14 +83,6 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
         return workspaceRawData.getProjectRawData( project );
     }
 
-    public Set<ClassRawData> getAllClassRawData() {
-        return workspaceRawData.getAllClassRawData();
-    }
-
-    public int getAllClassRawDataCount() {
-        return workspaceRawData.getAllClassRawData().size();
-    }
-
     public List<Integer> getAllClassesCCDResults() {
         Set<ClassRawData> classes = workspaceRawData.getAllClassRawData();
         List<Integer> ccdList = new ArrayList<Integer>();
@@ -98,6 +90,22 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
             ccdList.add( new Integer( node.getCCDResult() ) );
         }
         return ccdList;
+    }
+
+    public int getSumOfAllDirectChildrenOfAllClasses() {
+        int sumDirectChildren = 0;
+        for( ClassRawData clazz : workspaceRawData.getAllClassRawData() ) {
+            sumDirectChildren += clazz.getChildren().size();
+        }
+        return sumDirectChildren;
+    }
+
+    public int getSumOfAllKnownChildrenOfAllClasses() {
+        int sumKnownClasses = 0;
+        for( ClassRawData clazz : workspaceRawData.getAllClassRawData() ) {
+            sumKnownClasses += clazz.getAllChildren().size();
+        }
+        return sumKnownClasses;
     }
 
     public void resetRawData( IProject project ) {

@@ -5,14 +5,12 @@
 package org.projectusus.core.internal.proportions;
 
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
-import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
@@ -35,15 +33,15 @@ public interface IUsusModel {
 
     void dropRawData( IProject project );
 
-    Set<ClassRawData> getAllClassRawData();
-
     IProjectRawData getProjectRawData( IProject project );
 
     void resetRawData( IProject project );
 
-    int getAllClassRawDataCount();
-
     List<Integer> getAllClassesCCDResults();
 
     int getOverallMetric( CodeProportionKind metric );
+
+    int getSumOfAllDirectChildrenOfAllClasses();
+
+    int getSumOfAllKnownChildrenOfAllClasses();
 }

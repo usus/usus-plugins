@@ -89,6 +89,6 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
     }   
     
     private int getClassCount() {
-        return  UsusCorePlugin.getUsusModel().getAllClassRawDataCount();
+        return  UsusCorePlugin.getUsusModel().getNumberOf( CodeProportionUnit.CLASS );
     }
 }

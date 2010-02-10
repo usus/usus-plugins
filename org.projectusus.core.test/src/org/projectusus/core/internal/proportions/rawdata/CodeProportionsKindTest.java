@@ -13,8 +13,6 @@ import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKi
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.PC;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
 
-import java.util.HashSet;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,7 +35,6 @@ public class CodeProportionsKindTest {
 
         ususModel = mock(UsusModel.class);
         when( ususModel.getNumberOf( CodeProportionUnit.CLASS ) ).thenReturn( 100 );
-        when( ususModel.getAllClassRawData() ).thenReturn( new HashSet<ClassRawData>() );
         
         classRawDataOK = mock( ClassRawData.class );
         when( classRawDataOK.getNumberOfMethods() ).thenReturn( 1 );
