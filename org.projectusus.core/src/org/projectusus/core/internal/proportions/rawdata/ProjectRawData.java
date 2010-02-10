@@ -7,7 +7,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 
-public class ProjectRawData extends RawData<IFile, FileRawData> implements IProjectRawData {
+class ProjectRawData extends RawData<IFile, FileRawData> implements IProjectRawData {
 
     // TODO wird nicht gebraucht:
     private final IProject projectOfRawData;

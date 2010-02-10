@@ -2,8 +2,6 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Set;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Before;
@@ -54,7 +52,7 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.KG ) );
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.ML ) );
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.CC ) );
-        assertEquals( 1, getClasses().size() );
+        assertEquals( 1, getClassCount() );
     }
 
     private void checkProjectRawDataIsEmpty2Files( IProjectRawData projectRawData ) {
@@ -63,7 +61,7 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.KG ) );
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.ML ) );
         assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.CC ) );
-        assertEquals( 2, getClasses().size() );
+        assertEquals( 2, getClassCount() );
     }
     
     private void computeFile1AndCheckPreconditions() throws Exception {
@@ -74,7 +72,7 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
         assertEquals( 2, projectRawData.getNumberOf( CodeProportionUnit.METHOD ));
         assertEquals( 1, projectRawData.getViolationCount( CodeProportionKind.ML ) );
         assertEquals( 1, projectRawData.getViolationCount( CodeProportionKind.CC ) );
-        assertEquals( 1, getClasses().size() );
+        assertEquals( 1, getClassCount() );
     }   
     
     private void computeFiles2AndCheckPreconditions() throws Exception {
@@ -87,10 +85,10 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
         assertEquals( 3, projectRawData.getNumberOf( CodeProportionUnit.METHOD ));
         assertEquals( 1, projectRawData.getViolationCount( CodeProportionKind.ML ) );
         assertEquals( 1, projectRawData.getViolationCount( CodeProportionKind.CC ) );
-        assertEquals( 2, getClasses().size() );
+        assertEquals( 2, getClassCount() );
     }   
     
-    private Set<ClassRawData> getClasses() {
-        return  UsusCorePlugin.getUsusModel().getAllClassRawData();
+    private int getClassCount() {
+        return  UsusCorePlugin.getUsusModel().getAllClassRawDataCount();
     }
 }

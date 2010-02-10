@@ -1,21 +1,23 @@
 package org.projectusus.core.internal.proportions.model;
 
-import java.util.Set;
+import java.util.List;
 
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 
 public class AcdSQIComputer {
 
-    private Set<ClassRawData> classes;
+    private int numberOfClasses;
+    private List<Integer> ccdResults;
 
-    public double compute( Set<ClassRawData> classes ) {
-        this.classes = classes;
+    public double compute( List<Integer> ccdResults ) {
+        this.numberOfClasses = ccdResults.size();
+        this.ccdResults = ccdResults;
         return 100.0 - getRelativeACD_internal() * 100.0;
     }
 
     public double getRelativeACD() {
-        classes = UsusCorePlugin.getUsusModel().getAllClassRawData();
+        numberOfClasses = UsusCorePlugin.getUsusModel().getAllClassRawDataCount();
+        ccdResults = UsusCorePlugin.getUsusModel().getAllClassesCCDResults();
         return getRelativeACD_internal();
     }
 
@@ -27,10 +29,10 @@ public class AcdSQIComputer {
     // / </summary>
     // / <returns></returns>
     private double getRelativeACD_internal() {
-        if( classes.size() == 0 ) {
+        if( numberOfClasses == 0 ) {
             return 0.0;
         }
-        return getACD() / classes.size();
+        return getACD() / numberOfClasses;
     }
 
     // / <summary>
@@ -39,10 +41,10 @@ public class AcdSQIComputer {
     // / </summary>
     // / <returns></returns>
     private double getACD() {
-        if( classes.size() == 0 ) {
+        if( numberOfClasses == 0 ) {
             return 0.0;
         }
-        return getCCD() / (double)classes.size();
+        return getCCD() / (double)numberOfClasses;
     }
 
     // / <summary>
@@ -54,8 +56,8 @@ public class AcdSQIComputer {
     // / <returns></returns>
     private int getCCD() {
         int allDependencies = 0;
-        for( ClassRawData node : classes ) {
-            allDependencies += node.getCCDResult();
+        for( Integer result : ccdResults ) {
+            allDependencies += result.intValue();
         }
         return allDependencies;
     }

@@ -20,7 +20,7 @@ import org.projectusus.core.internal.proportions.model.Hotspot;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
 
-public class FileRawData extends RawData<Integer, ClassRawData> implements IFileRawData {
+class FileRawData extends RawData<Integer, ClassRawData> implements IFileRawData {
 
     private final IFile fileOfRawData;
 

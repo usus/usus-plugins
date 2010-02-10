@@ -6,7 +6,9 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import static java.util.Arrays.asList;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -65,6 +67,10 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
         return workspaceRawData.getNumberOf( unit );
     }
 
+    public int getOverallMetric( CodeProportionKind metric ) {
+        return workspaceRawData.getOverallMetric( metric );
+    }
+
     public void dropRawData( IProject project ) {
         workspaceRawData.dropRawData( project );
     }
@@ -79,6 +85,19 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
 
     public Set<ClassRawData> getAllClassRawData() {
         return workspaceRawData.getAllClassRawData();
+    }
+
+    public int getAllClassRawDataCount() {
+        return workspaceRawData.getAllClassRawData().size();
+    }
+
+    public List<Integer> getAllClassesCCDResults() {
+        Set<ClassRawData> classes = workspaceRawData.getAllClassRawData();
+        List<Integer> ccdList = new ArrayList<Integer>();
+        for( ClassRawData node : classes ) {
+            ccdList.add( new Integer( node.getCCDResult() ) );
+        }
+        return ccdList;
     }
 
     public void resetRawData( IProject project ) {

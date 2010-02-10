@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -14,7 +15,7 @@ import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
-import org.projectusus.core.internal.proportions.rawdata.ProjectRawData;
+import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 
 public interface IUsusModel {
 
@@ -36,7 +37,13 @@ public interface IUsusModel {
 
     Set<ClassRawData> getAllClassRawData();
 
-    ProjectRawData getProjectRawData( IProject project );
+    IProjectRawData getProjectRawData( IProject project );
 
     void resetRawData( IProject project );
+
+    int getAllClassRawDataCount();
+
+    List<Integer> getAllClassesCCDResults();
+
+    int getOverallMetric( CodeProportionKind metric );
 }
