@@ -42,8 +42,8 @@ public class JDTSupport {
         return openable instanceof ICompilationUnit ? (ICompilationUnit)openable : null;
     }
 
-    public static IFileRawData getFileRawDataFor( IFile file ) {
-        return getProjectRawDataFor( file ).getFileRawData( file );
+    public static FileRawData getFileRawDataFor( IFile file ) {
+        return (FileRawData)getProjectRawDataFor( file ).getFileRawData( file );
     }
 
     public static IProjectRawData getProjectRawDataFor( IFile file ) {

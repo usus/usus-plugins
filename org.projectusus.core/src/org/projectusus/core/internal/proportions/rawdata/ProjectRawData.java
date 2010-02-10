@@ -20,7 +20,7 @@ class ProjectRawData extends RawData<IFile, FileRawData> implements IProjectRawD
         return projectOfRawData;
     }
 
-    public IFileRawData getFileRawData( IFile file ) {
+    public FileRawData getFileRawData( IFile file ) {
         FileRawData rawData = super.getRawData( file );
         if( rawData == null ) {
             rawData = new FileRawData( file );

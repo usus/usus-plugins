@@ -5,23 +5,9 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
-import org.eclipse.jdt.core.dom.Initializer;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 public interface IFileRawData {
 
     IClassRawData getOrCreateRawData( IJavaElement javaElement );
 
-    void addClassReference( AbstractTypeDeclaration referencingType, IJavaElement referencedElement );
-
-    void setCCValue( MethodDeclaration methodDecl, int value );
-
-    void setCCValue( Initializer initializer, int value );
-
-    void addClass( AbstractTypeDeclaration node );
-
-    void setMLValue( MethodDeclaration methodDecl, int value );
-
-    void setMLValue( Initializer initializer, int value );
 }

@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.projectusus.core.internal.UsusCorePlugin;
 
 public class CCCollector extends Collector {
 
@@ -92,11 +93,11 @@ public class CCCollector extends Collector {
     }
 
     private void submit( MethodDeclaration node ) {
-        getFileRawData().setCCValue( node, ccCount );
+        UsusCorePlugin.getUsusModel().setCCValue( file, node, ccCount );
     }
 
     private void submit( Initializer node ) {
-        getFileRawData().setCCValue( node, ccCount );
+        UsusCorePlugin.getUsusModel().setCCValue( file, node, ccCount );
     }
 
     private boolean increase() {

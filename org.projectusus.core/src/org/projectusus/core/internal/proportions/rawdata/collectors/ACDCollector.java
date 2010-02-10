@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.projectusus.core.internal.UsusCorePlugin;
 
 public class ACDCollector extends Collector {
 
@@ -57,7 +58,7 @@ public class ACDCollector extends Collector {
         }
         ITypeBinding binding = node.resolveBinding();
         if( binding != null && binding.isFromSource() ) {
-            getFileRawData().addClassReference( currentType, binding.getJavaElement() );
+            UsusCorePlugin.getUsusModel().addClassReference( file, currentType, binding.getJavaElement() );
         }
         return true;
     }

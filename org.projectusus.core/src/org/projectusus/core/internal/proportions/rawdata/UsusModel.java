@@ -13,8 +13,12 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.Initializer;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
@@ -125,10 +129,38 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
     }
 
     public IClassRawData getClassRawData( IType clazz ) throws JavaModelException {
-        IFile underlyingResource = (IFile)clazz.getUnderlyingResource();
-        ProjectRawData projectRD = workspaceRawData.getRawData( underlyingResource.getProject() );
-        IFileRawData fileResults = projectRD.getFileRawData( underlyingResource );
+        IFile file = (IFile)clazz.getUnderlyingResource();
+        ProjectRawData projectRD = workspaceRawData.getRawData( file.getProject() );
+        FileRawData fileResults = projectRD.getFileRawData( file );
         return fileResults.getOrCreateRawData( clazz );
+    }
+
+    public void addClassReference( IFile file, AbstractTypeDeclaration referencingType, IJavaElement referencedElement ) {
+        getFileRawData( file ).addClassReference( referencingType, referencedElement );
+    }
+
+    public void setCCValue( IFile file, MethodDeclaration methodDecl, int value ) {
+        getFileRawData( file ).setCCValue( methodDecl, value );
+    }
+
+    public void setCCValue( IFile file, Initializer initializer, int value ) {
+        getFileRawData( file ).setCCValue( initializer, value );
+    }
+
+    public void addClass( IFile file, AbstractTypeDeclaration node ) {
+        getFileRawData( file ).addClass( node );
+    }
+
+    public void setMLValue( IFile file, MethodDeclaration methodDecl, int value ) {
+        getFileRawData( file ).setMLValue( methodDecl, value );
+    }
+
+    public void setMLValue( IFile file, Initializer initializer, int value ) {
+        getFileRawData( file ).setMLValue( initializer, value );
+    }
+
+    private FileRawData getFileRawData( IFile file ) {
+        return workspaceRawData.getRawData( file.getProject() ).getFileRawData( file );
     }
 
     // //////////////////////////////////
