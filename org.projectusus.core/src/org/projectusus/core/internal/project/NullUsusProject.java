@@ -7,7 +7,6 @@ package org.projectusus.core.internal.project;
 import org.eclipse.jdt.core.IMethod;
 import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.bugreport.BugList;
-import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 
 public class NullUsusProject implements IUSUSProject {
 
@@ -25,10 +24,6 @@ public class NullUsusProject implements IUSUSProject {
 
     public void setUsusProject( boolean ususProject ) {
         // can't make this project an usus project
-    }
-
-    public IProjectRawData getProjectRawData() {
-        return null;
     }
 
     public String getProjectName() {

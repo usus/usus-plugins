@@ -6,9 +6,11 @@ package org.projectusus.core.internal.bugreport;
 
 import static org.projectusus.core.internal.util.CoreTexts.AverageMetrics_overall;
 
+import org.eclipse.core.resources.IProject;
+import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
-import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 
 public class AverageMetrics implements IAverageMetrics {
 
@@ -36,12 +38,14 @@ public class AverageMetrics implements IAverageMetrics {
         return calculateAverage( numberOfMethods, numberOfClasses );
     }
 
-    public void addProjectResults( IProjectRawData projectResults ) {
-        numberOfMethods += projectResults.getNumberOf( CodeProportionUnit.METHOD );
-        numberOfClasses += projectResults.getNumberOf( CodeProportionUnit.CLASS );
+    // TODO nr: direkt die Summen aus dem WorkspaceRD geben lassen?
+    public void addProjectResults( IProject project ) {
+        IUsusModel model = UsusCorePlugin.getUsusModel();
+        numberOfMethods += model.getNumberOf( project, CodeProportionUnit.METHOD );
+        numberOfClasses += model.getNumberOf( project, CodeProportionUnit.CLASS );
 
-        totalCC += projectResults.getOverallMetric( CodeProportionKind.CC );
-        totalML += projectResults.getOverallMetric( CodeProportionKind.ML );
+        totalCC += model.getOverallMetric( project, CodeProportionKind.CC );
+        totalML += model.getOverallMetric( project, CodeProportionKind.ML );
     }
 
     public String getName() {

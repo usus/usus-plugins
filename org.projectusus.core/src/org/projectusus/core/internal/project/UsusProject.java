@@ -17,7 +17,6 @@ import org.projectusus.core.internal.bugreport.LoadBugs;
 import org.projectusus.core.internal.bugreport.MethodLocation;
 import org.projectusus.core.internal.bugreport.SaveBugsJob;
 import org.projectusus.core.internal.bugreport.SourceCodeLocation;
-import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 
 class UsusProject implements IUSUSProject {
 
@@ -73,10 +72,6 @@ class UsusProject implements IUSUSProject {
         BugList result = loadFromFile( file );
         result.setProjectName( project.getName() );
         return result;
-    }
-
-    public IProjectRawData getProjectRawData() {
-        return (IProjectRawData)project.getAdapter( IProjectRawData.class );
     }
 
     public String getProjectName() {

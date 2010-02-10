@@ -24,7 +24,7 @@ public class AverageMetricsCp extends CoveredProjectsCP {
             for( IProject project : wsRoot.getProjects() ) {
                 IUSUSProject ususProject = (IUSUSProject)project.getAdapter( IUSUSProject.class );
                 BugList bugs = ususProject.getBugs();
-                averageMetrics.addProjectResults( ususProject.getProjectRawData() );
+                averageMetrics.addProjectResults( project );
                 averageBugMetrics.addAverageBugMetrics( bugs.getAverageMetrics() );
             }
         }

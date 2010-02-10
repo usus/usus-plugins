@@ -13,6 +13,8 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaModelException;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
@@ -67,8 +69,18 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
         return workspaceRawData.getNumberOf( unit );
     }
 
+    public int getNumberOf( IProject project, CodeProportionUnit unit ) {
+        ProjectRawData projectRD = workspaceRawData.getRawData( project );
+        return projectRD.getNumberOf( unit );
+    }
+
     public int getOverallMetric( CodeProportionKind metric ) {
         return workspaceRawData.getOverallMetric( metric );
+    }
+
+    public int getOverallMetric( IProject project, CodeProportionKind metric ) {
+        ProjectRawData projectRD = workspaceRawData.getRawData( project );
+        return projectRD.getOverallMetric( metric );
     }
 
     public void dropRawData( IProject project ) {
@@ -110,6 +122,13 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
 
     public void resetRawData( IProject project ) {
         workspaceRawData.resetRawData( project );
+    }
+
+    public IClassRawData getClassRawData( IType clazz ) throws JavaModelException {
+        IFile underlyingResource = (IFile)clazz.getUnderlyingResource();
+        ProjectRawData projectRD = workspaceRawData.getRawData( underlyingResource.getProject() );
+        IFileRawData fileResults = projectRD.getFileRawData( underlyingResource );
+        return fileResults.getOrCreateRawData( clazz );
     }
 
     // //////////////////////////////////

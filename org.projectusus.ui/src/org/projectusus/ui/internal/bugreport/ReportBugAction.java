@@ -8,7 +8,6 @@ import static org.projectusus.core.internal.bugreport.SourceCodeLocation.getClaz
 import static org.projectusus.core.internal.bugreport.SourceCodeLocation.getMethod;
 import static org.projectusus.core.internal.bugreport.SourceCodeLocation.getMethodLocation;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
@@ -26,12 +25,12 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.project.NullUsusProject;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 import org.projectusus.core.internal.proportions.rawdata.IClassRawData;
-import org.projectusus.core.internal.proportions.rawdata.IFileRawData;
 import org.projectusus.core.internal.proportions.rawdata.IMethodRawData;
 import org.projectusus.ui.internal.UsusUIPlugin;
 import org.projectusus.ui.internal.selection.EditorInputAnalysis;
@@ -114,9 +113,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
 
     private IClassRawData getClassRawData( IMethod method ) throws JavaModelException {
         IType clazz = getClazz( method );
-        IUSUSProject ususProject = getUsusProject();
-        IFileRawData fileResults = ususProject.getProjectRawData().getFileRawData( (IFile)selectedJavaClass.getUnderlyingResource() );
-        return fileResults.getOrCreateRawData( clazz );
+        return UsusCorePlugin.getUsusModel().getClassRawData( clazz );
     }
 
     private IMethod getSelectedMethod() {
