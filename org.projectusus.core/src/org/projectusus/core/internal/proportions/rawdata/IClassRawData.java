@@ -8,7 +8,5 @@ import org.eclipse.jdt.core.IMethod;
 
 public interface IClassRawData extends IRawData {
 
-    int getNumberOfMethods();
-
     IMethodRawData getMethodRawData( IMethod method );
 }

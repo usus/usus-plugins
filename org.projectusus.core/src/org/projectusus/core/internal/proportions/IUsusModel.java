@@ -10,6 +10,7 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
@@ -73,4 +74,10 @@ public interface IUsusModel {
     void setMLValue( IFile file, Initializer initializer, int value );
 
     Set<ClassRepresenter> getAllClassRepresenters();
+
+    int getCCValue( IMethod method ) throws JavaModelException;
+
+    int getMLValue( IMethod method ) throws JavaModelException;
+
+    int getNumberOfMethods( IType type ) throws JavaModelException;
 }

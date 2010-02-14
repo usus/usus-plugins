@@ -14,6 +14,7 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
@@ -164,8 +165,31 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
         getFileRawData( file ).setMLValue( initializer, value );
     }
 
+    public int getCCValue( IMethod method ) throws JavaModelException {
+        ClassRawData classRawData = (ClassRawData)getClassRawData( method.getDeclaringType() );
+        MethodRawData methodRawData = (MethodRawData)classRawData.getMethodRawData( method );
+        if( methodRawData != null ) {
+            return methodRawData.getCCValue();
+        }
+        throw new IllegalStateException();
+    }
+
+    public int getMLValue( IMethod method ) throws JavaModelException {
+        ClassRawData classRawData = (ClassRawData)getClassRawData( method.getDeclaringType() );
+        MethodRawData methodRawData = (MethodRawData)classRawData.getMethodRawData( method );
+        if( methodRawData != null ) {
+            return methodRawData.getMLValue();
+        }
+        throw new IllegalStateException();
+    }
+
+    public int getNumberOfMethods( IType type ) throws JavaModelException {
+        ClassRawData classRawData = (ClassRawData)getClassRawData( type );
+        return classRawData.getNumberOfMethods();
+    }
+
     private FileRawData getFileRawData( IFile file ) {
-        return workspaceRawData.getRawData( file.getProject() ).getFileRawData( file );
+        return workspaceRawData.getProjectRawData( file.getProject() ).getFileRawData( file );
     }
 
     // //////////////////////////////////

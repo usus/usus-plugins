@@ -12,31 +12,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.JavaModelException;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.bugreport.BugList;
-import org.projectusus.core.internal.proportions.rawdata.IClassRawData;
-import org.projectusus.core.internal.proportions.rawdata.IMethodRawData;
 
 class UsusInfo implements IUsusInfo {
 
     private final IMethod method;
-    private final IMethodRawData methodRawData;
-    private final IClassRawData classRawData;
     private final BugList bugs;
 
-    UsusInfo( IMethod method, IMethodRawData methodRawData, IClassRawData classRawData, BugList bugs ) {
+    UsusInfo( IMethod method, BugList bugs ) {
         this.method = method;
-        this.methodRawData = methodRawData;
-        this.classRawData = classRawData;
         this.bugs = bugs;
     }
 
     public String[] getCodeProportionInfos() {
         List<String> result = new ArrayList<String>();
         UsusModelElementFormatter formatter = new UsusModelElementFormatter();
-        result.add( formatter.format( CC, methodRawData.getCCValue() ) );
-        result.add( formatter.format( ML, methodRawData.getMLValue() ) );
-        result.add( formatter.format( KG, classRawData.getNumberOfMethods() ) );
-        return result.toArray( new String[0] );
+
+        try {
+            result.add( formatter.format( CC, UsusCorePlugin.getUsusModel().getCCValue( method ) ) );
+            result.add( formatter.format( ML, UsusCorePlugin.getUsusModel().getMLValue( method ) ) );
+            result.add( formatter.format( KG, UsusCorePlugin.getUsusModel().getNumberOfMethods( method.getDeclaringType() ) ) );
+            return result.toArray( new String[0] );
+        } catch( JavaModelException jmox ) {
+            return new String[] { "Error in calculating metrics values." };
+        }
     }
 
     public String[] getBugInfos() {
