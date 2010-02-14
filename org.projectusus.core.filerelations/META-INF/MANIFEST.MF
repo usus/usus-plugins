@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: FileRelations
+Bundle-SymbolicName: org.projectusus.core.filerelations
+Bundle-Version: 0.3.5
+Bundle-Activator: org.projectusus.core.filerelations.UsusFileRelations
+Require-Bundle: org.eclipse.core.runtime,
+ org.junit4,
+ org.eclipse.core.resources
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ClassPath: .,
+ lib/cpsuite-1.1.0.jar,
+ lib/mockito-all-1.8.0.jar,
+ lib/google-collect-1.0.jar,
+ lib/hamcrest-all-1.2.jar,
+ lib/commons-lang-2.4.jar
