@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Nasty Mode for Usus
+Bundle-SymbolicName: org.projectusus.nasty.ui; singleton:=true
+Bundle-Version: 0.3.5
+Bundle-Activator: org.projectusus.nasty.ui.internal.NastyUsus
+Bundle-Vendor: projectusus.org
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.expressions,
+ org.eclipse.core.resources,
+ org.eclipse.ui,
+ org.eclipse.jdt.core,
+ org.eclipse.jdt.core.manipulation,
+ org.eclipse.ltk.core.refactoring,
+ org.projectusus.core
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
