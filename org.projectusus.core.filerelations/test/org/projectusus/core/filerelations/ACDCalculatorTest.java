@@ -1,84 +1,56 @@
 package org.projectusus.core.filerelations;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static java.util.Collections.emptySet;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+import static org.projectusus.core.filerelations.SimpleTestScenario.anotherTargetToSource;
+import static org.projectusus.core.filerelations.SimpleTestScenario.anotherTargetToTarget;
+import static org.projectusus.core.filerelations.SimpleTestScenario.source;
+import static org.projectusus.core.filerelations.SimpleTestScenario.sourceClass;
+import static org.projectusus.core.filerelations.SimpleTestScenario.sourceDescriptor;
+import static org.projectusus.core.filerelations.SimpleTestScenario.sourceToAnotherTarget;
+import static org.projectusus.core.filerelations.SimpleTestScenario.sourceToTarget;
+import static org.projectusus.core.filerelations.SimpleTestScenario.targetToAnotherTarget;
 import static org.projectusus.core.filerelations.TestServiceManager.asSet;
-import static org.projectusus.core.filerelations.TestServiceManager.createDescriptor;
-import static org.projectusus.core.filerelations.TestServiceManager.createFileMock;
 
-import java.util.HashSet;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
-import org.eclipse.core.resources.IFile;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
+@RunWith( Parameterized.class )
 public class ACDCalculatorTest {
 
-	private IFile source = createFileMock();
-	private IFile target = createFileMock();
-	private IFile anotherTarget = createFileMock();
-	private Classname sourceName = new Classname("sourceName");
-	private Classname targetName = new Classname("targetName");
-	private Classname anotherTargetName = new Classname("anotherTargetName");
-	private FileRelation sourceToTarget = new FileRelation(createDescriptor(source, sourceName), createDescriptor(target, targetName));
+    private final int expectedCcd;
+    private final Set<FileRelation> transitiveRelationsFromSource;
 
-	private FileRelation sourceToAnotherTarget = new FileRelation(createDescriptor(source, sourceName), createDescriptor(anotherTarget, anotherTargetName));
-	private FileRelation targetToAnotherTarget = new FileRelation(createDescriptor(target, targetName), createDescriptor(anotherTarget, anotherTargetName));
-	private FileRelation anotherTargetToTarget = new FileRelation(createDescriptor(anotherTarget, anotherTargetName), createDescriptor(target, targetName));
-	private FileRelation anotherTargetToSource = new FileRelation(createDescriptor(anotherTarget, anotherTargetName), createDescriptor(source, sourceName));
+    @Parameters
+    public static List<Object[]> data() {
+        return Arrays.asList( new Object[][] { { new Integer( 1 ), emptySet() }, { new Integer( 2 ), asSet( sourceToTarget ) },
+                { new Integer( 3 ), asSet( sourceToTarget, targetToAnotherTarget ) },
+                { new Integer( 3 ), asSet( sourceToTarget, sourceToAnotherTarget, targetToAnotherTarget, anotherTargetToTarget, anotherTargetToSource ) }, } );
+    }
 
+    public ACDCalculatorTest( int expectedCcd, Set<FileRelation> transitiveRelationsFromSource ) {
+        this.expectedCcd = expectedCcd;
+        this.transitiveRelationsFromSource = transitiveRelationsFromSource;
+    }
 
-	@Test
-	public void calculateCcdOfClassWithoutRelations() throws Exception {
-		FileRelations relations = mock(FileRelations.class);
-		IFile file = createFileMock();
-		Classname clazz = new Classname("MeineKlasse");
-		when(relations.getTransitiveRelationsFrom(file, clazz)).thenReturn(new HashSet<FileRelation>());
-		
-		int ccd = new ACDCalculator(relations).getCCD( createDescriptor(file, clazz) );
-		
-		assertThat(ccd, is(1));
-		verify(relations).getTransitiveRelationsFrom(file, clazz);
-	}
-	
-	@Test
-	public void calculateCcdOfClassWithDirectRelations() throws Exception {
-		FileRelations relations = mock(FileRelations.class);
-		IFile file = createFileMock();
-		Classname clazz = new Classname("MeineKlasse");
-		FileRelation relation = new FileRelation(createDescriptor(file, clazz), createDescriptor(createFileMock()));
-		when(relations.getTransitiveRelationsFrom(file, clazz)).thenReturn(asSet(relation));
-		
-		int ccd = new ACDCalculator(relations).getCCD( createDescriptor(file, clazz) );
-		
-		assertThat(ccd, is(2));
-		verify(relations).getTransitiveRelationsFrom(file, clazz);
-	}
-	
-	@Test
-	public void calculateCcdOfClassWithIndirectRelations() throws Exception {
-		
-		FileRelations relations = mock(FileRelations.class);
-		when(relations.getTransitiveRelationsFrom(source, sourceName)).thenReturn(asSet(sourceToTarget, targetToAnotherTarget));
-		
-		int ccd = new ACDCalculator(relations).getCCD( createDescriptor(source, sourceName) );
-		
-		assertThat(ccd, is(3));
-		verify(relations).getTransitiveRelationsFrom(source, sourceName);
-	}
-	
-	@Test
-	public void calculateCcdOfClassWithIndirectCyclicRelations() throws Exception {
-		
-		FileRelations relations = mock(FileRelations.class);
-		when(relations.getTransitiveRelationsFrom(source, sourceName)).thenReturn(asSet(sourceToTarget, sourceToAnotherTarget, targetToAnotherTarget, anotherTargetToTarget, anotherTargetToSource));
-		
-		int ccd = new ACDCalculator(relations).getCCD( createDescriptor(source, sourceName) );
-		
-		assertThat(ccd, is(3));
-		verify(relations).getTransitiveRelationsFrom(source, sourceName);
-	}
-	
+    @Test
+    public void calculate() {
+        FileRelations relations = mock( FileRelations.class );
+        when( relations.getTransitiveRelationsFrom( source, sourceClass ) ).thenReturn( transitiveRelationsFromSource );
+        int actualCcd = new ACDCalculator( relations ).getCCD( sourceDescriptor );
+        assertEquals( expectedCcd, actualCcd );
+        verify( relations ).getTransitiveRelationsFrom( source, sourceClass );
+        verifyNoMoreInteractions( relations );
+    }
+
 }

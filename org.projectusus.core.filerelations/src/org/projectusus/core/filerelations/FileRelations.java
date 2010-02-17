@@ -9,46 +9,44 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 
 public class FileRelations {
-	
-	private final SetMultimap<IFile, FileRelation> incomingRelations;
-	private final SetMultimap<IFile, FileRelation> outgoingRelations;
-	
-	public FileRelations() {
-		incomingRelations = HashMultimap.create();
-		outgoingRelations = HashMultimap.create();
-	}
 
-	public void add(FileRelation relation) {
-		incomingRelations.put(relation.getTargetFile(), relation);
-		outgoingRelations.put(relation.getSourceFile(), relation);
-	}
+    private final SetMultimap<IFile, FileRelation> incomingRelations;
+    private final SetMultimap<IFile, FileRelation> outgoingRelations;
 
-	public Set<FileRelation> getDirectRelationsFrom(IFile sourceFile) {
-		return outgoingRelations.get(sourceFile);
-	}
+    public FileRelations() {
+        incomingRelations = HashMultimap.create();
+        outgoingRelations = HashMultimap.create();
+    }
 
-	public Set<FileRelation> getDirectRelationsTo(IFile targetFile) {
-		return incomingRelations.get(targetFile);
-	}
+    public void add( FileRelation relation ) {
+        incomingRelations.put( relation.getTargetFile(), relation );
+        outgoingRelations.put( relation.getSourceFile(), relation );
+    }
 
-	public void removeDirectRelationsFrom(IFile sourceFile) {
-		outgoingRelations.removeAll(sourceFile);
-	}
+    public Set<FileRelation> getDirectRelationsFrom( IFile sourceFile ) {
+        return outgoingRelations.get( sourceFile );
+    }
 
+    public Set<FileRelation> getDirectRelationsTo( IFile targetFile ) {
+        return incomingRelations.get( targetFile );
+    }
 
-	public Set<FileRelation> getTransitiveRelationsFrom(IFile file, Classname clazz) {
-		Set<FileRelation> transitives = new HashSet<FileRelation>();
-		getTransitiveRelationsFrom(file, clazz, transitives);
-		return transitives;
-	}
+    public void removeDirectRelationsFrom( IFile sourceFile ) {
+        outgoingRelations.removeAll( sourceFile );
+    }
 
-	private void getTransitiveRelationsFrom(IFile file, Classname clazz, Set<FileRelation> transitives) {
-		for(FileRelation directRelation : outgoingRelations.get(file)){
-			if(directRelation.getSourceClassname().equals(clazz) && !transitives.contains(directRelation)){
-				transitives.add(directRelation);
-				this.getTransitiveRelationsFrom(directRelation.getTargetFile(), directRelation.getTargetClassname(), transitives);
-			}
-		}
-	}
+    public Set<FileRelation> getTransitiveRelationsFrom( IFile file, Classname clazz ) {
+        Set<FileRelation> transitives = new HashSet<FileRelation>();
+        getTransitiveRelationsFrom( file, clazz, transitives );
+        return transitives;
+    }
+
+    private void getTransitiveRelationsFrom( IFile file, Classname clazz, Set<FileRelation> transitives ) {
+        for( FileRelation relation : outgoingRelations.get( file ) ) {
+            if( relation.hasSourceClass( clazz ) && transitives.add( relation ) ) {
+                getTransitiveRelationsFrom( relation.getTargetFile(), relation.getTargetClassname(), transitives );
+            }
+        }
+    }
 
 }

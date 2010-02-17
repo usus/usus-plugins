@@ -8,22 +8,24 @@ import org.osgi.framework.BundleContext;
  */
 public class UsusFileRelations extends Plugin {
 
-	public static final String PLUGIN_ID = "org.projectusus.core.filerelations";
+    public static final String PLUGIN_ID = "org.projectusus.core.filerelations"; //$NON-NLS-1$
 
-	private static UsusFileRelations plugin;
-	
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-	}
+    private static UsusFileRelations plugin;
 
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
+    @Override
+    public void start( BundleContext context ) throws Exception {
+        super.start( context );
+        plugin = this;
+    }
 
-	public static UsusFileRelations getDefault() {
-		return plugin;
-	}
+    @Override
+    public void stop( BundleContext context ) throws Exception {
+        plugin = null;
+        super.stop( context );
+    }
+
+    public static UsusFileRelations getDefault() {
+        return plugin;
+    }
 
 }

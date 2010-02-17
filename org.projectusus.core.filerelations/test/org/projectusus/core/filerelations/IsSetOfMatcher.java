@@ -10,33 +10,33 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-public class IsSetOfMatcher<T> extends TypeSafeMatcher<Set<T>> {
-	
-	private Matcher<? super Set<T>> matcher;
+public class IsSetOfMatcher<T> extends TypeSafeMatcher<Set<? extends T>> {
 
-	public IsSetOfMatcher(T... items) {
-		this(asSet(items));
-	}
-	
-	public IsSetOfMatcher(Set<T> set) {
-		matcher = is(set);
-	}
+    private Matcher<?> matcher;
 
-	public boolean matchesSafely(Set<T> set) {
-		return matcher.matches(set);
-	}
+    public IsSetOfMatcher( T... items ) {
+        this( asSet( items ) );
+    }
 
-	public void describeTo(Description description) {
-		matcher.describeTo(description);
-	}
-	
-	public static <T> IsSetOfMatcher<T> isSetOf(T... items) {
-		return new IsSetOfMatcher<T>(items);
-	}
+    public IsSetOfMatcher( Set<? extends T> set ) {
+        matcher = is( set );
+    }
 
-	public static <T> IsSetOfMatcher<T> isEmptySetOf(Class<T> clazz) {
-		Set<T> emptySet = Collections.emptySet();
-		return new IsSetOfMatcher<T>(emptySet);
-	}
+    @Override
+    public boolean matchesSafely( Set<? extends T> set ) {
+        return matcher.matches( set );
+    }
+
+    public void describeTo( Description description ) {
+        matcher.describeTo( description );
+    }
+
+    public static <T> IsSetOfMatcher<T> isSetOf( T... items ) {
+        return new IsSetOfMatcher<T>( items );
+    }
+
+    public static <T> IsSetOfMatcher<T> isEmptySet() {
+        return new IsSetOfMatcher<T>( Collections.<T> emptySet() );
+    }
 
 }

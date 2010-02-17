@@ -3,39 +3,41 @@ package org.projectusus.core.filerelations;
 import org.eclipse.core.resources.IFile;
 
 public class FileRelation {
-	
-	private final ClassDescriptor source;
-	private final ClassDescriptor target;
 
-	public FileRelation(ClassDescriptor sourceFile, ClassDescriptor targetFile) {
-		this.source = sourceFile;
-		this.target = targetFile;
-	}
+    private final ClassDescriptor source;
+    private final ClassDescriptor target;
 
-	public IFile getSourceFile() {
-		return source.getFile();
-	}
+    public FileRelation( ClassDescriptor sourceFile, ClassDescriptor targetFile ) {
+        this.source = sourceFile;
+        this.target = targetFile;
+    }
 
-	public IFile getTargetFile() {
-		return target.getFile();
-	}
+    public IFile getSourceFile() {
+        return source.getFile();
+    }
 
-	public Classname getSourceClassname() {
-		return source.getClassname();
-	}
+    public IFile getTargetFile() {
+        return target.getFile();
+    }
 
-	public Classname getTargetClassname() {
-		return target.getClassname();
-	}
+    public Classname getSourceClassname() {
+        return source.getClassname();
+    }
 
-	public ClassDescriptor getSourceDescriptor() {
-		return source;
-	}
+    public Classname getTargetClassname() {
+        return target.getClassname();
+    }
 
-	public ClassDescriptor getTargetDescriptor() {
-		return target;
-	}
-	
-	
+    public ClassDescriptor getSourceDescriptor() {
+        return source;
+    }
+
+    public ClassDescriptor getTargetDescriptor() {
+        return target;
+    }
+
+    public boolean hasSourceClass( Classname clazz ) {
+        return getSourceClassname().equals( clazz );
+    }
 
 }
