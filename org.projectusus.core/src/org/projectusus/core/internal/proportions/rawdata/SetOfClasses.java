@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class SetOfClasses {
+class SetOfClasses {
 
     private final Set<ClassRawData> allClasses;
 

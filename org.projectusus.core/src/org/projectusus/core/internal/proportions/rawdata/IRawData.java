@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.projectusus.core.internal.proportions.model.IHotspot;
 
-public interface IRawData {
+interface IRawData {
 
     int getViolationCount( CodeProportionKind metric );
 

@@ -14,7 +14,6 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
 import org.junit.Test;
-import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 
 public class UsusInfoBuilderTest {
 

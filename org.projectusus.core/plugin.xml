@@ -19,10 +19,5 @@
              class="org.projectusus.core.internal.project.UsusProjectFactory">
           <adapter type="org.projectusus.core.internal.project.IUSUSProject" />
        </factory>
-       <factory
-             adaptableType="org.eclipse.core.resources.IProject"
-             class="org.projectusus.core.internal.proportions.rawdata.RawDataFactory">
-          <adapter type="org.projectusus.core.internal.proportions.rawdata.IProjectRawData" />
-       </factory>
     </extension>
 </plugin>

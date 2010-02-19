@@ -14,7 +14,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
-public class JDTSupport {
+class JDTSupport {
 
     public static ICompilationUnit getCompilationUnit( IJavaElement element ) {
         return toCompilationUnit( element.getOpenable() );

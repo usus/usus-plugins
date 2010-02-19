@@ -10,27 +10,27 @@ import java.util.Set;
 
 import org.projectusus.core.internal.proportions.model.IHotspot;
 
-public class RawData<S, T extends IRawData> implements IRawData {
+class RawData<S, T extends IRawData> implements IRawData {
 
     private final RawDataMapWrapper<S, T> wrapper;
 
-    protected RawData() {
+    RawData() {
         wrapper = new RawDataMapWrapper<S, T>();
     }
 
-    protected synchronized T getRawData( S key ) {
+    synchronized T getRawData( S key ) {
         return wrapper.getRawData( key );
     }
 
-    protected synchronized void addRawData( S key, T newObject ) {
+    synchronized void addRawData( S key, T newObject ) {
         wrapper.addRawData( key, newObject );
     }
 
-    protected synchronized int getRawDataElementCount() {
+    synchronized int getRawDataElementCount() {
         return wrapper.getRawDataElementCount();
     }
 
-    protected synchronized void remove( S key ) {
+    synchronized void remove( S key ) {
         wrapper.remove( key );
     }
 
@@ -42,7 +42,6 @@ public class RawData<S, T extends IRawData> implements IRawData {
         return violations;
     }
 
-    // TODO protected
     public synchronized int getNumberOf( CodeProportionUnit unit ) {
         int basis = 0;
         for( T result : wrapper.getAllRawDataElements() ) {
@@ -66,7 +65,7 @@ public class RawData<S, T extends IRawData> implements IRawData {
         return overallMetricValue;
     }
 
-    protected synchronized Set<S> getAllKeys() {
+    synchronized Set<S> getAllKeys() {
         return wrapper.getAllKeys();
     }
 
@@ -77,7 +76,7 @@ public class RawData<S, T extends IRawData> implements IRawData {
 
     }
 
-    protected synchronized Collection<T> getAllRawDataElements() {
+    synchronized Collection<T> getAllRawDataElements() {
         return wrapper.getAllRawDataElements();
     }
 }
