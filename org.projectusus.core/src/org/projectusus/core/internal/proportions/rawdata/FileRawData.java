@@ -20,7 +20,7 @@ import org.projectusus.core.internal.proportions.model.Hotspot;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
 
-class FileRawData extends RawData<Integer, ClassRawData> implements IFileRawData {
+class FileRawData extends RawData<Integer, ClassRawData> {
 
     private final IFile fileOfRawData;
 
@@ -97,7 +97,7 @@ class FileRawData extends RawData<Integer, ClassRawData> implements IFileRawData
         return getClassRawData( ASTSupport.findEnclosingClass( node ) );
     }
 
-    public IClassRawData getOrCreateRawData( IJavaElement element ) {
+    public ClassRawData getOrCreateRawData( IJavaElement element ) {
         if( element == null ) {
             return null;
         }
@@ -119,7 +119,7 @@ class FileRawData extends RawData<Integer, ClassRawData> implements IFileRawData
         return createClassRawDataFor( element );
     }
 
-    private IClassRawData createClassRawDataFor( IJavaElement element ) {
+    private ClassRawData createClassRawDataFor( IJavaElement element ) {
         if( element instanceof IType ) {
             String name = element.getElementName();
             IType type = (IType)element;
@@ -143,7 +143,7 @@ class FileRawData extends RawData<Integer, ClassRawData> implements IFileRawData
         }
         ClassRawData referencingRawData = getClassRawData( referencingType );
         FileRawData fileRawData = JDTSupport.getFileRawDataFor( (IFile)resource );
-        ClassRawData referencedRawData = (ClassRawData)fileRawData.getOrCreateRawData( referencedElement );
+        ClassRawData referencedRawData = fileRawData.getOrCreateRawData( referencedElement );
         referencingRawData.addChild( referencedRawData );
     }
 }

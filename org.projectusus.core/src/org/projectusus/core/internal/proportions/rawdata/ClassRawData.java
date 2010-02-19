@@ -19,7 +19,7 @@ import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.MetricACDHotspot;
 import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
 
-class ClassRawData extends RawData<Integer, MethodRawData> implements IClassRawData {
+class ClassRawData extends RawData<Integer, MethodRawData> {
 
     private final int startPosition;
     private final int lineNumber;

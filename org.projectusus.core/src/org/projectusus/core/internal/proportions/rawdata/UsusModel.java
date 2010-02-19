@@ -134,7 +134,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
         workspaceRawData.resetRawData( project );
     }
 
-    public IClassRawData getClassRawData( IType clazz ) throws JavaModelException {
+    public ClassRawData getClassRawData( IType clazz ) throws JavaModelException {
         IFile file = (IFile)clazz.getUnderlyingResource();
         ProjectRawData projectRD = workspaceRawData.getRawData( file.getProject() );
         FileRawData fileResults = projectRD.getFileRawData( file );
@@ -166,8 +166,8 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
     }
 
     public int getCCValue( IMethod method ) throws JavaModelException {
-        ClassRawData classRawData = (ClassRawData)getClassRawData( method.getDeclaringType() );
-        MethodRawData methodRawData = (MethodRawData)classRawData.getMethodRawData( method );
+        ClassRawData classRawData = getClassRawData( method.getDeclaringType() );
+        MethodRawData methodRawData = classRawData.getMethodRawData( method );
         if( methodRawData != null ) {
             return methodRawData.getCCValue();
         }
@@ -175,8 +175,8 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
     }
 
     public int getMLValue( IMethod method ) throws JavaModelException {
-        ClassRawData classRawData = (ClassRawData)getClassRawData( method.getDeclaringType() );
-        MethodRawData methodRawData = (MethodRawData)classRawData.getMethodRawData( method );
+        ClassRawData classRawData = getClassRawData( method.getDeclaringType() );
+        MethodRawData methodRawData = classRawData.getMethodRawData( method );
         if( methodRawData != null ) {
             return methodRawData.getMLValue();
         }
@@ -184,7 +184,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
     }
 
     public int getNumberOfMethods( IType type ) throws JavaModelException {
-        ClassRawData classRawData = (ClassRawData)getClassRawData( type );
+        ClassRawData classRawData = getClassRawData( type );
         return classRawData.getNumberOfMethods();
     }
 

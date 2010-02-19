@@ -22,8 +22,6 @@ import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
-import org.projectusus.core.internal.proportions.rawdata.IClassRawData;
-import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 
 public interface IUsusModel {
 
@@ -43,8 +41,6 @@ public interface IUsusModel {
 
     void dropRawData( IProject project );
 
-    IProjectRawData getProjectRawData( IProject project );
-
     void resetRawData( IProject project );
 
     List<Integer> getAllClassesCCDResults();
@@ -54,8 +50,6 @@ public interface IUsusModel {
     int getSumOfAllDirectChildrenOfAllClasses();
 
     int getSumOfAllKnownChildrenOfAllClasses();
-
-    IClassRawData getClassRawData( IType clazz ) throws JavaModelException;
 
     int getNumberOf( IProject project, CodeProportionUnit unit );
 

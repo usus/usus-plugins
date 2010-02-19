@@ -43,10 +43,10 @@ public class JDTSupport {
     }
 
     public static FileRawData getFileRawDataFor( IFile file ) {
-        return (FileRawData)getProjectRawDataFor( file ).getFileRawData( file );
+        return getProjectRawDataFor( file ).getFileRawData( file );
     }
 
-    public static IProjectRawData getProjectRawDataFor( IFile file ) {
-        return (IProjectRawData)file.getProject().getAdapter( IProjectRawData.class );
+    public static ProjectRawData getProjectRawDataFor( IFile file ) {
+        return (ProjectRawData)file.getProject().getAdapter( IProjectRawData.class );
     }
 }

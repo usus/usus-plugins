@@ -4,9 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
-import org.eclipse.core.resources.IFile;
 
 public interface IProjectRawData extends IRawData {
 
-    IFileRawData getFileRawData( IFile file );
 }

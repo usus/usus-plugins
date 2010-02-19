@@ -14,8 +14,6 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
 import org.junit.Test;
-import org.projectusus.core.internal.proportions.rawdata.IClassRawData;
-import org.projectusus.core.internal.proportions.rawdata.IFileRawData;
 import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 
 public class UsusInfoBuilderTest {
@@ -23,8 +21,6 @@ public class UsusInfoBuilderTest {
     private IMethod method = mock( IMethod.class );
     private IFile file = mock( IFile.class );
     private IProject project = mock( IProject.class );
-    private IProjectRawData projectRawData = mock( IProjectRawData.class );
-    private IFileRawData fileRawData = mock( IFileRawData.class );
 
     @Test
     public void unavailableMethodYieldsNull() throws Exception {
@@ -60,21 +56,13 @@ public class UsusInfoBuilderTest {
     @Test
     public void availableDataYieldsMeaningfulInfo() throws Exception {
         setUpRawDataHierarchy();
-        setupJavaElementRawData();
 
         IUsusInfo info = new UsusInfoBuilder( method ).create();
         assertEquals( UsusInfo.class, info );
     }
 
-    private void setupJavaElementRawData() {
-        IClassRawData classRawData = mock( IClassRawData.class );
-        when( fileRawData.getOrCreateRawData( method.getDeclaringType() ) ).thenReturn( classRawData );
-    }
-
     private void setUpRawDataHierarchy() throws JavaModelException {
         when( method.getUnderlyingResource() ).thenReturn( file );
         when( file.getProject() ).thenReturn( project );
-        when( project.getAdapter( IProjectRawData.class ) ).thenReturn( projectRawData );
-        when( projectRawData.getFileRawData( file ) ).thenReturn( fileRawData );
     }
 }

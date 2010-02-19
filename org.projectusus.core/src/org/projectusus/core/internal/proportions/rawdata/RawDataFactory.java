@@ -16,7 +16,7 @@ public class RawDataFactory implements IAdapterFactory {
         Object result = null;
         if( adapterType == IProjectRawData.class && adaptableObject instanceof IProject ) {
             IProject project = (IProject)adaptableObject;
-            result = UsusCorePlugin.getUsusModel().getProjectRawData( project );
+            result = ((UsusModel)UsusCorePlugin.getUsusModel()).getProjectRawData( project );
         }
         return result;
     }
