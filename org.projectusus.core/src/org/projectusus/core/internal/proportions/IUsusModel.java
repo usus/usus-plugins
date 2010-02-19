@@ -37,6 +37,10 @@ public interface IUsusModel {
 
     int getNumberOf( CodeProportionUnit unit );
 
+    int getNumberOf( IProject project, CodeProportionUnit unit );
+
+    int getNumberOfMethods( IType type ) throws JavaModelException;
+
     void dropRawData( IFile file );
 
     void dropRawData( IProject project );
@@ -50,8 +54,6 @@ public interface IUsusModel {
     int getSumOfAllDirectChildrenOfAllClasses();
 
     int getSumOfAllKnownChildrenOfAllClasses();
-
-    int getNumberOf( IProject project, CodeProportionUnit unit );
 
     int getOverallMetric( IProject project, CodeProportionKind metric );
 
@@ -73,5 +75,5 @@ public interface IUsusModel {
 
     int getMLValue( IMethod method ) throws JavaModelException;
 
-    int getNumberOfMethods( IType type ) throws JavaModelException;
+    int getViolationCount( IProject project, CodeProportionKind metric );
 }

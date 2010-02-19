@@ -3,14 +3,14 @@ package org.projectusus.core.internal.proportions.rawdata;
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.proportions.IUsusModel;
 
 public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
-
-    private IProjectRawData projectRawData;
 
     @Before
     public void setup() throws CoreException{
@@ -25,66 +25,68 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
         
         UsusCorePlugin.getUsusModel().resetRawData(project);
         
-        checkProjectRawDataIsEmpty1File( projectRawData );
+        checkProjectRawDataIsEmpty1File( project );
    }
     
     @Test
     public void resetProjectWithFile1() throws Exception {
         computeFile1AndCheckPreconditions();
         
-        projectRawData.resetRawData();
+        UsusCorePlugin.getUsusModel().resetRawData(project);
         
-        checkProjectRawDataIsEmpty1File( projectRawData );
+        checkProjectRawDataIsEmpty1File( project );
    }
 
     @Test
     public void resetProjectWithFiles2() throws Exception {
         computeFiles2AndCheckPreconditions();
         
-        projectRawData.resetRawData();
+        UsusCorePlugin.getUsusModel().resetRawData(project);
         
-        checkProjectRawDataIsEmpty2Files( projectRawData );
+        checkProjectRawDataIsEmpty2Files( project );
    }
     
-    private void checkProjectRawDataIsEmpty1File( IProjectRawData projectRawData ) {
-        assertEquals( 1, projectRawData.getNumberOf( CodeProportionUnit.CLASS ));
-        assertEquals( 2, projectRawData.getNumberOf( CodeProportionUnit.METHOD ));
-        assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.KG ) );
-        assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.ML ) );
-        assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.CC ) );
+    private void checkProjectRawDataIsEmpty1File( IProject project ) {
+        IUsusModel ususModel = UsusCorePlugin.getUsusModel();
+        assertEquals( 1, ususModel.getNumberOf( project, CodeProportionUnit.CLASS ));
+        assertEquals( 2, ususModel.getNumberOf( project, CodeProportionUnit.METHOD ));
+        assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.KG ) );
+        assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.ML ) );
+        assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.CC ) );
         assertEquals( 1, getClassCount() );
     }
 
-    private void checkProjectRawDataIsEmpty2Files( IProjectRawData projectRawData ) {
-        assertEquals( 2, projectRawData.getNumberOf( CodeProportionUnit.CLASS ));
-        assertEquals( 3, projectRawData.getNumberOf( CodeProportionUnit.METHOD ));
-        assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.KG ) );
-        assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.ML ) );
-        assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.CC ) );
+    private void checkProjectRawDataIsEmpty2Files( IProject project ) {
+        IUsusModel ususModel = UsusCorePlugin.getUsusModel();
+        assertEquals( 2, ususModel.getNumberOf( project, CodeProportionUnit.CLASS ));
+        assertEquals( 3, ususModel.getNumberOf( project, CodeProportionUnit.METHOD ));
+        assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.KG ) );
+        assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.ML ) );
+        assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.CC ) );
         assertEquals( 2, getClassCount() );
     }
     
     private void computeFile1AndCheckPreconditions() throws Exception {
-        IFile file = createAndCompute( "1", "Reset" );
-        projectRawData = JDTSupport.getProjectRawDataFor( file );
-        assertEquals( 1, projectRawData.getNumberOf( CodeProportionUnit.CLASS ));
-        assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.KG ) );
-        assertEquals( 2, projectRawData.getNumberOf( CodeProportionUnit.METHOD ));
-        assertEquals( 1, projectRawData.getViolationCount( CodeProportionKind.ML ) );
-        assertEquals( 1, projectRawData.getViolationCount( CodeProportionKind.CC ) );
+        IUsusModel ususModel = UsusCorePlugin.getUsusModel();
+        createAndCompute( "1", "Reset" );
+        assertEquals( 1, ususModel.getNumberOf( project, CodeProportionUnit.CLASS ));
+        assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.KG ) );
+        assertEquals( 2, ususModel.getNumberOf( project, CodeProportionUnit.METHOD ));
+        assertEquals( 1, ususModel.getViolationCount( project, CodeProportionKind.ML ) );
+        assertEquals( 1, ususModel.getViolationCount( project, CodeProportionKind.CC ) );
         assertEquals( 1, getClassCount() );
     }   
     
     private void computeFiles2AndCheckPreconditions() throws Exception {
+        IUsusModel ususModel = UsusCorePlugin.getUsusModel();
         IFile file2 = createWSFile( "Reset2.java", loadContent("Reset2.test") );
-        IFile file1 = createAndCompute( "1", "Reset" );
+        createAndCompute( "1", "Reset" );
         computeFile(file2);
-        projectRawData = JDTSupport.getProjectRawDataFor( file1 );
-        assertEquals( 2, projectRawData.getNumberOf( CodeProportionUnit.CLASS ));
-        assertEquals( 0, projectRawData.getViolationCount( CodeProportionKind.KG ) );
-        assertEquals( 3, projectRawData.getNumberOf( CodeProportionUnit.METHOD ));
-        assertEquals( 1, projectRawData.getViolationCount( CodeProportionKind.ML ) );
-        assertEquals( 1, projectRawData.getViolationCount( CodeProportionKind.CC ) );
+        assertEquals( 2, ususModel.getNumberOf( project, CodeProportionUnit.CLASS ));
+        assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.KG ) );
+        assertEquals( 3, ususModel.getNumberOf( project, CodeProportionUnit.METHOD ));
+        assertEquals( 1, ususModel.getViolationCount( project, CodeProportionKind.ML ) );
+        assertEquals( 1, ususModel.getViolationCount( project, CodeProportionKind.CC ) );
         assertEquals( 2, getClassCount() );
     }   
     

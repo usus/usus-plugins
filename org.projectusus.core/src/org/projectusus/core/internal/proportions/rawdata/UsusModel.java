@@ -183,6 +183,11 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
         throw new IllegalStateException();
     }
 
+    public int getViolationCount( IProject project, CodeProportionKind metric ) {
+        ProjectRawData projectRawData = getProjectRawData( project );
+        return projectRawData.getViolationCount( metric );
+    }
+
     public int getNumberOfMethods( IType type ) throws JavaModelException {
         ClassRawData classRawData = getClassRawData( type );
         return classRawData.getNumberOfMethods();

@@ -5,7 +5,6 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import static org.junit.Assert.assertEquals;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,8 +16,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
 import org.projectusus.core.internal.PDETestUsingWSProject;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
-import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
+import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
 
 public class PDETestForMetricsComputation extends PDETestUsingWSProject {
@@ -26,9 +25,9 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
     public void simpleCaseTestDemo() throws Exception {
         IFile file = createWSFile( "A.java", loadContent( "A.test" ) );
         computeFile( file );
-        IProjectRawData results = (IProjectRawData)file.getProject().getAdapter( IProjectRawData.class );
-        assertEquals( 1, results.getViolationCount( ML ) );
-        assertEquals( 2, results.getNumberOf( CodeProportionUnit.METHOD ) );
+        IUsusModel model = UsusCorePlugin.getUsusModel();
+        assertEquals( 1, model.getViolationCount( file.getProject(), CodeProportionKind.ML ) );
+        assertEquals( 2, model.getNumberOf( file.getProject(), CodeProportionUnit.METHOD ) );
     }
     
     protected void computeFile(IFile file){
