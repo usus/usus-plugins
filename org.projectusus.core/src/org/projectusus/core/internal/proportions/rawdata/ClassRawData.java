@@ -77,7 +77,7 @@ class ClassRawData extends RawData<Integer, MethodRawData> implements IClassRawD
         return rawData;
     }
 
-    public IMethodRawData getMethodRawData( IMethod method ) {
+    public MethodRawData getMethodRawData( IMethod method ) {
         if( method == null ) {
             return null;
         }

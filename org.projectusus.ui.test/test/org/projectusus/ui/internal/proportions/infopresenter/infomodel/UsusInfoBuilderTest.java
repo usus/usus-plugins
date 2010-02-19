@@ -16,7 +16,6 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.rawdata.IClassRawData;
 import org.projectusus.core.internal.proportions.rawdata.IFileRawData;
-import org.projectusus.core.internal.proportions.rawdata.IMethodRawData;
 import org.projectusus.core.internal.proportions.rawdata.IProjectRawData;
 
 public class UsusInfoBuilderTest {
@@ -70,8 +69,6 @@ public class UsusInfoBuilderTest {
     private void setupJavaElementRawData() {
         IClassRawData classRawData = mock( IClassRawData.class );
         when( fileRawData.getOrCreateRawData( method.getDeclaringType() ) ).thenReturn( classRawData );
-        IMethodRawData methodRawData = mock( IMethodRawData.class );
-        when( classRawData.getMethodRawData( method ) ).thenReturn( methodRawData );
     }
 
     private void setUpRawDataHierarchy() throws JavaModelException {

@@ -10,7 +10,7 @@ import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.MetricCCHotspot;
 import org.projectusus.core.internal.proportions.model.MetricMLHotspot;
 
-class MethodRawData implements IRawData, IMethodRawData {
+class MethodRawData implements IRawData {
 
     private final int startPosition;
     private final String className;

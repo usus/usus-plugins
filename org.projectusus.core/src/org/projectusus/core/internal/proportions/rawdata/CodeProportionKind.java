@@ -76,11 +76,11 @@ public enum CodeProportionKind {
         return unit;
     }
 
-    public boolean isViolatedBy( MethodRawData methodResult ) {
+    public boolean isViolatedBy( MethodRawData rawData ) {
         return false;
     }
 
-    public boolean isViolatedBy( ClassRawData methodResult ) {
+    public boolean isViolatedBy( ClassRawData rawData ) {
         return false;
     }
 
@@ -92,7 +92,7 @@ public enum CodeProportionKind {
         return calibration;
     }
 
-    public int getValueFor( MethodRawData methodResults ) {
+    public int getValueFor( MethodRawData rawData ) {
         return 0;
     }
 }

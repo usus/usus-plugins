@@ -4,7 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.bugreport;
 
-import static org.projectusus.core.internal.bugreport.SourceCodeLocation.getClazz;
 import static org.projectusus.core.internal.bugreport.SourceCodeLocation.getMethod;
 import static org.projectusus.core.internal.bugreport.SourceCodeLocation.getMethodLocation;
 
@@ -12,7 +11,6 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
-import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -30,8 +28,6 @@ import org.projectusus.core.internal.bugreport.Bug;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.project.NullUsusProject;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
-import org.projectusus.core.internal.proportions.rawdata.IClassRawData;
-import org.projectusus.core.internal.proportions.rawdata.IMethodRawData;
 import org.projectusus.ui.internal.UsusUIPlugin;
 import org.projectusus.ui.internal.selection.EditorInputAnalysis;
 import org.projectusus.ui.internal.selection.JDTWorkspaceEditorInputAnalysis;
@@ -80,11 +76,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
     private Bug initBugData() {
         Bug bug = new Bug();
         try {
-            IMethod method = getSelectedMethod();
-            IClassRawData classRawData = getClassRawData( method );
-            if( classRawData != null ) {
-                initBugClassData( bug, classRawData );
-            }
+            initBugClassData( bug );
         } catch( JavaModelException e ) {
             UsusUIPlugin.getDefault().log( e );
         }
@@ -92,28 +84,20 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
         return bug;
     }
 
-    private void initBugClassData( Bug bug, IClassRawData classRawData ) {
-        fillClassMetrics( bug, classRawData );
-        IMethodRawData methodResults = classRawData.getMethodRawData( getSelectedMethod() );
-        if( methodResults != null ) {
-            fillMethodMetrics( bug, methodResults );
-            bug.setLocation( getMethodLocation( getSelectedMethod() ) );
-        }
+    private void initBugClassData( Bug bug ) throws JavaModelException {
+        fillClassMetrics( bug );
+        fillMethodMetrics( bug, getSelectedMethod() );
+        bug.setLocation( getMethodLocation( getSelectedMethod() ) );
     }
 
-    private void fillClassMetrics( Bug bug, IClassRawData classRawData ) {
-        int numberOfMethods = classRawData.getNumberOf( CodeProportionUnit.METHOD );
+    private void fillClassMetrics( Bug bug ) {
+        int numberOfMethods = UsusCorePlugin.getUsusModel().getNumberOf( CodeProportionUnit.METHOD );
         bug.getBugMetrics().setNumberOfMethods( numberOfMethods );
     }
 
-    private void fillMethodMetrics( Bug bug, IMethodRawData methodRawData ) {
-        bug.getBugMetrics().setCyclomaticComplexity( methodRawData.getCCValue() );
-        bug.getBugMetrics().setMethodLength( methodRawData.getMLValue() );
-    }
-
-    private IClassRawData getClassRawData( IMethod method ) throws JavaModelException {
-        IType clazz = getClazz( method );
-        return UsusCorePlugin.getUsusModel().getClassRawData( clazz );
+    private void fillMethodMetrics( Bug bug, IMethod method ) throws JavaModelException {
+        bug.getBugMetrics().setCyclomaticComplexity( UsusCorePlugin.getUsusModel().getCCValue( method ) );
+        bug.getBugMetrics().setMethodLength( UsusCorePlugin.getUsusModel().getMLValue( method ) );
     }
 
     private IMethod getSelectedMethod() {

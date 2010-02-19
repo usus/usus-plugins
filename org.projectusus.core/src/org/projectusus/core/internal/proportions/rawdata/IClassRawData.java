@@ -8,5 +8,5 @@ import org.eclipse.jdt.core.IMethod;
 
 public interface IClassRawData extends IRawData {
 
-    IMethodRawData getMethodRawData( IMethod method );
+    MethodRawData getMethodRawData( IMethod method );
 }
