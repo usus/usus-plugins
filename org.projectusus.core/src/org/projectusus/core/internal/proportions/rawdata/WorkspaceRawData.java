@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.CodeStatistic;
 import org.projectusus.core.internal.proportions.model.IHotspot;
@@ -38,7 +39,7 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
     }
 
     public void resetRawData( IFile file ) {
-        FileRawData rawData = ((ProjectRawData)JDTSupport.getProjectRawDataFor( file )).getRawData( file );
+        FileRawData rawData = (((UsusModel)UsusCorePlugin.getUsusModel()).getProjectRawData( file.getProject() )).getRawData( file );
         if( rawData != null ) {
             rawData.resetRawData();
         }
@@ -51,7 +52,7 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
     public void dropRawData( IFile file ) {
         resetRawData( file );
-        ((ProjectRawData)JDTSupport.getProjectRawDataFor( file )).dropRawData( file );
+        ((UsusModel)UsusCorePlugin.getUsusModel()).getProjectRawData( file.getProject() ).dropRawData( file );
     }
 
     public CodeProportion getCodeProportion( CodeProportionKind metric ) {

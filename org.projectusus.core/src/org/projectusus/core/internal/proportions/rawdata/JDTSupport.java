@@ -6,7 +6,6 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import java.util.regex.Pattern;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IOpenable;
@@ -40,13 +39,5 @@ public class JDTSupport {
 
     private static ICompilationUnit toCompilationUnit( IOpenable openable ) {
         return openable instanceof ICompilationUnit ? (ICompilationUnit)openable : null;
-    }
-
-    public static FileRawData getFileRawDataFor( IFile file ) {
-        return getProjectRawDataFor( file ).getFileRawData( file );
-    }
-
-    public static ProjectRawData getProjectRawDataFor( IFile file ) {
-        return (ProjectRawData)file.getProject().getAdapter( IProjectRawData.class );
     }
 }

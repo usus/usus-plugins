@@ -16,6 +16,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.model.Hotspot;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
@@ -142,7 +143,7 @@ class FileRawData extends RawData<Integer, ClassRawData> {
             return;
         }
         ClassRawData referencingRawData = getClassRawData( referencingType );
-        FileRawData fileRawData = JDTSupport.getFileRawDataFor( (IFile)resource );
+        FileRawData fileRawData = ((UsusModel)UsusCorePlugin.getUsusModel()).getFileRawData( (IFile)resource );
         ClassRawData referencedRawData = fileRawData.getOrCreateRawData( referencedElement );
         referencingRawData.addChild( referencedRawData );
     }

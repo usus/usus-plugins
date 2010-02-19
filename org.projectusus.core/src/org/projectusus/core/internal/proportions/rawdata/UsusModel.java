@@ -193,7 +193,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
         return classRawData.getNumberOfMethods();
     }
 
-    private FileRawData getFileRawData( IFile file ) {
+    FileRawData getFileRawData( IFile file ) {
         return workspaceRawData.getProjectRawData( file.getProject() ).getFileRawData( file );
     }
 
