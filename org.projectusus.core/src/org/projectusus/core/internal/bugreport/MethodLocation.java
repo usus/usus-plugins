@@ -6,7 +6,6 @@ package org.projectusus.core.internal.bugreport;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.eclipse.jdt.core.IMethod;
 
 public class MethodLocation {
 
@@ -45,12 +44,6 @@ public class MethodLocation {
 
     public void setMethodName( String methodName ) {
         this.methodName = methodName;
-    }
-
-    public static MethodLocation from( IMethod method ) {
-        MethodLocation methodLocation = new MethodLocation();
-
-        return methodLocation;
     }
 
     @Override
