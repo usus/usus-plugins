@@ -1,5 +1,7 @@
 package org.projectusus.core.filerelations;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,6 +49,10 @@ public class FileRelations {
                 getTransitiveRelationsFrom( relation.getTargetFile(), relation.getTargetClassname(), transitives );
             }
         }
+    }
+
+    protected Collection<FileRelation> getAllDirectRelations() {
+        return Collections.unmodifiableCollection( outgoingRelations.values() );
     }
 
 }

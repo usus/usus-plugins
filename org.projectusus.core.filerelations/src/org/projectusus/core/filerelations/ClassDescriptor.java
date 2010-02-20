@@ -6,9 +6,9 @@ import org.eclipse.core.resources.IFile;
 
 public class ClassDescriptor {
 
-    private IFile file;
-    private Classname classname;
-    private Packagename packagename;
+    private final IFile file;
+    private final Classname classname;
+    private final Packagename packagename;
 
     public ClassDescriptor( IFile file, Classname classname, Packagename packagename ) {
         this.file = file;
@@ -22,6 +22,10 @@ public class ClassDescriptor {
 
     public Classname getClassname() {
         return classname;
+    }
+
+    public Packagename getPackagename() {
+        return packagename;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.projectusus.core.filerelations;
 
 import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.hasItems;
 import static org.projectusus.core.filerelations.IsSetOfMatcher.isEmptySet;
 import static org.projectusus.core.filerelations.IsSetOfMatcher.isSetOf;
 import static org.projectusus.core.filerelations.SimpleTestScenario.anotherTarget;
@@ -91,4 +92,10 @@ public class FileRelationsTest {
         assertThat( fileRelations.getTransitiveRelationsFrom( source, sourceClass ), isSetOf( sourceToTarget, targetToAnotherTarget, anotherTargetToTarget, anotherTargetToSource ) );
     }
 
+    @Test
+    public void getAllDirectRelations() {
+        fileRelations.add( sourceToTarget );
+        fileRelations.add( anotherTargetToSource );
+        assertThat( fileRelations.getAllDirectRelations(), hasItems( sourceToTarget, anotherTargetToSource ) );
+    }
 }

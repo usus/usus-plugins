@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="lib/jgrapht-jdk1.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/junit-4.8.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-lang-2.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hamcrest-all-1.2.jar"/>

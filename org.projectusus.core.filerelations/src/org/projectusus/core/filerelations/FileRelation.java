@@ -2,14 +2,10 @@ package org.projectusus.core.filerelations;
 
 import org.eclipse.core.resources.IFile;
 
-public class FileRelation {
+public class FileRelation extends Relation<ClassDescriptor> {
 
-    private final ClassDescriptor source;
-    private final ClassDescriptor target;
-
-    public FileRelation( ClassDescriptor sourceFile, ClassDescriptor targetFile ) {
-        this.source = sourceFile;
-        this.target = targetFile;
+    public FileRelation( ClassDescriptor source, ClassDescriptor target ) {
+        super( source, target );
     }
 
     public IFile getSourceFile() {
@@ -38,6 +34,14 @@ public class FileRelation {
 
     public boolean hasSourceClass( Classname clazz ) {
         return getSourceClassname().equals( clazz );
+    }
+
+    public Packagename getSourcePackage() {
+        return source.getPackagename();
+    }
+
+    public Packagename getTargetPackage() {
+        return target.getPackagename();
     }
 
 }

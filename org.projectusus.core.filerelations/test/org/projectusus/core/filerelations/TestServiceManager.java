@@ -23,11 +23,23 @@ public class TestServiceManager {
     }
 
     public static ClassDescriptor createDescriptor( IFile file, Classname clazz ) {
-        return new ClassDescriptor( file, clazz, new Packagename( "packagename1" ) ); //$NON-NLS-1$
+        return createDescriptor( file, clazz, new Packagename( "packagename1" ) ); //$NON-NLS-1$
+    }
+
+    public static ClassDescriptor createDescriptor( IFile file, Packagename packagename ) {
+        return new ClassDescriptor( file, createClassname(), packagename );
+    }
+
+    public static Classname createClassname() {
+        return new Classname( "classname1" ); //$NON-NLS-1$
+    }
+
+    public static ClassDescriptor createDescriptor( IFile file, Classname clazz, Packagename packagename ) {
+        return new ClassDescriptor( file, clazz, packagename );
     }
 
     public static ClassDescriptor createDescriptor( IFile file ) {
-        return createDescriptor( file, new Classname( "classname1" ) ); //$NON-NLS-1$
+        return createDescriptor( file, createClassname() );
     }
 
 }
