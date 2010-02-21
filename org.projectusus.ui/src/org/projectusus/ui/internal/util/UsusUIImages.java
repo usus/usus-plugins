@@ -21,18 +21,18 @@ public class UsusUIImages implements ISharedUsusImages {
     private ImageRegistry imageRegistry;
 
     static {
-        String pathPrefix = "icons/full/"; 
+        String pathPrefix = "icons/full/";
         try {
             Bundle bundle = UsusUIPlugin.getDefault().getBundle();
-            baseUrl = new URL( bundle.getEntry( "/" ), pathPrefix ); 
+            baseUrl = new URL( bundle.getEntry( "/" ), pathPrefix );
         } catch( MalformedURLException malfux ) {
             // do nothing
         }
     }
 
-    private final static String OBJECT = "obj16/"; // basic colors - size 16x16 
-    private final static String VIEW = "eview16/"; // basic colors - size 16x16 
-    private final static String WIZARDS = "wizban/"; 
+    private final static String OBJECT = "obj16/"; // basic colors - size 16x16
+    private final static String VIEW = "eview16/"; // basic colors - size 16x16
+    private final static String WIZARDS = "wizban/";
 
     private UsusUIImages() {
         // no instantiation
@@ -42,7 +42,7 @@ public class UsusUIImages implements ISharedUsusImages {
         return _instance;
     }
 
-    public Image getImage( final String key ) {
+    public Image getImage( String key ) {
         return getImageRegistry().get( key );
     }
 
@@ -51,13 +51,13 @@ public class UsusUIImages implements ISharedUsusImages {
     }
 
     private void declareImages() {
-        declare( OBJ_BUGS, OBJECT + "bugs.gif" ); 
-        declare( OBJ_CODE_PROPORTIONS, OBJECT + "codeproportions.gif" ); 
-        declare( OBJ_INFO, OBJECT + "info.gif" ); 
-        declare( OBJ_TEST_COVERAGE, OBJECT + "testcoverage.gif" ); 
-        declare( OBJ_WARNINGS, OBJECT + "warnings.gif" ); 
-        declare( VIEW_WARNING, VIEW + "warning.gif" ); 
-        declare( WIZARD_REPORT_BUG, WIZARDS + "report_bug.png" ); 
+        declare( OBJ_BUGS, OBJECT + "bugs.gif" );
+        declare( OBJ_CODE_PROPORTIONS, OBJECT + "codeproportions.gif" );
+        declare( OBJ_INFO, OBJECT + "info.gif" );
+        declare( OBJ_TEST_COVERAGE, OBJECT + "testcoverage.gif" );
+        declare( OBJ_WARNINGS, OBJECT + "warnings.gif" );
+        declare( VIEW_WARNING, VIEW + "warning.gif" );
+        declare( WIZARD_REPORT_BUG, WIZARDS + "report_bug.png" );
     }
 
     private void declare( final String key, final String path ) {
