@@ -4,31 +4,27 @@ import java.util.Collection;
 
 import org.jgrapht.alg.CycleDetector;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.SetMultimap;
-
 public class PackageCycleCalculator {
 
-    private final FileRelations relations;
+    private final FileRelations fileRelations;
 
-    public PackageCycleCalculator( FileRelations relations ) {
-        this.relations = relations;
+    public PackageCycleCalculator( FileRelations fileRelations ) {
+        this.fileRelations = fileRelations;
     }
 
     public int countPackagesInCycles() {
-        Collection<FileRelation> allDirectRelations = relations.getAllDirectRelations();
-        SetMultimap<Packagename, Relation<Packagename>> outgoingRelations = HashMultimap.create();
-        SetMultimap<Packagename, Relation<Packagename>> incomingRelations = HashMultimap.create();
+        Collection<FileRelation> allDirectRelations = fileRelations.getAllDirectRelations();
+
+        Relations<Packagename, Relation<Packagename>> packageRelations = new Relations<Packagename, Relation<Packagename>>();
+
         for( FileRelation fileRelation : allDirectRelations ) {
-            if( fileRelation.isCrossPackage( ) ) {
+            if( fileRelation.isCrossPackage() ) {
                 Packagename source = fileRelation.getSourcePackage();
                 Packagename target = fileRelation.getTargetPackage();
-                Relation<Packagename> packageRelation = Relation.of( source, target );
-                outgoingRelations.put( source, packageRelation );
-                incomingRelations.put( target, packageRelation );
+                packageRelations.add( Relation.of( source, target ), source, target );
             }
         }
-        RelationGraph<Packagename> graph = new RelationGraph<Packagename>( outgoingRelations, incomingRelations );
+        RelationGraph<Packagename> graph = new RelationGraph<Packagename>( packageRelations );
         return new CycleDetector<Packagename, Relation<Packagename>>( graph ).findCycles().size();
     }
 }

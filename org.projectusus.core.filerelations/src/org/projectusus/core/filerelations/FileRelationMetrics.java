@@ -2,9 +2,9 @@ package org.projectusus.core.filerelations;
 
 public class FileRelationMetrics {
 
-    private FileRelations relations;
+    private Relations relations;
 
-    public FileRelationMetrics( FileRelations relations ) {
+    public FileRelationMetrics( Relations relations ) {
         this.relations = relations;
     }
 

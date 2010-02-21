@@ -1,6 +1,5 @@
 package org.projectusus.core.filerelations;
 
-import static com.google.common.collect.Sets.union;
 import static java.util.Collections.singleton;
 
 import java.util.Collections;
@@ -9,32 +8,28 @@ import java.util.Set;
 
 import org.jgrapht.EdgeFactory;
 
-import com.google.common.collect.SetMultimap;
-
 class RelationGraph<T> extends UnmodifiableDirectedGraph<T, Relation<T>> {
 
-    private final SetMultimap<T, Relation<T>> outgoingRelations;
-    private final SetMultimap<T, Relation<T>> incomingRelations;
+    private final Relations<T, Relation<T>> relations;
 
-    public RelationGraph( SetMultimap<T, Relation<T>> outgoingRelations, SetMultimap<T, Relation<T>> incomingRelations ) {
-        this.outgoingRelations = outgoingRelations;
-        this.incomingRelations = incomingRelations;
+    public RelationGraph( Relations<T, Relation<T>> relations ) {
+        this.relations = relations;
     }
 
     public Set<Relation<T>> incomingEdgesOf( T vertex ) {
-        return incomingRelations.get( vertex );
+        return relations.getDirectRelationsTo( vertex );
     }
 
     public Set<Relation<T>> outgoingEdgesOf( T vertex ) {
-        return outgoingRelations.get( vertex );
+        return relations.getDirectRelationsFrom( vertex );
     }
 
     public boolean containsVertex( T vertex ) {
-        return outgoingRelations.containsKey( vertex ) || incomingRelations.containsKey( vertex );
+        return relations.containsKey( vertex );
     }
 
     public Set<Relation<T>> edgeSet() {
-        return new HashSet<Relation<T>>( outgoingRelations.values() );
+        return new HashSet<Relation<T>>( relations.getAllDirectRelations() );
     }
 
     public Set<Relation<T>> getAllEdges( T source, T target ) {
@@ -70,7 +65,7 @@ class RelationGraph<T> extends UnmodifiableDirectedGraph<T, Relation<T>> {
     }
 
     public Set<T> vertexSet() {
-        return union( outgoingRelations.keySet(), incomingRelations.keySet() );
+        return relations.keySet();
     }
 
 }
