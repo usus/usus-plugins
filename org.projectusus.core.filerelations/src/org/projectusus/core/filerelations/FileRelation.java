@@ -44,4 +44,8 @@ public class FileRelation extends Relation<ClassDescriptor> {
         return target.getPackagename();
     }
 
+    public boolean isCrossPackage() {
+        return !getSourcePackage().equals( getTargetPackage() );
+    }
+
 }

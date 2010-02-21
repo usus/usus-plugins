@@ -20,9 +20,13 @@ public class PackageCycleCalculator {
         SetMultimap<Packagename, Relation<Packagename>> outgoingRelations = HashMultimap.create();
         SetMultimap<Packagename, Relation<Packagename>> incomingRelations = HashMultimap.create();
         for( FileRelation fileRelation : allDirectRelations ) {
-            Relation<Packagename> packageRelation = Relation.of( fileRelation.getSourcePackage(), fileRelation.getTargetPackage() );
-            outgoingRelations.put( fileRelation.getSourcePackage(), packageRelation );
-            incomingRelations.put( fileRelation.getTargetPackage(), packageRelation );
+            if( fileRelation.isCrossPackage( ) ) {
+                Packagename source = fileRelation.getSourcePackage();
+                Packagename target = fileRelation.getTargetPackage();
+                Relation<Packagename> packageRelation = Relation.of( source, target );
+                outgoingRelations.put( source, packageRelation );
+                incomingRelations.put( target, packageRelation );
+            }
         }
         RelationGraph<Packagename> graph = new RelationGraph<Packagename>( outgoingRelations, incomingRelations );
         return new CycleDetector<Packagename, Relation<Packagename>>( graph ).findCycles().size();
