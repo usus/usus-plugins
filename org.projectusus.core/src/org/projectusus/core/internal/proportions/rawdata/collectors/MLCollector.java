@@ -28,12 +28,12 @@ public class MLCollector extends Collector {
 
     @Override
     public void endVisit( MethodDeclaration node ) {
-        UsusCorePlugin.getUsusModel().setMLValue( file, node, statementCount.getAndClearCount() );
+        UsusCorePlugin.getUsusModelWriteAccess().setMLValue( file, node, statementCount.getAndClearCount() );
     }
 
     @Override
     public void endVisit( Initializer node ) {
-        UsusCorePlugin.getUsusModel().setMLValue( file, node, statementCount.getAndClearCount() );
+        UsusCorePlugin.getUsusModelWriteAccess().setMLValue( file, node, statementCount.getAndClearCount() );
     }
 
     @Override

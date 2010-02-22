@@ -19,7 +19,7 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
 
     @Before
     public void setup() throws CoreException{
-        UsusCorePlugin.getUsusModel().dropRawData( project );
+        UsusCorePlugin.getUsusModelWriteAccess().dropRawData( project );
         makeUsusProject( false );
         addJavaNature();
         model = UsusCorePlugin.getUsusModel();

@@ -69,13 +69,8 @@ public class CodeProportionsComputerJob extends Job {
     }
 
     private void updateModel( IStatus result, List<CodeProportion> collector ) {
-        UsusCorePlugin ususCorePlugin = UsusCorePlugin.getDefault();
-        // we are inside a background job, and the plugin might have been
-        // shut down meanwhile
-        if( ususCorePlugin != null ) {
-            IUsusModelWriteAccess ususModel = ususCorePlugin.getUsusModelWriteAccess();
-            ususModel.update( new ComputationRunModelUpdate( collector, result.isOK() ) );
-        }
+        IUsusModelWriteAccess ususModel = UsusCorePlugin.getUsusModelWriteAccess();
+        ususModel.update( new ComputationRunModelUpdate( collector, result.isOK() ) );
     }
 
     private void performComputation( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {

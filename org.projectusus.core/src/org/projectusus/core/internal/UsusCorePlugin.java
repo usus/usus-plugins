@@ -18,6 +18,7 @@ import org.projectusus.core.internal.coverage.LaunchObserver;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.modelcomputation.AutoComputeSetting;
+import org.projectusus.core.internal.proportions.rawdata.NullUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class UsusCorePlugin extends Plugin {
@@ -39,8 +40,14 @@ public class UsusCorePlugin extends Plugin {
         return getDefault().ususModel;
     }
 
-    public synchronized IUsusModelWriteAccess getUsusModelWriteAccess() {
-        return ususModel;
+    public static synchronized IUsusModelWriteAccess getUsusModelWriteAccess() {
+        UsusCorePlugin ususCorePlugin = UsusCorePlugin.getDefault();
+        // inside a background job, the plugin might have been
+        // shut down meanwhile
+        if( ususCorePlugin != null ) {
+            return ususCorePlugin.ususModel;
+        }
+        return new NullUsusModelWriteAccess();
     }
 
     public void setAutoCompute( boolean autoCompute ) {
@@ -83,6 +90,7 @@ public class UsusCorePlugin extends Plugin {
         launchObserver.dispose();
         autoComputer.dispose();
         plugin = null;
+        ususModel = null;
         super.stop( context );
     }
 

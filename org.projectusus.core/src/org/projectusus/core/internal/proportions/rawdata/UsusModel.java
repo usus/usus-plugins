@@ -54,6 +54,42 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
         doUpdate( updateCommand );
     }
 
+    public void dropRawData( IProject project ) {
+        workspaceRawData.dropRawData( project );
+    }
+
+    public void dropRawData( IFile file ) {
+        workspaceRawData.dropRawData( file );
+    }
+
+    public void resetRawData( IProject project ) {
+        workspaceRawData.resetRawData( project );
+    }
+
+    public void addClassReference( IFile file, AbstractTypeDeclaration referencingType, IJavaElement referencedElement ) {
+        getFileRawData( file ).addClassReference( referencingType, referencedElement );
+    }
+
+    public void setCCValue( IFile file, MethodDeclaration methodDecl, int value ) {
+        getFileRawData( file ).setCCValue( methodDecl, value );
+    }
+
+    public void setCCValue( IFile file, Initializer initializer, int value ) {
+        getFileRawData( file ).setCCValue( initializer, value );
+    }
+
+    public void addClass( IFile file, AbstractTypeDeclaration node ) {
+        getFileRawData( file ).addClass( node );
+    }
+
+    public void setMLValue( IFile file, MethodDeclaration methodDecl, int value ) {
+        getFileRawData( file ).setMLValue( methodDecl, value );
+    }
+
+    public void setMLValue( IFile file, Initializer initializer, int value ) {
+        getFileRawData( file ).setMLValue( initializer, value );
+    }
+
     // interface of IUsusModel
     // ////////////////////////
 
@@ -163,44 +199,6 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
         ProjectRawData projectRD = workspaceRawData.getRawData( file.getProject() );
         FileRawData fileResults = projectRD.getFileRawData( file );
         return fileResults.getOrCreateRawData( clazz );
-    }
-
-    // //////////////////////////////////
-
-    public void dropRawData( IProject project ) {
-        workspaceRawData.dropRawData( project );
-    }
-
-    public void dropRawData( IFile file ) {
-        workspaceRawData.dropRawData( file );
-    }
-
-    public void resetRawData( IProject project ) {
-        workspaceRawData.resetRawData( project );
-    }
-
-    public void addClassReference( IFile file, AbstractTypeDeclaration referencingType, IJavaElement referencedElement ) {
-        getFileRawData( file ).addClassReference( referencingType, referencedElement );
-    }
-
-    public void setCCValue( IFile file, MethodDeclaration methodDecl, int value ) {
-        getFileRawData( file ).setCCValue( methodDecl, value );
-    }
-
-    public void setCCValue( IFile file, Initializer initializer, int value ) {
-        getFileRawData( file ).setCCValue( initializer, value );
-    }
-
-    public void addClass( IFile file, AbstractTypeDeclaration node ) {
-        getFileRawData( file ).addClass( node );
-    }
-
-    public void setMLValue( IFile file, MethodDeclaration methodDecl, int value ) {
-        getFileRawData( file ).setMLValue( methodDecl, value );
-    }
-
-    public void setMLValue( IFile file, Initializer initializer, int value ) {
-        getFileRawData( file ).setMLValue( initializer, value );
     }
 
     // //////////////////////////////////

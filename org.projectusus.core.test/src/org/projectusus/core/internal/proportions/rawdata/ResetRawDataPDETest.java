@@ -14,7 +14,7 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
 
     @Before
     public void setup() throws CoreException{
-        UsusCorePlugin.getUsusModel().dropRawData( project );
+        UsusCorePlugin.getUsusModelWriteAccess().dropRawData( project );
         makeUsusProject( false );
         addJavaNature();
    }
@@ -23,7 +23,7 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
     public void resetWorkspaceWithFile1() throws Exception {
         computeFile1AndCheckPreconditions();
         
-        UsusCorePlugin.getUsusModel().resetRawData(project);
+        UsusCorePlugin.getUsusModelWriteAccess().resetRawData(project);
         
         checkProjectRawDataIsEmpty1File( project );
    }
@@ -32,7 +32,7 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
     public void resetProjectWithFile1() throws Exception {
         computeFile1AndCheckPreconditions();
         
-        UsusCorePlugin.getUsusModel().resetRawData(project);
+        UsusCorePlugin.getUsusModelWriteAccess().resetRawData(project);
         
         checkProjectRawDataIsEmpty1File( project );
    }
@@ -41,7 +41,7 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
     public void resetProjectWithFiles2() throws Exception {
         computeFiles2AndCheckPreconditions();
         
-        UsusCorePlugin.getUsusModel().resetRawData(project);
+        UsusCorePlugin.getUsusModelWriteAccess().resetRawData(project);
         
         checkProjectRawDataIsEmpty2Files( project );
    }

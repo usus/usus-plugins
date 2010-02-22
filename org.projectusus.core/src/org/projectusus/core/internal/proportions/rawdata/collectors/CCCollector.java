@@ -93,11 +93,11 @@ public class CCCollector extends Collector {
     }
 
     private void submit( MethodDeclaration node ) {
-        UsusCorePlugin.getUsusModel().setCCValue( file, node, ccCount );
+        UsusCorePlugin.getUsusModelWriteAccess().setCCValue( file, node, ccCount );
     }
 
     private void submit( Initializer node ) {
-        UsusCorePlugin.getUsusModel().setCCValue( file, node, ccCount );
+        UsusCorePlugin.getUsusModelWriteAccess().setCCValue( file, node, ccCount );
     }
 
     private boolean increase() {

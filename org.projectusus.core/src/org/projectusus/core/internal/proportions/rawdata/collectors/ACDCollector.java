@@ -58,7 +58,7 @@ public class ACDCollector extends Collector {
         }
         ITypeBinding binding = node.resolveBinding();
         if( binding != null && binding.isFromSource() ) {
-            UsusCorePlugin.getUsusModel().addClassReference( file, currentType, binding.getJavaElement() );
+            UsusCorePlugin.getUsusModelWriteAccess().addClassReference( file, currentType, binding.getJavaElement() );
         }
         return true;
     }

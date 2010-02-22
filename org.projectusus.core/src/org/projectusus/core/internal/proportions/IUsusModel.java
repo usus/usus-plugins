@@ -7,15 +7,10 @@ package org.projectusus.core.internal.proportions;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
-import org.eclipse.jdt.core.dom.Initializer;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
@@ -41,12 +36,6 @@ public interface IUsusModel {
 
     int getNumberOfMethods( IType type ) throws JavaModelException;
 
-    void dropRawData( IFile file );
-
-    void dropRawData( IProject project );
-
-    void resetRawData( IProject project );
-
     List<Integer> getAllClassesCCDResults();
 
     int getOverallMetric( CodeProportionKind metric );
@@ -56,18 +45,6 @@ public interface IUsusModel {
     int getSumOfAllKnownChildrenOfAllClasses();
 
     int getOverallMetric( IProject project, CodeProportionKind metric );
-
-    void addClassReference( IFile file, AbstractTypeDeclaration referencingType, IJavaElement referencedElement );
-
-    void setCCValue( IFile file, MethodDeclaration methodDecl, int value );
-
-    void setCCValue( IFile file, Initializer initializer, int value );
-
-    void addClass( IFile file, AbstractTypeDeclaration node );
-
-    void setMLValue( IFile file, MethodDeclaration methodDecl, int value );
-
-    void setMLValue( IFile file, Initializer initializer, int value );
 
     Set<ClassRepresenter> getAllClassRepresenters();
 

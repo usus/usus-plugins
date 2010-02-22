@@ -30,20 +30,17 @@ public class CodeProportionsPDETest {
     
     @Test
     public void listenerHandling() throws InterruptedException {
+        IUsusModelWriteAccess ususModelWriteAccess = UsusCorePlugin.getUsusModelWriteAccess();
         DummyCodeProportionsListener listener = new DummyCodeProportionsListener();
         getUsusModel().addUsusModelListener( listener );
 
-        getUsusModelWriteAccess().update( new ComputationRunModelUpdate( new ArrayList<CodeProportion>(), true ) );
+        ususModelWriteAccess.update( new ComputationRunModelUpdate( new ArrayList<CodeProportion>(), true ) );
         assertEquals( 1, listener.getCallCount() );
 
         getUsusModel().removeUsusModelListener( listener );
-        getUsusModelWriteAccess().update( new ComputationRunModelUpdate( new ArrayList<CodeProportion>(), true ) );
+        ususModelWriteAccess.update( new ComputationRunModelUpdate( new ArrayList<CodeProportion>(), true ) );
         // no more calls
         assertEquals( 1, listener.getCallCount() );
-    }
-
-    private IUsusModelWriteAccess getUsusModelWriteAccess() {
-        return UsusCorePlugin.getDefault().getUsusModelWriteAccess();
     }
 
     private final class DummyCodeProportionsListener implements IUsusModelListener {

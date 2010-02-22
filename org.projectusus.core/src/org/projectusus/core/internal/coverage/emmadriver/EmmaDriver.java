@@ -16,6 +16,7 @@ import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.coverage.IEmmaDriver;
 import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.CodeProportionsRatio;
+import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.CodeStatistic;
 import org.projectusus.core.internal.proportions.model.IHotspot;
@@ -81,11 +82,8 @@ public class EmmaDriver implements IEmmaDriver {
     }
 
     private void updateModel( CodeProportion codeProportion ) {
-        UsusCorePlugin ususCorePlugin = UsusCorePlugin.getDefault();
-        if( ususCorePlugin != null ) {
-            IUsusModelUpdate updateCommand = new TestRunModelUpdate( codeProportion );
-            ususCorePlugin.getUsusModelWriteAccess().update( updateCommand );
-        }
+        IUsusModelUpdate updateCommand = new TestRunModelUpdate( codeProportion );
+        UsusCorePlugin.getUsusModelWriteAccess().update( updateCommand );
     }
 
     public void setActive( boolean active ) {

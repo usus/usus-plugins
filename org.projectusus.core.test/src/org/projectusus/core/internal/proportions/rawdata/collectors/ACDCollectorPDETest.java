@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.IUsusModel;
+import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.model.AcdSQIComputer;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
@@ -16,10 +17,12 @@ import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComput
 public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     private IUsusModel model;
+    private IUsusModelWriteAccess writeModel;
 
     @Before
     public void setup() throws CoreException{
-        UsusCorePlugin.getUsusModel().dropRawData( project );
+        writeModel = UsusCorePlugin.getUsusModelWriteAccess();
+        writeModel.dropRawData( project );
         makeUsusProject( false );
         addJavaNature();
         model = UsusCorePlugin.getUsusModel();
@@ -175,7 +178,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         computeFile( firstFile );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 0.75, getACD(), 0.0001 );
-        model.dropRawData( secondFile );
+        writeModel.dropRawData( secondFile );
         assertEquals( 1, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
@@ -215,7 +218,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         computeFile( firstFile );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 0.75, getACD(), 0.0001 );
-        model.dropRawData( firstFile );
+        writeModel.dropRawData( firstFile );
         assertEquals( 1, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
@@ -238,7 +241,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         computeFile( firstFile );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 1.0, getACD(), 0.0001 );
-        model.dropRawData( secondFile );
+        writeModel.dropRawData( secondFile );
         assertEquals( 1, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 1.0, getACD(), 0.0001 );
     }
