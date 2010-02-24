@@ -1,10 +1,13 @@
 package org.projectusus.core.internal.proportions;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+
+import com.mountainminds.eclemma.core.analysis.IJavaElementCoverage;
 
 public interface IUsusModelMetricsWriter {
 
@@ -19,5 +22,7 @@ public interface IUsusModelMetricsWriter {
     void setMLValue( IFile file, MethodDeclaration methodDecl, int value );
 
     void setMLValue( IFile file, Initializer initializer, int value );
+
+    void setInstructionCoverage( IProject project, IJavaElementCoverage coverage );
 
 }

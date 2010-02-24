@@ -16,7 +16,6 @@ import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.coverage.IEmmaDriver;
 import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.CodeProportionsRatio;
-import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.CodeStatistic;
 import org.projectusus.core.internal.proportions.model.IHotspot;
@@ -43,21 +42,18 @@ public class EmmaDriver implements IEmmaDriver {
 
     private void collectCoverageInfo( IJavaModelCoverage javaModelCoverage ) {
         IJavaProject[] instrumentedProjects = javaModelCoverage.getInstrumentedProjects();
-        Coverages coverages = new Coverages();
         for( IJavaProject javaProject : instrumentedProjects ) {
             IJavaElementCoverage coverage = javaModelCoverage.getCoverageFor( javaProject );
             if( coverage != null ) {
-                coverages.add( javaProject.getProject(), coverage );
+                UsusCorePlugin.getUsusModelMetricsWriter().setInstructionCoverage( javaProject.getProject(), coverage );
             }
         }
-        notifyListeners( coverages );
+        notifyListeners();
     }
 
-    private void notifyListeners( Coverages coverages ) {
-        if( !coverages.isEmpty() ) {
-            TestCoverage coverage = new AggregateTestCoverageOverWorkspace( coverages ).compute();
-            updateUsusModel( coverage );
-        }
+    private void notifyListeners() {
+        TestCoverage coverage = UsusCorePlugin.getUsusModel().getInstructionCoverage();
+        updateUsusModel( coverage );
     }
 
     private void updateUsusModel( TestCoverage coverage ) {
@@ -67,7 +63,8 @@ public class EmmaDriver implements IEmmaDriver {
         CodeStatistic statistic = new CodeStatistic( TA.getUnit(), total );
         CodeProportion codeProportion = new CodeProportion( TA, covered, statistic, sqi, new ArrayList<IHotspot>() );
         // TODO lf add hotspots
-        updateModel( codeProportion );
+        IUsusModelUpdate updateCommand = new TestRunModelUpdate( codeProportion );
+        UsusCorePlugin.getUsusModelWriteAccess().update( updateCommand );
     }
 
     private IJavaCoverageListener createEmmaListener() {
@@ -79,11 +76,6 @@ public class EmmaDriver implements IEmmaDriver {
                 }
             }
         };
-    }
-
-    private void updateModel( CodeProportion codeProportion ) {
-        IUsusModelUpdate updateCommand = new TestRunModelUpdate( codeProportion );
-        UsusCorePlugin.getUsusModelWriteAccess().update( updateCommand );
     }
 
     public void setActive( boolean active ) {

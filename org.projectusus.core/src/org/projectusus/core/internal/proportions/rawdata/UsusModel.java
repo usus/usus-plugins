@@ -20,6 +20,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
@@ -30,6 +31,8 @@ import org.projectusus.core.internal.proportions.model.UsusModelRootNode;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate;
 import org.projectusus.core.internal.proportions.modelupdate.UsusModelHistory;
+
+import com.mountainminds.eclemma.core.analysis.IJavaElementCoverage;
 
 public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelMetricsWriter {
 
@@ -67,6 +70,9 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         workspaceRawData.resetRawData( project );
     }
 
+    // interface of IUsusModelMetricsWriter
+    // /////////////////////////////////////
+
     public void addClassReference( IFile file, AbstractTypeDeclaration referencingType, IJavaElement referencedElement ) {
         getFileRawData( file ).addClassReference( referencingType, referencedElement );
     }
@@ -89,6 +95,10 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     public void setMLValue( IFile file, Initializer initializer, int value ) {
         getFileRawData( file ).setMLValue( initializer, value );
+    }
+
+    public void setInstructionCoverage( IProject project, IJavaElementCoverage coverage ) {
+        getProjectRawData( project ).setInstructionCoverage( coverage );
     }
 
     // interface of IUsusModel
@@ -183,6 +193,10 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     public int getViolationCount( IProject project, CodeProportionKind metric ) {
         ProjectRawData projectRawData = getProjectRawData( project );
         return projectRawData.getViolationCount( metric );
+    }
+
+    public TestCoverage getInstructionCoverage() {
+        return workspaceRawData.getAccumulatedInstructionCoverage();
     }
 
     // //////////////////////////////////

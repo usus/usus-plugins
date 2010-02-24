@@ -26,6 +26,11 @@ public class TestCoverage {
         this.totalCount = totalCount;
     }
 
+    public TestCoverage( ICounter counter ) {
+        this.coveredCount = (int)counter.getCoveredCount();
+        this.totalCount = (int)counter.getTotalCount();
+    }
+
     public int getTotalCount() {
         return totalCount;
     }
@@ -79,11 +84,4 @@ public class TestCoverage {
     public String toString() {
         return bind( testCoverage, new Integer( getCoveredCount() ), new Integer( getTotalCount() ) );
     }
-
-    public static TestCoverage from( ICounter counter ) {
-        int totalCount = (int)counter.getTotalCount();
-        int coveredCount = (int)counter.getCoveredCount();
-        return new TestCoverage( coveredCount, totalCount );
-    }
-
 }

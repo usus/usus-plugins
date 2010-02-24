@@ -12,6 +12,7 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.CodeStatistic;
 import org.projectusus.core.internal.proportions.model.IHotspot;
@@ -81,5 +82,13 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
             }
         }
         return allClassRawData;
+    }
+
+    TestCoverage getAccumulatedInstructionCoverage() {
+        TestCoverage result = new TestCoverage( 0, 0 );
+        for( ProjectRawData projectRD : getAllRawDataElements() ) {
+            result = result.add( projectRD.getInstructionCoverage() );
+        }
+        return result;
     }
 }

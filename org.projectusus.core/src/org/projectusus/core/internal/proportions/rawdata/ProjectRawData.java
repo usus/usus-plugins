@@ -6,11 +6,15 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.projectusus.core.internal.coverage.TestCoverage;
+
+import com.mountainminds.eclemma.core.analysis.IJavaElementCoverage;
 
 class ProjectRawData extends RawData<IFile, FileRawData> {
 
     // TODO wird nicht gebraucht:
     private final IProject projectOfRawData;
+    private IJavaElementCoverage coverage;
 
     public ProjectRawData( IProject project ) {
         this.projectOfRawData = project;
@@ -32,4 +36,16 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
     public void dropRawData( IFile file ) {
         remove( file );
     }
+
+    public void setInstructionCoverage( IJavaElementCoverage coverage ) {
+        this.coverage = coverage;
+    }
+
+    public TestCoverage getInstructionCoverage() {
+        if( coverage != null ) {
+            return new TestCoverage( coverage.getInstructionCounter() );
+        }
+        return new TestCoverage( 0, 0 );
+    }
+
 }

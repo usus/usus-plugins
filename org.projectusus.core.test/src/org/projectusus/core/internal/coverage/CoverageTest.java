@@ -49,7 +49,7 @@ public class CoverageTest {
 
     @Test
     public void from() throws Exception {
-        TestCoverage coverage = TestCoverage.from( createCounter( 1, 2 ) );
+        TestCoverage coverage = new TestCoverage( createCounter( 1, 2 ) );
         assertEquals( new TestCoverage( 1, 2 ), coverage );
     }
 

@@ -1,11 +1,14 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
+
+import com.mountainminds.eclemma.core.analysis.IJavaElementCoverage;
 
 @SuppressWarnings( "unused" )
 public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
@@ -31,6 +34,10 @@ public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
     }
 
     public void setMLValue( IFile file, Initializer initializer, int value ) {
+        // just do nothing harmful
+    }
+
+    public void setInstructionCoverage( IProject project, IJavaElementCoverage coverage ) {
         // just do nothing harmful
     }
 }
