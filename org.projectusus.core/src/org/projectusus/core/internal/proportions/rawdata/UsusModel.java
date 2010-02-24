@@ -22,6 +22,7 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
+import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
@@ -30,7 +31,7 @@ import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate;
 import org.projectusus.core.internal.proportions.modelupdate.UsusModelHistory;
 
-public class UsusModel implements IUsusModel, IUsusModelWriteAccess {
+public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelMetricsWriter {
 
     private final Set<IUsusModelListener> listeners;
     private final UsusModelHistory history;

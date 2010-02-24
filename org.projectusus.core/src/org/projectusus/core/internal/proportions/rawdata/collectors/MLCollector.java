@@ -15,25 +15,27 @@ public class MLCollector extends Collector {
     }
 
     @Override
-    public boolean visit( MethodDeclaration node ) {
-        statementCount.initCount();
+    public boolean visit( @SuppressWarnings( "unused" ) MethodDeclaration node ) {
+        statementCount.startNewCount();
         return true;
     }
 
     @Override
-    public boolean visit( Initializer node ) {
-        statementCount.initCount();
+    public boolean visit( @SuppressWarnings( "unused" ) Initializer node ) {
+        statementCount.startNewCount();
         return true;
     }
 
     @Override
     public void endVisit( MethodDeclaration node ) {
-        UsusCorePlugin.getUsusModelWriteAccess().setMLValue( file, node, statementCount.getAndClearCount() );
+        int count = statementCount.getAndClearCount();
+        UsusCorePlugin.getUsusModelMetricsWriter().setMLValue( file, node, count );
     }
 
     @Override
     public void endVisit( Initializer node ) {
-        UsusCorePlugin.getUsusModelWriteAccess().setMLValue( file, node, statementCount.getAndClearCount() );
+        int count = statementCount.getAndClearCount();
+        UsusCorePlugin.getUsusModelMetricsWriter().setMLValue( file, node, count );
     }
 
     @Override

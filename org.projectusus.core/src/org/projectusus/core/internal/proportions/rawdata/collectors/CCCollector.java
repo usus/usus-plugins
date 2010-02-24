@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.projectusus.core.internal.UsusCorePlugin;
 
+@SuppressWarnings( "unused" )
 public class CCCollector extends Collector {
 
     private int ccCount;
@@ -93,11 +94,11 @@ public class CCCollector extends Collector {
     }
 
     private void submit( MethodDeclaration node ) {
-        UsusCorePlugin.getUsusModelWriteAccess().setCCValue( file, node, ccCount );
+        UsusCorePlugin.getUsusModelMetricsWriter().setCCValue( file, node, ccCount );
     }
 
     private void submit( Initializer node ) {
-        UsusCorePlugin.getUsusModelWriteAccess().setCCValue( file, node, ccCount );
+        UsusCorePlugin.getUsusModelMetricsWriter().setCCValue( file, node, ccCount );
     }
 
     private boolean increase() {

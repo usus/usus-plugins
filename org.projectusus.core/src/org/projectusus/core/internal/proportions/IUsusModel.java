@@ -30,6 +30,8 @@ public interface IUsusModel {
 
     CodeProportion getCodeProportion( CodeProportionKind metric );
 
+    int getViolationCount( IProject project, CodeProportionKind metric );
+
     int getNumberOf( CodeProportionUnit unit );
 
     int getNumberOf( IProject project, CodeProportionUnit unit );
@@ -40,17 +42,15 @@ public interface IUsusModel {
 
     int getOverallMetric( CodeProportionKind metric );
 
+    int getOverallMetric( IProject project, CodeProportionKind metric );
+
     int getSumOfAllDirectChildrenOfAllClasses();
 
     int getSumOfAllKnownChildrenOfAllClasses();
-
-    int getOverallMetric( IProject project, CodeProportionKind metric );
 
     Set<ClassRepresenter> getAllClassRepresenters();
 
     int getCCValue( IMethod method ) throws JavaModelException;
 
     int getMLValue( IMethod method ) throws JavaModelException;
-
-    int getViolationCount( IProject project, CodeProportionKind metric );
 }

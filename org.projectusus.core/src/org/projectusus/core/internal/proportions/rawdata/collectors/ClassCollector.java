@@ -32,7 +32,7 @@ public class ClassCollector extends Collector {
     }
 
     private boolean addAbstractTypeDeclaration( AbstractTypeDeclaration node ) {
-        UsusCorePlugin.getUsusModelWriteAccess().addClass( file, node );
+        UsusCorePlugin.getUsusModelMetricsWriter().addClass( file, node );
         return true;
     }
 }

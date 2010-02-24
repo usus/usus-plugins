@@ -5,7 +5,7 @@ import java.util.Stack;
 public class Counter {
     private Stack<Integer> counts = new Stack<Integer>();
 
-    public void initCount() {
+    public void startNewCount() {
         counts.push( new Integer( 0 ) );
     }
 

@@ -16,8 +16,10 @@ import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 import org.projectusus.core.internal.coverage.LaunchObserver;
 import org.projectusus.core.internal.proportions.IUsusModel;
+import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.modelcomputation.AutoComputeSetting;
+import org.projectusus.core.internal.proportions.rawdata.NullUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.rawdata.NullUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
@@ -48,6 +50,16 @@ public class UsusCorePlugin extends Plugin {
             return ususCorePlugin.ususModel;
         }
         return new NullUsusModelWriteAccess();
+    }
+
+    public static synchronized IUsusModelMetricsWriter getUsusModelMetricsWriter() {
+        UsusCorePlugin ususCorePlugin = UsusCorePlugin.getDefault();
+        // inside a background job, the plugin might have been
+        // shut down meanwhile
+        if( ususCorePlugin != null ) {
+            return ususCorePlugin.ususModel;
+        }
+        return new NullUsusModelMetricsWriter();
     }
 
     public void setAutoCompute( boolean autoCompute ) {
