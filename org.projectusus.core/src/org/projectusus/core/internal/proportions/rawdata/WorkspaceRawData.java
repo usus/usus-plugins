@@ -4,6 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -57,9 +59,20 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
     }
 
     public CodeProportion getCodeProportion( CodeProportionKind metric ) {
-        int violations = getViolationCount( metric );
-        CodeStatistic basis = getCodeStatistic( metric.getUnit() );
-        List<IHotspot> hotspots = computeHotspots( metric );
+        int violations;
+        CodeStatistic basis;
+        List<IHotspot> hotspots;
+        if( metric == TA ) { // for the time being
+            violations = getInstructionCoverage().getCoveredCount();
+            int total = getInstructionCoverage().getTotalCount();
+            basis = new CodeStatistic( TA.getUnit(), total );
+            hotspots = new ArrayList<IHotspot>();
+            // TODO lf add hotspots
+        } else {
+            violations = getViolationCount( metric );
+            basis = getCodeStatistic( metric.getUnit() );
+            hotspots = computeHotspots( metric );
+        }
         return new CodeProportion( metric, violations, basis, hotspots );
     }
 
@@ -84,11 +97,17 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         return allClassRawData;
     }
 
-    TestCoverage getAccumulatedInstructionCoverage() {
+    TestCoverage getInstructionCoverage() {
         TestCoverage result = new TestCoverage( 0, 0 );
         for( ProjectRawData projectRD : getAllRawDataElements() ) {
             result = result.add( projectRD.getInstructionCoverage() );
         }
         return result;
+    }
+
+    public void resetInstructionCoverage() {
+        for( ProjectRawData projectRD : getAllRawDataElements() ) {
+            projectRD.setInstructionCoverage( null );
+        }
     }
 }

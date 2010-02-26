@@ -25,4 +25,6 @@ public interface IUsusModelMetricsWriter {
 
     void setInstructionCoverage( IProject project, IJavaElementCoverage coverage );
 
+    void resetInstructionCoverage();
+
 }

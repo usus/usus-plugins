@@ -40,4 +40,9 @@ public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
     public void setInstructionCoverage( IProject project, IJavaElementCoverage coverage ) {
         // just do nothing harmful
     }
+
+    public void resetInstructionCoverage() {
+        // TODO Auto-generated method stub
+
+    }
 }

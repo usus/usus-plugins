@@ -10,8 +10,6 @@ import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKi
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
-import java.util.List;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -31,7 +29,6 @@ import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.project.FindUsusProjects;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelStatus;
 import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
@@ -79,7 +76,7 @@ public class CockpitView extends ViewPart {
     }
 
     private void initContextMenuBehavior() {
-        MenuManager menuManager = new MenuManager( "#PopupMenu" ); 
+        MenuManager menuManager = new MenuManager( "#PopupMenu" );
         menuManager.addMenuListener( new IMenuListener() {
             public void menuAboutToShow( IMenuManager manager ) {
                 manager.add( new OpenHotspots( treeViewer.getSelection() ) );
@@ -112,7 +109,7 @@ public class CockpitView extends ViewPart {
 
     private void initModelListener() {
         listener = new IUsusModelListener() {
-            public void ususModelChanged( final IUsusModelHistory history, List<IUsusElement> elements ) {
+            public void ususModelChanged( final IUsusModelHistory history ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         handleUsusModelChanged( history );

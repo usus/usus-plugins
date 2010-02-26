@@ -29,7 +29,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
-import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
@@ -50,7 +49,7 @@ public class HistoryView extends ViewPart {
         chart = new CheckpointsHistoryChart( parent );
         refresh();
         getUsusModel().addUsusModelListener( new IUsusModelListener() {
-            public void ususModelChanged( IUsusModelHistory history, List<IUsusElement> entries ) {
+            public void ususModelChanged( IUsusModelHistory history ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         if( chart != null && !chart.isDisposed() ) {

@@ -4,8 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
-import static java.util.Arrays.asList;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -196,7 +194,11 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     }
 
     public TestCoverage getInstructionCoverage() {
-        return workspaceRawData.getAccumulatedInstructionCoverage();
+        return workspaceRawData.getInstructionCoverage();
+    }
+
+    public void resetInstructionCoverage() {
+        workspaceRawData.resetInstructionCoverage();
     }
 
     // //////////////////////////////////
@@ -230,9 +232,8 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     // ////////
 
     private void notifyListeners() {
-        IUsusElement[] elements = getElements();
         for( IUsusModelListener listener : listeners ) {
-            listener.ususModelChanged( history, asList( elements ) );
+            listener.ususModelChanged( history );
         }
     }
 
@@ -243,4 +244,5 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         history.add( updateCommand );
         notifyListeners();
     }
+
 }

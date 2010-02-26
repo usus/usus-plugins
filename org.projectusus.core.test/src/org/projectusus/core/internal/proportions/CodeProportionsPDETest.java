@@ -46,7 +46,7 @@ public class CodeProportionsPDETest {
     private final class DummyCodeProportionsListener implements IUsusModelListener {
         private int callCount;
 
-        public void ususModelChanged( IUsusModelHistory history, List<IUsusElement> elements ) {
+        public void ususModelChanged( IUsusModelHistory history ) {
           callCount++;
         }
 

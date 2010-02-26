@@ -4,9 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.cockpit;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.projectusus.core.internal.proportions.IUsusModel;
@@ -15,14 +12,15 @@ import org.projectusus.core.internal.proportions.model.IUsusElement;
 public class CockpitCP implements ITreeContentProvider {
 
     public Object[] getElements( Object inputElement ) {
-        List<Object> result = new ArrayList<Object>();
+        // List<Object> result = new ArrayList<Object>();
         if( inputElement instanceof IUsusModel ) {
             IUsusModel model = (IUsusModel)inputElement;
-            for( IUsusElement element : model.getElements() ) {
-                result.add( element );
-            }
+            return model.getElements().clone();
+            // for( IUsusElement element : model.getElements() ) {
+            // result.add( element );
+            // }
         }
-        return result.toArray();
+        return new Object[] {};
     }
 
     public Object[] getChildren( Object parentElement ) {

@@ -7,20 +7,14 @@ package org.projectusus.core.internal.coverage.emmadriver;
 import static com.mountainminds.eclemma.core.CoverageTools.addJavaCoverageListener;
 import static com.mountainminds.eclemma.core.CoverageTools.getJavaModelCoverage;
 import static com.mountainminds.eclemma.core.CoverageTools.removeJavaCoverageListener;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
-
-import java.util.ArrayList;
 
 import org.eclipse.jdt.core.IJavaProject;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.coverage.IEmmaDriver;
-import org.projectusus.core.internal.coverage.TestCoverage;
-import org.projectusus.core.internal.proportions.CodeProportionsRatio;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.model.CodeStatistic;
-import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate;
 import org.projectusus.core.internal.proportions.modelupdate.TestRunModelUpdate;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 import com.mountainminds.eclemma.core.analysis.IJavaCoverageListener;
 import com.mountainminds.eclemma.core.analysis.IJavaElementCoverage;
@@ -41,28 +35,17 @@ public class EmmaDriver implements IEmmaDriver {
     }
 
     private void collectCoverageInfo( IJavaModelCoverage javaModelCoverage ) {
+        // UsusCorePlugin.getUsusModelMetricsWriter().resetInstructionCoverage(); ??
         IJavaProject[] instrumentedProjects = javaModelCoverage.getInstrumentedProjects();
         for( IJavaProject javaProject : instrumentedProjects ) {
             IJavaElementCoverage coverage = javaModelCoverage.getCoverageFor( javaProject );
-            if( coverage != null ) {
-                UsusCorePlugin.getUsusModelMetricsWriter().setInstructionCoverage( javaProject.getProject(), coverage );
-            }
+            UsusCorePlugin.getUsusModelMetricsWriter().setInstructionCoverage( javaProject.getProject(), coverage );
         }
         notifyListeners();
     }
 
     private void notifyListeners() {
-        TestCoverage coverage = UsusCorePlugin.getUsusModel().getInstructionCoverage();
-        updateUsusModel( coverage );
-    }
-
-    private void updateUsusModel( TestCoverage coverage ) {
-        int covered = coverage.getCoveredCount();
-        int total = coverage.getTotalCount();
-        double sqi = new CodeProportionsRatio( covered, total ).compute();
-        CodeStatistic statistic = new CodeStatistic( TA.getUnit(), total );
-        CodeProportion codeProportion = new CodeProportion( TA, covered, statistic, sqi, new ArrayList<IHotspot>() );
-        // TODO lf add hotspots
+        CodeProportion codeProportion = UsusCorePlugin.getUsusModel().getCodeProportion( CodeProportionKind.TA );
         IUsusModelUpdate updateCommand = new TestRunModelUpdate( codeProportion );
         UsusCorePlugin.getUsusModelWriteAccess().update( updateCommand );
     }
