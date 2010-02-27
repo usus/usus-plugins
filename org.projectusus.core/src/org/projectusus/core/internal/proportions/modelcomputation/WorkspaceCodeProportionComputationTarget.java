@@ -42,6 +42,10 @@ class WorkspaceCodeProportionComputationTarget implements ICodeProportionComputa
         return emptyList();
     }
 
+    public boolean isCleanRequested() {
+        return true;
+    }
+
     // internal
     // /////////
 

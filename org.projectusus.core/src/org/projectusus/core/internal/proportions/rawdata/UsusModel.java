@@ -56,6 +56,10 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         doUpdate( updateCommand );
     }
 
+    public void dropAllRawData() {
+        workspaceRawData.dropAllRawData();
+    }
+
     public void dropRawData( IProject project ) {
         workspaceRawData.dropRawData( project );
     }

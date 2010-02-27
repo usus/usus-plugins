@@ -51,6 +51,10 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
         return unmodifiableList( removedProjects );
     }
 
+    public boolean isCleanRequested() {
+        return false;
+    }
+
     // internal
     // /////////
 

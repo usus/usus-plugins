@@ -12,6 +12,10 @@ public class NullUsusModelWriteAccess implements IUsusModelWriteAccess {
         // just do nothing harmful
     }
 
+    public void dropAllRawData() {
+        // just do nothing harmful
+    }
+
     public void dropRawData( IProject project ) {
         // just do nothing harmful
     }
@@ -23,5 +27,4 @@ public class NullUsusModelWriteAccess implements IUsusModelWriteAccess {
     public void update( IUsusModelUpdate updateCommand ) {
         // just do nothing harmful
     }
-
 }

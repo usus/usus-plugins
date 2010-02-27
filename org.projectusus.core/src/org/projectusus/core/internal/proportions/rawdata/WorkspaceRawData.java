@@ -48,6 +48,12 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         }
     }
 
+    public void dropAllRawData() {
+        for( IProject project : getAllKeys() ) {
+            dropRawData( project );
+        }
+    }
+
     public void dropRawData( IProject project ) {
         resetRawData( project );
         remove( project );

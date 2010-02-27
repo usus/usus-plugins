@@ -17,6 +17,8 @@ public interface IUsusModelWriteAccess {
 
     void update( IUsusModelUpdate updateCommand );
 
+    void dropAllRawData();
+
     void dropRawData( IFile file );
 
     void dropRawData( IProject project );

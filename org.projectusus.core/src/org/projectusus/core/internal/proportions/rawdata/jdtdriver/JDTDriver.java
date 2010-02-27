@@ -25,6 +25,9 @@ public class JDTDriver {
     }
 
     public void run( IProgressMonitor monitor ) throws CoreException {
+        if( target.isCleanRequested() ) {
+            UsusCorePlugin.getUsusModelWriteAccess().dropAllRawData();
+        }
         for( IProject removedProject : target.getRemovedProjects() ) {
             UsusCorePlugin.getUsusModelWriteAccess().dropRawData( removedProject );
         }
