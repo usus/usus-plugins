@@ -25,7 +25,7 @@ public class UsusModelHistory implements IUsusModelHistory {
 
     public void add( IUsusModelUpdate modelUpdate ) {
         history.add( modelUpdate );
-        updateStatus( modelUpdate );
+        updateStatus( );
         createCheckpoint();
     }
 
@@ -43,7 +43,7 @@ public class UsusModelHistory implements IUsusModelHistory {
     // internal
     // /////////
 
-    private void updateStatus( IUsusModelUpdate modelUpdate ) {
+    private void updateStatus( ) {
         status = new UsusModelStatus( last( COMPUTATION_RUN ), last( TEST_RUN ) );
     }
 

@@ -47,13 +47,13 @@ public class HistoryView extends ViewPart {
     @Override
     public void createPartControl( Composite parent ) {
         chart = new CheckpointsHistoryChart( parent );
-        refresh();
+        refresh( getUsusModel().getHistory() ); // ??
         getUsusModel().addUsusModelListener( new IUsusModelListener() {
-            public void ususModelChanged( IUsusModelHistory history ) {
+            public void ususModelChanged( final IUsusModelHistory history ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         if( chart != null && !chart.isDisposed() ) {
-                            refresh();
+                            refresh( history );
                         }
                     }
                 } );
@@ -68,22 +68,23 @@ public class HistoryView extends ViewPart {
         }
     }
 
-    private void refresh() {
+    private void refresh( IUsusModelHistory history ) {
+        Checkpoints2GraphicsConverter converter = getConverter( history );
         for( CodeProportionKind metric : CodeProportionKind.values() ) {
-            updateSeries( metric );
+            updateSeries( metric, converter.get( metric ) );
         }
         chart.redraw();
     }
 
-    private void updateSeries( CodeProportionKind metric ) {
-        ISeriesSet seriesSet = chart.getSeriesSet();
-        cleanOldValues( seriesSet, metric );
-        createSeries( seriesSet, metric, getValues( metric ) );
+    private Checkpoints2GraphicsConverter getConverter( IUsusModelHistory history ) {
+        List<ICheckpoint> checkpoints = history.getCheckpoints();
+        return new Checkpoints2GraphicsConverter( checkpoints );
     }
 
-    private double[] getValues( CodeProportionKind metric ) {
-        List<ICheckpoint> checkpoints = getUsusModel().getHistory().getCheckpoints();
-        return new Checkpoints2GraphicsConverter( checkpoints ).get( metric );
+    private void updateSeries( CodeProportionKind metric, double[] newValue ) {
+        ISeriesSet seriesSet = chart.getSeriesSet();
+        cleanOldValues( seriesSet, metric );
+        createSeries( seriesSet, metric, newValue );
     }
 
     private void createSeries( ISeriesSet seriesSet, CodeProportionKind metric, double[] values ) {
