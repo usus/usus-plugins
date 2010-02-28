@@ -27,4 +27,5 @@ public interface IUsusModelMetricsWriter {
 
     void resetInstructionCoverage();
 
+    void setYellowCount( IFile file, int markerCount );
 }

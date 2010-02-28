@@ -103,6 +103,10 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         getProjectRawData( project ).setInstructionCoverage( coverage );
     }
 
+    public void setYellowCount( IFile file, int markerCount ) {
+        getProjectRawData( file.getProject() ).setYellowCount( file, markerCount );
+    }
+
     // interface of IUsusModel
     // ////////////////////////
 
@@ -141,7 +145,10 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     public int getOverallMetric( IProject project, CodeProportionKind metric ) {
         ProjectRawData projectRD = workspaceRawData.getRawData( project );
-        return projectRD.getOverallMetric( metric );
+        if( projectRD != null ) {
+            return projectRD.getOverallMetric( metric );
+        }
+        return 0;
     }
 
     public List<Integer> getAllClassesCCDResults() {
@@ -248,5 +255,4 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         history.add( updateCommand );
         notifyListeners();
     }
-
 }

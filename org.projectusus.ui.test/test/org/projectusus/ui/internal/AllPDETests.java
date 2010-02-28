@@ -15,8 +15,8 @@ import org.projectusus.core.internal.proportions.ProjectChangeNotificationsPDETe
 import org.projectusus.core.internal.proportions.UsusProjectNotificationsPDETest;
 import org.projectusus.core.internal.proportions.rawdata.ResetRawDataPDETest;
 import org.projectusus.core.internal.proportions.rawdata.collectors.ACDCollectorPDETest;
+import org.projectusus.core.internal.proportions.rawdata.collectors.ProjectYellowCountPDETest;
 import org.projectusus.core.internal.proportions.sqi.jdtdriver.StatusCollectorPDETest;
-import org.projectusus.core.internal.proportions.yellowcount.ProjectYellowCountPDETest;
 
 @RunWith(Suite.class)
 @SuiteClasses( {  

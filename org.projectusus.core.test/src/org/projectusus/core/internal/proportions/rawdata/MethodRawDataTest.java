@@ -33,7 +33,7 @@ public class MethodRawDataTest {
     public void basisIs1(){
         assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.FILE ) );
+        assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.ANYFILE ) );
         assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.PACKAGE ) );
         assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.LINE ) );
     }

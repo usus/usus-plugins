@@ -44,6 +44,8 @@ public class CodeProportion extends PlatformObject {
             sqi = new AcdSQIComputer().compute( UsusCorePlugin.getUsusModel().getAllClassesCCDResults() );
         } else if( metric == CodeProportionKind.TA ) {
             sqi = new CodeProportionsRatio( violations, basis.getValue() ).compute();
+        } else if( metric == CodeProportionKind.CW ) {
+            sqi = new CodeProportionsRatio( violations, basis.getValue() ).computeReverseIndicator();
         } else {
             sqi = new SQIComputer( basis, violations, metric ).compute();
         }

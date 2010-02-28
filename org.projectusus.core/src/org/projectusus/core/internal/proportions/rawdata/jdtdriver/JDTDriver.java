@@ -14,28 +14,32 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.proportions.FileSupport;
+import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.modelcomputation.ICodeProportionComputationTarget;
 
 public class JDTDriver {
 
+    private final IUsusModelWriteAccess model;
     private final ICodeProportionComputationTarget target;
 
     public JDTDriver( ICodeProportionComputationTarget target ) {
+        model = UsusCorePlugin.getUsusModelWriteAccess();
         this.target = target;
     }
 
     public void run( IProgressMonitor monitor ) throws CoreException {
         if( target.isCleanRequested() ) {
-            UsusCorePlugin.getUsusModelWriteAccess().dropAllRawData();
+            model.dropAllRawData();
         }
         for( IProject removedProject : target.getRemovedProjects() ) {
-            UsusCorePlugin.getUsusModelWriteAccess().dropRawData( removedProject );
+            model.dropRawData( removedProject );
         }
         monitor.beginTask( jdtDriver_computing, countTicks( target.getProjects() ) );
         for( IProject project : target.getProjects() ) {
             monitor.subTask( project.getName() );
             for( IFile removedFile : target.getRemovedFiles( project ) ) {
-                UsusCorePlugin.getUsusModelWriteAccess().dropRawData( removedFile );
+                model.dropRawData( removedFile );
             }
             runInternal( project, monitor );
         }
@@ -69,12 +73,16 @@ public class JDTDriver {
 
     private void runDriverOnFile( IFile file, StatusCollector statusCollector, IProgressMonitor monitor ) {
         try {
-            new FileDriver( file ).compute();
+            driverForFile( file ).compute();
         } catch( Exception ex ) {
             statusCollector.add( ex );
         } finally {
             monitor.worked( 1 );
         }
+    }
+
+    private FileDriver driverForFile( IFile file ) {
+        return FileSupport.isJavaFile( file ) ? new JavaFileDriver( file ) : new FileDriver( file );
     }
 
     private void computationStarted( IProject project ) {
@@ -83,6 +91,6 @@ public class JDTDriver {
 
     private void fileStarted( IFile file ) {
         SQI.trace( "File started: " + file.getFullPath() ); //$NON-NLS-1$
-        UsusCorePlugin.getUsusModelWriteAccess().dropRawData( file );
+        model.dropRawData( file );
     }
 }

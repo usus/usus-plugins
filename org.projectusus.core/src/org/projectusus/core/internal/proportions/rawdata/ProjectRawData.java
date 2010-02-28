@@ -4,24 +4,24 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
+import java.util.List;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.internal.coverage.TestCoverage;
+import org.projectusus.core.internal.proportions.FileSupport;
+import org.projectusus.core.internal.proportions.model.IHotspot;
 
 import com.mountainminds.eclemma.core.analysis.IJavaElementCoverage;
 
 class ProjectRawData extends RawData<IFile, FileRawData> {
 
-    // TODO wird nicht gebraucht:
-    private final IProject projectOfRawData;
+    // private final IProject projectOfRawData;
     private IJavaElementCoverage coverage;
+    private RawDataMapWrapper<IFile, MiscFileRawData> miscRawData = new RawDataMapWrapper<IFile, MiscFileRawData>();
 
     public ProjectRawData( IProject project ) {
-        this.projectOfRawData = project;
-    }
-
-    public IProject getProjectOfRawData() {
-        return projectOfRawData;
+        // this.projectOfRawData = project;
     }
 
     public FileRawData getFileRawData( IFile file ) {
@@ -48,4 +48,71 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
         return new TestCoverage( 0, 0 );
     }
 
+    public void setYellowCount( IFile file, int markerCount ) {
+        if( FileSupport.isJavaFile( file ) ) {
+            getFileRawData( file ).setYellowCount( markerCount );
+        } else {
+            getMiscFileRawData( file ).setYellowCount( markerCount );
+        }
+    }
+
+    private MiscFileRawData getMiscFileRawData( IFile file ) {
+        MiscFileRawData rawData = miscRawData.getRawData( file );
+        if( rawData == null ) {
+            rawData = new MiscFileRawData( file );
+            miscRawData.addRawData( file, rawData );
+        }
+        return rawData;
+    }
+
+    @Override
+    public synchronized int getViolationCount( CodeProportionKind metric ) {
+        int violationCount = super.getViolationCount( metric );
+        violationCount += getViolationCountForMiscFiles( metric );
+        return violationCount;
+    }
+
+    private int getViolationCountForMiscFiles( CodeProportionKind metric ) {
+        if( metric == CodeProportionKind.CW ) {
+            int result = 0;
+            for( MiscFileRawData rawData : miscRawData.getAllRawDataElements() ) {
+                result += rawData.getViolationCount( metric );
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public int getNumberOf( CodeProportionUnit unit ) {
+        if( unit == CodeProportionUnit.ANYFILE ) {
+            return getRawDataElementCount() + miscRawData.getRawDataElementCount();
+        }
+        return super.getNumberOf( unit );
+    }
+
+    @Override
+    public synchronized void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots ) {
+        super.addToHotspots( metric, hotspots );
+
+        if( metric == CodeProportionKind.CW ) {
+            for( MiscFileRawData rawData : miscRawData.getAllRawDataElements() ) {
+                rawData.addToHotspots( metric, hotspots );
+            }
+        }
+    }
+
+    @Override
+    public synchronized int getOverallMetric( CodeProportionKind metric ) {
+        if( metric == CodeProportionKind.CW ) {
+            int sum = 0;
+            for( FileRawData rawData : getAllRawDataElements() ) {
+                sum += rawData.getOverallMetric( metric );
+            }
+            for( MiscFileRawData rawData : miscRawData.getAllRawDataElements() ) {
+                sum += rawData.getOverallMetric( metric );
+            }
+            return sum;
+        }
+        return super.getOverallMetric( metric );
+    }
 }

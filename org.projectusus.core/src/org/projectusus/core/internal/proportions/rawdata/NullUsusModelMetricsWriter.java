@@ -45,4 +45,9 @@ public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
         // TODO Auto-generated method stub
 
     }
+
+    public void setYellowCount( IFile file, int markerCount ) {
+        // TODO Auto-generated method stub
+
+    }
 }

@@ -25,6 +25,8 @@ class FileRawData extends RawData<Integer, ClassRawData> {
 
     private final IFile fileOfRawData;
 
+    private YellowCount yellowCount = new YellowCount();
+
     public FileRawData( IFile file ) {
         super(); // sagt AL ;)
         this.fileOfRawData = file;
@@ -55,6 +57,10 @@ class FileRawData extends RawData<Integer, ClassRawData> {
         getRawData( initializer ).setMLValue( initializer, value );
     }
 
+    public void setYellowCount( int count ) {
+        yellowCount.setYellowCount( count );
+    }
+
     public void addClass( AbstractTypeDeclaration node ) {
         getClassRawData( node );
     }
@@ -72,12 +78,25 @@ class FileRawData extends RawData<Integer, ClassRawData> {
 
     @Override
     public void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots ) {
-        List<IHotspot> localHotspots = new ArrayList<IHotspot>();
-        super.addToHotspots( metric, localHotspots );
+        List<IHotspot> localHotspots = getHotspotsForThisFile( metric );
+        addFileInfoToHotspots( localHotspots );
+        hotspots.addAll( localHotspots );
+    }
+
+    private void addFileInfoToHotspots( List<IHotspot> localHotspots ) {
         for( IHotspot hotspot : localHotspots ) {
             ((Hotspot)hotspot).setFile( fileOfRawData );
         }
-        hotspots.addAll( localHotspots );
+    }
+
+    private List<IHotspot> getHotspotsForThisFile( CodeProportionKind metric ) {
+        List<IHotspot> localHotspots = new ArrayList<IHotspot>();
+        if( metric == CodeProportionKind.CW ) {
+            localHotspots.add( yellowCount.createHotspot() );
+        } else {
+            super.addToHotspots( metric, localHotspots );
+        }
+        return localHotspots;
     }
 
     private ClassRawData getRawData( int start, int lineNumber, String name ) {
@@ -146,5 +165,21 @@ class FileRawData extends RawData<Integer, ClassRawData> {
         FileRawData fileRawData = ((UsusModel)UsusCorePlugin.getUsusModel()).getFileRawData( (IFile)resource );
         ClassRawData referencedRawData = fileRawData.getOrCreateRawData( referencedElement );
         referencingRawData.addChild( referencedRawData );
+    }
+
+    @Override
+    public int getViolationCount( CodeProportionKind metric ) {
+        if( metric == CodeProportionKind.CW ) {
+            return yellowCount.getViolationCount( metric );
+        }
+        return super.getViolationCount( metric );
+    }
+
+    @Override
+    public synchronized int getOverallMetric( CodeProportionKind metric ) {
+        if( metric == CodeProportionKind.CW ) {
+            return yellowCount.getOverallMetric( metric );
+        }
+        return super.getOverallMetric( metric );
     }
 }

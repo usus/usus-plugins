@@ -9,13 +9,11 @@ import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.projectusus.core.internal.project.FindUsusProjects;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.yellowcount.WorkspaceYellowCount;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 /**
  * <p>
@@ -55,17 +53,7 @@ public class YellowCount {
     }
 
     public IYellowCountResult count() {
-        List<IProject> projects = getUsusProjects();
-        return convert( new WorkspaceYellowCount( getUsusProjects() ), projects );
-    }
-
-    private IYellowCountResult convert( WorkspaceYellowCount count, List<IProject> projects ) {
-        return createResult( count.getCodeProportion(), projects.size(), count.countProjectsWithViolations() );
-    }
-
-    private List<IProject> getUsusProjects() {
-        IWorkspaceRoot wsRoot = getWorkspace().getRoot();
-        return new FindUsusProjects( wsRoot.getProjects() ).compute();
+        return createResult( UsusCorePlugin.getUsusModel().getCodeProportion( CodeProportionKind.CW ), 0, 0 ); // TODO
     }
 
     private void notifyListeners() {

@@ -9,15 +9,15 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 
-class RawDataMapWrapper<S, T extends IRawData> {
+class RawDataMapWrapper<Resource, RawDataContainer> {
 
-    private final Map<S, T> rawDataMap = new Hashtable<S, T>();
+    private final Map<Resource, RawDataContainer> rawDataMap = new Hashtable<Resource, RawDataContainer>();
 
-    T getRawData( S name ) {
+    RawDataContainer getRawData( Resource name ) {
         return rawDataMap.get( name );
     }
 
-    void addRawData( S key, T newObject ) {
+    void addRawData( Resource key, RawDataContainer newObject ) {
         rawDataMap.put( key, newObject );
     }
 
@@ -25,15 +25,15 @@ class RawDataMapWrapper<S, T extends IRawData> {
         return rawDataMap.size();
     }
 
-    Collection<T> getAllRawDataElements() {
+    Collection<RawDataContainer> getAllRawDataElements() {
         return rawDataMap.values();
     }
 
-    void remove( S key ) {
+    void remove( Resource key ) {
         rawDataMap.remove( key );
     }
 
-    Set<S> getAllKeys() {
+    Set<Resource> getAllKeys() {
         return rawDataMap.keySet();
     }
 }

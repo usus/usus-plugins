@@ -61,7 +61,7 @@ public class CodeProportionsKindTest {
     public void testGetUnit() {
         assertEquals( CodeProportionUnit.CLASS, ACD.getUnit() );
         assertEquals( CodeProportionUnit.METHOD, CC.getUnit() );
-        assertEquals( CodeProportionUnit.FILE, CW.getUnit() );
+        assertEquals( CodeProportionUnit.ANYFILE, CW.getUnit() );
         assertEquals( CodeProportionUnit.CLASS, KG.getUnit() );
         assertEquals( CodeProportionUnit.METHOD, ML.getUnit() );
         assertEquals( CodeProportionUnit.PACKAGE, PC.getUnit() );

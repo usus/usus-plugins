@@ -247,7 +247,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     }
     
     private double getACD() {
-        return new AcdSQIComputer().getRelativeACD();
+        return new AcdSQIComputer().getRelativeACD(); // TODO!! aus model lesen
     }
 
     private IFile createAndCompute( String filenumber ) throws CoreException, Exception {

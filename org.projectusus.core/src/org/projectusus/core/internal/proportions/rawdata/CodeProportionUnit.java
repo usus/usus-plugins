@@ -21,7 +21,8 @@ public enum CodeProportionUnit {
     CLASS( codeProportionUnit_CLASS_label ), //
     PACKAGE( codeProportionUnit_PACKAGE_label ), //
     LINE( codeProportionUnit_LINE_label ), //
-    FILE( codeProportionUnit_FILE_label );
+    JAVAFILE( codeProportionUnit_FILE_label ), //
+    ANYFILE( codeProportionUnit_FILE_label );
 
     private final String label;
 

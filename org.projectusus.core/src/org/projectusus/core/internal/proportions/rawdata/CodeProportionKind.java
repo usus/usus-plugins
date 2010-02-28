@@ -56,7 +56,12 @@ public enum CodeProportionKind {
             return rawData.getMLValue();
         }
     }, //
-    CW( isisMetrics_cw, CodeProportionUnit.FILE, 1.0 );
+    CW( isisMetrics_cw, CodeProportionUnit.ANYFILE, 1.0 ) {
+        @Override
+        public boolean operatesOnNonJavaFiles() {
+            return true;
+        }
+    };
 
     private final String label;
     private final double calibration;
@@ -94,5 +99,9 @@ public enum CodeProportionKind {
 
     public int getValueFor( MethodRawData rawData ) {
         return 0;
+    }
+
+    public boolean operatesOnNonJavaFiles() {
+        return false;
     }
 }

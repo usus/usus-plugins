@@ -5,7 +5,6 @@
 package org.projectusus.core.internal.proportions.modelcomputation;
 
 import static java.util.Collections.unmodifiableList;
-import static org.projectusus.core.internal.proportions.FileSupport.isJavaFile;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -81,9 +80,9 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
     private List<IFile> filter( List<IFile> files ) {
         List<IFile> result = new ArrayList<IFile>();
         for( IFile file : files ) {
-            if( isJavaFile( file ) ) {
-                result.add( file );
-            }
+            // if( isJavaFile( file ) ) {
+            result.add( file );
+            // }
         }
         return result;
     }
