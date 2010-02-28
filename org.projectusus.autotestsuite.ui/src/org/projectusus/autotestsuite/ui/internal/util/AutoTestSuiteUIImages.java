@@ -12,6 +12,7 @@ import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.osgi.framework.Bundle;
+import org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin;
 import org.projectusus.ui.internal.UsusUIPlugin;
 
 public class AutoTestSuiteUIImages implements ISharedAutoTestSuiteImages {
@@ -23,7 +24,7 @@ public class AutoTestSuiteUIImages implements ISharedAutoTestSuiteImages {
     static {
         String pathPrefix = "icons/";
         try {
-            Bundle bundle = UsusUIPlugin.getDefault().getBundle();
+            Bundle bundle = AutoTestSuitePlugin.getDefault().getBundle();
             baseUrl = new URL( bundle.getEntry( "/" ), pathPrefix );
         } catch( MalformedURLException malfux ) {
             // do nothing
