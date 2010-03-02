@@ -57,7 +57,6 @@ Export-Package: org.apache.commons.lang,
  org.projectusus.core.internal.proportions.rawdata,
  org.projectusus.core.internal.proportions.rawdata.collectors,
  org.projectusus.core.internal.proportions.rawdata.jdtdriver,
- org.projectusus.core.internal.proportions.yellowcount,
  org.projectusus.core.internal.util;x-friends:="org.projectusus.ui",
  org.projectusus.core.internal.yellowcount,
  org.projectusus.core.projectsettings
