@@ -1,9 +1,11 @@
-package org.projectusus.core.filerelations;
+package org.projectusus.core.filerelations.internal.model;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.projectusus.core.filerelations.model.Classname;
+import org.projectusus.core.filerelations.model.FileRelation;
 
 public class FileRelations extends Relations<IFile, FileRelation> {
 

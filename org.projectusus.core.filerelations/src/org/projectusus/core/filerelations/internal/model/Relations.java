@@ -1,10 +1,12 @@
-package org.projectusus.core.filerelations;
+package org.projectusus.core.filerelations.internal.model;
 
 import static com.google.common.collect.Sets.union;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
+
+import org.projectusus.core.filerelations.model.Relation;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;

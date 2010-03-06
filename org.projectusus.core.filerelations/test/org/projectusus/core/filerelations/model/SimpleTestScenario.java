@@ -1,14 +1,14 @@
-package org.projectusus.core.filerelations;
+package org.projectusus.core.filerelations.model;
 
-import static org.projectusus.core.filerelations.TestServiceManager.createDescriptor;
-import static org.projectusus.core.filerelations.TestServiceManager.createFileMock;
+import static org.projectusus.core.filerelations.model.TestServiceManager.createDescriptor;
+import static org.projectusus.core.filerelations.model.TestServiceManager.createFileMock;
 
 import org.eclipse.core.resources.IFile;
 
 public class SimpleTestScenario {
 
     public static final IFile source = createFileMock();
-    public static final Classname sourceClass = new Classname( "sourceClass" ); //$NON-NLS-1$
+    public static final Classname sourceClass = new Classname( "sourceClass" ); //$NON-NLS-1$ 
     public static final ClassDescriptor sourceDescriptor = createDescriptor( source, sourceClass );
 
     public static final IFile target = createFileMock();

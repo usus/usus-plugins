@@ -1,18 +1,18 @@
-package org.projectusus.core.filerelations;
+package org.projectusus.core.filerelations.internal.model;
 
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.hasItems;
-import static org.projectusus.core.filerelations.IsSetOfMatcher.isEmptySet;
-import static org.projectusus.core.filerelations.IsSetOfMatcher.isSetOf;
-import static org.projectusus.core.filerelations.SimpleTestScenario.anotherTarget;
-import static org.projectusus.core.filerelations.SimpleTestScenario.anotherTargetToSource;
-import static org.projectusus.core.filerelations.SimpleTestScenario.anotherTargetToTarget;
-import static org.projectusus.core.filerelations.SimpleTestScenario.source;
-import static org.projectusus.core.filerelations.SimpleTestScenario.sourceClass;
-import static org.projectusus.core.filerelations.SimpleTestScenario.sourceToAnotherTarget;
-import static org.projectusus.core.filerelations.SimpleTestScenario.sourceToTarget;
-import static org.projectusus.core.filerelations.SimpleTestScenario.target;
-import static org.projectusus.core.filerelations.SimpleTestScenario.targetToAnotherTarget;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTarget;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetToSource;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetToTarget;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.source;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceClass;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceToAnotherTarget;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceToTarget;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.target;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.targetToAnotherTarget;
+import static org.projectusus.core.filerelations.test.IsSetOfMatcher.isEmptySet;
+import static org.projectusus.core.filerelations.test.IsSetOfMatcher.isSetOf;
 
 import org.junit.Test;
 

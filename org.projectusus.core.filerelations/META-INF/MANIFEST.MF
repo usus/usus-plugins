@@ -16,3 +16,5 @@ Bundle-ClassPath: .,
  lib/commons-lang-2.4.jar,
  lib/junit-4.8.1.jar,
  lib/jgrapht-jdk1.5.jar
+Export-Package: org.projectusus.core.filerelations,
+ org.projectusus.core.filerelations.model

@@ -1,11 +1,11 @@
-package org.projectusus.core.filerelations;
+package org.projectusus.core.filerelations.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.projectusus.core.filerelations.SimpleTestScenario.sourceClass;
-import static org.projectusus.core.filerelations.SimpleTestScenario.sourceToTarget;
-import static org.projectusus.core.filerelations.SimpleTestScenario.targetClass;
-import static org.projectusus.core.filerelations.TestServiceManager.createDescriptor;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceClass;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceToTarget;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.targetClass;
+import static org.projectusus.core.filerelations.model.TestServiceManager.createDescriptor;
 
 import org.junit.Test;
 

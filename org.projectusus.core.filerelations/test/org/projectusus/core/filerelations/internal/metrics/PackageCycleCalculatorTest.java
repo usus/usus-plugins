@@ -1,12 +1,12 @@
-package org.projectusus.core.filerelations;
+package org.projectusus.core.filerelations.internal.metrics;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static org.projectusus.core.filerelations.TestServiceManager.asArrays;
-import static org.projectusus.core.filerelations.TestServiceManager.createDescriptor;
+import static org.projectusus.core.filerelations.model.TestServiceManager.asArrays;
+import static org.projectusus.core.filerelations.model.TestServiceManager.createDescriptor;
 
 import java.util.List;
 
@@ -14,6 +14,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.projectusus.core.filerelations.internal.model.FileRelations;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.FileRelation;
+import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.filerelations.model.Scenario;
 
 @RunWith( Parameterized.class )
 public class PackageCycleCalculatorTest {

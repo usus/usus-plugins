@@ -1,19 +1,19 @@
-package org.projectusus.core.filerelations;
+package org.projectusus.core.filerelations.internal.metrics;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static org.projectusus.core.filerelations.SimpleTestScenario.anotherTargetToSource;
-import static org.projectusus.core.filerelations.SimpleTestScenario.anotherTargetToTarget;
-import static org.projectusus.core.filerelations.SimpleTestScenario.source;
-import static org.projectusus.core.filerelations.SimpleTestScenario.sourceClass;
-import static org.projectusus.core.filerelations.SimpleTestScenario.sourceDescriptor;
-import static org.projectusus.core.filerelations.SimpleTestScenario.sourceToAnotherTarget;
-import static org.projectusus.core.filerelations.SimpleTestScenario.sourceToTarget;
-import static org.projectusus.core.filerelations.SimpleTestScenario.targetToAnotherTarget;
-import static org.projectusus.core.filerelations.TestServiceManager.asArrays;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetToSource;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetToTarget;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.source;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceClass;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceDescriptor;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceToAnotherTarget;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceToTarget;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.targetToAnotherTarget;
+import static org.projectusus.core.filerelations.model.TestServiceManager.asArrays;
 
 import java.util.List;
 
@@ -21,6 +21,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.projectusus.core.filerelations.internal.model.FileRelations;
+import org.projectusus.core.filerelations.model.Scenario;
 
 @RunWith( Parameterized.class )
 public class ACDCalculatorTest {

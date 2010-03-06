@@ -1,4 +1,4 @@
-package org.projectusus.core.filerelations;
+package org.projectusus.core.filerelations.model;
 
 import org.eclipse.core.resources.IFile;
 

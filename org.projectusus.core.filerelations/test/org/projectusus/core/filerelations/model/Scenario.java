@@ -1,6 +1,6 @@
-package org.projectusus.core.filerelations;
+package org.projectusus.core.filerelations.model;
 
-import static org.projectusus.core.filerelations.TestServiceManager.asSet;
+import static org.projectusus.core.filerelations.model.TestServiceManager.asSet;
 
 import java.util.Set;
 

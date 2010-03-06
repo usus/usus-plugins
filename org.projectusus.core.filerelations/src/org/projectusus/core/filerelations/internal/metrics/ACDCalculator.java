@@ -1,7 +1,11 @@
-package org.projectusus.core.filerelations;
+package org.projectusus.core.filerelations.internal.metrics;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import org.projectusus.core.filerelations.internal.model.FileRelations;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.FileRelation;
 
 public class ACDCalculator {
 

@@ -1,8 +1,14 @@
-package org.projectusus.core.filerelations;
+package org.projectusus.core.filerelations.internal.metrics;
 
 import java.util.Collection;
 
 import org.jgrapht.alg.CycleDetector;
+import org.projectusus.core.filerelations.internal.model.FileRelations;
+import org.projectusus.core.filerelations.internal.model.RelationGraph;
+import org.projectusus.core.filerelations.internal.model.Relations;
+import org.projectusus.core.filerelations.model.FileRelation;
+import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.filerelations.model.Relation;
 
 public class PackageCycleCalculator {
 
