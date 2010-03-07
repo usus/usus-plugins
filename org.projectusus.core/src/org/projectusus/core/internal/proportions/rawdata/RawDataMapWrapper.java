@@ -36,4 +36,8 @@ class RawDataMapWrapper<Resource, RawDataContainer> {
     Set<Resource> getAllKeys() {
         return rawDataMap.keySet();
     }
+
+    public void clear() {
+        rawDataMap.clear();
+    }
 }

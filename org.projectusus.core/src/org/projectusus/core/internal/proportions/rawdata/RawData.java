@@ -69,11 +69,15 @@ class RawData<S, T extends IRawData> implements IRawData {
         return wrapper.getAllKeys();
     }
 
+    public void dropAllRawData() {
+        resetRawData();
+        wrapper.clear();
+    }
+
     public void resetRawData() {
         for( T currentResult : wrapper.getAllRawDataElements() ) {
             currentResult.resetRawData();
         }
-
     }
 
     synchronized Collection<T> getAllRawDataElements() {
