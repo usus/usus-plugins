@@ -132,7 +132,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     public void twoFilesTheSecondKnowsTheFirst() throws Exception {
         IFile firstFile = createWSFile( "Acd11a.java", loadContent("Acd11a.test") );
         createAndCompute("11b");
-        computeFile( firstFile );
+        computeJavaFile( firstFile );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 0.75, getACD(), 0.0001 );
     }
@@ -146,8 +146,8 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         createWSFolder( "org/doublemill/model/util" );
         IFile firstFile = createWSFile( "org/doublemill/model/ai/Acd_GameStateAI.java", loadContent("Acd_GameStateAI.test") );
         IFile secondFile = createWSFile( "org/doublemill/model/util/Acd_LRUCache.java", loadContent("Acd_LRUCache.test") );
-        computeFile( secondFile );
-        computeFile( firstFile );
+        computeJavaFile( secondFile );
+        computeJavaFile( firstFile );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 0.75, getACD(), 0.0001 );
 //        assertEquals( 1, model.getSumOfAllDirectChildrenOfAllClasses() );
@@ -163,8 +163,8 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         createWSFolder( "org/doublemill/model/util" );
         IFile firstFile = createWSFile( "org/doublemill/model/ai/Acd_GameStateAI.java", loadContent("Acd_GameStateAI.test") );
         IFile secondFile = createWSFile( "org/doublemill/model/util/Acd_LRUCache.java", loadContent("Acd_LRUCache.test") );
-        computeFile( firstFile );
-        computeFile( secondFile );
+        computeJavaFile( firstFile );
+        computeJavaFile( secondFile );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 0.75, getACD(), 0.0001 );
 //        assertEquals( 1, model.getSumOfAllDirectChildrenOfAllClasses() );
@@ -175,7 +175,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     public void twoFiles_TheFirstKnowsTheSecond_SecondIsDeleted() throws Exception {
         IFile firstFile = createWSFile( "Acd11a.java", loadContent("Acd11a.test") );
         IFile secondFile = createAndCompute("11b");
-        computeFile( firstFile );
+        computeJavaFile( firstFile );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 0.75, getACD(), 0.0001 );
         writeModel.dropRawData( secondFile );
@@ -215,7 +215,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     public void twoFiles_TheFirstKnowsTheSecond_FirstIsDeleted() throws Exception {
         IFile firstFile = createWSFile( "Acd11a.java", loadContent("Acd11a.test") );
         createAndCompute("11b");
-        computeFile( firstFile );
+        computeJavaFile( firstFile );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 0.75, getACD(), 0.0001 );
         writeModel.dropRawData( firstFile );
@@ -227,7 +227,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     public void twoFilesKnowEachOther() throws Exception {
         IFile file = createWSFile( "Acd10a.java", loadContent("Acd10a.test") );
         createAndCompute("10b");
-        computeFile( file );
+        computeJavaFile( file );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 1.0, getACD(), 0.0001 );
 //        assertEquals( 2, model.getSumOfAllDirectChildrenOfAllClasses() );
@@ -238,7 +238,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     public void twoFilesKnowEachOtherTheSecondIsDeleted() throws Exception {
         IFile firstFile = createWSFile( "Acd10a.java", loadContent("Acd10a.test") );
         IFile secondFile = createAndCompute("10b");
-        computeFile( firstFile );
+        computeJavaFile( firstFile );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 1.0, getACD(), 0.0001 );
         writeModel.dropRawData( secondFile );

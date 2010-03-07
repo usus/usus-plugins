@@ -25,7 +25,7 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
 
     public void simpleCaseTestDemo() throws Exception {
         IFile file = createWSFile( "A.java", loadContent( "A.test" ) );
-        computeFile( file );
+        computeJavaFile( file );
         IUsusModel model = UsusCorePlugin.getUsusModel();
         assertEquals( 1, model.getViolationCount( file.getProject(), CodeProportionKind.ML ) );
         assertEquals( 2, model.getNumberOf( file.getProject(), CodeProportionUnit.METHOD ) );
