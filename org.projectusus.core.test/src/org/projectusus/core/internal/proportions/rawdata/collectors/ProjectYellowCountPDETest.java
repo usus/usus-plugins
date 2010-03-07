@@ -56,7 +56,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
     public void findMarkerOnJavaFile() throws CoreException {
         IFile file = createWSFile( "a.java", "no content" );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        computeFile(file);
+        computeJavaFile(file);
         int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
 
         assertEquals( 1, yellowCount );
@@ -96,7 +96,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
         IFile file2 = createWSFile( "b.java", "no content" );
         file2.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         computeFile(file1);
-        computeFile(file2);
+        computeJavaFile(file2);
         int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
 
         assertEquals( 2, yellowCount );
@@ -128,8 +128,8 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
         IFile fileB = createWSFile( "b.java", "no content" );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        computeFile(fileA);
-        computeFile(fileB);
+        computeJavaFile(fileA);
+        computeJavaFile(fileB);
         CodeProportion yellowCount = model.getCodeProportion( CodeProportionKind.CW );
         
         List<IHotspot> hotspots = yellowCount.getHotspots();

@@ -14,7 +14,7 @@ public class ClassNodeLabelProvider extends LabelProvider {
 		if (element instanceof EntityConnectionData) {
 			EntityConnectionData data = (EntityConnectionData) element;
 			ClassRepresenter dest = (ClassRepresenter) data.dest;
-			return String.valueOf(dest.getAllChildren().size());
+			return String.valueOf(dest.getNumberOfAllChildren());
 		}
 		throw new RuntimeException("Type not supported");
 	}

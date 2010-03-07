@@ -19,6 +19,7 @@ import org.projectusus.core.internal.PDETestUsingWSProject;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
+import org.projectusus.core.internal.proportions.rawdata.jdtdriver.JavaFileDriver;
 
 public class PDETestForMetricsComputation extends PDETestUsingWSProject {
 
@@ -34,6 +35,10 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
        new FileDriver( file ).compute();
     }
 
+    protected void computeJavaFile(IFile file){
+        new JavaFileDriver( file ).compute();
+    }
+    
     protected String loadContent( String fileName ) throws Exception {
         URL entry = loadEntry( fileName );
         return readPreservingBinaryIdentity( entry.openStream() );
@@ -57,7 +62,7 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
 
     public IFile createAndCompute( String filenumber, String testPrefix ) throws CoreException, Exception {
         IFile file = createWSFile( testPrefix+filenumber +".java", loadContent(testPrefix+filenumber+".test") );
-        computeFile(file);
+        computeJavaFile(file);
         return file;
     }
 }

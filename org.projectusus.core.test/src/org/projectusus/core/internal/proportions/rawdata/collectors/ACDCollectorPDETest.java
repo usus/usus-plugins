@@ -54,8 +54,8 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         createAndCompute( "_twoKnowEachOther" );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 1.0, getACD(), 0.0001 );
-        assertEquals( 2, model.getSumOfAllDirectChildrenOfAllClasses() );
-        assertEquals( 4, model.getSumOfAllKnownChildrenOfAllClasses() );
+//        assertEquals( 2, model.getSumOfAllDirectChildrenOfAllClasses() );
+//        assertEquals( 4, model.getSumOfAllKnownChildrenOfAllClasses() );
     }
     
     @Test
@@ -150,8 +150,8 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         computeFile( firstFile );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 0.75, getACD(), 0.0001 );
-        assertEquals( 1, model.getSumOfAllDirectChildrenOfAllClasses() );
-        assertEquals( 3, model.getSumOfAllKnownChildrenOfAllClasses() );
+//        assertEquals( 1, model.getSumOfAllDirectChildrenOfAllClasses() );
+//        assertEquals( 3, model.getSumOfAllKnownChildrenOfAllClasses() );
     }
     
     @Test
@@ -167,8 +167,8 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         computeFile( secondFile );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 0.75, getACD(), 0.0001 );
-        assertEquals( 1, model.getSumOfAllDirectChildrenOfAllClasses() );
-        assertEquals( 3, model.getSumOfAllKnownChildrenOfAllClasses() );
+//        assertEquals( 1, model.getSumOfAllDirectChildrenOfAllClasses() );
+//        assertEquals( 3, model.getSumOfAllKnownChildrenOfAllClasses() );
     }
     
     @Test
@@ -230,8 +230,8 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         computeFile( file );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 1.0, getACD(), 0.0001 );
-        assertEquals( 2, model.getSumOfAllDirectChildrenOfAllClasses() );
-        assertEquals( 4, model.getSumOfAllKnownChildrenOfAllClasses() );
+//        assertEquals( 2, model.getSumOfAllDirectChildrenOfAllClasses() );
+//        assertEquals( 4, model.getSumOfAllKnownChildrenOfAllClasses() );
     }
     
     @Test

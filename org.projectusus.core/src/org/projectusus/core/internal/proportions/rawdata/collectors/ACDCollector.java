@@ -13,7 +13,7 @@ import org.projectusus.core.internal.UsusCorePlugin;
 
 public class ACDCollector extends Collector {
 
-    private AbstractTypeDeclaration currentType;
+    private ITypeBinding currentType;
 
     public ACDCollector( IFile file ) {
         super( file );
@@ -56,9 +56,10 @@ public class ACDCollector extends Collector {
         if( currentType == null ) {
             return true;
         }
-        ITypeBinding binding = node.resolveBinding();
-        if( binding != null && binding.isFromSource() ) {
-            UsusCorePlugin.getUsusModelMetricsWriter().addClassReference( file, currentType, binding.getJavaElement() );
+        ITypeBinding targetType = node.resolveBinding();
+        if( targetType != null && targetType.isFromSource() ) {
+            UsusCorePlugin.getUsusModelMetricsWriter().addClassReference( currentType, targetType );
+
         }
         return true;
     }
@@ -78,7 +79,7 @@ public class ACDCollector extends Collector {
      */
 
     private void setCurrentType( AbstractTypeDeclaration node ) {
-        currentType = node;
+        currentType = node.resolveBinding();
     }
 
 }

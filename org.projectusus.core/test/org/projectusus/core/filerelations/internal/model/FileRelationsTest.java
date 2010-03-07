@@ -1,7 +1,7 @@
 package org.projectusus.core.filerelations.internal.model;
 
-import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.hasItems;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTarget;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetToSource;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetToTarget;

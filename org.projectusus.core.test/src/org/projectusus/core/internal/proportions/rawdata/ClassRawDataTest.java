@@ -33,7 +33,7 @@ public class ClassRawDataTest {
     
     @Before
     public void setup(){
-        classRawData = new ClassRawData(  CLASSNAME, SOURCEPOSITION, LINENUMBER );
+        classRawData = new ClassRawData(  null, CLASSNAME, SOURCEPOSITION, LINENUMBER );
         method1 = mock( MethodDeclaration.class );
         initMethod( method1, METHODNAME1 );
     }

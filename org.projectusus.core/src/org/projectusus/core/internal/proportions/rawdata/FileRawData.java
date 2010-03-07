@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IPackageDeclaration;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.model.Hotspot;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
@@ -69,7 +69,7 @@ class FileRawData extends RawData<Integer, ClassRawData> {
         if( node == null ) {
             return null;
         }
-        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
+        return getRawData( node.resolveBinding(), node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
     }
 
     public int getNumberOfClasses() {
@@ -99,11 +99,11 @@ class FileRawData extends RawData<Integer, ClassRawData> {
         return localHotspots;
     }
 
-    private ClassRawData getRawData( int start, int lineNumber, String name ) {
+    private ClassRawData getRawData( ITypeBinding typeBinding, int start, int lineNumber, String name ) {
         Integer startObject = new Integer( start );
         ClassRawData rawData = super.getRawData( startObject );
         if( rawData == null ) {
-            rawData = new ClassRawData( name, start, lineNumber );
+            rawData = new ClassRawData( typeBinding, name, start, lineNumber );
             super.addRawData( startObject, rawData );
         }
         return rawData;
@@ -126,6 +126,7 @@ class FileRawData extends RawData<Integer, ClassRawData> {
             return null;
         }
 
+        IPackageDeclaration[] packageDeclarations;
         try {
             for( Integer startPosition : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( startPosition.intValue() );
@@ -133,20 +134,23 @@ class FileRawData extends RawData<Integer, ClassRawData> {
                     return super.getRawData( startPosition );
                 }
             }
+            packageDeclarations = compilationUnit.getPackageDeclarations();
         } catch( JavaModelException e ) {
             return null;
         }
-        return createClassRawDataFor( element );
+
+        return createClassRawDataFor( element, packageDeclarations );
     }
 
-    private ClassRawData createClassRawDataFor( IJavaElement element ) {
+    private ClassRawData createClassRawDataFor( IJavaElement element, IPackageDeclaration[] packageDeclarations ) {
         if( element instanceof IType ) {
             String name = element.getElementName();
             IType type = (IType)element;
             try {
                 int lineNumber = JDTSupport.calcLineNumber( type );
                 int startPosition = type.getSourceRange().getOffset();
-                ClassRawData rawData = new ClassRawData( name, startPosition, lineNumber );
+                String packageName = packageDeclarations[0].getElementName();
+                ClassRawData rawData = new ClassRawData( fileOfRawData, packageName, name, startPosition, lineNumber );
                 super.addRawData( new Integer( startPosition ), rawData );
                 return rawData;
             } catch( JavaModelException e ) {
@@ -154,17 +158,6 @@ class FileRawData extends RawData<Integer, ClassRawData> {
             }
         }
         return null;
-    }
-
-    public void addClassReference( AbstractTypeDeclaration referencingType, IJavaElement referencedElement ) {
-        IResource resource = referencedElement.getResource();
-        if( !(resource instanceof IFile) || !resource.getFileExtension().equals( "java" ) ) { //$NON-NLS-1$
-            return;
-        }
-        ClassRawData referencingRawData = getClassRawData( referencingType );
-        FileRawData fileRawData = ((UsusModel)UsusCorePlugin.getUsusModel()).getFileRawData( (IFile)resource );
-        ClassRawData referencedRawData = fileRawData.getOrCreateRawData( referencedElement );
-        referencingRawData.addChild( referencedRawData );
     }
 
     @Override

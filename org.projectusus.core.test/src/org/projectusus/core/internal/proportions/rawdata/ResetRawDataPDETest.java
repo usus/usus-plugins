@@ -81,7 +81,7 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
         IUsusModel ususModel = UsusCorePlugin.getUsusModel();
         IFile file2 = createWSFile( "Reset2.java", loadContent("Reset2.test") );
         createAndCompute( "1", "Reset" );
-        computeFile(file2);
+        computeJavaFile(file2);
         assertEquals( 2, ususModel.getNumberOf( project, CodeProportionUnit.CLASS ));
         assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.KG ) );
         assertEquals( 3, ususModel.getNumberOf( project, CodeProportionUnit.METHOD ));

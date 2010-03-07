@@ -78,6 +78,7 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
             for( MiscFileRawData rawData : miscRawData.getAllRawDataElements() ) {
                 result += rawData.getViolationCount( metric );
             }
+            return result;
         }
         return 0;
     }

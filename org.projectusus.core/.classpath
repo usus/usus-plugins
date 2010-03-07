@@ -9,7 +9,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/commons-lang-2.4.jar" sourcepath="org.projectusus.coresrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/cpsuite-1.1.0.jar" sourcepath="org.projectusus.coresrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/google-collect-1.0.jar" sourcepath="org.projectusus.coresrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/hamcrest-all-1.2.jar" sourcepath="org.projectusus.coresrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgrapht-jdk1.5.jar" sourcepath="org.projectusus.coresrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/mockito-all-1.8.0.jar" sourcepath="org.projectusus.coresrc.zip"/>
 	<classpathentry kind="output" path="bin"/>

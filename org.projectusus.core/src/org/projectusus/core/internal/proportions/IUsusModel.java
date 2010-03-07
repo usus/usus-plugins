@@ -45,10 +45,6 @@ public interface IUsusModel {
 
     int getOverallMetric( IProject project, CodeProportionKind metric );
 
-    int getSumOfAllDirectChildrenOfAllClasses();
-
-    int getSumOfAllKnownChildrenOfAllClasses();
-
     Set<ClassRepresenter> getAllClassRepresenters();
 
     int getCCValue( IMethod method ) throws JavaModelException;

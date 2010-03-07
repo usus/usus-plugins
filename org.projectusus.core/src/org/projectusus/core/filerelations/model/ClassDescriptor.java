@@ -3,6 +3,8 @@ package org.projectusus.core.filerelations.model;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 
 public class ClassDescriptor {
 
@@ -14,6 +16,10 @@ public class ClassDescriptor {
         this.file = file;
         this.classname = classname;
         this.packagename = packagename;
+    }
+
+    public ClassDescriptor( ITypeBinding binding ) throws JavaModelException {
+        this( (IFile)binding.getJavaElement().getUnderlyingResource(), new Classname( binding.getName() ), new Packagename( binding.getPackage().getName() ) );
     }
 
     public IFile getFile() {

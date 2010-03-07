@@ -1,6 +1,6 @@
 package org.projectusus.core.filerelations.test;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.CoreMatchers.is;
 import static org.projectusus.core.filerelations.model.TestServiceManager.asSet;
 
 import java.util.Collections;
@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
+import org.junit.internal.matchers.TypeSafeMatcher;
 
 public class IsSetOfMatcher<T> extends TypeSafeMatcher<Set<? extends T>> {
 

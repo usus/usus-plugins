@@ -10,8 +10,8 @@ public class ClassNodeFilter extends ViewerFilter {
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 		if (element instanceof ClassRepresenter) {
 			ClassRepresenter classRawData = (ClassRepresenter) element;
-			return (classRawData.getChildren().size()
-					+ classRawData.getParents().size() > GraphModel
+			return (classRawData.getNumberOfChildren()
+					+ classRawData.getNumberOfParents() > GraphModel
 					.getInstance().getMinimumEdges() - 1);
 		}
 		return true;

@@ -4,17 +4,21 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.Classname;
+import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.MetricACDHotspot;
 import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
@@ -25,12 +29,26 @@ class ClassRawData extends RawData<Integer, MethodRawData> {
     private final int lineNumber;
     private final String className;
     private final ClassRepresenter representer;
+    private ClassDescriptor descriptor;
 
-    public ClassRawData( String name, int startPosition, int line ) {
+    public ClassRawData( ITypeBinding binding, String name, int startPosition, int line ) {
         this.className = name;
         this.startPosition = startPosition;
         this.lineNumber = line;
         this.representer = new ClassRepresenter( this );
+        try {
+            this.descriptor = new ClassDescriptor( binding );
+        } catch( JavaModelException e ) {
+            // impossible to create ClassDescriptor
+        }
+    }
+
+    public ClassRawData( IFile file, String packageName, String name, int startPosition, int line ) {
+        this.className = name;
+        this.startPosition = startPosition;
+        this.lineNumber = line;
+        this.representer = new ClassRepresenter( this );
+        this.descriptor = new ClassDescriptor( file, new Classname( name ), new Packagename( packageName ) );
     }
 
     // for debugging:
@@ -137,146 +155,14 @@ class ClassRawData extends RawData<Integer, MethodRawData> {
     }
 
     public int getCCDResult() {
-        return a_getCCD();
+        return UsusCorePlugin.getUsusModelMetricsWriter().getFileRelationMetrics().getCCD( descriptor );
     }
 
-    public void addChild( ClassRawData child ) {
-        if( child == null || this == child ) {
-            return;
-        }
-        a_addChild( child );
-        child.a_addParent( this );
-    }
-
-    @Override
-    public void resetRawData() {
-        a_removeNode( this );
-        super.resetRawData();
-    }
-
-    void removeParent( ClassRawData classRawData ) {
-        a_removeParent( classRawData );
-    }
-
-    void removeChild( ClassRawData classRawData ) {
-        a_removeChild( classRawData );
-    }
-
-    public Set<ClassRawData> getChildren() {
-        return a_getChildren();
-    }
-
-    public Set<ClassRawData> getParents() {
-        return a_getParents();
-    }
-
-    public Set<ClassRawData> getAllChildren() {
-        return a_getAllChildren();
-    }
-
-    public Set<ClassRawData> getAllParents() {
-        return a_getAllParents();
-    }
-
-    public void invalidateAcd() {
-        a_invalidate();
+    public Set<ClassDescriptor> getChildren() {
+        return UsusCorePlugin.getUsusModelMetricsWriter().getFileRelationMetrics().getChildren( descriptor );
     }
 
     public String getClassName() {
         return className;
-    }
-
-    // aus AdjacencyNode
-
-    private final Set<ClassRawData> directChildren = new HashSet<ClassRawData>();
-    private final SetOfClasses transitiveChildren = new SetOfClasses();
-    private final Set<ClassRawData> directParents = new HashSet<ClassRawData>();
-    private final SetOfClasses transitiveParents = new SetOfClasses();
-
-    private void a_addChild( ClassRawData child ) {
-        transitiveChildren.invalidate();
-        directChildren.add( child );
-    }
-
-    private void a_addParent( ClassRawData parent ) {
-        transitiveParents.invalidate();
-        directParents.add( parent );
-    }
-
-    public int getChildCount() {
-        return directChildren.size();
-    }
-
-    private Set<ClassRawData> a_getChildren() {
-        return Collections.unmodifiableSet( directChildren );
-    }
-
-    private Set<ClassRawData> a_getParents() {
-        return Collections.unmodifiableSet( directParents );
-    }
-
-    private Set<ClassRawData> a_getAllChildren() {
-        a_updateChildren();
-        return transitiveChildren.getClasses();
-    }
-
-    private Set<ClassRawData> a_getAllParents() {
-        a_updateParents();
-        return transitiveParents.getClasses();
-    }
-
-    private void a_updateChildren() {
-        if( transitiveChildren.areUpToDate() ) {
-            return;
-        }
-        transitiveChildren.startInitialization( this );
-        for( ClassRawData child : directChildren ) {
-            transitiveChildren.addAllClassesDependingOn( child, child.getAllChildren() );
-        }
-    }
-
-    private void a_updateParents() {
-        if( transitiveParents.areUpToDate() ) {
-            return;
-        }
-        transitiveParents.startInitialization( this );
-        for( ClassRawData parent : directParents ) {
-            transitiveChildren.addAllClassesDependingOn( parent, parent.getAllParents() );
-        }
-    }
-
-    private void a_removeParent( ClassRawData classRawData ) {
-        transitiveParents.invalidate();
-        directParents.remove( classRawData );
-    }
-
-    private void a_removeChild( ClassRawData classRawData ) {
-        transitiveChildren.invalidate();
-        directChildren.remove( classRawData );
-    }
-
-    private int a_getCCD() {
-        a_updateChildren();
-        return transitiveChildren.size();
-    }
-
-    private void a_invalidate() { // TODO what needs to be done for the parents?
-        if( !transitiveChildren.areUpToDate() ) {
-            return; // already invalidated
-        }
-        transitiveChildren.invalidate();
-        for( ClassRawData parent : directParents ) {
-            parent.invalidateAcd();
-        }
-    }
-
-    private void a_removeNode( ClassRawData classRawData ) {
-        a_invalidate();
-        for( ClassRawData parent : getParents() ) {
-            parent.removeChild( classRawData );
-        }
-        for( ClassRawData child : getChildren() ) {
-            child.removeParent( classRawData );
-        }
     }
 }

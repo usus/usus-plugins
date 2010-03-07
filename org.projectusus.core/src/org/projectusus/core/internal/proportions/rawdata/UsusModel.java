@@ -11,13 +11,15 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.filerelations.FileRelationMetrics;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
@@ -38,12 +40,14 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     private final UsusModelHistory history;
     private final UsusModelRootNode rootNode;
     private final WorkspaceRawData workspaceRawData;
+    private final FileRelationMetrics fileRelations;
 
     public UsusModel() {
         rootNode = new UsusModelRootNode();
         listeners = new HashSet<IUsusModelListener>();
         history = new UsusModelHistory();
         workspaceRawData = new WorkspaceRawData();
+        fileRelations = new FileRelationMetrics();
     }
 
     // interface of IUsusModelWriteAccess
@@ -75,8 +79,14 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     // interface of IUsusModelMetricsWriter
     // /////////////////////////////////////
 
-    public void addClassReference( IFile file, AbstractTypeDeclaration referencingType, IJavaElement referencedElement ) {
-        getFileRawData( file ).addClassReference( referencingType, referencedElement );
+    public void addClassReference( ITypeBinding sourceType, ITypeBinding targetType ) {
+        try {
+            ClassDescriptor source = new ClassDescriptor( sourceType );
+            ClassDescriptor target = new ClassDescriptor( targetType );
+            fileRelations.addFileRelation( source, target );
+        } catch( JavaModelException e ) {
+            e.printStackTrace();
+        }
     }
 
     public void setCCValue( IFile file, MethodDeclaration methodDecl, int value ) {
@@ -105,6 +115,10 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     public void setYellowCount( IFile file, int markerCount ) {
         getProjectRawData( file.getProject() ).setYellowCount( file, markerCount );
+    }
+
+    public FileRelationMetrics getFileRelationMetrics() {
+        return fileRelations;
     }
 
     // interface of IUsusModel
@@ -151,6 +165,11 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         return 0;
     }
 
+    public int getViolationCount( IProject project, CodeProportionKind metric ) {
+        ProjectRawData projectRawData = getProjectRawData( project );
+        return projectRawData.getViolationCount( metric );
+    }
+
     public List<Integer> getAllClassesCCDResults() {
         Set<ClassRawData> classes = workspaceRawData.getAllClassRawData();
         List<Integer> ccdList = new ArrayList<Integer>();
@@ -165,22 +184,22 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         return ClassRepresenter.transformToRepresenterSet( classes );
     }
 
-    public int getSumOfAllDirectChildrenOfAllClasses() {
-        int sumDirectChildren = 0;
-        for( ClassRawData clazz : workspaceRawData.getAllClassRawData() ) {
-            sumDirectChildren += clazz.getChildren().size();
-        }
-        return sumDirectChildren;
-    }
-
-    public int getSumOfAllKnownChildrenOfAllClasses() {
-        int sumKnownClasses = 0;
-        for( ClassRawData clazz : workspaceRawData.getAllClassRawData() ) {
-            sumKnownClasses += clazz.getAllChildren().size();
-        }
-        return sumKnownClasses;
-    }
-
+    // public int getSumOfAllDirectChildrenOfAllClasses() {
+    // int sumDirectChildren = 0;
+    // for( ClassRawData clazz : workspaceRawData.getAllClassRawData() ) {
+    // sumDirectChildren += clazz.getChildren().size();
+    // }
+    // return sumDirectChildren;
+    // }
+    //
+    // public int getSumOfAllKnownChildrenOfAllClasses() {
+    // int sumKnownClasses = 0;
+    // for( ClassRawData clazz : workspaceRawData.getAllClassRawData() ) {
+    // sumKnownClasses += clazz.getAllChildren().size();
+    // }
+    // return sumKnownClasses;
+    // }
+    //
     public int getCCValue( IMethod method ) throws JavaModelException {
         ClassRawData classRawData = getClassRawData( method.getDeclaringType() );
         MethodRawData methodRawData = classRawData.getMethodRawData( method );
@@ -197,11 +216,6 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
             return methodRawData.getMLValue();
         }
         throw new IllegalStateException();
-    }
-
-    public int getViolationCount( IProject project, CodeProportionKind metric ) {
-        ProjectRawData projectRawData = getProjectRawData( project );
-        return projectRawData.getViolationCount( metric );
     }
 
     public TestCoverage getInstructionCoverage() {

@@ -69,6 +69,5 @@ Bundle-ClassPath: .,
  lib/commons-lang-2.4.jar,
  lib/cpsuite-1.1.0.jar,
  lib/google-collect-1.0.jar,
- lib/hamcrest-all-1.2.jar,
  lib/jgrapht-jdk1.5.jar,
  lib/mockito-all-1.8.0.jar

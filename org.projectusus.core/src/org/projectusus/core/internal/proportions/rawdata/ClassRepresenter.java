@@ -3,6 +3,8 @@ package org.projectusus.core.internal.proportions.rawdata;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.projectusus.core.filerelations.model.ClassDescriptor;
+
 public class ClassRepresenter {
 
     private final ClassRawData clazz;
@@ -19,20 +21,24 @@ public class ClassRepresenter {
         return representers;
     }
 
-    public Set<ClassRepresenter> getChildren() {
-        return transformToRepresenterSet( clazz.getChildren() );
+    public Set<ClassDescriptor> getChildren() {
+        return clazz.getChildren();
     }
 
     public String getClassName() {
         return clazz.getClassName();
     }
 
-    public Set<ClassRepresenter> getAllChildren() {
-        return transformToRepresenterSet( clazz.getAllChildren() );
+    public int getNumberOfAllChildren() {
+        return 0; // TODO
     }
 
-    public Set<ClassRepresenter> getParents() {
-        return transformToRepresenterSet( clazz.getParents() );
+    public int getNumberOfChildren() {
+        return 0; // TODO
+    }
+
+    public int getNumberOfParents() {
+        return 0; // TODO
     }
 
 }

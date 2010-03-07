@@ -20,7 +20,7 @@ import org.projectusus.core.internal.proportions.rawdata.collectors.CCCollector;
 import org.projectusus.core.internal.proportions.rawdata.collectors.ClassCollector;
 import org.projectusus.core.internal.proportions.rawdata.collectors.MLCollector;
 
-class JavaFileDriver extends FileDriver {
+public class JavaFileDriver extends FileDriver {
 
     public JavaFileDriver( IFile file ) {
         super( file );
