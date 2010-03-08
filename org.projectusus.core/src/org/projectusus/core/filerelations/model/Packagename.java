@@ -22,4 +22,8 @@ public class Packagename {
         return builder.toHashCode();
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -21,4 +21,9 @@ public class Classname {
         builder.append( name );
         return builder.toHashCode();
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

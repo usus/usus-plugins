@@ -45,4 +45,9 @@ public class Relation<T> {
         return new Relation<T>( source, target );
     }
 
+    @Override
+    public String toString() {
+        return source + " -> " + target; //$NON-NLS-1$
+    }
+
 }

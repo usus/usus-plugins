@@ -2,6 +2,7 @@ package org.projectusus.core.filerelations;
 
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
 import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
 import org.projectusus.core.filerelations.internal.model.FileRelations;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
@@ -21,6 +22,10 @@ public class FileRelationMetrics {
 
     public void addFileRelation( ClassDescriptor source, ClassDescriptor target ) {
         relations.add( new FileRelation( source, target ) );
+    }
+
+    public void remove( IFile file ) {
+        relations.removeAllIncidentRelations( file );
     }
 
     public int getCCD( ClassDescriptor descriptor ) {

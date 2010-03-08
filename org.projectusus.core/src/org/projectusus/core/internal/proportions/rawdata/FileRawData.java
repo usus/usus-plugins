@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.model.Hotspot;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
@@ -174,5 +175,12 @@ class FileRawData extends RawData<Integer, ClassRawData> {
             return yellowCount.getOverallMetric( metric );
         }
         return super.getOverallMetric( metric );
+    }
+
+    @Override
+    public void resetRawData() {
+        // TODO
+        UsusCorePlugin.getUsusModelMetricsWriter().getFileRelationMetrics().remove( fileOfRawData );
+        super.resetRawData();
     }
 }

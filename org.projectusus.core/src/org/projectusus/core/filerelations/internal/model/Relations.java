@@ -49,4 +49,8 @@ public class Relations<K, R extends Relation<?>> {
     public Set<K> keySet() {
         return union( outgoingRelations.keySet(), incomingRelations.keySet() );
     }
+
+    protected Set<R> getOutgoingRelationsFrom( K key ) {
+        return outgoingRelations.get( key );
+    }
 }

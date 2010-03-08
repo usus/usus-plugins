@@ -53,4 +53,9 @@ public class ClassDescriptor {
         builder.append( packagename, other.packagename );
         return builder.isEquals();
     }
+
+    @Override
+    public String toString() {
+        return packagename + "." + classname + "[" + file + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    }
 }
