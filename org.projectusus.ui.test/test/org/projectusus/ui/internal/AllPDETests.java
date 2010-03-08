@@ -13,7 +13,7 @@ import org.projectusus.core.internal.proportions.CodeProportionsPDETest;
 import org.projectusus.core.internal.proportions.FileChangeNotificationsPDETest;
 import org.projectusus.core.internal.proportions.ProjectChangeNotificationsPDETest;
 import org.projectusus.core.internal.proportions.UsusProjectNotificationsPDETest;
-import org.projectusus.core.internal.proportions.rawdata.ResetRawDataPDETest;
+import org.projectusus.core.internal.proportions.rawdata.DropRawDataPDETest;
 import org.projectusus.core.internal.proportions.rawdata.collectors.ACDCollectorPDETest;
 import org.projectusus.core.internal.proportions.rawdata.collectors.ProjectYellowCountPDETest;
 import org.projectusus.core.internal.proportions.sqi.jdtdriver.StatusCollectorPDETest;
@@ -24,7 +24,7 @@ import org.projectusus.core.internal.proportions.sqi.jdtdriver.StatusCollectorPD
 		CodeProportionsPDETest.class, FileChangeNotificationsPDETest.class,
 		ProjectChangeNotificationsPDETest.class,
 		UsusProjectNotificationsPDETest.class,
-		ResetRawDataPDETest.class, ACDCollectorPDETest.class,
+		DropRawDataPDETest.class, ACDCollectorPDETest.class,
 		StatusCollectorPDETest.class, ProjectYellowCountPDETest.class })
 public class AllPDETests {
 

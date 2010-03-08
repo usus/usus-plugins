@@ -14,7 +14,7 @@ class Warnings implements IWarnings {
 
     private CodeProportion entry = new CodeProportion( CW );
 
-    void update( CodeProportion entry ) {
+    void refresh( CodeProportion entry ) {
         this.entry = entry;
     }
 

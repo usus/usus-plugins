@@ -80,9 +80,4 @@ class MethodRawData implements IRawData {
     public int getLineNumber() {
         return lineNumber;
     }
-
-    public void resetRawData() {
-        ccValue = 0;
-        mlValue = 0;
-    }
 }

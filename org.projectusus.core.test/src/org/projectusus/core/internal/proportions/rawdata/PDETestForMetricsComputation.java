@@ -31,14 +31,14 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
         assertEquals( 2, model.getNumberOf( file.getProject(), CodeProportionUnit.METHOD ) );
     }
     
-    protected void computeFile(IFile file){
-       new FileDriver( file ).compute();
-    }
-
-    protected void computeJavaFile(IFile file){
-        new JavaFileDriver( file ).compute();
+    protected void computeNonJavaFile(IFile file){
+        new FileDriver( file ).compute();
     }
     
+    protected void computeJavaFile(IFile file){
+       new JavaFileDriver( file ).compute();
+    }
+
     protected String loadContent( String fileName ) throws Exception {
         URL entry = loadEntry( fileName );
         return readPreservingBinaryIdentity( entry.openStream() );

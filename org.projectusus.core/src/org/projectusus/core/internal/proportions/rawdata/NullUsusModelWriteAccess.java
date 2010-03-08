@@ -20,11 +20,12 @@ public class NullUsusModelWriteAccess implements IUsusModelWriteAccess {
         // just do nothing harmful
     }
 
-    public void resetRawData( IProject project ) {
+    public void update( IUsusModelUpdate updateCommand ) {
         // just do nothing harmful
     }
 
-    public void update( IUsusModelUpdate updateCommand ) {
-        // just do nothing harmful
+    public void updateComputation( boolean ok ) {
+        // TODO Auto-generated method stub
+
     }
 }

@@ -23,5 +23,5 @@ public interface IUsusModelWriteAccess {
 
     void dropRawData( IProject project );
 
-    void resetRawData( IProject project );
+    void updateComputation( boolean ok );
 }

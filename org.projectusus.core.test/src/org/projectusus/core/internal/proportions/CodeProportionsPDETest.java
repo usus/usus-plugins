@@ -9,17 +9,15 @@ import static org.junit.Assert.assertEquals;
 import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.modelcomputation.CodeProportionsComputerJob;
-import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
+import org.projectusus.core.internal.proportions.rawdata.ComputationRunModelUpdate;
 
 public class CodeProportionsPDETest {
 

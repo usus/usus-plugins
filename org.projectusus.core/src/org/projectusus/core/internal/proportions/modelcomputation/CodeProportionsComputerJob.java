@@ -4,17 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.modelcomputation;
 
-import static java.util.Arrays.asList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ACD;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CC;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.KG;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_name;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -24,9 +15,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.modelupdate.ComputationRunModelUpdate;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.JDTDriver;
 
 public class CodeProportionsComputerJob extends Job {
@@ -54,31 +42,22 @@ public class CodeProportionsComputerJob extends Job {
 
     private IStatus performRun( IProgressMonitor monitor ) {
         IStatus result = Status.OK_STATUS;
-        List<CodeProportion> collector = new ArrayList<CodeProportion>();
         try {
-            performComputation( collector, monitor );
+            computeJavaCodeMetrics( monitor );
         } catch( CoreException cex ) {
             result = cex.getStatus();
         } finally {
-            updateModel( result, collector );
+            updateModel( result );
         }
         return result;
     }
 
-    private void updateModel( IStatus result, List<CodeProportion> collector ) {
+    private void updateModel( IStatus result ) {
         IUsusModelWriteAccess ususModel = UsusCorePlugin.getUsusModelWriteAccess();
-        ususModel.update( new ComputationRunModelUpdate( collector, result.isOK() ) );
+        ususModel.updateComputation( result.isOK() );
     }
 
-    private void performComputation( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
-        computeJavaCodeMetrics( collector, monitor );
-    }
-
-    private void computeJavaCodeMetrics( List<CodeProportion> collector, IProgressMonitor monitor ) throws CoreException {
+    private void computeJavaCodeMetrics( IProgressMonitor monitor ) throws CoreException {
         new JDTDriver( target ).run( monitor );
-
-        for( CodeProportionKind metric : asList( CC, KG, ML, ACD, CW ) ) {
-            collector.add( UsusCorePlugin.getUsusModel().getCodeProportion( metric ) );
-        }
     }
 }

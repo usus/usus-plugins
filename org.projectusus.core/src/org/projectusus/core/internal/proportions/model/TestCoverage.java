@@ -18,7 +18,7 @@ class TestCoverage implements ITestCoverage {
         return asList( entry );
     }
 
-    void update( CodeProportion entry ) {
+    void refresh( CodeProportion entry ) {
         this.entry = entry;
     }
 }

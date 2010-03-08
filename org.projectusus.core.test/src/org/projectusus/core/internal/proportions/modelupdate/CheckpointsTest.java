@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.rawdata.ComputationRunModelUpdate;
 
 public class CheckpointsTest {
 

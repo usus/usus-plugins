@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.IUsusModel;
 
-public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
+public class DropRawDataPDETest extends PDETestForMetricsComputation  {
 
     @Before
     public void setup() throws CoreException{
@@ -20,50 +20,50 @@ public class ResetRawDataPDETest extends PDETestForMetricsComputation  {
    }
 
     @Test
-    public void resetWorkspaceWithFile1() throws Exception {
+    public void dropWorkspaceWithFile1() throws Exception {
         computeFile1AndCheckPreconditions();
         
-        UsusCorePlugin.getUsusModelWriteAccess().resetRawData(project);
+        UsusCorePlugin.getUsusModelWriteAccess().dropAllRawData();
         
         checkProjectRawDataIsEmpty1File( project );
    }
     
     @Test
-    public void resetProjectWithFile1() throws Exception {
+    public void dropProjectWithFile1() throws Exception {
         computeFile1AndCheckPreconditions();
         
-        UsusCorePlugin.getUsusModelWriteAccess().resetRawData(project);
+        UsusCorePlugin.getUsusModelWriteAccess().dropRawData(project);
         
         checkProjectRawDataIsEmpty1File( project );
    }
 
     @Test
-    public void resetProjectWithFiles2() throws Exception {
+    public void dropProjectWithFiles2() throws Exception {
         computeFiles2AndCheckPreconditions();
         
-        UsusCorePlugin.getUsusModelWriteAccess().resetRawData(project);
+        UsusCorePlugin.getUsusModelWriteAccess().dropRawData(project);
         
         checkProjectRawDataIsEmpty2Files( project );
    }
     
     private void checkProjectRawDataIsEmpty1File( IProject project ) {
         IUsusModel ususModel = UsusCorePlugin.getUsusModel();
-        assertEquals( 1, ususModel.getNumberOf( project, CodeProportionUnit.CLASS ));
-        assertEquals( 2, ususModel.getNumberOf( project, CodeProportionUnit.METHOD ));
+        assertEquals( 0, ususModel.getNumberOf( project, CodeProportionUnit.CLASS ));
+        assertEquals( 0, ususModel.getNumberOf( project, CodeProportionUnit.METHOD ));
         assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.KG ) );
         assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.ML ) );
         assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.CC ) );
-        assertEquals( 1, getClassCount() );
+        assertEquals( 0, getClassCount() );
     }
 
     private void checkProjectRawDataIsEmpty2Files( IProject project ) {
         IUsusModel ususModel = UsusCorePlugin.getUsusModel();
-        assertEquals( 2, ususModel.getNumberOf( project, CodeProportionUnit.CLASS ));
-        assertEquals( 3, ususModel.getNumberOf( project, CodeProportionUnit.METHOD ));
+        assertEquals( 0, ususModel.getNumberOf( project, CodeProportionUnit.CLASS ));
+        assertEquals( 0, ususModel.getNumberOf( project, CodeProportionUnit.METHOD ));
         assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.KG ) );
         assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.ML ) );
         assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.CC ) );
-        assertEquals( 2, getClassCount() );
+        assertEquals( 0, getClassCount() );
     }
     
     private void computeFile1AndCheckPreconditions() throws Exception {

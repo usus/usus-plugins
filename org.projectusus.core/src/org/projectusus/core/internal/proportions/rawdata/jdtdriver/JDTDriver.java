@@ -29,9 +29,9 @@ public class JDTDriver {
     }
 
     public void run( IProgressMonitor monitor ) throws CoreException {
-        if( target.isCleanRequested() ) {
-            model.dropAllRawData();
-        }
+        // if( target.isCleanRequested() ) {
+        // model.dropAllRawData();
+        // }
         for( IProject removedProject : target.getRemovedProjects() ) {
             model.dropRawData( removedProject );
         }
@@ -41,7 +41,7 @@ public class JDTDriver {
             for( IFile removedFile : target.getRemovedFiles( project ) ) {
                 model.dropRawData( removedFile );
             }
-            runInternal( project, monitor );
+            computeChangedFiles( project, monitor );
         }
         monitor.done();
     }
@@ -54,7 +54,7 @@ public class JDTDriver {
         return result;
     }
 
-    private void runInternal( IProject project, IProgressMonitor monitor ) throws CoreException {
+    private void computeChangedFiles( IProject project, IProgressMonitor monitor ) throws CoreException {
         Collection<IFile> files = target.getJavaFiles( project );
         if( !files.isEmpty() ) {
             StatusCollector statusCollector = new StatusCollector();

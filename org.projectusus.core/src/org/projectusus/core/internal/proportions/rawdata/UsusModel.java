@@ -4,6 +4,13 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
+import static java.util.Arrays.asList;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ACD;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CC;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.KG;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,7 +34,7 @@ import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
-import org.projectusus.core.internal.proportions.model.UsusModelRootNode;
+import org.projectusus.core.internal.proportions.model.UsusModelCache;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate;
 import org.projectusus.core.internal.proportions.modelupdate.UsusModelHistory;
@@ -38,12 +45,12 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     private final Set<IUsusModelListener> listeners;
     private final UsusModelHistory history;
-    private final UsusModelRootNode rootNode;
+    private final UsusModelCache cache;
     private final WorkspaceRawData workspaceRawData;
     private final FileRelationMetrics fileRelations;
 
     public UsusModel() {
-        rootNode = new UsusModelRootNode();
+        cache = new UsusModelCache();
         listeners = new HashSet<IUsusModelListener>();
         history = new UsusModelHistory();
         workspaceRawData = new WorkspaceRawData();
@@ -70,10 +77,6 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     public void dropRawData( IFile file ) {
         workspaceRawData.dropRawData( file );
-    }
-
-    public void resetRawData( IProject project ) {
-        workspaceRawData.resetRawData( project );
     }
 
     // interface of IUsusModelMetricsWriter
@@ -129,7 +132,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     }
 
     public IUsusElement[] getElements() {
-        return rootNode.getElements();
+        return cache.getElements();
     }
 
     // ///////////////////////////////////////////////////////////////////////
@@ -145,11 +148,17 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     public int getNumberOf( IProject project, CodeProportionUnit unit ) {
         ProjectRawData projectRD = workspaceRawData.getRawData( project );
+        if( projectRD == null ) {
+            return 0;
+        }
         return projectRD.getNumberOf( unit );
     }
 
     public int getNumberOfMethods( IType type ) throws JavaModelException {
         ClassRawData classRawData = getClassRawData( type );
+        if( classRawData == null ) {
+            return 0;
+        }
         return classRawData.getNumberOfMethods();
     }
 
@@ -263,10 +272,24 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     }
 
     private void doUpdate( IUsusModelUpdate updateCommand ) {
-        for( CodeProportion entry : updateCommand.getEntries() ) {
-            rootNode.add( entry );
-        }
+        cache.refreshAll( updateCommand.getEntries() );
         history.add( updateCommand );
         notifyListeners();
     }
+
+    public void updateComputation( boolean computationSuccessful ) {
+        ArrayList<CodeProportion> proportions = getCodeProportions();
+        cache.refreshAll( proportions );
+        history.add( new ComputationRunModelUpdate( proportions, computationSuccessful ) );
+        notifyListeners();
+    }
+
+    private ArrayList<CodeProportion> getCodeProportions() {
+        ArrayList<CodeProportion> entries = new ArrayList<CodeProportion>();
+        for( CodeProportionKind metric : asList( CC, KG, ML, ACD, CW ) ) {
+            entries.add( getCodeProportion( metric ) );
+        }
+        return entries;
+    }
+
 }

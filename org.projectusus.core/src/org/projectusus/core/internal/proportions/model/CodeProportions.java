@@ -22,7 +22,7 @@ class CodeProportions implements ICodeProportions {
         isisMetricsValues = new HashMap<CodeProportionKind, CodeProportion>();
     }
 
-    void update( CodeProportion proportion ) {
+    void refresh( CodeProportion proportion ) {
         isisMetricsValues.put( proportion.getMetric(), proportion );
     }
 

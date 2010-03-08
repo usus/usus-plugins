@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.CodeStatistic;
 import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.core.internal.proportions.rawdata.ComputationRunModelUpdate;
 
 public class UsusModelHistoryTest {
 
@@ -46,7 +47,7 @@ public class UsusModelHistoryTest {
     public void statusStaleAfterUnsuccessfulRun() {
         UsusModelHistory history = new UsusModelHistory();
         history.add( new TestRunModelUpdate( null ) );
-        history.add( new ComputationRunModelUpdate( new ArrayList<CodeProportion>(), false ) );
+        history.add( new ComputationRunModelUpdate( emptyEntries(), false ) );
         history.add( new TestRunModelUpdate( null ) );
         assertFalse( history.getLastStatus().isStale() );
     }

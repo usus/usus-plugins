@@ -22,6 +22,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     @Before
     public void setup() throws CoreException{
         writeModel = UsusCorePlugin.getUsusModelWriteAccess();
+//        writeModel.dropAllRawData();
         writeModel.dropRawData( project );
 //        makeUsusProject( false );
         addJavaNature();
@@ -54,7 +55,8 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         createAndCompute( "_twoKnowEachOther" );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 1.0, getACD(), 0.0001 );
-//        assertEquals( 2, model.getSumOfAllDirectChildrenOfAllClasses() );
+        // TODO NR
+//        assertEquals( 2, model.getSumOfAllDirectChildrenOfAllClasses() ); 
 //        assertEquals( 4, model.getSumOfAllKnownChildrenOfAllClasses() );
     }
     
