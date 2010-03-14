@@ -27,8 +27,6 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
 
     public DeltaCodeProportionComputationTarget( IResourceDelta delta ) throws CoreException {
         compute( delta );
-        filterNonJavaFrom( changes );
-        filterNonJavaFrom( deletions );
     }
 
     public Collection<IFile> getFiles( IProject project ) throws CoreException {
@@ -67,23 +65,5 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
 
     private void compute( IResourceDelta delta ) throws CoreException {
         delta.accept( new ChangedResourcesCollector( removedProjects, changes, deletions ) );
-    }
-
-    private void filterNonJavaFrom( Map<IProject, List<IFile>> collector ) {
-        for( IProject project : collector.keySet() ) {
-            List<IFile> files = collector.get( project );
-            collector.put( project, filter( files ) );
-        }
-
-    }
-
-    private List<IFile> filter( List<IFile> files ) {
-        List<IFile> result = new ArrayList<IFile>();
-        for( IFile file : files ) {
-            // if( isJavaFile( file ) ) {
-            result.add( file );
-            // }
-        }
-        return result;
     }
 }
