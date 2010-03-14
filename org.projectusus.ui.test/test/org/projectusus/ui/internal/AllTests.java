@@ -7,8 +7,6 @@ package org.projectusus.ui.internal;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.projectusus.core.filerelations.FileRelationMetrics;
-import org.projectusus.core.filerelations.FileRelationMetricsTest;
 import org.projectusus.core.internal.coverage.CoverageTest;
 import org.projectusus.core.internal.proportions.model.SQIComputerTest;
 import org.projectusus.core.internal.proportions.modelupdate.CheckpointsTest;
@@ -28,7 +26,8 @@ import org.projectusus.ui.internal.selection.EditorInputAnalysisTest;
         CoverageTest.class, //
         WiseCrackTest.class, //
         UsusModelTest.class, //
-        UsusModelStatusTest.class } )
+        UsusModelStatusTest.class, //
+        org.projectusus.core.filerelations.AllTests.class } )
         // TODO add MLTest.class
 public class AllTests {
 
