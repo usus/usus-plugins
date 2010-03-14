@@ -31,7 +31,7 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
         filterNonJavaFrom( deletions );
     }
 
-    public Collection<IFile> getJavaFiles( IProject project ) throws CoreException {
+    public Collection<IFile> getFiles( IProject project ) throws CoreException {
         return getFilesFrom( project, changes );
     }
 

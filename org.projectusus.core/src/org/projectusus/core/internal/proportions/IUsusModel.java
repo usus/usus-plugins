@@ -11,7 +11,6 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
-import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
@@ -50,6 +49,4 @@ public interface IUsusModel {
     int getCCValue( IMethod method ) throws JavaModelException;
 
     int getMLValue( IMethod method ) throws JavaModelException;
-
-    TestCoverage getInstructionCoverage();
 }

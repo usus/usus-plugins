@@ -50,8 +50,8 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         CodeStatistic basis;
         List<IHotspot> hotspots;
         if( metric == TA ) { // for the time being
-            violations = getInstructionCoverage().getCoveredCount();
             int total = getInstructionCoverage().getTotalCount();
+            violations = total - getInstructionCoverage().getCoveredCount();
             basis = new CodeStatistic( TA.getUnit(), total );
             hotspots = new ArrayList<IHotspot>();
             // TODO lf add hotspots

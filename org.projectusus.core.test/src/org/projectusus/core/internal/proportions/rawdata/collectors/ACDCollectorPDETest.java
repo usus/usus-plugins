@@ -22,9 +22,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     @Before
     public void setup() throws CoreException{
         writeModel = UsusCorePlugin.getUsusModelWriteAccess();
-//        writeModel.dropAllRawData();
         writeModel.dropRawData( project );
-//        makeUsusProject( false );
         addJavaNature();
         model = UsusCorePlugin.getUsusModel();
    }

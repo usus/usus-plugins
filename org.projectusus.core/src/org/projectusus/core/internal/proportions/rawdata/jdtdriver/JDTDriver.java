@@ -49,13 +49,13 @@ public class JDTDriver {
     private int countTicks( Collection<IProject> projects ) throws CoreException {
         int result = 0;
         for( IProject project : projects ) {
-            result += target.getJavaFiles( project ).size();
+            result += target.getFiles( project ).size();
         }
         return result;
     }
 
     private void computeChangedFiles( IProject project, IProgressMonitor monitor ) throws CoreException {
-        Collection<IFile> files = target.getJavaFiles( project );
+        Collection<IFile> files = target.getFiles( project );
         if( !files.isEmpty() ) {
             StatusCollector statusCollector = new StatusCollector();
             runDriver( project, files, statusCollector, monitor );

@@ -21,7 +21,7 @@ public interface ICodeProportionComputationTarget {
 
     Collection<IProject> getRemovedProjects();
 
-    Collection<IFile> getJavaFiles( IProject project ) throws CoreException;
+    Collection<IFile> getFiles( IProject project ) throws CoreException;
 
     Collection<IFile> getRemovedFiles( IProject project ) throws CoreException;
 

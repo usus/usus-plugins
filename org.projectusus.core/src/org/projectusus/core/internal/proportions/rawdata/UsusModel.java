@@ -27,7 +27,6 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
@@ -225,14 +224,6 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
             return methodRawData.getMLValue();
         }
         throw new IllegalStateException();
-    }
-
-    public TestCoverage getInstructionCoverage() {
-        return workspaceRawData.getInstructionCoverage();
-    }
-
-    public void resetInstructionCoverage() {
-        workspaceRawData.resetInstructionCoverage();
     }
 
     // //////////////////////////////////
