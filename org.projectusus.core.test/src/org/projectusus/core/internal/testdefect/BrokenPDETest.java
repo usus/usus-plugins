@@ -51,6 +51,7 @@ public class BrokenPDETest extends PDETestUsingWSProject {
         assertEquals( project, removedProject );
 
         getWorkspace().removeResourceChangeListener( listener );
+        project.open( new NullProgressMonitor() ); // this fixes the 2nd test
         super.tearDown();
     }
         

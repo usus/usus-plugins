@@ -29,5 +29,6 @@ public class IsUsusProjectPDETest extends PDETestUsingWSProject {
         project.close( new NullProgressMonitor() );
         waitForAutobuild();
         assertFalse( new IsUsusProject( project ).compute() );
+        project.open( new NullProgressMonitor() ); // this fixes some following tests
     }
 }

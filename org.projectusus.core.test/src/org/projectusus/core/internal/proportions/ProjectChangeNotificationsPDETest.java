@@ -43,6 +43,7 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 1, target.getProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
         assertEquals( otherProject, affectedProject );
+        // TODO zweites Projekt schlie§en!!
     }
 
     
@@ -59,6 +60,7 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 1, target.getRemovedProjects().size() );
         IProject removedProject = target.getRemovedProjects().iterator().next();
         assertEquals( project, removedProject );
+        project.open( new NullProgressMonitor() ); // this fixes some following tests
     }
     
     // TODO lf will this be enough? if the project was removed from consideration,
