@@ -33,9 +33,7 @@ public enum CodeProportionKind {
         @Override
         public boolean isViolatedBy( ClassRawData rawData ) {
             int classCount = UsusCorePlugin.getUsusModel().getNumberOf( CodeProportionUnit.CLASS );
-            double log_5_classCount = Math.log( classCount ) / Math.log( 5 );
-            double factor = 1.5 / Math.pow( 2, log_5_classCount );
-            double limit = factor * classCount;
+            double limit = calculateCcdLimit( classCount );
             return rawData.getCCDResult() > limit;
         }
     }, //
@@ -81,11 +79,11 @@ public enum CodeProportionKind {
         return unit;
     }
 
-    public boolean isViolatedBy( MethodRawData rawData ) {
+    public boolean isViolatedBy( @SuppressWarnings( "unused" ) MethodRawData rawData ) {
         return false;
     }
 
-    public boolean isViolatedBy( ClassRawData rawData ) {
+    public boolean isViolatedBy( @SuppressWarnings( "unused" ) ClassRawData rawData ) {
         return false;
     }
 
@@ -97,11 +95,18 @@ public enum CodeProportionKind {
         return calibration;
     }
 
-    public int getValueFor( MethodRawData rawData ) {
+    public int getValueFor( @SuppressWarnings( "unused" ) MethodRawData rawData ) {
         return 0;
     }
 
     public boolean operatesOnNonJavaFiles() {
         return false;
+    }
+
+    public int calculateCcdLimit( int classCount ) {
+        double log_5_classCount = Math.log( classCount ) / Math.log( 5 );
+        double factor = 1.5 / Math.pow( 2, log_5_classCount );
+        double limit = factor * classCount;
+        return (int)limit;
     }
 }
