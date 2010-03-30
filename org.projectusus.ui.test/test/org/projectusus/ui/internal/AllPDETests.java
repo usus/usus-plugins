@@ -20,12 +20,17 @@ import org.projectusus.core.internal.proportions.sqi.jdtdriver.StatusCollectorPD
 
 @RunWith(Suite.class)
 @SuiteClasses( {  
-		FindUsusProjectsPDETest.class, IsUsusProjectPDETest.class,
-		CodeProportionsPDETest.class, FileChangeNotificationsPDETest.class,
-		ProjectChangeNotificationsPDETest.class,
-		UsusProjectNotificationsPDETest.class,
-		DropRawDataPDETest.class, ACDCollectorPDETest.class,
-		StatusCollectorPDETest.class, ProjectYellowCountPDETest.class })
+		FindUsusProjectsPDETest.class, //
+		IsUsusProjectPDETest.class, //
+		CodeProportionsPDETest.class, //
+		FileChangeNotificationsPDETest.class, //
+		ProjectChangeNotificationsPDETest.class, //
+		UsusProjectNotificationsPDETest.class, //
+		DropRawDataPDETest.class, //
+		ACDCollectorPDETest.class, //
+		StatusCollectorPDETest.class, //
+		ProjectYellowCountPDETest.class, //
+		})
 public class AllPDETests {
 
 }
