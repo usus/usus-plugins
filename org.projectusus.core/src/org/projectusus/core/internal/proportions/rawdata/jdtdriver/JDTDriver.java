@@ -65,6 +65,7 @@ public class JDTDriver {
 
     private void runDriver( IProject project, Collection<IFile> files, StatusCollector statusCollector, IProgressMonitor monitor ) {
         computationStarted( project );
+        new ProjectDriver( project ).compute();
         for( IFile file : files ) {
             fileStarted( file );
             runDriverOnFile( file, statusCollector, monitor );

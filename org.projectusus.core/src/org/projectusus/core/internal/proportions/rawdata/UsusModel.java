@@ -119,6 +119,10 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         getProjectRawData( file.getProject() ).setYellowCount( file, markerCount );
     }
 
+    public void setYellowCount( IProject project, int markerCount ) {
+        getProjectRawData( project ).setYellowCount( markerCount );
+    }
+
     public FileRelationMetrics getFileRelationMetrics() {
         return fileRelations;
     }
@@ -282,5 +286,4 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         }
         return entries;
     }
-
 }

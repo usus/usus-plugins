@@ -24,7 +24,7 @@ public class MiscFileRawData {
     }
 
     public void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots ) {
-        if( metric == CodeProportionKind.CW ) {
+        if( metric == CodeProportionKind.CW && metric.isViolatedBy( this ) ) {
             IHotspot hotspot = yellowCount.createHotspot();
             ((Hotspot)hotspot).setFile( fileOfRawData );
             hotspots.add( hotspot );

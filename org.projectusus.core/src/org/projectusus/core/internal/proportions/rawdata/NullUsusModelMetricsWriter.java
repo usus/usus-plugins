@@ -56,4 +56,9 @@ public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
         // TODO Auto-generated method stub
         return null;
     }
+
+    public void setYellowCount( IProject project, int markerCount ) {
+        // TODO Auto-generated method stub
+
+    }
 }

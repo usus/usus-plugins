@@ -26,7 +26,9 @@ public interface IUsusModelMetricsWriter {
 
     void setInstructionCoverage( IProject project, IJavaElementCoverage coverage );
 
+    FileRelationMetrics getFileRelationMetrics();
+
     void setYellowCount( IFile file, int markerCount );
 
-    FileRelationMetrics getFileRelationMetrics();
+    void setYellowCount( IProject project, int markerCount );
 }

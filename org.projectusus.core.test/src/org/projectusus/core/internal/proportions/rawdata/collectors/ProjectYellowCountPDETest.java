@@ -37,36 +37,34 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
     public void setup() throws CoreException{
         writeModel = UsusCorePlugin.getUsusModelWriteAccess();
         writeModel.dropRawData( project );
-        makeUsusProject( false );
+        makeUsusProject( true );
         addJavaNature();
         model = UsusCorePlugin.getUsusModel();
    }
-    
 
     @Test
     public void findMarkerOnProject() throws CoreException {
         project.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-//        computeFile(file);
+        waitForAutobuild();
         int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
-// TODO Model um diesen Fall ergaenzen!! NR
-        assertEquals( "Not implemented yet...", 1, yellowCount );
+        assertEquals( 1, yellowCount );
     }
 
     @Test
     public void findMarkerOnJavaFile() throws CoreException {
         IFile file = createWSFile( "a.java", "no content" );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        computeJavaFile(file);
+        waitForAutobuild();
         int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
 
         assertEquals( 1, yellowCount );
     }
 
     @Test
-    public void findMarkerOnNonJavaFile() throws CoreException {
+    public void findMarkerOnNonJavaFile() throws Exception {
         IFile file = createWSFile( "a", "no content" );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        computeNonJavaFile(file);
+        waitForAutobuild();
         int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
         
         assertEquals( 1, yellowCount );
@@ -81,7 +79,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
         IMarker marker2 = file.createMarker( PROBLEM );
         marker2.setAttribute( LINE_NUMBER, 2 );
         marker2.setAttribute( SEVERITY, SEVERITY_WARNING );
-        computeNonJavaFile(file);
+        waitForAutobuild();
         int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
         int violations = model.getViolationCount( project, CodeProportionKind.CW );
 
@@ -90,28 +88,26 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
-    public void findMarkersOnMultipleFiles() throws CoreException {
+    public void findMarkersOnMultipleFiles() throws Exception {
         IFile file1 = createWSFile( "a", "no content" );
         file1.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         IFile file2 = createWSFile( "b.java", "no content" );
         file2.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        computeNonJavaFile(file1);
-        computeJavaFile(file2);
+        waitForAutobuild();
         int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
 
         assertEquals( 2, yellowCount );
     }
     
     @Test
-    public void hotspotsOnMultipleNonJavaFiles() throws CoreException {
+    public void hotspotsOnMultipleNonJavaFiles() throws Exception {
         IFile fileA = createWSFile( "a", "no content" );
         fileA.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         IFile fileB = createWSFile( "b", "no content" );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        computeNonJavaFile(fileA);
-        computeNonJavaFile(fileB);
-        CodeProportion yellowCount = model.getCodeProportion( CodeProportionKind.CW );
+        waitForAutobuild();
+       CodeProportion yellowCount = model.getCodeProportion( CodeProportionKind.CW );
 
         List<IHotspot> hotspots = yellowCount.getHotspots();
         assertEquals( 2, hotspots.size() );
@@ -128,8 +124,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
         IFile fileB = createWSFile( "b.java", "no content" );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        computeJavaFile(fileA);
-        computeJavaFile(fileB);
+        waitForAutobuild();
         CodeProportion yellowCount = model.getCodeProportion( CodeProportionKind.CW );
         
         List<IHotspot> hotspots = yellowCount.getHotspots();
@@ -149,7 +144,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_ERROR );
         // this is the guy
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        computeNonJavaFile(file);
+        waitForAutobuild();
         int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
 
         assertEquals( 1, yellowCount );

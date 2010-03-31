@@ -59,6 +59,16 @@ public enum CodeProportionKind {
         public boolean operatesOnNonJavaFiles() {
             return true;
         }
+
+        @Override
+        public boolean isViolatedBy( FileRawData fileRawData ) {
+            return fileRawData.getViolationCount( CW ) > 0;
+        }
+
+        @Override
+        public boolean isViolatedBy( MiscFileRawData miscFileRawData ) {
+            return miscFileRawData.getViolationCount( CW ) > 0;
+        }
     };
 
     private final String label;
@@ -84,6 +94,14 @@ public enum CodeProportionKind {
     }
 
     public boolean isViolatedBy( @SuppressWarnings( "unused" ) ClassRawData rawData ) {
+        return false;
+    }
+
+    public boolean isViolatedBy( @SuppressWarnings( "unused" ) MiscFileRawData miscFileRawData ) {
+        return false;
+    }
+
+    public boolean isViolatedBy( @SuppressWarnings( "unused" ) FileRawData fileRawData ) {
         return false;
     }
 

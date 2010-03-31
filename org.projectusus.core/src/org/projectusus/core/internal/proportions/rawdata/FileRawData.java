@@ -91,7 +91,7 @@ class FileRawData extends RawData<Integer, ClassRawData> {
 
     private List<IHotspot> getHotspotsForThisFile( CodeProportionKind metric ) {
         List<IHotspot> localHotspots = new ArrayList<IHotspot>();
-        if( metric == CodeProportionKind.CW ) {
+        if( metric == CodeProportionKind.CW && metric.isViolatedBy( this ) ) {
             localHotspots.add( yellowCount.createHotspot() );
         } else {
             super.addToHotspots( metric, localHotspots );
