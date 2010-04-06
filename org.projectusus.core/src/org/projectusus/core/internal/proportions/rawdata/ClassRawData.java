@@ -28,14 +28,12 @@ class ClassRawData extends RawData<Integer, MethodRawData> {
     private final int startPosition;
     private final int lineNumber;
     private final String className;
-    private final ClassRepresenter representer;
     private ClassDescriptor descriptor;
 
     public ClassRawData( ITypeBinding binding, String name, int startPosition, int line ) {
         this.className = name;
         this.startPosition = startPosition;
         this.lineNumber = line;
-        this.representer = new ClassRepresenter( this );
         try {
             this.descriptor = new ClassDescriptor( binding );
         } catch( JavaModelException e ) {
@@ -47,7 +45,6 @@ class ClassRawData extends RawData<Integer, MethodRawData> {
         this.className = name;
         this.startPosition = startPosition;
         this.lineNumber = line;
-        this.representer = new ClassRepresenter( this );
         this.descriptor = new ClassDescriptor( file, new Classname( name ), new Packagename( packageName ) );
     }
 
@@ -55,10 +52,6 @@ class ClassRawData extends RawData<Integer, MethodRawData> {
     @Override
     public String toString() {
         return "Class " + className + " in line " + lineNumber + " with " + getNumberOfMethods() + " methods."; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-    }
-
-    public ClassRepresenter getRepresenter() {
-        return representer;
     }
 
     void setCCValue( MethodDeclaration node, int value ) {

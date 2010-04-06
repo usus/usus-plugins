@@ -36,4 +36,8 @@ public class FileRelationMetrics {
         return relations.getDirectRelationsFrom( descriptor );
     }
 
+    public Set<ClassDescriptor> getAllClassDescriptors() {
+        return relations.getAllClassDescriptors();
+    }
+
 }

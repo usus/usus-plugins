@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.FileSupport;
 import org.projectusus.core.internal.proportions.model.IHotspot;
@@ -36,7 +35,7 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
     }
 
     public void dropRawData( IFile file ) {
-        UsusCorePlugin.getUsusModelMetricsWriter().getFileRelationMetrics().remove( file );
+        // UsusCorePlugin.getUsusModelMetricsWriter().getFileRelationMetrics().remove( file );
         remove( file );
     }
 

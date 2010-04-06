@@ -41,9 +41,10 @@ public class ClassDescriptor {
 
     @Override
     public int hashCode() {
-        HashCodeBuilder builder = new HashCodeBuilder();
-        builder.append( file ).append( classname ).append( packagename );
-        return builder.toHashCode();
+        return new HashCodeBuilder(). //
+                append( file ). //
+                append( classname ). //
+                append( packagename ).toHashCode();
     }
 
     private boolean equals( ClassDescriptor other ) {

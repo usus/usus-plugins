@@ -49,7 +49,6 @@ public class ClassGraphView extends ViewPart {
 		graphViewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
 		graphViewer.setContentProvider(new ClassNodeContentProvider());
 		graphViewer.setLabelProvider(new ClassNodeLabelProvider());
-		graphViewer.setInput(model.getRawData());
 		SpringLayoutAlgorithm layoutAlgorithm = new SpringLayoutAlgorithm(
 				LayoutStyles.NO_LAYOUT_NODE_RESIZING);
 		graphViewer.setFilters(new ViewerFilter[] { new ClassNodeFilter() });

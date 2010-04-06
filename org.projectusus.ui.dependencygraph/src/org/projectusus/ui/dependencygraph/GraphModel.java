@@ -47,24 +47,13 @@ public class GraphModel {
 		}
 	}
 
-	public void increaseLimit() {
-		minimumEdges++;
-		update();
-	}
-
-	public void decreaseLimit() {
-		if (minimumEdges > 0) {
-			minimumEdges--;
-		}
-		update();
-	}
-
 	public int getMinimumEdges() {
 		return minimumEdges;
 	}
 
 	public void setMinimumEdges(Integer minimumEdges) {
 		this.minimumEdges = minimumEdges;
+		update();
 	}
 
 }

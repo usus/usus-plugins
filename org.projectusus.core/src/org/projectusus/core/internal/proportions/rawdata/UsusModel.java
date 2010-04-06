@@ -192,8 +192,11 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     }
 
     public Set<ClassRepresenter> getAllClassRepresenters() {
-        Set<ClassRawData> classes = workspaceRawData.getAllClassRawData();
-        return ClassRepresenter.transformToRepresenterSet( classes );
+        Set<ClassRepresenter> representers = new HashSet<ClassRepresenter>();
+        for( ClassDescriptor classDescriptor : fileRelations.getAllClassDescriptors() ) {
+            representers.add( new ClassRepresenter( classDescriptor, fileRelations ) );
+        }
+        return representers;
     }
 
     // public int getSumOfAllDirectChildrenOfAllClasses() {

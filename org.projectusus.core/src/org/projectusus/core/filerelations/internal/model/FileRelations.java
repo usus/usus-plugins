@@ -48,4 +48,13 @@ public class FileRelations extends Relations<IFile, FileRelation> {
             outgoingRelations.remove( relation.getSourceFile(), relation );
         }
     }
+
+    public Set<ClassDescriptor> getAllClassDescriptors() {
+        Set<ClassDescriptor> descriptors = new HashSet<ClassDescriptor>();
+        for( FileRelation relation : getAllDirectRelations() ) {
+            descriptors.add( relation.getSource() );
+            descriptors.add( relation.getTarget() );
+        }
+        return descriptors;
+    }
 }

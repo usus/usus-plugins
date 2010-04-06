@@ -16,6 +16,6 @@ public class ClassNodeLabelProvider extends LabelProvider {
 			ClassRepresenter dest = (ClassRepresenter) data.dest;
 			return String.valueOf(dest.getNumberOfAllChildren());
 		}
-		throw new RuntimeException("Type not supported");
+		throw new RuntimeException("Type not supported: " + element.getClass().toString());
 	}
 }

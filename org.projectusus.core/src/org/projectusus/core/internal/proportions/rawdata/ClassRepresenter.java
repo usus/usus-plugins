@@ -3,34 +3,43 @@ package org.projectusus.core.internal.proportions.rawdata;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 
 public class ClassRepresenter {
 
-    private final ClassRawData clazz;
+    private final ClassDescriptor clazz;
+    private static FileRelationMetrics relations;
 
-    public ClassRepresenter( ClassRawData clazz ) {
+    public ClassRepresenter( ClassDescriptor clazz, FileRelationMetrics relations ) {
         this.clazz = clazz;
+        initRelations( relations );
     }
 
-    public static Set<ClassRepresenter> transformToRepresenterSet( Set<ClassRawData> classes ) {
+    private void initRelations( FileRelationMetrics relations ) {
+        if( ClassRepresenter.relations == null ) {
+            ClassRepresenter.relations = relations;
+        }
+    }
+
+    private Set<ClassRepresenter> transformToRepresenterSet( Set<ClassDescriptor> classes ) {
         Set<ClassRepresenter> representers = new HashSet<ClassRepresenter>();
-        for( ClassRawData clazz : classes ) {
-            representers.add( clazz.getRepresenter() );
+        for( ClassDescriptor clazz : classes ) {
+            representers.add( new ClassRepresenter( clazz, relations ) );
         }
         return representers;
     }
 
-    public Set<ClassDescriptor> getChildren() {
-        return clazz.getChildren();
+    public Set<ClassRepresenter> getChildren() {
+        return transformToRepresenterSet( relations.getChildren( clazz ) );
     }
 
     public String getClassName() {
-        return clazz.getClassName();
+        return clazz.getClassname().toString();
     }
 
     public int getNumberOfAllChildren() {
-        return 0; // TODO
+        return relations.getCCD( clazz );
     }
 
     public int getNumberOfChildren() {
@@ -39,6 +48,16 @@ public class ClassRepresenter {
 
     public int getNumberOfParents() {
         return 0; // TODO
+    }
+
+    @Override
+    public boolean equals( Object obj ) {
+        return obj instanceof ClassRepresenter && clazz.equals( ((ClassRepresenter)obj).clazz );
+    }
+
+    @Override
+    public int hashCode() {
+        return clazz.hashCode();
     }
 
 }
