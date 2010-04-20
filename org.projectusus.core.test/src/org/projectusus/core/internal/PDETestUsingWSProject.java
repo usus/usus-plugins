@@ -5,6 +5,8 @@
 package org.projectusus.core.internal;
 
 import static org.eclipse.core.resources.IncrementalProjectBuilder.CLEAN_BUILD;
+import static org.eclipse.core.resources.IncrementalProjectBuilder.FULL_BUILD;
+import static org.eclipse.core.resources.IncrementalProjectBuilder.INCREMENTAL_BUILD;
 import static org.eclipse.core.resources.ResourcesPlugin.FAMILY_AUTO_BUILD;
 import static org.eclipse.core.resources.ResourcesPlugin.FAMILY_AUTO_REFRESH;
 import static org.eclipse.core.resources.ResourcesPlugin.FAMILY_MANUAL_BUILD;
@@ -18,6 +20,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.JavaCore;
@@ -36,18 +39,35 @@ public class PDETestUsingWSProject {
         project.create( new NullProgressMonitor() );
         project.open( new NullProgressMonitor() );
         makeUsusProject( true );
-        waitForAutobuild();
+        waitForFullBuild();
     }
 
     @After
     public void tearDown() throws CoreException { 
         project.delete( true, new NullProgressMonitor() );
-        waitForAutobuild();
+        waitForFullBuild();
     }
 
-    protected void waitForAutobuild() throws CoreException {
-        getWorkspace().build( CLEAN_BUILD, new NullProgressMonitor() );
-        System.out.print( "  Waiting for autobuild to complete ..." );
+    protected void waitForFullBuild() throws CoreException {
+        getWorkspace().build( FULL_BUILD, new NullProgressMonitor() );
+//        getWorkspace().build( CLEAN_BUILD, new NullProgressMonitor() );
+        System.out.print( "  Waiting for full build to complete ..." );
+        boolean retry = true;
+        while( retry ) {
+            try {
+                getJobManager().join( FAMILY_AUTO_REFRESH, new NullProgressMonitor() );
+                getJobManager().join( FAMILY_AUTO_BUILD, new NullProgressMonitor() );
+                getJobManager().join( FAMILY_MANUAL_BUILD, new NullProgressMonitor() );
+                retry = false;
+            } catch( Exception exc ) {
+                // ignore and retry
+            }
+        }
+        System.out.print( " OK.\n" );
+    }
+    protected void waitForIncrementalBuild() throws CoreException {
+        getWorkspace().build( INCREMENTAL_BUILD, new NullProgressMonitor() );
+        System.out.print( "  Waiting for incremental build to complete ..." );
         boolean retry = true;
         while( retry ) {
             try {
@@ -70,25 +90,29 @@ public class PDETestUsingWSProject {
     
     protected IFile createWSFile( String fileName, String content ) throws CoreException {
         IFile result = createWSFilePlain( fileName, content );
-        waitForAutobuild();
+        waitForFullBuild();
         return result;
+    }
+    
+    protected void deleteWSFile( IFile file) throws CoreException{
+        file.delete( true, new NullProgressMonitor() );
     }
 
     protected void updateFileContent( IFile file, String newContent ) throws CoreException {
         file.setContents( createInputStream( newContent ), true, false, new NullProgressMonitor() );
-        waitForAutobuild();
+        waitForFullBuild();
     }
     
     protected IFolder createWSFolder( String name ) throws CoreException {
         IFolder result = project.getFolder( name );
         result.create( true, true, new NullProgressMonitor() );
-        waitForAutobuild();
+        waitForFullBuild();
         return result;
     }
     
     protected void makeUsusProject( boolean makeUsusProject ) throws CoreException {
         getUsusProjectAdapter().setUsusProject( makeUsusProject );
-        waitForAutobuild();
+        waitForFullBuild();
     }
 
     protected IUSUSProject getUsusProjectAdapter() {
@@ -99,7 +123,7 @@ public class PDETestUsingWSProject {
         IProjectDescription description = project.getDescription();
         description.setNatureIds( new String[] { JavaCore.NATURE_ID } );
         project.setDescription( description, new NullProgressMonitor() );
-        waitForAutobuild();
+        waitForFullBuild();
     }
     
     private InputStream createInputStream( String content ) {

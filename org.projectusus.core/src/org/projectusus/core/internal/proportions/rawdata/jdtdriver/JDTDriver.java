@@ -29,16 +29,15 @@ public class JDTDriver {
     }
 
     public void run( IProgressMonitor monitor ) throws CoreException {
-        // if( target.isCleanRequested() ) {
-        // model.dropAllRawData();
-        // }
         for( IProject removedProject : target.getRemovedProjects() ) {
+            System.out.println( "Removed project " + removedProject.getName() );
             model.dropRawData( removedProject );
         }
         monitor.beginTask( jdtDriver_computing, countTicks( target.getProjects() ) );
         for( IProject project : target.getProjects() ) {
             monitor.subTask( project.getName() );
             for( IFile removedFile : target.getRemovedFiles( project ) ) {
+                System.out.println( "Removed file " + removedFile.getName() );
                 model.dropRawData( removedFile );
             }
             computeChangedFiles( project, monitor );
@@ -67,6 +66,7 @@ public class JDTDriver {
         computationStarted( project );
         new ProjectDriver( project ).compute();
         for( IFile file : files ) {
+            System.out.println( "Analyze file " + file.getName() );
             fileStarted( file );
             runDriverOnFile( file, statusCollector, monitor );
         }

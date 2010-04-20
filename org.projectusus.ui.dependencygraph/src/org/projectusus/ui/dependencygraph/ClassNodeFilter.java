@@ -8,12 +8,11 @@ public class ClassNodeFilter extends ViewerFilter {
 
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-//		if (element instanceof ClassRepresenter) {
-//			ClassRepresenter classRawData = (ClassRepresenter) element;
-//			return (classRawData.getNumberOfChildren()
-//					+ classRawData.getNumberOfParents() > GraphModel
-//					.getInstance().getMinimumEdges() - 1);
-//		}
+		if (element instanceof ClassRepresenter) {
+			ClassRepresenter classRepresenter = (ClassRepresenter) element;
+			return (classRepresenter.getBottleneckCount() >= GraphModel
+					.getInstance().getMinimumEdges());
+		}
 		return true;
 	}
 }

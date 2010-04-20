@@ -40,7 +40,7 @@ public class BrokenPDETest extends PDETestUsingWSProject {
         TestResourceChangeListener listener = new TestResourceChangeListener();
         getWorkspace().addResourceChangeListener( listener );
         project.close( new NullProgressMonitor() );
-        waitForAutobuild();
+        waitForFullBuild();
         
         listener.assertNoException();
         

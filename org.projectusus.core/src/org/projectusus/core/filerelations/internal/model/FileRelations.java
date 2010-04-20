@@ -1,6 +1,9 @@
 package org.projectusus.core.filerelations.internal.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -10,13 +13,15 @@ import org.projectusus.core.filerelations.model.FileRelation;
 
 public class FileRelations extends Relations<IFile, FileRelation> {
 
+    private Set<FileRelation> registeredForRepair = new HashSet<FileRelation>();
+
     public void add( FileRelation relation ) {
         add( relation, relation.getSourceFile(), relation.getTargetFile() );
     }
 
-    public Set<FileRelation> getTransitiveRelationsFrom( IFile file, Classname clazz ) {
+    public Set<FileRelation> getTransitiveRelationsFrom( IFile file, Classname classname ) {
         Set<FileRelation> transitives = new HashSet<FileRelation>();
-        getTransitiveRelationsFrom( file, clazz, transitives );
+        getTransitiveRelationsFrom( file, classname, transitives );
         return transitives;
     }
 
@@ -38,23 +43,49 @@ public class FileRelations extends Relations<IFile, FileRelation> {
         }
     }
 
-    public void removeAllIncidentRelations( IFile file ) {
-        Set<FileRelation> relations = outgoingRelations.removeAll( file );
-        for( FileRelation relation : relations ) {
-            incomingRelations.remove( relation.getTargetFile(), relation );
-        }
-        relations = incomingRelations.removeAll( file );
-        for( FileRelation relation : relations ) {
-            outgoingRelations.remove( relation.getSourceFile(), relation );
+    public Set<FileRelation> getTransitiveRelationsTo( IFile file, Classname classname ) {
+        Set<FileRelation> transitives = new HashSet<FileRelation>();
+        getTransitiveRelationsTo( file, classname, transitives );
+        return transitives;
+    }
+
+    private void getTransitiveRelationsTo( IFile file, Classname classname, Set<FileRelation> transitives ) {
+        for( FileRelation relation : getIncomingRelationsTo( file ) ) {
+            if( relation.hasTargetClass( classname ) && transitives.add( relation ) ) {
+                getTransitiveRelationsTo( relation.getSourceFile(), relation.getSourceClassname(), transitives );
+            }
         }
     }
 
-    public Set<ClassDescriptor> getAllClassDescriptors() {
-        Set<ClassDescriptor> descriptors = new HashSet<ClassDescriptor>();
-        for( FileRelation relation : getAllDirectRelations() ) {
-            descriptors.add( relation.getSource() );
-            descriptors.add( relation.getTarget() );
+    public void markAndRemoveAllRelationsStartingAt( IFile file ) {
+        Set<FileRelation> removedRelations = outgoingRelations.removeAll( file );
+        for( FileRelation relation : removedRelations ) {
+            relation.markAsObsolete();
+            incomingRelations.remove( relation.getTargetFile(), relation );
         }
-        return descriptors;
+    }
+
+    public void registerAllRelationsEndingAt( IFile file ) {
+        registeredForRepair.addAll( incomingRelations.get( file ) );
+    }
+
+    public List<FileRelation> extractRelationsRegisteredForRepair() {
+        List<FileRelation> relationsToRepair = new ArrayList<FileRelation>();
+        for( Iterator<FileRelation> iter = registeredForRepair.iterator(); iter.hasNext(); ) {
+            addRelationToRepairList( relationsToRepair, iter.next() );
+            iter.remove();
+        }
+        return relationsToRepair;
+    }
+
+    private void addRelationToRepairList( List<FileRelation> relationsToRepair, FileRelation relation ) {
+        System.out.println( "Found non-obsolete relation: " + relation );
+        if( !relation.isObsolete() ) {
+            relationsToRepair.add( relation );
+        }
+    }
+
+    public void remove( FileRelation relation ) {
+        remove( relation, relation.getSourceFile(), relation.getTargetFile() );
     }
 }

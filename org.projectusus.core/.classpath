@@ -4,6 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="pdetest"/>
 	<classpathentry exported="true" kind="lib" path="lib/joda-time-1.6.jar" sourcepath="lib/joda-time-1.6-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/junit-4.8.1.jar" sourcepath="org.projectusus.coresrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-lang-2.4.jar" sourcepath="org.projectusus.coresrc.zip"/>

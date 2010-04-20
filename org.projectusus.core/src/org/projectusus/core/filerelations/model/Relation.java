@@ -24,6 +24,7 @@ public class Relation<T> {
     @Override
     public int hashCode() {
         HashCodeBuilder builder = new HashCodeBuilder();
+        builder.append( source );
         builder.append( target );
         return builder.toHashCode();
     }

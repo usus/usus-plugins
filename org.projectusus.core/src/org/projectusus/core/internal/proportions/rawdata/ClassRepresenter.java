@@ -42,14 +42,6 @@ public class ClassRepresenter {
         return relations.getCCD( clazz );
     }
 
-    public int getNumberOfChildren() {
-        return 0; // TODO
-    }
-
-    public int getNumberOfParents() {
-        return 0; // TODO
-    }
-
     @Override
     public boolean equals( Object obj ) {
         return obj instanceof ClassRepresenter && clazz.equals( ((ClassRepresenter)obj).clazz );
@@ -58,6 +50,10 @@ public class ClassRepresenter {
     @Override
     public int hashCode() {
         return clazz.hashCode();
+    }
+
+    public int getBottleneckCount() {
+        return relations.getBottleneckCount( clazz );
     }
 
 }

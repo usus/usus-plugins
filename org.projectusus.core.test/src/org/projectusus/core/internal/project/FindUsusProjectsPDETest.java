@@ -39,7 +39,7 @@ public class FindUsusProjectsPDETest extends PDETestUsingWSProject {
     @Test
     public void noProjects() throws CoreException {
         project.delete( true, new NullProgressMonitor() );
-        waitForAutobuild();
+        waitForFullBuild();
         assertTrue( computeWithAllProjects().isEmpty() );
     }
 
@@ -77,7 +77,7 @@ public class FindUsusProjectsPDETest extends PDETestUsingWSProject {
         result.open( new NullProgressMonitor() );
         IUSUSProject ususProject = (IUSUSProject)result.getAdapter( IUSUSProject.class );
         ususProject.setUsusProject( makeUsusProject );
-        waitForAutobuild();
+        waitForFullBuild();
         return result;
     }
 }

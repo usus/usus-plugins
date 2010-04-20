@@ -34,7 +34,7 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
     public void projectCreated() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
         IProject otherProject = createAdditionalProjectWithFile();
-        waitForAutobuild();
+        waitForFullBuild();
         
         listener.assertNoException();
         
@@ -51,7 +51,7 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
     public void projectClosed() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
         project.close( new NullProgressMonitor() );
-        waitForAutobuild();
+        waitForFullBuild();
         
         listener.assertNoException();
         
@@ -70,10 +70,10 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
     public void projectOpened() throws Exception {
         createWSFile( "someFile.java", "some content" );
         project.close( new NullProgressMonitor() );
-        waitForAutobuild();
+        waitForFullBuild();
         getWorkspace().addResourceChangeListener( listener );
         project.open( new NullProgressMonitor() );
-        waitForAutobuild();
+        waitForFullBuild();
         
         listener.assertNoException();
         
@@ -86,10 +86,10 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
     
     @Test
     public void projectDeleted() throws Exception {
-        waitForAutobuild();
+        waitForFullBuild();
         getWorkspace().addResourceChangeListener( listener );
         project.delete( true, new NullProgressMonitor() );
-        waitForAutobuild();
+        waitForFullBuild();
         
         listener.assertNoException();
         

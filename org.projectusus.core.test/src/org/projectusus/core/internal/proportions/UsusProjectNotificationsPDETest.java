@@ -63,7 +63,7 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
         makeUsusProject( false );
         getWorkspace().addResourceChangeListener( listener );
         createWSFile( "a.java", "file that is ignored because in non-usus project" );
-        waitForAutobuild();
+        waitForFullBuild();
 
         listener.assertNoException();
 

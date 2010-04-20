@@ -27,6 +27,7 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
@@ -66,16 +67,50 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         doUpdate( updateCommand );
     }
 
-    public void dropAllRawData() {
-        workspaceRawData.dropAllRawData();
-    }
-
     public void dropRawData( IProject project ) {
+        for( IFile fileInProject : workspaceRawData.getProjectRawData( project ).getAllKeys() ) {
+            fileRelations.remove( fileInProject );
+        }
         workspaceRawData.dropRawData( project );
     }
 
     public void dropRawData( IFile file ) {
+        fileRelations.remove( file );
         workspaceRawData.dropRawData( file );
+    }
+
+    public void updateComputation( boolean computationSuccessful ) {
+        ArrayList<CodeProportion> proportions = getCodeProportions();
+        cache.refreshAll( proportions );
+        history.add( new ComputationRunModelUpdate( proportions, computationSuccessful ) );
+        List<FileRelation> relationsToRepair = fileRelations.findRelationsThatNeedRepair();
+        repairRelations( relationsToRepair );
+        notifyListeners();
+    }
+
+    private void repairRelations( List<FileRelation> relationsToRepair ) {
+        for( FileRelation relation : relationsToRepair ) {
+            System.out.println( "Found relation to repair: " + relation );
+            removeRelationIfTargetIsGone( relation );
+        }
+
+    }
+
+    private void removeRelationIfTargetIsGone( FileRelation relation ) {
+        IFile targetFile = relation.getTargetFile();
+        FileRawData fileRawData = getFileRawData( targetFile );
+        if( fileRawData == null ) {
+            System.out.println( "Cannot find file, removing relation " + relation );
+            fileRelations.remove( relation );
+        } else {
+            ClassRawData classRawData = fileRawData.findClass( relation.getTargetClassname() );
+            if( classRawData == null ) {
+                System.out.println( "Cannot find target class, removing relation " + relation );
+                fileRelations.remove( relation );
+            } else {
+                System.out.println( "Target class found, relation repaired." );
+            }
+        }
     }
 
     // interface of IUsusModelMetricsWriter
@@ -101,6 +136,11 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     public void addClass( IFile file, AbstractTypeDeclaration node ) {
         getFileRawData( file ).addClass( node );
+        try {
+            fileRelations.addClass( node.resolveBinding() );
+        } catch( JavaModelException e ) {
+            e.printStackTrace();
+        }
     }
 
     public void setMLValue( IFile file, MethodDeclaration methodDecl, int value ) {
@@ -272,13 +312,6 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     private void doUpdate( IUsusModelUpdate updateCommand ) {
         cache.refreshAll( updateCommand.getEntries() );
         history.add( updateCommand );
-        notifyListeners();
-    }
-
-    public void updateComputation( boolean computationSuccessful ) {
-        ArrayList<CodeProportion> proportions = getCodeProportions();
-        cache.refreshAll( proportions );
-        history.add( new ComputationRunModelUpdate( proportions, computationSuccessful ) );
         notifyListeners();
     }
 

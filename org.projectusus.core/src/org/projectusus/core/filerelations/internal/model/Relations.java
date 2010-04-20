@@ -42,6 +42,11 @@ public class Relations<K, R extends Relation<?>> {
         incomingRelations.put( targetKey, relation );
     }
 
+    public void remove( R relation, K sourceKey, K targetKey ) {
+        outgoingRelations.remove( sourceKey, relation );
+        incomingRelations.remove( targetKey, relation );
+    }
+
     public boolean containsKey( K key ) {
         return outgoingRelations.containsKey( key ) || incomingRelations.containsKey( key );
     }
@@ -52,5 +57,9 @@ public class Relations<K, R extends Relation<?>> {
 
     protected Set<R> getOutgoingRelationsFrom( K key ) {
         return outgoingRelations.get( key );
+    }
+
+    protected Set<R> getIncomingRelationsTo( K key ) {
+        return incomingRelations.get( key );
     }
 }

@@ -44,15 +44,16 @@ public class ClassDescriptor {
         return new HashCodeBuilder(). //
                 append( file ). //
                 append( classname ). //
-                append( packagename ).toHashCode();
+                append( packagename ). //
+                toHashCode();
     }
 
     private boolean equals( ClassDescriptor other ) {
-        EqualsBuilder builder = new EqualsBuilder();
-        builder.append( file, other.file );
-        builder.append( classname, other.classname );
-        builder.append( packagename, other.packagename );
-        return builder.isEquals();
+        return new EqualsBuilder(). //
+                append( file, other.file ). //
+                append( classname, other.classname ). //
+                append( packagename, other.packagename ). //
+                isEquals();
     }
 
     @Override

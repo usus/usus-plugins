@@ -55,7 +55,7 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         
         getWorkspace().addResourceChangeListener( listener );
         file.delete( true, new NullProgressMonitor() );
-        waitForAutobuild();
+        waitForFullBuild();
         
         listener.assertNoException();
         
@@ -95,7 +95,7 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         
         getWorkspace().addResourceChangeListener( listener );
         file.move( folder.getFullPath().append( file.getName() ), true, new NullProgressMonitor() );
-        waitForAutobuild();
+        waitForFullBuild();
         
         listener.assertNoException();
         
@@ -124,7 +124,7 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
                 createWSFilePlain( "c.java", "stuff" );
             }
         }, new NullProgressMonitor());
-        waitForAutobuild();
+        waitForFullBuild();
         
         listener.assertNoException();
         

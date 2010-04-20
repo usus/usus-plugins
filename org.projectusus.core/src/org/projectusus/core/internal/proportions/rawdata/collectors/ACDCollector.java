@@ -57,11 +57,18 @@ public class ACDCollector extends Collector {
             return true;
         }
         ITypeBinding targetType = node.resolveBinding();
-        if( targetType != null && targetType.isFromSource() ) {
+        if( isTypeInSourceFile( targetType ) && hasNothingToDoWithTypeVariables( targetType ) ) {
             UsusCorePlugin.getUsusModelMetricsWriter().addClassReference( currentType, targetType );
-
         }
         return true;
+    }
+
+    private boolean isTypeInSourceFile( ITypeBinding targetType ) {
+        return targetType != null && targetType.isFromSource();
+    }
+
+    private boolean hasNothingToDoWithTypeVariables( ITypeBinding targetType ) {
+        return !targetType.isTypeVariable() && !targetType.isCapture() && !targetType.isWildcardType();
     }
 
     /**

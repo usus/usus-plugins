@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.internal.proportions.model.Hotspot;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
@@ -174,5 +175,14 @@ class FileRawData extends RawData<Integer, ClassRawData> {
             return yellowCount.getOverallMetric( metric );
         }
         return super.getOverallMetric( metric );
+    }
+
+    public ClassRawData findClass( Classname classname ) {
+        for( ClassRawData classRD : getAllRawDataElements() ) {
+            if( classRD.getClassName().equals( classname.toString() ) ) {
+                return classRD;
+            }
+        }
+        return null;
     }
 }

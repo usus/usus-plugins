@@ -20,15 +20,6 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation  {
    }
 
     @Test
-    public void dropWorkspaceWithFile1() throws Exception {
-        computeFile1AndCheckPreconditions();
-        
-        UsusCorePlugin.getUsusModelWriteAccess().dropAllRawData();
-        
-        checkProjectRawDataIsEmpty1File( project );
-   }
-    
-    @Test
     public void dropProjectWithFile1() throws Exception {
         computeFile1AndCheckPreconditions();
         
