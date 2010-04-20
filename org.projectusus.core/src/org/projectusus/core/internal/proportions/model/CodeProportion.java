@@ -39,17 +39,17 @@ public class CodeProportion extends PlatformObject {
     }
 
     private static double computeSQI( CodeProportionKind metric, int violations, CodeStatistic basis ) {
-        double sqi;
         if( metric == CodeProportionKind.ACD ) {
-            sqi = new AcdSQIComputer().compute( UsusCorePlugin.getUsusModel().getAllClassesCCDResults() );
-        } else if( metric == CodeProportionKind.TA ) {
-            sqi = new CodeProportionsRatio( violations, basis.getValue() ).compute();
-        } else if( metric == CodeProportionKind.CW ) {
-            sqi = new CodeProportionsRatio( violations, basis.getValue() ).computeReverseIndicator();
-        } else {
-            sqi = new SQIComputer( basis, violations, metric ).compute();
+            return new AcdSQIComputer().compute( UsusCorePlugin.getUsusModel().getAllClassesCCDResults() );
         }
-        return sqi;
+        if( metric == CodeProportionKind.TA ) {
+            return new CodeProportionsRatio( violations, basis.getValue() ).computeReverseIndicator();
+        }
+        if( metric == CodeProportionKind.CW ) {
+            return new CodeProportionsRatio( violations, basis.getValue() ).computeReverseIndicator();
+        }
+        return new CodeProportionsRatio( violations, basis.getValue() ).computeReverseIndicator();
+        // return new SQIComputer( basis, violations, metric ).compute();
     }
 
     public Double getSQIValue() {
