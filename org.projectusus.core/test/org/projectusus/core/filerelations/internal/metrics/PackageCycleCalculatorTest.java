@@ -18,23 +18,24 @@ import org.projectusus.core.filerelations.internal.model.FileRelations;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.filerelations.model.PackagenameFactory;
 import org.projectusus.core.filerelations.model.Scenario;
 
 @RunWith( Parameterized.class )
 public class PackageCycleCalculatorTest {
 
-    private static Packagename I = new Packagename( "I" ); //$NON-NLS-1$
+    private static Packagename I = PackagenameFactory.get( "I" ); //$NON-NLS-1$
     private static ClassDescriptor I_A = createDescriptor( I );
     private static ClassDescriptor I_B = createDescriptor( I );
 
-    private static Packagename II = new Packagename( "II" ); //$NON-NLS-1$
+    private static Packagename II = PackagenameFactory.get( "II" ); //$NON-NLS-1$
     private static ClassDescriptor II_A = createDescriptor( II );
     private static ClassDescriptor II_B = createDescriptor( II );
 
-    private static Packagename III = new Packagename( "III" ); //$NON-NLS-1$
+    private static Packagename III = PackagenameFactory.get( "III" ); //$NON-NLS-1$
     private static ClassDescriptor III_A = createDescriptor( III );
 
-    private static Packagename IV = new Packagename( "IV" ); //$NON-NLS-1$
+    private static Packagename IV = PackagenameFactory.get( "IV" ); //$NON-NLS-1$
     private static ClassDescriptor IV_A = createDescriptor( IV );
 
     private static FileRelation I_AtoI_B = new FileRelation( I_A, I_B );

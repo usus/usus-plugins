@@ -5,24 +5,17 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 import org.projectusus.ui.dependencygraph.ClassGraphView;
-import org.projectusus.ui.dependencygraph.GraphModel;
 
-/**
- * Refresh action for acd view.
- * 
- * @author Joachim Meyer - meyer.joachim@gmail.com
- * 
- */
 public class RefreshGraphView implements IViewActionDelegate {
-	
-	ClassGraphView viewPart;
+
+	private ClassGraphView classGraphView;
 
 	public void run(IAction arg0) {
-		viewPart.refresh();
+		classGraphView.refresh();
 	}
 
-	public void init(IViewPart arg0) {
-		viewPart = (ClassGraphView) arg0;
+	public void init(IViewPart viewPart) {
+		this.classGraphView = (ClassGraphView) viewPart;
 	}
 
 	public void selectionChanged(IAction arg0, ISelection arg1) {

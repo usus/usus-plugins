@@ -2,19 +2,19 @@ package org.projectusus.ui.dependencygraph;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.zest.core.viewers.EntityConnectionData;
-import org.projectusus.core.internal.proportions.rawdata.ClassRepresenter;
+import org.projectusus.core.internal.proportions.rawdata.GraphNode;
 
-public class ClassNodeLabelProvider extends LabelProvider {
+public class NodeLabelProvider extends LabelProvider {
 	@Override
 	public String getText(Object element) {
-		if (element instanceof ClassRepresenter) {
-			ClassRepresenter acdNode = (ClassRepresenter) element;
-			return acdNode.getClassName();
+		if (element instanceof GraphNode) {
+			GraphNode node = (GraphNode) element;
+			return node.getNodeName();
 		}
 		if (element instanceof EntityConnectionData) {
 			EntityConnectionData data = (EntityConnectionData) element;
-			ClassRepresenter dest = (ClassRepresenter) data.dest;
-			return String.valueOf(dest.getNumberOfAllChildren());
+			GraphNode dest = (GraphNode) data.dest;
+			return dest.getEdgeEndLabel(); 
 		}
 		throw new RuntimeException("Type not supported: " + element.getClass().toString());
 	}

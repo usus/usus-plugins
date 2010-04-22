@@ -233,11 +233,11 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     }
 
     public Set<ClassRepresenter> getAllClassRepresenters() {
-        Set<ClassRepresenter> representers = new HashSet<ClassRepresenter>();
-        for( ClassDescriptor classDescriptor : fileRelations.getAllClassDescriptors() ) {
-            representers.add( new ClassRepresenter( classDescriptor, fileRelations ) );
-        }
-        return representers;
+        return ClassRepresenter.transformToRepresenterSet( fileRelations.getAllClassDescriptors(), fileRelations );
+    }
+
+    public Set<PackageRepresenter> getAllPackages() {
+        return PackageRepresenter.transformToRepresenterSet( fileRelations.getAllPackages(), fileRelations );
     }
 
     // public int getSumOfAllDirectChildrenOfAllClasses() {

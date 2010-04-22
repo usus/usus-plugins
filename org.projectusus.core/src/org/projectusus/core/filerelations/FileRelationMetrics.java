@@ -11,6 +11,8 @@ import org.projectusus.core.filerelations.internal.metrics.BottleneckCalculator;
 import org.projectusus.core.filerelations.internal.model.FileRelations;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.FileRelation;
+import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.filerelations.model.PackagenameFactory;
 
 public class FileRelationMetrics {
 
@@ -56,6 +58,10 @@ public class FileRelationMetrics {
         return classes.getAll();
     }
 
+    public Set<Packagename> getAllPackages() {
+        return PackagenameFactory.getAll();
+    }
+
     public void addClass( ITypeBinding binding ) throws JavaModelException {
         classes.add( new ClassDescriptor( binding ) );
     }
@@ -64,4 +70,11 @@ public class FileRelationMetrics {
         relations.remove( relation );
     }
 
+    public int getTransitiveParentCount( ClassDescriptor clazz ) {
+        return relations.getTransitiveRelationsTo( clazz.getFile(), clazz.getClassname() ).size();
+    }
+
+    public Set<Packagename> getChildren( Packagename packagename ) {
+        return relations.getDirectPackageRelationsFrom( packagename );
+    }
 }

@@ -17,6 +17,7 @@ import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
+import org.projectusus.core.internal.proportions.rawdata.PackageRepresenter;
 
 public interface IUsusModel {
 
@@ -45,6 +46,8 @@ public interface IUsusModel {
     int getOverallMetric( IProject project, CodeProportionKind metric );
 
     Set<ClassRepresenter> getAllClassRepresenters();
+
+    Set<PackageRepresenter> getAllPackages();
 
     int getCCValue( IMethod method ) throws JavaModelException;
 

@@ -17,7 +17,7 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
-import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.filerelations.model.PackagenameFactory;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.MetricACDHotspot;
@@ -45,7 +45,7 @@ class ClassRawData extends RawData<Integer, MethodRawData> {
         this.className = name;
         this.startPosition = startPosition;
         this.lineNumber = line;
-        this.descriptor = new ClassDescriptor( file, new Classname( name ), new Packagename( packageName ) );
+        this.descriptor = new ClassDescriptor( file, new Classname( name ), PackagenameFactory.get( packageName ) );
     }
 
     // for debugging:

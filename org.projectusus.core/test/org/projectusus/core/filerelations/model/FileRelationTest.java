@@ -19,8 +19,8 @@ public class FileRelationTest {
 
     @Test
     public void isCrossPackage() {
-        ClassDescriptor first = createDescriptor( new Packagename( "x" ) ); //$NON-NLS-1$
-        ClassDescriptor second = createDescriptor( new Packagename( "y" ) ); //$NON-NLS-1$
+        ClassDescriptor first = createDescriptor( PackagenameFactory.get( "x" ) ); //$NON-NLS-1$
+        ClassDescriptor second = createDescriptor( PackagenameFactory.get( "y" ) ); //$NON-NLS-1$
         assertTrue( new FileRelation( first, second ).isCrossPackage() );
         assertTrue( new FileRelation( second, first ).isCrossPackage() );
         assertFalse( new FileRelation( first, first ).isCrossPackage() );

@@ -8,18 +8,26 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 
 public class ClassDescriptor {
 
-    private final IFile file;
-    private final Classname classname;
-    private final Packagename packagename;
+    private IFile file;
+    private Classname classname;
+    private Packagename packagename;
 
     public ClassDescriptor( IFile file, Classname classname, Packagename packagename ) {
         this.file = file;
         this.classname = classname;
         this.packagename = packagename;
+        packagename.addClass( this );
     }
 
     public ClassDescriptor( ITypeBinding binding ) throws JavaModelException {
-        this( (IFile)binding.getJavaElement().getUnderlyingResource(), new Classname( binding.getName() ), new Packagename( binding.getPackage().getName() ) );
+        this( (IFile)binding.getJavaElement().getUnderlyingResource(), new Classname( binding.getName() ), PackagenameFactory.get( binding.getPackage().getName() ) );
+    }
+
+    public void destroy() {
+        packagename.removeClass( this );
+        this.file = null;
+        this.classname = null;
+        this.packagename = null;
     }
 
     public IFile getFile() {

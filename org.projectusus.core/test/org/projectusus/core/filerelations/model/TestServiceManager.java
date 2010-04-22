@@ -25,7 +25,7 @@ public class TestServiceManager {
     }
 
     public static ClassDescriptor createDescriptor( IFile file, Classname clazz ) {
-        return createDescriptor( file, clazz, new Packagename( "packagename1" ) ); //$NON-NLS-1$
+        return createDescriptor( file, clazz, PackagenameFactory.get( "packagename1" ) ); //$NON-NLS-1$
     }
 
     public static ClassDescriptor createDescriptor( IFile file, Packagename packagename ) {

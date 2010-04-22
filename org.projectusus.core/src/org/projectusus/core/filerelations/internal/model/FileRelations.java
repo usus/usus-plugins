@@ -10,6 +10,8 @@ import org.eclipse.core.resources.IFile;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.FileRelation;
+import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.filerelations.model.Relation;
 
 public class FileRelations extends Relations<IFile, FileRelation> {
 
@@ -87,5 +89,23 @@ public class FileRelations extends Relations<IFile, FileRelation> {
 
     public void remove( FileRelation relation ) {
         remove( relation, relation.getSourceFile(), relation.getTargetFile() );
+    }
+
+    public Relations<Packagename, Relation<Packagename>> calcPackageRelations() {
+        Relations<Packagename, Relation<Packagename>> packageRelations = new Relations<Packagename, Relation<Packagename>>();
+        for( FileRelation fileRelation : getAllDirectRelations() ) {
+            if( fileRelation.isCrossPackage() ) {
+                Packagename source = fileRelation.getSourcePackage();
+                Packagename target = fileRelation.getTargetPackage();
+                packageRelations.add( Relation.of( source, target ), source, target );
+            }
+        }
+        return packageRelations;
+    }
+
+    public Set<Packagename> getDirectPackageRelationsFrom( Packagename packagename ) {
+        // Set<Relation<Packagename>> directRelationsFrom = calcPackageRelations().getDirectRelationsFrom( packagename );
+        // return directRelationsFrom;
+        return null;
     }
 }
