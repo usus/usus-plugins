@@ -49,4 +49,8 @@ public interface IUsusModel {
     int getCCValue( IMethod method ) throws JavaModelException;
 
     int getMLValue( IMethod method ) throws JavaModelException;
+
+    int getNumberOfCompilerWarnings( IMethod method ) throws JavaModelException;
+
+    int getNumberOfProjectsViolatingCW();
 }

@@ -5,6 +5,7 @@
 package org.projectusus.ui.internal.proportions.infopresenter.infomodel;
 
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CC;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.KG;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
 
@@ -27,10 +28,9 @@ class UsusInfo implements IUsusInfo {
     }
 
     public String[] getCodeProportionInfos() {
-        List<String> result = new ArrayList<String>();
-        UsusModelElementFormatter formatter = new UsusModelElementFormatter();
-
         try {
+            List<String> result = new ArrayList<String>();
+            UsusModelElementFormatter formatter = new UsusModelElementFormatter();
             result.add( formatter.format( CC, UsusCorePlugin.getUsusModel().getCCValue( method ) ) );
             result.add( formatter.format( ML, UsusCorePlugin.getUsusModel().getMLValue( method ) ) );
             result.add( formatter.format( KG, UsusCorePlugin.getUsusModel().getNumberOfMethods( method.getDeclaringType() ) ) );
@@ -49,7 +49,14 @@ class UsusInfo implements IUsusInfo {
     }
 
     public String[] getWarningInfos() {
-        return new String[] { "Not yet available" };
+        try {
+            List<String> result = new ArrayList<String>();
+            UsusModelElementFormatter formatter = new UsusModelElementFormatter();
+            result.add( formatter.format( CW, UsusCorePlugin.getUsusModel().getNumberOfCompilerWarnings( method ) ) );
+            return result.toArray( new String[0] );
+        } catch( JavaModelException jmox ) {
+            return new String[] { "Error retrieving information." };
+        }
     }
 
     public String formatMethod() {

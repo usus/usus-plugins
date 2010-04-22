@@ -92,6 +92,9 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
 
     @Override
     public int getNumberOf( CodeProportionUnit unit ) {
+        if( unit == CodeProportionUnit.PROJECT ) {
+            return 1;
+        }
         if( unit == CodeProportionUnit.ANYFILE ) {
             return getRawDataElementCount() + miscRawData.getRawDataElementCount();
         }

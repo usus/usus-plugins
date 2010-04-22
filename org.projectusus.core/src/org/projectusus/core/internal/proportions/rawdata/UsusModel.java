@@ -12,6 +12,7 @@ import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKi
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -273,6 +274,10 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         throw new IllegalStateException();
     }
 
+    public int getNumberOfCompilerWarnings( IMethod method ) throws JavaModelException {
+        return getFileRawData( (IFile)method.getUnderlyingResource() ).getViolationCount( CW );
+    }
+
     // //////////////////////////////////
 
     FileRawData getFileRawData( IFile file ) {
@@ -321,5 +326,14 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
             entries.add( getCodeProportion( metric ) );
         }
         return entries;
+    }
+
+    public int getNumberOfProjectsViolatingCW() {
+        int count = 0;
+        Collection<ProjectRawData> allRawDataElements = workspaceRawData.getAllRawDataElements();
+        for( ProjectRawData projectRawData : allRawDataElements ) {
+            count = count + projectRawData.getViolationCount( CodeProportionKind.CW ) > 0 ? 1 : 0;
+        }
+        return count;
     }
 }

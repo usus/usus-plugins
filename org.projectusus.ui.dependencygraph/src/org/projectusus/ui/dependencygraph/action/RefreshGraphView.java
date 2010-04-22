@@ -4,6 +4,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
+import org.projectusus.ui.dependencygraph.ClassGraphView;
 import org.projectusus.ui.dependencygraph.GraphModel;
 
 /**
@@ -13,13 +14,15 @@ import org.projectusus.ui.dependencygraph.GraphModel;
  * 
  */
 public class RefreshGraphView implements IViewActionDelegate {
+	
+	ClassGraphView viewPart;
 
 	public void run(IAction arg0) {
-		GraphModel.getInstance().update();
+		viewPart.refresh();
 	}
 
 	public void init(IViewPart arg0) {
-		// unused
+		viewPart = (ClassGraphView) arg0;
 	}
 
 	public void selectionChanged(IAction arg0, ISelection arg1) {

@@ -4,16 +4,16 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.yellowcount;
 
-import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.IResourceChangeEvent;
-import org.eclipse.core.resources.IResourceChangeListener;
 import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.proportions.IUsusModel;
+import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 
 /**
  * <p>
@@ -30,11 +30,16 @@ public class YellowCount {
 
     private YellowCount() {
         listeners = new ArrayList<IYellowCountListener>();
-        getWorkspace().addResourceChangeListener( new IResourceChangeListener() {
-            public void resourceChanged( final IResourceChangeEvent event ) {
+        UsusCorePlugin.getUsusModel().addUsusModelListener( new IUsusModelListener() {
+
+            /**
+             * @param history
+             *            unfortunately no use here
+             */
+            public void ususModelChanged( IUsusModelHistory history ) {
                 notifyListeners();
             }
-        }, IResourceChangeEvent.POST_BUILD | IResourceChangeEvent.POST_CHANGE );
+        } );
     }
 
     public static synchronized YellowCount getInstance() {
@@ -53,7 +58,8 @@ public class YellowCount {
     }
 
     public IYellowCountResult count() {
-        return createResult( UsusCorePlugin.getUsusModel().getCodeProportion( CodeProportionKind.CW ), 0, 0 ); // TODO
+        IUsusModel ususModel = UsusCorePlugin.getUsusModel();
+        return createResult( ususModel.getCodeProportion( CodeProportionKind.CW ), ususModel.getNumberOf( CodeProportionUnit.PROJECT ), ususModel.getNumberOfProjectsViolatingCW() );
     }
 
     private void notifyListeners() {

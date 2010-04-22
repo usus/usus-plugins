@@ -95,7 +95,11 @@ public class ClassGraphView extends ViewPart {
 	}
 
 	public void refresh() {
-		drawGraph();
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                        refresh();
+                }
+        });
 	}
 
 	private void drawGraph() {

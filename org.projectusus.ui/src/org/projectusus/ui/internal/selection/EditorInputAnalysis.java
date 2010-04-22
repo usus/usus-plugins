@@ -40,6 +40,7 @@ public class EditorInputAnalysis {
         IMethod result = null;
         try {
             int offset = textSelection.getOffset();
+            System.out.println( "Offset for Selection: " + offset );
             IJavaElement element = compilationUnit.getElementAt( offset );
             if( element instanceof IMethod ) {
                 result = (IMethod)element;
