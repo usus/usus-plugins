@@ -8,21 +8,23 @@ import org.osgi.framework.BundleContext;
  */
 public class DependencyGraphPlugin extends AbstractUIPlugin {
 
-	public static final String PLUGIN_ID = "org.projectusus.ui.dependencygraph";
-	private static DependencyGraphPlugin plugin;
-	
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-	}
+    public static final String PLUGIN_ID = "org.projectusus.ui.dependencygraph";
+    private static DependencyGraphPlugin plugin;
 
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
+    @Override
+    public void start( BundleContext context ) throws Exception {
+        super.start( context );
+        plugin = this;
+    }
 
-	public static DependencyGraphPlugin getDefault() {
-		return plugin;
-	}
+    @Override
+    public void stop( BundleContext context ) throws Exception {
+        plugin = null;
+        super.stop( context );
+    }
+
+    public static DependencyGraphPlugin getDefault() {
+        return plugin;
+    }
 
 }

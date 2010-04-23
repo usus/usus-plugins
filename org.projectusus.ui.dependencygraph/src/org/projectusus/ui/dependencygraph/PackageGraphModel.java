@@ -3,17 +3,14 @@ package org.projectusus.ui.dependencygraph;
 import java.util.Set;
 
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.rawdata.PackageRepresenter;
+import org.projectusus.core.internal.proportions.rawdata.GraphNode;
+import org.projectusus.ui.dependencygraph.common.DependencyGraphModel;
 
-public class PackageGraphModel implements FilterLimitProvider {
+public class PackageGraphModel extends DependencyGraphModel {
 
-	public int getFilterLimit() {
-		return 0;
-	}
-
-	public Set<PackageRepresenter> getPackageRepresenters() {
-		return UsusCorePlugin.getUsusModel().getAllPackages();
-	}
-
+    @Override
+    protected Set<? extends GraphNode> getRefreshedNodes() {
+        return UsusCorePlugin.getUsusModel().getAllPackages();
+    }
 
 }

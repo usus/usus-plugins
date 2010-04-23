@@ -15,7 +15,7 @@
    </extension>
    <extension point="org.eclipse.ui.viewActions">
       <viewContribution
-            id="org.projectusus.ui.internal.viewContribution_ClassView_Refresh"
+            id="org.projectusus.ui.dependencygraph.viewContribution_ClassView_Refresh"
             targetID="org.projectusus.ui.dependencygraph.ClassGraphView">
          <action
                class="org.projectusus.ui.dependencygraph.action.RefreshGraphView"
@@ -26,6 +26,20 @@
                style="push"
                toolbarPath="additions"
                tooltip="Redraws the class dependecy graph."/>
+      </viewContribution>
+      <viewContribution
+            id="org.projectusus.ui.dependencygraph.viewContribution_PackageView_Refresh"
+            targetID="org.projectusus.ui.dependencygraph.PackageGraphView">
+         <action
+               class="org.projectusus.ui.dependencygraph.action.RefreshGraphView"
+               icon="icons/refresh.gif"
+               id="org.projectusus.ui.dependencygraph.action.RefreshGraphView"
+               label="Refresh"
+               menubarPath="additions"
+               style="push"
+               toolbarPath="additions"
+               tooltip="Redraws the class dependecy graph.">
+         </action>
       </viewContribution>
    </extension>
    <extension

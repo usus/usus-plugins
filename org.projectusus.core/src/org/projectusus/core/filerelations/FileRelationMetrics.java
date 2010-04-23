@@ -71,10 +71,15 @@ public class FileRelationMetrics {
     }
 
     public int getTransitiveParentCount( ClassDescriptor clazz ) {
-        return relations.getTransitiveRelationsTo( clazz.getFile(), clazz.getClassname() ).size();
+        return getTransitiveRelationsTo( clazz ).size();
+    }
+
+    private Set<FileRelation> getTransitiveRelationsTo( ClassDescriptor clazz ) {
+        return relations.getTransitiveRelationsTo( clazz.getFile(), clazz.getClassname() );
     }
 
     public Set<Packagename> getChildren( Packagename packagename ) {
         return relations.getDirectPackageRelationsFrom( packagename );
     }
+
 }

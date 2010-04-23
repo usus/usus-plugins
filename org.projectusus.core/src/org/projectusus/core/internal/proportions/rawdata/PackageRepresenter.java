@@ -14,6 +14,15 @@ public class PackageRepresenter implements GraphNode {
     private final Packagename packagename;
     private static FileRelationMetrics relations;
 
+    public static Set<PackageRepresenter> transformToRepresenterSet( Set<Packagename> classes, final FileRelationMetrics rel ) {
+        Function<Packagename, PackageRepresenter> function = new Function<Packagename, PackageRepresenter>() {
+            public PackageRepresenter apply( Packagename descriptor ) {
+                return new PackageRepresenter( descriptor, rel );
+            }
+        };
+        return new HashSet<PackageRepresenter>( Collections2.transform( classes, function ) );
+    }
+
     public PackageRepresenter( Packagename pkg, FileRelationMetrics relations ) {
         this.packagename = pkg;
         initRelations( relations );
@@ -23,15 +32,6 @@ public class PackageRepresenter implements GraphNode {
         if( PackageRepresenter.relations == null ) {
             PackageRepresenter.relations = relations;
         }
-    }
-
-    public static Set<PackageRepresenter> transformToRepresenterSet( Set<Packagename> classes, final FileRelationMetrics rel ) {
-        Function<Packagename, PackageRepresenter> function = new Function<Packagename, PackageRepresenter>() {
-            public PackageRepresenter apply( Packagename descriptor ) {
-                return new PackageRepresenter( descriptor, rel );
-            }
-        };
-        return new HashSet<PackageRepresenter>( Collections2.transform( classes, function ) );
     }
 
     public Set<? extends GraphNode> getChildren() {
@@ -66,6 +66,10 @@ public class PackageRepresenter implements GraphNode {
     @Override
     public int hashCode() {
         return packagename.hashCode();
+    }
+
+    public int getFilterValue() {
+        return 0;
     }
 
 }

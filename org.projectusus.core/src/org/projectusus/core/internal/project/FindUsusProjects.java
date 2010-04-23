@@ -16,29 +16,7 @@ public class FindUsusProjects {
 
     private final List<IProject> candidates;
 
-    public FindUsusProjects( List<IProject> candidates ) {
-        this.candidates = candidates;
-    }
-
-    public FindUsusProjects( IProject[] candidates ) {
-        this.candidates = asList( candidates );
-    }
-
-    public FindUsusProjects( Object[] candidates ) {
-        this.candidates = asProjectList( candidates );
-    }
-
-    public List<IProject> compute() {
-        List<IProject> result = new ArrayList<IProject>();
-        for( IProject project : candidates ) {
-            if( new IsUsusProject( project ).compute() ) {
-                result.add( project );
-            }
-        }
-        return unmodifiableList( result );
-    }
-
-    private List<IProject> asProjectList( Object[] elements ) {
+    private static List<IProject> asProjectList( Object[] elements ) {
         List<IProject> projects = new ArrayList<IProject>();
         for( Object element : elements ) {
             if( element instanceof IProject ) {
@@ -47,4 +25,39 @@ public class FindUsusProjects {
         }
         return projects;
     }
+
+    public FindUsusProjects( List<IProject> candidates ) {
+        this.candidates = candidates;
+    }
+
+    public FindUsusProjects( IProject[] candidates ) {
+        this( asList( candidates ) );
+    }
+
+    public FindUsusProjects( Object[] candidates ) {
+        this( asProjectList( candidates ) );
+    }
+
+    public List<IProject> compute() {
+        return compute( true );
+    }
+
+    public List<IProject> computeOpposite() {
+        return compute( false );
+    }
+
+    private List<IProject> compute( boolean findUsusProjects ) {
+        List<IProject> result = new ArrayList<IProject>();
+        for( IProject project : candidates ) {
+            if( findUsusProjects == isUsusProject( project ) ) {
+                result.add( project );
+            }
+        }
+        return unmodifiableList( result );
+    }
+
+    private boolean isUsusProject( IProject project ) {
+        return new IsUsusProject( project ).compute();
+    }
+
 }

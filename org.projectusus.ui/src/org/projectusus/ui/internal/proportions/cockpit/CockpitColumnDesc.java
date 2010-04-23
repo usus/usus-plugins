@@ -20,7 +20,7 @@ enum CockpitColumnDesc implements IColumnDesc<CodeProportion> {
             return element.getMetric().getLabel();
         }
     },
-    @UsusTreeColumn( header = "SQI", align = RIGHT, weight = 10 )
+    @UsusTreeColumn( header = "Level", align = RIGHT, weight = 10 )
     SQI( false ) {
         public String getLabel( CodeProportion element ) {
             DecimalFormat formatter = new DecimalFormat( "#.##" );

@@ -13,6 +13,16 @@ public class ClassRepresenter implements GraphNode {
 
     private final ClassDescriptor clazz;
     private static FileRelationMetrics relations;
+    private Set<ClassRepresenter> childrenCache = null;
+
+    public static Set<ClassRepresenter> transformToRepresenterSet( Set<ClassDescriptor> classes, final FileRelationMetrics rel ) {
+        Function<ClassDescriptor, ClassRepresenter> function = new Function<ClassDescriptor, ClassRepresenter>() {
+            public ClassRepresenter apply( ClassDescriptor descriptor ) {
+                return new ClassRepresenter( descriptor, rel );
+            }
+        };
+        return new HashSet<ClassRepresenter>( Collections2.transform( classes, function ) );
+    }
 
     public ClassRepresenter( ClassDescriptor clazz, FileRelationMetrics relations ) {
         this.clazz = clazz;
@@ -25,17 +35,11 @@ public class ClassRepresenter implements GraphNode {
         }
     }
 
-    public static Set<ClassRepresenter> transformToRepresenterSet( Set<ClassDescriptor> classes, final FileRelationMetrics rel ) {
-        Function<ClassDescriptor, ClassRepresenter> function = new Function<ClassDescriptor, ClassRepresenter>() {
-            public ClassRepresenter apply( ClassDescriptor descriptor ) {
-                return new ClassRepresenter( descriptor, rel );
-            }
-        };
-        return new HashSet<ClassRepresenter>( Collections2.transform( classes, function ) );
-    }
-
     public Set<ClassRepresenter> getChildren() {
-        return transformToRepresenterSet( relations.getChildren( clazz ), relations );
+        if( childrenCache == null ) {
+            childrenCache = transformToRepresenterSet( relations.getChildren( clazz ), relations );
+        }
+        return childrenCache;
     }
 
     public String getNodeName() {
@@ -61,10 +65,18 @@ public class ClassRepresenter implements GraphNode {
     }
 
     public String getEdgeEndLabel() {
-        return "" + relations.getCCD( clazz ); //$NON-NLS-1$
+        return String.valueOf( getRelationCount() );
+    }
+
+    private int getRelationCount() {
+        return relations.getCCD( clazz );
     }
 
     public boolean isVisibleFor( int limit ) {
-        return relations.getBottleneckCount( this.clazz ) >= limit;
+        return getFilterValue() >= limit;
+    }
+
+    public int getFilterValue() {
+        return relations.getBottleneckCount( this.clazz );
     }
 }

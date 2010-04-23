@@ -68,4 +68,5 @@ public class ClassDescriptor {
     public String toString() {
         return packagename + "." + classname + "[" + file + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
+
 }

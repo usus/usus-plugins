@@ -76,6 +76,7 @@ class WorkspaceCodeProportionComputationTarget implements ICodeProportionComputa
     }
 
     public Collection<IProject> getRemovedProjects() {
-        return new ArrayList<IProject>();
+        IWorkspaceRoot wsRoot = getWorkspace().getRoot();
+        return new FindUsusProjects( wsRoot.getProjects() ).computeOpposite();
     }
 }

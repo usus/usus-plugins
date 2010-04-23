@@ -3,26 +3,18 @@ package org.projectusus.ui.dependencygraph;
 import java.util.Set;
 
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.rawdata.ClassRepresenter;
+import org.projectusus.core.internal.proportions.rawdata.GraphNode;
+import org.projectusus.ui.dependencygraph.common.DependencyGraphModel;
 
-public class ClassGraphModel implements FilterLimitProvider {
+public class ClassGraphModel extends DependencyGraphModel {
 
-	private int minimumEdges;
+    public ClassGraphModel() {
+        super();
+    }
 
-	public ClassGraphModel() {
-		minimumEdges = 2;
-	}
-
-	public Set<ClassRepresenter> getClassRepresenters() {
-		return UsusCorePlugin.getUsusModel().getAllClassRepresenters();
-	}
-
-	public void setMinimumEdges(Integer minimumEdges) {
-		this.minimumEdges = minimumEdges;
-	}
-
-	public int getFilterLimit() {
-		return minimumEdges;
-	}
+    @Override
+    protected Set<? extends GraphNode> getRefreshedNodes() {
+        return UsusCorePlugin.getUsusModel().getAllClassRepresenters();
+    }
 
 }

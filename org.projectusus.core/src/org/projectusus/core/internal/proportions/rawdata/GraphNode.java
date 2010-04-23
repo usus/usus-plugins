@@ -14,5 +14,7 @@ public interface GraphNode {
 
     String getEdgeEndLabel();
 
+    int getFilterValue();
+
     boolean isVisibleFor( int limit );
 }
