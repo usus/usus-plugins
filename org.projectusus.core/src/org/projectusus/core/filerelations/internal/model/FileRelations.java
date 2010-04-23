@@ -91,6 +91,8 @@ public class FileRelations extends Relations<IFile, FileRelation> {
         remove( relation, relation.getSourceFile(), relation.getTargetFile() );
     }
 
+    // //// neues Objekt machen!! PackageRelation, PackageRelations
+
     public Relations<Packagename, Relation<Packagename>> calcPackageRelations() {
         Relations<Packagename, Relation<Packagename>> packageRelations = new Relations<Packagename, Relation<Packagename>>();
         for( FileRelation fileRelation : getAllDirectRelations() ) {
@@ -104,8 +106,10 @@ public class FileRelations extends Relations<IFile, FileRelation> {
     }
 
     public Set<Packagename> getDirectPackageRelationsFrom( Packagename packagename ) {
-        // Set<Relation<Packagename>> directRelationsFrom = calcPackageRelations().getDirectRelationsFrom( packagename );
-        // return directRelationsFrom;
-        return null;
+        Set<Packagename> descriptors = new HashSet<Packagename>();
+        for( Relation<Packagename> relation : calcPackageRelations().getDirectRelationsFrom( packagename ) ) {
+            descriptors.add( relation.getTarget() );
+        }
+        return descriptors;
     }
 }

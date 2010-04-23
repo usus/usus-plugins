@@ -7,6 +7,11 @@
             id="org.projectusus.ui.dependencygraph.ClassGraphView"
             category="org.projectusus.ui.viewCategory"
             name="Usus Class Graph"/>
+       <view class="org.projectusus.ui.dependencygraph.PackageGraphView"
+            icon="icons/graph.gif"
+            id="org.projectusus.ui.dependencygraph.PackageGraphView"
+            category="org.projectusus.ui.viewCategory"
+            name="Usus Package Graph"/>
    </extension>
    <extension point="org.eclipse.ui.viewActions">
       <viewContribution

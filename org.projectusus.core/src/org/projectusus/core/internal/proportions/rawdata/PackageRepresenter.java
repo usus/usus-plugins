@@ -58,4 +58,14 @@ public class PackageRepresenter implements GraphNode {
         return true;
     }
 
+    @Override
+    public boolean equals( Object obj ) {
+        return obj instanceof PackageRepresenter && packagename.equals( ((PackageRepresenter)obj).packagename );
+    }
+
+    @Override
+    public int hashCode() {
+        return packagename.hashCode();
+    }
+
 }

@@ -57,7 +57,7 @@ public class ClassRepresenter implements GraphNode {
     }
 
     public String getEdgeMiddleLabel() {
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
     public String getEdgeEndLabel() {
