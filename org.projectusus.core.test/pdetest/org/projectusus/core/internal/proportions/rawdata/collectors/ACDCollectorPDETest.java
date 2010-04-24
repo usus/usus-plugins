@@ -276,7 +276,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void twoFilesKnowEachOtherTheSecondIsDeleted() throws Exception {
-        IFile firstFile = createWSFile( "Acd10a.java", loadContent( "Acd10a.test" ) );
+        createWSFile( "Acd10a.java", loadContent( "Acd10a.test" ) );
         IFile secondFile = createFileAndBuild( "10b" );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 2, model.getAllClassRepresenters().size() );
