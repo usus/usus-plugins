@@ -7,6 +7,7 @@ package org.projectusus.core.internal.proportions.modelcomputation;
 import static org.eclipse.core.resources.IResourceDelta.ADDED;
 import static org.eclipse.core.resources.IResourceDelta.CHANGED;
 import static org.eclipse.core.resources.IResourceDelta.REMOVED;
+import static org.projectusus.core.internal.project.UsusProjectSupport.isUsusProject;
 import static org.projectusus.core.internal.util.TracingOption.RESOURCE_CHANGES;
 
 import java.util.ArrayList;
@@ -19,7 +20,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
-import org.projectusus.core.internal.project.IsUsusProject;
 
 class ChangedResourcesCollector implements IResourceDeltaVisitor {
 
@@ -47,7 +47,7 @@ class ChangedResourcesCollector implements IResourceDeltaVisitor {
     }
 
     private boolean isNonUsusProject( IResource resource ) {
-        return resource instanceof IProject && !(new IsUsusProject( (IProject)resource ).compute());
+        return resource instanceof IProject && !(isUsusProject( (IProject)resource ));
     }
 
     private boolean handleRemovedProject( IResourceDelta delta ) {

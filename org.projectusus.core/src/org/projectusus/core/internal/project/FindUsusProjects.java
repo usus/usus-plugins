@@ -6,6 +6,7 @@ package org.projectusus.core.internal.project;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
+import static org.projectusus.core.internal.project.UsusProjectSupport.isUsusProject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +55,6 @@ public class FindUsusProjects {
             }
         }
         return unmodifiableList( result );
-    }
-
-    private boolean isUsusProject( IProject project ) {
-        return new IsUsusProject( project ).compute();
     }
 
 }

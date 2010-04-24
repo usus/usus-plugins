@@ -6,15 +6,9 @@ package org.projectusus.core.internal.project;
 
 import org.eclipse.core.resources.IProject;
 
-public class IsUsusProject {
+public class UsusProjectSupport {
 
-    private final IProject project;
-
-    public IsUsusProject( IProject project ) {
-        this.project = project;
-    }
-
-    public boolean compute() {
+    public static boolean isUsusProject( IProject project ) {
         boolean result = false;
         if( project.isAccessible() ) {
             Object adapter = project.getAdapter( IUSUSProject.class );
@@ -23,5 +17,9 @@ public class IsUsusProject {
             }
         }
         return result;
+    }
+
+    private UsusProjectSupport() {
+        // static class
     }
 }

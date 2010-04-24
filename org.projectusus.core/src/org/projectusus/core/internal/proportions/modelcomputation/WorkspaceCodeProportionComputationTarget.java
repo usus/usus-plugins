@@ -37,6 +37,10 @@ class WorkspaceCodeProportionComputationTarget implements ICodeProportionComputa
         return new FindUsusProjects( wsRoot.getProjects() ).compute();
     }
 
+    /**
+     * @param project
+     *            from Interface
+     */
     public Collection<IFile> getRemovedFiles( IProject project ) throws CoreException {
         return emptyList();
     }
