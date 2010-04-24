@@ -9,8 +9,8 @@ public class PackagenameTest {
     @Test
     public void packagenameFactoryProduziertIdentischeObjekte() {
         String name = "my.nice.package"; //$NON-NLS-1$
-        Packagename package1 = PackagenameFactory.get( name );
-        Packagename package2 = PackagenameFactory.get( name );
+        Packagename package1 = Packagename.of( name );
+        Packagename package2 = Packagename.of( name );
         assertSame( package1, package2 );
     }
 

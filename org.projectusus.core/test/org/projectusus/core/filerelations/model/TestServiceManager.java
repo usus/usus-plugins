@@ -21,15 +21,15 @@ public class TestServiceManager {
     }
 
     public static ClassDescriptor createDescriptor( Packagename packagename ) {
-        return new ClassDescriptor( createFileMock(), createClassname(), packagename );
+        return ClassDescriptor.of( createFileMock(), createClassname(), packagename );
     }
 
     public static ClassDescriptor createDescriptor( IFile file, Classname clazz ) {
-        return createDescriptor( file, clazz, PackagenameFactory.get( "packagename1" ) ); //$NON-NLS-1$
+        return createDescriptor( file, clazz, Packagename.of( "packagename1" ) ); //$NON-NLS-1$
     }
 
     public static ClassDescriptor createDescriptor( IFile file, Packagename packagename ) {
-        return new ClassDescriptor( file, createClassname(), packagename );
+        return ClassDescriptor.of( file, createClassname(), packagename );
     }
 
     public static Classname createClassname() {
@@ -37,7 +37,7 @@ public class TestServiceManager {
     }
 
     public static ClassDescriptor createDescriptor( IFile file, Classname clazz, Packagename packagename ) {
-        return new ClassDescriptor( file, clazz, packagename );
+        return ClassDescriptor.of( file, clazz, packagename );
     }
 
     public static ClassDescriptor createDescriptor( IFile file ) {

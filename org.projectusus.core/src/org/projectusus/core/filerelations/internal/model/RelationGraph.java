@@ -7,21 +7,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jgrapht.EdgeFactory;
-import org.projectusus.core.filerelations.model.Relation;
+import org.projectusus.core.filerelations.model.PackageRelation;
+import org.projectusus.core.filerelations.model.Packagename;
 
-public class RelationGraph<T> extends UnmodifiableDirectedGraph<T, Relation<T>> {
+public class RelationGraph<T extends Packagename, TRelation extends PackageRelation> extends UnmodifiableDirectedGraph<T, TRelation> {
 
-    private final Relations<T, Relation<T>> relations;
+    private final Relations<T, TRelation> relations;
 
-    public RelationGraph( Relations<T, Relation<T>> relations ) {
+    public RelationGraph( Relations<T, TRelation> relations ) {
         this.relations = relations;
     }
 
-    public Set<Relation<T>> incomingEdgesOf( T vertex ) {
+    public Set<TRelation> incomingEdgesOf( T vertex ) {
         return relations.getDirectRelationsTo( vertex );
     }
 
-    public Set<Relation<T>> outgoingEdgesOf( T vertex ) {
+    public Set<TRelation> outgoingEdgesOf( T vertex ) {
         return relations.getDirectRelationsFrom( vertex );
     }
 
@@ -29,19 +30,19 @@ public class RelationGraph<T> extends UnmodifiableDirectedGraph<T, Relation<T>> 
         return relations.containsKey( vertex );
     }
 
-    public Set<Relation<T>> edgeSet() {
-        return new HashSet<Relation<T>>( relations.getAllDirectRelations() );
+    public Set<TRelation> edgeSet() {
+        return new HashSet<TRelation>( relations.getAllDirectRelations() );
     }
 
-    public Set<Relation<T>> getAllEdges( T source, T target ) {
-        Relation<T> relation = getEdge( source, target );
-        Set<Relation<T>> emptySet = Collections.<Relation<T>> emptySet();
+    public Set<TRelation> getAllEdges( T source, T target ) {
+        TRelation relation = getEdge( source, target );
+        Set<TRelation> emptySet = Collections.<TRelation> emptySet();
         return relation == null ? emptySet : singleton( relation );
     }
 
-    public Relation<T> getEdge( T source, T target ) {
-        Relation<T> searchedForRelation = Relation.of( source, target );
-        for( Relation<T> relation : outgoingEdgesOf( source ) ) {
+    public TRelation getEdge( T source, T target ) {
+        TRelation searchedForRelation = (TRelation)source.getRelationTo( target );// Relation.of( source, target );
+        for( TRelation relation : outgoingEdgesOf( source ) ) {
             if( searchedForRelation.equals( relation ) ) {
                 return relation;
             }
@@ -49,20 +50,20 @@ public class RelationGraph<T> extends UnmodifiableDirectedGraph<T, Relation<T>> 
         return null;
     }
 
-    public EdgeFactory<T, Relation<T>> getEdgeFactory() {
-        return new EdgeFactory<T, Relation<T>>() {
-            public Relation<T> createEdge( T source, T target ) {
-                return Relation.of( source, target );
+    public EdgeFactory<T, TRelation> getEdgeFactory() {
+        return new EdgeFactory<T, TRelation>() {
+            public TRelation createEdge( T source, T target ) {
+                return (TRelation)source.getRelationTo( target );
             }
         };
     }
 
-    public T getEdgeSource( Relation<T> relation ) {
-        return relation.getSource();
+    public T getEdgeSource( TRelation relation ) {
+        return (T)relation.getSource();
     }
 
-    public T getEdgeTarget( Relation<T> relation ) {
-        return relation.getTarget();
+    public T getEdgeTarget( TRelation relation ) {
+        return (T)relation.getTarget();
     }
 
     public Set<T> vertexSet() {

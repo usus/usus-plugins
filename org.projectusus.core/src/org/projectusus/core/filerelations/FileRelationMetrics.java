@@ -9,19 +9,18 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
 import org.projectusus.core.filerelations.internal.metrics.BottleneckCalculator;
 import org.projectusus.core.filerelations.internal.model.FileRelations;
+import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.filerelations.model.PackagenameFactory;
 
 public class FileRelationMetrics {
 
     private final FileRelations relations;
-    private final ClassDescriptors classes;
 
+    @Deprecated
     public FileRelationMetrics( FileRelations relations ) {
         this.relations = relations;
-        classes = new ClassDescriptors();
     }
 
     public FileRelationMetrics() {
@@ -33,7 +32,7 @@ public class FileRelationMetrics {
     }
 
     public void remove( IFile file ) {
-        classes.removeAllClassesIn( file );
+        ClassDescriptor.removeAllClassesIn( file );
         relations.markAndRemoveAllRelationsStartingAt( file );
         relations.registerAllRelationsEndingAt( file );
     }
@@ -55,15 +54,15 @@ public class FileRelationMetrics {
     }
 
     public Set<ClassDescriptor> getAllClassDescriptors() {
-        return classes.getAll();
+        return ClassDescriptor.getAll();
     }
 
     public Set<Packagename> getAllPackages() {
-        return PackagenameFactory.getAll();
+        return Packagename.getAll();
     }
 
     public void addClass( ITypeBinding binding ) throws JavaModelException {
-        classes.add( new ClassDescriptor( binding ) );
+        ClassDescriptor.of( binding );
     }
 
     public void remove( FileRelation relation ) {
@@ -79,7 +78,8 @@ public class FileRelationMetrics {
     }
 
     public Set<Packagename> getChildren( Packagename packagename ) {
-        return relations.getDirectPackageRelationsFrom( packagename );
+        // TODO Bullshit...
+        return new PackageRelations( relations ).getDirectPackageRelationsFrom( packagename );
     }
 
 }

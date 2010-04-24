@@ -1,7 +1,6 @@
 package org.projectusus.core.filerelations.model;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.eclipse.core.resources.IFile;
@@ -34,10 +33,7 @@ public class ClassDescriptorTest {
     public void classIsRemovedFromPackageOnDestruction() {
         ClassDescriptor descriptor = TestServiceManager.createDescriptor( file );
         Packagename packagename = descriptor.getPackagename();
-        descriptor.destroy();
+        ClassDescriptor.removeAllClassesIn( file );
         assertFalse( packagename.containsClass( descriptor ) );
-        assertNull( descriptor.getFile() );
-        assertNull( descriptor.getClassname() );
-        assertNull( descriptor.getPackagename() );
     }
 }

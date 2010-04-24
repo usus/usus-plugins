@@ -119,8 +119,8 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     public void addClassReference( ITypeBinding sourceType, ITypeBinding targetType ) {
         try {
-            ClassDescriptor source = new ClassDescriptor( sourceType );
-            ClassDescriptor target = new ClassDescriptor( targetType );
+            ClassDescriptor source = ClassDescriptor.of( sourceType );
+            ClassDescriptor target = ClassDescriptor.of( targetType );
             fileRelations.addFileRelation( source, target );
         } catch( JavaModelException e ) {
             e.printStackTrace();

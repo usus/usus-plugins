@@ -1,5 +1,6 @@
 package org.projectusus.core.filerelations;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -14,7 +15,7 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 
 public class FileRelationMetricsRemoveTest {
 
-    private FileRelationMetrics metrics = new FileRelationMetrics();
+    private FileRelationMetrics metrics;
     private ClassDescriptor descriptor1;
     private ClassDescriptor descriptor2;
     private ClassDescriptor descriptor3;
@@ -24,12 +25,18 @@ public class FileRelationMetricsRemoveTest {
 
     @Before
     public void setupClassDescriptors() {
+        metrics = new FileRelationMetrics();
         descriptor1 = createClassDescriptor( "Descriptor1" ); //$NON-NLS-1$
         descriptor2 = createClassDescriptor( "Descriptor2" ); //$NON-NLS-1$
         descriptor3 = createClassDescriptor( "Descriptor3" ); //$NON-NLS-1$
         file1 = mock( IFile.class );
         file2 = mock( IFile.class );
         file3 = mock( IFile.class );
+    }
+
+    @Test
+    public void mocksAreNotEqual() {
+        assertFalse( file1.equals( file2 ) );
     }
 
     @Test

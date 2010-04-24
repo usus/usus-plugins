@@ -1,5 +1,10 @@
 package org.projectusus.core.filerelations.model;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
@@ -8,38 +13,61 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 
 public class ClassDescriptor {
 
-    private IFile file;
-    private Classname classname;
-    private Packagename packagename;
+    private ClassDescriptorKey key;
 
-    public ClassDescriptor( IFile file, Classname classname, Packagename packagename ) {
-        this.file = file;
-        this.classname = classname;
-        this.packagename = packagename;
-        packagename.addClass( this );
+    private static final Map<ClassDescriptorKey, ClassDescriptor> classes = new HashMap<ClassDescriptorKey, ClassDescriptor>();
+
+    public static Set<ClassDescriptor> getAll() {
+        return new HashSet<ClassDescriptor>( classes.values() );
     }
 
-    public ClassDescriptor( ITypeBinding binding ) throws JavaModelException {
-        this( (IFile)binding.getJavaElement().getUnderlyingResource(), new Classname( binding.getName() ), PackagenameFactory.get( binding.getPackage().getName() ) );
+    public static ClassDescriptor of( ITypeBinding binding ) throws JavaModelException {
+        return ClassDescriptor.of( new ClassDescriptorKey( (IFile)binding.getJavaElement().getUnderlyingResource(), new Classname( binding.getName() ), Packagename.of( binding
+                .getPackage().getName() ) ) );
     }
 
-    public void destroy() {
-        packagename.removeClass( this );
-        this.file = null;
-        this.classname = null;
-        this.packagename = null;
+    public static ClassDescriptor of( IFile file, Classname classname, Packagename packagename ) {
+        return ClassDescriptor.of( new ClassDescriptorKey( file, classname, packagename ) );
+    }
+
+    private static ClassDescriptor of( ClassDescriptorKey key ) {
+        if( classes.containsKey( key ) ) {
+            return classes.get( key );
+        }
+        ClassDescriptor newClassDescriptor = new ClassDescriptor( key );
+        classes.put( key, newClassDescriptor );
+        return newClassDescriptor;
+    }
+
+    public static void removeAllClassesIn( IFile file ) {
+        Set<ClassDescriptorKey> keys = new HashSet<ClassDescriptorKey>( classes.keySet() );
+        for( ClassDescriptorKey key : keys ) {
+            if( key.file.equals( file ) ) {
+                ClassDescriptor descriptor = classes.remove( key );
+                descriptor.removeFromPackage();
+            }
+        }
+    }
+
+    private ClassDescriptor( ClassDescriptorKey key ) {
+        this.key = key;
+        key.packagename.addClass( this );
+    }
+
+    private void removeFromPackage() {
+        key.packagename.removeClass( this );
     }
 
     public IFile getFile() {
-        return file;
+        return key.file;
     }
 
     public Classname getClassname() {
-        return classname;
+        return key.classname;
     }
 
     public Packagename getPackagename() {
-        return packagename;
+        return key.packagename;
     }
 
     @Override
@@ -50,23 +78,23 @@ public class ClassDescriptor {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(). //
-                append( file ). //
-                append( classname ). //
-                append( packagename ). //
+                append( key.file ). //
+                append( key.classname ). //
+                append( key.packagename ). //
                 toHashCode();
     }
 
     private boolean equals( ClassDescriptor other ) {
         return new EqualsBuilder(). //
-                append( file, other.file ). //
-                append( classname, other.classname ). //
-                append( packagename, other.packagename ). //
+                append( key.file, other.key.file ). //
+                append( key.classname, other.key.classname ). //
+                append( key.packagename, other.key.packagename ). //
                 isEquals();
     }
 
     @Override
     public String toString() {
-        return packagename + "." + classname + "[" + file + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return key.packagename + "." + key.classname + "[" + key.file + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
 }

@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
+import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.math.BigDecimal.ROUND_DOWN;
 
@@ -11,18 +12,21 @@ import java.math.BigDecimal;
 
 public class CodeProportionsRatio {
 
-    private final double result;
+    private static final double upperLimit = 100.0;
+    private final int part;
+    private final int total;
 
     public CodeProportionsRatio( int part, int total ) {
-        result = total == 0 ? 0 : computeRatio( part, total );
+        this.part = part;
+        this.total = total;
     }
 
     public double compute() {
-        return result;
+        return total == 0 ? 0 : computeRatio( part, total );
     }
 
-    public double computeReverseIndicator() {
-        return 100 - result;
+    public double computeInverseIndicator() {
+        return total == 0 ? 0 : upperLimit - computeRatio( part, total );
     }
 
     // internal
@@ -30,6 +34,6 @@ public class CodeProportionsRatio {
 
     private double computeRatio( int part, int total ) {
         BigDecimal ratio = new BigDecimal( part ).divide( new BigDecimal( total ), 5, ROUND_DOWN );
-        return min( ratio.doubleValue() * 100, 100.0 );
+        return max( 0, min( ratio.doubleValue() * upperLimit, upperLimit ) );
     }
 }

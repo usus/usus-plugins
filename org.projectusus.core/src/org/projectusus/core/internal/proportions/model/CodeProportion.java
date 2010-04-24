@@ -42,13 +42,14 @@ public class CodeProportion extends PlatformObject {
         if( metric == CodeProportionKind.ACD ) {
             return new AcdSQIComputer().compute( UsusCorePlugin.getUsusModel().getAllClassesCCDResults() );
         }
-        if( metric == CodeProportionKind.TA ) {
-            return new CodeProportionsRatio( violations, basis.getValue() ).computeReverseIndicator();
-        }
-        if( metric == CodeProportionKind.CW ) {
-            return new CodeProportionsRatio( violations, basis.getValue() ).computeReverseIndicator();
-        }
-        return new CodeProportionsRatio( violations, basis.getValue() ).computeReverseIndicator();
+        // TODO entfernen
+        // if( metric == CodeProportionKind.TA ) {
+        // return new CodeProportionsRatio( violations, basis.getValue() ).computeReverseIndicator();
+        // }
+        // if( metric == CodeProportionKind.CW ) {
+        // return new CodeProportionsRatio( violations, basis.getValue() ).computeReverseIndicator();
+        // }
+        return new CodeProportionsRatio( violations, basis.getValue() ).computeInverseIndicator();
         // return new SQIComputer( basis, violations, metric ).compute();
     }
 
