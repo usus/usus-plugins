@@ -32,7 +32,7 @@ public class UsusInfoBuilderTest {
         when( method.getUnderlyingResource() ).thenReturn( null );
 
         IUsusInfo info = new UsusInfoBuilder( method ).create();
-        assertEquals( UnavailableUsusInfo.class , info );
+        assertEquals( UnavailableUsusInfo.class , info.getClass() );
     }
 
     @Test
@@ -41,7 +41,7 @@ public class UsusInfoBuilderTest {
         when( file.getProject() ).thenReturn( project );
 
         IUsusInfo info = new UsusInfoBuilder( method ).create();
-        assertEquals( UnavailableUsusInfo.class, info );
+        assertEquals( UnavailableUsusInfo.class, info.getClass() );
     }
 
     @Test
@@ -49,7 +49,7 @@ public class UsusInfoBuilderTest {
         setUpRawDataHierarchy();
 
         IUsusInfo info = new UsusInfoBuilder( method ).create();
-        assertEquals( UnavailableUsusInfo.class, info );
+        assertEquals( UnavailableUsusInfo.class, info.getClass() );
     }
 
     @Test
@@ -57,7 +57,7 @@ public class UsusInfoBuilderTest {
         setUpRawDataHierarchy();
 
         IUsusInfo info = new UsusInfoBuilder( method ).create();
-        assertEquals( UsusInfo.class, info );
+        assertEquals( UsusInfo.class, info.getClass() );
     }
 
     private void setUpRawDataHierarchy() throws JavaModelException {

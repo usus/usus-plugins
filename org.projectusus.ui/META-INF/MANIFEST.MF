@@ -37,3 +37,6 @@ Export-Package: org.projectusus.ui.internal,
  org.projectusus.ui.internal.util,
  org.projectusus.ui.internal.viewer;x-internal:=true,
  org.projectusus.ui.internal.yellowcount
+Bundle-ClassPath: lib/junit-4.8.1.jar,
+ .,
+ lib/mockito-all-1.8.0.jar
