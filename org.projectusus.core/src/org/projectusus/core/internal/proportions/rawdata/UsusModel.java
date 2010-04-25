@@ -121,13 +121,9 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     // /////////////////////////////////////
 
     public void addClassReference( ITypeBinding sourceType, ITypeBinding targetType ) {
-        try {
-            ClassDescriptor source = ClassDescriptor.of( sourceType );
-            ClassDescriptor target = ClassDescriptor.of( targetType );
-            fileRelations.addFileRelation( source, target );
-        } catch( JavaModelException e ) {
-            e.printStackTrace();
-        }
+        ClassDescriptor source = ClassDescriptor.of( sourceType );
+        ClassDescriptor target = ClassDescriptor.of( targetType );
+        fileRelations.addFileRelation( source, target );
     }
 
     public void setCCValue( IFile file, MethodDeclaration methodDecl, int value ) {
@@ -140,11 +136,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     public void addClass( IFile file, AbstractTypeDeclaration node ) {
         getFileRawData( file ).addClass( node );
-        try {
-            fileRelations.addClass( node.resolveBinding() );
-        } catch( JavaModelException e ) {
-            e.printStackTrace();
-        }
+        fileRelations.addClass( node.resolveBinding() );
     }
 
     public void setMLValue( IFile file, MethodDeclaration methodDecl, int value ) {

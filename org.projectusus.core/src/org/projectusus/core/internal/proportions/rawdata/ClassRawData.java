@@ -30,30 +30,27 @@ class ClassRawData extends RawData<Integer, MethodRawData> {
     private final String className;
     private ClassDescriptor descriptor;
 
-    public ClassRawData( ITypeBinding binding, String name, int startPosition, int line ) {
+    private ClassRawData( String name, int startPosition, int line ) {
+        super();
         this.className = name;
         this.startPosition = startPosition;
         this.lineNumber = line;
-        if( binding != null ) {
-            try {
-                this.descriptor = ClassDescriptor.of( binding );
-            } catch( JavaModelException e ) {
-                // impossible to create ClassDescriptor
-            }
-        }
+    }
+
+    public ClassRawData( ITypeBinding binding, String name, int startPosition, int line ) {
+        this( name, startPosition, line );
+        this.descriptor = ClassDescriptor.of( binding );
     }
 
     public ClassRawData( IFile file, String packageName, String name, int startPosition, int line ) {
-        this.className = name;
-        this.startPosition = startPosition;
-        this.lineNumber = line;
+        this( name, startPosition, line );
         this.descriptor = ClassDescriptor.of( file, new Classname( name ), Packagename.of( packageName ) );
     }
 
     // for debugging:
     @Override
     public String toString() {
-        return "Class " + className + " in line " + lineNumber + " with " + getNumberOfMethods() + " methods."; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        return "Class " + className + " in line " + lineNumber + " with " + getNumberOfMethods() + " methods.";
     }
 
     void setCCValue( MethodDeclaration node, int value ) {
@@ -77,7 +74,7 @@ class ClassRawData extends RawData<Integer, MethodRawData> {
     }
 
     private MethodRawData getRawData( Initializer node ) {
-        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), "initializer" ); //$NON-NLS-1$
+        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), "initializer" );
     }
 
     private MethodRawData getRawData( int start, int lineNumber, String methodName ) {
@@ -103,7 +100,7 @@ class ClassRawData extends RawData<Integer, MethodRawData> {
             for( Integer start : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( start.intValue() );
                 if( method.equals( foundElement ) ) {
-                    return getRawData( start.intValue(), 0, "" ); //$NON-NLS-1$
+                    return getRawData( start.intValue(), 0, "" );
                 }
             }
         } catch( JavaModelException e ) {

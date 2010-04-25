@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
 import org.projectusus.core.filerelations.internal.metrics.BottleneckCalculator;
@@ -18,13 +17,9 @@ public class FileRelationMetrics {
 
     private final FileRelations relations;
 
-    @Deprecated
-    public FileRelationMetrics( FileRelations relations ) {
-        this.relations = relations;
-    }
-
     public FileRelationMetrics() {
-        this( new FileRelations() );
+        super();
+        this.relations = new FileRelations();
     }
 
     public void addFileRelation( ClassDescriptor source, ClassDescriptor target ) {
@@ -61,7 +56,7 @@ public class FileRelationMetrics {
         return Packagename.getAll();
     }
 
-    public void addClass( ITypeBinding binding ) throws JavaModelException {
+    public void addClass( ITypeBinding binding ) {
         ClassDescriptor.of( binding );
     }
 

@@ -9,7 +9,7 @@ class ClassDescriptorKey {
 
     public ClassDescriptorKey( IFile file, Classname classname, Packagename packagename ) {
         if( file == null || classname == null || packagename == null ) {
-            throw new IllegalArgumentException( "Null parameters are not allowed." );
+            throw new IllegalArgumentException( "Null parameters are not allowed." ); //$NON-NLS-1$
         }
         this.file = file;
         this.classname = classname;

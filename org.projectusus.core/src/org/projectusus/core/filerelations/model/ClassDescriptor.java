@@ -21,9 +21,14 @@ public class ClassDescriptor {
         return new HashSet<ClassDescriptor>( classes.values() );
     }
 
-    public static ClassDescriptor of( ITypeBinding binding ) throws JavaModelException {
-        return ClassDescriptor.of( new ClassDescriptorKey( (IFile)binding.getJavaElement().getUnderlyingResource(), new Classname( binding.getName() ), Packagename.of( binding
-                .getPackage().getName() ) ) );
+    public static ClassDescriptor of( ITypeBinding binding ) {
+        IFile underlyingResource;
+        try {
+            underlyingResource = (IFile)binding.getJavaElement().getUnderlyingResource();
+        } catch( JavaModelException jme ) {
+            throw new IllegalArgumentException( "binding not suitable", jme ); //$NON-NLS-1$
+        }
+        return ClassDescriptor.of( new ClassDescriptorKey( underlyingResource, new Classname( binding.getName() ), Packagename.of( binding.getPackage().getName() ) ) );
     }
 
     public static ClassDescriptor of( IFile file, Classname classname, Packagename packagename ) {
