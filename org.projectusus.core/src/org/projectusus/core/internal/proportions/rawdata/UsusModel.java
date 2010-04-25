@@ -5,6 +5,7 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import static java.util.Arrays.asList;
+import static org.projectusus.core.internal.project.UsusProjectSupport.isUsusProject;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ACD;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CC;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
@@ -19,6 +20,7 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
@@ -38,9 +40,10 @@ import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
 import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate;
+import org.projectusus.core.internal.proportions.modelupdate.TestRunModelUpdate;
 import org.projectusus.core.internal.proportions.modelupdate.UsusModelHistory;
 
-import com.mountainminds.eclemma.core.analysis.IJavaElementCoverage;
+import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
 public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelMetricsWriter {
 
@@ -152,8 +155,18 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         getFileRawData( file ).setMLValue( initializer, value );
     }
 
-    public void setInstructionCoverage( IProject project, IJavaElementCoverage coverage ) {
-        getProjectRawData( project ).setInstructionCoverage( coverage );
+    public void collectCoverageInfo( IJavaModelCoverage javaModelCoverage ) {
+        // UsusCorePlugin.getUsusModelMetricsWriter().resetInstructionCoverage(); ??
+        IJavaProject[] instrumentedProjects = javaModelCoverage.getInstrumentedProjects();
+        for( IJavaProject javaProject : instrumentedProjects ) {
+            IProject project = javaProject.getProject();
+            if( isUsusProject( project ) ) {
+                getProjectRawData( project ).setInstructionCoverage( javaModelCoverage.getCoverageFor( javaProject ) );
+            }
+        }
+        CodeProportion codeProportion = getCodeProportion( CodeProportionKind.TA );
+        IUsusModelUpdate updateCommand = new TestRunModelUpdate( codeProportion );
+        update( updateCommand );
     }
 
     public void setYellowCount( IFile file, int markerCount ) {
@@ -176,7 +189,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     }
 
     public IUsusElement[] getElements() {
-        return cache.getElements();
+        return cache.getElements().clone();
     }
 
     // ///////////////////////////////////////////////////////////////////////

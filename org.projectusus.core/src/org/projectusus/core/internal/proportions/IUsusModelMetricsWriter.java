@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.filerelations.FileRelationMetrics;
 
-import com.mountainminds.eclemma.core.analysis.IJavaElementCoverage;
+import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
 public interface IUsusModelMetricsWriter {
 
@@ -24,11 +24,11 @@ public interface IUsusModelMetricsWriter {
 
     void setMLValue( IFile file, Initializer initializer, int value );
 
-    void setInstructionCoverage( IProject project, IJavaElementCoverage coverage );
-
     FileRelationMetrics getFileRelationMetrics();
 
     void setYellowCount( IFile file, int markerCount );
 
     void setYellowCount( IProject project, int markerCount );
+
+    void collectCoverageInfo( IJavaModelCoverage javaModelCoverage );
 }

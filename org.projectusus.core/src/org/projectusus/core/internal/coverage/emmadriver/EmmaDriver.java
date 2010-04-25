@@ -8,16 +8,10 @@ import static com.mountainminds.eclemma.core.CoverageTools.addJavaCoverageListen
 import static com.mountainminds.eclemma.core.CoverageTools.getJavaModelCoverage;
 import static com.mountainminds.eclemma.core.CoverageTools.removeJavaCoverageListener;
 
-import org.eclipse.jdt.core.IJavaProject;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.coverage.IEmmaDriver;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate;
-import org.projectusus.core.internal.proportions.modelupdate.TestRunModelUpdate;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 import com.mountainminds.eclemma.core.analysis.IJavaCoverageListener;
-import com.mountainminds.eclemma.core.analysis.IJavaElementCoverage;
 import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
 public class EmmaDriver implements IEmmaDriver {
@@ -35,19 +29,7 @@ public class EmmaDriver implements IEmmaDriver {
     }
 
     private void collectCoverageInfo( IJavaModelCoverage javaModelCoverage ) {
-        // UsusCorePlugin.getUsusModelMetricsWriter().resetInstructionCoverage(); ??
-        IJavaProject[] instrumentedProjects = javaModelCoverage.getInstrumentedProjects();
-        for( IJavaProject javaProject : instrumentedProjects ) {
-            IJavaElementCoverage coverage = javaModelCoverage.getCoverageFor( javaProject );
-            UsusCorePlugin.getUsusModelMetricsWriter().setInstructionCoverage( javaProject.getProject(), coverage );
-        }
-        notifyListeners();
-    }
-
-    private void notifyListeners() {
-        CodeProportion codeProportion = UsusCorePlugin.getUsusModel().getCodeProportion( CodeProportionKind.TA );
-        IUsusModelUpdate updateCommand = new TestRunModelUpdate( codeProportion );
-        UsusCorePlugin.getUsusModelWriteAccess().update( updateCommand );
+        UsusCorePlugin.getUsusModelMetricsWriter().collectCoverageInfo( javaModelCoverage );
     }
 
     private IJavaCoverageListener createEmmaListener() {

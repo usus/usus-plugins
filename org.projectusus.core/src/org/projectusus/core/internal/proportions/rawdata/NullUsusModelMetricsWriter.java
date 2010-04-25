@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
 
-import com.mountainminds.eclemma.core.analysis.IJavaElementCoverage;
+import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
 @SuppressWarnings( "unused" )
 public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
@@ -38,10 +38,6 @@ public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
         // just do nothing harmful
     }
 
-    public void setInstructionCoverage( IProject project, IJavaElementCoverage coverage ) {
-        // just do nothing harmful
-    }
-
     public void resetInstructionCoverage() {
         // TODO Auto-generated method stub
 
@@ -58,6 +54,11 @@ public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
     }
 
     public void setYellowCount( IProject project, int markerCount ) {
+        // TODO Auto-generated method stub
+
+    }
+
+    public void collectCoverageInfo( IJavaModelCoverage javaModelCoverage ) {
         // TODO Auto-generated method stub
 
     }

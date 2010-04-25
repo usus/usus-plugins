@@ -12,13 +12,8 @@ import org.projectusus.core.internal.proportions.model.IUsusElement;
 public class CockpitCP implements ITreeContentProvider {
 
     public Object[] getElements( Object inputElement ) {
-        // List<Object> result = new ArrayList<Object>();
         if( inputElement instanceof IUsusModel ) {
-            IUsusModel model = (IUsusModel)inputElement;
-            return model.getElements().clone();
-            // for( IUsusElement element : model.getElements() ) {
-            // result.add( element );
-            // }
+            return ((IUsusModel)inputElement).getElements();
         }
         return new Object[] {};
     }
