@@ -1,5 +1,6 @@
 package org.projectusus.core.filerelations;
 
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -8,10 +9,13 @@ import static org.projectusus.core.filerelations.ClassDescriptorUtil.createClass
 import static org.projectusus.core.filerelations.test.IsSetOfMatcher.isEmptySet;
 import static org.projectusus.core.filerelations.test.IsSetOfMatcher.isSetOf;
 
+import java.util.List;
+
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.FileRelation;
 
 public class FileRelationMetricsRemoveTest {
 
@@ -41,13 +45,13 @@ public class FileRelationMetricsRemoveTest {
 
     @Test
     public void noRelations() {
-        metrics.remove( file1 );
+        metrics.handleFileRemoval( file1 );
     }
 
     @Test
     public void oneRelationSameFile() {
         setupTwoWithOneFile();
-        metrics.remove( file1 );
+        metrics.handleFileRemoval( file1 );
         assertThat( metrics.getChildren( descriptor1 ), isEmptySet() );
         assertThat( metrics.getChildren( descriptor2 ), isEmptySet() );
     }
@@ -55,7 +59,7 @@ public class FileRelationMetricsRemoveTest {
     @Test
     public void oneRelationDifferentFilesRemoveSource() {
         setupTwoWithTwoFiles();
-        metrics.remove( file1 );
+        metrics.handleFileRemoval( file1 );
         assertThat( metrics.getChildren( descriptor1 ), isEmptySet() );
         assertThat( metrics.getChildren( descriptor2 ), isEmptySet() );
     }
@@ -63,16 +67,17 @@ public class FileRelationMetricsRemoveTest {
     @Test
     public void oneRelationDifferentFilesRemoveTarget() {
         setupTwoWithTwoFiles();
-        metrics.remove( file2 );
-        assertThat( metrics.getChildren( descriptor1 ), isEmptySet() );
+        metrics.handleFileRemoval( file2 ); // does not remove from children!
+        assertThat( metrics.getChildren( descriptor1 ), isSetOf( descriptor2 ) );
         assertThat( metrics.getChildren( descriptor2 ), isEmptySet() );
+        checkRelationsToRepair( descriptor1, descriptor2 );
     }
 
     @Test
     public void twoRelationsOneFile() {
         setupThreeWithOneFile();
 
-        metrics.remove( file1 );
+        metrics.handleFileRemoval( file1 );
 
         assertThat( metrics.getChildren( descriptor1 ), isEmptySet() );
         assertThat( metrics.getChildren( descriptor2 ), isEmptySet() );
@@ -83,7 +88,7 @@ public class FileRelationMetricsRemoveTest {
     public void twoRelationsThreeFilesRemoveFirst() {
         setupThreeWithThreeFiles();
 
-        metrics.remove( file1 );
+        metrics.handleFileRemoval( file1 );
 
         assertThat( metrics.getChildren( descriptor1 ), isEmptySet() );
         assertThat( metrics.getChildren( descriptor2 ), isSetOf( descriptor3 ) );
@@ -94,22 +99,26 @@ public class FileRelationMetricsRemoveTest {
     public void twoRelationsThreeFilesRemoveSecond() {
         setupThreeWithThreeFiles();
 
-        metrics.remove( file2 );
+        metrics.handleFileRemoval( file2 );
 
-        assertThat( metrics.getChildren( descriptor1 ), isEmptySet() );
+        assertThat( metrics.getChildren( descriptor1 ), isSetOf( descriptor2 ) );
         assertThat( metrics.getChildren( descriptor2 ), isEmptySet() );
         assertThat( metrics.getChildren( descriptor3 ), isEmptySet() );
+
+        checkRelationsToRepair( descriptor1, descriptor2 );
     }
 
     @Test
     public void twoRelationsThreeFilesRemoveThird() {
         setupThreeWithThreeFiles();
 
-        metrics.remove( file3 );
+        metrics.handleFileRemoval( file3 );
 
         assertThat( metrics.getChildren( descriptor1 ), isSetOf( descriptor2 ) );
-        assertThat( metrics.getChildren( descriptor2 ), isEmptySet() );
+        assertThat( metrics.getChildren( descriptor2 ), isSetOf( descriptor3 ) );
         assertThat( metrics.getChildren( descriptor3 ), isEmptySet() );
+
+        checkRelationsToRepair( descriptor2, descriptor3 );
     }
 
     private void setupTwoWithOneFile() {
@@ -138,6 +147,15 @@ public class FileRelationMetricsRemoveTest {
         when( descriptor3.getFile() ).thenReturn( file3 );
         metrics.addFileRelation( descriptor1, descriptor2 );
         metrics.addFileRelation( descriptor2, descriptor3 );
+    }
+
+    private void checkRelationsToRepair( ClassDescriptor source, ClassDescriptor target ) {
+        List<FileRelation> relationsThatNeedRepair = metrics.findRelationsThatNeedRepair();
+        assertEquals( 1, relationsThatNeedRepair.size() );
+        FileRelation relationToRepair = relationsThatNeedRepair.get( 0 );
+        assertEquals( relationToRepair.getTarget(), target );
+        metrics.remove( relationToRepair );
+        assertThat( metrics.getChildren( source ), isEmptySet() );
     }
 
 }

@@ -70,13 +70,13 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     public void dropRawData( IProject project ) {
         for( IFile fileInProject : workspaceRawData.getProjectRawData( project ).getAllKeys() ) {
-            fileRelations.remove( fileInProject );
+            fileRelations.handleFileRemoval( fileInProject );
         }
         workspaceRawData.dropRawData( project );
     }
 
     public void dropRawData( IFile file ) {
-        fileRelations.remove( file );
+        fileRelations.handleFileRemoval( file );
         workspaceRawData.dropRawData( file );
     }
 

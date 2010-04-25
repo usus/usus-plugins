@@ -36,7 +36,7 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
     }
 
     public void dropRawData( IFile file ) {
-        UsusCorePlugin.getUsusModelMetricsWriter().getFileRelationMetrics().remove( file );
+        UsusCorePlugin.getUsusModelMetricsWriter().getFileRelationMetrics().handleFileRemoval( file );
         remove( file );
     }
 

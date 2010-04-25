@@ -31,7 +31,7 @@ public class FileRelationMetrics {
         relations.add( new FileRelation( source, target ) );
     }
 
-    public void remove( IFile file ) {
+    public void handleFileRemoval( IFile file ) {
         ClassDescriptor.removeAllClassesIn( file );
         relations.markAndRemoveAllRelationsStartingAt( file );
         relations.registerAllRelationsEndingAt( file );
