@@ -17,12 +17,12 @@ import org.junit.Test;
 
 public class UsusInfoBuilderTest {
 
-    private IMethod method = mock( IMethod.class );
-    private IFile file = mock( IFile.class );
-    private IProject project = mock( IProject.class );
+    private final IMethod method = mock( IMethod.class );
+    private final IFile file = mock( IFile.class );
+    private final IProject project = mock( IProject.class );
 
     @Test
-    public void unavailableMethodYieldsNull() throws Exception {
+    public void unavailableMethodYieldsNull() {
         IUsusInfo info = new UsusInfoBuilder( null ).create();
         assertNull( info );
     }
@@ -32,7 +32,7 @@ public class UsusInfoBuilderTest {
         when( method.getUnderlyingResource() ).thenReturn( null );
 
         IUsusInfo info = new UsusInfoBuilder( method ).create();
-        assertEquals( UnavailableUsusInfo.class , info.getClass() );
+        assertEquals( UnavailableUsusInfo.class, info.getClass() );
     }
 
     @Test

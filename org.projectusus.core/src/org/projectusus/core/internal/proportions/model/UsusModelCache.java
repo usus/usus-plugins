@@ -22,7 +22,7 @@ public class UsusModelCache {
         return new IUsusElement[] { codeProportionsCache, warningsCache, testCoverageCache, bugsCache };
     }
 
-    private void refresh( CodeProportion proportion ) {
+    public void refresh( CodeProportion proportion ) {
         CodeProportionKind metric = proportion.getMetric();
         if( metric == TA ) {
             testCoverageCache.refresh( proportion );

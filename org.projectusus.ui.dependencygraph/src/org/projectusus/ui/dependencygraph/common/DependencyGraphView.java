@@ -21,7 +21,7 @@ import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
-import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
+import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
 import org.projectusus.core.internal.proportions.rawdata.GraphNode;
 
 public abstract class DependencyGraphView extends ViewPart implements FilterLimitProvider {
@@ -145,7 +145,7 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
 
     private void initUsusModelListener() {
         listener = new IUsusModelListener() {
-            public void ususModelChanged( final IUsusModelHistory history ) {
+            public void ususModelChanged( CheckpointHistory history ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         model.invalidate();

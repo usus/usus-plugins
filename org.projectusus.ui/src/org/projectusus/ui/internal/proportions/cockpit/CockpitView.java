@@ -29,8 +29,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.project.FindUsusProjects;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
-import org.projectusus.core.internal.proportions.modelupdate.IUsusModelStatus;
+import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
 import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
 import org.projectusus.ui.internal.proportions.actions.ShowCoverageView;
 import org.projectusus.ui.internal.proportions.actions.ShowProblemsView;
@@ -51,7 +50,7 @@ public class CockpitView extends ViewPart {
         initContextMenuBehavior();
         initModelListener();
         getViewSite().setSelectionProvider( treeViewer );
-        setMessage( getUsusModel().getHistory().getLastStatus() );
+        setMessage( getUsusModel().getHistory() );
     }
 
     @Override
@@ -109,7 +108,7 @@ public class CockpitView extends ViewPart {
 
     private void initModelListener() {
         listener = new IUsusModelListener() {
-            public void ususModelChanged( final IUsusModelHistory history ) {
+            public void ususModelChanged( final CheckpointHistory history ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         handleUsusModelChanged( history );
@@ -120,11 +119,11 @@ public class CockpitView extends ViewPart {
         getUsusModel().addUsusModelListener( listener );
     }
 
-    private void handleUsusModelChanged( final IUsusModelHistory history ) {
+    private void handleUsusModelChanged( final CheckpointHistory history ) {
         if( hasUsusProjects() ) {
             enableViewer( true );
             refresh();
-            setMessage( history.getLastStatus() );
+            setMessage( history );
         } else {
             enableViewer( false );
             getStatusLine().setMessage( getWarningImage(), "No projects selected for use with Usus." );
@@ -142,9 +141,9 @@ public class CockpitView extends ViewPart {
         }
     }
 
-    private void setMessage( IUsusModelStatus status ) {
-        Image image = status.isStale() ? getWarningImage() : null;
-        getStatusLine().setMessage( image, status.toString() );
+    private void setMessage( CheckpointHistory history ) {
+        Image image = history.isStale() ? getWarningImage() : null;
+        getStatusLine().setMessage( image, history.getStatusMessage() );
     }
 
     private Image getWarningImage() {

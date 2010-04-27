@@ -38,17 +38,13 @@ import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
-import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
-import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate;
-import org.projectusus.core.internal.proportions.modelupdate.TestRunModelUpdate;
-import org.projectusus.core.internal.proportions.modelupdate.UsusModelHistory;
 
 import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
 public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelMetricsWriter {
 
     private final Set<IUsusModelListener> listeners;
-    private final UsusModelHistory history;
+    private final CheckpointHistory history;
     private final UsusModelCache cache;
     private final WorkspaceRawData workspaceRawData;
     private final FileRelationMetrics fileRelations;
@@ -56,7 +52,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     public UsusModel() {
         cache = new UsusModelCache();
         listeners = new HashSet<IUsusModelListener>();
-        history = new UsusModelHistory();
+        history = new CheckpointHistory();
         workspaceRawData = new WorkspaceRawData();
         fileRelations = new FileRelationMetrics();
     }
@@ -65,7 +61,12 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     // //////////////////////////////////
 
     public void updateAfterComputationRun( boolean computationSuccessful ) {
-        doUpdate( new ComputationRunModelUpdate( getCodeProportions(), computationSuccessful ) );
+        // TODO handle computationSuccessful
+        repairRelations();
+        ArrayList<CodeProportion> codeProportions = getCodeProportions();
+        history.addComputationResult( codeProportions );
+        cache.refreshAll( codeProportions );
+        notifyListeners();
     }
 
     public void dropRawData( IProject project ) {
@@ -143,7 +144,9 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
             }
         }
         CodeProportion codeProportion = getCodeProportion( CodeProportionKind.TA );
-        doUpdate( new TestRunModelUpdate( codeProportion ) );
+        history.addTestResult( codeProportion );
+        cache.refresh( codeProportion );
+        notifyListeners();
     }
 
     public void setYellowCount( IFile file, int markerCount ) {
@@ -161,7 +164,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     // interface of IUsusModel
     // ////////////////////////
 
-    public IUsusModelHistory getHistory() {
+    public CheckpointHistory getHistory() {
         return history;
     }
 
@@ -286,13 +289,6 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         for( IUsusModelListener listener : listeners ) {
             listener.ususModelChanged( history );
         }
-    }
-
-    private void doUpdate( IUsusModelUpdate updateCommand ) {
-        repairRelations();
-        cache.refreshAll( updateCommand.getEntries() );
-        history.add( updateCommand );
-        notifyListeners();
     }
 
     private ArrayList<CodeProportion> getCodeProportions() {

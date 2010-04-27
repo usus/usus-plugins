@@ -8,16 +8,12 @@ import static org.eclipse.core.runtime.jobs.Job.getJobManager;
 import static org.junit.Assert.assertEquals;
 import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 
-import java.util.ArrayList;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.modelcomputation.CodeProportionsComputerJob;
-import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
-import org.projectusus.core.internal.proportions.rawdata.ComputationRunModelUpdate;
+import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
 
 public class CodeProportionsPDETest {
 
@@ -44,7 +40,7 @@ public class CodeProportionsPDETest {
     private final class DummyCodeProportionsListener implements IUsusModelListener {
         private int callCount;
 
-        public void ususModelChanged( IUsusModelHistory history ) {
+        public void ususModelChanged( CheckpointHistory history ) {
           callCount++;
         }
 

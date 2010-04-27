@@ -13,7 +13,7 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
-import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
+import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
 import org.projectusus.core.internal.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
@@ -23,7 +23,7 @@ public interface IUsusModel {
 
     IUsusElement[] getElements();
 
-    IUsusModelHistory getHistory();
+    CheckpointHistory getHistory();
 
     void addUsusModelListener( IUsusModelListener listener );
 

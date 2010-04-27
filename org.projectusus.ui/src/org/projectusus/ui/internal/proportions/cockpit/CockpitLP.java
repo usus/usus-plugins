@@ -58,7 +58,7 @@ public class CockpitLP extends UsusModelLabelProvider implements ITableLabelProv
     }
 
     private boolean lastStatusIsStale() {
-        return getUsusModel().getHistory().getLastStatus().isStale();
+        return getUsusModel().getHistory().isStale();
     }
 
     private boolean isTestCoverageMetric( CodeProportion codeProportion ) {

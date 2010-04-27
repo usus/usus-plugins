@@ -11,7 +11,7 @@ import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
+import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 
@@ -34,9 +34,9 @@ public class YellowCount {
 
             /**
              * @param history
-             *            unfortunately no use here
+             *            not used in method
              */
-            public void ususModelChanged( IUsusModelHistory history ) {
+            public void ususModelChanged( CheckpointHistory history ) {
                 notifyListeners();
             }
         } );

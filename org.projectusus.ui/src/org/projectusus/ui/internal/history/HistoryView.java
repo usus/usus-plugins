@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
-import org.projectusus.core.internal.proportions.modelupdate.IUsusModelHistory;
+import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.ui.internal.util.UsusColors;
 import org.swtchart.Chart;
@@ -49,7 +49,7 @@ public class HistoryView extends ViewPart {
         chart = new CheckpointsHistoryChart( parent );
         refresh( getUsusModel().getHistory() ); // ??
         getUsusModel().addUsusModelListener( new IUsusModelListener() {
-            public void ususModelChanged( final IUsusModelHistory history ) {
+            public void ususModelChanged( final CheckpointHistory history ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         if( chart != null && !chart.isDisposed() ) {
@@ -68,7 +68,7 @@ public class HistoryView extends ViewPart {
         }
     }
 
-    private void refresh( IUsusModelHistory history ) {
+    private void refresh( CheckpointHistory history ) {
         Checkpoints2GraphicsConverter converter = getConverter( history );
         for( CodeProportionKind metric : CodeProportionKind.values() ) {
             updateSeries( metric, converter.get( metric ) );
@@ -76,7 +76,7 @@ public class HistoryView extends ViewPart {
         chart.redraw();
     }
 
-    private Checkpoints2GraphicsConverter getConverter( IUsusModelHistory history ) {
+    private Checkpoints2GraphicsConverter getConverter( CheckpointHistory history ) {
         List<ICheckpoint> checkpoints = history.getCheckpoints();
         return new Checkpoints2GraphicsConverter( checkpoints );
     }
