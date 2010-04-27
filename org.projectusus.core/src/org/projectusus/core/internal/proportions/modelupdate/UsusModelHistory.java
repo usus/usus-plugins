@@ -24,8 +24,12 @@ public class UsusModelHistory implements IUsusModelHistory {
     private UsusModelStatus status = new UsusModelStatus();
 
     public void add( IUsusModelUpdate modelUpdate ) {
-        history.add( modelUpdate );
-        updateStatus( );
+        if( modelUpdate.getType() == TEST_RUN && last().getType() == TEST_RUN ) {
+            history.set( history.indexOf( last() ), modelUpdate );
+        } else {
+            history.add( modelUpdate );
+        }
+        updateStatus();
         createCheckpoint();
     }
 
@@ -43,7 +47,7 @@ public class UsusModelHistory implements IUsusModelHistory {
     // internal
     // /////////
 
-    private void updateStatus( ) {
+    private void updateStatus() {
         status = new UsusModelStatus( last( COMPUTATION_RUN ), last( TEST_RUN ) );
     }
 

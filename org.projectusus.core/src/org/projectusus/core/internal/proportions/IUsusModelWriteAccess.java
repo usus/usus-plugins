@@ -6,7 +6,6 @@ package org.projectusus.core.internal.proportions;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate;
 
 /**
  * provides update facilities to the Usus model.
@@ -15,12 +14,10 @@ import org.projectusus.core.internal.proportions.modelupdate.IUsusModelUpdate;
  */
 public interface IUsusModelWriteAccess {
 
-    void update( IUsusModelUpdate updateCommand );
-
     void dropRawData( IFile file );
 
     void dropRawData( IProject project );
 
-    void updateComputation( boolean ok );
+    void updateAfterComputationRun( boolean ok );
 
 }

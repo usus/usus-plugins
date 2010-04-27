@@ -32,11 +32,11 @@ public class CodeProportionsPDETest {
         DummyCodeProportionsListener listener = new DummyCodeProportionsListener();
         getUsusModel().addUsusModelListener( listener );
 
-        ususModelWriteAccess.update( new ComputationRunModelUpdate( new ArrayList<CodeProportion>(), true ) );
+        ususModelWriteAccess.updateAfterComputationRun( false );
         assertEquals( 1, listener.getCallCount() );
 
         getUsusModel().removeUsusModelListener( listener );
-        ususModelWriteAccess.update( new ComputationRunModelUpdate( new ArrayList<CodeProportion>(), true ) );
+        ususModelWriteAccess.updateAfterComputationRun( false );
         // no more calls
         assertEquals( 1, listener.getCallCount() );
     }

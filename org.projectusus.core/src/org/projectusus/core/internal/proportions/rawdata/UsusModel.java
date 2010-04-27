@@ -64,11 +64,8 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     // interface of IUsusModelWriteAccess
     // //////////////////////////////////
 
-    public void update( IUsusModelUpdate updateCommand ) {
-        if( updateCommand == null || updateCommand.getType() == null ) {
-            throw new IllegalArgumentException();
-        }
-        doUpdate( updateCommand );
+    public void updateAfterComputationRun( boolean computationSuccessful ) {
+        doUpdate( new ComputationRunModelUpdate( getCodeProportions(), computationSuccessful ) );
     }
 
     public void dropRawData( IProject project ) {
@@ -83,18 +80,8 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         workspaceRawData.dropRawData( file );
     }
 
-    public void updateComputation( boolean computationSuccessful ) {
-        ArrayList<CodeProportion> proportions = getCodeProportions();
-        cache.refreshAll( proportions );
-        history.add( new ComputationRunModelUpdate( proportions, computationSuccessful ) );
-        List<FileRelation> relationsToRepair = fileRelations.findRelationsThatNeedRepair();
-        repairRelations( relationsToRepair );
-        notifyListeners();
-    }
-
-    private void repairRelations( List<FileRelation> relationsToRepair ) {
-        for( FileRelation relation : relationsToRepair ) {
-            System.out.println( "Found relation to repair: " + relation );
+    private void repairRelations() {
+        for( FileRelation relation : fileRelations.findRelationsThatNeedRepair() ) {
             removeRelationIfTargetIsGone( relation );
         }
 
@@ -104,15 +91,11 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         IFile targetFile = relation.getTargetFile();
         FileRawData fileRawData = getFileRawData( targetFile );
         if( fileRawData == null ) {
-            System.out.println( "Cannot find file, removing relation " + relation );
             fileRelations.remove( relation );
         } else {
             ClassRawData classRawData = fileRawData.findClass( relation.getTargetClassname() );
             if( classRawData == null ) {
-                System.out.println( "Cannot find target class, removing relation " + relation );
                 fileRelations.remove( relation );
-            } else {
-                System.out.println( "Target class found, relation repaired." );
             }
         }
     }
@@ -150,6 +133,9 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     public void collectCoverageInfo( IJavaModelCoverage javaModelCoverage ) {
         // UsusCorePlugin.getUsusModelMetricsWriter().resetInstructionCoverage(); ??
         IJavaProject[] instrumentedProjects = javaModelCoverage.getInstrumentedProjects();
+        if( instrumentedProjects.length == 0 ) {
+            return;
+        }
         for( IJavaProject javaProject : instrumentedProjects ) {
             IProject project = javaProject.getProject();
             if( isUsusProject( project ) ) {
@@ -157,8 +143,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
             }
         }
         CodeProportion codeProportion = getCodeProportion( CodeProportionKind.TA );
-        IUsusModelUpdate updateCommand = new TestRunModelUpdate( codeProportion );
-        update( updateCommand );
+        doUpdate( new TestRunModelUpdate( codeProportion ) );
     }
 
     public void setYellowCount( IFile file, int markerCount ) {
@@ -245,22 +230,6 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         return PackageRepresenter.transformToRepresenterSet( fileRelations.getAllPackages(), fileRelations );
     }
 
-    // public int getSumOfAllDirectChildrenOfAllClasses() {
-    // int sumDirectChildren = 0;
-    // for( ClassRawData clazz : workspaceRawData.getAllClassRawData() ) {
-    // sumDirectChildren += clazz.getChildren().size();
-    // }
-    // return sumDirectChildren;
-    // }
-    //
-    // public int getSumOfAllKnownChildrenOfAllClasses() {
-    // int sumKnownClasses = 0;
-    // for( ClassRawData clazz : workspaceRawData.getAllClassRawData() ) {
-    // sumKnownClasses += clazz.getAllChildren().size();
-    // }
-    // return sumKnownClasses;
-    // }
-    //
     public int getCCValue( IMethod method ) throws JavaModelException {
         ClassRawData classRawData = getClassRawData( method.getDeclaringType() );
         MethodRawData methodRawData = classRawData.getMethodRawData( method );
@@ -320,6 +289,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     }
 
     private void doUpdate( IUsusModelUpdate updateCommand ) {
+        repairRelations();
         cache.refreshAll( updateCommand.getEntries() );
         history.add( updateCommand );
         notifyListeners();

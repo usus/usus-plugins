@@ -53,8 +53,7 @@ public class CodeProportionsComputerJob extends Job {
     }
 
     private void updateModel( IStatus result ) {
-        IUsusModelWriteAccess ususModel = UsusCorePlugin.getUsusModelWriteAccess();
-        ususModel.updateComputation( result.isOK() );
+        UsusCorePlugin.getUsusModelWriteAccess().updateAfterComputationRun( result.isOK() );
     }
 
     private void computeJavaCodeMetrics( IProgressMonitor monitor ) throws CoreException {
