@@ -25,7 +25,12 @@ public class RunComputationOnResourceChange implements IResourceChangeListener {
     }
 
     private void runComputationJob( IResourceDelta delta ) throws CoreException {
-        ICodeProportionComputationTarget target = new DeltaCodeProportionComputationTarget( delta );
+        ICodeProportionComputationTarget target = null;
+        if( UsusCorePlugin.getUsusModel().needsFullRecompute() ) {
+            target = new WorkspaceCodeProportionComputationTarget();
+        } else {
+            target = new DeltaCodeProportionComputationTarget( delta );
+        }
         new CodeProportionsComputerJob( target ).schedule();
     }
 

@@ -56,4 +56,6 @@ public interface IUsusModel {
     int getNumberOfCompilerWarnings( IMethod method ) throws JavaModelException;
 
     int getNumberOfProjectsViolatingCW();
+
+    boolean needsFullRecompute();
 }

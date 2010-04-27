@@ -50,6 +50,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     private final UsusModelCache cache;
     private final WorkspaceRawData workspaceRawData;
     private final FileRelationMetrics fileRelations;
+    private boolean needsFullRecompute;
 
     public UsusModel() {
         cache = new UsusModelCache();
@@ -57,14 +58,15 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         history = new CheckpointHistory();
         workspaceRawData = new WorkspaceRawData();
         fileRelations = new FileRelationMetrics();
+        needsFullRecompute = true;
     }
 
     // interface of IUsusModelWriteAccess
     // //////////////////////////////////
 
     public void updateAfterComputationRun( boolean computationSuccessful, IProgressMonitor monitor ) {
-        // TODO handle computationSuccessful
-        repairRelations(monitor);
+        needsFullRecompute = !computationSuccessful;
+        repairRelations( monitor );
         ArrayList<CodeProportion> codeProportions = getCodeProportions();
         history.addComputationResult( codeProportions );
         cache.refreshAll( codeProportions );
@@ -312,5 +314,9 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
             count = count + projectRawData.getViolationCount( CodeProportionKind.CW ) > 0 ? 1 : 0;
         }
         return count;
+    }
+
+    public boolean needsFullRecompute() {
+        return needsFullRecompute;
     }
 }
