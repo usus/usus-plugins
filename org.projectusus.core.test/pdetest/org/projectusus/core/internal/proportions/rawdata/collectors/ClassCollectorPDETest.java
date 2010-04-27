@@ -47,7 +47,7 @@ public class ClassCollectorPDETest extends PDETestForMetricsComputation {
     @Test
     public void oneWithAnonymousClass() throws Exception {
         createAndCompute( "_anon" );
-        assertEquals( 2, UsusCorePlugin.getUsusModel().getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 1, UsusCorePlugin.getUsusModel().getNumberOf( CodeProportionUnit.CLASS ) );
     }
     
     private IFile createAndCompute( String filenumber ) throws CoreException, Exception {
