@@ -5,6 +5,7 @@
 package org.projectusus.core.internal.proportions.modelcomputation;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_computing;
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_name;
 
 import org.eclipse.core.runtime.CoreException;
@@ -12,9 +13,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.JDTDriver;
 
 public class CodeProportionsComputerJob extends Job {
@@ -42,18 +43,20 @@ public class CodeProportionsComputerJob extends Job {
 
     private IStatus performRun( IProgressMonitor monitor ) {
         IStatus result = Status.OK_STATUS;
+        monitor.beginTask( codeProportionsComputerJob_computing, 1000 );
         try {
-            computeJavaCodeMetrics( monitor );
+            computeJavaCodeMetrics( new SubProgressMonitor( monitor, 700 ) );
         } catch( CoreException cex ) {
             result = cex.getStatus();
         } finally {
-            updateModel( result );
+            updateModel( result, new SubProgressMonitor( monitor, 300 ) );
+            monitor.done();
         }
         return result;
     }
 
-    private void updateModel( IStatus result ) {
-        UsusCorePlugin.getUsusModelWriteAccess().updateAfterComputationRun( result.isOK() );
+    private void updateModel( IStatus result, IProgressMonitor monitor ) {
+        UsusCorePlugin.getUsusModelWriteAccess().updateAfterComputationRun( result.isOK(), monitor );
     }
 
     private void computeJavaCodeMetrics( IProgressMonitor monitor ) throws CoreException {

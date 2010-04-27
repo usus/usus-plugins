@@ -29,7 +29,6 @@ public final class CoreTexts extends NLS {
     public static String isisMetrics_pc;
     public static String isisMetrics_ta;
 
-    public static String jdtDriver_computing;
     public static String jdtDriver_errors;
 
     public static String projectSettings_defaultName;
@@ -43,6 +42,7 @@ public final class CoreTexts extends NLS {
     public static String SettingsAccess_save_settings;
 
     public static String testCoverage;
+    public static String ususModel_UpdatingFileRelations;
 
     public static String ususModelStatus_ok;
     public static String ususModelStatus_stale;

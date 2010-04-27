@@ -4,7 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
 
-import static org.projectusus.core.internal.util.CoreTexts.jdtDriver_computing;
 import static org.projectusus.core.internal.util.TracingOption.SQI;
 
 import java.util.Collection;
@@ -33,7 +32,7 @@ public class JDTDriver {
             System.out.println( "Removed project " + removedProject.getName() );
             model.dropRawData( removedProject );
         }
-        monitor.beginTask( jdtDriver_computing, countTicks( target.getProjects() ) );
+        monitor.beginTask( null, countTicks( target.getProjects() ) );
         for( IProject project : target.getProjects() ) {
             monitor.subTask( project.getName() );
             for( IFile removedFile : target.getRemovedFiles( project ) ) {

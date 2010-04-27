@@ -2,6 +2,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 
 @SuppressWarnings( "unused" )
@@ -15,8 +16,8 @@ public class NullUsusModelWriteAccess implements IUsusModelWriteAccess {
         // just do nothing harmful
     }
 
-    public void updateAfterComputationRun( boolean ok ) {
-        // TODO Auto-generated method stub
-
+    public void updateAfterComputationRun( boolean ok, IProgressMonitor monitor ) {
+        // just do nothing harmful
     }
+
 }

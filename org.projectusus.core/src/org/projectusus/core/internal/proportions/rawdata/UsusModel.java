@@ -20,6 +20,7 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
@@ -38,6 +39,7 @@ import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
+import org.projectusus.core.internal.util.CoreTexts;
 
 import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
@@ -60,9 +62,9 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     // interface of IUsusModelWriteAccess
     // //////////////////////////////////
 
-    public void updateAfterComputationRun( boolean computationSuccessful ) {
+    public void updateAfterComputationRun( boolean computationSuccessful, IProgressMonitor monitor ) {
         // TODO handle computationSuccessful
-        repairRelations();
+        repairRelations(monitor);
         ArrayList<CodeProportion> codeProportions = getCodeProportions();
         history.addComputationResult( codeProportions );
         cache.refreshAll( codeProportions );
@@ -81,11 +83,15 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         workspaceRawData.dropRawData( file );
     }
 
-    private void repairRelations() {
-        for( FileRelation relation : fileRelations.findRelationsThatNeedRepair() ) {
+    private void repairRelations( IProgressMonitor monitor ) {
+        List<FileRelation> candidates = fileRelations.findRelationsThatNeedRepair();
+        monitor.beginTask( null, candidates.size() );
+        monitor.subTask( CoreTexts.ususModel_UpdatingFileRelations );
+        for( FileRelation relation : candidates ) {
             removeRelationIfTargetIsGone( relation );
+            monitor.worked( 1 );
         }
-
+        monitor.done();
     }
 
     private void removeRelationIfTargetIsGone( FileRelation relation ) {
