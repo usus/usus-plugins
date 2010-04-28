@@ -4,7 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions;
 
-import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_BUGS;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_CODE_PROPORTIONS;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_INFO;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_TEST_COVERAGE;
@@ -16,7 +15,6 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.model.IBugs;
 import org.projectusus.core.internal.proportions.model.ICodeProportions;
 import org.projectusus.core.internal.proportions.model.ITestCoverage;
 import org.projectusus.core.internal.proportions.model.IWarnings;
@@ -36,8 +34,6 @@ public abstract class UsusModelLabelProvider extends LabelProvider implements IC
             result = "Test coverage (Red-/Greenness)";
         } else if( element instanceof IWarnings ) {
             result = "Static analysis warnings (Yellowness)";
-        } else if( element instanceof IBugs ) {
-            result = "Bugs";
         }
         return result;
     }
@@ -50,8 +46,6 @@ public abstract class UsusModelLabelProvider extends LabelProvider implements IC
             result = getSharedImages().getImage( OBJ_TEST_COVERAGE );
         } else if( element instanceof IWarnings ) {
             result = getSharedImages().getImage( OBJ_WARNINGS );
-        } else if( element instanceof IBugs ) {
-            result = getSharedImages().getImage( OBJ_BUGS );
         } else if( !(element instanceof CodeProportion) ) {
             result = getSharedImages().getImage( OBJ_INFO );
         }

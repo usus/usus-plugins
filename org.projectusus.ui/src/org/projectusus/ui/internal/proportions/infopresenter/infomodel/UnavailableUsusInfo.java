@@ -15,10 +15,6 @@ class UnavailableUsusInfo implements IUsusInfo {
         this.method = method;
     }
 
-    public String[] getBugInfos() {
-        return MESSAGE;
-    }
-
     public String[] getCodeProportionInfos() {
         return MESSAGE;
     }

@@ -16,10 +16,9 @@ public class UsusModelCache {
     private final TestCoverage testCoverageCache = new TestCoverage();
     private final CodeProportions codeProportionsCache = new CodeProportions();
     private final Warnings warningsCache = new Warnings();
-    private final Bugs bugsCache = new Bugs(); // TODO auch hier drin??
 
     public IUsusElement[] getElements() {
-        return new IUsusElement[] { codeProportionsCache, warningsCache, testCoverageCache, bugsCache };
+        return new IUsusElement[] { codeProportionsCache, warningsCache, testCoverageCache };
     }
 
     public void refresh( CodeProportion proportion ) {

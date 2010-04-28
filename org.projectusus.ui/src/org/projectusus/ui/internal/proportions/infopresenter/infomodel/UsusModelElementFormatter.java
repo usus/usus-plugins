@@ -4,19 +4,9 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter.infomodel;
 
-import org.projectusus.core.internal.bugreport.Bug;
-import org.projectusus.core.internal.bugreport.BugList;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 class UsusModelElementFormatter {
-
-    String format( BugList bugs ) {
-        StringBuilder sb = new StringBuilder();
-        for( Bug bug : bugs ) {
-            formatKeyValue( "Bug", bug.getTitle(), sb );
-        }
-        return sb.toString();
-    }
 
     String format( CodeProportionKind metric, int value ) {
         StringBuilder sb = new StringBuilder();
@@ -26,7 +16,7 @@ class UsusModelElementFormatter {
 
     private void formatKeyValue( String key, String value, StringBuilder sb ) {
         sb.append( key );
-        sb.append( ": " ); 
+        sb.append( ": " );
         sb.append( value );
     }
 }

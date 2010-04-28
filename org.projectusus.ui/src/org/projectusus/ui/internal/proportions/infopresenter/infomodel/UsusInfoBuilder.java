@@ -4,11 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter.infomodel;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IMethod;
-import org.eclipse.jdt.core.JavaModelException;
-import org.projectusus.core.internal.bugreport.BugList;
-import org.projectusus.core.internal.project.IUSUSProject;
 
 public class UsusInfoBuilder {
 
@@ -25,22 +21,11 @@ public class UsusInfoBuilder {
     private IUsusInfo buildUsusInfo() {
         IUsusInfo result = new UnavailableUsusInfo( method );
         try {
-            result = new UsusInfo( method, findBugInfo( method ) );
+            result = new UsusInfo( method );
         } catch( IllegalStateException isex ) {
             // something went wrong in calculation
-        } catch( JavaModelException jamox ) {
-            // ignore
         }
         return result;
     }
 
-    private BugList findBugInfo( IMethod method ) throws JavaModelException {
-        BugList result = new BugList();
-        IProject project = method.getUnderlyingResource().getProject();
-        IUSUSProject ususProject = (IUSUSProject)project.getAdapter( IUSUSProject.class );
-        if( ususProject != null ) {
-            result = ususProject.getBugsFor( method );
-        }
-        return result;
-    }
 }

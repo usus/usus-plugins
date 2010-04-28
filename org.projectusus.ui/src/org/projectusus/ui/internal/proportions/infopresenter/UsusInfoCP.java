@@ -4,7 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter;
 
-import org.projectusus.core.internal.proportions.model.IBugs;
 import org.projectusus.core.internal.proportions.model.ICodeProportions;
 import org.projectusus.core.internal.proportions.model.ITestCoverage;
 import org.projectusus.core.internal.proportions.model.IWarnings;
@@ -28,8 +27,6 @@ class UsusInfoCP extends CockpitCP {
             result = ususInfo.getTestCoverageInfos();
         } else if( parentElement instanceof IWarnings ) {
             result = ususInfo.getWarningInfos();
-        } else if( parentElement instanceof IBugs ) {
-            result = ususInfo.getBugInfos();
         }
         return result;
     }

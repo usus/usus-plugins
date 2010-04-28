@@ -18,18 +18,22 @@ public class ReportBugPDETest extends PDETestUsingWSProject {
 
     private static final DateTime TODAY = new DateMidnight().toDateTime();
 
+    protected IBuggyProject getBuggyProjectAdapter() {
+        return (IBuggyProject)project.getAdapter( IBuggyProject.class );
+    }
+
     @Test
     public void testgetBugsWithNoBugs() throws Exception {
-        BugList bugs = getUsusProjectAdapter().getBugs();
+        BugList bugs = getBuggyProjectAdapter().getBugs();
         assertTrue(bugs.isEmpty());
     }
     
     @Test
     public void testCreateBug() throws Exception {
         Bug bug = createBug();
-        getUsusProjectAdapter().saveBug( bug );
+        getBuggyProjectAdapter().saveBug( bug );
         getJobManager().join( SaveBugsJob.FAMILY, new NullProgressMonitor() );
-        BugList bugs = getUsusProjectAdapter().getBugs();
+        BugList bugs = getBuggyProjectAdapter().getBugs();
         assertEquals(1, bugs.size());
         testBugContent(bugs.getBugs()[0]);
     }

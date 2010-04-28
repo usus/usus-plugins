@@ -25,6 +25,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.bugreport.Bug;
+import org.projectusus.core.internal.bugreport.IBuggyProject;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.project.NullUsusProject;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
@@ -53,7 +54,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
 
             if( dialog.getReturnCode() == Window.OK ) {
                 Bug bug = wizard.getBug();
-                getUsusProject().saveBug( bug );
+                getBuggyProject().saveBug( bug );
             }
 
         }
@@ -106,6 +107,14 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
 
     private boolean isMethodSelected() {
         return getSelectedMethod() != null;
+    }
+
+    private IBuggyProject getBuggyProject() {
+        if( selectedJavaClass == null ) {
+            return new NullBuggyProject();
+        }
+        IJavaProject project = selectedJavaClass.getJavaProject();
+        return (IBuggyProject)project.getProject().getAdapter( IBuggyProject.class );
     }
 
     private IUSUSProject getUsusProject() {

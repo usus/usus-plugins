@@ -15,16 +15,13 @@ import java.util.List;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.bugreport.BugList;
 
 class UsusInfo implements IUsusInfo {
 
     private final IMethod method;
-    private final BugList bugs;
 
-    UsusInfo( IMethod method, BugList bugs ) {
+    UsusInfo( IMethod method ) {
         this.method = method;
-        this.bugs = bugs;
     }
 
     public String[] getCodeProportionInfos() {
@@ -38,10 +35,6 @@ class UsusInfo implements IUsusInfo {
         } catch( JavaModelException jmox ) {
             return new String[] { "Error in calculating metrics values." };
         }
-    }
-
-    public String[] getBugInfos() {
-        return new String[] { new UsusModelElementFormatter().format( bugs ) };
     }
 
     public String[] getTestCoverageInfos() {

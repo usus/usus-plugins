@@ -7,7 +7,7 @@ package org.projectusus.ui.internal.bugreport;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.projectusus.core.internal.bugreport.BugList;
-import org.projectusus.core.internal.project.IUSUSProject;
+import org.projectusus.core.internal.bugreport.IBuggyProject;
 import org.projectusus.ui.internal.coveredprojects.CoveredProjectsCP;
 
 public class BugsContentProvider extends CoveredProjectsCP {
@@ -18,7 +18,7 @@ public class BugsContentProvider extends CoveredProjectsCP {
         if( input instanceof IWorkspaceRoot ) {
             IWorkspaceRoot wsRoot = (IWorkspaceRoot)input;
             for( IProject project : wsRoot.getProjects() ) {
-                IUSUSProject ususProject = (IUSUSProject)project.getAdapter( IUSUSProject.class );
+                IBuggyProject ususProject = (IBuggyProject)project.getAdapter( IBuggyProject.class );
                 bugList.addBugs( ususProject.getBugs() );
             }
         }
