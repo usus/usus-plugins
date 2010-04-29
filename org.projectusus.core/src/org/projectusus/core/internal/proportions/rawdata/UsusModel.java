@@ -11,6 +11,7 @@ import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKi
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.KG;
 import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
+import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.PC;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,11 +33,14 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.FileRelation;
+import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.model.CodeStatistic;
+import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
 import org.projectusus.core.internal.util.CoreTexts;
@@ -184,6 +188,13 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     // Methoden, die auf WorkspaceRawData zugreifen:
     public CodeProportion getCodeProportion( CodeProportionKind metric ) {
+        if( metric == CodeProportionKind.PC ) {
+            CodeStatistic basis = new CodeStatistic( metric.getUnit(), Packagename.getAll().size() );
+            int violations = fileRelations.getPackageCycles().numberOfPackagesInAnyCycles();
+            List<IHotspot> hotspots = new ArrayList<IHotspot>();
+            // TODO add hotspots
+            return new CodeProportion( metric, violations, basis, hotspots );
+        }
         return workspaceRawData.getCodeProportion( metric );
     }
 
@@ -301,7 +312,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     private ArrayList<CodeProportion> getCodeProportions() {
         ArrayList<CodeProportion> entries = new ArrayList<CodeProportion>();
-        for( CodeProportionKind metric : asList( CC, KG, ML, ACD, CW ) ) {
+        for( CodeProportionKind metric : asList( CC, KG, ML, ACD, CW, PC ) ) {
             entries.add( getCodeProportion( metric ) );
         }
         return entries;

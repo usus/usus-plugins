@@ -10,21 +10,21 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 public class Packagename {
 
     private String name;
-    private Set<ClassDescriptor> classes = new HashSet<ClassDescriptor>();
+    private Set<ClassDescriptor> classesInPackage = new HashSet<ClassDescriptor>();
 
-    private static Map<String, Packagename> packages = new HashMap<String, Packagename>();
+    private static Map<String, Packagename> allPackages = new HashMap<String, Packagename>();
 
     public static Packagename of( String name ) {
-        if( packages.containsKey( name ) ) {
-            return packages.get( name );
+        if( allPackages.containsKey( name ) ) {
+            return allPackages.get( name );
         }
         Packagename newPackage = new Packagename( name );
-        packages.put( name, newPackage );
+        allPackages.put( name, newPackage );
         return newPackage;
     }
 
     public static Set<Packagename> getAll() {
-        return new HashSet<Packagename>( packages.values() );
+        return new HashSet<Packagename>( allPackages.values() );
     }
 
     private Packagename( String name ) {
@@ -32,22 +32,22 @@ public class Packagename {
     }
 
     public void addClass( ClassDescriptor clazz ) {
-        classes.add( clazz );
+        classesInPackage.add( clazz );
     }
 
     public void removeClass( ClassDescriptor clazz ) {
-        classes.remove( clazz );
-        if( classes.isEmpty() ) {
-            packages.remove( name );
+        classesInPackage.remove( clazz );
+        if( classesInPackage.isEmpty() ) {
+            allPackages.remove( name );
         }
     }
 
     public boolean containsClass( ClassDescriptor clazz ) {
-        return classes.contains( clazz );
+        return classesInPackage.contains( clazz );
     }
 
     public int numberOfClasses() {
-        return classes.size();
+        return classesInPackage.size();
     }
 
     @Override

@@ -1,13 +1,11 @@
 package org.projectusus.core.filerelations;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.projectusus.core.filerelations.ClassDescriptorUtil.createClassDescriptor;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.filerelations.model.Classname;
 
 public class CCDTest {
 
@@ -72,11 +70,4 @@ public class CCDTest {
         assertEquals( 2, metrics.getCCD( descriptor2 ) );
         assertEquals( 2, metrics.getCCD( descriptor3 ) );
     }
-
-    private ClassDescriptor createClassDescriptor( String name ) {
-        ClassDescriptor descriptor = mock( ClassDescriptor.class );
-        when( descriptor.getClassname() ).thenReturn( new Classname( name ) );
-        return descriptor;
-    }
-
 }
