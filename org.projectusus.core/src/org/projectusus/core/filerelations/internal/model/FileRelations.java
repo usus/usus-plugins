@@ -79,7 +79,6 @@ public class FileRelations extends Relations<IFile, FileRelation> {
     }
 
     private void addRelationToRepairList( List<FileRelation> relationsToRepair, FileRelation relation ) {
-        System.out.println( "Found non-obsolete relation: " + relation );
         if( !relation.isObsolete() ) {
             relationsToRepair.add( relation );
         }
