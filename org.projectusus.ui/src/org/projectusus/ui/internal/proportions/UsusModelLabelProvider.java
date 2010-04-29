@@ -31,9 +31,9 @@ public abstract class UsusModelLabelProvider extends LabelProvider implements IC
         if( element instanceof ICodeProportions ) {
             result = "Code proportions";
         } else if( element instanceof ITestCoverage ) {
-            result = "Test coverage (Red-/Greenness)";
+            result = "Test coverage";
         } else if( element instanceof IWarnings ) {
-            result = "Static analysis warnings (Yellowness)";
+            result = "Static analysis warnings";
         }
         return result;
     }

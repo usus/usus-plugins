@@ -6,15 +6,15 @@ package org.projectusus.ui.internal.proportions.infopresenter;
 
 import static org.eclipse.ui.handlers.HandlerUtil.getActiveEditor;
 import static org.eclipse.ui.handlers.HandlerUtil.getActiveShell;
-import static org.eclipse.ui.handlers.HandlerUtil.getCurrentSelection;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
 import org.projectusus.ui.internal.proportions.infopresenter.infomodel.IUsusInfo;
 import org.projectusus.ui.internal.proportions.infopresenter.infomodel.UsusInfoBuilder;
 import org.projectusus.ui.internal.selection.EditorInputAnalysis;
@@ -26,7 +26,9 @@ public class ShowUsusInfo extends AbstractHandler {
     public Object execute( ExecutionEvent event ) throws ExecutionException {
         IEditorPart activeEditor = getActiveEditor( event );
         if( activeEditor != null ) {
-            IMethod method = extractSelectedMethod( event, activeEditor );
+            EditorInputAnalysis analysis = new JDTWorkspaceEditorInputAnalysis( activeEditor.getEditorInput() );
+            ISelection currentSelection = calcCurrentSelection();
+            IMethod method = analysis.getSelectedMethod( currentSelection );
             IUsusInfo ususInfo = new UsusInfoBuilder( method ).create();
             if( ususInfo != null ) {
                 openLightWeightDialog( ususInfo, getActiveShell( event ) );
@@ -41,9 +43,7 @@ public class ShowUsusInfo extends AbstractHandler {
         dialog.open();
     }
 
-    private IMethod extractSelectedMethod( ExecutionEvent event, IEditorPart editor ) {
-        IEditorInput editorInput = editor.getEditorInput();
-        EditorInputAnalysis analysis = new JDTWorkspaceEditorInputAnalysis( editorInput );
-        return analysis.getSelectedMethod( getCurrentSelection( event ) );
+    private ISelection calcCurrentSelection() {
+        return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService().getSelection();
     }
 }

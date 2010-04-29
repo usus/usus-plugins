@@ -44,8 +44,11 @@ class UsusInfo implements IUsusInfo {
     public String[] getWarningInfos() {
         try {
             List<String> result = new ArrayList<String>();
-            UsusModelElementFormatter formatter = new UsusModelElementFormatter();
-            result.add( formatter.format( CW, UsusCorePlugin.getUsusModel().getNumberOfCompilerWarnings( method ) ) );
+            StringBuilder sb = new StringBuilder();
+            sb.append( CW.getLabel() );
+            sb.append( " (in file) : " );
+            sb.append( String.valueOf( UsusCorePlugin.getUsusModel().getNumberOfCompilerWarnings( method ) ) );
+            result.add( sb.toString() );
             return result.toArray( new String[0] );
         } catch( JavaModelException jmox ) {
             return new String[] { "Error retrieving information." };
