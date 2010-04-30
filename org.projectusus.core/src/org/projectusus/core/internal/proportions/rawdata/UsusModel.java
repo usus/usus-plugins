@@ -62,7 +62,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         history = new CheckpointHistory();
         workspaceRawData = new WorkspaceRawData();
         fileRelations = new FileRelationMetrics();
-        needsFullRecompute = true;
+        needsFullRecompute = false;
     }
 
     // interface of IUsusModelWriteAccess
