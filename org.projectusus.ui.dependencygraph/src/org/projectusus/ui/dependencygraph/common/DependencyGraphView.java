@@ -6,15 +6,15 @@ import java.util.Set;
 
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Scale;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.ZestStyles;
@@ -25,18 +25,21 @@ import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
 import org.projectusus.core.internal.proportions.rawdata.GraphNode;
 
 public abstract class DependencyGraphView extends ViewPart implements FilterLimitProvider {
-    private static final String SPINNER_TOOLTIP_TEXT = "Threshold for product of incoming and outgoing edges";
-    private static final String SPINNER_TEXT = "Threshold ";
+    private static final String SCALE_TOOLTIP_TEXT = "Change the number of visible nodes by moving the slider";
+    private static final String SCALE_LEFT_TEXT = "All";
+    private static final String SCALE_RIGHT_TEXT = "None";
 
     private GraphViewer graphViewer;
     private int filterLimit = -1;
     private final DependencyGraphModel model;
     private IUsusModelListener listener;
-    private Spinner spinner;
+    private Scale scale;
+    private final boolean showFilter;
 
-    public DependencyGraphView( DependencyGraphModel model ) {
+    public DependencyGraphView( DependencyGraphModel model, boolean showFilter ) {
         super();
         this.model = model;
+        this.showFilter = showFilter;
         initUsusModelListener();
     }
 
@@ -44,40 +47,50 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
     public void createPartControl( Composite parent ) {
         Composite composite = new Composite( parent, SWT.NONE );
         composite.setLayout( new GridLayout( 1, false ) );
-
-        createFilterArea( composite );
+        if( showFilter ) {
+            createFilterArea( composite );
+        }
         createGraphArea( composite );
     }
 
-    protected void initFilterLimit( int maxFilterValue ) {
+    private void initFilterLimit( int maxFilterValue ) {
         if( filterLimit == -1 ) {
             setFilterLimit( maxFilterValue );
-            spinner.setSelection( filterLimit );
+            scale.setSelection( filterLimit );
         }
     }
 
     private void createFilterArea( Composite composite ) {
         Composite filterArea = new Composite( composite, SWT.BORDER );
-        filterArea.setLayout( new GridLayout( 2, false ) );
-        Label filterText = new Label( filterArea, SWT.NONE );
-        filterText.setToolTipText( SPINNER_TOOLTIP_TEXT );
-        filterText.setText( SPINNER_TEXT );
+        filterArea.setToolTipText( SCALE_TOOLTIP_TEXT );
+        filterArea.setLayout( new GridLayout( 3, false ) );
+        createLabel( filterArea, SCALE_LEFT_TEXT );
 
-        spinner = new Spinner( filterArea, SWT.BORDER );
-        spinner.setMinimum( 0 );
-        spinner.setMaximum( 9999999 );
-        spinner.setSelection( getFilterLimit() );
-        spinner.addModifyListener( new ModifyListener() {
-            public void modifyText( ModifyEvent e ) {
+        scale = new Scale( filterArea, SWT.HORIZONTAL );
+        scale.setMinimum( 0 );
+        scale.setMaximum( 9999999 );
+        scale.setSelection( getFilterLimit() );
+        scale.addSelectionListener( new SelectionListener() {
+            public void widgetDefaultSelected( SelectionEvent e ) {
+                // we don't need that
+            }
+
+            public void widgetSelected( SelectionEvent e ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
-                        int spinnerValue = spinner.getSelection();
+                        int spinnerValue = scale.getSelection();
                         setFilterLimit( spinnerValue );
                         drawGraphConditionally();
                     }
                 } );
             }
         } );
+        createLabel( filterArea, SCALE_RIGHT_TEXT );
+    }
+
+    private void createLabel( Composite parent, String labelText ) {
+        Label filterText = new Label( parent, SWT.NONE );
+        filterText.setText( labelText );
     }
 
     private void createGraphArea( Composite composite ) {
@@ -158,10 +171,11 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
     }
 
     private void updateSpinnerAndFilter() {
-        int maxFilterValue = model.getMaxFilterValue();
-        initFilterLimit( maxFilterValue );
-        spinner.setMaximum( maxFilterValue );
-        spinner.setIncrement( maxFilterValue / 10 );
+        if( showFilter ) {
+            int maxFilterValue = model.getMaxFilterValue();
+            initFilterLimit( maxFilterValue );
+            scale.setMaximum( maxFilterValue + 1 );
+        }
     }
 
 }
