@@ -68,7 +68,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
             EditorInputAnalysis analysis = new JDTWorkspaceEditorInputAnalysis( editorInput );
             selectedJavaClass = analysis.getCompilationUnit();
             ISelection selection = workbenchWindow.getSelectionService().getSelection();
-            selectedElement = analysis.getSelectedMethod( selection );
+            selectedElement = analysis.getSelectedElement( selection );
         } catch( Exception e ) {
             UsusUIPlugin.getDefault().log( e );
         }

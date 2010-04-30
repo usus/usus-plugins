@@ -4,15 +4,16 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter.infomodel;
 
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 
 class UnavailableUsusInfo implements IUsusInfo {
 
     private static final String[] MESSAGE = new String[] { "No information available at this time." };
-    private final IMethod method;
+    private final IJavaElement element;
 
-    UnavailableUsusInfo( IMethod method ) {
-        this.method = method;
+    UnavailableUsusInfo( IJavaElement element ) {
+        this.element = element;
     }
 
     public String[] getCodeProportionInfos() {
@@ -27,7 +28,10 @@ class UnavailableUsusInfo implements IUsusInfo {
         return MESSAGE;
     }
 
-    public String formatMethod() {
-        return new MethodFormatter( method ).formatHeadInfo();
+    public String formatTitle() {
+        if( element instanceof IMethod ) {
+            return new MethodFormatter( (IMethod)element ).formatHeadInfo();
+        }
+        return "n.n.";
     }
 }

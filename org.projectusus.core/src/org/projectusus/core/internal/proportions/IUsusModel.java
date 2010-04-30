@@ -7,6 +7,7 @@ package org.projectusus.core.internal.proportions;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
@@ -53,7 +54,7 @@ public interface IUsusModel {
 
     int getMLValue( IMethod method ) throws JavaModelException;
 
-    int getNumberOfCompilerWarnings( IMethod method ) throws JavaModelException;
+    int getNumberOfCompilerWarnings( IFile file ) throws JavaModelException;
 
     int getNumberOfProjectsViolatingCW();
 

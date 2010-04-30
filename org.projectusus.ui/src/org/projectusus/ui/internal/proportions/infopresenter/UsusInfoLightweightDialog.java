@@ -35,7 +35,7 @@ class UsusInfoLightweightDialog extends LightweightDialog {
         lblTitle.setLayoutData( new GridData( FILL_HORIZONTAL ) );
         applyInfoColors( lblTitle );
         makeBold( lblTitle );
-        lblTitle.setText( ususInfo.formatMethod() );
+        lblTitle.setText( ususInfo.formatTitle() );
     }
 
     @Override

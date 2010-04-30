@@ -10,7 +10,7 @@ import static org.eclipse.ui.handlers.HandlerUtil.getActiveShell;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -26,15 +26,18 @@ public class ShowUsusInfo extends AbstractHandler {
     public Object execute( ExecutionEvent event ) throws ExecutionException {
         IEditorPart activeEditor = getActiveEditor( event );
         if( activeEditor != null ) {
-            EditorInputAnalysis analysis = new JDTWorkspaceEditorInputAnalysis( activeEditor.getEditorInput() );
-            ISelection currentSelection = calcCurrentSelection();
-            IMethod method = analysis.getSelectedMethod( currentSelection );
-            IUsusInfo ususInfo = new UsusInfoBuilder( method ).create();
+            IJavaElement element = getSelectedJavaElement( activeEditor );
+            IUsusInfo ususInfo = UsusInfoBuilder.of( element );
             if( ususInfo != null ) {
                 openLightWeightDialog( ususInfo, getActiveShell( event ) );
             }
         }
         return null; // must return null by IHandler contract
+    }
+
+    private IJavaElement getSelectedJavaElement( IEditorPart activeEditor ) {
+        EditorInputAnalysis analysis = new JDTWorkspaceEditorInputAnalysis( activeEditor.getEditorInput() );
+        return analysis.getSelectedElement( calcCurrentSelection() );
     }
 
     private void openLightWeightDialog( IUsusInfo ususInfo, Shell shell ) {

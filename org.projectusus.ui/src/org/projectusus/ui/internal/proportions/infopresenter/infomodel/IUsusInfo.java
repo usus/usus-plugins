@@ -11,7 +11,7 @@ public interface IUsusInfo {
 
     String[] getCodeProportionInfos();
 
-    String formatMethod();
+    String formatTitle();
 
     String[] getWarningInfos();
 

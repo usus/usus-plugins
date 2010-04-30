@@ -270,8 +270,8 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         throw new IllegalStateException();
     }
 
-    public int getNumberOfCompilerWarnings( IMethod method ) throws JavaModelException {
-        return getFileRawData( (IFile)method.getUnderlyingResource() ).getViolationCount( CW );
+    public int getNumberOfCompilerWarnings( IFile file ) throws JavaModelException {
+        return getFileRawData( file ).getViolationCount( CW );
     }
 
     // //////////////////////////////////

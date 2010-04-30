@@ -38,33 +38,33 @@ public class EditorInputAnalysisTest {
         inputAnalysis = new EditorInputAnalysis( loader, editorInput );
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test( expected = IllegalArgumentException.class )
     public void dontAcceptMissingLoader() {
         new EditorInputAnalysis( null, null );
     }
-    
+
     @Test
     public void canHandleNull() {
         // we want to make sure that an analysis can be requested with null,
         // so that we don't need defensive null checks all over the code
         EditorInputAnalysis analysis = new EditorInputAnalysis( loader, null );
         assertNull( analysis.getCompilationUnit() );
-        assertNull( analysis.getSelectedMethod( null ) );
+        assertNull( analysis.getSelectedElement( null ) );
     }
 
     @Test
     public void extractCompilationUnitFromInput() {
-        assertEquals( compilationUnit, inputAnalysis.getCompilationUnit()  );
+        assertEquals( compilationUnit, inputAnalysis.getCompilationUnit() );
     }
 
     @Test
     public void ignoreNullSelection() {
-        assertNull( inputAnalysis.getSelectedMethod( null ) );
+        assertNull( inputAnalysis.getSelectedElement( null ) );
     }
 
     @Test
     public void extractMethodFromTextSelection() {
         ISelection selection = new TextSelection( 1, 1 );
-        assertEquals( javaElement, inputAnalysis.getSelectedMethod( selection ) );
+        assertEquals( javaElement, inputAnalysis.getSelectedElement( selection ) );
     }
 }
