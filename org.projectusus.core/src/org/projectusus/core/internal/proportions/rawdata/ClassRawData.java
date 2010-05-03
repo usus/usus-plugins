@@ -95,7 +95,6 @@ class ClassRawData extends RawData<Integer, MethodRawData> {
         if( compilationUnit == null ) {
             return null;
         }
-
         try {
             for( Integer start : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( start.intValue() );
@@ -103,10 +102,10 @@ class ClassRawData extends RawData<Integer, MethodRawData> {
                     return getRawData( start.intValue(), 0, "" ); //$NON-NLS-1$
                 }
             }
+            return null;
         } catch( JavaModelException e ) {
             return null;
         }
-        return null;
     }
 
     @Override

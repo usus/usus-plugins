@@ -127,20 +127,22 @@ class FileRawData extends RawData<Integer, ClassRawData> {
             return null;
         }
 
-        IPackageDeclaration[] packageDeclarations;
         try {
+            ClassRawData rawData = null;
             for( Integer startPosition : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( startPosition.intValue() );
                 if( element.equals( foundElement ) ) {
-                    return super.getRawData( startPosition );
+                    rawData = super.getRawData( startPosition );
                 }
             }
-            packageDeclarations = compilationUnit.getPackageDeclarations();
+            if( rawData != null ) {
+                rawData = createClassRawDataFor( element, compilationUnit.getPackageDeclarations() );
+            }
+            return rawData;
         } catch( JavaModelException e ) {
             return null;
         }
 
-        return createClassRawDataFor( element, packageDeclarations );
     }
 
     private ClassRawData createClassRawDataFor( IJavaElement element, IPackageDeclaration[] packageDeclarations ) {
