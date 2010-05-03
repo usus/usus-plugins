@@ -26,20 +26,16 @@ import org.projectusus.core.internal.proportions.rawdata.GraphNode;
 
 public abstract class DependencyGraphView extends ViewPart implements FilterLimitProvider {
     private static final String SCALE_TOOLTIP_TEXT = "Change the number of visible nodes by moving the slider";
-    private static final String SCALE_LEFT_TEXT = "All";
-    private static final String SCALE_RIGHT_TEXT = "None";
 
     private GraphViewer graphViewer;
     private int filterLimit = -1;
     private final DependencyGraphModel model;
     private IUsusModelListener listener;
     private Scale scale;
-    private final boolean showFilter;
 
-    public DependencyGraphView( DependencyGraphModel model, boolean showFilter ) {
+    public DependencyGraphView( DependencyGraphModel model ) {
         super();
         this.model = model;
-        this.showFilter = showFilter;
         initUsusModelListener();
     }
 
@@ -47,9 +43,7 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
     public void createPartControl( Composite parent ) {
         Composite composite = new Composite( parent, SWT.NONE );
         composite.setLayout( new GridLayout( 1, false ) );
-        if( showFilter ) {
-            createFilterArea( composite );
-        }
+        createFilterArea( composite );
         createGraphArea( composite );
     }
 
@@ -64,7 +58,7 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
         Composite filterArea = new Composite( composite, SWT.BORDER );
         filterArea.setToolTipText( SCALE_TOOLTIP_TEXT );
         filterArea.setLayout( new GridLayout( 3, false ) );
-        createLabel( filterArea, SCALE_LEFT_TEXT );
+        createLabel( filterArea, getScaleLeftLabelText() );
 
         scale = new Scale( filterArea, SWT.HORIZONTAL );
         scale.setMinimum( 0 );
@@ -85,8 +79,12 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
                 } );
             }
         } );
-        createLabel( filterArea, SCALE_RIGHT_TEXT );
+        createLabel( filterArea, getScaleRightLabelText() );
     }
+
+    protected abstract String getScaleRightLabelText();
+
+    protected abstract String getScaleLeftLabelText();
 
     private void createLabel( Composite parent, String labelText ) {
         Label filterText = new Label( parent, SWT.NONE );
@@ -171,11 +169,13 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
     }
 
     private void updateSpinnerAndFilter() {
-        if( showFilter ) {
-            int maxFilterValue = model.getMaxFilterValue();
-            initFilterLimit( maxFilterValue );
-            scale.setMaximum( maxFilterValue + 1 );
-        }
+        int maxFilterValue = model.getMaxFilterValue();
+        initFilterLimit( maxFilterValue );
+        scale.setMaximum( calcMaxFilterValue( maxFilterValue ) );
+    }
+
+    protected int calcMaxFilterValue( int maxFilterValue ) {
+        return maxFilterValue;
     }
 
 }

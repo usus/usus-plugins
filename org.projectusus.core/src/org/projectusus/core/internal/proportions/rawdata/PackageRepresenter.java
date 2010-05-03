@@ -39,15 +39,15 @@ public class PackageRepresenter implements GraphNode {
     }
 
     public String getEdgeEndLabel() {
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
     public String getEdgeMiddleLabel() {
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
     public String getEdgeStartLabel() {
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
     public String getNodeName() {
@@ -55,6 +55,9 @@ public class PackageRepresenter implements GraphNode {
     }
 
     public boolean isVisibleFor( int limit ) {
+        if( limit > 0 ) {
+            return relations.getPackageCycles().containsPackage( packagename );
+        }
         return true;
     }
 

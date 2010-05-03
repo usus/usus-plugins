@@ -13,4 +13,9 @@ public class PackageGraphModel extends DependencyGraphModel {
         return UsusCorePlugin.getUsusModel().getAllPackages();
     }
 
+    @Override
+    public int getMaxFilterValue() {
+        return 1;
+    }
+
 }

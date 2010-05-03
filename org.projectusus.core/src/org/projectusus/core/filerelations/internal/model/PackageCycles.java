@@ -28,4 +28,12 @@ public class PackageCycles {
         return count;
     }
 
+    public boolean containsPackage( Packagename packagename ) {
+        for( PackageCycle cycle : packageCycles ) {
+            if( cycle.contains( packagename ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

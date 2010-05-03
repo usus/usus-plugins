@@ -20,4 +20,8 @@ public class PackageCycle {
         return packagesInCycle.size();
     }
 
+    public boolean contains( Packagename packagename ) {
+        return packagesInCycle.contains( packagename );
+    }
+
 }
