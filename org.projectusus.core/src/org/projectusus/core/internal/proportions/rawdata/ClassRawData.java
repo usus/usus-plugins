@@ -5,7 +5,6 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -147,10 +146,6 @@ class ClassRawData extends RawData<Integer, MethodRawData> {
 
     public int getCCDResult() {
         return UsusCorePlugin.getUsusModelMetricsWriter().getFileRelationMetrics().getCCD( descriptor );
-    }
-
-    public Set<ClassDescriptor> getChildren() {
-        return UsusCorePlugin.getUsusModelMetricsWriter().getFileRelationMetrics().getChildren( descriptor );
     }
 
     public String getClassName() {
