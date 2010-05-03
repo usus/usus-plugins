@@ -132,6 +132,8 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     public void addClass( IFile file, AbstractTypeDeclaration node ) {
         getFileRawData( file ).addClass( node );
+        // TODO Aufruf dieser Methode ersetzen durch FileRawData.getOrCreateRawData
+        // TODO Unterer Aufruf ist unnštig, da schon ClassRawData die ClassDescriptor erzeugt
         fileRelations.addClass( node.resolveBinding() );
     }
 
