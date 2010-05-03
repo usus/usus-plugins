@@ -135,7 +135,7 @@ class FileRawData extends RawData<Integer, ClassRawData> {
                     rawData = super.getRawData( startPosition );
                 }
             }
-            if( rawData != null ) {
+            if( rawData == null ) {
                 rawData = createClassRawDataFor( element, compilationUnit.getPackageDeclarations() );
             }
             return rawData;
