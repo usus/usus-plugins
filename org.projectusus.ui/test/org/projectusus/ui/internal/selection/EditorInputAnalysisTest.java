@@ -58,8 +58,8 @@ public class EditorInputAnalysisTest {
     }
 
     @Test
-    public void ignoreNullSelection() {
-        assertNull( inputAnalysis.getSelectedElement( null ) );
+    public void nullSelectionReturnsCompilationUnit() {
+        assertEquals( compilationUnit, inputAnalysis.getSelectedElement( null ) );
     }
 
     @Test

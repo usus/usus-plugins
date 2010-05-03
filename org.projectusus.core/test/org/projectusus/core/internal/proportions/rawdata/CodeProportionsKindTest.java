@@ -50,10 +50,10 @@ public class CodeProportionsKindTest {
     public void testGetLabel() {
         assertEquals( "Average component dependency", ACD.getLabel() ); //$NON-NLS-1$
         assertEquals( "Cyclomatic complexity", CC.getLabel() ); //$NON-NLS-1$
-        assertEquals( "Compiler warnings", CW.getLabel() ); //$NON-NLS-1$
+        assertEquals( "Warnings", CW.getLabel() ); //$NON-NLS-1$
         assertEquals( "Class size", KG.getLabel() ); //$NON-NLS-1$
         assertEquals( "Method length", ML.getLabel() ); //$NON-NLS-1$
-        assertEquals( "Package cycles", PC.getLabel() ); //$NON-NLS-1$
+        assertEquals( "Packages in cycles", PC.getLabel() ); //$NON-NLS-1$
         assertEquals( "Test coverage", TA.getLabel() ); //$NON-NLS-1$
     }
 

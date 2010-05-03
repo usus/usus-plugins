@@ -6,8 +6,11 @@ package org.projectusus.ui.internal.proportions.infopresenter.infomodel;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.IType;
 import org.junit.Test;
 
 public class UsusInfoBuilderTest {
@@ -21,8 +24,10 @@ public class UsusInfoBuilderTest {
     @Test
     public void availableDataYieldsMeaningfulInfo() {
         IMethod method = mock( IMethod.class );
+        IType classMock = mock( IType.class );
+        when( Integer.valueOf( method.getElementType() ) ).thenReturn( Integer.valueOf( IJavaElement.METHOD ) );
+        when( method.getDeclaringType() ).thenReturn( classMock );
         IUsusInfo info = UsusInfoBuilder.of( method );
-        assertEquals( UsusInfoForFile.class, info.getClass() );
+        assertEquals( UsusInfoForMethod.class, info.getClass() );
     }
-
 }
