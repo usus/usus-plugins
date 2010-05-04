@@ -1,5 +1,7 @@
 package org.projectusus.core.filerelations.model;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
 
 class ClassDescriptorKey {
@@ -14,5 +16,25 @@ class ClassDescriptorKey {
         this.file = file;
         this.classname = classname;
         this.packagename = packagename;
+    }
+
+    @Override
+    public boolean equals( Object obj ) {
+        return obj instanceof ClassDescriptorKey && equals( (ClassDescriptorKey)obj );
+    }
+
+    private boolean equals( ClassDescriptorKey other ) {
+        return new EqualsBuilder().append( file, other.file ). //
+                append( classname, other.classname ).append( packagename, other.packagename ).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append( file ).append( classname ).append( packagename ).toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return packagename + "." + classname + " in " + file; //$NON-NLS-1$ //$NON-NLS-2$
     }
 }
