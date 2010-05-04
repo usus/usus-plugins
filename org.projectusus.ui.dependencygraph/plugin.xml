@@ -52,6 +52,12 @@
                relationship="stack"
                relative="org.projectusus.ui.internal.history.HistoryView">
          </view>
+         <view
+               id="org.projectusus.ui.dependencygraph.PackageGraphView"
+               minimized="false"
+               relationship="stack"
+               relative="org.projectusus.ui.dependencygraph.ClassGraphView">
+         </view>
       </perspectiveExtension>
    </extension>
    
