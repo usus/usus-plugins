@@ -4,12 +4,15 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.hotspots;
 
+import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.ui.internal.hotspots.pages.DefaultHotspotsPage;
 import org.projectusus.ui.internal.hotspots.pages.IHotspotsPage;
 
@@ -19,9 +22,12 @@ public class HotSpotsView extends ViewPart {
     private IHotspotsPage defaultPage;
     private IHotspotsPage activePage;
 
-    public void update( CodeProportion codeProportion ) {
-        if( codeProportion != null ) {
-            updatePage( codeProportion );
+    public void update( CodeProportionKind kind ) {
+        if( kind != null ) {
+            CodeProportion codeProportion = getUsusModel().getCodeProportion( kind );
+            if( codeProportion != null ) {
+                updatePage( codeProportion );
+            }
         }
     }
 
@@ -95,6 +101,12 @@ public class HotSpotsView extends ViewPart {
             showPage( page );
         } else {
             showPage( defaultPage );
+        }
+    }
+
+    public void refreshActivePage() {
+        if( activePage != null ) {
+            activePage.setInput( getUsusModel().getCodeProportion( activePage.getCodeProportionKind() ) );
         }
     }
 }

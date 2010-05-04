@@ -13,6 +13,7 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.ui.internal.UsusUIPlugin;
 import org.projectusus.ui.internal.hotspots.HotSpotsView;
 
@@ -40,17 +41,16 @@ public class OpenHotspots extends Action {
         if( !selection.isEmpty() && selection instanceof IStructuredSelection ) {
             Object element = ((IStructuredSelection)selection).getFirstElement();
             if( element instanceof CodeProportion ) {
-                showHotspotsView( (CodeProportion)element );
+                showHotspotsView( ((CodeProportion)element).getMetric() );
             }
         }
     }
 
-    private void showHotspotsView( CodeProportion codeProportion ) {
+    private void showHotspotsView( CodeProportionKind codeProportionKind ) {
         try {
             IViewPart viewPart = getPage().showView( HotSpotsView.class.getName() );
             if( viewPart instanceof HotSpotsView ) {
-                HotSpotsView hotSpotsView = (HotSpotsView)viewPart;
-                hotSpotsView.update( codeProportion );
+                ((HotSpotsView)viewPart).update( codeProportionKind );
             }
         } catch( PartInitException paix ) {
             UsusUIPlugin.getDefault().getLog().log( paix.getStatus() );

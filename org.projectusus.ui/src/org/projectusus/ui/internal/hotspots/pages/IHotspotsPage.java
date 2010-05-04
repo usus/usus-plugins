@@ -6,10 +6,13 @@ package org.projectusus.ui.internal.hotspots.pages;
 
 import org.eclipse.ui.part.IPageBookViewPage;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 public interface IHotspotsPage extends IPageBookViewPage {
 
     void setInput( CodeProportion element );
 
     boolean isInitialized();
+
+    CodeProportionKind getCodeProportionKind();
 }

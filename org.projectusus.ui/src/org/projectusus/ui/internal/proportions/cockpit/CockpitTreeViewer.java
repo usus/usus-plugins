@@ -4,8 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.cockpit;
 
+import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.widgets.Composite;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.ui.internal.viewer.UsusTreeViewer;
 
 class CockpitTreeViewer extends UsusTreeViewer<CodeProportion> {
@@ -17,4 +20,27 @@ class CockpitTreeViewer extends UsusTreeViewer<CodeProportion> {
         setLabelProvider( new CockpitLP() );
         setContentProvider( new CockpitCP() );
     }
+
+    void selectInTree( Object object ) {
+        if( object instanceof CodeProportion ) {
+            selectCodeProportionInTree( ((CodeProportion)object) );
+        }
+    }
+
+    private void selectCodeProportionInTree( CodeProportion codeProportion ) {
+        for( Object element : getExpandedElements() ) {
+            if( element instanceof IUsusElement ) {
+                for( CodeProportion cp : ((IUsusElement)element).getEntries() ) {
+                    if( cp.getMetric().equals( codeProportion.getMetric() ) ) {
+                        setSelection( createTreeSelection( new Object[] { element, cp } ) );
+                    }
+                }
+            }
+        }
+    }
+
+    private TreeSelection createTreeSelection( Object... elements ) {
+        return new TreeSelection( new TreePath( elements ) );
+    }
+
 }

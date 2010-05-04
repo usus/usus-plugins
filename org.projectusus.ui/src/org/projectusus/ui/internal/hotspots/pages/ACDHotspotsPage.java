@@ -5,11 +5,12 @@
 package org.projectusus.ui.internal.hotspots.pages;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 
 public class ACDHotspotsPage extends HotspotsPage {
 
     public ACDHotspotsPage() {
-        super( ACDColumnDesc.values() );
+        super( CodeProportionKind.ACD, ACDColumnDesc.values() );
     }
 
     @Override

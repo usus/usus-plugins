@@ -52,10 +52,10 @@ public class PageFactory implements IAdapterFactory {
     // ////////
 
     private void initPages() {
-        pages.put( CC, new HotspotsPage( CCColumnDesc.values() ) );
-        pages.put( ML, new HotspotsPage( MLColumnDesc.values() ) );
-        pages.put( CW, new HotspotsPage( CWColumnDesc.values() ) );
-        pages.put( KG, new HotspotsPage( KGColumnDesc.values() ) );
+        pages.put( CC, new HotspotsPage( CC, CCColumnDesc.values() ) );
+        pages.put( ML, new HotspotsPage( ML, MLColumnDesc.values() ) );
+        pages.put( CW, new HotspotsPage( CW, CWColumnDesc.values() ) );
+        pages.put( KG, new HotspotsPage( KG, KGColumnDesc.values() ) );
         pages.put( ACD, new ACDHotspotsPage() );
     }
 }

@@ -19,6 +19,7 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.OpenEvent;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -31,6 +32,7 @@ import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
 import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
+import org.projectusus.ui.internal.proportions.actions.RefreshHotspots;
 import org.projectusus.ui.internal.proportions.actions.ShowCoverageView;
 import org.projectusus.ui.internal.proportions.actions.ShowProblemsView;
 import org.projectusus.ui.internal.proportions.actions.ToggleAutoCompute;
@@ -156,8 +158,13 @@ public class CockpitView extends ViewPart {
 
     private void refresh() {
         if( treeViewer != null && !treeViewer.getControl().isDisposed() ) {
+            ISelection selection = treeViewer.getSelection();
             treeViewer.refresh();
             treeViewer.expandAll();
+            if( !selection.isEmpty() ) {
+                treeViewer.selectInTree( ((TreeSelection)selection).getFirstElement() );
+                new RefreshHotspots().run();
+            }
         }
     }
 
@@ -166,4 +173,5 @@ public class CockpitView extends ViewPart {
         treeViewer = new CockpitTreeViewer( parent );
         treeViewer.setInput( getUsusModel() );
     }
+
 }

@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.part.Page;
 import org.projectusus.core.internal.proportions.model.CodeProportion;
 import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.ui.internal.hotspots.actions.OpenHotspotInEditor;
 import org.projectusus.ui.internal.selection.ExtractHotspot;
 import org.projectusus.ui.internal.viewer.UsusTreeViewer;
@@ -22,8 +23,10 @@ public class HotspotsPage extends Page implements IHotspotsPage {
 
     protected UsusTreeViewer<IHotspot> viewer;
     private final IHotspotsPageColumnDesc[] columnDescs;
+    private final CodeProportionKind kind;
 
-    public HotspotsPage( IHotspotsPageColumnDesc[] columnDescs ) {
+    public HotspotsPage( CodeProportionKind kind, IHotspotsPageColumnDesc[] columnDescs ) {
+        this.kind = kind;
         this.columnDescs = columnDescs;
     }
 
@@ -72,5 +75,9 @@ public class HotspotsPage extends Page implements IHotspotsPage {
         if( viewer != null && !viewer.getControl().isDisposed() ) {
             viewer.getControl().setFocus();
         }
+    }
+
+    public CodeProportionKind getCodeProportionKind() {
+        return kind;
     }
 }
