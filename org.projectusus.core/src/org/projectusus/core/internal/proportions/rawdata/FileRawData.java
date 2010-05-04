@@ -70,7 +70,7 @@ class FileRawData extends RawData<Integer, ClassRawData> {
         if( node == null ) {
             return null;
         }
-        return getRawData( node.resolveBinding(), node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
+        return getRawData( node.resolveBinding().getErasure(), node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
     }
 
     public int getNumberOfClasses() {

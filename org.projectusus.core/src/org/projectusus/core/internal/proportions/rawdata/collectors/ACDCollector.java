@@ -56,7 +56,8 @@ public class ACDCollector extends Collector {
         if( currentType == null ) {
             return true;
         }
-        ITypeBinding targetType = node.resolveBinding();
+
+        ITypeBinding targetType = node.resolveBinding().getErasure();
         if( isTypeInSourceFile( targetType ) && hasNothingToDoWithTypeVariables( targetType ) ) {
             UsusCorePlugin.getUsusModelMetricsWriter().addClassReference( currentType, targetType );
         }
@@ -86,7 +87,7 @@ public class ACDCollector extends Collector {
      */
 
     private void setCurrentType( AbstractTypeDeclaration node ) {
-        currentType = node.resolveBinding();
+        currentType = node.resolveBinding().getErasure();
     }
 
 }

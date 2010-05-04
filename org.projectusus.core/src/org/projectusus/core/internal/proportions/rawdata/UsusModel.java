@@ -134,7 +134,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         getFileRawData( file ).addClass( node );
         // TODO Aufruf dieser Methode ersetzen durch FileRawData.getOrCreateRawData
         // TODO Unterer Aufruf ist unnštig, da schon ClassRawData die ClassDescriptor erzeugt
-        fileRelations.addClass( node.resolveBinding() );
+        fileRelations.addClass( node.resolveBinding().getErasure() );
     }
 
     public void setMLValue( IFile file, MethodDeclaration methodDecl, int value ) {
