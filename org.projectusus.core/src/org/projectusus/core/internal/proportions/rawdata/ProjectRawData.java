@@ -19,7 +19,7 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
 
     // private final IProject projectOfRawData;
     private IJavaElementCoverage coverage;
-    private YellowCount projectMarkers = new YellowCount();
+    private WarningsCount projectMarkers = new WarningsCount();
     private RawDataMapWrapper<IFile, MiscFileRawData> miscRawData = new RawDataMapWrapper<IFile, MiscFileRawData>();
 
     public ProjectRawData( IProject project ) {
@@ -51,7 +51,7 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
         return new TestCoverage( 0, 0 );
     }
 
-    public void setYellowCount( IFile file, int markerCount ) {
+    public void setWarningsCount( IFile file, int markerCount ) {
         if( FileSupport.isJavaFile( file ) ) {
             getFileRawData( file ).setYellowCount( markerCount );
         } else {
@@ -59,8 +59,8 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
         }
     }
 
-    public void setYellowCount( int markerCount ) {
-        projectMarkers.setYellowCount( markerCount );
+    public void setWarningsCount( int markerCount ) {
+        projectMarkers.setWarningsCount( markerCount );
     }
 
     private MiscFileRawData getMiscFileRawData( IFile file ) {
@@ -126,5 +126,9 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
             return sum;
         }
         return super.getOverallMetric( metric );
+    }
+
+    public boolean hasWarnings() {
+        return getViolationCount( CodeProportionKind.CW ) > 0;
     }
 }

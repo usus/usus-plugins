@@ -26,7 +26,7 @@ class FileRawData extends RawData<Integer, ClassRawData> {
 
     private final IFile fileOfRawData;
 
-    private YellowCount yellowCount = new YellowCount();
+    private WarningsCount yellowCount = new WarningsCount();
 
     public FileRawData( IFile file ) {
         super(); // sagt AL ;)
@@ -59,7 +59,7 @@ class FileRawData extends RawData<Integer, ClassRawData> {
     }
 
     public void setYellowCount( int count ) {
-        yellowCount.setYellowCount( count );
+        yellowCount.setWarningsCount( count );
     }
 
     public void addClass( AbstractTypeDeclaration node ) {

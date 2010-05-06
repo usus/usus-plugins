@@ -27,6 +27,6 @@ public class FileDriver extends Driver {
     private void countYellowMarkers() throws CoreException {
         IMarker[] markers = file.findMarkers( PROBLEM, true, DEPTH_INFINITE );
         int markerCount = getNumberOfWarnings( markers );
-        UsusCorePlugin.getUsusModelMetricsWriter().setYellowCount( file, markerCount );
+        UsusCorePlugin.getUsusModelMetricsWriter().setWarningsCount( file, markerCount );
     }
 }

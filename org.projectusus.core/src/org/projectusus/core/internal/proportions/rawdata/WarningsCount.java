@@ -3,11 +3,11 @@ package org.projectusus.core.internal.proportions.rawdata;
 import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.model.MetricCWHotspot;
 
-public class YellowCount {
+public class WarningsCount {
 
     private int count;
 
-    public void setYellowCount( int count ) {
+    public void setWarningsCount( int count ) {
         this.count = count;
     }
 

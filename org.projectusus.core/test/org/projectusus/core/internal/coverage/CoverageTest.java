@@ -14,41 +14,39 @@ import com.mountainminds.eclemma.core.analysis.ICounter;
 
 public class CoverageTest {
 
- 
-
     @Test
-    public void addCoverage() throws Exception {
+    public void addCoverage() {
         TestCoverage coverage = new TestCoverage( 23, 100 ).add( new TestCoverage( 17, 50 ) );
         assertEquals( 40, coverage.getCoveredCount() );
         assertEquals( 150, coverage.getTotalCount() );
     }
 
     @Test
-    public void getCoverageInPercent_not_coveredProject() throws Exception {
+    public void getCoverageInPercent_not_coveredProject() {
         assertEquals( BigDecimal.ZERO, new TestCoverage( 0, 0 ).getCoverageInPercent() );
         assertEquals( BigDecimal.ZERO, new TestCoverage( 0, 100 ).getCoverageInPercent() );
     }
 
     @Test
-    public void getCoverageInPercent_coveredProject() throws Exception {
-        assertEquals( new BigDecimal( "43" ), new TestCoverage( 43, 100 ).getCoverageInPercent() );
-        assertEquals( new BigDecimal( "4" ), new TestCoverage( 16, 400 ).getCoverageInPercent() );
+    public void getCoverageInPercent_coveredProject() {
+        assertEquals( new BigDecimal( "43" ), new TestCoverage( 43, 100 ).getCoverageInPercent() ); //$NON-NLS-1$
+        assertEquals( new BigDecimal( "4" ), new TestCoverage( 16, 400 ).getCoverageInPercent() ); //$NON-NLS-1$
     }
 
     @Test
-    public void getCoverageInPercent_coveredProject_roundPercentage() throws Exception {
-        assertEquals( new BigDecimal( "1.5" ), new TestCoverage( 3, 200 ).getCoverageInPercent() );
-        assertEquals( new BigDecimal( "33.3" ), new TestCoverage( 3, 9 ).getCoverageInPercent() );
+    public void getCoverageInPercent_coveredProject_roundPercentage() {
+        assertEquals( new BigDecimal( "1.5" ), new TestCoverage( 3, 200 ).getCoverageInPercent() ); //$NON-NLS-1$
+        assertEquals( new BigDecimal( "33.3" ), new TestCoverage( 3, 9 ).getCoverageInPercent() ); //$NON-NLS-1$
     }
 
     @Test
-    public void getCoverageInPercentDisplayString() throws Exception {
-        assertEquals( "43.0 %", new TestCoverage( 43, 100 ).getCoverageInPercentDisplayString() );
-        assertEquals( "33.3 %", new TestCoverage( 3, 9 ).getCoverageInPercentDisplayString() );
+    public void getCoverageInPercentDisplayString() {
+        assertEquals( "43.0 %", new TestCoverage( 43, 100 ).getCoverageInPercentDisplayString() ); //$NON-NLS-1$
+        assertEquals( "33.3 %", new TestCoverage( 3, 9 ).getCoverageInPercentDisplayString() ); //$NON-NLS-1$
     }
 
     @Test
-    public void from() throws Exception {
+    public void from() {
         TestCoverage coverage = new TestCoverage( createCounter( 1, 2 ) );
         assertEquals( new TestCoverage( 1, 2 ), coverage );
     }
@@ -56,7 +54,7 @@ public class CoverageTest {
     private ICounter createCounter( final int coveredCount, final int totalCount ) {
         return new TestCounter( coveredCount, totalCount );
     }
-    
+
     private final class TestCounter implements ICounter {
         private final int coveredCount;
         private final int totalCount;
@@ -78,6 +76,10 @@ public class CoverageTest {
             return totalCount;
         }
 
+        /**
+         * @param arg0
+         *            is not used
+         */
         public int compareTo( Object arg0 ) {
             return 0;
         }

@@ -18,6 +18,7 @@ import org.projectusus.core.internal.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 import org.projectusus.core.internal.proportions.rawdata.PackageRepresenter;
+import org.projectusus.core.internal.proportions.rawdata.YellowCountResult;
 
 public interface IUsusModel {
 
@@ -51,11 +52,13 @@ public interface IUsusModel {
 
     int getMLValue( IMethod method ) throws JavaModelException;
 
-    int getNumberOfCompilerWarnings( IFile file ) throws JavaModelException;
+    int getNumberOfWarnings( IFile file ) throws JavaModelException;
 
     int getNumberOfProjectsViolatingCW();
 
     boolean needsFullRecompute();
 
     double getRelativeACD();
+
+    YellowCountResult getWarnings();
 }

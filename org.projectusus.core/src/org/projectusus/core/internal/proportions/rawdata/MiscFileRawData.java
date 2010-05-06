@@ -9,14 +9,14 @@ import org.projectusus.core.internal.proportions.model.IHotspot;
 public class MiscFileRawData {
 
     private IFile fileOfRawData;
-    private YellowCount yellowCount = new YellowCount();
+    private WarningsCount yellowCount = new WarningsCount();
 
     public MiscFileRawData( IFile file ) {
         this.fileOfRawData = file;
     }
 
     public void setYellowCount( int count ) {
-        yellowCount.setYellowCount( count );
+        yellowCount.setWarningsCount( count );
     }
 
     public int getViolationCount( CodeProportionKind metric ) {

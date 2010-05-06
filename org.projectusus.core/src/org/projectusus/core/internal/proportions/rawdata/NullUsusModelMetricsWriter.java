@@ -43,7 +43,7 @@ public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
 
     }
 
-    public void setYellowCount( IFile file, int markerCount ) {
+    public void setWarningsCount( IFile file, int markerCount ) {
         // TODO Auto-generated method stub
 
     }
@@ -53,7 +53,7 @@ public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
         return null;
     }
 
-    public void setYellowCount( IProject project, int markerCount ) {
+    public void setWarningsCount( IProject project, int markerCount ) {
         // TODO Auto-generated method stub
 
     }

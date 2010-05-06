@@ -42,6 +42,10 @@ class LaunchListener implements ILaunchesListener {
         }
     }
 
+    /**
+     * @param launches
+     *            is unused
+     */
     public void launchesChanged( ILaunch[] launches ) {
         // unused
     }

@@ -12,26 +12,25 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.projectusus.core.projectsettings.CompilerWarningSettingCode;
 
-
-public class CompilerWarningSettingCodeTest  {
+public class CompilerWarningSettingCodeTest {
 
     @Test
     public void testFromString() {
-        CompilerWarningSettingCode code = CompilerWarningSettingCode.fromString("org.eclipse.jdt.core.compiler.problem.annotationSuperInterface");
-        assertEquals(CompilerWarningSettingCode.annotationSuperInterface, code);
-        
+        CompilerWarningSettingCode code = CompilerWarningSettingCode.fromString( "org.eclipse.jdt.core.compiler.problem.annotationSuperInterface" ); //$NON-NLS-1$
+        assertEquals( CompilerWarningSettingCode.annotationSuperInterface, code );
+
     }
-    
+
     @Test
-    public void testFromStringWithUnknownCode() throws Exception {
-    	assertNull(CompilerWarningSettingCode.fromString("unbekannt"));
+    public void testFromStringWithUnknownCode() {
+        assertNull( CompilerWarningSettingCode.fromString( "unbekannt" ) ); //$NON-NLS-1$
     }
-    
+
     @Test
-    public void testHasCode() throws Exception {
-        assertTrue(CompilerWarningSettingCode.hasCode("org.eclipse.jdt.core.compiler.problem.annotationSuperInterface"));
-        assertFalse(CompilerWarningSettingCode.hasCode("org.eclipse.jdt.core.compiler.problem.unknown"));
-        assertFalse(CompilerWarningSettingCode.hasCode("unknown"));
+    public void testHasCode() {
+        assertTrue( CompilerWarningSettingCode.hasCode( "org.eclipse.jdt.core.compiler.problem.annotationSuperInterface" ) ); //$NON-NLS-1$
+        assertFalse( CompilerWarningSettingCode.hasCode( "org.eclipse.jdt.core.compiler.problem.unknown" ) ); //$NON-NLS-1$
+        assertFalse( CompilerWarningSettingCode.hasCode( "unknown" ) ); //$NON-NLS-1$
     }
 
 }

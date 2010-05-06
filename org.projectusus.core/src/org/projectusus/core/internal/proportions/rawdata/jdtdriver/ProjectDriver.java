@@ -27,7 +27,7 @@ public class ProjectDriver extends Driver {
     private void countYellowMarkers() throws CoreException {
         IMarker[] markers = project.findMarkers( PROBLEM, true, DEPTH_ZERO );
         int markerCount = getNumberOfWarnings( markers );
-        UsusCorePlugin.getUsusModelMetricsWriter().setYellowCount( project, markerCount );
+        UsusCorePlugin.getUsusModelMetricsWriter().setWarningsCount( project, markerCount );
     }
 
 }

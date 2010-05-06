@@ -29,6 +29,10 @@ public class SaveCheckpointsJob extends Job {
         setPriority( DECORATE );
     }
 
+    /**
+     * @param monitor
+     *            is not used
+     */
     @Override
     protected IStatus run( IProgressMonitor monitor ) {
         try {

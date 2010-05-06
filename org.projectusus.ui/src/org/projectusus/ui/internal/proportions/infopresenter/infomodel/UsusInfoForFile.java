@@ -48,7 +48,7 @@ class UsusInfoForFile implements IUsusInfo {
             StringBuilder sb = new StringBuilder();
             sb.append( CW.getLabel() );
             sb.append( " (in file) : " );
-            sb.append( String.valueOf( UsusCorePlugin.getUsusModel().getNumberOfCompilerWarnings( file ) ) );
+            sb.append( String.valueOf( UsusCorePlugin.getUsusModel().getNumberOfWarnings( file ) ) );
             result.add( sb.toString() );
             return result.toArray( new String[0] );
         } catch( JavaModelException jmox ) {

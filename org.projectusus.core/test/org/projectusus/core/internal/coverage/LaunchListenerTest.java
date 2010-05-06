@@ -19,7 +19,7 @@ import com.mountainminds.eclemma.core.CoverageTools;
 public class LaunchListenerTest {
 
     @Test
-    public void coverageLaunchTriggersSelectorCallback() throws Exception {
+    public void coverageLaunchTriggersSelectorCallback() {
         ILaunch launch = setupLaunchWithTarget( CoverageTools.LAUNCH_MODE );
         TestSuiteForCoverageSelector selector = new TestSuiteForCoverageSelector();
         LaunchListener listener = new LaunchListener( asList( selector ), new TestEmmaDriver() );
@@ -28,15 +28,15 @@ public class LaunchListenerTest {
     }
 
     @Test
-    public void debugLaunchTriggersSelectorCallback() throws Exception {
+    public void debugLaunchTriggersSelectorCallback() {
         ILaunch launch = setupLaunchWithTarget( ILaunchManager.DEBUG_MODE );
         TestSuiteForCoverageSelector selector = new TestSuiteForCoverageSelector();
-        LaunchListener listener = new LaunchListener( asList( selector ),new TestEmmaDriver() );
+        LaunchListener listener = new LaunchListener( asList( selector ), new TestEmmaDriver() );
         listener.launchesAdded( new ILaunch[] { launch } );
         assertFalse( selector.isCalled() );
     }
 
-    private ILaunch setupLaunchWithTarget( String name ) throws Exception {
+    private ILaunch setupLaunchWithTarget( String name ) {
         ILaunch launch = mock( ILaunch.class );
         when( launch.getLaunchMode() ).thenReturn( name );
         return launch;
@@ -46,6 +46,10 @@ public class LaunchListenerTest {
 
         boolean called = false;
 
+        /**
+         * @param launch
+         *            is not used
+         */
         public boolean select( ILaunch launch ) {
             called = true;
             return false;
@@ -55,8 +59,12 @@ public class LaunchListenerTest {
             return called;
         }
     }
-    
+
     private class TestEmmaDriver implements IEmmaDriver {
+        /**
+         * @param active
+         *            is not used
+         */
         public void setActive( boolean active ) {
             // unused
         }

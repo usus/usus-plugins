@@ -21,8 +21,8 @@ public class UsusModelTest {
         ITypeBinding sourceBinding = mock( ITypeBinding.class );
         ITypeBinding targetBinding = mock( ITypeBinding.class );
         IPackageBinding packageBindingMock = mock( IPackageBinding.class );
-        when( sourceBinding.getName() ).thenReturn( "sourceName" );
-        when( targetBinding.getName() ).thenReturn( "targetName" );
+        when( sourceBinding.getName() ).thenReturn( "sourceName" ); //$NON-NLS-1$
+        when( targetBinding.getName() ).thenReturn( "targetName" ); //$NON-NLS-1$
         when( sourceBinding.getPackage() ).thenReturn( packageBindingMock );
         when( targetBinding.getPackage() ).thenReturn( packageBindingMock );
         IJavaElement javaElementMock = mock( IJavaElement.class );

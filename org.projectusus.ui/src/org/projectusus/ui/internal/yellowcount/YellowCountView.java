@@ -15,9 +15,10 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
-import org.projectusus.core.internal.yellowcount.IYellowCountListener;
-import org.projectusus.core.internal.yellowcount.IYellowCountResult;
-import org.projectusus.core.internal.yellowcount.YellowCount;
+import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.proportions.IUsusModelListener;
+import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
+import org.projectusus.core.internal.proportions.rawdata.YellowCountResult;
 
 /**
  * A simple view that displays the current yellow count to the user.
@@ -27,7 +28,7 @@ import org.projectusus.core.internal.yellowcount.YellowCount;
 public class YellowCountView extends ViewPart {
 
     private StyledText styledText;
-    private IYellowCountListener listener;
+    private IUsusModelListener listener;
     private final ColorRegistry colorRegistry = new ColorRegistry();
 
     // interface methods of ViewPart
@@ -39,13 +40,19 @@ public class YellowCountView extends ViewPart {
         styledText.setEditable( false );
         styledText.setBackground( getBackgroundColor() );
 
-        listener = new IYellowCountListener() {
-            public void yellowCountChanged() {
-                display( YellowCount.getInstance().count() );
+        listener = new IUsusModelListener() {
+
+            /**
+             * @param history
+             *            not used in method
+             */
+            public void ususModelChanged( CheckpointHistory history ) {
+                display( UsusCorePlugin.getUsusModel().getWarnings() );
             }
         };
-        YellowCount.getInstance().addYellowCountListener( listener );
-        display( YellowCount.getInstance().count() );
+        UsusCorePlugin.getUsusModel().addUsusModelListener( listener );
+
+        display( UsusCorePlugin.getUsusModel().getWarnings() );
     }
 
     @Override
@@ -57,21 +64,21 @@ public class YellowCountView extends ViewPart {
 
     @Override
     public void dispose() {
-        YellowCount.getInstance().removeYellowCountListener( listener );
+        UsusCorePlugin.getUsusModel().removeUsusModelListener( listener );
         super.dispose();
     }
 
     // helping methods
     // ////////////////
 
-    private void display( final IYellowCountResult countResult ) {
+    private void display( final YellowCountResult countResult ) {
         final String displayString = countResult.toString();
         Display.getDefault().asyncExec( new Runnable() {
             public void run() {
                 if( styledText != null && !styledText.isDisposed() ) {
                     styledText.setText( displayString );
-                    styledText.setStyleRange( createStyleRange( countResult ) );
                     styledText.setBackground( getBackgroundColor() );
+                    styledText.setStyleRange( createStyleRange( countResult ) );
                     styledText.redraw();
                 }
             }
@@ -79,16 +86,15 @@ public class YellowCountView extends ViewPart {
     }
 
     private Color getBackgroundColor() {
-        int fade = YellowCount.getInstance().count().getYellowCount();
-        fade = (fade > 255) ? 0 : 255 - fade;
-        RGB rgb = new RGB( 255, 255, fade );
+        int fade = UsusCorePlugin.getUsusModel().getWarnings().getYellowCount();
+        RGB rgb = new RGB( 255, 255, Math.max( 255 - fade, 0 ) );
         if( !colorRegistry.hasValueFor( rgb.toString() ) ) {
             colorRegistry.put( rgb.toString(), rgb );
         }
         return colorRegistry.get( rgb.toString() );
     }
 
-    private StyleRange createStyleRange( IYellowCountResult countResult ) {
+    private StyleRange createStyleRange( YellowCountResult countResult ) {
         Color foreground = styledText.getForeground();
         Color background = styledText.getBackground();
         int position = countResult.getFormattedCountPosition();

@@ -16,19 +16,18 @@ import org.projectusus.core.projectsettings.CompilerWarningSettings;
 
 public class CompilerWarningSettingsTest {
 
-    
     @Test
-    public void testLoadValuesFromProperties() throws Exception {
-    	CompilerWarningSettings settings = new CompilerWarningSettings();
-	
-		Properties properties = new Properties();
-		properties.put(annotationSuperInterface.getSetting(), "error");
-		properties.put("unknown", "warning");
-		settings.loadValuesFromProperties(properties);
-	
-		CompilerWarningSetting setting = settings.getSetting(annotationSuperInterface);
-	
-		assertEquals(CompilerWarningLevel.error, setting.getValue());
+    public void testLoadValuesFromProperties() {
+        CompilerWarningSettings settings = new CompilerWarningSettings();
+
+        Properties properties = new Properties();
+        properties.put( annotationSuperInterface.getSetting(), "error" ); //$NON-NLS-1$
+        properties.put( "unknown", "warning" ); //$NON-NLS-1$//$NON-NLS-2$
+        settings.loadValuesFromProperties( properties );
+
+        CompilerWarningSetting setting = settings.getSetting( annotationSuperInterface );
+
+        assertEquals( CompilerWarningLevel.error, setting.getValue() );
     }
-    
+
 }

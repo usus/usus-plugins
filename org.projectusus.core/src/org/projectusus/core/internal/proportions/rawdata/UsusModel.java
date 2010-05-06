@@ -163,12 +163,12 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         notifyListeners();
     }
 
-    public void setYellowCount( IFile file, int markerCount ) {
-        getProjectRawData( file.getProject() ).setYellowCount( file, markerCount );
+    public void setWarningsCount( IFile file, int markerCount ) {
+        getProjectRawData( file.getProject() ).setWarningsCount( file, markerCount );
     }
 
-    public void setYellowCount( IProject project, int markerCount ) {
-        getProjectRawData( project ).setYellowCount( markerCount );
+    public void setWarningsCount( IProject project, int markerCount ) {
+        getProjectRawData( project ).setWarningsCount( markerCount );
     }
 
     public FileRelationMetrics getFileRelationMetrics() {
@@ -263,15 +263,18 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         throw new IllegalStateException();
     }
 
-    public int getNumberOfCompilerWarnings( IFile file ) throws JavaModelException {
-        return getFileRawData( file ).getViolationCount( CW );
-    }
-
     public double getRelativeACD() {
         return fileRelations.getRelativeACD();
     }
 
-    // //////////////////////////////////
+    public int getNumberOfWarnings( IFile file ) throws JavaModelException {
+        return getFileRawData( file ).getViolationCount( CW );
+    }
+
+    public YellowCountResult getWarnings() {
+        return new YellowCountResult( this.getNumberOf( CodeProportionUnit.PROJECT ), this.getNumberOf( CodeProportionKind.CW.getUnit() ), this
+                .getOverallMetric( CodeProportionKind.CW ), this.getNumberOfProjectsViolatingCW() );
+    }
 
     FileRawData getFileRawData( IFile file ) {
         return workspaceRawData.getProjectRawData( file.getProject() ).getFileRawData( file );
@@ -319,7 +322,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         int count = 0;
         Collection<ProjectRawData> allRawDataElements = workspaceRawData.getAllRawDataElements();
         for( ProjectRawData projectRawData : allRawDataElements ) {
-            count = count + projectRawData.getViolationCount( CodeProportionKind.CW ) > 0 ? 1 : 0;
+            count = count + (projectRawData.hasWarnings() ? 1 : 0);
         }
         return count;
     }

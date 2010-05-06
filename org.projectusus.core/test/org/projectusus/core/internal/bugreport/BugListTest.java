@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BugListTest  {
+public class BugListTest {
 
     private BugList bugs;
 
@@ -18,21 +18,21 @@ public class BugListTest  {
     public void setUp() {
         bugs = new BugList();
     }
-    
+
     @Test
     public void testFilter() {
         addBug();
         BugList filteredBugs = bugs.filter( createLocation() );
-        assertEquals(1, filteredBugs.size());
+        assertEquals( 1, filteredBugs.size() );
     }
-    
+
     @Test
     public void testFilterWithEmptyResult() {
         addBug();
         MethodLocation location = createLocation();
-        location.setClassName( "an other classname" );
+        location.setClassName( "an other classname" ); //$NON-NLS-1$
         BugList filteredBugs = bugs.filter( location );
-        assertTrue(filteredBugs.isEmpty());
+        assertTrue( filteredBugs.isEmpty() );
     }
 
     private void addBug() {
@@ -43,12 +43,12 @@ public class BugListTest  {
 
     private MethodLocation createLocation() {
         MethodLocation result = new MethodLocation();
-        
-        result.setProject( "project" );
-        result.setPackageName( "packageName" );
-        result.setClassName( "className" );
-        result.setMethodName( "methodName" );
-        
+
+        result.setProject( "project" ); //$NON-NLS-1$
+        result.setPackageName( "packageName" ); //$NON-NLS-1$
+        result.setClassName( "className" ); //$NON-NLS-1$
+        result.setMethodName( "methodName" ); //$NON-NLS-1$
+
         return result;
     }
 
