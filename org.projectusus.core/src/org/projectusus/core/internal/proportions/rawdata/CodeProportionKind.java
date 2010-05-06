@@ -16,9 +16,9 @@ import org.projectusus.core.internal.UsusCorePlugin;
 
 public enum CodeProportionKind {
 
-    TA( isisMetrics_ta, CodeProportionUnit.LINE, 1.0 ), //
-    PC( isisMetrics_pc, CodeProportionUnit.PACKAGE, 1.0 ), //
-    CC( isisMetrics_cc, CodeProportionUnit.METHOD, 100.0 ) {
+    TA( isisMetrics_ta, CodeProportionUnit.LINE ), //
+    PC( isisMetrics_pc, CodeProportionUnit.PACKAGE ), //
+    CC( isisMetrics_cc, CodeProportionUnit.METHOD ) {
         @Override
         public boolean isViolatedBy( MethodRawData rawData ) {
             return getValueFor( rawData ) > MetricsLimits.CC_LIMIT;
@@ -29,7 +29,7 @@ public enum CodeProportionKind {
             return rawData.getCCValue();
         }
     },
-    ACD( isisMetrics_acd, CodeProportionUnit.CLASS, 1.0 ) {
+    ACD( isisMetrics_acd, CodeProportionUnit.CLASS ) {
         @Override
         public boolean isViolatedBy( ClassRawData rawData ) {
             int classCount = UsusCorePlugin.getUsusModel().getNumberOf( CodeProportionUnit.CLASS );
@@ -37,13 +37,13 @@ public enum CodeProportionKind {
             return rawData.getCCDResult() > limit;
         }
     }, //
-    KG( isisMetrics_kg, CodeProportionUnit.CLASS, 25.0 ) {
+    KG( isisMetrics_kg, CodeProportionUnit.CLASS ) {
         @Override
         public boolean isViolatedBy( ClassRawData rawData ) {
             return rawData.getNumberOfMethods() > MetricsLimits.KG_LIMIT;
         }
     }, //
-    ML( isisMetrics_ml, CodeProportionUnit.METHOD, 25.0 ) {
+    ML( isisMetrics_ml, CodeProportionUnit.METHOD ) {
         @Override
         public boolean isViolatedBy( MethodRawData rawData ) {
             return getValueFor( rawData ) > MetricsLimits.ML_LIMIT;
@@ -54,7 +54,7 @@ public enum CodeProportionKind {
             return rawData.getMLValue();
         }
     }, //
-    CW( isisMetrics_cw, CodeProportionUnit.ANYFILE, 1.0 ) {
+    CW( isisMetrics_cw, CodeProportionUnit.ANYFILE ) {
         @Override
         public boolean operatesOnNonJavaFiles() {
             return true;
@@ -72,13 +72,11 @@ public enum CodeProportionKind {
     };
 
     private final String label;
-    private final double calibration;
     private final CodeProportionUnit unit;
 
-    private CodeProportionKind( String label, CodeProportionUnit unit, double calibration ) {
+    private CodeProportionKind( String label, CodeProportionUnit unit ) {
         this.label = label;
         this.unit = unit;
-        this.calibration = calibration;
     }
 
     public String getLabel() {
@@ -107,10 +105,6 @@ public enum CodeProportionKind {
 
     public final boolean isMethodKind() {
         return getUnit() == CodeProportionUnit.METHOD;
-    }
-
-    public final double getCalibration() {
-        return calibration;
     }
 
     public int getValueFor( @SuppressWarnings( "unused" ) MethodRawData rawData ) {

@@ -237,15 +237,6 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         return projectRawData.getViolationCount( metric );
     }
 
-    public List<Integer> getAllClassesCCDResults() {
-        Set<ClassRawData> classes = workspaceRawData.getAllClassRawData();
-        List<Integer> ccdList = new ArrayList<Integer>();
-        for( ClassRawData node : classes ) {
-            ccdList.add( new Integer( node.getCCDResult() ) );
-        }
-        return ccdList;
-    }
-
     public Set<ClassRepresenter> getAllClassRepresenters() {
         return ClassRepresenter.transformToRepresenterSet( fileRelations.getAllClassDescriptors(), fileRelations );
     }
@@ -274,6 +265,10 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     public int getNumberOfCompilerWarnings( IFile file ) throws JavaModelException {
         return getFileRawData( file ).getViolationCount( CW );
+    }
+
+    public double getRelativeACD() {
+        return fileRelations.getRelativeACD();
     }
 
     // //////////////////////////////////

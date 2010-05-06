@@ -126,17 +126,6 @@ public class CodeProportionsKindTest {
     }
 
     @Test
-    public void testGetCalibration() {
-        assertEquals( 1.0, ACD.getCalibration(), 0.0 );
-        assertEquals( 100.0, CC.getCalibration(), 0.0 );
-        assertEquals( 1.0, CW.getCalibration(), 0.0 );
-        assertEquals( 25.0, KG.getCalibration(), 0.0 );
-        assertEquals( 25.0, ML.getCalibration(), 0.0 );
-        assertEquals( 1.0, PC.getCalibration(), 0.0 );
-        assertEquals( 1.0, TA.getCalibration(), 0.0 );
-    }
-
-    @Test
     public void testGetValueFor() {
         assertEquals( 0, ACD.getValueFor( methodRawDataFailing ) );
         assertEquals( 22, CC.getValueFor( methodRawDataFailing ) );

@@ -48,6 +48,10 @@ public class FileRelationMetrics {
         return new ACDCalculator( relations ).getCCD( descriptor );
     }
 
+    public double getRelativeACD() {
+        return new ACDCalculator( relations ).getRelativeACD();
+    }
+
     public int getBottleneckCount( ClassDescriptor descriptor ) {
         return new BottleneckCalculator( relations ).getBottleneckCount( descriptor );
     }

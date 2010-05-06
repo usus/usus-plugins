@@ -57,9 +57,12 @@ public class ACDCollector extends Collector {
             return true;
         }
 
-        ITypeBinding targetType = node.resolveBinding().getErasure();
-        if( isTypeInSourceFile( targetType ) && hasNothingToDoWithTypeVariables( targetType ) ) {
-            UsusCorePlugin.getUsusModelMetricsWriter().addClassReference( currentType, targetType );
+        ITypeBinding targetType = node.resolveBinding();
+        if( targetType != null ) {
+            targetType = targetType.getErasure();
+            if( isTypeInSourceFile( targetType ) && hasNothingToDoWithTypeVariables( targetType ) ) {
+                UsusCorePlugin.getUsusModelMetricsWriter().addClassReference( currentType, targetType );
+            }
         }
         return true;
     }

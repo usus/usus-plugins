@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
-import org.projectusus.core.internal.proportions.model.AcdSQIComputer;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
 
@@ -291,7 +290,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 //    twoFilesOneClassIsRemovedFromFile
 
     private double getACD() {
-        return new AcdSQIComputer().getRelativeACD(); // TODO!! aus model lesen
+        return UsusCorePlugin.getUsusModel().getRelativeACD();
     }
 
     private IFile createFileAndBuild( String filenumber ) throws Exception {

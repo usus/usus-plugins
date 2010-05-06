@@ -4,7 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -40,8 +39,6 @@ public interface IUsusModel {
 
     int getNumberOfMethods( IType type ) throws JavaModelException;
 
-    List<Integer> getAllClassesCCDResults();
-
     int getOverallMetric( CodeProportionKind metric );
 
     int getOverallMetric( IProject project, CodeProportionKind metric );
@@ -59,4 +56,6 @@ public interface IUsusModel {
     int getNumberOfProjectsViolatingCW();
 
     boolean needsFullRecompute();
+
+    double getRelativeACD();
 }

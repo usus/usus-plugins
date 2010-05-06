@@ -23,7 +23,6 @@ import org.projectusus.core.internal.PDETestUsingWSProject;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
-import org.projectusus.core.internal.proportions.model.AcdSQIComputer;
 import org.projectusus.core.internal.proportions.modelcomputation.ICodeProportionComputationTarget;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.JavaFileDriver;
@@ -63,7 +62,7 @@ public class BrokenPDETest extends PDETestUsingWSProject {
         IUsusModel model = UsusCorePlugin.getUsusModel();
         createAndCompute( "_1knows2generic", "Acd" );
         assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
-        assertEquals( 0.75, new AcdSQIComputer().getRelativeACD(), 0.0001 );
+        assertEquals( 0.75, UsusCorePlugin.getUsusModel().getRelativeACD(), 0.0001 );
     }
     
     
