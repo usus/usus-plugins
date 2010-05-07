@@ -15,9 +15,9 @@ import org.eclipse.debug.core.ILaunchesListener;
 class LaunchListener implements ILaunchesListener {
 
     private final ITestSuiteForCoverageSelector selector;
-    private final IEmmaDriver emmaDriver;
+    private final EmmaDriver emmaDriver;
 
-    LaunchListener( List<? extends ITestSuiteForCoverageSelector> selectors, IEmmaDriver emmaDriver ) {
+    LaunchListener( List<? extends ITestSuiteForCoverageSelector> selectors, EmmaDriver emmaDriver ) {
         this.selector = selectors.get( 0 );
         this.emmaDriver = emmaDriver;
     }

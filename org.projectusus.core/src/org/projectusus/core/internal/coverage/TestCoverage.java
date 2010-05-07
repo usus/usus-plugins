@@ -13,6 +13,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import com.mountainminds.eclemma.core.analysis.ICounter;
 
 public class TestCoverage {
@@ -27,27 +30,18 @@ public class TestCoverage {
     }
 
     public TestCoverage( ICounter counter ) {
-        this.coveredCount = (int)counter.getCoveredCount();
-        this.totalCount = (int)counter.getTotalCount();
+        this( (int)counter.getCoveredCount(), (int)counter.getTotalCount() );
     }
 
     public int getTotalCount() {
         return totalCount;
     }
 
-    public void setTotalCount( int totalCount ) {
-        this.totalCount = totalCount;
-    }
-
     public int getCoveredCount() {
         return coveredCount;
     }
 
-    public void setCoveredCount( int coveredCount ) {
-        this.coveredCount = coveredCount;
-    }
-
-    public BigDecimal getCoverageInPercent() {
+    private BigDecimal getCoverageInPercent() {
         if( getTotalCount() == 0 ) {
             return BigDecimal.ZERO;
         }
@@ -55,12 +49,11 @@ public class TestCoverage {
     }
 
     public String getCoverageInPercentDisplayString() {
-        BigDecimal coverageInPercent = getCoverageInPercent();
         NumberFormat numberInstance = getNumberInstance( ENGLISH );
         numberInstance.setMaximumIntegerDigits( 3 );
         numberInstance.setMaximumFractionDigits( 2 );
         numberInstance.setMinimumFractionDigits( 1 );
-        return numberInstance.format( coverageInPercent ) + " %"; //$NON-NLS-1$
+        return numberInstance.format( getCoverageInPercent() ) + " %"; //$NON-NLS-1$
     }
 
     public TestCoverage add( TestCoverage other ) {
@@ -75,9 +68,15 @@ public class TestCoverage {
             return false;
         }
         TestCoverage otherCoverage = (TestCoverage)other;
-        boolean coveredCountIsEqual = getCoveredCount() == otherCoverage.getCoveredCount();
-        boolean totalCountIsEqual = getTotalCount() == otherCoverage.getTotalCount();
-        return coveredCountIsEqual && totalCountIsEqual;
+        return new EqualsBuilder(). //
+                append( coveredCount, otherCoverage.coveredCount ).//
+                append( totalCount, otherCoverage.totalCount ).//
+                isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append( coveredCount ).append( totalCount ).hashCode();
     }
 
     @Override

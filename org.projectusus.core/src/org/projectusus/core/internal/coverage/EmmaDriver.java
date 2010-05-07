@@ -2,19 +2,18 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.coverage.emmadriver;
+package org.projectusus.core.internal.coverage;
 
 import static com.mountainminds.eclemma.core.CoverageTools.addJavaCoverageListener;
 import static com.mountainminds.eclemma.core.CoverageTools.getJavaModelCoverage;
 import static com.mountainminds.eclemma.core.CoverageTools.removeJavaCoverageListener;
 
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.coverage.IEmmaDriver;
 
 import com.mountainminds.eclemma.core.analysis.IJavaCoverageListener;
 import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
-public class EmmaDriver implements IEmmaDriver {
+public class EmmaDriver {
 
     private final IJavaCoverageListener emmaListener;
     private boolean active;
@@ -32,7 +31,7 @@ public class EmmaDriver implements IEmmaDriver {
         UsusCorePlugin.getUsusModelMetricsWriter().collectCoverageInfo( javaModelCoverage );
     }
 
-    private IJavaCoverageListener createEmmaListener() {
+    protected IJavaCoverageListener createEmmaListener() {
         return new IJavaCoverageListener() {
             public void coverageChanged() {
                 IJavaModelCoverage javaModelCoverage = getJavaModelCoverage();

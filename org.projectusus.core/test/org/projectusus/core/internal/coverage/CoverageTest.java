@@ -6,8 +6,6 @@ package org.projectusus.core.internal.coverage;
 
 import static org.junit.Assert.assertEquals;
 
-import java.math.BigDecimal;
-
 import org.junit.Test;
 
 import com.mountainminds.eclemma.core.analysis.ICounter;
@@ -22,27 +20,13 @@ public class CoverageTest {
     }
 
     @Test
-    public void getCoverageInPercent_not_coveredProject() {
-        assertEquals( BigDecimal.ZERO, new TestCoverage( 0, 0 ).getCoverageInPercent() );
-        assertEquals( BigDecimal.ZERO, new TestCoverage( 0, 100 ).getCoverageInPercent() );
-    }
-
-    @Test
-    public void getCoverageInPercent_coveredProject() {
-        assertEquals( new BigDecimal( "43" ), new TestCoverage( 43, 100 ).getCoverageInPercent() ); //$NON-NLS-1$
-        assertEquals( new BigDecimal( "4" ), new TestCoverage( 16, 400 ).getCoverageInPercent() ); //$NON-NLS-1$
-    }
-
-    @Test
-    public void getCoverageInPercent_coveredProject_roundPercentage() {
-        assertEquals( new BigDecimal( "1.5" ), new TestCoverage( 3, 200 ).getCoverageInPercent() ); //$NON-NLS-1$
-        assertEquals( new BigDecimal( "33.3" ), new TestCoverage( 3, 9 ).getCoverageInPercent() ); //$NON-NLS-1$
-    }
-
-    @Test
     public void getCoverageInPercentDisplayString() {
+        assertEquals( "0.0 %", new TestCoverage( 0, 0 ).getCoverageInPercentDisplayString() ); //$NON-NLS-1$
+        assertEquals( "0.0 %", new TestCoverage( 0, 100 ).getCoverageInPercentDisplayString() ); //$NON-NLS-1$
         assertEquals( "43.0 %", new TestCoverage( 43, 100 ).getCoverageInPercentDisplayString() ); //$NON-NLS-1$
         assertEquals( "33.3 %", new TestCoverage( 3, 9 ).getCoverageInPercentDisplayString() ); //$NON-NLS-1$
+        assertEquals( "4.0 %", new TestCoverage( 16, 400 ).getCoverageInPercentDisplayString() ); //$NON-NLS-1$
+        assertEquals( "1.5 %", new TestCoverage( 3, 200 ).getCoverageInPercentDisplayString() ); //$NON-NLS-1$
     }
 
     @Test

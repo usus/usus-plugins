@@ -12,17 +12,25 @@ import static org.mockito.Mockito.when;
 
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchManager;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.mountainminds.eclemma.core.CoverageTools;
 
 public class LaunchListenerTest {
 
+    EmmaDriver testDriver;
+
+    @Before
+    public void setupMocks() {
+        testDriver = mock( EmmaDriver.class );
+    }
+
     @Test
     public void coverageLaunchTriggersSelectorCallback() {
         ILaunch launch = setupLaunchWithTarget( CoverageTools.LAUNCH_MODE );
         TestSuiteForCoverageSelector selector = new TestSuiteForCoverageSelector();
-        LaunchListener listener = new LaunchListener( asList( selector ), new TestEmmaDriver() );
+        LaunchListener listener = new LaunchListener( asList( selector ), testDriver );
         listener.launchesAdded( new ILaunch[] { launch } );
         assertTrue( selector.isCalled() );
     }
@@ -31,7 +39,7 @@ public class LaunchListenerTest {
     public void debugLaunchTriggersSelectorCallback() {
         ILaunch launch = setupLaunchWithTarget( ILaunchManager.DEBUG_MODE );
         TestSuiteForCoverageSelector selector = new TestSuiteForCoverageSelector();
-        LaunchListener listener = new LaunchListener( asList( selector ), new TestEmmaDriver() );
+        LaunchListener listener = new LaunchListener( asList( selector ), testDriver );
         listener.launchesAdded( new ILaunch[] { launch } );
         assertFalse( selector.isCalled() );
     }
@@ -60,13 +68,4 @@ public class LaunchListenerTest {
         }
     }
 
-    private class TestEmmaDriver implements IEmmaDriver {
-        /**
-         * @param active
-         *            is not used
-         */
-        public void setActive( boolean active ) {
-            // unused
-        }
-    }
 }
