@@ -52,7 +52,7 @@ public class CockpitView extends ViewPart {
         initContextMenuBehavior();
         initModelListener();
         getViewSite().setSelectionProvider( treeViewer );
-        setMessage( getUsusModel().getHistory() );
+        updateStatusLine();
     }
 
     @Override
@@ -110,10 +110,10 @@ public class CockpitView extends ViewPart {
 
     private void initModelListener() {
         listener = new IUsusModelListener() {
-            public void ususModelChanged( final CheckpointHistory history ) {
+            public void ususModelChanged() {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
-                        handleUsusModelChanged( history );
+                        handleUsusModelChanged();
                     }
                 } );
             }
@@ -121,11 +121,11 @@ public class CockpitView extends ViewPart {
         getUsusModel().addUsusModelListener( listener );
     }
 
-    private void handleUsusModelChanged( final CheckpointHistory history ) {
+    private void handleUsusModelChanged() {
         if( hasUsusProjects() ) {
             enableViewer( true );
             refresh();
-            setMessage( history );
+            updateStatusLine();
         } else {
             enableViewer( false );
             getStatusLine().setMessage( getWarningImage(), "No projects selected for use with Usus." );
@@ -143,7 +143,8 @@ public class CockpitView extends ViewPart {
         }
     }
 
-    private void setMessage( CheckpointHistory history ) {
+    private void updateStatusLine() {
+        CheckpointHistory history = getUsusModel().getHistory();
         Image image = history.isStale() ? getWarningImage() : null;
         getStatusLine().setMessage( image, history.getStatusMessage() );
     }

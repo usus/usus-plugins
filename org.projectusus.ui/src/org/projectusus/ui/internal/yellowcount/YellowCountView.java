@@ -17,7 +17,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
-import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
 import org.projectusus.core.internal.proportions.rawdata.YellowCountResult;
 
 /**
@@ -42,11 +41,7 @@ public class YellowCountView extends ViewPart {
 
         listener = new IUsusModelListener() {
 
-            /**
-             * @param history
-             *            not used in method
-             */
-            public void ususModelChanged( CheckpointHistory history ) {
+            public void ususModelChanged( ) {
                 display( UsusCorePlugin.getUsusModel().getWarnings() );
             }
         };

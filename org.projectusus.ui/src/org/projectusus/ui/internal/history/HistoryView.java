@@ -21,7 +21,6 @@ import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_PC;
 import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_TA;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.swt.graphics.Color;
@@ -29,15 +28,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.internal.proportions.IUsusModelListener;
-import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
-import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
 import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.projectusus.ui.internal.util.UsusColors;
 import org.swtchart.Chart;
 import org.swtchart.ILineSeries;
-import org.swtchart.ISeriesSet;
 import org.swtchart.ILineSeries.PlotSymbolType;
 import org.swtchart.ISeries.SeriesType;
+import org.swtchart.ISeriesSet;
 
 public class HistoryView extends ViewPart {
 
@@ -47,13 +44,13 @@ public class HistoryView extends ViewPart {
     @Override
     public void createPartControl( Composite parent ) {
         chart = new CheckpointsHistoryChart( parent );
-        refresh( getUsusModel().getHistory() ); // ??
+        refresh();
         getUsusModel().addUsusModelListener( new IUsusModelListener() {
-            public void ususModelChanged( final CheckpointHistory history ) {
+            public void ususModelChanged() {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         if( chart != null && !chart.isDisposed() ) {
-                            refresh( history );
+                            refresh();
                         }
                     }
                 } );
@@ -68,17 +65,16 @@ public class HistoryView extends ViewPart {
         }
     }
 
-    private void refresh( CheckpointHistory history ) {
-        Checkpoints2GraphicsConverter converter = getConverter( history );
+    private void refresh() {
+        Checkpoints2GraphicsConverter converter = getConverter();
         for( CodeProportionKind metric : CodeProportionKind.values() ) {
             updateSeries( metric, converter.get( metric ) );
         }
         chart.redraw();
     }
 
-    private Checkpoints2GraphicsConverter getConverter( CheckpointHistory history ) {
-        List<ICheckpoint> checkpoints = history.getCheckpoints();
-        return new Checkpoints2GraphicsConverter( checkpoints );
+    private Checkpoints2GraphicsConverter getConverter() {
+        return new Checkpoints2GraphicsConverter( getUsusModel().getHistory().getCheckpoints() );
     }
 
     private void updateSeries( CodeProportionKind metric, double[] newValue ) {

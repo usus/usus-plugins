@@ -13,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.modelcomputation.CodeProportionsComputerJob;
-import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
 
 public class CodeProportionsPDETest {
 
@@ -40,7 +39,7 @@ public class CodeProportionsPDETest {
     private final class DummyCodeProportionsListener implements IUsusModelListener {
         private int callCount;
 
-        public void ususModelChanged( CheckpointHistory history ) {
+        public void ususModelChanged(  ) {
           callCount++;
         }
 

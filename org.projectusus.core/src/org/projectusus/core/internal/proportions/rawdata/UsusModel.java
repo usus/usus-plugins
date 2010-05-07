@@ -306,7 +306,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     private void notifyListeners() {
         for( IUsusModelListener listener : listeners ) {
-            listener.ususModelChanged( history );
+            listener.ususModelChanged( );
         }
     }
 

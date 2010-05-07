@@ -4,8 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions;
 
-import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
 
 public interface IUsusModelListener {
-    void ususModelChanged( CheckpointHistory history );
+    void ususModelChanged( );
 }
