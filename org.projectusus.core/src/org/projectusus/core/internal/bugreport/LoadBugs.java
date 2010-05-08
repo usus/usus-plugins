@@ -6,6 +6,7 @@ package org.projectusus.core.internal.bugreport;
 
 import java.util.ArrayList;
 
+import org.projectusus.core.bugreport.Bug;
 import org.projectusus.core.internal.XmlLoader;
 import org.w3c.dom.Element;
 

@@ -8,7 +8,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.internal.proportions.modelupdate.checkpoints.CheckpointHistory;
 
 public class CheckpointHistoryTest {
 

@@ -11,8 +11,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.ui.internal.hotspots.pages.DefaultHotspotsPage;
 import org.projectusus.ui.internal.hotspots.pages.IHotspotsPage;
 

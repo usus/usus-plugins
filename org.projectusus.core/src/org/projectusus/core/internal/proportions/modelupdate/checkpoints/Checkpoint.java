@@ -7,9 +7,9 @@ package org.projectusus.core.internal.proportions.modelupdate.checkpoints;
 import java.util.List;
 
 import org.joda.time.DateTime;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.ICheckpoint;
 
 public class Checkpoint implements ICheckpoint {
 

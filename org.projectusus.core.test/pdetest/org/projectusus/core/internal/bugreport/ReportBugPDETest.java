@@ -12,6 +12,9 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.junit.Test;
+import org.projectusus.core.bugreport.Bug;
+import org.projectusus.core.bugreport.BugList;
+import org.projectusus.core.bugreport.IBuggyProject;
 import org.projectusus.core.internal.PDETestUsingWSProject;
 
 public class ReportBugPDETest extends PDETestUsingWSProject {

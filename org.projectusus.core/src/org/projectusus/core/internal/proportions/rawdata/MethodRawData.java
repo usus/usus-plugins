@@ -6,11 +6,15 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import java.util.List;
 
-import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportionUnit;
+import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.IMethodRawData;
+import org.projectusus.core.basis.IRawData;
 import org.projectusus.core.internal.proportions.model.MetricCCHotspot;
 import org.projectusus.core.internal.proportions.model.MetricMLHotspot;
 
-class MethodRawData implements IRawData {
+public class MethodRawData implements IRawData, IMethodRawData {
 
     private final int startPosition;
     private final String className;

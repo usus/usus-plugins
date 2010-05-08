@@ -11,8 +11,8 @@ import org.eclipse.jdt.core.dom.IPackageBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.junit.Test;
 import org.projectusus.core.filerelations.FileRelationMetrics;
-import org.projectusus.core.filerelations.ReflectionUtil;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.testutil.ReflectionUtil;
 
 public class UsusModelTest {
 

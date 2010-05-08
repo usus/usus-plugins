@@ -5,13 +5,13 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import static java.util.Arrays.asList;
+import static org.projectusus.core.basis.CodeProportionKind.ACD;
+import static org.projectusus.core.basis.CodeProportionKind.CC;
+import static org.projectusus.core.basis.CodeProportionKind.CW;
+import static org.projectusus.core.basis.CodeProportionKind.KG;
+import static org.projectusus.core.basis.CodeProportionKind.ML;
+import static org.projectusus.core.basis.CodeProportionKind.PC;
 import static org.projectusus.core.internal.project.UsusProjectSupport.isUsusProject;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ACD;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CC;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.KG;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.PC;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,19 +30,21 @@ import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.IUsusElement;
+import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportionUnit;
+import org.projectusus.core.basis.CodeStatistic;
+import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.internal.proportions.IUsusModel;
-import org.projectusus.core.internal.proportions.IUsusModelListener;
 import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.model.CodeStatistic;
-import org.projectusus.core.internal.proportions.model.IHotspot;
-import org.projectusus.core.internal.proportions.model.IUsusElement;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
+import org.projectusus.core.internal.proportions.modelupdate.checkpoints.CheckpointHistory;
 import org.projectusus.core.internal.util.CoreTexts;
 
 import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;

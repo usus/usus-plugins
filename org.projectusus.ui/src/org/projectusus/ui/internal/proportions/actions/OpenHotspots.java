@@ -12,8 +12,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.ui.internal.UsusUIPlugin;
 import org.projectusus.ui.internal.hotspots.HotSpotsView;
 

@@ -5,8 +5,8 @@
 package org.projectusus.ui.internal.hotspots.pages;
 
 import org.eclipse.ui.part.IPageBookViewPage;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeProportionKind;
 
 public interface IHotspotsPage extends IPageBookViewPage {
 

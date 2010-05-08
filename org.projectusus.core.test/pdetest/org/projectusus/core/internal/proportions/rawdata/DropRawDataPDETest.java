@@ -7,8 +7,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.IUsusModel;
 
 public class DropRawDataPDETest extends PDETestForMetricsComputation  {
 

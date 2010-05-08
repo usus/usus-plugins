@@ -3,10 +3,12 @@ package org.projectusus.core.internal.proportions.rawdata;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.IMiscFileRawData;
 import org.projectusus.core.internal.proportions.model.Hotspot;
-import org.projectusus.core.internal.proportions.model.IHotspot;
 
-public class MiscFileRawData {
+public class MiscFileRawData implements IMiscFileRawData {
 
     private IFile fileOfRawData;
     private WarningsCount yellowCount = new WarningsCount();

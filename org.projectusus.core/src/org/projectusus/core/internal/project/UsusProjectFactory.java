@@ -10,7 +10,7 @@ import org.eclipse.core.runtime.IAdapterFactory;
 public class UsusProjectFactory implements IAdapterFactory {
 
     // raw type in interface we implement - no chance
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings( "rawtypes" )
     public Object getAdapter( Object adaptableObject, Class adapterType ) {
         if( adapterType == IUSUSProject.class && adaptableObject instanceof IProject ) {
             return new UsusProject( (IProject)adaptableObject );

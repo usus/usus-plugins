@@ -6,10 +6,10 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.IUsusModel;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionUnit;
+import org.projectusus.core.internal.proportions.rawdata.IUsusModel;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
 
 

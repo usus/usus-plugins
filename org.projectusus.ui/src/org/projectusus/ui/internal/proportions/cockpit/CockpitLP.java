@@ -5,15 +5,15 @@
 package org.projectusus.ui.internal.proportions.cockpit;
 
 import static org.eclipse.swt.SWT.COLOR_GRAY;
+import static org.projectusus.core.basis.CodeProportionKind.TA;
 import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
 import static org.projectusus.ui.internal.proportions.cockpit.CockpitColumnDesc.INDICATOR;
 
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.ui.internal.proportions.UsusModelLabelProvider;
 
 public class CockpitLP extends UsusModelLabelProvider implements ITableLabelProvider {

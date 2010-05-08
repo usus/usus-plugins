@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchesListener;
+import org.projectusus.core.ITestSuiteForCoverageSelector;
 
 class LaunchListener implements ILaunchesListener {
 

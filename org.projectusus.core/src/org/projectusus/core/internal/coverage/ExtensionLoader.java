@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.projectusus.core.ITestSuiteForCoverageSelector;
 import org.projectusus.core.internal.UsusCorePlugin;
 
 class ExtensionLoader {

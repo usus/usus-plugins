@@ -4,7 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
+import static org.projectusus.core.basis.CodeProportionKind.TA;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,11 +13,13 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportionUnit;
+import org.projectusus.core.basis.CodeStatistic;
+import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.coverage.TestCoverage;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.model.CodeStatistic;
-import org.projectusus.core.internal.proportions.model.IHotspot;
 
 class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
@@ -28,7 +30,7 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
     ProjectRawData getProjectRawData( IProject project ) {
         ProjectRawData rawData = super.getRawData( project );
         if( rawData == null ) {
-            rawData = new ProjectRawData( project );
+            rawData = new ProjectRawData();
             super.addRawData( project, rawData );
         }
         return rawData;

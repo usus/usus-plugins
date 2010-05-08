@@ -17,12 +17,14 @@ import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.IFileRawData;
+import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.internal.proportions.model.Hotspot;
-import org.projectusus.core.internal.proportions.model.IHotspot;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
 
-class FileRawData extends RawData<Integer, ClassRawData> {
+public class FileRawData extends RawData<Integer, ClassRawData> implements IFileRawData {
 
     private final IFile fileOfRawData;
 

@@ -20,7 +20,7 @@ import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
-import org.projectusus.core.internal.proportions.IUsusModelListener;
+import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.internal.proportions.rawdata.GraphNode;
 
 public abstract class DependencyGraphView extends ViewPart implements FilterLimitProvider {

@@ -7,9 +7,9 @@ package org.projectusus.ui.internal.history;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.ICheckpoint;
 
 class Checkpoints2GraphicsConverter {
 

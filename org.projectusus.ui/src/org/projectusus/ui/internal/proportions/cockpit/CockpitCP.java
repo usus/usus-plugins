@@ -6,8 +6,8 @@ package org.projectusus.ui.internal.proportions.cockpit;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.projectusus.core.internal.proportions.IUsusModel;
-import org.projectusus.core.internal.proportions.model.IUsusElement;
+import org.projectusus.core.IUsusElement;
+import org.projectusus.core.internal.proportions.rawdata.IUsusModel;
 
 public class CockpitCP implements ITreeContentProvider {
 

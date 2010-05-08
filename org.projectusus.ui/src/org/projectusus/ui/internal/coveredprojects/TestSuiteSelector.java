@@ -6,7 +6,7 @@ package org.projectusus.ui.internal.coveredprojects;
 
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
-import org.projectusus.core.internal.coverage.ITestSuiteForCoverageSelector;
+import org.projectusus.core.ITestSuiteForCoverageSelector;
 
 public class TestSuiteSelector implements ITestSuiteForCoverageSelector {
 

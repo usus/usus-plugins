@@ -4,12 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.model;
 
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
+import static org.projectusus.core.basis.CodeProportionKind.CW;
+import static org.projectusus.core.basis.CodeProportionKind.TA;
 
 import java.util.List;
 
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.IUsusElement;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeProportionKind;
 
 public class UsusModelCache {
 

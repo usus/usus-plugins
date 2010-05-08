@@ -14,10 +14,10 @@ import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.model.ICodeProportions;
-import org.projectusus.core.internal.proportions.model.ITestCoverage;
-import org.projectusus.core.internal.proportions.model.IWarnings;
+import org.projectusus.core.ICodeProportions;
+import org.projectusus.core.ITestCoverage;
+import org.projectusus.core.IWarnings;
+import org.projectusus.core.basis.CodeProportion;
 
 /**
  * basic capacities to display Usus Model elements; This class is intended to be subclassed in order to make a specialized tree or table label provider.

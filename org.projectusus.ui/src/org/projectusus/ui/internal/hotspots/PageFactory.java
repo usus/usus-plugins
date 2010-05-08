@@ -4,18 +4,18 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.hotspots;
 
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ACD;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CC;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.KG;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
+import static org.projectusus.core.basis.CodeProportionKind.ACD;
+import static org.projectusus.core.basis.CodeProportionKind.CC;
+import static org.projectusus.core.basis.CodeProportionKind.CW;
+import static org.projectusus.core.basis.CodeProportionKind.KG;
+import static org.projectusus.core.basis.CodeProportionKind.ML;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IAdapterFactory;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.ui.internal.hotspots.pages.ACDHotspotsPage;
 import org.projectusus.ui.internal.hotspots.pages.CCColumnDesc;
 import org.projectusus.ui.internal.hotspots.pages.CWColumnDesc;
@@ -34,7 +34,7 @@ public class PageFactory implements IAdapterFactory {
     }
 
     // raw type in interface we implement - no chance
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings( { "rawtypes" } )
     public Object getAdapter( Object adaptableObject, Class adapterType ) {
         Object result = null;
         if( adapterType == IHotspotsPage.class && adaptableObject instanceof CodeProportion ) {

@@ -5,6 +5,7 @@
 package org.projectusus.core.internal.proportions.model;
 
 import org.eclipse.core.resources.IFile;
+import org.projectusus.core.basis.IHotspot;
 
 public class Hotspot implements IHotspot {
 

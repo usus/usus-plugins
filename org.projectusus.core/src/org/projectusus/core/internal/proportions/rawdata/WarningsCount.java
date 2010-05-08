@@ -1,6 +1,7 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
-import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.internal.proportions.model.MetricCWHotspot;
 
 public class WarningsCount {

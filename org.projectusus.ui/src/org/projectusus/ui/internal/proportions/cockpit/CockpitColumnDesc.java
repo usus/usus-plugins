@@ -8,7 +8,7 @@ import static org.projectusus.ui.internal.viewer.ColumnAlignment.RIGHT;
 
 import java.text.DecimalFormat;
 
-import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.ui.internal.viewer.IColumnDesc;
 import org.projectusus.ui.internal.viewer.UsusTreeColumn;
 

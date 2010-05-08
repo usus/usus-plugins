@@ -1,6 +1,6 @@
 package org.projectusus.ui.internal.proportions.infopresenter.infomodel;
 
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.KG;
+import static org.projectusus.core.basis.CodeProportionKind.KG;
 
 import java.util.List;
 

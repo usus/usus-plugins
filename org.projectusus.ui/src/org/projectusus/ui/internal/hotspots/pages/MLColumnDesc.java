@@ -6,8 +6,8 @@ package org.projectusus.ui.internal.hotspots.pages;
 
 import static org.projectusus.ui.internal.viewer.ColumnAlignment.RIGHT;
 
-import org.projectusus.core.internal.proportions.model.IHotspot;
-import org.projectusus.core.internal.proportions.model.IMetricMLHotspot;
+import org.projectusus.core.IMetricMLHotspot;
+import org.projectusus.core.basis.IHotspot;
 import org.projectusus.ui.internal.viewer.UsusTreeColumn;
 
 public enum MLColumnDesc implements IHotspotsPageColumnDesc {

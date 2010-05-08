@@ -14,6 +14,7 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchManager;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.ITestSuiteForCoverageSelector;
 
 import com.mountainminds.eclemma.core.CoverageTools;
 

@@ -5,7 +5,7 @@
 package org.projectusus.ui.internal.hotspots.pages;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.projectusus.core.internal.proportions.model.IMetricACDHotspot;
+import org.projectusus.core.IMetricACDHotspot;
 
 class ACDHotspotsCP extends HotspotsCP implements IStructuredContentProvider {
 

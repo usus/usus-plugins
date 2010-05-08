@@ -15,9 +15,10 @@ import java.net.URL;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.PDETestUsingWSProject;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.IUsusModel;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.JavaFileDriver;
 

@@ -6,7 +6,7 @@ package org.projectusus.ui.internal.bugreport;
 
 import static org.projectusus.ui.internal.viewer.ColumnAlignment.RIGHT;
 
-import org.projectusus.core.internal.bugreport.Bug;
+import org.projectusus.core.bugreport.Bug;
 import org.projectusus.ui.internal.viewer.IColumnDesc;
 import org.projectusus.ui.internal.viewer.UsusTreeColumn;
 

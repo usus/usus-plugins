@@ -8,7 +8,7 @@ import static org.projectusus.ui.internal.util.ISharedUsusImages.WIZARD_REPORT_B
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
 import org.eclipse.jface.wizard.Wizard;
-import org.projectusus.core.internal.bugreport.Bug;
+import org.projectusus.core.bugreport.Bug;
 
 public class ReportBugWizard extends Wizard {
 

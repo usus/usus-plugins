@@ -23,7 +23,7 @@
              adaptableType="org.eclipse.core.resources.IProject"
              class="org.projectusus.core.internal.bugreport.BuggyProjectFactory">
           <adapter
-                type="org.projectusus.core.internal.bugreport.IBuggyProject">
+                type="org.projectusus.core.bugreport.IBuggyProject">
           </adapter>
        </factory>
     </extension>

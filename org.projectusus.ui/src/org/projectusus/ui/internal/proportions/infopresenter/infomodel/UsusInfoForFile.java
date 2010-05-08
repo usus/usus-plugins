@@ -4,7 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter.infomodel;
 
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
+import static org.projectusus.core.basis.CodeProportionKind.CW;
 
 import java.util.ArrayList;
 import java.util.List;

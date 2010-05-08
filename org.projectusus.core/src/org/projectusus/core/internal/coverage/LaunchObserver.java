@@ -9,6 +9,7 @@ import java.util.List;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.core.ILaunchesListener;
+import org.projectusus.core.ITestSuiteForCoverageSelector;
 
 public class LaunchObserver {
 

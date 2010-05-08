@@ -4,14 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.history;
 
+import static org.projectusus.core.basis.CodeProportionKind.ACD;
+import static org.projectusus.core.basis.CodeProportionKind.CC;
+import static org.projectusus.core.basis.CodeProportionKind.CW;
+import static org.projectusus.core.basis.CodeProportionKind.KG;
+import static org.projectusus.core.basis.CodeProportionKind.ML;
+import static org.projectusus.core.basis.CodeProportionKind.PC;
+import static org.projectusus.core.basis.CodeProportionKind.TA;
 import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ACD;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CC;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.KG;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.PC;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
 import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_ACD;
 import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_CC;
 import static org.projectusus.ui.internal.util.ISharedUsusColors.ISIS_METRIC_CW;
@@ -27,8 +27,8 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
-import org.projectusus.core.internal.proportions.IUsusModelListener;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.ui.internal.util.UsusColors;
 import org.swtchart.Chart;
 import org.swtchart.ILineSeries;

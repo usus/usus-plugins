@@ -6,7 +6,7 @@ package org.projectusus.ui.internal.selection;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.basis.CodeProportion;
 
 public class ExtractCodeProportion {
 

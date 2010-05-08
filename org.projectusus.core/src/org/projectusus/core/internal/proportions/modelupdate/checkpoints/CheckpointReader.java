@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.CodeStatistic;
+import org.projectusus.core.basis.ICheckpoint;
+import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.internal.UsusXmlReader;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.model.CodeStatistic;
-import org.projectusus.core.internal.proportions.model.IHotspot;
-import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

@@ -9,9 +9,9 @@ import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.
 import java.util.ArrayList;
 
 import org.eclipse.core.runtime.IPath;
+import org.projectusus.core.basis.ICheckpoint;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.XmlLoader;
-import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
 import org.w3c.dom.Element;
 
 public class LoadCheckpoints extends XmlLoader<ICheckpoint> {

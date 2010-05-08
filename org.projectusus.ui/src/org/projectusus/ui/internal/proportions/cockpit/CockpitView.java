@@ -5,9 +5,9 @@
 package org.projectusus.ui.internal.proportions.cockpit;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+import static org.projectusus.core.basis.CodeProportionKind.CW;
+import static org.projectusus.core.basis.CodeProportionKind.TA;
 import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.CW;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
 import org.eclipse.core.resources.IProject;
@@ -27,10 +27,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
+import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.internal.project.FindUsusProjects;
-import org.projectusus.core.internal.proportions.IUsusModelListener;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.rawdata.CheckpointHistory;
+import org.projectusus.core.internal.proportions.modelupdate.checkpoints.CheckpointHistory;
 import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
 import org.projectusus.ui.internal.proportions.actions.RefreshHotspots;
 import org.projectusus.ui.internal.proportions.actions.ShowCoverageView;

@@ -5,9 +5,12 @@
 package org.projectusus.core.internal.proportions.model;
 
 import static java.util.Arrays.asList;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.TA;
+import static org.projectusus.core.basis.CodeProportionKind.TA;
 
 import java.util.List;
+
+import org.projectusus.core.ITestCoverage;
+import org.projectusus.core.basis.CodeProportion;
 
 
 class TestCoverage implements ITestCoverage {

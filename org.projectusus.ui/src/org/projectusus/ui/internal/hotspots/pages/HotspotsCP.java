@@ -6,7 +6,7 @@ package org.projectusus.ui.internal.hotspots.pages;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
+import org.projectusus.core.basis.CodeProportion;
 
 class HotspotsCP implements ITreeContentProvider {
 

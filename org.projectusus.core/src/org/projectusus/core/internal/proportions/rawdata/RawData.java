@@ -8,7 +8,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.projectusus.core.internal.proportions.model.IHotspot;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportionUnit;
+import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.IRawData;
 
 class RawData<S, T extends IRawData> implements IRawData {
 

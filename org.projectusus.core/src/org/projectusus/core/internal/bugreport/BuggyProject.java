@@ -4,11 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.bugreport;
 
-import static org.projectusus.core.internal.bugreport.SourceCodeLocation.getMethodLocation;
+import static org.projectusus.core.bugreport.SourceCodeLocation.getMethodLocation;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IMethod;
+import org.projectusus.core.bugreport.Bug;
+import org.projectusus.core.bugreport.BugList;
+import org.projectusus.core.bugreport.IBuggyProject;
 
 class BuggyProject implements IBuggyProject {
 

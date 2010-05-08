@@ -6,11 +6,12 @@ package org.projectusus.core.internal.bugreport;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IAdapterFactory;
+import org.projectusus.core.bugreport.IBuggyProject;
 
 public class BuggyProjectFactory implements IAdapterFactory {
 
     // raw type in interface we implement - no chance
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings( "rawtypes" )
     public Object getAdapter( Object adaptableObject, Class adapterType ) {
         if( adapterType == IBuggyProject.class && adaptableObject instanceof IProject ) {
             return new BuggyProject( (IProject)adaptableObject );

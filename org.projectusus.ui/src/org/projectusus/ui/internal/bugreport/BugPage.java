@@ -16,7 +16,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.projectusus.core.internal.bugreport.Bug;
+import org.projectusus.core.bugreport.Bug;
 
 public class BugPage extends WizardPage {
 

@@ -11,6 +11,7 @@ import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.modelcomputation.CodeProportionsComputerJob;
 

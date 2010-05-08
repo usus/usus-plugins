@@ -5,7 +5,7 @@
 package org.projectusus.ui.internal.hotspots.pages;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportionKind;
 
 public class ACDHotspotsPage extends HotspotsPage {
 

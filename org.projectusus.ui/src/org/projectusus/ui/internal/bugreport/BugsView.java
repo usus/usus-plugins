@@ -19,7 +19,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.swt.widgets.Composite;
-import org.projectusus.core.internal.bugreport.Bug;
+import org.projectusus.core.bugreport.Bug;
 import org.projectusus.ui.internal.viewer.IColumnDesc;
 import org.projectusus.ui.internal.viewer.TableViewPart;
 

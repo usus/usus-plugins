@@ -4,6 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.model;
 
+import org.projectusus.core.IMetricCWHotspot;
+
 public class MetricCWHotspot extends Hotspot implements IMetricCWHotspot {
 
     public MetricCWHotspot( int count ) {

@@ -4,6 +4,9 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.bugreport;
 
+import org.projectusus.core.bugreport.Bug;
+import org.projectusus.core.bugreport.BugList;
+import org.projectusus.core.bugreport.BugMetrics;
 import org.projectusus.core.internal.UsusXmlWriter;
 
 public class BugsWriter extends UsusXmlWriter implements BugXmlNames {

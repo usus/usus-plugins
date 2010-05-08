@@ -7,8 +7,8 @@ package org.projectusus.ui.internal.proportions.cockpit;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.widgets.Composite;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.model.IUsusElement;
+import org.projectusus.core.IUsusElement;
+import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.ui.internal.viewer.UsusTreeViewer;
 
 class CockpitTreeViewer extends UsusTreeViewer<CodeProportion> {

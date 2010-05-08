@@ -7,18 +7,18 @@ package org.projectusus.ui.internal.history;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.projectusus.core.internal.proportions.rawdata.CodeProportionKind.ML;
+import static org.projectusus.core.basis.CodeProportionKind.ML;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.model.CodeStatistic;
-import org.projectusus.core.internal.proportions.model.IHotspot;
-import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
-import org.projectusus.core.internal.proportions.rawdata.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.CodeStatistic;
+import org.projectusus.core.basis.ICheckpoint;
+import org.projectusus.core.basis.IHotspot;
 
 public class Checkpoints2GraphicsConverterTest {
 

@@ -7,11 +7,12 @@ package org.projectusus.core.internal.proportions.rawdata;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
+import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportionUnit;
+import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.FileSupport;
-import org.projectusus.core.internal.proportions.model.IHotspot;
 
 import com.mountainminds.eclemma.core.analysis.IJavaElementCoverage;
 
@@ -21,10 +22,6 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
     private IJavaElementCoverage coverage;
     private WarningsCount projectMarkers = new WarningsCount();
     private RawDataMapWrapper<IFile, MiscFileRawData> miscRawData = new RawDataMapWrapper<IFile, MiscFileRawData>();
-
-    public ProjectRawData( IProject project ) {
-        // this.projectOfRawData = project;
-    }
 
     public FileRawData getFileRawData( IFile file ) {
         FileRawData rawData = super.getRawData( file );

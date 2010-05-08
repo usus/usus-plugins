@@ -6,7 +6,7 @@ package org.projectusus.ui.internal.bugreport;
 
 import java.util.List;
 
-import org.projectusus.core.internal.bugreport.IAverageMetrics;
+import org.projectusus.core.bugreport.IAverageMetrics;
 import org.projectusus.ui.internal.viewer.ColumnDescLabelProvider;
 import org.projectusus.ui.internal.viewer.IColumnDesc;
 

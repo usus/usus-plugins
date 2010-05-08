@@ -20,9 +20,9 @@ import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.
 import java.util.List;
 
 import org.joda.time.format.DateTimeFormatter;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.ICheckpoint;
 import org.projectusus.core.internal.UsusXmlWriter;
-import org.projectusus.core.internal.proportions.model.CodeProportion;
-import org.projectusus.core.internal.proportions.modelupdate.ICheckpoint;
 
 class CheckpointWriter extends UsusXmlWriter {
 

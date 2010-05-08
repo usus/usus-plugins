@@ -1,9 +1,9 @@
 package org.projectusus.ui.internal.bugreport;
 
 import org.eclipse.jdt.core.IMethod;
-import org.projectusus.core.internal.bugreport.Bug;
-import org.projectusus.core.internal.bugreport.BugList;
-import org.projectusus.core.internal.bugreport.IBuggyProject;
+import org.projectusus.core.bugreport.Bug;
+import org.projectusus.core.bugreport.BugList;
+import org.projectusus.core.bugreport.IBuggyProject;
 
 public class NullBuggyProject implements IBuggyProject {
 
