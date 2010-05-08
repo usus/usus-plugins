@@ -4,7 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.projectsettings;
 
-public class Setting<Code, Value> {
+class Setting<Code, Value> {
 
     private final Code code;
     private Value value;

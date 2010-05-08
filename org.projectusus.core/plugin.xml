@@ -8,7 +8,7 @@
     </extension>
     <extension point="org.projectusus.core.settingsprovider">
        <provider
-             clazz="org.projectusus.core.internal.projectsettings.UsusStandardSettingsLoader">
+             clazz="org.projectusus.core.projectsettings.UsusStandardSettingsLoader">
        </provider>
     </extension>
     

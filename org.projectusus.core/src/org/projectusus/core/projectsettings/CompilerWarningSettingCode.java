@@ -4,7 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.projectsettings;
 
-public enum CompilerWarningSettingCode {
+enum CompilerWarningSettingCode {
 
     annotationSuperInterface, assertIdentifier, autoboxing, deprecation,
     // deprecationInDeprecatedCode=disabled

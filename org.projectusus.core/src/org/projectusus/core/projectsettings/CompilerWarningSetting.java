@@ -4,7 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.projectsettings;
 
-public class CompilerWarningSetting extends Setting<CompilerWarningSettingCode, CompilerWarningLevel> {
+class CompilerWarningSetting extends Setting<CompilerWarningSettingCode, CompilerWarningLevel> {
 
     protected CompilerWarningSetting( CompilerWarningSettingCode code ) {
         super( code );

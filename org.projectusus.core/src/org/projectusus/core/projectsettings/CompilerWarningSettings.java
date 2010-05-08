@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class CompilerWarningSettings {
+class CompilerWarningSettings {
 
     private final List<CompilerWarningSetting> settings = new ArrayList<CompilerWarningSetting>();
 

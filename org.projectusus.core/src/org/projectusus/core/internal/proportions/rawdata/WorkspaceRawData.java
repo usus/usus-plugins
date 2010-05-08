@@ -65,7 +65,8 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         return new CodeProportion( metric, violations, basis, hotspots );
     }
 
-    public CodeStatistic getCodeStatistic( CodeProportionUnit unit ) {
+    // TODO CodeStatistic cachen?
+    private CodeStatistic getCodeStatistic( CodeProportionUnit unit ) {
         int basis = getNumberOf( unit );
         return new CodeStatistic( unit, basis );
     }
