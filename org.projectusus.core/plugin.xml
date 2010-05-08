@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="settingsprovider" name="Usus Settingsprovider" schema="schema/settingsprovider.exsd"/>
    <extension-point id="testSuiteSelectors" name="Test Suites For Coverage Selectors" schema="schema/testSuiteSelectors.exsd"/>
     <extension point="org.eclipse.core.runtime.preferences">
        <initializer class="org.projectusus.core.internal.util.UsusPreferenceInitializer"/>
-    </extension>
-    <extension point="org.projectusus.core.settingsprovider">
-       <provider
-             clazz="org.projectusus.core.projectsettings.UsusStandardSettingsLoader">
-       </provider>
     </extension>
     
     <!-- adapt resources and model objects -->

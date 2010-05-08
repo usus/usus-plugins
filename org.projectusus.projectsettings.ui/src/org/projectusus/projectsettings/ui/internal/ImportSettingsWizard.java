@@ -7,7 +7,7 @@ package org.projectusus.projectsettings.ui.internal;
 import java.util.List;
 
 import org.eclipse.jface.wizard.Wizard;
-import org.projectusus.core.projectsettings.ProjectSettings;
+import org.projectusus.projectsettings.core.ProjectSettings;
 
 public class ImportSettingsWizard extends Wizard {
 

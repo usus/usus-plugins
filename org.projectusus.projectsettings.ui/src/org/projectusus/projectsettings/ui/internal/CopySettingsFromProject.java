@@ -12,8 +12,8 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.projectusus.core.projectsettings.ProjectSettings;
-import org.projectusus.core.projectsettings.SettingsAccess;
+import org.projectusus.projectsettings.core.ProjectSettings;
+import org.projectusus.projectsettings.core.SettingsAccess;
 
 public class CopySettingsFromProject extends AbstractHandler {
 

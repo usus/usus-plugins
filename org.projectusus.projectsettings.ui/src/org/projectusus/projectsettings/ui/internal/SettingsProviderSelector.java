@@ -9,8 +9,8 @@ import java.util.List;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.projectusus.core.projectsettings.ProjectSettings;
-import org.projectusus.core.projectsettings.SettingsProviderExtension;
+import org.projectusus.projectsettings.core.ProjectSettings;
+import org.projectusus.projectsettings.core.SettingsProviderExtension;
 
 public class SettingsProviderSelector {
 

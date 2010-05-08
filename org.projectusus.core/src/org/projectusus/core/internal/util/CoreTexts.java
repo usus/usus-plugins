@@ -31,15 +31,9 @@ public final class CoreTexts extends NLS {
 
     public static String jdtDriver_errors;
 
-    public static String projectSettings_defaultName;
-    public static String projectSettings_settingsName;
-
     public static String saveCheckpointsJob_name;
 
     public static String SaveBugsJob_title;
-
-    public static String SettingsAccess_load_settings;
-    public static String SettingsAccess_save_settings;
 
     public static String testCoverage;
     public static String ususModel_UpdatingFileRelations;

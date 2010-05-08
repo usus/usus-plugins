@@ -17,7 +17,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.projectusus.core.projectsettings.ProjectSettings;
+import org.projectusus.projectsettings.core.ProjectSettings;
 
 public class SelectSettingPage extends WizardPage {
 

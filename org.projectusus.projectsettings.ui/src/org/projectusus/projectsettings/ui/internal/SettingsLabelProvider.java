@@ -5,7 +5,7 @@
 package org.projectusus.projectsettings.ui.internal;
 
 import org.eclipse.jface.viewers.LabelProvider;
-import org.projectusus.core.projectsettings.ProjectSettings;
+import org.projectusus.projectsettings.core.ProjectSettings;
 
 public class SettingsLabelProvider extends LabelProvider {
 

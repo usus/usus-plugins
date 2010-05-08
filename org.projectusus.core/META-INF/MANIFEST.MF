@@ -58,8 +58,7 @@ Export-Package: org.apache.commons.lang,
  org.projectusus.core.internal.proportions.rawdata,
  org.projectusus.core.internal.proportions.rawdata.collectors,
  org.projectusus.core.internal.proportions.rawdata.jdtdriver,
- org.projectusus.core.internal.util;x-friends:="org.projectusus.ui",
- org.projectusus.core.projectsettings
+ org.projectusus.core.internal.util;x-friends:="org.projectusus.ui"
 Eclipse-RegisterBuddy: net.sf.eclipsecs.core
 Bundle-ClassPath: .,
  lib/joda-time-1.6.jar,
