@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Usus Projectsettings Core
+Bundle-SymbolicName: org.projectusus.projectsettings.core;singleton:=true
+Bundle-Version: 0.4
+Bundle-Vendor: projectusus.org
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.junit4;resolution:=optional
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Export-Package: org.projectusus.projectsettings.core

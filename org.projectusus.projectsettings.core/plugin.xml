@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="settingsprovider" name="Usus Settingsprovider" schema="schema/settingsprovider.exsd"/>
+    <extension point="org.projectusus.projectsettings.core.settingsprovider">
+       <provider
+             clazz="org.projectusus.projectsettings.core.UsusStandardSettingsLoader">
+       </provider>
+    </extension>
+
+</plugin>
