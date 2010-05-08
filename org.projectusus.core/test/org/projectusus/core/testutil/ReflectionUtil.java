@@ -10,7 +10,7 @@ public class ReflectionUtil {
 
     private static final boolean DISABLE_SECURITY = true;
 
-    @SuppressWarnings( "rawtypes" )
+    @SuppressWarnings( { "unchecked" } )
     private static Field getField( final Class clazz, final String fieldName ) throws SecurityException, NoSuchFieldException {
         final Field declaredField = clazz.getDeclaredField( fieldName );
         return declaredField;
@@ -20,7 +20,7 @@ public class ReflectionUtil {
         return getValue( object.getClass(), object, fieldName );
     }
 
-    @SuppressWarnings( "rawtypes" )
+    @SuppressWarnings( { "unchecked" } )
     public static Object getValue( final Class clazz, final Object object, final String fieldName ) throws IllegalArgumentException, IllegalAccessException, SecurityException,
             NoSuchFieldException {
         final Field field = ReflectionUtil.getField( clazz, fieldName );
@@ -36,7 +36,7 @@ public class ReflectionUtil {
         setValue( target.getClass(), target, value, fieldName );
     }
 
-    @SuppressWarnings( { "rawtypes" } )
+    @SuppressWarnings( { "unchecked" } )
     public static void setValue( final Class clazz, final Object target, final Object value, final String fieldName ) throws IllegalArgumentException, IllegalAccessException,
             SecurityException, NoSuchFieldException {
         final Field field = ReflectionUtil.getField( clazz, fieldName );
@@ -46,7 +46,7 @@ public class ReflectionUtil {
         field.setAccessible( oldAccessible );
     }
 
-    @SuppressWarnings( "rawtypes" )
+    @SuppressWarnings( { "unchecked" } )
     public static void setIntValue( final Class clazz, final Object target, final int value, final String fieldName ) throws IllegalArgumentException, IllegalAccessException,
             SecurityException, NoSuchFieldException {
         final Field field = ReflectionUtil.getField( clazz, fieldName );

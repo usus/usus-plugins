@@ -11,7 +11,7 @@ import org.projectusus.core.bugreport.IBuggyProject;
 public class BuggyProjectFactory implements IAdapterFactory {
 
     // raw type in interface we implement - no chance
-    @SuppressWarnings( "rawtypes" )
+    @SuppressWarnings( { "unchecked" } )
     public Object getAdapter( Object adaptableObject, Class adapterType ) {
         if( adapterType == IBuggyProject.class && adaptableObject instanceof IProject ) {
             return new BuggyProject( (IProject)adaptableObject );

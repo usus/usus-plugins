@@ -34,7 +34,7 @@ public class PageFactory implements IAdapterFactory {
     }
 
     // raw type in interface we implement - no chance
-    @SuppressWarnings( { "rawtypes" } )
+    @SuppressWarnings( { "unchecked" } )
     public Object getAdapter( Object adaptableObject, Class adapterType ) {
         Object result = null;
         if( adapterType == IHotspotsPage.class && adaptableObject instanceof CodeProportion ) {
