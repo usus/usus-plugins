@@ -33,7 +33,6 @@ can be found at http://www.eclipse.org/legal/epl-v10.html.
 
    <url>
       <discovery label="EclEmma Update Site" url="http://update.eclemma.org/"/>
-      <discovery label="Eclipse-Checkstyle Update Site" url="http://eclipse-cs.sf.net/update/"/>
    </url>
 
    <plugin
@@ -69,6 +68,13 @@ can be found at http://www.eclipse.org/legal/epl-v10.html.
          download-size="0"
          install-size="0"
          version="0.4"
+         unpack="false"/>
+
+   <plugin
+         id="org.projectusus.projectsettings.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>
