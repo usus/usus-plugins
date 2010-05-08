@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.projectusus.ui.dependencygraph.feature"
-      label="Usus Dependency Graph Feature"
+      label="Project Usus Dependency Graph Feature"
       version="0.4"
       provider-name="projectusus.org">
 
