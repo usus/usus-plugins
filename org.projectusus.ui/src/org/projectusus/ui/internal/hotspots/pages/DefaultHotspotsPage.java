@@ -10,7 +10,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.Page;
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.basis.CodeProportionKind;
 
 public class DefaultHotspotsPage extends Page implements IHotspotsPage {
 
@@ -46,7 +45,7 @@ public class DefaultHotspotsPage extends Page implements IHotspotsPage {
         return "No content to display at this time.\nSelect an entry on the Cockpit view and choose 'Open Hotspots'.";
     }
 
-    public CodeProportionKind getCodeProportionKind() {
-        return null;
+    public void refresh() {
+        // nothing to refresh
     }
 }

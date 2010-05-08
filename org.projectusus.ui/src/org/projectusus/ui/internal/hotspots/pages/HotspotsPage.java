@@ -5,6 +5,7 @@
 package org.projectusus.ui.internal.hotspots.pages;
 
 import static java.util.Arrays.asList;
+import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -77,7 +78,7 @@ public class HotspotsPage extends Page implements IHotspotsPage {
         }
     }
 
-    public CodeProportionKind getCodeProportionKind() {
-        return kind;
+    public void refresh() {
+        setInput( getUsusModel().getCodeProportion( kind ) );
     }
 }

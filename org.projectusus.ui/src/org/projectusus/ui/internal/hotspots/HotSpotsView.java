@@ -106,7 +106,7 @@ public class HotSpotsView extends ViewPart {
 
     public void refreshActivePage() {
         if( activePage != null ) {
-            activePage.setInput( getUsusModel().getCodeProportion( activePage.getCodeProportionKind() ) );
+            activePage.refresh();
         }
     }
 }
