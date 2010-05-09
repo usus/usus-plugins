@@ -37,35 +37,28 @@ public class PDETestUsingWSProject {
         project.create( new NullProgressMonitor() );
         project.open( new NullProgressMonitor() );
         makeUsusProject( true );
-        waitForFullBuild();
+        addJavaNature();
+        UsusCorePlugin.getUsusModelWriteAccess().dropRawData( project );
     }
 
     @After
     public void tearDown() throws CoreException { 
         project.delete( true, new NullProgressMonitor() );
-        waitForFullBuild();
     }
 
-    protected void waitForFullBuild() throws CoreException {
+    protected void buildFullyAndWait() throws CoreException {
         getWorkspace().build( FULL_BUILD, new NullProgressMonitor() );
-//        getWorkspace().build( CLEAN_BUILD, new NullProgressMonitor() );
         System.out.print( "  Waiting for full build to complete ..." );
-        boolean retry = true;
-        while( retry ) {
-            try {
-                getJobManager().join( FAMILY_AUTO_REFRESH, new NullProgressMonitor() );
-                getJobManager().join( FAMILY_AUTO_BUILD, new NullProgressMonitor() );
-                getJobManager().join( FAMILY_MANUAL_BUILD, new NullProgressMonitor() );
-                retry = false;
-            } catch( Exception exc ) {
-                // ignore and retry
-            }
-        }
-        System.out.print( " OK.\n" );
+        waitForBuild();
     }
-    protected void waitForIncrementalBuild() throws CoreException {
+
+    protected void buildIncrementallyAndWait() throws CoreException {
         getWorkspace().build( INCREMENTAL_BUILD, new NullProgressMonitor() );
         System.out.print( "  Waiting for incremental build to complete ..." );
+        waitForBuild();
+    }
+
+    private void waitForBuild() {
         boolean retry = true;
         while( retry ) {
             try {
@@ -77,18 +70,12 @@ public class PDETestUsingWSProject {
                 // ignore and retry
             }
         }
-        System.out.print( " OK.\n" );
+        System.out.println( " OK." );
     }
 
-    protected IFile createWSFilePlain( String fileName, String content ) throws CoreException {
+    protected IFile createWSFile( String fileName, String content ) throws CoreException {
         IFile result = project.getFile( fileName );
         result.create( createInputStream( content ), true, new NullProgressMonitor() );
-        return result;
-    }
-    
-    protected IFile createWSFile( String fileName, String content ) throws CoreException {
-        IFile result = createWSFilePlain( fileName, content );
-        waitForFullBuild();
         return result;
     }
     
@@ -98,30 +85,26 @@ public class PDETestUsingWSProject {
 
     protected void updateFileContent( IFile file, String newContent ) throws CoreException {
         file.setContents( createInputStream( newContent ), true, false, new NullProgressMonitor() );
-        waitForFullBuild();
     }
     
     protected IFolder createWSFolder( String name ) throws CoreException {
         IFolder result = project.getFolder( name );
         result.create( true, true, new NullProgressMonitor() );
-        waitForFullBuild();
         return result;
     }
     
     protected void makeUsusProject( boolean makeUsusProject ) throws CoreException {
         getUsusProjectAdapter().setUsusProject( makeUsusProject );
-        waitForFullBuild();
     }
 
-    protected IUSUSProject getUsusProjectAdapter() {
+    private IUSUSProject getUsusProjectAdapter() {
         return (IUSUSProject)project.getAdapter( IUSUSProject.class );
     }
     
-    protected void addJavaNature() throws CoreException {
+    private void addJavaNature() throws CoreException {
         IProjectDescription description = project.getDescription();
         description.setNatureIds( new String[] { JavaCore.NATURE_ID } );
         project.setDescription( description, new NullProgressMonitor() );
-        waitForFullBuild();
     }
     
     private InputStream createInputStream( String content ) {

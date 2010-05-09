@@ -28,7 +28,7 @@ public class IsUsusProjectPDETest extends PDETestUsingWSProject {
     @Test
     public void inaccessibleProject() throws CoreException {
         project.close( new NullProgressMonitor() );
-        waitForFullBuild();
+        buildFullyAndWait();
         assertFalse( isUsusProject( project ));
         project.open( new NullProgressMonitor() ); // this fixes some following tests
     }

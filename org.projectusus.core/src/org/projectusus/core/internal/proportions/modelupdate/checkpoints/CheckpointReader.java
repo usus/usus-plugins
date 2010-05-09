@@ -5,7 +5,7 @@
 package org.projectusus.core.internal.proportions.modelupdate.checkpoints;
 
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_CASES;
-import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_SQI;
+import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_LEVEL;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_TIME;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_VIOLATIONS;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ELEM_CHECKPOINT;
@@ -51,7 +51,7 @@ class CheckpointReader extends UsusXmlReader<ICheckpoint> {
     private void readEntry( Node child, List<CodeProportion> entries ) {
         int cases = loadInteger( child, ATT_CASES );
         int violations = loadInteger( child, ATT_VIOLATIONS );
-        Double sqi = loadDouble( child, ATT_SQI );
+        Double sqi = loadDouble( child, ATT_LEVEL );
         CodeProportionKind metric = loadMetric( child, XmlNames.ATT_METRIC );
         if( cases != UNDEFINED && violations != UNDEFINED && sqi != null && metric != null ) {
             ArrayList<IHotspot> hotspots = new ArrayList<IHotspot>();

@@ -7,6 +7,9 @@ package org.projectusus.core.internal.proportions;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.junit.Assert.assertEquals;
 
+import java.util.Collection;
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.After;
@@ -24,12 +27,9 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
         super.tearDown();
     }
 
-    // TODO lf same game as with project creation, is this enough?
-
     @Test
     public void projectAddedToUsus() throws Exception {
         makeUsusProject( false );
-        createWSFile( "a.java", "created before adding project to usus" );
         getWorkspace().addResourceChangeListener( listener );
         makeUsusProject( true );
 
@@ -40,12 +40,16 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 1, target.getProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
         assertEquals( project, affectedProject );
+        Collection<IFile> files = target.getFiles( project );
+        assertEquals( 1, files.size() );
+        assertEquals( "org.projectusus.core.prefs", files.iterator().next().getName() );
     }
 
     @Test
     public void projectRemovedFromUsus() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
         createWSFile( "a.java", "created before removing project from usus" );
+
         listener.assertNoException();
         assertEquals( 1, listener.getTarget().getProjects().size() );
 
@@ -63,7 +67,6 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
         makeUsusProject( false );
         getWorkspace().addResourceChangeListener( listener );
         createWSFile( "a.java", "file that is ignored because in non-usus project" );
-        waitForFullBuild();
 
         listener.assertNoException();
 
@@ -71,7 +74,8 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
         // non-Usus projects always show up in the list of removed projects
         // otherwise we would have a gap when switching a project from
         // added-to-Usus to not-added-to-Usus
-        assertEquals( 1, target.getRemovedProjects().size() );
+        
+        assertRemovedProject( target );
         assertEquals( 0, target.getProjects().size() );
     }
 

@@ -14,6 +14,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.PDETestUsingWSProject;
 import org.projectusus.core.internal.project.IUSUSProject;
@@ -34,7 +35,6 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
     public void projectCreated() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
         IProject otherProject = createAdditionalProjectWithFile();
-        waitForFullBuild();
         
         listener.assertNoException();
         
@@ -51,7 +51,6 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
     public void projectClosed() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
         project.close( new NullProgressMonitor() );
-        waitForFullBuild();
         
         listener.assertNoException();
         
@@ -70,10 +69,9 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
     public void projectOpened() throws Exception {
         createWSFile( "someFile.java", "some content" );
         project.close( new NullProgressMonitor() );
-        waitForFullBuild();
+        buildFullyAndWait();
         getWorkspace().addResourceChangeListener( listener );
         project.open( new NullProgressMonitor() );
-        waitForFullBuild();
         
         listener.assertNoException();
         
@@ -86,10 +84,8 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
     
     @Test
     public void projectDeleted() throws Exception {
-        waitForFullBuild();
         getWorkspace().addResourceChangeListener( listener );
         project.delete( true, new NullProgressMonitor() );
-        waitForFullBuild();
         
         listener.assertNoException();
         

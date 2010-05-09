@@ -2,23 +2,13 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import static org.junit.Assert.assertEquals;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
-import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.UsusCorePlugin;
 
 public class DropRawDataPDETest extends PDETestForMetricsComputation  {
-
-    @Before
-    public void setup() throws CoreException{
-        UsusCorePlugin.getUsusModelWriteAccess().dropRawData( project );
-        makeUsusProject( false );
-        addJavaNature();
-   }
 
     @Test
     public void dropProjectWithFile1() throws Exception {
@@ -59,8 +49,9 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation  {
     }
     
     private void computeFile1AndCheckPreconditions() throws Exception {
+        createFileAndBuild( "Reset" + "1" );
+
         IUsusModel ususModel = UsusCorePlugin.getUsusModel();
-        createAndCompute( "1", "Reset" );
         assertEquals( 1, ususModel.getNumberOf( project, CodeProportionUnit.CLASS ));
         assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.KG ) );
         assertEquals( 2, ususModel.getNumberOf( project, CodeProportionUnit.METHOD ));
@@ -70,10 +61,10 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation  {
     }   
     
     private void computeFiles2AndCheckPreconditions() throws Exception {
+        createFile( "Reset" + "2" );
+        createFileAndBuild( "Reset" + "1" );
+
         IUsusModel ususModel = UsusCorePlugin.getUsusModel();
-        IFile file2 = createWSFile( "Reset2.java", loadContent("Reset2.test") );
-        createAndCompute( "1", "Reset" );
-        computeJavaFile(file2);
         assertEquals( 2, ususModel.getNumberOf( project, CodeProportionUnit.CLASS ));
         assertEquals( 0, ususModel.getViolationCount( project, CodeProportionKind.KG ) );
         assertEquals( 3, ususModel.getNumberOf( project, CodeProportionUnit.METHOD ));

@@ -18,6 +18,6 @@ class XmlNames extends UsusXmlNames {
     static final String ATT_METRIC = "metric"; //$NON-NLS-1$
     static final String ATT_CASES = "cases"; //$NON-NLS-1$
     static final String ATT_VIOLATIONS = "violations"; //$NON-NLS-1$
-    static final String ATT_SQI = "sqi"; //$NON-NLS-1$
+    static final String ATT_LEVEL = "sqi"; //$NON-NLS-1$
 
 }

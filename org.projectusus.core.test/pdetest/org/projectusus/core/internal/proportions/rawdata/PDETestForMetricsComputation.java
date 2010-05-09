@@ -13,31 +13,21 @@ import java.io.Reader;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.PDETestUsingWSProject;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
-import org.projectusus.core.internal.proportions.rawdata.jdtdriver.JavaFileDriver;
 
 public class PDETestForMetricsComputation extends PDETestUsingWSProject {
 
+    protected IUsusModel model = UsusCorePlugin.getUsusModel();
+
     public void simpleCaseTestDemo() throws Exception {
         IFile file = createWSFile( "A.java", loadContent( "A.test" ) );
-        computeJavaFile( file );
-        IUsusModel model = UsusCorePlugin.getUsusModel();
+        buildFullyAndWait();
         assertEquals( 1, model.getViolationCount( file.getProject(), CodeProportionKind.ML ) );
         assertEquals( 2, model.getNumberOf( file.getProject(), CodeProportionUnit.METHOD ) );
-    }
-    
-    protected void computeNonJavaFile(IFile file){
-        new FileDriver( file ).compute();
-    }
-    
-    protected void computeJavaFile(IFile file){
-       new JavaFileDriver( file ).compute();
     }
 
     protected String loadContent( String fileName ) throws Exception {
@@ -61,13 +51,13 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
         return result.toString();
     }
 
-    public IFile createAndCompute( String filenumber, String testPrefix ) throws CoreException, Exception {
-        IFile file = createFile( filenumber, testPrefix );
-        computeJavaFile(file);
+    protected IFile createFileAndBuild( String name ) throws Exception {
+        IFile file = createFile( name );
+        buildFullyAndWait();
         return file;
     }
 
-    public IFile createFile( String filenumber, String testPrefix ) throws CoreException, Exception {
-        return createWSFile( testPrefix+filenumber +".java", loadContent(testPrefix+filenumber+".test") );
+    protected IFile createFile( String name ) throws Exception {
+        return createWSFile( name + ".java", loadContent( name + ".test" ) );
     }
 }

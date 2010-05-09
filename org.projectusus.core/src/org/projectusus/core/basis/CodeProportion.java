@@ -16,7 +16,7 @@ public class CodeProportion extends PlatformObject {
     private final CodeProportionKind metric;
     private final int violations;
     private final CodeStatistic basis;
-    private final double sqi;
+    private final double level;
     private final List<IHotspot> hotspots;
 
     public CodeProportion( CodeProportionKind metric ) {
@@ -24,26 +24,26 @@ public class CodeProportion extends PlatformObject {
     }
 
     public CodeProportion( CodeProportionKind metric, int violations, CodeStatistic basis, List<IHotspot> hotspots ) {
-        this( metric, violations, basis, computeSQI( metric, violations, basis ), hotspots );
+        this( metric, violations, basis, computeLevel( metric, violations, basis ), hotspots );
     }
 
-    public CodeProportion( CodeProportionKind metric, int violations, CodeStatistic basis, double sqiValue, List<IHotspot> hotspots ) {
+    public CodeProportion( CodeProportionKind metric, int violations, CodeStatistic basis, double levelValue, List<IHotspot> hotspots ) {
         this.metric = metric;
         this.violations = violations;
         this.basis = basis;
         this.hotspots = sort( hotspots );
-        this.sqi = sqiValue;
+        this.level = levelValue;
     }
 
-    private static double computeSQI( CodeProportionKind metric, int violations, CodeStatistic basis ) {
+    private static double computeLevel( CodeProportionKind metric, int violations, CodeStatistic basis ) {
         if( metric == CodeProportionKind.ACD ) {
             return 100.0 - 100.0 * UsusCorePlugin.getUsusModel().getRelativeACD();
         }
-        return new CodeProportionsRatio( violations, basis.getValue() ).computeInverseIndicator();
+        return CodeProportionsRatio.computeInverse( violations, basis );
     }
 
-    public Double getSQIValue() {
-        return new Double( sqi );
+    public Double getLevel() {
+        return new Double( level );
     }
 
     public int getViolations() {

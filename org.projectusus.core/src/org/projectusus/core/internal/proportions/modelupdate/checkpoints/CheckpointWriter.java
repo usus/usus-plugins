@@ -10,7 +10,7 @@ import static org.joda.time.format.DateTimeFormat.forPattern;
 import static org.projectusus.core.internal.UsusXmlNames.DATE_TIME_PATTERN;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_CASES;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_METRIC;
-import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_SQI;
+import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_LEVEL;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_TIME;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ATT_VIOLATIONS;
 import static org.projectusus.core.internal.proportions.modelupdate.checkpoints.XmlNames.ELEM_CHECKPOINT;
@@ -64,7 +64,7 @@ class CheckpointWriter extends UsusXmlWriter {
         sb.append( att( ATT_METRIC, codeProportion.getMetric().toString() ) );
         sb.append( att( ATT_CASES, valueOf( codeProportion.getBasis().getValue() ) ) );
         sb.append( att( ATT_VIOLATIONS, valueOf( codeProportion.getViolations() ) ) );
-        sb.append( att( ATT_SQI, codeProportion.getSQIValue().toString() ) );
+        sb.append( att( ATT_LEVEL, codeProportion.getLevel().toString() ) );
         sb.append( tagEndClosed() );
     }
 

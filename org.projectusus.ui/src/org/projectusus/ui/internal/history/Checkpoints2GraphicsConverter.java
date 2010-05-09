@@ -34,7 +34,7 @@ class Checkpoints2GraphicsConverter {
 
     private Double computeValue( CodeProportionKind metric, ICheckpoint checkpoint ) {
         CodeProportion codeProportion = find( metric, checkpoint.getEntries() );
-        return codeProportion == null ? new Double( 0.0 ) : codeProportion.getSQIValue();
+        return codeProportion == null ? new Double( 0.0 ) : codeProportion.getLevel();
     }
 
     private double[] convert( List<Double> values ) {

@@ -41,7 +41,7 @@ class ChangedResourcesCollector implements IResourceDeltaVisitor {
             removedProjects.add( (IProject)resource );
             result = false; // ignore the entire delta
         } else if( resource instanceof IFile ) {
-            handleJavaFileDelta( delta, (IFile)resource );
+            handleFileDelta( delta, (IFile)resource );
         }
         return result;
     }
@@ -64,7 +64,7 @@ class ChangedResourcesCollector implements IResourceDeltaVisitor {
         return isOpenCloseStatusChanged( delta ) && !project.isOpen();
     }
 
-    private void handleJavaFileDelta( IResourceDelta delta, IFile file ) {
+    private void handleFileDelta( IResourceDelta delta, IFile file ) {
         if( isInteresting( delta.getKind() ) ) {
             RESOURCE_CHANGES.trace( "Changed file " + file.getFullPath() ); //$NON-NLS-1$
             addToMap( file, changes );

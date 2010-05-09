@@ -24,7 +24,7 @@ enum CockpitColumnDesc implements IColumnDesc<CodeProportion> {
     SQI( false ) {
         public String getLabel( CodeProportion element ) {
             DecimalFormat formatter = new DecimalFormat( "#.##" );
-            return String.valueOf( formatter.format( element.getSQIValue() ) );
+            return String.valueOf( formatter.format( element.getLevel() ) );
         }
     },
     @UsusTreeColumn( header = "Violations", align = RIGHT, weight = 14 )

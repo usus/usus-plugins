@@ -3,30 +3,24 @@ package org.projectusus.core.basis;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.projectusus.core.basis.CodeProportionsRatio;
 
 public class CodeProportionsRatioTest {
 
     @Test
-    public void testCompute() {
-        assertEquals( 0, new CodeProportionsRatio( 0, 0 ).compute(), 0.0 );
-        assertEquals( 100, new CodeProportionsRatio( 10, 10 ).compute(), 0.0 );
-        assertEquals( 10, new CodeProportionsRatio( 10, 100 ).compute(), 0.0 );
-        assertEquals( 100, new CodeProportionsRatio( 1000, 100 ).compute(), 0.0 );
-        assertEquals( 0, new CodeProportionsRatio( 0, 100 ).compute(), 0.0 );
-    }
-
-    @Test
     public void avoidDivisionByZero() {
-        assertEquals( 0, new CodeProportionsRatio( 1, 0 ).compute(), 0.0 );
+
+        assertEquals( 0, CodeProportionsRatio.computeInverse( 1, new CodeStatistic( null, 0 ) ), 0.0 );
     }
 
     @Test
     public void testComputeReverseIndicator() {
-        assertEquals( 0, new CodeProportionsRatio( 0, 0 ).computeInverseIndicator(), 0.0 );
-        assertEquals( 100, new CodeProportionsRatio( 0, 10 ).computeInverseIndicator(), 0.0 );
-        assertEquals( 0, new CodeProportionsRatio( 10, 10 ).computeInverseIndicator(), 0.0 );
-        assertEquals( 90, new CodeProportionsRatio( 10, 100 ).computeInverseIndicator(), 0.0 );
-        assertEquals( 10, new CodeProportionsRatio( 9, 10 ).computeInverseIndicator(), 0.0 );
+        assertEquals( 0, CodeProportionsRatio.computeInverse( 0, new CodeStatistic( null, 0 ) ), 0.0 );
+        assertEquals( 100, CodeProportionsRatio.computeInverse( 0, new CodeStatistic( null, 10 ) ), 0.0 );
+        assertEquals( 0, CodeProportionsRatio.computeInverse( 10, new CodeStatistic( null, 10 ) ), 0.0 );
+        assertEquals( 90, CodeProportionsRatio.computeInverse( 10, new CodeStatistic( null, 100 ) ), 0.0 );
+        assertEquals( 10, CodeProportionsRatio.computeInverse( 9, new CodeStatistic( null, 10 ) ), 0.0 );
+        assertEquals( 0, CodeProportionsRatio.computeInverse( 1000, new CodeStatistic( null, 100 ) ), 0.0 );
+        assertEquals( 100, CodeProportionsRatio.computeInverse( 0, new CodeStatistic( null, 100 ) ), 0.0 );
+        assertEquals( 75, CodeProportionsRatio.computeInverse( 1, new CodeStatistic( null, 4 ) ), 0.0 );
     }
 }
