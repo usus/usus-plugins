@@ -14,17 +14,15 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.adapter.ICodeProportionComputationTarget;
 import org.projectusus.core.internal.PDETestUsingWSProject;
 import org.projectusus.core.internal.project.IUSUSProject;
-import org.projectusus.core.internal.proportions.modelcomputation.ICodeProportionComputationTarget;
-
 
 public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
 
     private TestResourceChangeListener listener = new TestResourceChangeListener();
-    
+
     @After
     public void tearDown() throws CoreException {
         getWorkspace().removeResourceChangeListener( listener );
@@ -35,9 +33,9 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
     public void projectCreated() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
         IProject otherProject = createAdditionalProjectWithFile();
-        
+
         listener.assertNoException();
-        
+
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 0, target.getRemovedProjects().size() );
         assertEquals( 1, target.getProjects().size() );
@@ -46,14 +44,13 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         // TODO zweites Projekt schlie§en!!
     }
 
-    
     @Test
     public void projectClosed() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
         project.close( new NullProgressMonitor() );
-        
+
         listener.assertNoException();
-        
+
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 0, target.getProjects().size() );
         assertEquals( 1, target.getRemovedProjects().size() );
@@ -61,10 +58,10 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( project, removedProject );
         project.open( new NullProgressMonitor() ); // this fixes some following tests
     }
-    
+
     // TODO lf will this be enough? if the project was removed from consideration,
     // wouldn't we also need the full list of files in the project?
-    
+
     @Test
     public void projectOpened() throws Exception {
         createWSFile( "someFile.java", "some content" );
@@ -72,23 +69,23 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         buildFullyAndWait();
         getWorkspace().addResourceChangeListener( listener );
         project.open( new NullProgressMonitor() );
-        
+
         listener.assertNoException();
-        
+
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 1, target.getProjects().size() );
         assertEquals( 0, target.getRemovedProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
         assertEquals( project, affectedProject );
     }
-    
+
     @Test
     public void projectDeleted() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
         project.delete( true, new NullProgressMonitor() );
-        
+
         listener.assertNoException();
-        
+
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 0, target.getProjects().size() );
         assertEquals( 1, target.getRemovedProjects().size() );

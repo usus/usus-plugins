@@ -14,8 +14,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.After;
 import org.junit.Test;
+import org.projectusus.adapter.ICodeProportionComputationTarget;
 import org.projectusus.core.internal.PDETestUsingWSProject;
-import org.projectusus.core.internal.proportions.modelcomputation.ICodeProportionComputationTarget;
 
 public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
 
@@ -74,7 +74,7 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
         // non-Usus projects always show up in the list of removed projects
         // otherwise we would have a gap when switching a project from
         // added-to-Usus to not-added-to-Usus
-        
+
         assertRemovedProject( target );
         assertEquals( 0, target.getProjects().size() );
     }

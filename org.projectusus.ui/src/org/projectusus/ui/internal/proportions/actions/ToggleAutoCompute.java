@@ -4,11 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.actions;
 
-import static org.projectusus.core.internal.util.UsusPreferenceKeys.AUTO_COMPUTE;
-
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.jface.action.Action;
-import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.adapter.UsusAdapterPlugin;
 
 public class ToggleAutoCompute extends Action {
 
@@ -19,15 +16,10 @@ public class ToggleAutoCompute extends Action {
 
     @Override
     public void run() {
-        getUsusCorePlugin().setAutoCompute( isChecked() );
+        UsusAdapterPlugin.getDefault().setAutoCompute( isChecked() );
     }
 
     private void init() {
-        IEclipsePreferences prefs = getUsusCorePlugin().getPreferences();
-        setChecked( prefs.getBoolean( AUTO_COMPUTE, true ) );
-    }
-
-    private UsusCorePlugin getUsusCorePlugin() {
-        return UsusCorePlugin.getDefault();
+        setChecked( UsusAdapterPlugin.getDefault().getAutocompute() );
     }
 }

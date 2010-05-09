@@ -11,9 +11,9 @@ import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.adapter.CodeProportionsComputerJob;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.modelcomputation.CodeProportionsComputerJob;
 
 public class CodeProportionsPDETest {
 
@@ -21,7 +21,7 @@ public class CodeProportionsPDETest {
     public void setUp() throws Exception {
         getJobManager().join( CodeProportionsComputerJob.FAMILY, new NullProgressMonitor() );
     }
-    
+
     @Test
     public void listenerHandling() throws InterruptedException {
         IUsusModelWriteAccess ususModelWriteAccess = UsusCorePlugin.getUsusModelWriteAccess();
@@ -40,8 +40,8 @@ public class CodeProportionsPDETest {
     private final class DummyCodeProportionsListener implements IUsusModelListener {
         private int callCount;
 
-        public void ususModelChanged(  ) {
-          callCount++;
+        public void ususModelChanged() {
+            callCount++;
         }
 
         public int getCallCount() {

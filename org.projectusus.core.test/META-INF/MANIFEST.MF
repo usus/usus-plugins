@@ -11,7 +11,8 @@ Require-Bundle: org.projectusus.core,
  org.eclipse.core.resources,
  org.eclipse.core.runtime,
  org.eclipse.jdt.core,
- org.eclipse.debug.core
+ org.eclipse.debug.core,
+ org.projectusus.adapter;bundle-version="0.0.1"
 Bundle-ClassPath: lib/cpsuite-1.1.0.jar,
  lib/mockito-all-1.8.0.jar,
  .

@@ -5,6 +5,7 @@
 package org.projectusus.core.internal;
 
 import static org.eclipse.core.runtime.IStatus.ERROR;
+import static org.projectusus.core.internal.util.UsusPreferenceKeys.AUTO_COMPUTE;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
@@ -14,10 +15,10 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
+import org.osgi.service.prefs.BackingStoreException;
 import org.projectusus.core.internal.coverage.LaunchObserver;
 import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
-import org.projectusus.core.internal.proportions.modelcomputation.AutoComputeSetting;
 import org.projectusus.core.internal.proportions.rawdata.IUsusModel;
 import org.projectusus.core.internal.proportions.rawdata.NullUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.rawdata.NullUsusModelWriteAccess;
@@ -32,7 +33,6 @@ public class UsusCorePlugin extends Plugin {
     private static UsusCorePlugin plugin;
     private final LaunchObserver launchObserver = new LaunchObserver();
     private UsusModel ususModel;
-    private AutoComputeSetting autoComputer;
 
     public static UsusCorePlugin getDefault() {
         return plugin;
@@ -62,10 +62,6 @@ public class UsusCorePlugin extends Plugin {
         return new NullUsusModelMetricsWriter();
     }
 
-    public void setAutoCompute( boolean autoCompute ) {
-        autoComputer.setAutoCompute( autoCompute );
-    }
-
     public static void log( Exception ex ) {
         String msg = ex.getMessage() == null ? "[No details.]" : ex.getMessage(); //$NON-NLS-1$
         log( msg, ex );
@@ -78,7 +74,7 @@ public class UsusCorePlugin extends Plugin {
         }
     }
 
-    public IEclipsePreferences getPreferences() {
+    private IEclipsePreferences getPreferences() {
         return new InstanceScope().getNode( PLUGIN_ID );
     }
 
@@ -100,14 +96,27 @@ public class UsusCorePlugin extends Plugin {
     @Override
     public void stop( BundleContext context ) throws Exception {
         launchObserver.dispose();
-        autoComputer.dispose();
         plugin = null;
         ususModel = null;
         super.stop( context );
     }
 
     private synchronized void performInits() {
-        autoComputer = new AutoComputeSetting();
         launchObserver.connect();
     }
+
+    public boolean getAutocompute() {
+        return getPreferences().getBoolean( AUTO_COMPUTE, true );
+    }
+
+    public void setAutoCompute( boolean autoCompute ) {
+        try {
+            IEclipsePreferences prefs = getPreferences();
+            prefs.putBoolean( AUTO_COMPUTE, autoCompute );
+            prefs.flush();
+        } catch( BackingStoreException bastox ) {
+            UsusCorePlugin.log( bastox );
+        }
+    }
+
 }

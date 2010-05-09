@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Test;
+import org.projectusus.adapter.ForcedRecompute;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.modelcomputation.ForcedRecompute;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
 
 public class ACDCollectorPDETest extends PDETestForMetricsComputation {
