@@ -12,7 +12,7 @@ import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.osgi.util.NLS;
 import org.osgi.service.prefs.BackingStoreException;
-import org.projectusus.core.internal.util.CoreTexts;
+import org.projectusus.projectsettings.internal.util.CoreTexts;
 
 public class SettingsAccess {
 

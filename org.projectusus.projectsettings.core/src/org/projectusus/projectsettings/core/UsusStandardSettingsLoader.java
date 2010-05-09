@@ -4,7 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.projectsettings.core;
 
-import static org.projectusus.core.internal.util.CoreTexts.projectSettings_defaultName;
+import static org.projectusus.projectsettings.internal.util.CoreTexts.projectSettings_defaultName;
 
 import java.io.InputStream;
 import java.util.Properties;
