@@ -4,11 +4,13 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal;
 
-import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+import static org.eclipse.jdt.core.JavaCore.removePreProcessingResourceChangedListener;
 import static org.projectusus.core.internal.util.UsusPreferenceKeys.AUTO_COMPUTE;
 
+import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.jdt.core.JavaCore;
 import org.osgi.service.prefs.BackingStoreException;
 import org.projectusus.core.internal.proportions.modelcomputation.ForcedRecompute;
 import org.projectusus.core.internal.proportions.modelcomputation.RunComputationOnResourceChange;
@@ -31,7 +33,8 @@ public class AutoComputeSetting {
     }
 
     public void dispose() {
-        getWorkspace().removeResourceChangeListener( resourcelistener );
+        removePreProcessingResourceChangedListener( resourcelistener );
+        // getWorkspace().removeResourceChangeListener( resourcelistener );
     }
 
     private void writePref( boolean autoCompute ) throws BackingStoreException {
@@ -42,10 +45,12 @@ public class AutoComputeSetting {
 
     private void applyAutoCompute( boolean autoCompute ) {
         if( autoCompute ) {
-            getWorkspace().addResourceChangeListener( resourcelistener );
+            JavaCore.addPreProcessingResourceChangedListener( resourcelistener, IResourceChangeEvent.POST_BUILD );
+            // getWorkspace().addResourceChangeListener( resourcelistener );
             new ForcedRecompute().schedule();
         } else {
-            getWorkspace().removeResourceChangeListener( resourcelistener );
+            removePreProcessingResourceChangedListener( resourcelistener );
+            // getWorkspace().removeResourceChangeListener( resourcelistener );
         }
     }
 
