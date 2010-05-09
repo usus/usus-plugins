@@ -28,7 +28,6 @@ import org.projectusus.core.bugreport.Bug;
 import org.projectusus.core.bugreport.IBuggyProject;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.project.IUSUSProject;
-import org.projectusus.core.internal.project.NullUsusProject;
 import org.projectusus.ui.internal.UsusUIPlugin;
 import org.projectusus.ui.internal.selection.EditorInputAnalysis;
 import org.projectusus.ui.internal.selection.JDTWorkspaceEditorInputAnalysis;

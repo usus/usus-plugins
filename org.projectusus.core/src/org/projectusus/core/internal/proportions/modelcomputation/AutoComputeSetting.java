@@ -2,18 +2,17 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal;
+package org.projectusus.core.internal.proportions.modelcomputation;
 
+import static org.eclipse.jdt.core.JavaCore.addPreProcessingResourceChangedListener;
 import static org.eclipse.jdt.core.JavaCore.removePreProcessingResourceChangedListener;
 import static org.projectusus.core.internal.util.UsusPreferenceKeys.AUTO_COMPUTE;
 
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.jdt.core.JavaCore;
 import org.osgi.service.prefs.BackingStoreException;
-import org.projectusus.core.internal.proportions.modelcomputation.ForcedRecompute;
-import org.projectusus.core.internal.proportions.modelcomputation.RunComputationOnResourceChange;
+import org.projectusus.core.internal.UsusCorePlugin;
 
 public class AutoComputeSetting {
     private final IResourceChangeListener resourcelistener = new RunComputationOnResourceChange();
@@ -45,7 +44,7 @@ public class AutoComputeSetting {
 
     private void applyAutoCompute( boolean autoCompute ) {
         if( autoCompute ) {
-            JavaCore.addPreProcessingResourceChangedListener( resourcelistener, IResourceChangeEvent.POST_BUILD );
+            addPreProcessingResourceChangedListener( resourcelistener, IResourceChangeEvent.POST_BUILD );
             // getWorkspace().addResourceChangeListener( resourcelistener );
             new ForcedRecompute().schedule();
         } else {

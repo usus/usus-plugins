@@ -17,6 +17,7 @@ import org.osgi.framework.BundleListener;
 import org.projectusus.core.internal.coverage.LaunchObserver;
 import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
+import org.projectusus.core.internal.proportions.modelcomputation.AutoComputeSetting;
 import org.projectusus.core.internal.proportions.rawdata.IUsusModel;
 import org.projectusus.core.internal.proportions.rawdata.NullUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.rawdata.NullUsusModelWriteAccess;
