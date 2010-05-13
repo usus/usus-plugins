@@ -8,8 +8,6 @@ import java.util.Set;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 
 public class ClassDescriptor {
 
@@ -21,14 +19,8 @@ public class ClassDescriptor {
         return new HashSet<ClassDescriptor>( classes.values() );
     }
 
-    public static ClassDescriptor of( ITypeBinding binding ) {
-        IFile underlyingResource;
-        try {
-            underlyingResource = (IFile)binding.getJavaElement().getUnderlyingResource();
-        } catch( JavaModelException jme ) {
-            throw new IllegalArgumentException( "binding not suitable", jme ); //$NON-NLS-1$
-        }
-        return ClassDescriptor.of( new ClassDescriptorKey( underlyingResource, new Classname( binding.getName() ), Packagename.of( binding.getPackage().getName() ) ) );
+    public static ClassDescriptor of( BoundType type ) {
+        return ClassDescriptor.of( new ClassDescriptorKey( type.getUnderlyingResource(), type.getClassname(), type.getPackagename() ) );
     }
 
     public static ClassDescriptor of( IFile file, Classname classname, Packagename packagename ) {

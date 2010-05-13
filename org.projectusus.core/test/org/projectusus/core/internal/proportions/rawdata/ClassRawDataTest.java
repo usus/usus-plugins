@@ -12,10 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.IPackageBinding;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.junit.Before;
@@ -23,6 +19,9 @@ import org.junit.Test;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.filerelations.model.BoundType;
+import org.projectusus.core.filerelations.model.Classname;
+import org.projectusus.core.filerelations.model.Packagename;
 
 public class ClassRawDataTest {
 
@@ -36,23 +35,19 @@ public class ClassRawDataTest {
     private MethodDeclaration method1;
 
     @Before
-    public void setup() throws Exception {
-        ITypeBinding typeBinding = setupMocks();
+    public void setup() {
+        BoundType typeBinding = setupMocks();
         classRawData = new ClassRawData( typeBinding, CLASSNAME, SOURCEPOSITION, LINENUMBER );
         method1 = mock( MethodDeclaration.class );
         initMethod( method1, METHODNAME1 );
     }
 
-    private ITypeBinding setupMocks() throws JavaModelException {
-        ITypeBinding typeBinding = mock( ITypeBinding.class );
-        IPackageBinding packageBinding = mock( IPackageBinding.class );
-        when( packageBinding.getName() ).thenReturn( PACKAGENAME );
-        IJavaElement elementMock = mock( IJavaElement.class );
+    private BoundType setupMocks() {
+        BoundType typeBinding = mock( BoundType.class );
         IFile resourceMock = mock( IFile.class );
-        when( elementMock.getUnderlyingResource() ).thenReturn( resourceMock );
-        when( typeBinding.getJavaElement() ).thenReturn( elementMock );
-        when( typeBinding.getName() ).thenReturn( CLASSNAME );
-        when( typeBinding.getPackage() ).thenReturn( packageBinding );
+        when( typeBinding.getUnderlyingResource() ).thenReturn( resourceMock );
+        when( typeBinding.getClassname() ).thenReturn( new Classname( CLASSNAME ) );
+        when( typeBinding.getPackagename() ).thenReturn( Packagename.of( PACKAGENAME ) );
         return typeBinding;
     }
 

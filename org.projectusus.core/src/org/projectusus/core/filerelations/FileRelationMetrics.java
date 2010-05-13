@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.jgrapht.alg.StrongConnectivityInspector;
 import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
 import org.projectusus.core.filerelations.internal.metrics.BottleneckCalculator;
@@ -66,10 +65,6 @@ public class FileRelationMetrics {
 
     public Set<Packagename> getAllPackages() {
         return Packagename.getAll();
-    }
-
-    public void addClass( ITypeBinding binding ) {
-        ClassDescriptor.of( binding );
     }
 
     public void remove( FileRelation relation ) {

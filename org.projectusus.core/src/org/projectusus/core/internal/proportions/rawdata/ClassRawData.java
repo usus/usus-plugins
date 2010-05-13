@@ -11,13 +11,13 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.IClassRawData;
 import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
@@ -39,7 +39,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         this.lineNumber = line;
     }
 
-    public ClassRawData( ITypeBinding binding, String name, int startPosition, int line ) {
+    public ClassRawData( BoundType binding, String name, int startPosition, int line ) {
         this( name, startPosition, line );
         this.descriptor = ClassDescriptor.of( binding );
     }

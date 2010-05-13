@@ -27,7 +27,6 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IUsusElement;
@@ -38,6 +37,7 @@ import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.filerelations.FileRelationMetrics;
+import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.filerelations.model.Packagename;
@@ -118,7 +118,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     // interface of IUsusModelMetricsWriter
     // /////////////////////////////////////
 
-    public void addClassReference( ITypeBinding sourceType, ITypeBinding targetType ) {
+    public void addClassReference( BoundType sourceType, BoundType targetType ) {
         ClassDescriptor source = ClassDescriptor.of( sourceType );
         ClassDescriptor target = ClassDescriptor.of( targetType );
         fileRelations.addFileRelation( source, target );
@@ -135,8 +135,6 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     public void addClass( IFile file, AbstractTypeDeclaration node ) {
         getFileRawData( file ).addClass( node );
         // TODO Aufruf dieser Methode ersetzen durch FileRawData.getOrCreateRawData
-        // TODO Unterer Aufruf ist unnštig, da schon ClassRawData die ClassDescriptor erzeugt
-        fileRelations.addClass( node.resolveBinding().getErasure() );
     }
 
     public void setMLValue( IFile file, MethodDeclaration methodDecl, int value ) {
@@ -308,7 +306,7 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
 
     private void notifyListeners() {
         for( IUsusModelListener listener : listeners ) {
-            listener.ususModelChanged( );
+            listener.ususModelChanged();
         }
     }
 

@@ -3,10 +3,10 @@ package org.projectusus.core.internal.proportions.rawdata;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.filerelations.FileRelationMetrics;
+import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
 
 import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
@@ -18,7 +18,7 @@ public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
         // just do nothing harmful
     }
 
-    public void addClassReference( ITypeBinding sourceType, ITypeBinding targetType ) {
+    public void addClassReference( BoundType sourceType, BoundType targetType ) {
         // just do nothing harmful
     }
 

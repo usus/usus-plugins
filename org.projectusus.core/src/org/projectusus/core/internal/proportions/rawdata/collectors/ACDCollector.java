@@ -5,15 +5,15 @@ import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.internal.UsusCorePlugin;
 
 public class ACDCollector extends Collector {
 
-    private ITypeBinding currentType;
+    private BoundType currentType;
 
     public ACDCollector( IFile file ) {
         super( file );
@@ -57,22 +57,17 @@ public class ACDCollector extends Collector {
             return true;
         }
 
-        ITypeBinding targetType = node.resolveBinding();
+        BoundType targetType = BoundType.of( node );
         if( targetType != null ) {
-            targetType = targetType.getErasure();
-            if( isTypeInSourceFile( targetType ) && hasNothingToDoWithTypeVariables( targetType ) ) {
+            if( isTypeInSourceFile( targetType ) ) {
                 UsusCorePlugin.getUsusModelMetricsWriter().addClassReference( currentType, targetType );
             }
         }
         return true;
     }
 
-    private boolean isTypeInSourceFile( ITypeBinding targetType ) {
+    private boolean isTypeInSourceFile( BoundType targetType ) {
         return targetType != null && targetType.isFromSource();
-    }
-
-    private boolean hasNothingToDoWithTypeVariables( ITypeBinding targetType ) {
-        return !targetType.isTypeVariable() && !targetType.isCapture() && !targetType.isWildcardType();
     }
 
     /**
@@ -90,7 +85,7 @@ public class ACDCollector extends Collector {
      */
 
     private void setCurrentType( AbstractTypeDeclaration node ) {
-        currentType = node.resolveBinding().getErasure();
+        currentType = BoundType.of( node );
     }
 
 }

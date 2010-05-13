@@ -14,12 +14,12 @@ import org.eclipse.jdt.core.IPackageDeclaration;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.IFileRawData;
 import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.internal.proportions.model.Hotspot;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
@@ -72,7 +72,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
         if( node == null ) {
             return null;
         }
-        return getRawData( node.resolveBinding().getErasure(), node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
+        return getRawData( BoundType.of( node ), node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
     }
 
     public int getNumberOfClasses() {
@@ -102,7 +102,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
         return localHotspots;
     }
 
-    private ClassRawData getRawData( ITypeBinding typeBinding, int start, int lineNumber, String name ) {
+    private ClassRawData getRawData( BoundType typeBinding, int start, int lineNumber, String name ) {
         Integer startObject = new Integer( start );
         ClassRawData rawData = super.getRawData( startObject );
         if( rawData == null ) {
