@@ -1,6 +1,10 @@
 package org.projectusus.core.filerelations.internal.metrics;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static org.projectusus.core.filerelations.model.TestServiceManager.asArrays;
 import static org.projectusus.core.filerelations.model.TestServiceManager.createDescriptor;
 
@@ -10,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.projectusus.core.filerelations.internal.model.FileRelations;
 import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.FileRelation;
@@ -43,8 +48,6 @@ public class PackageCycleCalculatorTest {
     private static FileRelation III_AtoIV_A = new FileRelation( III_A, IV_A );
     private static FileRelation IV_AtoIII_A = new FileRelation( IV_A, III_A );
 
-    private PackageRelations relations = mock( PackageRelations.class );
-    private PackageCycleCalculator calculator = new PackageCycleCalculator( relations );
     private final Scenario scenario;
 
     @Parameters
@@ -59,10 +62,12 @@ public class PackageCycleCalculatorTest {
 
     @Test
     public void countPackagesInCycles() {
-        // when( relations.getAllDirectRelations() ).thenReturn( scenario.getInput() );
-        // assertEquals( scenario.getExpectedResult(), calculator.countPackagesInCycles() );
-        // verify( relations ).getAllDirectRelations();
-        // verifyNoMoreInteractions( relations );
+        FileRelations fileRelations = mock( FileRelations.class );
+        when( fileRelations.getAllDirectRelations() ).thenReturn( scenario.getInput() );
+        PackageCycleCalculator calculator = new PackageCycleCalculator( new PackageRelations( fileRelations ) );
+        assertEquals( scenario.getExpectedResult(), calculator.countPackagesInCycles() );
+        verify( fileRelations ).getAllDirectRelations();
+        verifyNoMoreInteractions( fileRelations );
     }
 
 }
