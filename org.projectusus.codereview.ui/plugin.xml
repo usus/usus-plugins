@@ -2,26 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <!-- add interesting 3rd-party UI into the Usus perspective for review purposes -->
-   <extension point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="org.projectusus.ui.internal.perspective.USUSPerspective">
-         <viewShortcut id="net.sf.eclipsecs.ui.duplicates.DuplicatedCodeView" />
-         <view id="net.sf.eclipsecs.ui.duplicates.DuplicatedCodeView"
-               minimized="false"
-               relationship="stack"
-               relative="org.eclipse.ui.views.ProblemView" />
-         <viewShortcut id="net.sf.eclipsecs.ui.stats.views.MarkerStatsView" />
-         <view id="net.sf.eclipsecs.ui.stats.views.MarkerStatsView"
-               minimized="false"
-               relationship="stack"
-               relative="org.eclipse.ui.views.ProblemView" />
-         <viewShortcut id="net.sf.eclipsecs.ui.stats.views.GraphStatsView" />
-         <view id="net.sf.eclipsecs.ui.stats.views.GraphStatsView"
-               minimized="false"
-               relationship="stack"
-               relative="org.eclipse.ui.views.ProblemView" />
-      </perspectiveExtension>
-   </extension>
    
    <!-- code reviews -->
    <extension point="org.eclipse.ui.cheatsheets.cheatSheetContent">

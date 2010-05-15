@@ -57,13 +57,6 @@ can be found at http://www.eclipse.org/legal/epl-v10.html.
          unpack="false"/>
 
    <plugin
-         id="org.projectusus.codereview.ui"
-         download-size="0"
-         install-size="0"
-         version="0.4.1"
-         unpack="false"/>
-
-   <plugin
          id="org.projectusus.projectsettings.ui"
          download-size="0"
          install-size="0"
