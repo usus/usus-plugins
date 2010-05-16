@@ -66,12 +66,12 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
     }
 
     // TODO CodeStatistic cachen?
-    private CodeStatistic getCodeStatistic( CodeProportionUnit unit ) {
+    CodeStatistic getCodeStatistic( CodeProportionUnit unit ) {
         int basis = getNumberOf( unit );
         return new CodeStatistic( unit, basis );
     }
 
-    private List<IHotspot> computeHotspots( CodeProportionKind metric ) {
+    List<IHotspot> computeHotspots( CodeProportionKind metric ) {
         List<IHotspot> hotspots = new ArrayList<IHotspot>();
         addToHotspots( metric, hotspots );
         return hotspots;

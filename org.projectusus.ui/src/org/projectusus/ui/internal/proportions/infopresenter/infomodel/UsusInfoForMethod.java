@@ -20,9 +20,8 @@ public class UsusInfoForMethod extends UsusInfoForClass {
     @Override
     protected void addFormattedProportion( List<String> result ) throws JavaModelException {
         super.addFormattedProportion( result );
-        UsusModelElementFormatter formatter = new UsusModelElementFormatter();
-        result.add( formatter.format( CC, UsusCorePlugin.getUsusModel().getCCValue( method ) ) );
-        result.add( formatter.format( ML, UsusCorePlugin.getUsusModel().getMLValue( method ) ) );
+        result.add( UsusModelElementFormatter.format( CC, UsusCorePlugin.getMetricsAccessor().getCCValue( method ) ) );
+        result.add( UsusModelElementFormatter.format( ML, UsusCorePlugin.getMetricsAccessor().getMLValue( method ) ) );
     }
 
     @Override

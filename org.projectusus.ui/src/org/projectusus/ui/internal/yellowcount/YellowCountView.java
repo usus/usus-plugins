@@ -41,13 +41,13 @@ public class YellowCountView extends ViewPart {
 
         listener = new IUsusModelListener() {
 
-            public void ususModelChanged( ) {
-                display( UsusCorePlugin.getUsusModel().getWarnings() );
+            public void ususModelChanged() {
+                display( UsusCorePlugin.getMetricsAccessor().getWarnings() );
             }
         };
         UsusCorePlugin.getUsusModel().addUsusModelListener( listener );
 
-        display( UsusCorePlugin.getUsusModel().getWarnings() );
+        display( UsusCorePlugin.getMetricsAccessor().getWarnings() );
     }
 
     @Override
@@ -81,7 +81,7 @@ public class YellowCountView extends ViewPart {
     }
 
     private Color getBackgroundColor() {
-        int fade = UsusCorePlugin.getUsusModel().getWarnings().getYellowCount();
+        int fade = UsusCorePlugin.getMetricsAccessor().getWarnings().getYellowCount();
         RGB rgb = new RGB( 255, 255, Math.max( 255 - fade, 0 ) );
         if( !colorRegistry.hasValueFor( rgb.toString() ) ) {
             colorRegistry.put( rgb.toString(), rgb );

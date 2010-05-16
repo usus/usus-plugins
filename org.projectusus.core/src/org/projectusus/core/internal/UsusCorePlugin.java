@@ -20,6 +20,7 @@ import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.internal.coverage.LaunchObserver;
 import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
+import org.projectusus.core.internal.proportions.rawdata.IMetricsAccessor;
 import org.projectusus.core.internal.proportions.rawdata.IUsusModel;
 import org.projectusus.core.internal.proportions.rawdata.NullUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.rawdata.NullUsusModelWriteAccess;
@@ -37,6 +38,10 @@ public class UsusCorePlugin extends Plugin {
 
     public static UsusCorePlugin getDefault() {
         return plugin;
+    }
+
+    public static IMetricsAccessor getMetricsAccessor() {
+        return getUsusModel().getMetricsAccessor();
     }
 
     public static synchronized IUsusModel getUsusModel() {
@@ -124,7 +129,7 @@ public class UsusCorePlugin extends Plugin {
      * @deprecated will soon be deleted; access to FileRelations via Descriptors then
      */
     public static FileRelationMetrics getFileRelationMetrics() {
-        return getDefault().ususModel.getFileRelationMetrics();
+        return UsusCorePlugin.getMetricsAccessor().getFileRelationMetrics();
     }
 
 }

@@ -32,7 +32,7 @@ public enum CodeProportionKind {
     ACD( isisMetrics_acd, CodeProportionUnit.CLASS ) {
         @Override
         public boolean isViolatedBy( IClassRawData rawData ) {
-            int classCount = UsusCorePlugin.getUsusModel().getNumberOf( CodeProportionUnit.CLASS );
+            int classCount = UsusCorePlugin.getMetricsAccessor().getNumberOf( CodeProportionUnit.CLASS );
             double limit = calculateCcdLimit( classCount );
             return rawData.getCCDResult() > limit;
         }

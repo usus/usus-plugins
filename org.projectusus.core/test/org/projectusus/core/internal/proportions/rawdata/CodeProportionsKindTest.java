@@ -16,13 +16,9 @@ import static org.projectusus.core.basis.CodeProportionKind.TA;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.basis.CodeProportionUnit;
-import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
-import org.projectusus.core.internal.proportions.rawdata.MethodRawData;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class CodeProportionsKindTest {
 
-    private UsusModel ususModel;
     private MethodRawData methodRawDataOK;
     private MethodRawData methodRawDataFailing;
     private ClassRawData classRawDataOK;
@@ -37,8 +33,8 @@ public class CodeProportionsKindTest {
         methodRawDataOK.setMLValue( 1 );
         methodRawDataOK.setCCValue( 2 );
 
-        ususModel = mock( UsusModel.class );
-        when( new Integer( ususModel.getNumberOf( CodeProportionUnit.CLASS ) ) ).thenReturn( new Integer( 100 ) );
+        MetricsAccessor metrics = mock( MetricsAccessor.class );
+        when( new Integer( metrics.getNumberOf( CodeProportionUnit.CLASS ) ) ).thenReturn( new Integer( 100 ) );
 
         classRawDataOK = mock( ClassRawData.class );
         when( new Integer( classRawDataOK.getNumberOfMethods() ) ).thenReturn( new Integer( 1 ) );

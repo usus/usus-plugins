@@ -16,7 +16,7 @@ public class ClassGraphModel extends DependencyGraphModel {
 
     @Override
     protected Set<? extends GraphNode> getRefreshedNodes() {
-        return UsusCorePlugin.getUsusModel().getAllClassRepresenters();
+        return UsusCorePlugin.getMetricsAccessor().getAllClassRepresenters();
     }
 
     @Override

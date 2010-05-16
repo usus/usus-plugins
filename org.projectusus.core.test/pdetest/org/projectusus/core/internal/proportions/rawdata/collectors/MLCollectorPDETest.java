@@ -15,116 +15,116 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
     public void emptyMethod() throws Exception {
         createFileAndBuild( "_empty" );
         assertEquals( 1, getClassesCount() );
-        assertEquals( 1, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 0, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 0, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     @Test
     public void oneAssignment() throws Exception {
         createFileAndBuild( "_assign" );
         assertEquals( 1, getClassesCount() );
-        assertEquals( 1, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 1, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 1, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     @Test
     public void oneIfThenElse() throws Exception {
         createFileAndBuild( "_ite" );
         assertEquals( 1, getClassesCount() );
-        assertEquals( 1, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 1, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 1, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     @Test
     public void oneIfThenElseWithAssignments() throws Exception {
         createFileAndBuild( "_iteassign" );
         assertEquals( 1, getClassesCount() );
-        assertEquals( 1, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 3, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 3, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     @Test
     public void oneInitializer() throws Exception {
         createFileAndBuild( "_init" );
         assertEquals( 1, getClassesCount() );
-        assertEquals( 1, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 1, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 1, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     @Test
     public void oneStaticInitializer() throws Exception {
         createFileAndBuild( "_staticinit" );
         assertEquals( 1, getClassesCount() );
-        assertEquals( 1, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 1, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 1, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     @Test
     public void oneAnonymous() throws Exception {
         createFileAndBuild( "_anon" );
         assertEquals( 1, getClassesCount() );
-        assertEquals( 1, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 1, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 1, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     @Test
     public void oneAnonymous3after() throws Exception {
         createFileAndBuild( "_anon3after" );
         assertEquals( 1, getClassesCount() );
-        assertEquals( 1, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 4, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 4, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     @Test
     public void oneAnonymous3before() throws Exception {
         createFileAndBuild( "_anon3before" );
         assertEquals( 1, getClassesCount() );
-        assertEquals( 1, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 4, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 4, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     @Test
     public void oneAnonymousWithMethod() throws Exception {
         createFileAndBuild( "_anonWmeth" );
         assertEquals( 1, getClassesCount() );
-        assertEquals( 2, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 1, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 2, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 1, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     @Test
     public void oneAnonymousWithMethod3after() throws Exception {
         createFileAndBuild( "_anonWmeth3after" );
         assertEquals( 1, getClassesCount() );
-        assertEquals( 2, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 4, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 2, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 4, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     @Test
     public void oneAnonymousWithMethod3before() throws Exception {
         createFileAndBuild( "_anonWmeth3before" );
         assertEquals( 1, getClassesCount() );
-        assertEquals( 2, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 4, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 2, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 4, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     @Test
     public void oneAnonymousWith4Methods() throws Exception {
         createFileAndBuild( "_anonW4meth" );
         assertEquals( 1, getClassesCount() );
-        assertEquals( 5, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 7, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 5, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 7, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     @Test
     public void twoClassesWithOneAssignment() throws Exception {
         createFileAndBuild( "_2assign" );
         assertEquals( 2, getClassesCount() );
-        assertEquals( 2, getModel().getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 2, getModel().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 2, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 2, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
     }
 
     private int getClassesCount() {
-        return getModel().getNumberOf( CodeProportionUnit.CLASS );
+        return getMetricsAccessor().getNumberOf( CodeProportionUnit.CLASS );
     }
 
     protected IFile createFileAndBuild( String filenumber ) throws CoreException, Exception {

@@ -24,8 +24,8 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
     public void simpleCaseTestDemo() throws Exception {
         IFile file = createWSFile( "A.java", loadContent( "A.test" ) );
         buildFullyAndWait();
-        assertEquals( 1, getModel().getViolationCount( file.getProject(), CodeProportionKind.ML ) );
-        assertEquals( 2, getModel().getNumberOf( file.getProject(), CodeProportionUnit.METHOD ) );
+        assertEquals( 1, getMetricsAccessor().getViolationCount( file.getProject(), CodeProportionKind.ML ) );
+        assertEquals( 2, getMetricsAccessor().getNumberOf( file.getProject(), CodeProportionUnit.METHOD ) );
     }
 
     protected String loadContent( String fileName ) throws Exception {
@@ -57,6 +57,10 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
 
     protected IFile createFile( String name ) throws Exception {
         return createWSFile( name + ".java", loadContent( name + ".test" ) );
+    }
+
+    public IMetricsAccessor getMetricsAccessor() {
+        return UsusCorePlugin.getMetricsAccessor();
     }
 
     public IUsusModel getModel() {

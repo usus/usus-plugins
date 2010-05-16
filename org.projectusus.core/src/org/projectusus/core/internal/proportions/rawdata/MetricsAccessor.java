@@ -38,7 +38,7 @@ import org.projectusus.core.internal.util.CoreTexts;
 
 import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
-public class MetricsAccessor {
+public class MetricsAccessor implements IMetricsAccessor {
     private final WorkspaceRawData workspaceRawData;
     private final FileRelationMetrics fileRelationMetrics;
 
@@ -135,6 +135,15 @@ public class MetricsAccessor {
             // TODO add hotspots
             return new CodeProportion( metric, violations, basis, hotspots );
         }
+
+        if( metric == ACD ) {
+            CodeStatistic basis = workspaceRawData.getCodeStatistic( metric.getUnit() );
+            List<IHotspot> hotspots = workspaceRawData.computeHotspots( metric );
+            int violations = workspaceRawData.getViolationCount( metric );
+            double levelValue = 100.0 - 100.0 * getRelativeACD();
+            return new CodeProportion( metric, violations, basis, levelValue, hotspots );
+        }
+
         return workspaceRawData.getCodeProportion( metric );
     }
 

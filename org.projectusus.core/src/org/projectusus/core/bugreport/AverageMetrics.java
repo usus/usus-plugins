@@ -10,7 +10,7 @@ import org.eclipse.core.resources.IProject;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.rawdata.IUsusModel;
+import org.projectusus.core.internal.proportions.rawdata.IMetricsAccessor;
 
 public class AverageMetrics implements IAverageMetrics {
 
@@ -40,12 +40,12 @@ public class AverageMetrics implements IAverageMetrics {
 
     // TODO nr: direkt die Summen aus dem WorkspaceRD geben lassen?
     public void addProjectResults( IProject project ) {
-        IUsusModel model = UsusCorePlugin.getUsusModel();
-        numberOfMethods += model.getNumberOf( project, CodeProportionUnit.METHOD );
-        numberOfClasses += model.getNumberOf( project, CodeProportionUnit.CLASS );
+        IMetricsAccessor metricsAccessor = UsusCorePlugin.getMetricsAccessor();
+        numberOfMethods += metricsAccessor.getNumberOf( project, CodeProportionUnit.METHOD );
+        numberOfClasses += metricsAccessor.getNumberOf( project, CodeProportionUnit.CLASS );
 
-        totalCC += model.getOverallMetric( project, CodeProportionKind.CC );
-        totalML += model.getOverallMetric( project, CodeProportionKind.ML );
+        totalCC += metricsAccessor.getOverallMetric( project, CodeProportionKind.CC );
+        totalML += metricsAccessor.getOverallMetric( project, CodeProportionKind.ML );
     }
 
     public String getName() {

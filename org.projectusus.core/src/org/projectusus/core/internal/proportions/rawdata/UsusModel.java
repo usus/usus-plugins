@@ -11,9 +11,6 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jdt.core.IMethod;
-import org.eclipse.jdt.core.IType;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -21,8 +18,6 @@ import org.projectusus.core.IUsusElement;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
-import org.projectusus.core.basis.CodeProportionUnit;
-import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
@@ -131,62 +126,6 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         return cache.getCodeProportion( metric );
     }
 
-    public int getNumberOf( CodeProportionUnit unit ) {
-        return metrics.getNumberOf( unit );
-    }
-
-    public int getNumberOf( IProject project, CodeProportionUnit unit ) {
-        return metrics.getNumberOf( project, unit );
-    }
-
-    public int getNumberOfMethods( IType type ) {
-        return metrics.getNumberOfMethods( type );
-    }
-
-    public int getCCD( IType type ) {
-        return metrics.getCCD( type );
-    }
-
-    public int getOverallMetric( CodeProportionKind metric ) {
-        return metrics.getOverallMetric( metric );
-    }
-
-    public int getOverallMetric( IProject project, CodeProportionKind metric ) {
-        return metrics.getOverallMetric( project, metric );
-    }
-
-    public int getViolationCount( IProject project, CodeProportionKind metric ) {
-        return metrics.getViolationCount( project, metric );
-    }
-
-    public Set<ClassRepresenter> getAllClassRepresenters() {
-        return metrics.getAllClassRepresenters();
-    }
-
-    public Set<PackageRepresenter> getAllPackages() {
-        return metrics.getAllPackages();
-    }
-
-    public int getCCValue( IMethod method ) throws JavaModelException {
-        return metrics.getCCValue( method );
-    }
-
-    public int getMLValue( IMethod method ) throws JavaModelException {
-        return metrics.getMLValue( method );
-    }
-
-    public double getRelativeACD() {
-        return metrics.getRelativeACD();
-    }
-
-    public int getNumberOfWarnings( IFile file ) throws JavaModelException {
-        return metrics.getNumberOfWarnings( file );
-    }
-
-    public YellowCountResult getWarnings() {
-        return metrics.getWarnings();
-    }
-
     // //////////////////////////////////
 
     public void addUsusModelListener( IUsusModelListener listener ) {
@@ -206,18 +145,11 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         }
     }
 
-    public int getNumberOfProjectsViolatingCW() {
-        return metrics.getNumberOfProjectsViolatingCW();
-    }
-
     public boolean needsFullRecompute() {
         return needsFullRecompute;
     }
 
-    /**
-     * @deprecated will soon be deleted; access to FileRelations via Descriptors then
-     */
-    public FileRelationMetrics getFileRelationMetrics() {
-        return metrics.getFileRelationMetrics();
+    public IMetricsAccessor getMetricsAccessor() {
+        return metrics;
     }
 }

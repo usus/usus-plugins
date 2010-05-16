@@ -11,7 +11,6 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -28,12 +27,14 @@ import org.projectusus.core.bugreport.Bug;
 import org.projectusus.core.bugreport.IBuggyProject;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.project.IUSUSProject;
+import org.projectusus.core.internal.proportions.rawdata.IMetricsAccessor;
 import org.projectusus.ui.internal.UsusUIPlugin;
 import org.projectusus.ui.internal.selection.EditorInputAnalysis;
 import org.projectusus.ui.internal.selection.JDTWorkspaceEditorInputAnalysis;
 
 public class ReportBugAction extends Action implements IEditorActionDelegate {
 
+    private static final IMetricsAccessor metrics = UsusCorePlugin.getMetricsAccessor();
     private ICompilationUnit selectedJavaClass;
     private IJavaElement selectedElement;
 
@@ -75,29 +76,24 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
 
     private Bug initBugData() {
         Bug bug = new Bug();
-        try {
-            initBugClassData( bug );
-        } catch( JavaModelException e ) {
-            UsusUIPlugin.getDefault().log( e );
-        }
-
+        initBugClassData( bug );
         return bug;
     }
 
-    private void initBugClassData( Bug bug ) throws JavaModelException {
+    private void initBugClassData( Bug bug ) {
         fillClassMetrics( bug );
         fillMethodMetrics( bug, getSelectedMethod() );
         bug.setLocation( getMethodLocation( getSelectedMethod() ) );
     }
 
     private void fillClassMetrics( Bug bug ) {
-        int numberOfMethods = UsusCorePlugin.getUsusModel().getNumberOf( CodeProportionUnit.METHOD );
+        int numberOfMethods = metrics.getNumberOf( CodeProportionUnit.METHOD );
         bug.getBugMetrics().setNumberOfMethods( numberOfMethods );
     }
 
-    private void fillMethodMetrics( Bug bug, IMethod method ) throws JavaModelException {
-        bug.getBugMetrics().setCyclomaticComplexity( UsusCorePlugin.getUsusModel().getCCValue( method ) );
-        bug.getBugMetrics().setMethodLength( UsusCorePlugin.getUsusModel().getMLValue( method ) );
+    private void fillMethodMetrics( Bug bug, IMethod method ) {
+        bug.getBugMetrics().setCyclomaticComplexity( metrics.getCCValue( method ) );
+        bug.getBugMetrics().setMethodLength( metrics.getMLValue( method ) );
     }
 
     private IMethod getSelectedMethod() {

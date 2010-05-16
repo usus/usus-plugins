@@ -4,12 +4,13 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.basis;
 
+import static org.projectusus.core.basis.CodeProportionsRatio.computeInverse;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.PlatformObject;
-import org.projectusus.core.internal.UsusCorePlugin;
 
 public class CodeProportion extends PlatformObject {
 
@@ -24,7 +25,7 @@ public class CodeProportion extends PlatformObject {
     }
 
     public CodeProportion( CodeProportionKind metric, int violations, CodeStatistic basis, List<IHotspot> hotspots ) {
-        this( metric, violations, basis, computeLevel( metric, violations, basis ), hotspots );
+        this( metric, violations, basis, computeInverse( violations, basis ), hotspots );
     }
 
     public CodeProportion( CodeProportionKind metric, int violations, CodeStatistic basis, double levelValue, List<IHotspot> hotspots ) {
@@ -33,13 +34,6 @@ public class CodeProportion extends PlatformObject {
         this.basis = basis;
         this.hotspots = sort( hotspots );
         this.level = levelValue;
-    }
-
-    private static double computeLevel( CodeProportionKind metric, int violations, CodeStatistic basis ) {
-        if( metric == CodeProportionKind.ACD ) {
-            return 100.0 - 100.0 * UsusCorePlugin.getUsusModel().getRelativeACD();
-        }
-        return CodeProportionsRatio.computeInverse( violations, basis );
     }
 
     public Double getLevel() {

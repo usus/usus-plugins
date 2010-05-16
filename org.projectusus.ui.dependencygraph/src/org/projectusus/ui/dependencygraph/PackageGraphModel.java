@@ -10,7 +10,7 @@ public class PackageGraphModel extends DependencyGraphModel {
 
     @Override
     protected Set<? extends GraphNode> getRefreshedNodes() {
-        return UsusCorePlugin.getUsusModel().getAllPackages();
+        return UsusCorePlugin.getMetricsAccessor().getAllPackages();
     }
 
     @Override
