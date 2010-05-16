@@ -8,13 +8,17 @@ import org.projectusus.core.basis.CodeProportionKind;
 
 class UsusModelElementFormatter {
 
-    String format( CodeProportionKind metric, int value ) {
+    static String format( CodeProportionKind metric, int value ) {
+        return format( metric.getLabel(), value );
+    }
+
+    static String format( String label, int value ) {
         StringBuilder sb = new StringBuilder();
-        formatKeyValue( metric.getLabel(), String.valueOf( value ), sb );
+        formatKeyValue( label, String.valueOf( value ), sb );
         return sb.toString();
     }
 
-    private void formatKeyValue( String key, String value, StringBuilder sb ) {
+    private static void formatKeyValue( String key, String value, StringBuilder sb ) {
         sb.append( key );
         sb.append( ": " );
         sb.append( value );

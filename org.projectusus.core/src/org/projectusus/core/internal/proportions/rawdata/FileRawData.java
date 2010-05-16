@@ -121,22 +121,13 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
     }
 
     public ClassRawData getOrCreateRawData( IJavaElement element ) {
-        if( element == null ) {
-            return null;
-        }
-        ICompilationUnit compilationUnit = JDTSupport.getCompilationUnit( element );
-        if( compilationUnit == null ) {
-            return null;
-        }
-
         try {
-            ClassRawData rawData = null;
-            for( Integer startPosition : getAllKeys() ) {
-                IJavaElement foundElement = compilationUnit.getElementAt( startPosition.intValue() );
-                if( element.equals( foundElement ) ) {
-                    rawData = super.getRawData( startPosition );
-                }
+            ICompilationUnit compilationUnit = getCompilationUnit( element );
+            if( compilationUnit == null ) {
+                return null;
             }
+
+            ClassRawData rawData = getClassRawData( element, compilationUnit );
             if( rawData == null ) {
                 rawData = createClassRawDataFor( element, compilationUnit.getPackageDeclarations() );
             }
@@ -144,7 +135,37 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
         } catch( JavaModelException e ) {
             return null;
         }
+    }
 
+    public ClassRawData getRawData( IJavaElement element ) {
+        // TODO nr Duplicate code from getOrCreateRawData
+        ICompilationUnit compilationUnit = getCompilationUnit( element );
+        if( compilationUnit == null ) {
+            return null;
+        }
+
+        try {
+            return getClassRawData( element, compilationUnit );
+        } catch( JavaModelException e ) {
+            return null;
+        }
+    }
+
+    private ICompilationUnit getCompilationUnit( IJavaElement element ) {
+        if( element == null ) {
+            return null;
+        }
+        return JDTSupport.getCompilationUnit( element );
+    }
+
+    private ClassRawData getClassRawData( IJavaElement element, ICompilationUnit compilationUnit ) throws JavaModelException {
+        for( Integer startPosition : getAllKeys() ) {
+            IJavaElement foundElement = compilationUnit.getElementAt( startPosition.intValue() );
+            if( element.equals( foundElement ) ) {
+                return super.getRawData( startPosition );
+            }
+        }
+        return null;
     }
 
     private ClassRawData createClassRawDataFor( IJavaElement element, IPackageDeclaration[] packageDeclarations ) {

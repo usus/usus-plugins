@@ -23,12 +23,21 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
     private WarningsCount projectMarkers = new WarningsCount();
     private RawDataMapWrapper<IFile, MiscFileRawData> miscRawData = new RawDataMapWrapper<IFile, MiscFileRawData>();
 
-    public FileRawData getFileRawData( IFile file ) {
-        FileRawData rawData = super.getRawData( file );
+    public FileRawData getOrCreateFileRawData( IFile file ) {
+        FileRawData rawData = getFileRawData( file );
         if( rawData == null ) {
-            rawData = new FileRawData( file );
-            super.addRawData( file, rawData );
+            rawData = createFileRawData( file );
         }
+        return rawData;
+    }
+
+    public FileRawData getFileRawData( IFile file ) {
+        return super.getRawData( file );
+    }
+
+    private FileRawData createFileRawData( IFile file ) {
+        FileRawData rawData = new FileRawData( file );
+        super.addRawData( file, rawData );
         return rawData;
     }
 
@@ -50,7 +59,7 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
 
     public void setWarningsCount( IFile file, int markerCount ) {
         if( FileSupport.isJavaFile( file ) ) {
-            getFileRawData( file ).setYellowCount( markerCount );
+            getOrCreateFileRawData( file ).setYellowCount( markerCount );
         } else {
             getMiscFileRawData( file ).setYellowCount( markerCount );
         }

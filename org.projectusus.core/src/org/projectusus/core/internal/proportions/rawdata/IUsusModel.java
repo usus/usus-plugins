@@ -59,4 +59,6 @@ public interface IUsusModel {
     double getRelativeACD();
 
     YellowCountResult getWarnings();
+
+    int getCCD( IType clazz );
 }

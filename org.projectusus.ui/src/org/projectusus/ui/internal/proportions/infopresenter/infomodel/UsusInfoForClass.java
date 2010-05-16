@@ -20,8 +20,8 @@ public class UsusInfoForClass extends UsusInfoForFile {
     @Override
     protected void addFormattedProportion( List<String> result ) throws JavaModelException {
         super.addFormattedProportion( result );
-        UsusModelElementFormatter formatter = new UsusModelElementFormatter();
-        result.add( formatter.format( KG, UsusCorePlugin.getUsusModel().getNumberOfMethods( clazz ) ) );
+        result.add( UsusModelElementFormatter.format( KG, UsusCorePlugin.getUsusModel().getNumberOfMethods( clazz ) ) );
+        result.add( UsusModelElementFormatter.format( "Cumulative Component Dependency (of class)", UsusCorePlugin.getUsusModel().getCCD( clazz ) ) );
     }
 
     @Override

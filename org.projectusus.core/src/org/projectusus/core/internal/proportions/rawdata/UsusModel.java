@@ -125,24 +125,24 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     }
 
     public void setCCValue( IFile file, MethodDeclaration methodDecl, int value ) {
-        getFileRawData( file ).setCCValue( methodDecl, value );
+        getOrCreateFileRawData( file ).setCCValue( methodDecl, value );
     }
 
     public void setCCValue( IFile file, Initializer initializer, int value ) {
-        getFileRawData( file ).setCCValue( initializer, value );
+        getOrCreateFileRawData( file ).setCCValue( initializer, value );
     }
 
     public void addClass( IFile file, AbstractTypeDeclaration node ) {
-        getFileRawData( file ).addClass( node );
+        getOrCreateFileRawData( file ).addClass( node );
         // TODO Aufruf dieser Methode ersetzen durch FileRawData.getOrCreateRawData
     }
 
     public void setMLValue( IFile file, MethodDeclaration methodDecl, int value ) {
-        getFileRawData( file ).setMLValue( methodDecl, value );
+        getOrCreateFileRawData( file ).setMLValue( methodDecl, value );
     }
 
     public void setMLValue( IFile file, Initializer initializer, int value ) {
-        getFileRawData( file ).setMLValue( initializer, value );
+        getOrCreateFileRawData( file ).setMLValue( initializer, value );
     }
 
     public void collectCoverageInfo( IJavaModelCoverage javaModelCoverage ) {
@@ -212,12 +212,20 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         return projectRD.getNumberOf( unit );
     }
 
-    public int getNumberOfMethods( IType type ) throws JavaModelException {
+    public int getNumberOfMethods( IType type ) {
         ClassRawData classRawData = getClassRawData( type );
         if( classRawData == null ) {
             return 0;
         }
         return classRawData.getNumberOfMethods();
+    }
+
+    public int getCCD( IType type ) {
+        ClassRawData classRawData = getClassRawData( type );
+        if( classRawData == null ) {
+            return 0;
+        }
+        return classRawData.getCCDResult();
     }
 
     public int getOverallMetric( CodeProportionKind metric ) {
@@ -246,21 +254,23 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     }
 
     public int getCCValue( IMethod method ) throws JavaModelException {
-        ClassRawData classRawData = getClassRawData( method.getDeclaringType() );
-        MethodRawData methodRawData = classRawData.getMethodRawData( method );
-        if( methodRawData != null ) {
-            return methodRawData.getCCValue();
-        }
-        throw new IllegalStateException();
+        return getMethodRawData( method ).getCCValue();
     }
 
     public int getMLValue( IMethod method ) throws JavaModelException {
+        return getMethodRawData( method ).getMLValue();
+    }
+
+    private MethodRawData getMethodRawData( IMethod method ) {
         ClassRawData classRawData = getClassRawData( method.getDeclaringType() );
-        MethodRawData methodRawData = classRawData.getMethodRawData( method );
-        if( methodRawData != null ) {
-            return methodRawData.getMLValue();
+        if( classRawData == null ) {
+            throw new IllegalStateException();
         }
-        throw new IllegalStateException();
+        MethodRawData methodRawData = classRawData.getMethodRawData( method );
+        if( methodRawData == null ) {
+            throw new IllegalStateException();
+        }
+        return methodRawData;
     }
 
     public double getRelativeACD() {
@@ -276,6 +286,10 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
                 .getOverallMetric( CodeProportionKind.CW ), this.getNumberOfProjectsViolatingCW() );
     }
 
+    FileRawData getOrCreateFileRawData( IFile file ) {
+        return workspaceRawData.getProjectRawData( file.getProject() ).getOrCreateFileRawData( file );
+    }
+
     FileRawData getFileRawData( IFile file ) {
         return workspaceRawData.getProjectRawData( file.getProject() ).getFileRawData( file );
     }
@@ -284,11 +298,17 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         return workspaceRawData.getProjectRawData( project );
     }
 
-    ClassRawData getClassRawData( IType clazz ) throws JavaModelException {
-        IFile file = (IFile)clazz.getUnderlyingResource();
-        ProjectRawData projectRD = workspaceRawData.getRawData( file.getProject() );
-        FileRawData fileResults = projectRD.getFileRawData( file );
-        return fileResults.getOrCreateRawData( clazz );
+    ClassRawData getClassRawData( IType clazz ) {
+        try {
+            IFile file = (IFile)clazz.getUnderlyingResource();
+            FileRawData fileResults = getFileRawData( file );
+            if( fileResults != null ) {
+                return fileResults.getRawData( clazz );
+            }
+        } catch( JavaModelException jme ) {
+            // nothing
+        }
+        return null;
     }
 
     // //////////////////////////////////
