@@ -8,12 +8,11 @@ import org.eclipse.jdt.core.dom.EnhancedForStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.WhileStatement;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.projectusus.core.internal.UsusCorePlugin;
 
 @SuppressWarnings( "unused" )
 public class CCCollector extends Collector {
@@ -94,11 +93,11 @@ public class CCCollector extends Collector {
     }
 
     private void submit( MethodDeclaration node ) {
-        UsusCorePlugin.getUsusModelMetricsWriter().setCCValue( file, node, ccCount );
+        getMetricsWriter().setCCValue( file, node, ccCount );
     }
 
     private void submit( Initializer node ) {
-        UsusCorePlugin.getUsusModelMetricsWriter().setCCValue( file, node, ccCount );
+        getMetricsWriter().setCCValue( file, node, ccCount );
     }
 
     private boolean increase() {

@@ -18,12 +18,12 @@ import org.osgi.framework.BundleListener;
 import org.osgi.service.prefs.BackingStoreException;
 import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.internal.coverage.LaunchObserver;
-import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
-import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
+import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
+import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.proportions.rawdata.IMetricsAccessor;
 import org.projectusus.core.internal.proportions.rawdata.IUsusModel;
-import org.projectusus.core.internal.proportions.rawdata.NullUsusModelMetricsWriter;
-import org.projectusus.core.internal.proportions.rawdata.NullUsusModelWriteAccess;
+import org.projectusus.core.internal.proportions.rawdata.NullMetricsWriter;
+import org.projectusus.core.internal.proportions.rawdata.NullUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class UsusCorePlugin extends Plugin {
@@ -48,24 +48,24 @@ public class UsusCorePlugin extends Plugin {
         return getDefault().ususModel;
     }
 
-    public static synchronized IUsusModelWriteAccess getUsusModelWriteAccess() {
+    public static synchronized IUsusModelForAdapter getUsusModelForAdapter() {
         UsusCorePlugin ususCorePlugin = UsusCorePlugin.getDefault();
         // inside a background job, the plugin might have been
         // shut down meanwhile
         if( ususCorePlugin != null ) {
             return ususCorePlugin.ususModel;
         }
-        return new NullUsusModelWriteAccess();
+        return new NullUsusModelForAdapter();
     }
 
-    public static synchronized IUsusModelMetricsWriter getUsusModelMetricsWriter() {
+    public static synchronized IMetricsWriter getMetricsWriter() {
         UsusCorePlugin ususCorePlugin = UsusCorePlugin.getDefault();
         // inside a background job, the plugin might have been
         // shut down meanwhile
         if( ususCorePlugin != null ) {
-            return ususCorePlugin.ususModel;
+            return ususCorePlugin.ususModel.getMetricsWriter();
         }
-        return new NullUsusModelMetricsWriter();
+        return new NullMetricsWriter();
     }
 
     public static void log( Exception ex ) {

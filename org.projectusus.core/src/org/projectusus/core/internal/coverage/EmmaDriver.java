@@ -28,7 +28,7 @@ public class EmmaDriver {
     }
 
     private void collectCoverageInfo( IJavaModelCoverage javaModelCoverage ) {
-        UsusCorePlugin.getUsusModelMetricsWriter().collectCoverageInfo( javaModelCoverage );
+        UsusCorePlugin.getUsusModel().collectCoverageInfo( javaModelCoverage );
     }
 
     protected IJavaCoverageListener createEmmaListener() {

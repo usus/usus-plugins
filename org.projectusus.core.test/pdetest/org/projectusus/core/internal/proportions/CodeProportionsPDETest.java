@@ -24,7 +24,7 @@ public class CodeProportionsPDETest {
 
     @Test
     public void listenerHandling() throws InterruptedException {
-        IUsusModelWriteAccess ususModelWriteAccess = UsusCorePlugin.getUsusModelWriteAccess();
+        IUsusModelForAdapter ususModelWriteAccess = UsusCorePlugin.getUsusModelForAdapter();
         DummyCodeProportionsListener listener = new DummyCodeProportionsListener();
         getUsusModel().addUsusModelListener( listener );
 

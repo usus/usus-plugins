@@ -5,7 +5,6 @@ import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.projectusus.core.internal.UsusCorePlugin;
 
 public class ClassCollector extends Collector {
 
@@ -32,7 +31,7 @@ public class ClassCollector extends Collector {
     }
 
     private boolean addAbstractTypeDeclaration( AbstractTypeDeclaration node ) {
-        UsusCorePlugin.getUsusModelMetricsWriter().addClass( file, node );
+        getMetricsWriter().addClass( file, node );
         return true;
     }
 }

@@ -14,7 +14,7 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
     public void dropProjectWithFile1() throws Exception {
         computeFile1AndCheckPreconditions();
 
-        UsusCorePlugin.getUsusModelWriteAccess().dropRawData( project );
+        UsusCorePlugin.getUsusModelForAdapter().dropRawData( project );
 
         checkProjectRawDataIsEmpty1File( project );
     }
@@ -23,7 +23,7 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
     public void dropProjectWithFiles2() throws Exception {
         computeFiles2AndCheckPreconditions();
 
-        UsusCorePlugin.getUsusModelWriteAccess().dropRawData( project );
+        UsusCorePlugin.getUsusModelForAdapter().dropRawData( project );
 
         checkProjectRawDataIsEmpty2Files( project );
     }

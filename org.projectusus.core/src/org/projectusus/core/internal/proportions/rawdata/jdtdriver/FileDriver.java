@@ -2,6 +2,7 @@ package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
 
 import static org.eclipse.core.resources.IMarker.PROBLEM;
 import static org.eclipse.core.resources.IResource.DEPTH_INFINITE;
+import static org.projectusus.core.internal.UsusCorePlugin.getMetricsWriter;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -27,6 +28,6 @@ public class FileDriver extends Driver {
     private void countYellowMarkers() throws CoreException {
         IMarker[] markers = file.findMarkers( PROBLEM, true, DEPTH_INFINITE );
         int markerCount = getNumberOfWarnings( markers );
-        UsusCorePlugin.getUsusModelMetricsWriter().setWarningsCount( file, markerCount );
+        getMetricsWriter().setWarningsCount( file, markerCount );
     }
 }

@@ -10,10 +10,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * provides update facilities to the Usus model.
- * 
- * @author leif
  */
-public interface IUsusModelWriteAccess {
+public interface IUsusModelForAdapter {
 
     void dropRawData( IFile file );
 

@@ -11,22 +11,18 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
-import org.eclipse.jdt.core.dom.Initializer;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IUsusElement;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
-import org.projectusus.core.filerelations.model.BoundType;
-import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
-import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
+import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
+import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
 import org.projectusus.core.internal.proportions.modelupdate.checkpoints.CheckpointHistory;
 
 import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
-public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelMetricsWriter {
+public class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
     private final Set<IUsusModelListener> listeners;
     private final CheckpointHistory history;
@@ -62,32 +58,8 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         metrics.dropRawData( file );
     }
 
-    // interface of IUsusModelMetricsWriter
-    // /////////////////////////////////////
-
-    public void addClassReference( BoundType sourceType, BoundType targetType ) {
-        metrics.addClassReference( sourceType, targetType );
-    }
-
-    public void setCCValue( IFile file, MethodDeclaration methodDecl, int value ) {
-        metrics.setCCValue( file, methodDecl, value );
-    }
-
-    public void setCCValue( IFile file, Initializer initializer, int value ) {
-        metrics.setCCValue( file, initializer, value );
-    }
-
-    public void addClass( IFile file, AbstractTypeDeclaration node ) {
-        metrics.addClass( file, node );
-    }
-
-    public void setMLValue( IFile file, MethodDeclaration methodDecl, int value ) {
-        metrics.setMLValue( file, methodDecl, value );
-    }
-
-    public void setMLValue( IFile file, Initializer initializer, int value ) {
-        metrics.setMLValue( file, initializer, value );
-    }
+    // interface of IUsusModel
+    // ////////////////////////
 
     public void collectCoverageInfo( IJavaModelCoverage javaModelCoverage ) {
         if( javaModelCoverage.getInstrumentedProjects().length == 0 ) {
@@ -99,17 +71,6 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
         cache.refresh( codeProportion );
         notifyListeners();
     }
-
-    public void setWarningsCount( IFile file, int markerCount ) {
-        metrics.setWarningsCount( file, markerCount );
-    }
-
-    public void setWarningsCount( IProject project, int markerCount ) {
-        metrics.setWarningsCount( project, markerCount );
-    }
-
-    // interface of IUsusModel
-    // ////////////////////////
 
     public CheckpointHistory getHistory() {
         return history;
@@ -150,6 +111,10 @@ public class UsusModel implements IUsusModel, IUsusModelWriteAccess, IUsusModelM
     }
 
     public IMetricsAccessor getMetricsAccessor() {
+        return metrics;
+    }
+
+    public IMetricsWriter getMetricsWriter() {
         return metrics;
     }
 }

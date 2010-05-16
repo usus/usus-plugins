@@ -7,9 +7,7 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.filerelations.model.BoundType;
 
-import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
-
-public interface IUsusModelMetricsWriter {
+public interface IMetricsWriter {
 
     void addClassReference( BoundType sourceType, BoundType targetType );
 
@@ -27,5 +25,4 @@ public interface IUsusModelMetricsWriter {
 
     void setWarningsCount( IProject project, int markerCount );
 
-    void collectCoverageInfo( IJavaModelCoverage javaModelCoverage );
 }

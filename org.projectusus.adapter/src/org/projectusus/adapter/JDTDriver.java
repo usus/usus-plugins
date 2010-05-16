@@ -14,7 +14,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.FileSupport;
-import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
+import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.JavaFileDriver;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ProjectDriver;
@@ -22,11 +22,11 @@ import org.projectusus.core.internal.proportions.rawdata.jdtdriver.StatusCollect
 
 public class JDTDriver {
 
-    private final IUsusModelWriteAccess model;
+    private final IUsusModelForAdapter model;
     private final ICodeProportionComputationTarget target;
 
     public JDTDriver( ICodeProportionComputationTarget target ) {
-        model = UsusCorePlugin.getUsusModelWriteAccess();
+        model = UsusCorePlugin.getUsusModelForAdapter();
         this.target = target;
     }
 

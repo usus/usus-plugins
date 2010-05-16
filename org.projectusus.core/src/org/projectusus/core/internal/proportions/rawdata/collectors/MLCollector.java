@@ -4,7 +4,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.projectusus.core.internal.UsusCorePlugin;
 
 public class MLCollector extends Collector {
 
@@ -29,13 +28,13 @@ public class MLCollector extends Collector {
     @Override
     public void endVisit( MethodDeclaration node ) {
         int count = statementCount.getAndClearCount();
-        UsusCorePlugin.getUsusModelMetricsWriter().setMLValue( file, node, count );
+        getMetricsWriter().setMLValue( file, node, count );
     }
 
     @Override
     public void endVisit( Initializer node ) {
         int count = statementCount.getAndClearCount();
-        UsusCorePlugin.getUsusModelMetricsWriter().setMLValue( file, node, count );
+        getMetricsWriter().setMLValue( file, node, count );
     }
 
     @Override

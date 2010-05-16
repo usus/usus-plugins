@@ -7,12 +7,10 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.filerelations.model.BoundType;
-import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
-
-import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
+import org.projectusus.core.internal.proportions.IMetricsWriter;
 
 @SuppressWarnings( "unused" )
-public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
+public class NullMetricsWriter implements IMetricsWriter {
 
     public void addClass( IFile file, AbstractTypeDeclaration node ) {
         // just do nothing harmful
@@ -40,12 +38,10 @@ public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
 
     public void resetInstructionCoverage() {
         // TODO Auto-generated method stub
-
     }
 
     public void setWarningsCount( IFile file, int markerCount ) {
         // TODO Auto-generated method stub
-
     }
 
     public FileRelationMetrics getFileRelationMetrics() {
@@ -55,11 +51,6 @@ public class NullUsusModelMetricsWriter implements IUsusModelMetricsWriter {
 
     public void setWarningsCount( IProject project, int markerCount ) {
         // TODO Auto-generated method stub
-
     }
 
-    public void collectCoverageInfo( IJavaModelCoverage javaModelCoverage ) {
-        // TODO Auto-generated method stub
-
-    }
 }

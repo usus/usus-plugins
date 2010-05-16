@@ -34,11 +34,12 @@ import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.util.CoreTexts;
 
 import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
-public class MetricsAccessor implements IMetricsAccessor {
+public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     private final WorkspaceRawData workspaceRawData;
     private final FileRelationMetrics fileRelationMetrics;
 

@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.projectusus.core.filerelations.model.BoundType;
-import org.projectusus.core.internal.UsusCorePlugin;
 
 public class ACDCollector extends Collector {
 
@@ -60,7 +59,7 @@ public class ACDCollector extends Collector {
         BoundType targetType = BoundType.of( node );
         if( targetType != null ) {
             if( isTypeInSourceFile( targetType ) ) {
-                UsusCorePlugin.getUsusModelMetricsWriter().addClassReference( currentType, targetType );
+                getMetricsWriter().addClassReference( currentType, targetType );
             }
         }
         return true;
