@@ -24,13 +24,14 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.JavaCore;
 import org.junit.After;
 import org.junit.Before;
+import org.projectusus.adapter.UsusAdapterPlugin;
 import org.projectusus.core.internal.project.IUSUSProject;
 
 public class PDETestUsingWSProject {
 
     protected static final String PROJECT_NAME = "p";
     protected IProject project;
-    
+
     @Before
     public void setUp() throws CoreException {
         project = getWorkspace().getRoot().getProject( PROJECT_NAME );
@@ -39,10 +40,11 @@ public class PDETestUsingWSProject {
         makeUsusProject( true );
         addJavaNature();
         UsusCorePlugin.getUsusModelWriteAccess().dropRawData( project );
+        UsusAdapterPlugin.getDefault(); // to load bundle with ResourceChangeListener
     }
 
     @After
-    public void tearDown() throws CoreException { 
+    public void tearDown() throws CoreException {
         project.delete( true, new NullProgressMonitor() );
     }
 
@@ -78,21 +80,21 @@ public class PDETestUsingWSProject {
         result.create( createInputStream( content ), true, new NullProgressMonitor() );
         return result;
     }
-    
-    protected void deleteWSFile( IFile file) throws CoreException{
+
+    protected void deleteWSFile( IFile file ) throws CoreException {
         file.delete( true, new NullProgressMonitor() );
     }
 
     protected void updateFileContent( IFile file, String newContent ) throws CoreException {
         file.setContents( createInputStream( newContent ), true, false, new NullProgressMonitor() );
     }
-    
+
     protected IFolder createWSFolder( String name ) throws CoreException {
         IFolder result = project.getFolder( name );
         result.create( true, true, new NullProgressMonitor() );
         return result;
     }
-    
+
     protected void makeUsusProject( boolean makeUsusProject ) throws CoreException {
         getUsusProjectAdapter().setUsusProject( makeUsusProject );
     }
@@ -100,13 +102,13 @@ public class PDETestUsingWSProject {
     private IUSUSProject getUsusProjectAdapter() {
         return (IUSUSProject)project.getAdapter( IUSUSProject.class );
     }
-    
+
     private void addJavaNature() throws CoreException {
         IProjectDescription description = project.getDescription();
         description.setNatureIds( new String[] { JavaCore.NATURE_ID } );
         project.setDescription( description, new NullProgressMonitor() );
     }
-    
+
     private InputStream createInputStream( String content ) {
         return new ByteArrayInputStream( content.getBytes() );
     }
