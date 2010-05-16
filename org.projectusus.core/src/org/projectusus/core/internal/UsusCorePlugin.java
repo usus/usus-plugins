@@ -16,6 +16,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 import org.osgi.service.prefs.BackingStoreException;
+import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.internal.coverage.LaunchObserver;
 import org.projectusus.core.internal.proportions.IUsusModelMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelWriteAccess;
@@ -117,6 +118,13 @@ public class UsusCorePlugin extends Plugin {
         } catch( BackingStoreException bastox ) {
             UsusCorePlugin.log( bastox );
         }
+    }
+
+    /**
+     * @deprecated will soon be deleted; access to FileRelations via Descriptors then
+     */
+    public static FileRelationMetrics getFileRelationMetrics() {
+        return getDefault().ususModel.getFileRelationMetrics();
     }
 
 }

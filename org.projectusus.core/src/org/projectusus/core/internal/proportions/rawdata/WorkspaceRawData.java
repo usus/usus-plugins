@@ -38,7 +38,7 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
     public void dropRawData( IProject project ) {
         for( IFile file : getProjectRawData( project ).getAllKeys() ) {
-            UsusCorePlugin.getUsusModelMetricsWriter().getFileRelationMetrics().handleFileRemoval( file );
+            UsusCorePlugin.getFileRelationMetrics().handleFileRemoval( file );
         }
         remove( project );
     }

@@ -12,7 +12,6 @@ import java.util.List;
 import org.projectusus.core.ITestCoverage;
 import org.projectusus.core.basis.CodeProportion;
 
-
 class TestCoverage implements ITestCoverage {
 
     private CodeProportion entry = new CodeProportion( TA );
@@ -23,5 +22,9 @@ class TestCoverage implements ITestCoverage {
 
     void refresh( CodeProportion entry ) {
         this.entry = entry;
+    }
+
+    public CodeProportion getProportion() {
+        return entry;
     }
 }

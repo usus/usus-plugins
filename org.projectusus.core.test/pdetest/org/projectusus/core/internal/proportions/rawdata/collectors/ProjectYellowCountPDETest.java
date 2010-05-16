@@ -30,7 +30,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
     public void findMarkerOnProject() throws CoreException {
         project.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
-        int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
+        int yellowCount = getModel().getOverallMetric( project, CodeProportionKind.CW );
         assertEquals( 1, yellowCount );
     }
 
@@ -39,7 +39,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
         IFile file = createWSFile( "a.java", "no content" );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
-        int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
+        int yellowCount = getModel().getOverallMetric( project, CodeProportionKind.CW );
 
         assertEquals( 1, yellowCount );
     }
@@ -49,7 +49,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
         IFile file = createWSFile( "a", "no content" );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
-        int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
+        int yellowCount = getModel().getOverallMetric( project, CodeProportionKind.CW );
 
         assertEquals( 1, yellowCount );
     }
@@ -64,8 +64,8 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
         marker2.setAttribute( LINE_NUMBER, 2 );
         marker2.setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
-        int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
-        int violations = model.getViolationCount( project, CodeProportionKind.CW );
+        int yellowCount = getModel().getOverallMetric( project, CodeProportionKind.CW );
+        int violations = getModel().getViolationCount( project, CodeProportionKind.CW );
 
         assertEquals( 2, yellowCount );
         assertEquals( 1, violations );
@@ -78,7 +78,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
         IFile file2 = createWSFile( "b.java", "no content" );
         file2.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
-        int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
+        int yellowCount = getModel().getOverallMetric( project, CodeProportionKind.CW );
 
         assertEquals( 2, yellowCount );
     }
@@ -91,7 +91,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
-        CodeProportion yellowCount = model.getCodeProportion( CodeProportionKind.CW );
+        CodeProportion yellowCount = getModel().getCodeProportion( CodeProportionKind.CW );
 
         List<IHotspot> hotspots = yellowCount.getHotspots();
         assertEquals( 2, hotspots.size() );
@@ -109,7 +109,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
-        CodeProportion yellowCount = model.getCodeProportion( CodeProportionKind.CW );
+        CodeProportion yellowCount = getModel().getCodeProportion( CodeProportionKind.CW );
 
         List<IHotspot> hotspots = yellowCount.getHotspots();
         assertEquals( 2, hotspots.size() );
@@ -129,7 +129,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
         // this is the guy
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
-        int yellowCount = model.getOverallMetric( project, CodeProportionKind.CW );
+        int yellowCount = getModel().getOverallMetric( project, CodeProportionKind.CW );
 
         assertEquals( 1, yellowCount );
     }

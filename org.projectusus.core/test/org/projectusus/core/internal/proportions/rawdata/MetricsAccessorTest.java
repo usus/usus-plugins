@@ -14,7 +14,7 @@ import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.testutil.ReflectionUtil;
 
-public class UsusModelTest {
+public class MetricsAccessorTest {
 
     @Test
     public void addFileRelation() throws Exception {
@@ -28,9 +28,9 @@ public class UsusModelTest {
         IFile file = mock( IFile.class );
         when( sourceBinding.getUnderlyingResource() ).thenReturn( file );
         when( targetBinding.getUnderlyingResource() ).thenReturn( file );
-        UsusModel model = new UsusModel();
+        MetricsAccessor model = new MetricsAccessor();
         FileRelationMetrics relations = mock( FileRelationMetrics.class );
-        ReflectionUtil.setValue( model, relations, "fileRelations" ); //$NON-NLS-1$
+        ReflectionUtil.setValue( model, relations, "fileRelationMetrics" ); //$NON-NLS-1$
 
         model.addClassReference( sourceBinding, targetBinding );
 

@@ -39,4 +39,14 @@ public class UsusModelCache {
             refresh( metric );
         }
     }
+
+    public CodeProportion getCodeProportion( CodeProportionKind kind ) {
+        if( kind == TA ) {
+            return testCoverageCache.getProportion();
+        }
+        if( kind == CW ) {
+            return warningsCache.getProportion();
+        }
+        return codeProportionsCache.forKind( kind );
+    }
 }

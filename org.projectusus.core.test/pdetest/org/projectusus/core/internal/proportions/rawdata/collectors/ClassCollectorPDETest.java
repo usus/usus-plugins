@@ -12,31 +12,31 @@ public class ClassCollectorPDETest extends PDETestForMetricsComputation {
     @Test
     public void oneClass() throws Exception {
         createFileAndBuild( "_one" );
-        assertEquals( 1, model.getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 1, getModel().getNumberOf( CodeProportionUnit.CLASS ) );
     }
 
     @Test
     public void twoClasses() throws Exception {
         createFileAndBuild( "_two" );
-        assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 2, getModel().getNumberOf( CodeProportionUnit.CLASS ) );
     }
 
     @Test
     public void oneWithInnerClass() throws Exception {
         createFileAndBuild( "_inner" );
-        assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 2, getModel().getNumberOf( CodeProportionUnit.CLASS ) );
     }
 
     @Test
     public void oneWithStaticInnerClass() throws Exception {
         createFileAndBuild( "_static" );
-        assertEquals( 2, model.getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 2, getModel().getNumberOf( CodeProportionUnit.CLASS ) );
     }
 
     @Test
     public void oneWithAnonymousClass() throws Exception {
         createFileAndBuild( "_anon" );
-        assertEquals( 1, model.getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 1, getModel().getNumberOf( CodeProportionUnit.CLASS ) );
     }
 
     protected IFile createFileAndBuild( String filenumber ) throws Exception {

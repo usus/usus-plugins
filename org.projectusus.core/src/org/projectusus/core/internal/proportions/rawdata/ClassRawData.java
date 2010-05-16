@@ -148,7 +148,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     public int getCCDResult() {
-        return UsusCorePlugin.getUsusModelMetricsWriter().getFileRelationMetrics().getCCD( descriptor );
+        return UsusCorePlugin.getFileRelationMetrics().getCCD( descriptor );
     }
 
     public String getClassName() {

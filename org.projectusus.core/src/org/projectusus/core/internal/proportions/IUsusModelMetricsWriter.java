@@ -5,7 +5,6 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.filerelations.model.BoundType;
 
 import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
@@ -23,8 +22,6 @@ public interface IUsusModelMetricsWriter {
     void setMLValue( IFile file, MethodDeclaration methodDecl, int value );
 
     void setMLValue( IFile file, Initializer initializer, int value );
-
-    FileRelationMetrics getFileRelationMetrics();
 
     void setWarningsCount( IFile file, int markerCount );
 

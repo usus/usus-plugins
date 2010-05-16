@@ -12,7 +12,6 @@ import java.util.List;
 import org.projectusus.core.IWarnings;
 import org.projectusus.core.basis.CodeProportion;
 
-
 class Warnings implements IWarnings {
 
     private CodeProportion entry = new CodeProportion( CW );
@@ -23,5 +22,9 @@ class Warnings implements IWarnings {
 
     public List<CodeProportion> getEntries() {
         return asList( entry );
+    }
+
+    public CodeProportion getProportion() {
+        return entry;
     }
 }

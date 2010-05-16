@@ -34,4 +34,8 @@ class CodeProportions implements ICodeProportions {
         sort( result, new ByIsisMetricsComparator() );
         return unmodifiableList( result );
     }
+
+    public CodeProportion forKind( CodeProportionKind kind ) {
+        return isisMetricsValues.get( kind );
+    }
 }
