@@ -8,7 +8,6 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.FileRelation;
 
 public class FileRelations extends Relations<IFile, FileRelation> {
@@ -19,9 +18,9 @@ public class FileRelations extends Relations<IFile, FileRelation> {
         add( relation, relation.getSourceFile(), relation.getTargetFile() );
     }
 
-    public Set<FileRelation> getTransitiveRelationsFrom( IFile file, Classname classname ) {
+    public Set<FileRelation> getTransitiveRelationsFrom( ClassDescriptor descriptor ) {
         Set<FileRelation> transitives = new HashSet<FileRelation>();
-        getTransitiveRelationsFrom( file, classname, transitives );
+        getTransitiveRelationsFrom( descriptor, transitives );
         return transitives;
     }
 
@@ -35,24 +34,24 @@ public class FileRelations extends Relations<IFile, FileRelation> {
         return descriptors;
     }
 
-    private void getTransitiveRelationsFrom( IFile file, Classname clazz, Set<FileRelation> transitives ) {
-        for( FileRelation relation : getOutgoingRelationsFrom( file ) ) {
-            if( relation.hasSourceClass( clazz ) && transitives.add( relation ) ) {
-                getTransitiveRelationsFrom( relation.getTargetFile(), relation.getTargetClassname(), transitives );
+    private void getTransitiveRelationsFrom( ClassDescriptor descriptor, Set<FileRelation> transitives ) {
+        for( FileRelation relation : getOutgoingRelationsFrom( descriptor.getFile() ) ) {
+            if( relation.hasSourceClass( descriptor.getClassname() ) && transitives.add( relation ) ) {
+                getTransitiveRelationsFrom( relation.getTarget(), transitives );
             }
         }
     }
 
-    public Set<FileRelation> getTransitiveRelationsTo( IFile file, Classname classname ) {
+    public Set<FileRelation> getTransitiveRelationsTo( ClassDescriptor descriptor ) {
         Set<FileRelation> transitives = new HashSet<FileRelation>();
-        getTransitiveRelationsTo( file, classname, transitives );
+        getTransitiveRelationsTo( descriptor, transitives );
         return transitives;
     }
 
-    private void getTransitiveRelationsTo( IFile file, Classname classname, Set<FileRelation> transitives ) {
-        for( FileRelation relation : getIncomingRelationsTo( file ) ) {
-            if( relation.hasTargetClass( classname ) && transitives.add( relation ) ) {
-                getTransitiveRelationsTo( relation.getSourceFile(), relation.getSourceClassname(), transitives );
+    private void getTransitiveRelationsTo( ClassDescriptor descriptor, Set<FileRelation> transitives ) {
+        for( FileRelation relation : getIncomingRelationsTo( descriptor.getFile() ) ) {
+            if( relation.hasTargetClass( descriptor.getClassname() ) && transitives.add( relation ) ) {
+                getTransitiveRelationsTo( relation.getSource(), transitives );
             }
         }
     }

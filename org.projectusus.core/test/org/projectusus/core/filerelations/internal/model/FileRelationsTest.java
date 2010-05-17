@@ -6,7 +6,7 @@ import static org.projectusus.core.filerelations.model.SimpleTestScenario.anothe
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetToSource;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetToTarget;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.source;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceClass;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceDescriptor;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceToAnotherTarget;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceToTarget;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.target;
@@ -65,14 +65,14 @@ public class FileRelationsTest {
     @Test
     public void transitiveRelationsFromSingleRelation() {
         fileRelations.add( sourceToTarget );
-        assertThat( fileRelations.getTransitiveRelationsFrom( source, sourceClass ), isSetOf( sourceToTarget ) );
+        assertThat( fileRelations.getTransitiveRelationsFrom( sourceDescriptor ), isSetOf( sourceToTarget ) );
     }
 
     @Test
     public void transitiveRelationsFromTwoRelations() {
         fileRelations.add( sourceToTarget );
         fileRelations.add( targetToAnotherTarget );
-        assertThat( fileRelations.getTransitiveRelationsFrom( source, sourceClass ), isSetOf( sourceToTarget, targetToAnotherTarget ) );
+        assertThat( fileRelations.getTransitiveRelationsFrom( sourceDescriptor ), isSetOf( sourceToTarget, targetToAnotherTarget ) );
     }
 
     @Test
@@ -80,7 +80,7 @@ public class FileRelationsTest {
         fileRelations.add( sourceToTarget );
         fileRelations.add( targetToAnotherTarget );
         fileRelations.add( anotherTargetToTarget );
-        assertThat( fileRelations.getTransitiveRelationsFrom( source, sourceClass ), isSetOf( sourceToTarget, targetToAnotherTarget, anotherTargetToTarget ) );
+        assertThat( fileRelations.getTransitiveRelationsFrom( sourceDescriptor ), isSetOf( sourceToTarget, targetToAnotherTarget, anotherTargetToTarget ) );
     }
 
     @Test
@@ -89,7 +89,7 @@ public class FileRelationsTest {
         fileRelations.add( targetToAnotherTarget );
         fileRelations.add( anotherTargetToTarget );
         fileRelations.add( anotherTargetToSource );
-        assertThat( fileRelations.getTransitiveRelationsFrom( source, sourceClass ), isSetOf( sourceToTarget, targetToAnotherTarget, anotherTargetToTarget, anotherTargetToSource ) );
+        assertThat( fileRelations.getTransitiveRelationsFrom( sourceDescriptor ), isSetOf( sourceToTarget, targetToAnotherTarget, anotherTargetToTarget, anotherTargetToSource ) );
     }
 
     @Test

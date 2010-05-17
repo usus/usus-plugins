@@ -12,9 +12,7 @@ public class BottleneckCalculator {
     }
 
     public int getBottleneckCount( ClassDescriptor descriptor ) {
-        return relations.getTransitiveRelationsFrom( descriptor.getFile(), descriptor.getClassname() ).size()
-                * relations.getTransitiveRelationsTo( descriptor.getFile(), descriptor.getClassname() ).size();
-        // TODO oder Multiplikation??
+        return relations.getTransitiveRelationsFrom( descriptor ).size() * relations.getTransitiveRelationsTo( descriptor ).size();
     }
 
 }

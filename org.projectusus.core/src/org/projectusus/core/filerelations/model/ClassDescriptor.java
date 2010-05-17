@@ -36,6 +36,15 @@ public class ClassDescriptor {
         return newClassDescriptor;
     }
 
+    public static ClassDescriptor findFor( IFile file, Classname classname ) {
+        for( ClassDescriptorKey key : classes.keySet() ) {
+            if( key.file.equals( file ) && key.classname.equals( classname ) ) {
+                return classes.get( key );
+            }
+        }
+        return null;
+    }
+
     public static void removeAllClassesIn( IFile file ) {
         Set<ClassDescriptorKey> keys = new HashSet<ClassDescriptorKey>( classes.keySet() );
         for( ClassDescriptorKey key : keys ) {

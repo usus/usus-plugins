@@ -7,8 +7,6 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetToSource;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetToTarget;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.source;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceClass;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceDescriptor;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceToAnotherTarget;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceToTarget;
@@ -42,10 +40,10 @@ public class ACDCalculatorTest {
     @Test
     public void calculate() {
         FileRelations relations = mock( FileRelations.class );
-        when( relations.getTransitiveRelationsFrom( source, sourceClass ) ).thenReturn( scenario.getInput() );
+        when( relations.getTransitiveRelationsFrom( sourceDescriptor ) ).thenReturn( scenario.getInput() );
         int actualCcd = new ACDCalculator( relations ).getCCD( sourceDescriptor );
         assertEquals( scenario.getExpectedResult(), actualCcd );
-        verify( relations ).getTransitiveRelationsFrom( source, sourceClass );
+        verify( relations ).getTransitiveRelationsFrom( sourceDescriptor );
         verifyNoMoreInteractions( relations );
     }
 

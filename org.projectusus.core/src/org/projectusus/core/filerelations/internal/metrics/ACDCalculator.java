@@ -18,7 +18,7 @@ public class ACDCalculator {
     public int getCCD( ClassDescriptor descriptor ) {
         Set<ClassDescriptor> descriptors = new HashSet<ClassDescriptor>();
         descriptors.add( descriptor );
-        Set<FileRelation> classRelations = relations.getTransitiveRelationsFrom( descriptor.getFile(), descriptor.getClassname() );
+        Set<FileRelation> classRelations = relations.getTransitiveRelationsFrom( descriptor );
         for( FileRelation relation : classRelations ) {
             descriptors.add( relation.getSourceDescriptor() );
             descriptors.add( relation.getTargetDescriptor() );
