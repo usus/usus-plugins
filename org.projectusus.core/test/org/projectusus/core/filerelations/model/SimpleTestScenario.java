@@ -19,10 +19,10 @@ public class SimpleTestScenario {
     public static final Classname anotherTargetClass = new Classname( "anotherTargetClass" ); //$NON-NLS-1$
     public static final ClassDescriptor anotherTargetDescriptor = createDescriptor( anotherTarget, anotherTargetClass );
 
-    public static final FileRelation sourceToTarget = new FileRelation( sourceDescriptor, targetDescriptor );
-    public static final FileRelation sourceToAnotherTarget = new FileRelation( sourceDescriptor, anotherTargetDescriptor );
-    public static final FileRelation targetToAnotherTarget = new FileRelation( targetDescriptor, anotherTargetDescriptor );
-    public static final FileRelation anotherTargetToTarget = new FileRelation( anotherTargetDescriptor, targetDescriptor );
-    public static final FileRelation anotherTargetToSource = new FileRelation( anotherTargetDescriptor, sourceDescriptor );
+    public static final FileRelation sourceToTarget = FileRelation.of( sourceDescriptor, targetDescriptor );
+    public static final FileRelation sourceToAnotherTarget = FileRelation.of( sourceDescriptor, anotherTargetDescriptor );
+    public static final FileRelation targetToAnotherTarget = FileRelation.of( targetDescriptor, anotherTargetDescriptor );
+    public static final FileRelation anotherTargetToTarget = FileRelation.of( anotherTargetDescriptor, targetDescriptor );
+    public static final FileRelation anotherTargetToSource = FileRelation.of( anotherTargetDescriptor, sourceDescriptor );
 
 }

@@ -78,6 +78,7 @@ public class ClassDescriptor {
 
     @Override
     public boolean equals( Object object ) {
+        // equality does not work! file can change...
         return object instanceof ClassDescriptor && equals( (ClassDescriptor)object );
     }
 

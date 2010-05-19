@@ -38,15 +38,15 @@ public class PackageCycleCalculatorTest {
     private static Packagename IV = Packagename.of( "IV" ); //$NON-NLS-1$
     private static ClassDescriptor IV_A = createDescriptor( IV );
 
-    private static FileRelation I_AtoI_B = new FileRelation( I_A, I_B );
-    private static FileRelation I_BtoI_A = new FileRelation( I_B, I_A );
-    private static FileRelation I_AtoII_A = new FileRelation( I_A, II_A );
-    private static FileRelation II_AtoI_A = new FileRelation( II_A, I_A );
-    private static FileRelation II_AtoIII_A = new FileRelation( II_A, III_A );
-    private static FileRelation II_BtoI_B = new FileRelation( II_B, I_B );
-    private static FileRelation III_AtoI_A = new FileRelation( III_A, I_A );
-    private static FileRelation III_AtoIV_A = new FileRelation( III_A, IV_A );
-    private static FileRelation IV_AtoIII_A = new FileRelation( IV_A, III_A );
+    private static FileRelation I_AtoI_B = FileRelation.of( I_A, I_B );
+    private static FileRelation I_BtoI_A = FileRelation.of( I_B, I_A );
+    private static FileRelation I_AtoII_A = FileRelation.of( I_A, II_A );
+    private static FileRelation II_AtoI_A = FileRelation.of( II_A, I_A );
+    private static FileRelation II_AtoIII_A = FileRelation.of( II_A, III_A );
+    private static FileRelation II_BtoI_B = FileRelation.of( II_B, I_B );
+    private static FileRelation III_AtoI_A = FileRelation.of( III_A, I_A );
+    private static FileRelation III_AtoIV_A = FileRelation.of( III_A, IV_A );
+    private static FileRelation IV_AtoIII_A = FileRelation.of( IV_A, III_A );
 
     private final Scenario scenario;
 

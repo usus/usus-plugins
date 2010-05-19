@@ -131,7 +131,7 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     private CodeProportion getCodeProportion( CodeProportionKind metric ) {
         if( metric == CodeProportionKind.PC ) {
             CodeStatistic basis = new CodeStatistic( metric.getUnit(), Packagename.getAll().size() );
-            int violations = fileRelationMetrics.getPackageCycles().numberOfPackagesInAnyCycles();
+            int violations = fileRelationMetrics.getPackageRelations().getPackageCycles().numberOfPackagesInAnyCycles();
             List<IHotspot> hotspots = new ArrayList<IHotspot>();
             // TODO add hotspots
             return new CodeProportion( metric, violations, basis, hotspots );
@@ -197,7 +197,7 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     }
 
     public Set<PackageRepresenter> getAllPackages() {
-        return PackageRepresenter.transformToRepresenterSet( fileRelationMetrics.getAllPackages(), fileRelationMetrics );
+        return PackageRepresenter.transformToRepresenterSet( fileRelationMetrics.getAllPackages(), fileRelationMetrics.getPackageRelations() );
     }
 
     public int getCCValue( IMethod method ) {
@@ -229,8 +229,8 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     }
 
     public YellowCountResult getWarnings() {
-        return new YellowCountResult( this.getNumberOf( CodeProportionUnit.PROJECT ), this.getNumberOf( CodeProportionKind.CW.getUnit() ),
-                this.getOverallMetric( CodeProportionKind.CW ), this.getNumberOfProjectsViolatingCW() );
+        return new YellowCountResult( this.getNumberOf( CodeProportionUnit.PROJECT ), this.getNumberOf( CodeProportionKind.CW.getUnit() ), this
+                .getOverallMetric( CodeProportionKind.CW ), this.getNumberOfProjectsViolatingCW() );
     }
 
     public ArrayList<CodeProportion> getCodeProportions() {

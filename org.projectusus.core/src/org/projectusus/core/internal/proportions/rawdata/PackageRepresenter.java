@@ -3,7 +3,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.projectusus.core.filerelations.FileRelationMetrics;
+import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 
 import com.google.common.base.Function;
@@ -12,9 +12,9 @@ import com.google.common.collect.Collections2;
 public class PackageRepresenter implements GraphNode {
 
     private final Packagename packagename;
-    private static FileRelationMetrics relations;
+    private static PackageRelations relations;
 
-    public static Set<PackageRepresenter> transformToRepresenterSet( Set<Packagename> classes, final FileRelationMetrics rel ) {
+    public static Set<PackageRepresenter> transformToRepresenterSet( Set<Packagename> classes, final PackageRelations rel ) {
         Function<Packagename, PackageRepresenter> function = new Function<Packagename, PackageRepresenter>() {
             public PackageRepresenter apply( Packagename descriptor ) {
                 return new PackageRepresenter( descriptor, rel );
@@ -23,19 +23,19 @@ public class PackageRepresenter implements GraphNode {
         return new HashSet<PackageRepresenter>( Collections2.transform( classes, function ) );
     }
 
-    public PackageRepresenter( Packagename pkg, FileRelationMetrics relations ) {
+    public PackageRepresenter( Packagename pkg, PackageRelations relations ) {
         this.packagename = pkg;
         initRelations( relations );
     }
 
-    private void initRelations( FileRelationMetrics relations ) {
+    private void initRelations( PackageRelations relations ) {
         if( PackageRepresenter.relations == null ) {
             PackageRepresenter.relations = relations;
         }
     }
 
     public Set<? extends GraphNode> getChildren() {
-        return transformToRepresenterSet( relations.getChildren( packagename ), relations );
+        return transformToRepresenterSet( relations.getDirectPackageRelationsFrom( packagename ), relations );
     }
 
     public String getEdgeEndLabel() {
