@@ -10,7 +10,7 @@ import static org.projectusus.core.internal.util.CoreTexts.wiseCrack_shame;
 import static org.projectusus.core.internal.util.CoreTexts.yellowCountResult_msg;
 
 public class YellowCountResult {
-    private static final int COUNT_POSITION = 17;
+    private static final int COUNT_POSITION = 16;
     private final int projectCount;
     private final int yellowCount;
     private final int yellowProjectCount;
@@ -40,7 +40,7 @@ public class YellowCountResult {
     }
 
     public int getFormattedCountLength() {
-        return String.valueOf( yellowCount ).length();
+        return format( "{0}", new Integer( yellowCount ) ).length(); //$NON-NLS-1$
     }
 
     public int getFormattedCountPosition() {
