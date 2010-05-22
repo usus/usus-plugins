@@ -12,9 +12,10 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.junit.Test;
-import org.projectusus.core.bugreport.Bug;
-import org.projectusus.core.bugreport.BugList;
-import org.projectusus.core.bugreport.IBuggyProject;
+import org.projectusus.bugreport.core.Bug;
+import org.projectusus.bugreport.core.BugList;
+import org.projectusus.bugreport.core.IBuggyProject;
+import org.projectusus.bugreport.core.internal.SaveBugsJob;
 import org.projectusus.core.internal.PDETestUsingWSProject;
 
 public class ReportBugPDETest extends PDETestUsingWSProject {
@@ -28,31 +29,31 @@ public class ReportBugPDETest extends PDETestUsingWSProject {
     @Test
     public void testgetBugsWithNoBugs() throws Exception {
         BugList bugs = getBuggyProjectAdapter().getBugs();
-        assertTrue(bugs.isEmpty());
+        assertTrue( bugs.isEmpty() );
     }
-    
+
     @Test
     public void testCreateBug() throws Exception {
         Bug bug = createBug();
         getBuggyProjectAdapter().saveBug( bug );
         getJobManager().join( SaveBugsJob.FAMILY, new NullProgressMonitor() );
         BugList bugs = getBuggyProjectAdapter().getBugs();
-        assertEquals(1, bugs.size());
-        testBugContent(bugs.getBugs()[0]);
+        assertEquals( 1, bugs.size() );
+        testBugContent( bugs.getBugs()[0] );
     }
 
     private void testBugContent( Bug bug ) {
-        assertEquals(TODAY, bug.getCreationTime());
-        assertEquals(TODAY, bug.getReportTime());
-        assertEquals("pde test title", bug.getTitle());
-        assertEquals(4, bug.getBugMetrics().getCyclomaticComplexity());
-        assertEquals(8, bug.getBugMetrics().getMethodLength());
-        assertEquals(7, bug.getBugMetrics().getNumberOfMethods());
-        
-        assertEquals(PROJECT_NAME, bug.getLocation().getProject());
-        assertEquals("pde.test.package", bug.getLocation().getPackageName());
-        assertEquals("TestClassName", bug.getLocation().getClassName());
-        assertEquals("testMethodName", bug.getLocation().getMethodName());
+        assertEquals( TODAY, bug.getCreationTime() );
+        assertEquals( TODAY, bug.getReportTime() );
+        assertEquals( "pde test title", bug.getTitle() );
+        assertEquals( 4, bug.getBugMetrics().getCyclomaticComplexity() );
+        assertEquals( 8, bug.getBugMetrics().getMethodLength() );
+        assertEquals( 7, bug.getBugMetrics().getNumberOfMethods() );
+
+        assertEquals( PROJECT_NAME, bug.getLocation().getProject() );
+        assertEquals( "pde.test.package", bug.getLocation().getPackageName() );
+        assertEquals( "TestClassName", bug.getLocation().getClassName() );
+        assertEquals( "testMethodName", bug.getLocation().getMethodName() );
     }
 
     private Bug createBug() {
@@ -63,10 +64,10 @@ public class ReportBugPDETest extends PDETestUsingWSProject {
         bug.getBugMetrics().setCyclomaticComplexity( 4 );
         bug.getBugMetrics().setMethodLength( 8 );
         bug.getBugMetrics().setNumberOfMethods( 7 );
-        
+
         bug.getLocation().setPackageName( "pde.test.package" );
         bug.getLocation().setClassName( "TestClassName" );
-        bug.getLocation().setMethodName(  "testMethodName" );
+        bug.getLocation().setMethodName( "testMethodName" );
         return bug;
     }
 

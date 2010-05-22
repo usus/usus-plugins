@@ -2,16 +2,16 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.bugreport;
+package org.projectusus.bugreport.core.internal;
 
-import static org.projectusus.core.bugreport.SourceCodeLocation.getMethodLocation;
+import static org.projectusus.bugreport.core.SourceCodeLocation.getMethodLocation;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IMethod;
-import org.projectusus.core.bugreport.Bug;
-import org.projectusus.core.bugreport.BugList;
-import org.projectusus.core.bugreport.IBuggyProject;
+import org.projectusus.bugreport.core.Bug;
+import org.projectusus.bugreport.core.BugList;
+import org.projectusus.bugreport.core.IBuggyProject;
 
 class BuggyProject implements IBuggyProject {
 

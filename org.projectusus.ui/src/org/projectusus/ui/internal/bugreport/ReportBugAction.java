@@ -4,8 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.bugreport;
 
-import static org.projectusus.core.bugreport.SourceCodeLocation.getMethod;
-import static org.projectusus.core.bugreport.SourceCodeLocation.getMethodLocation;
+import static org.projectusus.bugreport.core.SourceCodeLocation.getMethod;
+import static org.projectusus.bugreport.core.SourceCodeLocation.getMethodLocation;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
@@ -22,9 +22,9 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.projectusus.bugreport.core.Bug;
+import org.projectusus.bugreport.core.IBuggyProject;
 import org.projectusus.core.basis.CodeProportionUnit;
-import org.projectusus.core.bugreport.Bug;
-import org.projectusus.core.bugreport.IBuggyProject;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.proportions.rawdata.IMetricsAccessor;

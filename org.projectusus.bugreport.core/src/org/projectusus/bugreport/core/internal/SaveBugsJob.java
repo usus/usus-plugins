@@ -2,10 +2,9 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.bugreport;
+package org.projectusus.bugreport.core.internal;
 
 import static org.eclipse.core.runtime.Status.OK_STATUS;
-import static org.projectusus.core.internal.util.CoreTexts.SaveBugsJob_title;
 
 import java.io.ByteArrayInputStream;
 
@@ -14,7 +13,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.Job;
-import org.projectusus.core.bugreport.BugList;
+import org.projectusus.bugreport.core.BugList;
+import org.projectusus.bugreport.core.texts.BugReportTexts;
 import org.projectusus.core.internal.UsusCorePlugin;
 
 public class SaveBugsJob extends Job {
@@ -24,7 +24,7 @@ public class SaveBugsJob extends Job {
     private final IFile file;
 
     public SaveBugsJob( IFile file, BugList bugs ) {
-        super( SaveBugsJob_title );
+        super( BugReportTexts.SaveBugsJob_title );
         this.file = file;
         this.bugs = bugs;
     }

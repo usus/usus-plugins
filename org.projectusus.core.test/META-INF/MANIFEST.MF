@@ -12,4 +12,5 @@ Require-Bundle: org.projectusus.core,
  org.eclipse.jdt.core,
  org.eclipse.debug.core,
  org.projectusus.adapter,
- org.junit4;bundle-version="4.5.0";resolution:=optional
+ org.junit4;bundle-version="4.5.0";resolution:=optional,
+ org.projectusus.bugreport.core

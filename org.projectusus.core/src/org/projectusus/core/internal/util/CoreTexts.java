@@ -8,9 +8,6 @@ import org.eclipse.osgi.util.NLS;
 
 public final class CoreTexts extends NLS {
 
-    public static String AverageBugMetrics_allBugs;
-    public static String AverageMetrics_overall;
-
     public static String codeProportionsComputerJob_computing;
     public static String codeProportionsComputerJob_name;
 
@@ -32,8 +29,6 @@ public final class CoreTexts extends NLS {
     public static String jdtDriver_errors;
 
     public static String saveCheckpointsJob_name;
-
-    public static String SaveBugsJob_title;
 
     public static String testCoverage;
     public static String ususModel_UpdatingFileRelations;

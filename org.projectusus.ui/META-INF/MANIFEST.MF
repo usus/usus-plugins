@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.text,
  org.eclipse.debug.core,
  org.projectusus.adapter,
- org.projectusus.externals.test;resolution:=optional
+ org.projectusus.externals.test;resolution:=optional,
+ org.projectusus.bugreport.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.projectusus.ui.internal,

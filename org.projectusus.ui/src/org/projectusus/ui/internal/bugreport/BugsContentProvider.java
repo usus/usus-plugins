@@ -6,8 +6,8 @@ package org.projectusus.ui.internal.bugreport;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
-import org.projectusus.core.bugreport.BugList;
-import org.projectusus.core.bugreport.IBuggyProject;
+import org.projectusus.bugreport.core.BugList;
+import org.projectusus.bugreport.core.IBuggyProject;
 import org.projectusus.ui.internal.coveredprojects.CoveredProjectsCP;
 
 public class BugsContentProvider extends CoveredProjectsCP {

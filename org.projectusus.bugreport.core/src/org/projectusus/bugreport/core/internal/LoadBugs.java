@@ -2,11 +2,11 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.bugreport;
+package org.projectusus.bugreport.core.internal;
 
 import java.util.ArrayList;
 
-import org.projectusus.core.bugreport.Bug;
+import org.projectusus.bugreport.core.Bug;
 import org.projectusus.core.internal.XmlLoader;
 import org.w3c.dom.Element;
 

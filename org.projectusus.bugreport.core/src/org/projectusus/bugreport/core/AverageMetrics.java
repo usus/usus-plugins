@@ -2,9 +2,9 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.bugreport;
+package org.projectusus.bugreport.core;
 
-import static org.projectusus.core.internal.util.CoreTexts.AverageMetrics_overall;
+import static org.projectusus.bugreport.core.texts.BugReportTexts.AverageMetrics_overall;
 
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.basis.CodeProportionKind;

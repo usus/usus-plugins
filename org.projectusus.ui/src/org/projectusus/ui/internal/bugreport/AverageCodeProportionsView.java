@@ -11,7 +11,7 @@ import java.util.Arrays;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.swt.widgets.Composite;
-import org.projectusus.core.bugreport.IAverageMetrics;
+import org.projectusus.bugreport.core.IAverageMetrics;
 import org.projectusus.ui.internal.viewer.ColumnDescLabelProvider;
 import org.projectusus.ui.internal.viewer.IColumnDesc;
 import org.projectusus.ui.internal.viewer.TableViewPart;

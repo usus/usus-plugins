@@ -6,11 +6,11 @@ package org.projectusus.ui.internal.bugreport;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
-import org.projectusus.core.bugreport.AverageBugMetrics;
-import org.projectusus.core.bugreport.AverageMetrics;
-import org.projectusus.core.bugreport.BugList;
-import org.projectusus.core.bugreport.IAverageMetrics;
-import org.projectusus.core.bugreport.IBuggyProject;
+import org.projectusus.bugreport.core.AverageBugMetrics;
+import org.projectusus.bugreport.core.AverageMetrics;
+import org.projectusus.bugreport.core.BugList;
+import org.projectusus.bugreport.core.IAverageMetrics;
+import org.projectusus.bugreport.core.IBuggyProject;
 import org.projectusus.ui.internal.coveredprojects.CoveredProjectsCP;
 
 public class AverageMetricsCp extends CoveredProjectsCP {
