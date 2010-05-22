@@ -20,11 +20,11 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.debug.core,
  org.projectusus.adapter,
  org.projectusus.externals.test;resolution:=optional,
- org.projectusus.bugreport.core
+ org.projectusus.bugprison.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.projectusus.ui.internal,
- org.projectusus.ui.internal.bugreport,
+ org.projectusus.ui.internal.bugprison,
  org.projectusus.ui.internal.coveredprojects,
  org.projectusus.ui.internal.history,
  org.projectusus.ui.internal.hotspots;x-friends:="org.projectusus.ui.test",
