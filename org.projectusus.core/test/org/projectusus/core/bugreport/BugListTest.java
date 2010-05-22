@@ -4,14 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.bugreport;
 
-import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.bugreport.Bug;
-import org.projectusus.core.bugreport.BugList;
-import org.projectusus.core.bugreport.MethodLocation;
 
 public class BugListTest {
 

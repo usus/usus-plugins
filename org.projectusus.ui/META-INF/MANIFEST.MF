@@ -18,7 +18,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.workbench.texteditor,
  org.eclipse.jface.text,
  org.eclipse.debug.core,
- org.projectusus.adapter;bundle-version="0.0.1"
+ org.projectusus.adapter,
+ org.projectusus.externals.test;resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.projectusus.ui.internal,
@@ -38,6 +39,3 @@ Export-Package: org.projectusus.ui.internal,
  org.projectusus.ui.internal.util,
  org.projectusus.ui.internal.viewer;x-internal:=true,
  org.projectusus.ui.internal.yellowcount
-Bundle-ClassPath: lib/junit-4.8.1.jar,
- .,
- lib/mockito-all-1.8.0.jar

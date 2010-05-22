@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.junit.internal.matchers.TypeSafeMatcher;
+import org.hamcrest.TypeSafeMatcher;
 
 public class IsSetOfMatcher<T> extends TypeSafeMatcher<Set<? extends T>> {
 
