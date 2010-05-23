@@ -78,11 +78,11 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), "initializer" ); //$NON-NLS-1$
     }
 
-    private MethodRawData getRawData( int start, int lineNumber, String methodName ) {
+    private MethodRawData getRawData( int start, int lineNr, String methodName ) {
         Integer startObject = new Integer( start );
         MethodRawData rawData = super.getRawData( startObject );
         if( rawData == null ) {
-            rawData = new MethodRawData( start, lineNumber, className, methodName );
+            rawData = new MethodRawData( start, lineNr, className, methodName );
             super.addRawData( startObject, rawData );
         }
         return rawData;

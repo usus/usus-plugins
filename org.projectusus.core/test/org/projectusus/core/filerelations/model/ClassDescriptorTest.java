@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
@@ -30,15 +29,14 @@ public class ClassDescriptorTest {
 
     @Test
     public void keyComparison() {
-        IFile file = mock( IFile.class );
-        String classNameString = "name";
+        String classNameString = "name"; //$NON-NLS-1$
         Classname classname1 = new Classname( classNameString );
         Classname classname2 = new Classname( classNameString );
         assertEquals( classname1, classname2 );
         assertNotSame( classname1, classname2 );
 
-        Packagename packagename1 = Packagename.of( "packagename" );
-        Packagename packagename2 = Packagename.of( "packagename" );
+        Packagename packagename1 = Packagename.of( "packagename" ); //$NON-NLS-1$
+        Packagename packagename2 = Packagename.of( "packagename" ); //$NON-NLS-1$
         assertEquals( packagename1, packagename2 );
         assertSame( packagename1, packagename2 );
 

@@ -48,9 +48,9 @@ public abstract class LightweightDialog extends Dialog {
 
     public abstract void setInput( Object input );
 
-    protected abstract void createTitleArea( Composite area );
+    protected abstract void createTitleArea( Composite titleArea );
 
-    protected abstract void createMainArea( Composite area );
+    protected abstract void createMainArea( Composite mainArea );
 
     protected abstract void setFocus();
 

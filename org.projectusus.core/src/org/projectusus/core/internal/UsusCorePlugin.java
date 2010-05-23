@@ -107,7 +107,7 @@ public class UsusCorePlugin extends Plugin {
         super.stop( context );
     }
 
-    private synchronized void performInits() {
+    synchronized void performInits() {
         launchObserver.connect();
     }
 

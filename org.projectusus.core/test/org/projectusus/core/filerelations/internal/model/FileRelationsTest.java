@@ -2,12 +2,12 @@ package org.projectusus.core.filerelations.internal.model;
 
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.hasItems;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTarget;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetClass;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.source;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceClass;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.target;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.targetClass;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.ANOTHER_TARGET;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.ANOTHER_TARGET_CLASS;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.SOURCE;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.SOURCE_CLASS;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.TARGET;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.TARGET_CLASS;
 import static org.projectusus.core.filerelations.model.TestServiceManager.createDescriptor;
 import static org.projectusus.core.filerelations.test.IsSetOfMatcher.isSetOf;
 
@@ -68,17 +68,17 @@ public class FileRelationsTest {
 
     @Test
     public void transitiveRelationsFromSingleRelation() {
-        ClassDescriptor sourceDescriptor = createDescriptor( source, sourceClass );
-        ClassDescriptor targetDescriptor = createDescriptor( target, targetClass );
+        ClassDescriptor sourceDescriptor = createDescriptor( SOURCE, SOURCE_CLASS );
+        ClassDescriptor targetDescriptor = createDescriptor( TARGET, TARGET_CLASS );
         FileRelation sourceToTarget = FileRelation.of( sourceDescriptor, targetDescriptor );
         assertThat( sourceDescriptor.getTransitiveRelationsFrom(), isSetOf( sourceToTarget ) );
     }
 
     @Test
     public void transitiveRelationsFromTwoRelations() {
-        ClassDescriptor sourceDescriptor = createDescriptor( source, sourceClass );
-        ClassDescriptor targetDescriptor = createDescriptor( target, targetClass );
-        ClassDescriptor anotherTargetDescriptor = createDescriptor( anotherTarget, anotherTargetClass );
+        ClassDescriptor sourceDescriptor = createDescriptor( SOURCE, SOURCE_CLASS );
+        ClassDescriptor targetDescriptor = createDescriptor( TARGET, TARGET_CLASS );
+        ClassDescriptor anotherTargetDescriptor = createDescriptor( ANOTHER_TARGET, ANOTHER_TARGET_CLASS );
         FileRelation sourceToTarget = FileRelation.of( sourceDescriptor, targetDescriptor );
         FileRelation targetToAnotherTarget = FileRelation.of( targetDescriptor, anotherTargetDescriptor );
         assertThat( sourceDescriptor.getTransitiveRelationsFrom(), isSetOf( sourceToTarget, targetToAnotherTarget ) );
@@ -86,9 +86,9 @@ public class FileRelationsTest {
 
     @Test
     public void transitiveRelationsFromCyclicRelationsBelowStart() {
-        ClassDescriptor sourceDescriptor = createDescriptor( source, sourceClass );
-        ClassDescriptor targetDescriptor = createDescriptor( target, targetClass );
-        ClassDescriptor anotherTargetDescriptor = createDescriptor( anotherTarget, anotherTargetClass );
+        ClassDescriptor sourceDescriptor = createDescriptor( SOURCE, SOURCE_CLASS );
+        ClassDescriptor targetDescriptor = createDescriptor( TARGET, TARGET_CLASS );
+        ClassDescriptor anotherTargetDescriptor = createDescriptor( ANOTHER_TARGET, ANOTHER_TARGET_CLASS );
         FileRelation sourceToTarget = FileRelation.of( sourceDescriptor, targetDescriptor );
         FileRelation targetToAnotherTarget = FileRelation.of( targetDescriptor, anotherTargetDescriptor );
         FileRelation anotherTargetToTarget = FileRelation.of( anotherTargetDescriptor, targetDescriptor );
@@ -97,9 +97,9 @@ public class FileRelationsTest {
 
     @Test
     public void transitiveRelationsFromCyclicRelationsIncludingStart() {
-        ClassDescriptor sourceDescriptor = createDescriptor( source, sourceClass );
-        ClassDescriptor targetDescriptor = createDescriptor( target, targetClass );
-        ClassDescriptor anotherTargetDescriptor = createDescriptor( anotherTarget, anotherTargetClass );
+        ClassDescriptor sourceDescriptor = createDescriptor( SOURCE, SOURCE_CLASS );
+        ClassDescriptor targetDescriptor = createDescriptor( TARGET, TARGET_CLASS );
+        ClassDescriptor anotherTargetDescriptor = createDescriptor( ANOTHER_TARGET, ANOTHER_TARGET_CLASS );
         FileRelation sourceToTarget = FileRelation.of( sourceDescriptor, targetDescriptor );
         FileRelation targetToAnotherTarget = FileRelation.of( targetDescriptor, anotherTargetDescriptor );
         FileRelation anotherTargetToTarget = FileRelation.of( anotherTargetDescriptor, targetDescriptor );
@@ -109,9 +109,9 @@ public class FileRelationsTest {
 
     @Test
     public void getAllDirectRelations() {
-        ClassDescriptor sourceDescriptor = createDescriptor( source, sourceClass );
-        ClassDescriptor targetDescriptor = createDescriptor( target, targetClass );
-        ClassDescriptor anotherTargetDescriptor = createDescriptor( anotherTarget, anotherTargetClass );
+        ClassDescriptor sourceDescriptor = createDescriptor( SOURCE, SOURCE_CLASS );
+        ClassDescriptor targetDescriptor = createDescriptor( TARGET, TARGET_CLASS );
+        ClassDescriptor anotherTargetDescriptor = createDescriptor( ANOTHER_TARGET, ANOTHER_TARGET_CLASS );
         FileRelation sourceToTarget = FileRelation.of( sourceDescriptor, targetDescriptor );
         FileRelation anotherTargetToSource = FileRelation.of( anotherTargetDescriptor, sourceDescriptor );
         assertThat( FileRelation.getAllRelations(), hasItems( sourceToTarget, anotherTargetToSource ) );

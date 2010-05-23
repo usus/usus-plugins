@@ -20,8 +20,8 @@ class TestCoverage implements ITestCoverage {
         return asList( entry );
     }
 
-    void refresh( CodeProportion entry ) {
-        this.entry = entry;
+    void refresh( CodeProportion codeProportion ) {
+        this.entry = codeProportion;
     }
 
     public CodeProportion getProportion() {

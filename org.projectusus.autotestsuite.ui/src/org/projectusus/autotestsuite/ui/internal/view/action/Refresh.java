@@ -16,8 +16,8 @@ public class Refresh implements IViewActionDelegate {
 
     private IViewPart view;
 
-    public void init( IViewPart view ) {
-        this.view = view;
+    public void init( IViewPart viewPart ) {
+        this.view = viewPart;
     }
 
     public void run( IAction action ) {

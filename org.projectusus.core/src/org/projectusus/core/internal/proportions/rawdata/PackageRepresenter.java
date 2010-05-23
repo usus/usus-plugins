@@ -33,9 +33,9 @@ public class PackageRepresenter implements GraphNode {
         initRelations( relations );
     }
 
-    private void initRelations( PackageRelations relations ) {
+    private void initRelations( PackageRelations packageRelations ) {
         if( PackageRepresenter.relations == null ) {
-            PackageRepresenter.relations = relations;
+            PackageRepresenter.relations = packageRelations;
         }
     }
 

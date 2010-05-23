@@ -11,9 +11,9 @@ public class AverageBugMetrics implements IAverageMetrics {
     private int numberOfBugs;
     final BugMetrics bugMetrics = new BugMetrics();
 
-    public void addBugMetrics( BugMetrics bugMetrics ) {
+    public void addBugMetrics( BugMetrics metrics ) {
         numberOfBugs++;
-        this.bugMetrics.add( bugMetrics );
+        this.bugMetrics.add( metrics );
     }
 
     public double getAverageCyclomaticComplexity() {

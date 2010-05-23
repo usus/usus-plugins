@@ -25,14 +25,14 @@ public class SelectProjectPage extends WizardPage {
     private IProject selectedProject;
 
     public SelectProjectPage( List<IProject> projects ) {
-        super( "SelectProjectPage" );
+        super( "SelectProjectPage" ); //$NON-NLS-1$
         this.projects = projects;
-        setTitle( "Select Project" );
+        setTitle( "Select Project" ); //$NON-NLS-1$
         setDescription( getDescriptionText() );
     }
 
     private String getDescriptionText() {
-        return "Select a master project. Compiler warning settings will be copied to the other projects.";
+        return "Select a master project. Compiler warning settings will be copied to the other projects."; //$NON-NLS-1$
     }
 
     public void createControl( Composite parent ) {

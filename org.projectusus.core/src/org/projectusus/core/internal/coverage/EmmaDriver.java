@@ -16,7 +16,7 @@ import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 public class EmmaDriver {
 
     private final IJavaCoverageListener emmaListener;
-    private boolean active;
+    boolean active;
 
     public EmmaDriver() {
         emmaListener = createEmmaListener();
@@ -27,7 +27,7 @@ public class EmmaDriver {
         removeJavaCoverageListener( emmaListener );
     }
 
-    private void collectCoverageInfo( IJavaModelCoverage javaModelCoverage ) {
+    void collectCoverageInfo( IJavaModelCoverage javaModelCoverage ) {
         UsusCorePlugin.getUsusModel().collectCoverageInfo( javaModelCoverage );
     }
 

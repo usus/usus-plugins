@@ -16,7 +16,7 @@ public class ProjectsLabelProvider extends LabelProvider {
             return project.getName();
 
         }
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
 }

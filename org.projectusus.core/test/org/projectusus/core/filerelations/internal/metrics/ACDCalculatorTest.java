@@ -1,12 +1,12 @@
 package org.projectusus.core.filerelations.internal.metrics;
 
 import static org.junit.Assert.assertEquals;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTarget;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetClass;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.source;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceClass;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.target;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.targetClass;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.ANOTHER_TARGET;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.ANOTHER_TARGET_CLASS;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.SOURCE;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.SOURCE_CLASS;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.TARGET;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.TARGET_CLASS;
 import static org.projectusus.core.filerelations.model.TestServiceManager.createDescriptor;
 
 import org.junit.Before;
@@ -24,9 +24,9 @@ public class ACDCalculatorTest {
     @Before
     public void cleanup() {
         UsusModel.clear();
-        sourceDescriptor = createDescriptor( source, sourceClass );
-        targetDescriptor = createDescriptor( target, targetClass );
-        anotherTargetDescriptor = createDescriptor( anotherTarget, anotherTargetClass );
+        sourceDescriptor = createDescriptor( SOURCE, SOURCE_CLASS );
+        targetDescriptor = createDescriptor( TARGET, TARGET_CLASS );
+        anotherTargetDescriptor = createDescriptor( ANOTHER_TARGET, ANOTHER_TARGET_CLASS );
     }
 
     @Test

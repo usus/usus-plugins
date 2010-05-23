@@ -55,9 +55,9 @@ class Checkpoints2GraphicsConverter {
         return result;
     }
 
-    private List<ICheckpoint> cutToDisplaySize( List<ICheckpoint> checkpoints ) {
-        int fromIndex = checkpoints.size() - (MAX_DISPLAYED_ENTRIES + 1);
-        int toIndex = checkpoints.size() - 1;
-        return checkpoints.subList( fromIndex, toIndex );
+    private List<ICheckpoint> cutToDisplaySize( List<ICheckpoint> list ) {
+        int fromIndex = list.size() - (MAX_DISPLAYED_ENTRIES + 1);
+        int toIndex = list.size() - 1;
+        return list.subList( fromIndex, toIndex );
     }
 }

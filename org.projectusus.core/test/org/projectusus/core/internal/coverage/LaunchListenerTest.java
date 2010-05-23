@@ -51,7 +51,7 @@ public class LaunchListenerTest {
         return launch;
     }
 
-    private class TestSuiteForCoverageSelector implements ITestSuiteForCoverageSelector {
+    class TestSuiteForCoverageSelector implements ITestSuiteForCoverageSelector {
 
         boolean called = false;
 

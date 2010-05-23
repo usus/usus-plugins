@@ -43,7 +43,7 @@ public class CoverageTest {
         private final int coveredCount;
         private final int totalCount;
 
-        private TestCounter( int coveredCount, int totalCount ) {
+        TestCounter( int coveredCount, int totalCount ) {
             this.coveredCount = coveredCount;
             this.totalCount = totalCount;
         }
