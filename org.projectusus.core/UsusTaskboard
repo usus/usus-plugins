@@ -1,0 +1,3 @@
+- YellowCount macht nicht die ganze Zahl fett, wenn ein Tausenderpunkt vorkommt.
+
+- Null-Objekte in die RawData-Hierarchie einführen.

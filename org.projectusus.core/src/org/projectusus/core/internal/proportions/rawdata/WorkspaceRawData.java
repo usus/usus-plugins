@@ -11,14 +11,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.IHotspot;
-import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.coverage.TestCoverage;
 
 class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
@@ -37,14 +35,8 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
     }
 
     public void dropRawData( IProject project ) {
-        for( IFile file : getProjectRawData( project ).getAllKeys() ) {
-            UsusCorePlugin.getFileRelationMetrics().handleFileRemoval( file );
-        }
+        getProjectRawData( project ).dropRawData();
         remove( project );
-    }
-
-    public void dropRawData( IFile file ) {
-        getProjectRawData( file.getProject() ).dropRawData( file );
     }
 
     public CodeProportion getCodeProportion( CodeProportionKind metric ) {

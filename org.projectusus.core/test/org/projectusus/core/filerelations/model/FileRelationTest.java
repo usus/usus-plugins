@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetDescriptor;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceClass;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceDescriptor;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceToTarget;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.targetClass;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.targetDescriptor;
 import static org.projectusus.core.filerelations.model.TestServiceManager.createDescriptor;
@@ -18,6 +17,7 @@ public class FileRelationTest {
 
     @Test
     public void hasSourceClass() {
+        FileRelation sourceToTarget = FileRelation.of( sourceDescriptor, targetDescriptor );
         assertTrue( sourceToTarget.hasSourceClass( sourceClass ) );
         assertFalse( sourceToTarget.hasSourceClass( targetClass ) );
     }

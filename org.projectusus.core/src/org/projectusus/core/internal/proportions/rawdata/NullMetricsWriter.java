@@ -5,7 +5,6 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
 
@@ -42,11 +41,6 @@ public class NullMetricsWriter implements IMetricsWriter {
 
     public void setWarningsCount( IFile file, int markerCount ) {
         // TODO Auto-generated method stub
-    }
-
-    public FileRelationMetrics getFileRelationMetrics() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     public void setWarningsCount( IProject project, int markerCount ) {

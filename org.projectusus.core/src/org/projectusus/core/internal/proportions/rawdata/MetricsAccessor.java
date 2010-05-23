@@ -29,7 +29,9 @@ import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.IHotspot;
-import org.projectusus.core.filerelations.FileRelationMetrics;
+import org.projectusus.core.filerelations.DefectFileRelations;
+import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
+import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.FileRelation;
@@ -41,28 +43,22 @@ import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
 public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     private final WorkspaceRawData workspaceRawData;
-    private final FileRelationMetrics fileRelationMetrics;
 
     public MetricsAccessor() {
         super();
         workspaceRawData = new WorkspaceRawData();
-        fileRelationMetrics = new FileRelationMetrics();
     }
 
     public void dropRawData( IProject project ) {
-        for( IFile fileInProject : workspaceRawData.getProjectRawData( project ).getAllKeys() ) {
-            fileRelationMetrics.handleFileRemoval( fileInProject );
-        }
         workspaceRawData.dropRawData( project );
     }
 
     public void dropRawData( IFile file ) {
-        fileRelationMetrics.handleFileRemoval( file );
-        workspaceRawData.dropRawData( file );
+        workspaceRawData.getProjectRawData( file.getProject() ).dropRawData( file );
     }
 
     public void addClassReference( BoundType sourceType, BoundType targetType ) {
-        fileRelationMetrics.addFileRelation( ClassDescriptor.of( sourceType ), ClassDescriptor.of( targetType ) );
+        FileRelation.of( ClassDescriptor.of( sourceType ), ClassDescriptor.of( targetType ) );
     }
 
     public void setCCValue( IFile file, MethodDeclaration methodDecl, int value ) {
@@ -131,7 +127,7 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     private CodeProportion getCodeProportion( CodeProportionKind metric ) {
         if( metric == CodeProportionKind.PC ) {
             CodeStatistic basis = new CodeStatistic( metric.getUnit(), Packagename.getAll().size() );
-            int violations = fileRelationMetrics.getPackageRelations().getPackageCycles().numberOfPackagesInAnyCycles();
+            int violations = new PackageRelations().getPackageCycles().numberOfPackagesInAnyCycles();
             List<IHotspot> hotspots = new ArrayList<IHotspot>();
             // TODO add hotspots
             return new CodeProportion( metric, violations, basis, hotspots );
@@ -193,11 +189,11 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     }
 
     public Set<ClassRepresenter> getAllClassRepresenters() {
-        return ClassRepresenter.transformToRepresenterSet( fileRelationMetrics.getAllClassDescriptors(), fileRelationMetrics );
+        return ClassRepresenter.transformToRepresenterSet( ClassDescriptor.getAll() );
     }
 
     public Set<PackageRepresenter> getAllPackages() {
-        return PackageRepresenter.transformToRepresenterSet( fileRelationMetrics.getAllPackages(), fileRelationMetrics.getPackageRelations() );
+        return PackageRepresenter.transformToRepresenterSet( Packagename.getAll(), new PackageRelations() );
     }
 
     public int getCCValue( IMethod method ) {
@@ -221,7 +217,7 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     }
 
     public double getRelativeACD() {
-        return fileRelationMetrics.getRelativeACD();
+        return ACDCalculator.getRelativeACD();
     }
 
     public int getNumberOfWarnings( IFile file ) {
@@ -250,12 +246,8 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         return count;
     }
 
-    public FileRelationMetrics getFileRelationMetrics() {
-        return fileRelationMetrics;
-    }
-
     public void repairRelations( IProgressMonitor monitor ) {
-        List<FileRelation> candidates = fileRelationMetrics.findRelationsThatNeedRepair();
+        List<FileRelation> candidates = DefectFileRelations.extractRelationsRegisteredForRepair();
         monitor.beginTask( null, candidates.size() );
         monitor.subTask( CoreTexts.ususModel_UpdatingFileRelations );
         for( FileRelation relation : candidates ) {
@@ -269,11 +261,11 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         IFile targetFile = relation.getTargetFile();
         FileRawData fileRawData = getFileRawData( targetFile );
         if( fileRawData == null ) {
-            fileRelationMetrics.remove( relation );
+            relation.remove();
         } else {
             ClassRawData classRawData = fileRawData.findClass( relation.getTargetClassname() );
             if( classRawData == null ) {
-                fileRelationMetrics.remove( relation );
+                relation.remove();
             }
         }
     }

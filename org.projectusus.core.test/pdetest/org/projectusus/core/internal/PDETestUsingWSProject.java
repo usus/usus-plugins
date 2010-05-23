@@ -26,6 +26,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.projectusus.adapter.UsusAdapterPlugin;
 import org.projectusus.core.internal.project.IUSUSProject;
+import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class PDETestUsingWSProject {
 
@@ -46,6 +47,7 @@ public class PDETestUsingWSProject {
     @After
     public void tearDown() throws CoreException {
         project.delete( true, new NullProgressMonitor() );
+        UsusModel.clear();
     }
 
     protected void buildFullyAndWait() throws CoreException {

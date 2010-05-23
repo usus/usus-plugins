@@ -21,7 +21,6 @@ import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.model.MetricACDHotspot;
 import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
 
@@ -148,10 +147,18 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     public int getCCDResult() {
-        return UsusCorePlugin.getFileRelationMetrics().getCCD( descriptor );
+        return descriptor.getCCD();
     }
 
     public String getClassName() {
         return className;
+    }
+
+    public void dropRawData() {
+        if( descriptor != null ) {
+            descriptor.remove();
+        } else {
+            System.out.println( "Could not remove class " + className + ", descriptor == null" ); //$NON-NLS-1$ //$NON-NLS-2$
+        }
     }
 }

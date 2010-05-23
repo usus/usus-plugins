@@ -210,4 +210,11 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
         }
         return null;
     }
+
+    public void dropRawData() {
+        for( ClassRawData classRD : getAllRawDataElements() ) {
+            classRD.dropRawData();
+        }
+        removeAll();
+    }
 }

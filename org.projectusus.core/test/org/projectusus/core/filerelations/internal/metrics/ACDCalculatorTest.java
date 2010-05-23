@@ -1,50 +1,59 @@
 package org.projectusus.core.filerelations.internal.metrics;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetToSource;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetToTarget;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceDescriptor;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceToAnotherTarget;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceToTarget;
-import static org.projectusus.core.filerelations.model.SimpleTestScenario.targetToAnotherTarget;
-import static org.projectusus.core.filerelations.model.TestServiceManager.asArrays;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTarget;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.anotherTargetClass;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.source;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.sourceClass;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.target;
+import static org.projectusus.core.filerelations.model.SimpleTestScenario.targetClass;
+import static org.projectusus.core.filerelations.model.TestServiceManager.createDescriptor;
 
-import java.util.List;
-
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-import org.projectusus.core.filerelations.internal.model.FileRelations;
-import org.projectusus.core.filerelations.model.Scenario;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.FileRelation;
+import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
-@RunWith( Parameterized.class )
 public class ACDCalculatorTest {
 
-    private final Scenario scenario;
+    private ClassDescriptor sourceDescriptor;
+    private ClassDescriptor targetDescriptor;
+    private ClassDescriptor anotherTargetDescriptor;
 
-    @Parameters
-    public static List<Object[]> data() {
-        return asArrays( new Scenario( 1 ), new Scenario( 2, sourceToTarget ), new Scenario( 3, sourceToTarget, targetToAnotherTarget ), new Scenario( 3, sourceToTarget,
-                sourceToAnotherTarget, targetToAnotherTarget, anotherTargetToTarget, anotherTargetToSource ) );
-    }
-
-    public ACDCalculatorTest( Scenario scenario ) {
-        this.scenario = scenario;
+    @Before
+    public void cleanup() {
+        UsusModel.clear();
+        sourceDescriptor = createDescriptor( source, sourceClass );
+        targetDescriptor = createDescriptor( target, targetClass );
+        anotherTargetDescriptor = createDescriptor( anotherTarget, anotherTargetClass );
     }
 
     @Test
-    public void calculate() {
-        FileRelations relations = mock( FileRelations.class );
-        when( relations.getTransitiveRelationsFrom( sourceDescriptor ) ).thenReturn( scenario.getInput() );
-        int actualCcd = new ACDCalculator( relations ).getCCD( sourceDescriptor );
-        assertEquals( scenario.getExpectedResult(), actualCcd );
-        verify( relations ).getTransitiveRelationsFrom( sourceDescriptor );
-        verifyNoMoreInteractions( relations );
+    public void calculateNoRelations() {
+        assertEquals( 1, sourceDescriptor.getCCD() );
     }
 
+    @Test
+    public void calculateOneRelation() {
+        FileRelation.of( sourceDescriptor, targetDescriptor );
+        assertEquals( 2, sourceDescriptor.getCCD() );
+    }
+
+    @Test
+    public void calculateTwoRelations() {
+        FileRelation.of( sourceDescriptor, targetDescriptor );
+        FileRelation.of( targetDescriptor, anotherTargetDescriptor );
+        assertEquals( 3, sourceDescriptor.getCCD() );
+    }
+
+    @Test
+    public void calculateManyRelations() {
+        FileRelation.of( sourceDescriptor, targetDescriptor );
+        FileRelation.of( sourceDescriptor, anotherTargetDescriptor );
+        FileRelation.of( targetDescriptor, anotherTargetDescriptor );
+        FileRelation.of( anotherTargetDescriptor, targetDescriptor );
+        FileRelation.of( anotherTargetDescriptor, sourceDescriptor );
+        assertEquals( 3, sourceDescriptor.getCCD() );
+    }
 }

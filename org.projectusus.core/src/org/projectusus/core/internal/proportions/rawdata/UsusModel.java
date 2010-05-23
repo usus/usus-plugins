@@ -15,8 +15,12 @@ import org.projectusus.core.IUsusElement;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
-import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
+import org.projectusus.core.filerelations.DefectFileRelations;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.FileRelation;
+import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
+import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
 import org.projectusus.core.internal.proportions.modelupdate.checkpoints.CheckpointHistory;
 
@@ -116,5 +120,13 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
     public IMetricsWriter getMetricsWriter() {
         return metrics;
+    }
+
+    public static void clear() {
+        ClassDescriptor.clear();
+        DefectFileRelations.clear();
+        FileRelation.clear();
+        Packagename.clear();
+        PackageRepresenter.clear();
     }
 }

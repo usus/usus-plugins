@@ -14,6 +14,10 @@ public class Packagename {
 
     private static Map<String, Packagename> allPackages = new HashMap<String, Packagename>();
 
+    public static void clear() {
+        allPackages = new HashMap<String, Packagename>();
+    }
+
     public static Packagename of( String name ) {
         if( allPackages.containsKey( name ) ) {
             return allPackages.get( name );

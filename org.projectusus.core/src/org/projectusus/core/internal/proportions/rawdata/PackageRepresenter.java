@@ -14,6 +14,10 @@ public class PackageRepresenter implements GraphNode {
     private final Packagename packagename;
     private static PackageRelations relations;
 
+    public static void clear() {
+        relations = null;
+    }
+
     public static Set<PackageRepresenter> transformToRepresenterSet( Set<Packagename> classes, final PackageRelations rel ) {
         Function<Packagename, PackageRepresenter> function = new Function<Packagename, PackageRepresenter>() {
             public PackageRepresenter apply( Packagename descriptor ) {

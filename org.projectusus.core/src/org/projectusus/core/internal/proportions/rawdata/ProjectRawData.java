@@ -10,7 +10,6 @@ import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.IHotspot;
-import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.FileSupport;
 
@@ -42,8 +41,18 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
     }
 
     public void dropRawData( IFile file ) {
-        UsusCorePlugin.getFileRelationMetrics().handleFileRemoval( file );
+        FileRawData fileRawData = getFileRawData( file );
+        if( fileRawData != null ) {
+            fileRawData.dropRawData();
+        }
         remove( file );
+    }
+
+    public void dropRawData() {
+        for( FileRawData fileRD : getAllRawDataElements() ) {
+            fileRD.dropRawData();
+        }
+        removeAll();
     }
 
     public void setInstructionCoverage( IJavaElementCoverage coverage ) {

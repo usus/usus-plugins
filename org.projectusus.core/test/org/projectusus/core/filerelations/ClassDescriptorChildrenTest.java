@@ -1,7 +1,9 @@
 package org.projectusus.core.filerelations;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.projectusus.core.filerelations.test.IsSetOfMatcher.isEmptySet;
+import static org.projectusus.core.filerelations.test.IsSetOfMatcher.isSetOf;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
@@ -11,7 +13,7 @@ import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.filerelations.model.Packagename;
 
-public class CCDTest {
+public class ClassDescriptorChildrenTest {
 
     private ClassDescriptor descriptor1;
     private ClassDescriptor descriptor2;
@@ -31,32 +33,32 @@ public class CCDTest {
 
     @Test
     public void noRelations() {
-        assertEquals( 1, descriptor1.getCCD() );
+        assertThat( descriptor1.getChildren(), isEmptySet() );
     }
 
     @Test
     public void oneRelation() {
         FileRelation.of( descriptor1, descriptor2 );
-        assertEquals( 2, descriptor1.getCCD() );
-        assertEquals( 1, descriptor2.getCCD() );
+        assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
+        assertThat( descriptor2.getChildren(), isEmptySet() );
     }
 
     @Test
     public void oneClassKnows2() {
         FileRelation.of( descriptor1, descriptor2 );
         FileRelation.of( descriptor1, descriptor3 );
-        assertEquals( 3, descriptor1.getCCD() );
-        assertEquals( 1, descriptor2.getCCD() );
-        assertEquals( 1, descriptor3.getCCD() );
+        assertThat( descriptor1.getChildren(), isSetOf( descriptor2, descriptor3 ) );
+        assertThat( descriptor2.getChildren(), isEmptySet() );
+        assertThat( descriptor3.getChildren(), isEmptySet() );
     }
 
     @Test
     public void oneClassKnows1Knows1() {
         FileRelation.of( descriptor1, descriptor2 );
         FileRelation.of( descriptor2, descriptor3 );
-        assertEquals( 3, descriptor1.getCCD() );
-        assertEquals( 2, descriptor2.getCCD() );
-        assertEquals( 1, descriptor3.getCCD() );
+        assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
+        assertThat( descriptor2.getChildren(), isSetOf( descriptor3 ) );
+        assertThat( descriptor3.getChildren(), isEmptySet() );
     }
 
     @Test
@@ -64,9 +66,9 @@ public class CCDTest {
         FileRelation.of( descriptor1, descriptor2 );
         FileRelation.of( descriptor2, descriptor3 );
         FileRelation.of( descriptor3, descriptor1 );
-        assertEquals( 3, descriptor1.getCCD() );
-        assertEquals( 3, descriptor2.getCCD() );
-        assertEquals( 3, descriptor3.getCCD() );
+        assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
+        assertThat( descriptor2.getChildren(), isSetOf( descriptor3 ) );
+        assertThat( descriptor3.getChildren(), isSetOf( descriptor1 ) );
     }
 
     @Test
@@ -74,8 +76,8 @@ public class CCDTest {
         FileRelation.of( descriptor1, descriptor2 );
         FileRelation.of( descriptor2, descriptor3 );
         FileRelation.of( descriptor3, descriptor2 );
-        assertEquals( 3, descriptor1.getCCD() );
-        assertEquals( 2, descriptor2.getCCD() );
-        assertEquals( 2, descriptor3.getCCD() );
+        assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
+        assertThat( descriptor2.getChildren(), isSetOf( descriptor3 ) );
+        assertThat( descriptor3.getChildren(), isSetOf( descriptor2 ) );
     }
 }

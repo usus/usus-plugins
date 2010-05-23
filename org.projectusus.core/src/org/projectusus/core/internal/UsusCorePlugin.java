@@ -16,10 +16,9 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 import org.osgi.service.prefs.BackingStoreException;
-import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.internal.coverage.LaunchObserver;
-import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
+import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.rawdata.IMetricsAccessor;
 import org.projectusus.core.internal.proportions.rawdata.IUsusModel;
 import org.projectusus.core.internal.proportions.rawdata.NullMetricsWriter;
@@ -103,6 +102,7 @@ public class UsusCorePlugin extends Plugin {
     public void stop( BundleContext context ) throws Exception {
         launchObserver.dispose();
         plugin = null;
+        UsusModel.clear();
         ususModel = null;
         super.stop( context );
     }
@@ -124,12 +124,4 @@ public class UsusCorePlugin extends Plugin {
             UsusCorePlugin.log( bastox );
         }
     }
-
-    /**
-     * @deprecated will soon be deleted; access to FileRelations via Descriptors then
-     */
-    public static FileRelationMetrics getFileRelationMetrics() {
-        return UsusCorePlugin.getMetricsAccessor().getFileRelationMetrics();
-    }
-
 }

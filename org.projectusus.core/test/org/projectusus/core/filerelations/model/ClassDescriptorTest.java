@@ -76,4 +76,5 @@ public class ClassDescriptorTest {
         ClassDescriptor.removeAllClassesIn( file );
         assertFalse( packagename.containsClass( descriptor ) );
     }
+
 }

@@ -1,0 +1,5 @@
+public interface Y {
+
+void m(Z x);
+
+}

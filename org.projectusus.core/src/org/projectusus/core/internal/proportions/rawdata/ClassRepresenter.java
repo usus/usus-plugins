@@ -3,7 +3,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.projectusus.core.filerelations.FileRelationMetrics;
+import org.projectusus.core.filerelations.internal.metrics.BottleneckCalculator;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 
 import com.google.common.base.Function;
@@ -12,32 +12,24 @@ import com.google.common.collect.Collections2;
 public class ClassRepresenter implements GraphNode {
 
     private final ClassDescriptor clazz;
-    private static FileRelationMetrics relations;
     private Set<ClassRepresenter> childrenCache = null;
 
-    public static Set<ClassRepresenter> transformToRepresenterSet( Set<ClassDescriptor> classes, final FileRelationMetrics rel ) {
+    public static Set<ClassRepresenter> transformToRepresenterSet( Set<ClassDescriptor> classes ) {
         Function<ClassDescriptor, ClassRepresenter> function = new Function<ClassDescriptor, ClassRepresenter>() {
             public ClassRepresenter apply( ClassDescriptor descriptor ) {
-                return new ClassRepresenter( descriptor, rel );
+                return new ClassRepresenter( descriptor );
             }
         };
         return new HashSet<ClassRepresenter>( Collections2.transform( classes, function ) );
     }
 
-    public ClassRepresenter( ClassDescriptor clazz, FileRelationMetrics relations ) {
+    public ClassRepresenter( ClassDescriptor clazz ) {
         this.clazz = clazz;
-        initRelations( relations );
-    }
-
-    private void initRelations( FileRelationMetrics relations ) {
-        if( ClassRepresenter.relations == null ) {
-            ClassRepresenter.relations = relations;
-        }
     }
 
     public Set<ClassRepresenter> getChildren() {
         if( childrenCache == null ) {
-            childrenCache = transformToRepresenterSet( relations.getChildren( clazz ), relations );
+            childrenCache = transformToRepresenterSet( clazz.getChildren() );
         }
         return childrenCache;
     }
@@ -69,7 +61,7 @@ public class ClassRepresenter implements GraphNode {
     }
 
     private int getRelationCount() {
-        return relations.getCCD( clazz );
+        return clazz.getCCD();
     }
 
     public boolean isVisibleFor( int limit ) {
@@ -77,6 +69,6 @@ public class ClassRepresenter implements GraphNode {
     }
 
     public int getFilterValue() {
-        return relations.getBottleneckCount( this.clazz );
+        return BottleneckCalculator.getBottleneckCount( this.clazz );
     }
 }

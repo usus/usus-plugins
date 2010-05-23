@@ -1,29 +1,17 @@
 package org.projectusus.core.filerelations.model;
 
-import static org.projectusus.core.filerelations.model.TestServiceManager.asSet;
-
-import java.util.Set;
-
 public class Scenario {
 
     private final int expectedResult;
-    private final Set<FileRelation> input;
 
-    public Scenario( int expectedResult, FileRelation... input ) {
-        this( expectedResult, asSet( input ) );
-    }
-
-    public Scenario( int expectedResult, Set<FileRelation> input ) {
+    public Scenario( int expectedResult, ClassDescriptor... input ) {
         this.expectedResult = expectedResult;
-        this.input = input;
+        for( int i = 0; i < input.length; i += 2 ) {
+            FileRelation.of( input[i], input[i++] );
+        }
     }
 
     public int getExpectedResult() {
         return expectedResult;
     }
-
-    public Set<FileRelation> getInput() {
-        return input;
-    }
-
 }

@@ -1,0 +1,5 @@
+public class X implements Y {
+
+void m(Object x);
+
+}

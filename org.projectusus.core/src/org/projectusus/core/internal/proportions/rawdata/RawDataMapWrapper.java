@@ -40,4 +40,8 @@ class RawDataMapWrapper<Resource, RawDataContainer> {
     public void clear() {
         rawDataMap.clear();
     }
+
+    public void removeAll() {
+        rawDataMap.clear();
+    }
 }

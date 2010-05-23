@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.IType;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
-import org.projectusus.core.filerelations.FileRelationMetrics;
 
 public interface IMetricsAccessor {
 
@@ -45,7 +44,4 @@ public interface IMetricsAccessor {
     ArrayList<CodeProportion> getCodeProportions();
 
     int getNumberOfProjectsViolatingCW();
-
-    FileRelationMetrics getFileRelationMetrics();
-
 }

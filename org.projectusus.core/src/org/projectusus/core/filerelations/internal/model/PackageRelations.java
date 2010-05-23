@@ -10,17 +10,15 @@ import org.projectusus.core.filerelations.model.Packagename;
 
 public class PackageRelations extends Relations<Packagename, PackageRelation> {
 
-    private final FileRelations fileRelations;
     private PackageCycles packageCycles;
 
-    public PackageRelations( FileRelations fileRelations ) {
-        this.fileRelations = fileRelations;
+    public PackageRelations() {
         calcPackageRelations();
         calcPackageCycles();
     }
 
     private void calcPackageRelations() {
-        for( FileRelation fileRelation : fileRelations.getAllDirectRelations() ) {
+        for( FileRelation fileRelation : FileRelation.getAllRelations() ) {
             if( fileRelation.isCrossPackage() ) {
                 Packagename source = fileRelation.getSourcePackage();
                 Packagename target = fileRelation.getTargetPackage();

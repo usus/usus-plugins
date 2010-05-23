@@ -1,23 +1,18 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
-import org.projectusus.core.filerelations.FileRelationMetrics;
 import org.projectusus.core.filerelations.model.BoundType;
-import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.testutil.ReflectionUtil;
 
 public class MetricsAccessorTest {
 
     @Test
-    public void addFileRelation() throws Exception {
+    public void addFileRelation() {
         BoundType sourceBinding = mock( BoundType.class );
         BoundType targetBinding = mock( BoundType.class );
         when( sourceBinding.getClassname() ).thenReturn( new Classname( "sourceName" ) ); //$NON-NLS-1$
@@ -29,11 +24,7 @@ public class MetricsAccessorTest {
         when( sourceBinding.getUnderlyingResource() ).thenReturn( file );
         when( targetBinding.getUnderlyingResource() ).thenReturn( file );
         MetricsAccessor model = new MetricsAccessor();
-        FileRelationMetrics relations = mock( FileRelationMetrics.class );
-        ReflectionUtil.setValue( model, relations, "fileRelationMetrics" ); //$NON-NLS-1$
 
         model.addClassReference( sourceBinding, targetBinding );
-
-        verify( relations ).addFileRelation( any( ClassDescriptor.class ), any( ClassDescriptor.class ) );
     }
 }
