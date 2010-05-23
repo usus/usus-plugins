@@ -21,7 +21,7 @@ import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.projectusus.core.IUsusModelListener;
-import org.projectusus.core.internal.proportions.rawdata.GraphNode;
+import org.projectusus.core.basis.GraphNode;
 
 public abstract class DependencyGraphView extends ViewPart implements FilterLimitProvider {
     private static final String SCALE_TOOLTIP_TEXT = "Change the number of visible nodes by moving the slider";

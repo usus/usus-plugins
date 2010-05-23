@@ -2,7 +2,7 @@ package org.projectusus.ui.dependencygraph.common;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.projectusus.core.internal.proportions.rawdata.GraphNode;
+import org.projectusus.core.basis.GraphNode;
 
 public class NodeFilter extends ViewerFilter {
 

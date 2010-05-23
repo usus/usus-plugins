@@ -7,10 +7,10 @@ package org.projectusus.bugprison.core;
 import static org.projectusus.bugprison.core.texts.BugPrisonTexts.AverageMetrics_overall;
 
 import org.eclipse.core.resources.IProject;
+import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.rawdata.IMetricsAccessor;
 
 public class AverageMetrics implements IAverageMetrics {
 

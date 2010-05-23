@@ -14,6 +14,8 @@ import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
+import org.projectusus.core.IMetricsAccessor;
+import org.projectusus.core.IUsusModel;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.PDETestUsingWSProject;

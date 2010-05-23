@@ -2,7 +2,7 @@ package org.projectusus.ui.dependencygraph.common;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.zest.core.viewers.EntityConnectionData;
-import org.projectusus.core.internal.proportions.rawdata.GraphNode;
+import org.projectusus.core.basis.GraphNode;
 
 public class NodeLabelProvider extends LabelProvider {
     @Override

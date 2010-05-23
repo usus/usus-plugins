@@ -29,8 +29,8 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.ICheckpointHistory;
 import org.projectusus.core.internal.project.FindUsusProjects;
-import org.projectusus.core.internal.proportions.modelupdate.checkpoints.CheckpointHistory;
 import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
 import org.projectusus.ui.internal.proportions.actions.RefreshHotspots;
 import org.projectusus.ui.internal.proportions.actions.ShowCoverageView;
@@ -144,7 +144,7 @@ public class CockpitView extends ViewPart {
     }
 
     private void updateStatusLine() {
-        CheckpointHistory history = getUsusModel().getHistory();
+        ICheckpointHistory history = getUsusModel().getHistory();
         Image image = history.isStale() ? getWarningImage() : null;
         getStatusLine().setMessage( image, history.getStatusMessage() );
     }

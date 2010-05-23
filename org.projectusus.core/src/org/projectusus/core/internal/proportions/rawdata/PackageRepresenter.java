@@ -3,6 +3,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 
@@ -18,13 +19,13 @@ public class PackageRepresenter implements GraphNode {
         relations = null;
     }
 
-    public static Set<PackageRepresenter> transformToRepresenterSet( Set<Packagename> classes, final PackageRelations rel ) {
+    public static Set<GraphNode> transformToRepresenterSet( Set<Packagename> classes, final PackageRelations rel ) {
         Function<Packagename, PackageRepresenter> function = new Function<Packagename, PackageRepresenter>() {
             public PackageRepresenter apply( Packagename descriptor ) {
                 return new PackageRepresenter( descriptor, rel );
             }
         };
-        return new HashSet<PackageRepresenter>( Collections2.transform( classes, function ) );
+        return new HashSet<GraphNode>( Collections2.transform( classes, function ) );
     }
 
     public PackageRepresenter( Packagename pkg, PackageRelations relations ) {

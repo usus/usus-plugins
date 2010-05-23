@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.eclipse.core.resources.IProject;
 import org.junit.Test;
+import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.UsusCorePlugin;

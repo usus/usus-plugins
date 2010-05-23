@@ -24,11 +24,14 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.CodeStatistic;
+import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.YellowCountResult;
 import org.projectusus.core.filerelations.DefectFileRelations;
 import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
 import org.projectusus.core.filerelations.internal.model.PackageRelations;
@@ -188,11 +191,11 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         return getProjectRawData( project ).getViolationCount( metric );
     }
 
-    public Set<ClassRepresenter> getAllClassRepresenters() {
+    public Set<GraphNode> getAllClassRepresenters() {
         return ClassRepresenter.transformToRepresenterSet( ClassDescriptor.getAll() );
     }
 
-    public Set<PackageRepresenter> getAllPackages() {
+    public Set<GraphNode> getAllPackages() {
         return PackageRepresenter.transformToRepresenterSet( Packagename.getAll(), new PackageRelations() );
     }
 
@@ -225,8 +228,8 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     }
 
     public YellowCountResult getWarnings() {
-        return new YellowCountResult( this.getNumberOf( CodeProportionUnit.PROJECT ), this.getNumberOf( CodeProportionKind.CW.getUnit() ), this
-                .getOverallMetric( CodeProportionKind.CW ), this.getNumberOfProjectsViolatingCW() );
+        return new YellowCountResult( this.getNumberOf( CodeProportionUnit.PROJECT ), this.getNumberOf( CodeProportionKind.CW.getUnit() ),
+                this.getOverallMetric( CodeProportionKind.CW ), this.getNumberOfProjectsViolatingCW() );
     }
 
     public ArrayList<CodeProportion> getCodeProportions() {

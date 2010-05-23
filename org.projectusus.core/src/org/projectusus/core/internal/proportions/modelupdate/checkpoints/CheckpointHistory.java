@@ -8,8 +8,9 @@ import java.util.List;
 
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.ICheckpoint;
+import org.projectusus.core.basis.ICheckpointHistory;
 
-public class CheckpointHistory {
+public class CheckpointHistory implements ICheckpointHistory {
 
     private List<ICheckpoint> checkpoints;
     private List<CodeProportion> bufferedComputationResult;

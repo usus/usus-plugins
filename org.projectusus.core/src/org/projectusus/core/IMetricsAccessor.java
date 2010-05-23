@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core;
 
 import java.util.Set;
 
@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
+import org.projectusus.core.basis.GraphNode;
+import org.projectusus.core.basis.YellowCountResult;
 
 public interface IMetricsAccessor {
 
@@ -25,9 +27,9 @@ public interface IMetricsAccessor {
 
     int getViolationCount( IProject project, CodeProportionKind metric );
 
-    Set<ClassRepresenter> getAllClassRepresenters();
+    Set<GraphNode> getAllClassRepresenters();
 
-    Set<PackageRepresenter> getAllPackages();
+    Set<GraphNode> getAllPackages();
 
     int getCCValue( IMethod method );
 

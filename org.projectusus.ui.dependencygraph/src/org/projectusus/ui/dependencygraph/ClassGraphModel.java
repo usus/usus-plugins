@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 
+import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.rawdata.GraphNode;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphModel;
 
 public class ClassGraphModel extends DependencyGraphModel {

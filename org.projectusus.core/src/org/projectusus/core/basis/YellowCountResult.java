@@ -2,7 +2,7 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.basis;
 
 import static java.text.MessageFormat.format;
 import static org.projectusus.core.internal.util.CoreTexts.wiseCrack_cool;
@@ -16,7 +16,7 @@ public class YellowCountResult {
     private final int yellowProjectCount;
     private final int fileCount;
 
-    YellowCountResult( int projectCount, int fileCount, int yellowCount, int yellowProjectCount ) {
+    public YellowCountResult( int projectCount, int fileCount, int yellowCount, int yellowProjectCount ) {
         this.projectCount = projectCount;
         this.fileCount = fileCount;
         this.yellowCount = yellowCount;

@@ -3,6 +3,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.internal.metrics.BottleneckCalculator;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 
@@ -12,22 +13,22 @@ import com.google.common.collect.Collections2;
 public class ClassRepresenter implements GraphNode {
 
     private final ClassDescriptor clazz;
-    private Set<ClassRepresenter> childrenCache = null;
+    private Set<GraphNode> childrenCache = null;
 
-    public static Set<ClassRepresenter> transformToRepresenterSet( Set<ClassDescriptor> classes ) {
+    public static Set<GraphNode> transformToRepresenterSet( Set<ClassDescriptor> classes ) {
         Function<ClassDescriptor, ClassRepresenter> function = new Function<ClassDescriptor, ClassRepresenter>() {
             public ClassRepresenter apply( ClassDescriptor descriptor ) {
                 return new ClassRepresenter( descriptor );
             }
         };
-        return new HashSet<ClassRepresenter>( Collections2.transform( classes, function ) );
+        return new HashSet<GraphNode>( Collections2.transform( classes, function ) );
     }
 
     public ClassRepresenter( ClassDescriptor clazz ) {
         this.clazz = clazz;
     }
 
-    public Set<ClassRepresenter> getChildren() {
+    public Set<GraphNode> getChildren() {
         if( childrenCache == null ) {
             childrenCache = transformToRepresenterSet( clazz.getChildren() );
         }

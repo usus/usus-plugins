@@ -16,8 +16,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.basis.YellowCountResult;
 import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.rawdata.YellowCountResult;
 
 /**
  * A simple view that displays the current yellow count to the user.

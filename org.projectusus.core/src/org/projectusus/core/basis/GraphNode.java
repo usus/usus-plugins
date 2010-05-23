@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.basis;
 
 import java.util.Set;
 
