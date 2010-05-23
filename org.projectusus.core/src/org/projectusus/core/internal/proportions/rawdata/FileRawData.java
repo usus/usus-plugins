@@ -4,14 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
+import static org.projectusus.core.internal.proportions.rawdata.JDTSupport.getCompilationUnit;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.IPackageDeclaration;
-import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
@@ -120,23 +120,6 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
         return getClassRawData( ASTSupport.findEnclosingClass( node ) );
     }
 
-    public ClassRawData getOrCreateRawData( IJavaElement element ) {
-        try {
-            ICompilationUnit compilationUnit = getCompilationUnit( element );
-            if( compilationUnit == null ) {
-                return null;
-            }
-
-            ClassRawData rawData = getClassRawData( element, compilationUnit );
-            if( rawData == null ) {
-                rawData = createClassRawDataFor( element, compilationUnit.getPackageDeclarations() );
-            }
-            return rawData;
-        } catch( JavaModelException e ) {
-            return null;
-        }
-    }
-
     public ClassRawData getRawData( IJavaElement element ) {
         // TODO nr Duplicate code from getOrCreateRawData
         ICompilationUnit compilationUnit = getCompilationUnit( element );
@@ -151,36 +134,11 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
         }
     }
 
-    private ICompilationUnit getCompilationUnit( IJavaElement element ) {
-        if( element == null ) {
-            return null;
-        }
-        return JDTSupport.getCompilationUnit( element );
-    }
-
     private ClassRawData getClassRawData( IJavaElement element, ICompilationUnit compilationUnit ) throws JavaModelException {
         for( Integer startPosition : getAllKeys() ) {
             IJavaElement foundElement = compilationUnit.getElementAt( startPosition.intValue() );
             if( element.equals( foundElement ) ) {
                 return super.getRawData( startPosition );
-            }
-        }
-        return null;
-    }
-
-    private ClassRawData createClassRawDataFor( IJavaElement element, IPackageDeclaration[] packageDeclarations ) {
-        if( element instanceof IType ) {
-            String name = element.getElementName();
-            IType type = (IType)element;
-            try {
-                int lineNumber = JDTSupport.calcLineNumber( type );
-                int startPosition = type.getSourceRange().getOffset();
-                String packageName = packageDeclarations[0].getElementName();
-                ClassRawData rawData = new ClassRawData( fileOfRawData, packageName, name, startPosition, lineNumber );
-                super.addRawData( new Integer( startPosition ), rawData );
-                return rawData;
-            } catch( JavaModelException e ) {
-                // do nothing
             }
         }
         return null;

@@ -17,6 +17,9 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 class JDTSupport {
 
     public static ICompilationUnit getCompilationUnit( IJavaElement element ) {
+        if( element == null ) {
+            return null;
+        }
         return toCompilationUnit( element.getOpenable() );
     }
 

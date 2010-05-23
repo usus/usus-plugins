@@ -4,6 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
+import static org.projectusus.core.internal.proportions.rawdata.JDTSupport.getCompilationUnit;
+
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -89,10 +91,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     public MethodRawData getMethodRawData( IMethod method ) {
-        if( method == null ) {
-            return null;
-        }
-        ICompilationUnit compilationUnit = JDTSupport.getCompilationUnit( method );
+        ICompilationUnit compilationUnit = getCompilationUnit( method );
         if( compilationUnit == null ) {
             return null;
         }
