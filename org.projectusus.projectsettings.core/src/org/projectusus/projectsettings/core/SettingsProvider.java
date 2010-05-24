@@ -6,6 +6,6 @@ package org.projectusus.projectsettings.core;
 
 public interface SettingsProvider {
 
-    public abstract ProjectSettings getUsusProjectSettings();
+    public abstract Preferences getUsusProjectSettings();
 
 }

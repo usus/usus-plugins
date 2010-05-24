@@ -9,7 +9,7 @@ import java.util.List;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.projectusus.projectsettings.core.ProjectSettings;
+import org.projectusus.projectsettings.core.Preferences;
 import org.projectusus.projectsettings.core.SettingsProviderExtension;
 
 public class SettingsProviderSelector {
@@ -21,8 +21,8 @@ public class SettingsProviderSelector {
         this.shell = shell;
     }
 
-    public ProjectSettings selectSetting() {
-        List<ProjectSettings> settings = new SettingsProviderExtension().loadSettings();
+    public Preferences selectSetting() {
+        List<Preferences> settings = new SettingsProviderExtension().loadSettings();
         ImportSettingsWizard wizard = new ImportSettingsWizard( settings );
         WizardDialog dialog = new WizardDialog( shell, wizard );
         dialog.create();

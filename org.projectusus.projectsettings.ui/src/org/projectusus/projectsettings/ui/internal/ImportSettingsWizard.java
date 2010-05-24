@@ -7,19 +7,19 @@ package org.projectusus.projectsettings.ui.internal;
 import java.util.List;
 
 import org.eclipse.jface.wizard.Wizard;
-import org.projectusus.projectsettings.core.ProjectSettings;
+import org.projectusus.projectsettings.core.Preferences;
 
 public class ImportSettingsWizard extends Wizard {
 
-    private final List<ProjectSettings> projectSettings;
+    private final List<Preferences> projectSettings;
     private SelectSettingPage settingsPage;
-    private ProjectSettings selectedSetting;
+    private Preferences selectedSetting;
 
-    public ProjectSettings getSelectedSetting() {
+    public Preferences getSelectedSetting() {
         return selectedSetting;
     }
 
-    public ImportSettingsWizard( List<ProjectSettings> projectSettings ) {
+    public ImportSettingsWizard( List<Preferences> projectSettings ) {
         this.projectSettings = projectSettings;
     }
 

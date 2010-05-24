@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.projectsettings.ui.internal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
@@ -16,13 +17,16 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.projectusus.projectsettings.core.WhichPrefs;
 
 public class SelectProjectPage extends WizardPage {
 
     private final List<IProject> projects;
     private IProject selectedProject;
+    private List<WhichPrefs> whichPrefs = new ArrayList<WhichPrefs>();
 
     public SelectProjectPage( List<IProject> projects ) {
         super( "SelectProjectPage" ); //$NON-NLS-1$
@@ -31,8 +35,8 @@ public class SelectProjectPage extends WizardPage {
         setDescription( getDescriptionText() );
     }
 
-    private String getDescriptionText() {
-        return "Select a master project. Compiler warning settings will be copied to the other projects."; //$NON-NLS-1$
+    protected String getDescriptionText() {
+        return "Select a master project. Settings will be copied to the other projects."; //$NON-NLS-1$
     }
 
     public void createControl( Composite parent ) {
@@ -42,8 +46,19 @@ public class SelectProjectPage extends WizardPage {
         composite.setLayout( gridLayout );
         Label label = new Label( composite, SWT.NULL );
         label.setText( getDescriptionText() );
+        createCheckbox( composite, "Copy Compiler Warnings Preferences", WhichPrefs.CompilerWarnings );
+        createCheckbox( composite, "Copy Codecompletion Preferences", WhichPrefs.CodeCompletion );
+        createCheckbox( composite, "Copy Formatting Preferences", WhichPrefs.Formatting );
         createProjectsList( composite );
         setControl( composite );
+    }
+
+    private void createCheckbox( Composite composite, String label, WhichPrefs whichPref ) {
+        Button checkbox = new Button( composite, SWT.CHECK );
+        checkbox.setText( label );
+        GridData gridData = new GridData();
+        checkbox.setLayoutData( gridData );
+        checkbox.addSelectionListener( new SelectWhichListener( checkbox, getWizard(), whichPrefs, whichPref ) );
     }
 
     private void createProjectsList( Composite composite ) {
@@ -77,6 +92,10 @@ public class SelectProjectPage extends WizardPage {
 
     public boolean isProjectSelected() {
         return getSelectedProject() != null;
+    }
+
+    public WhichPrefs[] getWhichPrefs() {
+        return whichPrefs.toArray( new WhichPrefs[whichPrefs.size()] );
     }
 
 }

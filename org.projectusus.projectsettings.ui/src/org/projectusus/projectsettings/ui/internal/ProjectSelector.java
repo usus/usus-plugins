@@ -19,7 +19,7 @@ public class ProjectSelector {
         this.shell = shell;
     }
 
-    public IProject selectProject( List<IProject> projects ) {
+    public ProjectSelectorResult selectProject( List<IProject> projects ) {
         UnifyProjectSettingsWizard wizard = new UnifyProjectSettingsWizard( projects );
 
         WizardDialog dialog = new WizardDialog( shell, wizard );
@@ -27,7 +27,7 @@ public class ProjectSelector {
         dialog.open();
 
         if( dialog.getReturnCode() == Window.OK ) {
-            return wizard.getSelectedProject();
+            return new ProjectSelectorResult( wizard.getSelectedProject(), wizard.getWhichPrefs() );
         }
         return null;
 

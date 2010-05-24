@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.wizard.Wizard;
+import org.projectusus.projectsettings.core.WhichPrefs;
 
 public class UnifyProjectSettingsWizard extends Wizard {
 
@@ -32,6 +33,10 @@ public class UnifyProjectSettingsWizard extends Wizard {
 
     public IProject getSelectedProject() {
         return selectProjectPage.getSelectedProject();
+    }
+
+    public WhichPrefs[] getWhichPrefs() {
+        return selectProjectPage.getWhichPrefs();
     }
 
 }

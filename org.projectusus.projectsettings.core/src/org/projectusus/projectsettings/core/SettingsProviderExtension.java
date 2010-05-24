@@ -39,8 +39,8 @@ public class SettingsProviderExtension {
         return null;
     }
 
-    public List<ProjectSettings> loadSettings() {
-        List<ProjectSettings> result = new ArrayList<ProjectSettings>();
+    public List<Preferences> loadSettings() {
+        List<Preferences> result = new ArrayList<Preferences>();
         for( SettingsProvider settingsProvider : loadSettingsProvider() ) {
             result.add( settingsProvider.getUsusProjectSettings() );
         }

@@ -11,8 +11,8 @@ public final class CoreTexts extends NLS {
     public static String projectSettings_defaultName;
     public static String projectSettings_settingsName;
 
-    public static String SettingsAccess_load_settings;
-    public static String SettingsAccess_save_settings;
+    public static String Error_load_settings;
+    public static String Error_save_settings;
 
     private static final String BUNDLE_NAME = CoreTexts.class.getPackage().getName() + ".coretexts"; //$NON-NLS-1$
 

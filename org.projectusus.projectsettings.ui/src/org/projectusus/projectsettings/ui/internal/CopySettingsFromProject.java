@@ -4,15 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.projectsettings.ui.internal;
 
+import static org.eclipse.ui.handlers.HandlerUtil.getActiveWorkbenchWindowChecked;
+
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.handlers.HandlerUtil;
-import org.projectusus.projectsettings.core.ProjectSettings;
 import org.projectusus.projectsettings.core.SettingsAccess;
 
 public class CopySettingsFromProject extends AbstractHandler {
@@ -21,27 +20,17 @@ public class CopySettingsFromProject extends AbstractHandler {
 
     public Object execute( ExecutionEvent event ) throws ExecutionException {
         List<IProject> projects = new ProjectSelectionExtractor( event ).getSelectedProjects();
-        IProject project = selectProject( event, projects );
-        if( project != null ) {
-            ProjectSettings settings = loadSettings( project );
-            // Don't save settings for selected project.
+        ProjectSelectorResult projectAndChoice = selectProject( event, projects );
+        if( projectAndChoice != null ) {
+            IProject project = projectAndChoice.getProject();
             projects.remove( project );
-            saveSettings( settings, projects );
+            settingsAccess.transferSettingsFromProject( projects, project, projectAndChoice.getWhichPrefs() );
         }
         return null;
     }
 
-    private IProject selectProject( ExecutionEvent event, List<IProject> projects ) throws ExecutionException {
-        Shell shell = HandlerUtil.getActiveWorkbenchWindowChecked( event ).getShell();
-        return new ProjectSelector( shell ).selectProject( projects );
-    }
-
-    private ProjectSettings loadSettings( IProject project ) {
-        return settingsAccess.loadSettings( project );
-    }
-
-    private void saveSettings( ProjectSettings settings, List<IProject> projects ) {
-        settingsAccess.save( projects, settings );
+    private ProjectSelectorResult selectProject( ExecutionEvent event, List<IProject> projects ) throws ExecutionException {
+        return new ProjectSelector( getActiveWorkbenchWindowChecked( event ).getShell() ).selectProject( projects );
     }
 
 }

@@ -5,14 +5,14 @@
 package org.projectusus.projectsettings.ui.internal;
 
 import org.eclipse.jface.viewers.LabelProvider;
-import org.projectusus.projectsettings.core.ProjectSettings;
+import org.projectusus.projectsettings.core.Preferences;
 
 public class SettingsLabelProvider extends LabelProvider {
 
     @Override
     public String getText( Object element ) {
-        if( element instanceof ProjectSettings ) {
-            ProjectSettings settings = (ProjectSettings)element;
+        if( element instanceof Preferences ) {
+            Preferences settings = (Preferences)element;
             return settings.getName();
 
         }

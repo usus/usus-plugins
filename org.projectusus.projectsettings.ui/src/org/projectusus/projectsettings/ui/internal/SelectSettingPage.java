@@ -17,14 +17,14 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.projectusus.projectsettings.core.ProjectSettings;
+import org.projectusus.projectsettings.core.Preferences;
 
 public class SelectSettingPage extends WizardPage {
 
-    private final List<ProjectSettings> projectSettings;
-    private ProjectSettings selectedSetting;
+    private final List<Preferences> projectSettings;
+    private Preferences selectedSetting;
 
-    protected SelectSettingPage( List<ProjectSettings> projectSettings ) {
+    protected SelectSettingPage( List<Preferences> projectSettings ) {
         super( "" ); //$NON-NLS-1$
         this.projectSettings = projectSettings;
         setTitle( "Select Settings" ); //$NON-NLS-1$
@@ -57,17 +57,17 @@ public class SelectSettingPage extends WizardPage {
 
             public void selectionChanged( SelectionChangedEvent event ) {
                 IStructuredSelection selection = (IStructuredSelection)event.getSelection();
-                setSelectedSetting( (ProjectSettings)selection.getFirstElement() );
+                setSelectedSetting( (Preferences)selection.getFirstElement() );
                 getWizard().getContainer().updateButtons();
             }
         } );
     }
 
-    public ProjectSettings getSelectedSetting() {
+    public Preferences getSelectedSetting() {
         return selectedSetting;
     }
 
-    public void setSelectedSetting( ProjectSettings selectedSetting ) {
+    public void setSelectedSetting( Preferences selectedSetting ) {
         this.selectedSetting = selectedSetting;
     }
 
