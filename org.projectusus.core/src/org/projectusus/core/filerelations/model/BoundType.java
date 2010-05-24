@@ -7,7 +7,10 @@ import org.eclipse.jdt.core.dom.SimpleType;
 
 public class BoundType {
 
-    private final ITypeBinding binding;
+    private IFile underlyingResource;
+    private final Classname classname;
+    private final Packagename packagename;
+    private final boolean fromSource;
 
     public static BoundType of( AbstractTypeDeclaration node ) {
         return node == null ? null : of( node.resolveBinding() );
@@ -33,26 +36,30 @@ public class BoundType {
     }
 
     private BoundType( ITypeBinding binding ) {
-        this.binding = binding;
+        classname = new Classname( binding.getName() );
+        packagename = Packagename.of( binding.getPackage().getName() );
+        fromSource = binding.isFromSource();
+        try {
+            underlyingResource = (IFile)binding.getJavaElement().getUnderlyingResource();
+        } catch( Throwable t ) {
+            underlyingResource = null;
+        }
+
     }
 
     public IFile getUnderlyingResource() {
-        try {
-            return (IFile)binding.getJavaElement().getUnderlyingResource();
-        } catch( Throwable t ) {
-            return null;
-        }
+        return underlyingResource;
     }
 
     public Classname getClassname() {
-        return new Classname( binding.getName() );
+        return classname;
     }
 
     public Packagename getPackagename() {
-        return Packagename.of( binding.getPackage().getName() );
+        return packagename;
     }
 
     public boolean isFromSource() {
-        return binding.isFromSource();
+        return fromSource;
     }
 }
