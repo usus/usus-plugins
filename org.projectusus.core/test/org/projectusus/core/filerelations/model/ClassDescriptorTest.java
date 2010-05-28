@@ -71,7 +71,7 @@ public class ClassDescriptorTest {
     public void classIsRemovedFromPackageOnDestruction() {
         ClassDescriptor descriptor = TestServiceManager.createDescriptor( file );
         Packagename packagename = descriptor.getPackagename();
-        ClassDescriptor.removeAllClassesIn( file );
+        descriptor.removeFromPool();
         assertFalse( packagename.containsClass( descriptor ) );
     }
 

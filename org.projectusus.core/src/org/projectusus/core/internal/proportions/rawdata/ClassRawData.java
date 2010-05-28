@@ -155,7 +155,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
 
     public void dropRawData() {
         if( descriptor != null ) {
-            descriptor.remove();
+            descriptor.prepareRemoval();
         } else {
             System.out.println( "Could not remove class " + className + ", descriptor == null" ); //$NON-NLS-1$ //$NON-NLS-2$
         }

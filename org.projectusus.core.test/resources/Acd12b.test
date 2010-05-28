@@ -1,5 +1,5 @@
-public interface Y {
+public interface Acd12b extends Acd12c {
 
-void m(Z x);
+// public static final Acd12c x = null;
 
 }

@@ -1,0 +1,8 @@
+public interface A {
+
+B m();
+
+}
+
+class B {
+}

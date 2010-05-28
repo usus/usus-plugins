@@ -16,17 +16,24 @@ public class FileRelation {
     private ClassDescriptor target;
     private boolean obsolete;
 
+    public static Set<FileRelation> getAllRelations() {
+        return new HashSet<FileRelation>( relations.values() );
+    }
+
     public static void clear() {
         relations = HashMultimap.create();
     }
 
     public static FileRelation of( ClassDescriptor source, ClassDescriptor target ) {
-        Set<FileRelation> relationSet = relations.get( source );
-        for( FileRelation relation : relationSet ) {
+        for( FileRelation relation : relations.get( source ) ) {
             if( relation.getTargetDescriptor().equals( target ) ) {
                 return relation;
             }
         }
+        return newFileRelation( source, target );
+    }
+
+    private static FileRelation newFileRelation( ClassDescriptor source, ClassDescriptor target ) {
         FileRelation fileRelation = new FileRelation( source, target );
         relations.put( source, fileRelation );
         return fileRelation;
@@ -64,14 +71,6 @@ public class FileRelation {
         return target;
     }
 
-    public boolean hasSourceClass( Classname clazz ) {
-        return getSourceClassname().equals( clazz );
-    }
-
-    public boolean hasTargetClass( Classname clazz ) {
-        return getTargetClassname().equals( clazz );
-    }
-
     public Packagename getSourcePackage() {
         return source.getPackagename();
     }
@@ -84,7 +83,7 @@ public class FileRelation {
         return !getSourcePackage().equals( getTargetPackage() );
     }
 
-    public void markAsObsolete() {
+    private void markAsObsolete() {
         obsolete = true;
     }
 
@@ -92,29 +91,10 @@ public class FileRelation {
         return obsolete;
     }
 
-    public static Set<FileRelation> getAllRelations() {
-        Set<FileRelation> result = new HashSet<FileRelation>();
-        result.addAll( relations.values() );
-        return result;
-    }
-
     public void remove() {
+        this.markAsObsolete();
         source.removeOutgoingRelation( this );
         target.removeIncomingRelation( this );
         relations.remove( source, this );
     }
-
-    // //////////
-
-    // public static void markAndRemoveAllRelationsStartingAt( IFile file ) {
-    // Set<FileRelation> removedRelations = outgoingRelations.removeAll( file );
-    // for( FileRelation relation : removedRelations ) {
-    // relation.markAsObsolete();
-    // incomingRelations.remove( relation.getTargetFile(), relation );
-    // }
-    // }
-    //
-    // public static void registerAllRelationsEndingAt( IFile file ) {
-    // registeredForRepair.addAll( incomingRelations.get( file ) );
-    // }
 }

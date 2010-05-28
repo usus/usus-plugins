@@ -17,7 +17,7 @@ import org.projectusus.core.IUsusModel;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
-import org.projectusus.core.filerelations.DefectFileRelations;
+import org.projectusus.core.filerelations.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.filerelations.model.Packagename;
@@ -49,7 +49,7 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
     public void updateAfterComputationRun( boolean computationSuccessful, IProgressMonitor monitor ) {
         needsFullRecompute = !computationSuccessful;
-        metrics.repairRelations( monitor );
+        metrics.cleanupRelations( monitor );
         ArrayList<CodeProportion> codeProportions = metrics.getCodeProportions();
         history.addComputationResult( codeProportions );
         cache.refreshAll( codeProportions );
@@ -126,7 +126,7 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
     public static void clear() {
         ClassDescriptor.clear();
-        DefectFileRelations.clear();
+        ClassDescriptorCleanup.clear();
         FileRelation.clear();
         Packagename.clear();
         PackageRepresenter.clear();

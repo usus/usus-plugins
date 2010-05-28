@@ -28,13 +28,6 @@ public class FileRelationTest {
     }
 
     @Test
-    public void hasSourceClass() {
-        FileRelation sourceToTarget = FileRelation.of( sourceDescriptor, targetDescriptor );
-        assertTrue( sourceToTarget.hasSourceClass( SOURCE_CLASS ) );
-        assertFalse( sourceToTarget.hasSourceClass( TARGET_CLASS ) );
-    }
-
-    @Test
     public void isCrossPackage() {
         ClassDescriptor first = createDescriptor( Packagename.of( "x" ) ); //$NON-NLS-1$
         ClassDescriptor second = createDescriptor( Packagename.of( "y" ) ); //$NON-NLS-1$

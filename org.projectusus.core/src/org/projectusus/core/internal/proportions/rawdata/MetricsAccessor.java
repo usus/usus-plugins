@@ -7,6 +7,7 @@ import static org.projectusus.core.basis.CodeProportionKind.CW;
 import static org.projectusus.core.basis.CodeProportionKind.KG;
 import static org.projectusus.core.basis.CodeProportionKind.ML;
 import static org.projectusus.core.basis.CodeProportionKind.PC;
+import static org.projectusus.core.basis.CodeProportionUnit.PROJECT;
 import static org.projectusus.core.internal.project.UsusProjectSupport.isUsusProject;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.basis.YellowCountResult;
-import org.projectusus.core.filerelations.DefectFileRelations;
+import org.projectusus.core.filerelations.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
 import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.BoundType;
@@ -60,6 +61,7 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         workspaceRawData.getProjectRawData( file.getProject() ).dropRawData( file );
     }
 
+    // TODO static. Raus hier?
     public void addClassReference( BoundType sourceType, BoundType targetType ) {
         FileRelation.of( ClassDescriptor.of( sourceType ), ClassDescriptor.of( targetType ) );
     }
@@ -128,7 +130,7 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     }
 
     private CodeProportion getCodeProportion( CodeProportionKind metric ) {
-        if( metric == CodeProportionKind.PC ) {
+        if( metric == PC ) {
             CodeStatistic basis = new CodeStatistic( metric.getUnit(), Packagename.getAll().size() );
             int violations = new PackageRelations().getPackageCycles().numberOfPackagesInAnyCycles();
             List<IHotspot> hotspots = new ArrayList<IHotspot>();
@@ -228,8 +230,7 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     }
 
     public YellowCountResult getWarnings() {
-        return new YellowCountResult( this.getNumberOf( CodeProportionUnit.PROJECT ), this.getNumberOf( CodeProportionKind.CW.getUnit() ),
-                this.getOverallMetric( CodeProportionKind.CW ), this.getNumberOfProjectsViolatingCW() );
+        return new YellowCountResult( this.getNumberOf( PROJECT ), this.getNumberOf( CW.getUnit() ), this.getOverallMetric( CW ), this.getNumberOfProjectsViolatingCW() );
     }
 
     public ArrayList<CodeProportion> getCodeProportions() {
@@ -249,26 +250,27 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         return count;
     }
 
-    public void repairRelations( IProgressMonitor monitor ) {
-        List<FileRelation> candidates = DefectFileRelations.extractRelationsRegisteredForRepair();
+    public void cleanupRelations( IProgressMonitor monitor ) {
+        Set<ClassDescriptor> candidates = ClassDescriptorCleanup.extractDescriptorsRegisteredForCleanup();
         monitor.beginTask( null, candidates.size() );
         monitor.subTask( CoreTexts.ususModel_UpdatingFileRelations );
-        for( FileRelation relation : candidates ) {
-            removeRelationIfTargetIsGone( relation );
+        for( ClassDescriptor descriptor : candidates ) {
+            removeRelationIfTargetIsGone( descriptor );
             monitor.worked( 1 );
         }
         monitor.done();
     }
 
-    private void removeRelationIfTargetIsGone( FileRelation relation ) {
-        IFile targetFile = relation.getTargetFile();
+    private void removeRelationIfTargetIsGone( ClassDescriptor descriptor ) {
+        IFile targetFile = descriptor.getFile();
         FileRawData fileRawData = getFileRawData( targetFile );
         if( fileRawData == null ) {
-            relation.remove();
+            // TODO
+            descriptor.removeFromPool();
         } else {
-            ClassRawData classRawData = fileRawData.findClass( relation.getTargetClassname() );
+            ClassRawData classRawData = fileRawData.findClass( descriptor.getClassname() );
             if( classRawData == null ) {
-                relation.remove();
+                descriptor.removeFromPool();
             }
         }
     }

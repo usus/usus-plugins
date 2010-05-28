@@ -52,21 +52,13 @@ public class ACDCollector extends Collector {
 
     @Override
     public boolean visit( SimpleType node ) {
-        if( currentType == null ) {
-            return true;
-        }
-
         BoundType targetType = BoundType.of( node );
-        if( targetType != null ) {
-            if( isTypeInSourceFile( targetType ) ) {
+        if( currentType != null && targetType != null ) {
+            if( targetType.isFromSource() ) {
                 getMetricsWriter().addClassReference( currentType, targetType );
             }
         }
         return true;
-    }
-
-    private boolean isTypeInSourceFile( BoundType targetType ) {
-        return targetType != null && targetType.isFromSource();
     }
 
     /**

@@ -14,9 +14,6 @@ public class ClassCollector extends Collector {
 
     @Override
     public boolean visit( TypeDeclaration node ) {
-        if( node.isInterface() ) {
-            return false;
-        }
         return addAbstractTypeDeclaration( node );
     }
 

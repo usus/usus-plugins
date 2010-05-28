@@ -18,6 +18,10 @@ class ClassDescriptorKey {
         this.packagename = packagename;
     }
 
+    public ClassDescriptorKey( BoundType type ) {
+        this( type.getUnderlyingResource(), type.getClassname(), type.getPackagename() );
+    }
+
     @Override
     public boolean equals( Object obj ) {
         return obj instanceof ClassDescriptorKey && equals( (ClassDescriptorKey)obj );
