@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.projectusus.ui.viewCategory"
+            class="org.projectusus.bugprison.ui.internal.BugsView"
+            icon="icons/full/eview16/bug.gif"
+            id="org.projectusus.ui.bugreport.bugsView"
+            name="Bugs">
+      </view>
+      <view
+            category="org.projectusus.ui.viewCategory"
+            class="org.projectusus.bugprison.ui.internal.AverageCodeProportionsView"
+            icon="icons/full/eview16/bug.gif"
+            id="org.projectusus.ui.bugreport.averageCodeProportionsView"
+            name="Average Code Proportions">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+            id="org.projectusus.bugprison.javaEditorContribution"
+            targetID="#CompilationUnitEditorContext">
+         <action
+               class="org.projectusus.bugprison.ui.internal.ReportBugAction"
+               icon="icons/full/elcl16/report_bug.gif"
+               id="org.projectusus.ui.bugreport"
+               label="Report Bug"
+               menubarPath="additions">
+         </action>
+      </viewerContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.projectusus.bugprison.reportBugForMethod"
+            objectClass="org.eclipse.jdt.core.IMethod">
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.projectusus.ui.internal.perspective.USUSPerspective">
+         <view
+               id="org.projectusus.ui.bugreport.bugsView"
+               minimized="false"
+               relationship="stack"
+               relative="org.projectusus.ui.internal.history.HistoryView">
+         </view>
+         <view
+               id="org.projectusus.ui.bugreport.averageCodeProportionsView"
+               minimized="false"
+               relationship="stack"
+               relative="org.projectusus.ui.bugreport.bugsView">
+         </view>
+         <viewShortcut
+               id="org.projectusus.ui.bugreport.bugsView">
+         </viewShortcut>
+         <viewShortcut
+               id="org.projectusus.ui.bugreport.averageCodeProportionsView">
+         </viewShortcut>
+      </perspectiveExtension>
+   </extension>
+
+</plugin>

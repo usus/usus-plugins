@@ -19,7 +19,7 @@ import org.projectusus.ui.internal.proportions.infopresenter.infomodel.IUsusInfo
 import org.projectusus.ui.internal.proportions.infopresenter.infomodel.UsusInfoBuilder;
 import org.projectusus.ui.internal.selection.EditorInputAnalysis;
 import org.projectusus.ui.internal.selection.JDTWorkspaceEditorInputAnalysis;
-import org.projectusus.ui.internal.viewer.LightweightDialog;
+import org.projectusus.ui.viewer.LightweightDialog;
 
 public class ShowUsusInfo extends AbstractHandler {
 

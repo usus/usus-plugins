@@ -19,7 +19,6 @@ public interface ISharedUsusImages {
     String OBJ_WARNINGS = ID + ".OBJ_WARNINGS";
 
     String VIEW_WARNING = ID + ".VIEW_WARNING";
-    String WIZARD_REPORT_BUG = ID + ".WIZARD_REPORT_BUG";
 
     Image getImage( String key );
 

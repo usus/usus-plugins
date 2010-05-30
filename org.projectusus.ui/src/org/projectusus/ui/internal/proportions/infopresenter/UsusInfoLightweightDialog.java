@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.projectusus.ui.internal.proportions.infopresenter.infomodel.IUsusInfo;
-import org.projectusus.ui.internal.viewer.LightweightDialog;
+import org.projectusus.ui.viewer.LightweightDialog;
 
 class UsusInfoLightweightDialog extends LightweightDialog {
 

@@ -18,7 +18,7 @@ import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.IHotspot;
 import org.projectusus.ui.internal.hotspots.actions.OpenHotspotInEditor;
 import org.projectusus.ui.internal.selection.ExtractHotspot;
-import org.projectusus.ui.internal.viewer.UsusTreeViewer;
+import org.projectusus.ui.viewer.UsusTreeViewer;
 
 public class HotspotsPage extends Page implements IHotspotsPage {
 

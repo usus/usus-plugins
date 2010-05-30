@@ -56,7 +56,8 @@ Export-Package: org.apache.commons.lang,
  org.projectusus.core.internal.proportions.rawdata,
  org.projectusus.core.internal.proportions.rawdata.collectors,
  org.projectusus.core.internal.proportions.rawdata.jdtdriver,
- org.projectusus.core.internal.util;x-friends:="org.projectusus.ui"
+ org.projectusus.core.internal.util;x-friends:="org.projectusus.ui",
+ org.projectusus.core.util
 Bundle-ClassPath: .,
  lib/joda-time-1.6.jar,
  lib/commons-lang-2.4.jar,

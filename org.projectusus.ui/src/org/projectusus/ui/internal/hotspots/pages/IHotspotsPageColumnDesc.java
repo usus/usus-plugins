@@ -5,7 +5,7 @@
 package org.projectusus.ui.internal.hotspots.pages;
 
 import org.projectusus.core.basis.IHotspot;
-import org.projectusus.ui.internal.viewer.IColumnDesc;
+import org.projectusus.ui.viewer.IColumnDesc;
 
 public interface IHotspotsPageColumnDesc extends IColumnDesc<IHotspot> {
 

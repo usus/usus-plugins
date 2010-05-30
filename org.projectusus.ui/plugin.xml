@@ -39,16 +39,6 @@
             id="org.projectusus.ui.internal.coveredprojects.CoveredProjectsView"
             category="org.projectusus.ui.viewCategory"
             name="Projects covered by Usus"/>
-      <view category="org.projectusus.ui.viewCategory"
-            class="org.projectusus.ui.internal.bugprison.BugsView"
-            icon="icons/full/eview16/bug.gif"
-            id="org.projectusus.ui.bugreport.bugsView"
-            name="Bugs" />
-      <view category="org.projectusus.ui.viewCategory"
-            class="org.projectusus.ui.internal.bugprison.AverageCodeProportionsView"
-            icon="icons/full/eview16/bug.gif"
-            id="org.projectusus.ui.bugreport.averageCodeProportionsView"
-            name="Average Code Proportions" />
    </extension>
    <!-- register page book pages for model objects -->
    <extension point="org.eclipse.core.runtime.adapters">
@@ -101,25 +91,6 @@
            contextId="org.eclipse.jdt.ui.javaEditorScope"
            commandId="org.projectusus.ui.internal.proportions.infopresenter.ShowUsusInfo"
            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-   </extension>
-   <extension
-         point="org.eclipse.ui.popupMenus">
-      <viewerContribution
-            id="org.projectusus.ui.bugreport.javaEditorContribution"
-            targetID="#CompilationUnitEditorContext">
-         <action
-               class="org.projectusus.ui.internal.bugprison.ReportBugAction"
-               icon="icons/full/elcl16/report_bug.gif"
-               id="org.projectusus.ui.bugreport"
-               label="Report Bug"
-               menubarPath="additions">
-         </action>
-      </viewerContribution>
-      <objectContribution
-            adaptable="false"
-            id="org.projectusus.ui.bugreport.reportBugForMethod"
-            objectClass="org.eclipse.jdt.core.IMethod">
-      </objectContribution>
    </extension>
    <extension point="org.projectusus.core.testSuiteSelectors">
       <selector class="org.projectusus.ui.internal.coveredprojects.TestSuiteSelector"/>

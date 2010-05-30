@@ -9,7 +9,7 @@ import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.widgets.Composite;
 import org.projectusus.core.IUsusElement;
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.ui.internal.viewer.UsusTreeViewer;
+import org.projectusus.ui.viewer.UsusTreeViewer;
 
 class CockpitTreeViewer extends UsusTreeViewer<CodeProportion> {
 

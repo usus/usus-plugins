@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.projectusus.bugprison"
+      label="Project Usus Bug Prison (experimental)"
+      version="0.4.1"
+      provider-name="projectusus.org">
+
+   <description url="http://www.projectusus.org">
+      Detain your bugs in the bug prison
+   </description>
+
+   <copyright>
+      Copyright (c) 2009-2010 by projectusus.org contributors
+   </copyright>
+
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      This software is made available by projectusus.org contributors
+under the terms of the Eclipse Public License, version 1.0 (EPL).
+A copy of the license text is provided with the software, or
+can be found at http://www.eclipse.org/legal/epl-v10.html.
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.projectusus.core"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.projectusus.ui"/>
+      <import plugin="org.eclipse.jdt.ui" version="3.5.2" match="greaterOrEqual"/>
+      <import feature="org.projectusus" version="0.4.1"/>
+   </requires>
+
+   <plugin
+         id="org.projectusus.bugprison.core"
+         download-size="0"
+         install-size="0"
+         version="0.4.1"
+         unpack="false"/>
+
+   <plugin
+         id="org.projectusus.bugprison.ui"
+         download-size="0"
+         install-size="0"
+         version="0.4.1"
+         unpack="false"/>
+
+</feature>

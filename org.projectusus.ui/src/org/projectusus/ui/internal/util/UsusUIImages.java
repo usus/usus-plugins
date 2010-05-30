@@ -12,6 +12,7 @@ import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.osgi.framework.Bundle;
+import org.projectusus.core.util.Defect;
 import org.projectusus.ui.internal.UsusUIPlugin;
 
 public class UsusUIImages implements ISharedUsusImages {
@@ -26,13 +27,12 @@ public class UsusUIImages implements ISharedUsusImages {
             Bundle bundle = UsusUIPlugin.getDefault().getBundle();
             baseUrl = new URL( bundle.getEntry( "/" ), pathPrefix );
         } catch( MalformedURLException malfux ) {
-            // do nothing
+            throw new Defect( malfux );
         }
     }
 
     private final static String OBJECT = "obj16/"; // basic colors - size 16x16
     private final static String VIEW = "eview16/"; // basic colors - size 16x16
-    private final static String WIZARDS = "wizban/";
 
     private UsusUIImages() {
         // no instantiation
@@ -56,7 +56,6 @@ public class UsusUIImages implements ISharedUsusImages {
         declare( OBJ_TEST_COVERAGE, OBJECT + "testcoverage.gif" );
         declare( OBJ_WARNINGS, OBJECT + "warnings.gif" );
         declare( VIEW_WARNING, VIEW + "warning.gif" );
-        declare( WIZARD_REPORT_BUG, WIZARDS + "report_bug.png" );
     }
 
     private void declare( final String key, final String path ) {

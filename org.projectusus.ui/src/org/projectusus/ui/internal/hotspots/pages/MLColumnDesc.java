@@ -4,11 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.hotspots.pages;
 
-import static org.projectusus.ui.internal.viewer.ColumnAlignment.RIGHT;
+import static org.projectusus.ui.viewer.ColumnAlignment.RIGHT;
 
 import org.projectusus.core.IMetricMLHotspot;
 import org.projectusus.core.basis.IHotspot;
-import org.projectusus.ui.internal.viewer.UsusTreeColumn;
+import org.projectusus.ui.viewer.UsusTreeColumn;
 
 public enum MLColumnDesc implements IHotspotsPageColumnDesc {
 

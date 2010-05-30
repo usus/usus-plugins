@@ -4,13 +4,13 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.cockpit;
 
-import static org.projectusus.ui.internal.viewer.ColumnAlignment.RIGHT;
+import static org.projectusus.ui.viewer.ColumnAlignment.RIGHT;
 
 import java.text.DecimalFormat;
 
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.ui.internal.viewer.IColumnDesc;
-import org.projectusus.ui.internal.viewer.UsusTreeColumn;
+import org.projectusus.ui.viewer.IColumnDesc;
+import org.projectusus.ui.viewer.UsusTreeColumn;
 
 enum CockpitColumnDesc implements IColumnDesc<CodeProportion> {
 
