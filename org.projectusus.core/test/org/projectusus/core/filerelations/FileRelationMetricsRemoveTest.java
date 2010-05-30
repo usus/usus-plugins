@@ -14,7 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
-import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.filerelations.model.Packagename;
 
 public class FileRelationMetricsRemoveTest {
@@ -136,29 +135,29 @@ public class FileRelationMetricsRemoveTest {
     private void setupTwoWithOneFile() {
         descriptor1 = createClassDescriptor( file1, "Descriptor1" ); //$NON-NLS-1$
         descriptor2 = createClassDescriptor( file1, "Descriptor2" ); //$NON-NLS-1$
-        FileRelation.of( descriptor1, descriptor2 );
+        descriptor1.addChild( descriptor2 );
     }
 
     private void setupTwoWithTwoFiles() {
         descriptor1 = createClassDescriptor( file1, "Descriptor1" ); //$NON-NLS-1$
         descriptor2 = createClassDescriptor( file2, "Descriptor2" ); //$NON-NLS-1$
-        FileRelation.of( descriptor1, descriptor2 );
+        descriptor1.addChild( descriptor2 );
     }
 
     private void setupThreeWithOneFile() {
         descriptor1 = createClassDescriptor( file1, "Descriptor1" ); //$NON-NLS-1$
         descriptor2 = createClassDescriptor( file1, "Descriptor2" ); //$NON-NLS-1$
         descriptor3 = createClassDescriptor( file1, "Descriptor3" ); //$NON-NLS-1$
-        FileRelation.of( descriptor1, descriptor2 );
-        FileRelation.of( descriptor2, descriptor3 );
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor3 );
     }
 
     private void setupThreeWithThreeFiles() {
         descriptor1 = createClassDescriptor( file1, "Descriptor1" ); //$NON-NLS-1$
         descriptor2 = createClassDescriptor( file2, "Descriptor2" ); //$NON-NLS-1$
         descriptor3 = createClassDescriptor( file3, "Descriptor3" ); //$NON-NLS-1$
-        FileRelation.of( descriptor1, descriptor2 );
-        FileRelation.of( descriptor2, descriptor3 );
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor3 );
     }
 
     private void checkRelationsToRepair( ClassDescriptor source, ClassDescriptor target ) {

@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
-import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class CCDTest {
 
@@ -19,6 +19,7 @@ public class CCDTest {
 
     @Before
     public void setupClassDescriptors() {
+        UsusModel.clear();
         descriptor1 = createClassDescriptor( "Descriptor1" ); //$NON-NLS-1$
         descriptor2 = createClassDescriptor( "Descriptor2" ); //$NON-NLS-1$
         descriptor3 = createClassDescriptor( "Descriptor3" ); //$NON-NLS-1$
@@ -36,15 +37,15 @@ public class CCDTest {
 
     @Test
     public void oneRelation() {
-        FileRelation.of( descriptor1, descriptor2 );
+        descriptor1.addChild( descriptor2 );
         assertEquals( 2, descriptor1.getCCD() );
         assertEquals( 1, descriptor2.getCCD() );
     }
 
     @Test
     public void oneClassKnows2() {
-        FileRelation.of( descriptor1, descriptor2 );
-        FileRelation.of( descriptor1, descriptor3 );
+        descriptor1.addChild( descriptor2 );
+        descriptor1.addChild( descriptor3 );
         assertEquals( 3, descriptor1.getCCD() );
         assertEquals( 1, descriptor2.getCCD() );
         assertEquals( 1, descriptor3.getCCD() );
@@ -52,8 +53,8 @@ public class CCDTest {
 
     @Test
     public void oneClassKnows1Knows1() {
-        FileRelation.of( descriptor1, descriptor2 );
-        FileRelation.of( descriptor2, descriptor3 );
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor3 );
         assertEquals( 3, descriptor1.getCCD() );
         assertEquals( 2, descriptor2.getCCD() );
         assertEquals( 1, descriptor3.getCCD() );
@@ -61,9 +62,9 @@ public class CCDTest {
 
     @Test
     public void threeClassCycle() {
-        FileRelation.of( descriptor1, descriptor2 );
-        FileRelation.of( descriptor2, descriptor3 );
-        FileRelation.of( descriptor3, descriptor1 );
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor3 );
+        descriptor3.addChild( descriptor1 );
         assertEquals( 3, descriptor1.getCCD() );
         assertEquals( 3, descriptor2.getCCD() );
         assertEquals( 3, descriptor3.getCCD() );
@@ -71,11 +72,45 @@ public class CCDTest {
 
     @Test
     public void threeClasses2InCycle() {
-        FileRelation.of( descriptor1, descriptor2 );
-        FileRelation.of( descriptor2, descriptor3 );
-        FileRelation.of( descriptor3, descriptor2 );
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor3 );
+        descriptor3.addChild( descriptor2 );
         assertEquals( 3, descriptor1.getCCD() );
         assertEquals( 2, descriptor2.getCCD() );
         assertEquals( 2, descriptor3.getCCD() );
     }
+
+    @Test
+    public void transitiveChildrenWithSelfLoop() {
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor2 );
+        descriptor2.addChild( descriptor3 );
+        assertEquals( 3, descriptor1.getCCD() );
+        assertEquals( 2, descriptor2.getCCD() );
+        assertEquals( 1, descriptor3.getCCD() );
+    }
+
+    @Test
+    public void calculateManyRelations() {
+        descriptor1.addChild( descriptor2 );
+        descriptor1.addChild( descriptor3 );
+        descriptor2.addChild( descriptor3 );
+        descriptor3.addChild( descriptor2 );
+        descriptor3.addChild( descriptor1 );
+        assertEquals( 3, descriptor1.getCCD() );
+        assertEquals( 3, descriptor2.getCCD() );
+        assertEquals( 3, descriptor3.getCCD() );
+    }
+
+    @Test
+    public void transitiveRelationsFromCyclicRelationsIncludingStart() {
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor3 );
+        descriptor3.addChild( descriptor2 );
+        descriptor3.addChild( descriptor1 );
+        assertEquals( 3, descriptor1.getCCD() );
+        assertEquals( 3, descriptor2.getCCD() );
+        assertEquals( 3, descriptor3.getCCD() );
+    }
+
 }

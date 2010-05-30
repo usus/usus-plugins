@@ -19,10 +19,10 @@ public class ClassDescriptor {
     protected final Set<FileRelation> outgoingRelations; // this == source
     protected final Set<FileRelation> incomingRelations; // this == target
 
-    // private Set<ClassDescriptor> transitiveChildrenCache = new HashSet<ClassDescriptor>();
+    private Set<ClassDescriptor> transitiveChildrenCache = new HashSet<ClassDescriptor>();
 
     public static void clear() {
-        classes = new HashMap<ClassDescriptorKey, ClassDescriptor>();
+        classes.clear();
     }
 
     public static Set<ClassDescriptor> getAll() {
@@ -108,27 +108,20 @@ public class ClassDescriptor {
         return key.packagename + "." + key.classname + "[" + key.file.getName() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
-    void addOutgoingRelation( FileRelation fileRelation ) {
+    private void addOutgoingRelation( FileRelation fileRelation ) {
         outgoingRelations.add( fileRelation );
-        // notifyParents();
+        fileRelation.getTargetDescriptor().incomingRelations.add( fileRelation );
+        clearOwnAndParentsTransitiveChildrenCache();
     }
 
-    void addIncomingRelation( FileRelation fileRelation ) {
-        incomingRelations.add( fileRelation );
+    private void clearOwnAndParentsTransitiveChildrenCache() {
+        if( !transitiveChildrenCache.isEmpty() ) {
+            transitiveChildrenCache.clear();
+            for( ClassDescriptor parent : getParents() ) {
+                parent.clearOwnAndParentsTransitiveChildrenCache();
+            }
+        }
     }
-
-    // private void notifyParents() {
-    // for( ClassDescriptor parent : getParents() ) {
-    // parent.clearTransitiveChildrenCache();
-    // }
-    // }
-    //
-    // private void clearTransitiveChildrenCache() {
-    // if( !transitiveChildrenCache.isEmpty() ) {
-    // transitiveChildrenCache.clear();
-    // notifyParents();
-    // }
-    // }
 
     public Set<ClassDescriptor> getChildren() {
         Set<ClassDescriptor> result = new HashSet<ClassDescriptor>();
@@ -138,7 +131,7 @@ public class ClassDescriptor {
         return result;
     }
 
-    public Set<ClassDescriptor> getParents() {
+    private Set<ClassDescriptor> getParents() {
         Set<ClassDescriptor> result = new HashSet<ClassDescriptor>();
         for( FileRelation relation : incomingRelations ) {
             result.add( relation.getSourceDescriptor() );
@@ -146,14 +139,11 @@ public class ClassDescriptor {
         return result;
     }
 
-    public Set<ClassDescriptor> getTransitiveChildren() {
-        Set<ClassDescriptor> result = new HashSet<ClassDescriptor>();
-        collectTransitiveChildren( result );
-        return result;
-        // if( transitiveChildrenCache.isEmpty() ) {
-        // collectTransitiveChildren( transitiveChildrenCache );
-        // }
-        // return transitiveChildrenCache;
+    private Set<ClassDescriptor> getTransitiveChildren() {
+        if( transitiveChildrenCache.isEmpty() ) {
+            collectTransitiveChildren( transitiveChildrenCache );
+        }
+        return transitiveChildrenCache;
     }
 
     private void collectTransitiveChildren( Set<ClassDescriptor> result ) {
@@ -165,7 +155,7 @@ public class ClassDescriptor {
         }
     }
 
-    public Set<ClassDescriptor> getTransitiveParents() {
+    private Set<ClassDescriptor> getTransitiveParents() {
         Set<ClassDescriptor> result = new HashSet<ClassDescriptor>();
         collectTransitiveParents( result );
         return result;
@@ -188,40 +178,11 @@ public class ClassDescriptor {
         return getTransitiveParents().size();
     }
 
-    public Set<FileRelation> getTransitiveRelationsFrom() {
-        Set<FileRelation> transitives = new HashSet<FileRelation>();
-        getTransitiveRelationsFrom( transitives );
-        return transitives;
-    }
-
-    private void getTransitiveRelationsFrom( Set<FileRelation> transitives ) {
-        for( FileRelation relation : outgoingRelations ) {
-            if( !relation.isObsolete() && transitives.add( relation ) ) {
-                relation.getTargetDescriptor().getTransitiveRelationsFrom( transitives );
-            }
-        }
-    }
-
-    public Set<FileRelation> getTransitiveRelationsTo() {
-        Set<FileRelation> transitives = new HashSet<FileRelation>();
-        getTransitiveRelationsTo( transitives );
-        return transitives;
-    }
-
-    private void getTransitiveRelationsTo( Set<FileRelation> transitives ) {
-        for( FileRelation relation : incomingRelations ) {
-            if( !relation.isObsolete() && transitives.add( relation ) ) {
-                relation.getSourceDescriptor().getTransitiveRelationsTo( transitives );
-            }
-        }
-    }
-
-    public void removeOutgoingRelation( FileRelation fileRelation ) {
+    private void removeOutgoingRelation( FileRelation fileRelation ) {
         outgoingRelations.remove( fileRelation );
-        // notifyParents();
     }
 
-    public void removeIncomingRelation( FileRelation fileRelation ) {
+    private void removeIncomingRelation( FileRelation fileRelation ) {
         incomingRelations.remove( fileRelation );
     }
 
@@ -231,18 +192,26 @@ public class ClassDescriptor {
     }
 
     private void markAndRemoveAllOutgoingRelations() {
-        Set<FileRelation> relationsToRemove = new HashSet<FileRelation>( outgoingRelations );
-        for( FileRelation relation : relationsToRemove ) {
-            relation.remove();
-        }
+        removeAll( new HashSet<FileRelation>( outgoingRelations ) );
+        clearOwnAndParentsTransitiveChildrenCache();
     }
 
     public void removeFromPool() {
-        for( FileRelation relation : incomingRelations ) {
-            relation.remove();
-        }
+        clearOwnAndParentsTransitiveChildrenCache();
+        removeAll( incomingRelations );
         // eigentlich auch für die outgoings, aber wir werden nur aufgerufen, wenn die outgoings schon leer sind
         removeDescriptor( this.key );
     }
 
+    private static void removeAll( Set<FileRelation> relationsToRemove ) {
+        for( FileRelation relation : relationsToRemove ) {
+            relation.remove();
+            relation.getSourceDescriptor().removeOutgoingRelation( relation );
+            relation.getTargetDescriptor().removeIncomingRelation( relation );
+        }
+    }
+
+    public void addChild( ClassDescriptor target ) {
+        addOutgoingRelation( FileRelation.of( this, target ) );
+    }
 }

@@ -40,7 +40,7 @@ public class FileRelationClassDescriptorTest {
     public void twoClassDescriptorsOneRelation() {
         ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor target = ClassDescriptor.of( file, classname2, packagename );
-        FileRelation.of( source, target );
+        source.addChild( target );
         checkTwo();
         assertEquals( 1, FileRelation.getAllRelations().size() );
     }
@@ -49,9 +49,9 @@ public class FileRelationClassDescriptorTest {
     public void threeClassDescriptorsTwoRelations() {
         ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor middle = ClassDescriptor.of( file, classname2, packagename );
-        FileRelation.of( source, middle );
+        source.addChild( middle );
         ClassDescriptor target = ClassDescriptor.of( file, classname3, packagename );
-        FileRelation.of( middle, target );
+        middle.addChild( target );
         checkThree();
         assertEquals( 2, FileRelation.getAllRelations().size() );
     }
@@ -60,7 +60,7 @@ public class FileRelationClassDescriptorTest {
     public void threeClassDescriptorsTwoRelationsFirstAndSecondRemovedInBetween() {
         ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor middle = ClassDescriptor.of( file, classname2, packagename );
-        FileRelation.of( source, middle );
+        source.addChild( middle );
         checkTwo();
         assertEquals( 1, FileRelation.getAllRelations().size() );
 
@@ -75,12 +75,12 @@ public class FileRelationClassDescriptorTest {
 
         ClassDescriptor source2 = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor middle2 = ClassDescriptor.of( file, classname2, packagename );
-        FileRelation.of( source2, middle2 );
+        source2.addChild( middle2 );
         assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
         ClassDescriptor target = ClassDescriptor.of( file, classname3, packagename );
-        FileRelation.of( middle2, target );
+        middle2.addChild( target );
         checkThree();
     }
 
@@ -88,7 +88,7 @@ public class FileRelationClassDescriptorTest {
     public void threeClassDescriptorsTwoRelationsSecondAndFirstRemovedInBetween() {
         ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor middle = ClassDescriptor.of( file, classname2, packagename );
-        FileRelation.of( source, middle );
+        source.addChild( middle );
         checkTwo();
         assertEquals( 1, FileRelation.getAllRelations().size() );
 
@@ -104,12 +104,12 @@ public class FileRelationClassDescriptorTest {
 
         ClassDescriptor source2 = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor middle2 = ClassDescriptor.of( file, classname2, packagename );
-        FileRelation.of( source2, middle2 );
+        source2.addChild( middle2 );
         assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
         ClassDescriptor target = ClassDescriptor.of( file, classname3, packagename );
-        FileRelation.of( middle2, target );
+        middle2.addChild( target );
         checkThree();
     }
 
@@ -117,7 +117,7 @@ public class FileRelationClassDescriptorTest {
     public void threeClassDescriptorsTwoRelationsSecondRemovedInBetween() {
         ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor middle = ClassDescriptor.of( file, classname2, packagename );
-        FileRelation.of( source, middle );
+        source.addChild( middle );
         assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
@@ -127,12 +127,12 @@ public class FileRelationClassDescriptorTest {
         checkOne();
 
         ClassDescriptor middle2 = ClassDescriptor.of( file, classname2, packagename );
-        FileRelation.of( source, middle2 );
+        source.addChild( middle2 );
         assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
         ClassDescriptor target = ClassDescriptor.of( file, classname3, packagename );
-        FileRelation.of( middle2, target );
+        middle2.addChild( target );
         checkThree();
     }
 
@@ -140,7 +140,7 @@ public class FileRelationClassDescriptorTest {
     public void twoClassDescriptorsOneRelationRemoved() {
         ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor target = ClassDescriptor.of( file, classname2, packagename );
-        FileRelation.of( source, target );
+        source.addChild( target );
         assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
@@ -154,7 +154,7 @@ public class FileRelationClassDescriptorTest {
     public void twoClassDescriptorsOneRelationBothRemovedSourceFirst() {
         ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor target = ClassDescriptor.of( file, classname2, packagename );
-        FileRelation.of( source, target );
+        source.addChild( target );
         assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
@@ -169,7 +169,7 @@ public class FileRelationClassDescriptorTest {
     public void twoClassDescriptorsOneRelationBothRemovedTargetFirst() {
         ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor target = ClassDescriptor.of( file, classname2, packagename );
-        FileRelation.of( source, target );
+        source.addChild( target );
         assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
@@ -180,6 +180,7 @@ public class FileRelationClassDescriptorTest {
         checkNull();
     }
 
+    // TODO ?? was wird hier getestet?
     @Test
     public void removeRelation() {
         ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
@@ -201,8 +202,8 @@ public class FileRelationClassDescriptorTest {
         Set<ClassDescriptor> descriptors = ClassDescriptor.getAll();
         assertEquals( 1, descriptors.size() );
         for( ClassDescriptor descriptor : descriptors ) {
-            assertEquals( 0, descriptor.getTransitiveRelationsFrom().size() );
-            assertEquals( 0, descriptor.getTransitiveRelationsTo().size() );
+            assertEquals( 1, descriptor.getCCD() );
+            assertEquals( 1, descriptor.getTransitiveParentCount() );
         }
         assertEquals( 1.0, ACDCalculator.getRelativeACD(), 0.0001 );
     }
@@ -212,11 +213,11 @@ public class FileRelationClassDescriptorTest {
         assertEquals( 2, descriptors.size() );
         for( ClassDescriptor descriptor : descriptors ) {
             if( descriptor.getClassname().toString().equals( class1 ) ) {
-                assertEquals( 1, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 0, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 2, descriptor.getCCD() );
+                assertEquals( 1, descriptor.getTransitiveParentCount() );
             } else if( descriptor.getClassname().toString().equals( class2 ) ) {
-                assertEquals( 0, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 1, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 1, descriptor.getCCD() );
+                assertEquals( 2, descriptor.getTransitiveParentCount() );
             } else {
                 fail( "Found unknown ClassDescriptor" ); //$NON-NLS-1$
             }
@@ -229,14 +230,14 @@ public class FileRelationClassDescriptorTest {
         assertEquals( 3, descriptors.size() );
         for( ClassDescriptor descriptor : descriptors ) {
             if( descriptor.getClassname().toString().equals( class1 ) ) {
-                assertEquals( 2, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 0, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 3, descriptor.getCCD() );
+                assertEquals( 1, descriptor.getTransitiveParentCount() );
             } else if( descriptor.getClassname().toString().equals( class2 ) ) {
-                assertEquals( 1, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 1, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 2, descriptor.getCCD() );
+                assertEquals( 2, descriptor.getTransitiveParentCount() );
             } else if( descriptor.getClassname().toString().equals( class3 ) ) {
-                assertEquals( 0, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 2, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 1, descriptor.getCCD() );
+                assertEquals( 3, descriptor.getTransitiveParentCount() );
             } else {
                 fail( "Found unknown ClassDescriptor" ); //$NON-NLS-1$
             }

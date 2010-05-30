@@ -14,7 +14,6 @@ public class FileRelation {
 
     private ClassDescriptor source;
     private ClassDescriptor target;
-    private boolean obsolete;
 
     public static Set<FileRelation> getAllRelations() {
         return new HashSet<FileRelation>( relations.values() );
@@ -42,9 +41,6 @@ public class FileRelation {
     private FileRelation( ClassDescriptor source, ClassDescriptor target ) {
         this.source = source;
         this.target = target;
-        source.addOutgoingRelation( this );
-        target.addIncomingRelation( this );
-        obsolete = false;
     }
 
     public IFile getSourceFile() {
@@ -83,18 +79,7 @@ public class FileRelation {
         return !getSourcePackage().equals( getTargetPackage() );
     }
 
-    private void markAsObsolete() {
-        obsolete = true;
-    }
-
-    public boolean isObsolete() {
-        return obsolete;
-    }
-
     public void remove() {
-        this.markAsObsolete();
-        source.removeOutgoingRelation( this );
-        target.removeIncomingRelation( this );
         relations.remove( source, this );
     }
 }

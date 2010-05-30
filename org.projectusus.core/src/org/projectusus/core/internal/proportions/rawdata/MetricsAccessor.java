@@ -38,7 +38,6 @@ import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
 import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.util.CoreTexts;
@@ -61,9 +60,8 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         workspaceRawData.getProjectRawData( file.getProject() ).dropRawData( file );
     }
 
-    // TODO static. Raus hier?
     public void addClassReference( BoundType sourceType, BoundType targetType ) {
-        FileRelation.of( ClassDescriptor.of( sourceType ), ClassDescriptor.of( targetType ) );
+        ClassDescriptor.of( sourceType ).addChild( ClassDescriptor.of( targetType ) );
     }
 
     public void setCCValue( IFile file, MethodDeclaration methodDecl, int value ) {
@@ -265,7 +263,6 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         IFile targetFile = descriptor.getFile();
         FileRawData fileRawData = getFileRawData( targetFile );
         if( fileRawData == null ) {
-            // TODO
             descriptor.removeFromPool();
         } else {
             ClassRawData classRawData = fileRawData.findClass( descriptor.getClassname() );

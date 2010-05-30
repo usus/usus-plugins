@@ -5,7 +5,8 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 public class BottleneckCalculator {
 
     public static int getBottleneckCount( ClassDescriptor descriptor ) {
-        return descriptor.getTransitiveRelationsFrom().size() * descriptor.getTransitiveRelationsTo().size();
+        // do not account for "this"
+        return (descriptor.getTransitiveParentCount() - 1) * (descriptor.getCCD() - 1);
     }
 
 }

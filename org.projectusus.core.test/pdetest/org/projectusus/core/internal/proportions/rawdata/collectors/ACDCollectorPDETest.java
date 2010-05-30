@@ -345,8 +345,8 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         Set<ClassDescriptor> descriptors = ClassDescriptor.getAll();
         assertEquals( 1, descriptors.size() );
         for( ClassDescriptor descriptor : descriptors ) {
-            assertEquals( 0, descriptor.getTransitiveRelationsFrom().size() );
-            assertEquals( 0, descriptor.getTransitiveRelationsTo().size() );
+            assertEquals( 1, descriptor.getCCD() );
+            assertEquals( 1, descriptor.getTransitiveParentCount() );
         }
         assertEquals( 1.0, getACD(), 0.0001 );
 
@@ -356,11 +356,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 2, descriptors.size() );
         for( ClassDescriptor descriptor : descriptors ) {
             if( descriptor.getClassname().toString().equals( "Acd12a" ) ) {
-                assertEquals( 1, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 0, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 2, descriptor.getCCD() );
+                assertEquals( 1, descriptor.getTransitiveParentCount() );
             } else if( descriptor.getClassname().toString().equals( "Acd12b" ) ) {
-                assertEquals( 0, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 1, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 1, descriptor.getCCD() );
+                assertEquals( 2, descriptor.getTransitiveParentCount() );
             } else {
                 fail( "Found unknown ClassDescriptor" );
             }
@@ -374,14 +374,14 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 3, descriptors.size() );
         for( ClassDescriptor descriptor : descriptors ) {
             if( descriptor.getClassname().toString().equals( "Acd12a" ) ) {
-                assertEquals( 2, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 0, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 3, descriptor.getCCD() );
+                assertEquals( 1, descriptor.getTransitiveParentCount() );
             } else if( descriptor.getClassname().toString().equals( "Acd12b" ) ) {
-                assertEquals( 1, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 1, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 2, descriptor.getCCD() );
+                assertEquals( 2, descriptor.getTransitiveParentCount() );
             } else if( descriptor.getClassname().toString().equals( "Acd12c" ) ) {
-                assertEquals( 0, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 2, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 1, descriptor.getCCD() );
+                assertEquals( 3, descriptor.getTransitiveParentCount() );
             } else {
                 fail( "Found unknown ClassDescriptor" );
             }
@@ -396,8 +396,8 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         Set<ClassDescriptor> descriptors = ClassDescriptor.getAll();
         assertEquals( 1, descriptors.size() );
         for( ClassDescriptor descriptor : descriptors ) {
-            assertEquals( 0, descriptor.getTransitiveRelationsFrom().size() );
-            assertEquals( 0, descriptor.getTransitiveRelationsTo().size() );
+            assertEquals( 1, descriptor.getCCD() );
+            assertEquals( 1, descriptor.getTransitiveParentCount() );
         }
         assertEquals( 1.0, getACD(), 0.0001 );
 
@@ -407,11 +407,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 2, descriptors.size() );
         for( ClassDescriptor descriptor : descriptors ) {
             if( descriptor.getClassname().toString().equals( "Acd17a" ) ) {
-                assertEquals( 1, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 0, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 2, descriptor.getCCD() );
+                assertEquals( 1, descriptor.getTransitiveParentCount() );
             } else if( descriptor.getClassname().toString().equals( "Acd17b" ) ) {
-                assertEquals( 0, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 1, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 1, descriptor.getCCD() );
+                assertEquals( 2, descriptor.getTransitiveParentCount() );
             } else {
                 fail( "Found unknown ClassDescriptor" );
             }
@@ -425,14 +425,14 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 3, descriptors.size() );
         for( ClassDescriptor descriptor : descriptors ) {
             if( descriptor.getClassname().toString().equals( "Acd17a" ) ) {
-                assertEquals( 2, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 0, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 3, descriptor.getCCD() );
+                assertEquals( 1, descriptor.getTransitiveParentCount() );
             } else if( descriptor.getClassname().toString().equals( "Acd17b" ) ) {
-                assertEquals( 1, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 1, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 2, descriptor.getCCD() );
+                assertEquals( 2, descriptor.getTransitiveParentCount() );
             } else if( descriptor.getClassname().toString().equals( "Acd17c" ) ) {
-                assertEquals( 0, descriptor.getTransitiveRelationsFrom().size() );
-                assertEquals( 2, descriptor.getTransitiveRelationsTo().size() );
+                assertEquals( 1, descriptor.getCCD() );
+                assertEquals( 3, descriptor.getTransitiveParentCount() );
             } else {
                 fail( "Found unknown ClassDescriptor" );
             }

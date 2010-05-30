@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
-import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.filerelations.model.Packagename;
 
 public class ClassDescriptorChildrenTest {
@@ -38,15 +37,15 @@ public class ClassDescriptorChildrenTest {
 
     @Test
     public void oneRelation() {
-        FileRelation.of( descriptor1, descriptor2 );
+        descriptor1.addChild( descriptor2 );
         assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
         assertThat( descriptor2.getChildren(), isEmptySet() );
     }
 
     @Test
     public void oneClassKnows2() {
-        FileRelation.of( descriptor1, descriptor2 );
-        FileRelation.of( descriptor1, descriptor3 );
+        descriptor1.addChild( descriptor2 );
+        descriptor1.addChild( descriptor3 );
         assertThat( descriptor1.getChildren(), isSetOf( descriptor2, descriptor3 ) );
         assertThat( descriptor2.getChildren(), isEmptySet() );
         assertThat( descriptor3.getChildren(), isEmptySet() );
@@ -54,8 +53,8 @@ public class ClassDescriptorChildrenTest {
 
     @Test
     public void oneClassKnows1Knows1() {
-        FileRelation.of( descriptor1, descriptor2 );
-        FileRelation.of( descriptor2, descriptor3 );
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor3 );
         assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
         assertThat( descriptor2.getChildren(), isSetOf( descriptor3 ) );
         assertThat( descriptor3.getChildren(), isEmptySet() );
@@ -63,9 +62,9 @@ public class ClassDescriptorChildrenTest {
 
     @Test
     public void threeClassCycle() {
-        FileRelation.of( descriptor1, descriptor2 );
-        FileRelation.of( descriptor2, descriptor3 );
-        FileRelation.of( descriptor3, descriptor1 );
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor3 );
+        descriptor3.addChild( descriptor1 );
         assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
         assertThat( descriptor2.getChildren(), isSetOf( descriptor3 ) );
         assertThat( descriptor3.getChildren(), isSetOf( descriptor1 ) );
@@ -73,9 +72,9 @@ public class ClassDescriptorChildrenTest {
 
     @Test
     public void threeClasses2InCycle() {
-        FileRelation.of( descriptor1, descriptor2 );
-        FileRelation.of( descriptor2, descriptor3 );
-        FileRelation.of( descriptor3, descriptor2 );
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor3 );
+        descriptor3.addChild( descriptor2 );
         assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
         assertThat( descriptor2.getChildren(), isSetOf( descriptor3 ) );
         assertThat( descriptor3.getChildren(), isSetOf( descriptor2 ) );
