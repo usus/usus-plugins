@@ -1,8 +1,5 @@
 package org.projectusus.core.filerelations.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.eclipse.core.resources.IFile;
 
 import com.google.common.collect.HashMultimap;
@@ -14,10 +11,6 @@ public class FileRelation {
 
     private ClassDescriptor source;
     private ClassDescriptor target;
-
-    public static Set<FileRelation> getAllRelations() {
-        return new HashSet<FileRelation>( relations.values() );
-    }
 
     public static void clear() {
         relations = HashMultimap.create();
@@ -73,10 +66,6 @@ public class FileRelation {
 
     public Packagename getTargetPackage() {
         return target.getPackagename();
-    }
-
-    public boolean isCrossPackage() {
-        return !getSourcePackage().equals( getTargetPackage() );
     }
 
     public void remove() {

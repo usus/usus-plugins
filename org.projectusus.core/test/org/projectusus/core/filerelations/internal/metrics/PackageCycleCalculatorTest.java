@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
@@ -43,46 +42,46 @@ public class PackageCycleCalculatorTest {
 
     @Test
     public void countPackagesInCycles2() {
-        FileRelation.of( I_A, II_A );
+        I_A.addChild( II_A );
         assertEquals( 0, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
     }
 
     @Test
     public void countPackagesInCycles3() {
-        FileRelation.of( I_A, I_B );
-        FileRelation.of( I_B, I_A );
+        I_A.addChild( I_B );
+        I_B.addChild( I_A );
         assertEquals( 0, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
     }
 
     @Test
     public void countPackagesInCycles4() {
-        FileRelation.of( I_A, II_A );
-        FileRelation.of( II_A, I_A );
+        I_A.addChild( II_A );
+        II_A.addChild( I_A );
         assertEquals( 2, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
     }
 
     @Test
     public void countPackagesInCycles5() {
-        FileRelation.of( I_A, II_A );
-        FileRelation.of( II_B, I_B );
+        I_A.addChild( II_A );
+        II_B.addChild( I_B );
         assertEquals( 2, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
     }
 
     @Test
     public void countPackagesInCycles6() {
-        FileRelation.of( I_A, II_A );
-        FileRelation.of( II_A, III_A );
-        FileRelation.of( III_A, I_A );
-        FileRelation.of( IV_A, III_A );
+        I_A.addChild( II_A );
+        II_A.addChild( III_A );
+        III_A.addChild( I_A );
+        IV_A.addChild( III_A );
         assertEquals( 3, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
     }
 
     @Test
     public void countPackagesInCycles7() {
-        FileRelation.of( I_A, II_A );
-        FileRelation.of( II_A, I_A );
-        FileRelation.of( III_A, IV_A );
-        FileRelation.of( IV_A, III_A );
+        I_A.addChild( II_A );
+        II_A.addChild( I_A );
+        III_A.addChild( IV_A );
+        IV_A.addChild( III_A );
         assertEquals( 4, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
     }
 }

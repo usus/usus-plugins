@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jgrapht.alg.StrongConnectivityInspector;
-import org.projectusus.core.filerelations.model.FileRelation;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.PackageRelation;
 import org.projectusus.core.filerelations.model.Packagename;
 
@@ -18,11 +18,9 @@ public class PackageRelations extends Relations<Packagename, PackageRelation> {
     }
 
     private void calcPackageRelations() {
-        for( FileRelation fileRelation : FileRelation.getAllRelations() ) {
-            if( fileRelation.isCrossPackage() ) {
-                Packagename source = fileRelation.getSourcePackage();
-                Packagename target = fileRelation.getTargetPackage();
-                this.add( new PackageRelation( source, target ), source, target );
+        for( ClassDescriptor source : ClassDescriptor.getAll() ) {
+            for( ClassDescriptor target : source.getChildrenInOtherPackages() ) {
+                this.add( new PackageRelation( source.getPackagename(), target.getPackagename() ), source.getPackagename(), target.getPackagename() );
             }
         }
     }

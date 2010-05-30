@@ -1,9 +1,9 @@
 package org.projectusus.core.filerelations.model;
 
-import static org.junit.Assert.assertFalse;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThat;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.ANOTHER_TARGET;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.ANOTHER_TARGET_CLASS;
 import static org.projectusus.core.filerelations.model.SimpleTestScenario.SOURCE;
@@ -31,9 +31,8 @@ public class FileRelationTest {
     public void isCrossPackage() {
         ClassDescriptor first = createDescriptor( Packagename.of( "x" ) ); //$NON-NLS-1$
         ClassDescriptor second = createDescriptor( Packagename.of( "y" ) ); //$NON-NLS-1$
-        assertTrue( FileRelation.of( first, second ).isCrossPackage() );
-        assertTrue( FileRelation.of( second, first ).isCrossPackage() );
-        assertFalse( FileRelation.of( first, first ).isCrossPackage() );
+        first.addChild( second );
+        assertThat( first.getChildrenInOtherPackages(), hasItems( second ) );
     }
 
     @Test

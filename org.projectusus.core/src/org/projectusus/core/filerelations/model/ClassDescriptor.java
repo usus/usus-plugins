@@ -131,6 +131,17 @@ public class ClassDescriptor {
         return result;
     }
 
+    public Set<ClassDescriptor> getChildrenInOtherPackages() {
+        Set<ClassDescriptor> result = new HashSet<ClassDescriptor>();
+        for( FileRelation relation : outgoingRelations ) {
+            ClassDescriptor target = relation.getTargetDescriptor();
+            if( !this.getPackagename().equals( target.getPackagename() ) ) {
+                result.add( target );
+            }
+        }
+        return result;
+    }
+
     private Set<ClassDescriptor> getParents() {
         Set<ClassDescriptor> result = new HashSet<ClassDescriptor>();
         for( FileRelation relation : incomingRelations ) {

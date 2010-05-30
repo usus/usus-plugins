@@ -33,7 +33,6 @@ public class FileRelationClassDescriptorTest {
     public void oneClassDescriptorNoRelations() {
         ClassDescriptor.of( file, classname1, packagename );
         checkOne();
-        assertEquals( 0, FileRelation.getAllRelations().size() );
     }
 
     @Test
@@ -42,7 +41,6 @@ public class FileRelationClassDescriptorTest {
         ClassDescriptor target = ClassDescriptor.of( file, classname2, packagename );
         source.addChild( target );
         checkTwo();
-        assertEquals( 1, FileRelation.getAllRelations().size() );
     }
 
     @Test
@@ -53,7 +51,6 @@ public class FileRelationClassDescriptorTest {
         ClassDescriptor target = ClassDescriptor.of( file, classname3, packagename );
         middle.addChild( target );
         checkThree();
-        assertEquals( 2, FileRelation.getAllRelations().size() );
     }
 
     @Test
@@ -62,21 +59,18 @@ public class FileRelationClassDescriptorTest {
         ClassDescriptor middle = ClassDescriptor.of( file, classname2, packagename );
         source.addChild( middle );
         checkTwo();
-        assertEquals( 1, FileRelation.getAllRelations().size() );
 
         source.prepareRemoval();
         cleanupDescriptors( 1 );
         checkOne();
-        assertEquals( 0, FileRelation.getAllRelations().size() );
+
         middle.prepareRemoval();
         cleanupDescriptors( 1 );
         checkNull();
-        assertEquals( 0, FileRelation.getAllRelations().size() );
 
         ClassDescriptor source2 = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor middle2 = ClassDescriptor.of( file, classname2, packagename );
         source2.addChild( middle2 );
-        assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
         ClassDescriptor target = ClassDescriptor.of( file, classname3, packagename );
@@ -90,22 +84,18 @@ public class FileRelationClassDescriptorTest {
         ClassDescriptor middle = ClassDescriptor.of( file, classname2, packagename );
         source.addChild( middle );
         checkTwo();
-        assertEquals( 1, FileRelation.getAllRelations().size() );
 
         middle.prepareRemoval();
-        assertEquals( 1, FileRelation.getAllRelations().size() );
         cleanupDescriptors( 1 );
         checkOne();
 
         source.prepareRemoval();
-        assertEquals( 0, FileRelation.getAllRelations().size() );
         cleanupDescriptors( 1 );
         checkNull();
 
         ClassDescriptor source2 = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor middle2 = ClassDescriptor.of( file, classname2, packagename );
         source2.addChild( middle2 );
-        assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
         ClassDescriptor target = ClassDescriptor.of( file, classname3, packagename );
@@ -118,17 +108,14 @@ public class FileRelationClassDescriptorTest {
         ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor middle = ClassDescriptor.of( file, classname2, packagename );
         source.addChild( middle );
-        assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
         middle.prepareRemoval();
-        assertEquals( 1, FileRelation.getAllRelations().size() );
         cleanupDescriptors( 1 );
         checkOne();
 
         ClassDescriptor middle2 = ClassDescriptor.of( file, classname2, packagename );
         source.addChild( middle2 );
-        assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
         ClassDescriptor target = ClassDescriptor.of( file, classname3, packagename );
@@ -141,11 +128,9 @@ public class FileRelationClassDescriptorTest {
         ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor target = ClassDescriptor.of( file, classname2, packagename );
         source.addChild( target );
-        assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
         target.prepareRemoval();
-        assertEquals( 1, FileRelation.getAllRelations().size() );
         cleanupDescriptors( 1 );
         checkOne();
     }
@@ -155,12 +140,10 @@ public class FileRelationClassDescriptorTest {
         ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor target = ClassDescriptor.of( file, classname2, packagename );
         source.addChild( target );
-        assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
         source.prepareRemoval();
         target.prepareRemoval();
-        assertEquals( 0, FileRelation.getAllRelations().size() );
         cleanupDescriptors( 2 );
         checkNull();
     }
@@ -170,27 +153,12 @@ public class FileRelationClassDescriptorTest {
         ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
         ClassDescriptor target = ClassDescriptor.of( file, classname2, packagename );
         source.addChild( target );
-        assertEquals( 1, FileRelation.getAllRelations().size() );
         checkTwo();
 
         target.prepareRemoval();
         source.prepareRemoval();
-        assertEquals( 0, FileRelation.getAllRelations().size() );
         cleanupDescriptors( 2 );
         checkNull();
-    }
-
-    // TODO ?? was wird hier getestet?
-    @Test
-    public void removeRelation() {
-        ClassDescriptor source = ClassDescriptor.of( file, classname1, packagename );
-        ClassDescriptor middle = ClassDescriptor.of( file, classname2, packagename );
-        FileRelation relation = FileRelation.of( source, middle );
-        assertEquals( 1, FileRelation.getAllRelations().size() );
-        assertEquals( 2, ClassDescriptor.getAll().size() );
-
-        relation.getTargetDescriptor().removeFromPool();
-        relation.remove();
     }
 
     private void checkNull() {
