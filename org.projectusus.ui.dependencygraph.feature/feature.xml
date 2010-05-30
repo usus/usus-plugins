@@ -10,7 +10,7 @@
    </description>
 
    <copyright>
-      Copyright (c) 2009 by projectusus.org contributors
+      Copyright (c) 2009-2010 by projectusus.org contributors
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
@@ -20,11 +20,17 @@ A copy of the license text is provided with the software, or
 can be found at http://www.eclipse.org/legal/epl-v10.html.
    </license>
 
+   <url>
+      <discovery label="GEF Update Site" url="http://download.eclipse.org/tools/gef/updates/releases/"/>
+   </url>
+
    <requires>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.runtime"/>
-      <import feature="org.projectusus" version="0.4.1" match="greaterOrEqual"/>
-      <import feature="org.eclipse.zest" version="1.1.2.v20100111-1352-6618yD6DH8G6N59OM53B2A" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.zest.core" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.zest.layouts" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.projectusus.core" version="0.3.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.zest" version="1.1.2.v20100111-1352-6618yD6DH8G6N59OM53B2A"/>
    </requires>
 
    <plugin
