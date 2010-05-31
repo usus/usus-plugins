@@ -6,7 +6,11 @@ public class Counter {
     private Stack<Integer> counts = new Stack<Integer>();
 
     public void startNewCount() {
-        counts.push( new Integer( 0 ) );
+        startNewCount( 0 );
+    }
+
+    public void startNewCount( int startValue ) {
+        counts.push( new Integer( startValue ) );
     }
 
     public int getAndClearCount() {

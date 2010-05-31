@@ -8,16 +8,16 @@ import org.eclipse.jdt.core.dom.EnhancedForStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.WhileStatement;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
 @SuppressWarnings( "unused" )
 public class CCCollector extends Collector {
 
-    private int ccCount;
+    private Counter ccCount = new Counter();
 
     public CCCollector( IFile file ) {
         super( file );
@@ -93,20 +93,20 @@ public class CCCollector extends Collector {
     }
 
     private void submit( MethodDeclaration node ) {
-        getMetricsWriter().setCCValue( file, node, ccCount );
+        getMetricsWriter().setCCValue( file, node, ccCount.getAndClearCount() );
     }
 
     private void submit( Initializer node ) {
-        getMetricsWriter().setCCValue( file, node, ccCount );
+        getMetricsWriter().setCCValue( file, node, ccCount.getAndClearCount() );
     }
 
     private boolean increase() {
-        ccCount++;
+        ccCount.increaseLastCountBy( 1 );
         return true;
     }
 
     private boolean init() {
-        ccCount = 1;
+        ccCount.startNewCount( 1 );
         return true;
     }
 

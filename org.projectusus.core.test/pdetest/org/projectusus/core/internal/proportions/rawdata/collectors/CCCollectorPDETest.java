@@ -74,6 +74,22 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 2, getMetricsAccessor().getOverallMetric( CodeProportionKind.CC ) );
     }
 
+    @Test
+    public void bestScores2Methods() throws Exception {
+        createFileAndBuild( "_bestScores2" );
+        assertEquals( 1, getMetricsAccessor().getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 3, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 5, getMetricsAccessor().getOverallMetric( CodeProportionKind.CC ) );
+    }
+
+    @Test
+    public void bestScores1Method() throws Exception {
+        createFileAndBuild( "_bestScores1" );
+        assertEquals( 1, getMetricsAccessor().getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 2, getMetricsAccessor().getNumberOf( CodeProportionUnit.METHOD ) );
+        assertEquals( 4, getMetricsAccessor().getOverallMetric( CodeProportionKind.CC ) );
+    }
+
     protected IFile createFileAndBuild( String filenumber ) throws Exception {
         return super.createFileAndBuild( "CC" + filenumber );
     }
