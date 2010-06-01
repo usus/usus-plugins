@@ -54,9 +54,7 @@ public class ACDCollector extends Collector {
     public boolean visit( SimpleType node ) {
         BoundType targetType = BoundType.of( node );
         if( currentType != null && targetType != null ) {
-            if( targetType.isFromSource() ) {
-                getMetricsWriter().addClassReference( currentType, targetType );
-            }
+            getMetricsWriter().addClassReference( currentType, targetType );
         }
         return true;
     }

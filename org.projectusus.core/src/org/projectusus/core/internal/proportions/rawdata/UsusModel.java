@@ -19,7 +19,6 @@ import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.filerelations.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.filerelations.model.FileRelation;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
@@ -127,8 +126,6 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
     public static void clear() {
         ClassDescriptor.clear();
         ClassDescriptorCleanup.clear();
-        FileRelation.clear();
         Packagename.clear();
-        PackageRepresenter.clear();
     }
 }

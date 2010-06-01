@@ -15,28 +15,18 @@ public class PackageRepresenter implements GraphNode {
     private final Packagename packagename;
     private static PackageRelations relations;
 
-    public static void clear() {
-        relations = null;
-    }
-
     public static Set<GraphNode> transformToRepresenterSet( Set<Packagename> classes, final PackageRelations rel ) {
+        relations = rel;
         Function<Packagename, PackageRepresenter> function = new Function<Packagename, PackageRepresenter>() {
             public PackageRepresenter apply( Packagename descriptor ) {
-                return new PackageRepresenter( descriptor, rel );
+                return new PackageRepresenter( descriptor );
             }
         };
         return new HashSet<GraphNode>( Collections2.transform( classes, function ) );
     }
 
-    public PackageRepresenter( Packagename pkg, PackageRelations relations ) {
+    private PackageRepresenter( Packagename pkg ) {
         this.packagename = pkg;
-        initRelations( relations );
-    }
-
-    private void initRelations( PackageRelations packageRelations ) {
-        if( PackageRepresenter.relations == null ) {
-            PackageRepresenter.relations = packageRelations;
-        }
     }
 
     public Set<? extends GraphNode> getChildren() {

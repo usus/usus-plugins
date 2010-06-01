@@ -4,13 +4,14 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.SimpleType;
+import org.projectusus.core.internal.project.IUSUSProject;
 
 public class BoundType {
 
+    private static final String JAVA = "java"; //$NON-NLS-1$
     private IFile underlyingResource;
     private final Classname classname;
     private final Packagename packagename;
-    private final boolean fromSource;
 
     public static BoundType of( AbstractTypeDeclaration node ) {
         return node == null ? null : of( node.resolveBinding() );
@@ -28,6 +29,18 @@ public class BoundType {
         if( erasedType == null || isATypeVariable( erasedType ) ) {
             return null;
         }
+        try {
+            IFile underlyingResource = (IFile)erasedType.getJavaElement().getUnderlyingResource();
+            if( !underlyingResource.getFileExtension().equals( JAVA ) ) {
+                return null;
+            }
+            IUSUSProject adapter = (IUSUSProject)underlyingResource.getProject().getAdapter( IUSUSProject.class );
+            if( adapter == null || !adapter.isUsusProject() ) {
+                return null;
+            }
+        } catch( Throwable t ) {
+            return null;
+        }
         return new BoundType( erasedType );
     }
 
@@ -38,7 +51,6 @@ public class BoundType {
     private BoundType( ITypeBinding binding ) {
         classname = new Classname( binding.getName() );
         packagename = Packagename.of( binding.getPackage().getName() );
-        fromSource = binding.isFromSource();
         try {
             underlyingResource = (IFile)binding.getJavaElement().getUnderlyingResource();
         } catch( Throwable t ) {
@@ -59,7 +71,4 @@ public class BoundType {
         return packagename;
     }
 
-    public boolean isFromSource() {
-        return fromSource;
-    }
 }

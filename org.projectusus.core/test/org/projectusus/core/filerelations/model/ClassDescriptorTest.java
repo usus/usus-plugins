@@ -1,10 +1,13 @@
 package org.projectusus.core.filerelations.model;
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.projectusus.core.filerelations.model.TestServiceManager.createDescriptor;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
@@ -73,6 +76,14 @@ public class ClassDescriptorTest {
         Packagename packagename = descriptor.getPackagename();
         descriptor.removeFromPool();
         assertFalse( packagename.containsClass( descriptor ) );
+    }
+
+    @Test
+    public void isCrossPackage() {
+        ClassDescriptor first = createDescriptor( Packagename.of( "x" ) ); //$NON-NLS-1$
+        ClassDescriptor second = createDescriptor( Packagename.of( "y" ) ); //$NON-NLS-1$
+        first.addChild( second );
+        assertThat( first.getChildrenInOtherPackages(), hasItems( second ) );
     }
 
 }
