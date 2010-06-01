@@ -1,10 +1,14 @@
 package org.projectusus.core.internal.proportions.rawdata.collectors;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
@@ -72,6 +76,30 @@ public class ACDCollector extends Collector {
      * 
      * Therefore, it should be sufficient to treat SimpleType.
      */
+
+    @Override
+    public boolean visit( MethodInvocation node ) {
+        Expression targetExpression = node.getExpression();
+        if( targetExpression != null ) {
+            if( targetExpression.getNodeType() == ASTNode.SIMPLE_NAME ) {
+                BoundType targetType = BoundType.of( (SimpleName)targetExpression );
+                if( currentType != null && targetType != null ) {
+                    // we found a static method invocation
+                    getMetricsWriter().addClassReference( currentType, targetType );
+                }
+            }
+        } else {
+            // method invocation without target expression
+            BoundType declaringType = BoundType.of( node );
+            if( currentType != null && declaringType != null && !currentType.equals( declaringType ) ) {
+                getMetricsWriter().addClassReference( currentType, declaringType );
+            }
+            // if( declaringType == null ) {
+            // System.out.println( "Declaring type of invocation " + node.toString() + " in class " + currentType.getClassname() + " is null" );
+            // }
+        }
+        return true;
+    }
 
     private void setCurrentType( AbstractTypeDeclaration node ) {
         currentType = BoundType.of( node );

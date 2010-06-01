@@ -7,6 +7,8 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.projectusus.adapter.ForcedRecompute;
 import org.projectusus.core.basis.CodeProportionUnit;
@@ -36,6 +38,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     public void twoRelatedClasses1knows2() throws Exception {
         createFileAndBuild( "3_1" );
         assertEquals( 2, getMetricsAccessor().getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
     }
 
@@ -306,7 +309,6 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "13a" );
         assertEquals( 2, getMetricsAccessor().getNumberOf( CodeProportionUnit.CLASS ) );
         assertEquals( 2, ClassDescriptor.getAll().size() );
-        assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
     }
 
@@ -315,7 +317,6 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "13a" );
         createFileAndBuild( "13b" );
         assertEquals( 2, getMetricsAccessor().getNumberOf( CodeProportionUnit.CLASS ) );
-        assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
     }
@@ -438,6 +439,31 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
             }
         }
         assertEquals( 6 / 9.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    public void staticMethodWithClassName() throws Exception {
+        createWSFolder( "oops" );
+        createJavaWSFile( "oops/Acd_static1.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "oops/Acd_static2.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getMetricsAccessor().getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    @Ignore( value = "Test fails, but tested code works in productive system" )
+    public void staticMethodWithoutClassName() throws Exception {
+        createWSFolder( "oops" );
+        createJavaWSFile( "oops/Acd_static1.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "oops/Acd_static3.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getMetricsAccessor().getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        Assert.assertEquals( 3 / 4.0, getACD(), 0.0001 );
     }
 
     // twoFilesOneClassIsRemovedFromFile

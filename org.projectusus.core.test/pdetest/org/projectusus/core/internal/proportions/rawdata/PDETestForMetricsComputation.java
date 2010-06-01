@@ -39,6 +39,19 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
         return Platform.getBundle( "org.projectusus.core.test" ).getEntry( "resources/" + fileName );
     }
 
+    protected IFile createJavaWSFile( String fileName ) throws Exception {
+        return createWSFile( fileName, loadJavaContent( fileName ) );
+    }
+
+    protected String loadJavaContent( String fileName ) throws Exception {
+        URL entry = loadJavaEntry( fileName );
+        return readPreservingBinaryIdentity( entry.openStream() );
+    }
+
+    private URL loadJavaEntry( String fileName ) {
+        return Platform.getBundle( "org.projectusus.core.test" ).getEntry( "javaresources/" + fileName );
+    }
+
     private String readPreservingBinaryIdentity( InputStream is ) throws IOException {
         StringBuffer result = new StringBuffer();
         Reader reader = new InputStreamReader( is );

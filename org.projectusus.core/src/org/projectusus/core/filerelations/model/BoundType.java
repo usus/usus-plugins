@@ -1,8 +1,14 @@
 package org.projectusus.core.filerelations.model;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.IBinding;
+import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.projectusus.core.internal.project.IUSUSProject;
 
@@ -21,8 +27,31 @@ public class BoundType {
         return node == null ? null : of( node.resolveBinding() );
     }
 
+    public static BoundType of( SimpleName node ) {
+        if( node != null ) {
+            IBinding binding = node.resolveBinding();
+            if( binding instanceof ITypeBinding ) {
+                return of( (ITypeBinding)binding );
+            }
+        }
+        return null;
+    }
+
+    public static BoundType of( MethodInvocation node ) {
+        if( node != null ) {
+            IMethodBinding methodBinding = node.resolveMethodBinding();
+            if( methodBinding != null ) {
+                return of( methodBinding.getDeclaringClass() );
+            }
+        }
+        return null;
+    }
+
     private static BoundType of( final ITypeBinding type ) {
         if( type == null ) {
+            return null;
+        }
+        if( type.isPrimitive() ) {
             return null;
         }
         ITypeBinding erasedType = type.getErasure();
@@ -71,4 +100,17 @@ public class BoundType {
         return packagename;
     }
 
+    @Override
+    public boolean equals( Object obj ) {
+        return obj instanceof BoundType && equals( (BoundType)obj );
+    }
+
+    private boolean equals( BoundType other ) {
+        return new EqualsBuilder().append( classname, other.classname ).append( packagename, other.packagename ).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append( classname ).append( packagename ).toHashCode();
+    }
 }
