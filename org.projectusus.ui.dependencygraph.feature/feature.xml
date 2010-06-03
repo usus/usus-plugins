@@ -2,7 +2,7 @@
 <feature
       id="org.projectusus.ui.dependencygraph.feature"
       label="Project Usus Dependency Graph (optional)"
-      version="0.4.1"
+      version="0.4.2"
       provider-name="projectusus.org">
 
    <description url="http://www.projectusus.org">
@@ -29,7 +29,7 @@ can be found at http://www.eclipse.org/legal/epl-v10.html.
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.zest.core" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.zest.layouts" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="org.projectusus.core" version="0.3.0" match="greaterOrEqual"/>
+      <import feature="org.projectusus" version="0.4.2"/>
       <import feature="org.eclipse.zest" version="1.1.2.v20100111-1352-6618yD6DH8G6N59OM53B2A"/>
    </requires>
 
@@ -37,7 +37,7 @@ can be found at http://www.eclipse.org/legal/epl-v10.html.
          id="org.projectusus.ui.dependencygraph"
          download-size="0"
          install-size="0"
-         version="0.4.1"
+         version="0.4.2"
          unpack="false"/>
 
 </feature>

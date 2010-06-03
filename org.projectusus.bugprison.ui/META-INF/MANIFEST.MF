@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Project Usus Bug Prison UI
 Bundle-SymbolicName: org.projectusus.bugprison.ui;singleton:=true
-Bundle-Version: 0.4.1
+Bundle-Version: 0.4.2
 Bundle-Activator: org.projectusus.bugprison.ui.BugPrisonUIPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.projectusus.bugprison.core,
  org.projectusus.ui,
- org.eclipse.jdt.ui;bundle-version="3.5.2"
+ org.eclipse.jdt.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: projectusus.org

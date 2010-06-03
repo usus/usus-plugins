@@ -2,7 +2,7 @@
 <feature
       id="org.projectusus.bugprison"
       label="Project Usus Bug Prison (experimental)"
-      version="0.4.1"
+      version="0.4.2"
       provider-name="projectusus.org">
 
    <description url="http://www.projectusus.org">
@@ -27,22 +27,22 @@ can be found at http://www.eclipse.org/legal/epl-v10.html.
       <import plugin="org.eclipse.jdt.core"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.projectusus.ui"/>
-      <import plugin="org.eclipse.jdt.ui" version="3.5.2" match="greaterOrEqual"/>
-      <import feature="org.projectusus" version="0.4.1"/>
+      <import plugin="org.eclipse.jdt.ui"/>
+      <import feature="org.projectusus" version="0.4.2"/>
    </requires>
 
    <plugin
          id="org.projectusus.bugprison.core"
          download-size="0"
          install-size="0"
-         version="0.4.1"
+         version="0.4.2"
          unpack="false"/>
 
    <plugin
          id="org.projectusus.bugprison.ui"
          download-size="0"
          install-size="0"
-         version="0.4.1"
+         version="0.4.2"
          unpack="false"/>
 
 </feature>

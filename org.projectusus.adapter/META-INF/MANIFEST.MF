@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Projectusus Adapter
 Bundle-SymbolicName: org.projectusus.adapter;singleton:=true
-Bundle-Version: 0.4.1
+Bundle-Version: 0.4.2
 Bundle-Activator: org.projectusus.adapter.UsusAdapterPlugin
 Bundle-Vendor: projectusus.org
 Export-Package: org.projectusus.adapter
@@ -10,6 +10,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.eclipse.jdt.core,
  org.eclipse.core.runtime,
- org.projectusus.core;bundle-version="0.4.1"
+ org.projectusus.core;bundle-version="0.4.2"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
