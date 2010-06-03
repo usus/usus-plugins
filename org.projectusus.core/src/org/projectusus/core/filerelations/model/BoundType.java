@@ -48,44 +48,44 @@ public class BoundType {
     }
 
     private static BoundType of( final ITypeBinding type ) {
-        if( type == null ) {
-            return null;
-        }
-        if( type.isPrimitive() ) {
+        if( type == null || type.isPrimitive() ) {
             return null;
         }
         ITypeBinding erasedType = type.getErasure();
-        if( erasedType == null || isATypeVariable( erasedType ) ) {
-            return null;
-        }
-        try {
-            IFile underlyingResource = (IFile)erasedType.getJavaElement().getUnderlyingResource();
-            if( !underlyingResource.getFileExtension().equals( JAVA ) ) {
-                return null;
-            }
-            IUSUSProject adapter = (IUSUSProject)underlyingResource.getProject().getAdapter( IUSUSProject.class );
-            if( adapter == null || !adapter.isUsusProject() ) {
-                return null;
-            }
-        } catch( Throwable t ) {
+        if( erasedType == null || isATypeVariable( erasedType ) || resourceIsNotInUsusProject( erasedType ) ) {
             return null;
         }
         return new BoundType( erasedType );
     }
 
-    private static boolean isATypeVariable( ITypeBinding erasedType ) {
-        return erasedType.isTypeVariable() || erasedType.isCapture() || erasedType.isWildcardType();
+    private static boolean resourceIsNotInUsusProject( ITypeBinding binding ) {
+        IFile underlyingResource = determineUnderlyingResource( binding );
+        if( underlyingResource == null || !underlyingResource.getFileExtension().equals( JAVA ) ) {
+            return true;
+        }
+        IUSUSProject adapter = (IUSUSProject)underlyingResource.getProject().getAdapter( IUSUSProject.class );
+        if( adapter == null || !adapter.isUsusProject() ) {
+            return true;
+        }
+        return false;
+    }
+
+    private static IFile determineUnderlyingResource( ITypeBinding binding ) {
+        try {
+            return (IFile)binding.getJavaElement().getUnderlyingResource();
+        } catch( Throwable t ) {
+            return null;
+        }
+    }
+
+    private static boolean isATypeVariable( ITypeBinding binding ) {
+        return binding.isTypeVariable() || binding.isCapture() || binding.isWildcardType();
     }
 
     private BoundType( ITypeBinding binding ) {
         classname = new Classname( binding.getName() );
         packagename = Packagename.of( binding.getPackage().getName() );
-        try {
-            underlyingResource = (IFile)binding.getJavaElement().getUnderlyingResource();
-        } catch( Throwable t ) {
-            underlyingResource = null;
-        }
-
+        underlyingResource = determineUnderlyingResource( binding );
     }
 
     public IFile getUnderlyingResource() {

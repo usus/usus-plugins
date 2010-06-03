@@ -9,7 +9,6 @@ import java.util.Set;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
-import org.projectusus.core.filerelations.ClassDescriptorCleanup;
 
 public class ClassDescriptor {
 
@@ -106,7 +105,11 @@ public class ClassDescriptor {
 
     @Override
     public String toString() {
-        return key.packagename + "." + key.classname + "[" + key.file.getName() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return qualifiedClassName() + "[" + key.file.getName() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    public String qualifiedClassName() {
+        return key.packagename + "." + key.classname; //$NON-NLS-1$ 
     }
 
     private void clearOwnAndParentsTransitiveChildrenCache() {

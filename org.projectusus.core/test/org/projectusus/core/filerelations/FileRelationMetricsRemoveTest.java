@@ -13,6 +13,7 @@ import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
 

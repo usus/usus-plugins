@@ -42,10 +42,6 @@ public class Relation<T> {
         return builder.isEquals();
     }
 
-    public static <T> Relation<T> of( T source, T target ) {
-        return new Relation<T>( source, target );
-    }
-
     @Override
     public String toString() {
         return source + " -> " + target; //$NON-NLS-1$

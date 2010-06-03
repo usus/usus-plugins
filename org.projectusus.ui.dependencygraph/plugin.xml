@@ -12,6 +12,14 @@
             id="org.projectusus.ui.dependencygraph.PackageGraphView"
             category="org.projectusus.ui.viewCategory"
             name="Usus Package Graph"/>
+       <view
+             class="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView"
+             icon="icons/graph.gif"
+             id="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView"
+             category="org.projectusus.ui.viewCategory"
+             name="Cross-Package Class Graph"
+             restorable="true">
+       </view>
    </extension>
    <extension point="org.eclipse.ui.viewActions">
       <viewContribution
@@ -25,7 +33,7 @@
                menubarPath="additions"
                style="push"
                toolbarPath="additions"
-               tooltip="Redraws the class dependecy graph."/>
+               tooltip="Redraws the class dependency graph."/>
       </viewContribution>
       <viewContribution
             id="org.projectusus.ui.dependencygraph.viewContribution_PackageView_Refresh"
@@ -38,7 +46,21 @@
                menubarPath="additions"
                style="push"
                toolbarPath="additions"
-               tooltip="Redraws the class dependecy graph.">
+               tooltip="Redraws the package dependency graph.">
+         </action>
+      </viewContribution>
+      <viewContribution
+            id="org.projectusus.ui.dependencygraph.viewContribution_CrossPackageClassView_Refresh"
+            targetID="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView">
+         <action
+               class="org.projectusus.ui.dependencygraph.action.RefreshGraphView"
+               icon="icons/refresh.gif"
+               id="org.projectusus.ui.dependencygraph.action.RefreshGraphView"
+               label="Refresh"
+               menubarPath="additions"
+               style="push"
+               toolbarPath="additions"
+               tooltip="Redraws the class dependency graph.">
          </action>
       </viewContribution>
    </extension>
@@ -57,6 +79,12 @@
                minimized="false"
                relationship="stack"
                relative="org.projectusus.ui.dependencygraph.ClassGraphView">
+         </view>
+         <view
+               id="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView"
+               minimized="false"
+               relationship="stack"
+               relative="org.projectusus.ui.dependencygraph.PackageGraphView">
          </view>
       </perspectiveExtension>
    </extension>

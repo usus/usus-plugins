@@ -9,7 +9,6 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.filerelations.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 

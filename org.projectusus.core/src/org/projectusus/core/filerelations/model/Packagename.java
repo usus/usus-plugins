@@ -69,7 +69,7 @@ public class Packagename {
         return name;
     }
 
-    public PackageRelation getRelationTo( Packagename target ) {
-        return new PackageRelation( this, target );
+    public Relation<Packagename> getRelationTo( Packagename target ) {
+        return new Relation<Packagename>( this, target );
     }
 }

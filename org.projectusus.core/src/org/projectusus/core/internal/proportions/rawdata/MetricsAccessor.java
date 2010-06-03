@@ -33,11 +33,12 @@ import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.basis.YellowCountResult;
-import org.projectusus.core.filerelations.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
+import org.projectusus.core.filerelations.internal.model.CrossPackageClassRelations;
 import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.util.CoreTexts;
@@ -197,6 +198,10 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
 
     public Set<GraphNode> getAllPackages() {
         return PackageRepresenter.transformToRepresenterSet( Packagename.getAll(), new PackageRelations() );
+    }
+
+    public Set<GraphNode> getAllCrossPackageClasses() {
+        return CrossPackageClassRepresenter.transformToRepresenterSet( ClassDescriptor.getAll(), new CrossPackageClassRelations() );
     }
 
     public int getCCValue( IMethod method ) {

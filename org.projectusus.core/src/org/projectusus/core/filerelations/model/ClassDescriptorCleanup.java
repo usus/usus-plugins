@@ -1,9 +1,8 @@
-package org.projectusus.core.filerelations;
+package org.projectusus.core.filerelations.model;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.projectusus.core.filerelations.model.ClassDescriptor;
 
 public class ClassDescriptorCleanup {
 

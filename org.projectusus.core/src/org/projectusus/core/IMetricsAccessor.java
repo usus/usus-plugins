@@ -31,6 +31,8 @@ public interface IMetricsAccessor {
 
     Set<GraphNode> getAllPackages();
 
+    Set<GraphNode> getAllCrossPackageClasses();
+
     int getCCValue( IMethod method );
 
     int getMLValue( IMethod method );
@@ -42,4 +44,5 @@ public interface IMetricsAccessor {
     YellowCountResult getWarnings();
 
     int getNumberOfProjectsViolatingCW();
+
 }
