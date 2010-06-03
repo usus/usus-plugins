@@ -3,6 +3,10 @@ public class Tasks {
         // TODO Namensgebung geradeziehen: Kind -> Metrics. Was noch?
     }
 
+    void documentationOfCalculations() {
+        // TODO Doku der Usus-Interna. Welche Schwellwerte? Was sind die Level? etc.
+    }
+
     void introduceNullObjects() {
         // TODO Null-Objekte in die RawData-Hierarchie einfŸühren.
     }
