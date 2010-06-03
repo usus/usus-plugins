@@ -95,4 +95,25 @@
    <extension point="org.projectusus.core.testSuiteSelectors">
       <selector class="org.projectusus.ui.internal.coveredprojects.TestSuiteSelector"/>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <perspectiveShortcut
+               id="org.projectusus.ui.internal.perspective.USUSPerspective">
+         </perspectiveShortcut>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.pde.ui.PDEPerspective">
+         <perspectiveShortcut
+               id="org.projectusus.ui.internal.perspective.USUSPerspective">
+         </perspectiveShortcut>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaBrowsingPerspective">
+         <perspectiveShortcut
+               id="org.projectusus.ui.internal.perspective.USUSPerspective">
+         </perspectiveShortcut>
+      </perspectiveExtension>
+   </extension>
 </plugin>
