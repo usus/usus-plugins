@@ -7,7 +7,7 @@ import org.jgrapht.alg.StrongConnectivityInspector;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Relation;
 
-public class CrossPackageClassRelations extends Relations<ClassDescriptor, Relation<ClassDescriptor>> {
+public class CrossPackageClassRelations extends Relations<ClassDescriptor> {
 
     private ClassCycles classCycles;
 
@@ -19,7 +19,7 @@ public class CrossPackageClassRelations extends Relations<ClassDescriptor, Relat
     private void calcClassRelations() {
         for( ClassDescriptor source : ClassDescriptor.getAll() ) {
             for( ClassDescriptor target : source.getChildrenInOtherPackages() ) {
-                this.add( new Relation<ClassDescriptor>( source, target ), source, target );
+                this.add( source, target );
             }
         }
     }

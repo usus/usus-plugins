@@ -11,9 +11,9 @@ import org.projectusus.core.filerelations.model.Relation;
 
 public class RelationGraph<T> extends UnmodifiableDirectedGraph<T, Relation<T>> {
 
-    private final Relations<T, Relation<T>> relations;
+    private final Relations<T> relations;
 
-    public RelationGraph( Relations<T, Relation<T>> relations ) {
+    public RelationGraph( Relations<T> relations ) {
         this.relations = relations;
     }
 

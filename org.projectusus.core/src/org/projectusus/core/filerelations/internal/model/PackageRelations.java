@@ -8,7 +8,7 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.filerelations.model.Relation;
 
-public class PackageRelations extends Relations<Packagename, Relation<Packagename>> {
+public class PackageRelations extends Relations<Packagename> {
 
     private PackageCycles packageCycles;
 
@@ -20,7 +20,7 @@ public class PackageRelations extends Relations<Packagename, Relation<Packagenam
     private void calcPackageRelations() {
         for( ClassDescriptor source : ClassDescriptor.getAll() ) {
             for( ClassDescriptor target : source.getChildrenInOtherPackages() ) {
-                this.add( new Relation<Packagename>( source.getPackagename(), target.getPackagename() ), source.getPackagename(), target.getPackagename() );
+                this.add( source.getPackagename(), target.getPackagename() );
             }
         }
     }

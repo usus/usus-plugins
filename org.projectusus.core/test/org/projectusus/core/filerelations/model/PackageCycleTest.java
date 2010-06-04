@@ -10,19 +10,19 @@ public class PackageCycleTest {
 
     @Test( expected = IllegalArgumentException.class )
     public void nullPackageCycle() {
-        new Cycle( null );
+        new Cycle<Object>( null );
     }
 
     @Test( expected = IllegalArgumentException.class )
     public void emptyPackageCycle() {
-        new Cycle( new HashSet<Packagename>() );
+        new Cycle<Packagename>( new HashSet<Packagename>() );
     }
 
     @Test( expected = IllegalArgumentException.class )
     public void packageCycleWith1Package() {
         HashSet<Packagename> packages = new HashSet<Packagename>();
         packages.add( Packagename.of( "package1" ) ); //$NON-NLS-1$
-        new Cycle( packages );
+        new Cycle<Packagename>( packages );
     }
 
     @Test
@@ -30,7 +30,7 @@ public class PackageCycleTest {
         HashSet<Packagename> packages = new HashSet<Packagename>();
         packages.add( Packagename.of( "package1" ) ); //$NON-NLS-1$
         packages.add( Packagename.of( "package2" ) ); //$NON-NLS-1$
-        Cycle cycle = new Cycle( packages );
+        Cycle<Packagename> cycle = new Cycle<Packagename>( packages );
 
         assertEquals( 2, cycle.numberOfElements() );
     }

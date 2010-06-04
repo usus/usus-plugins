@@ -11,21 +11,21 @@ import org.projectusus.core.filerelations.model.Relation;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 
-public class Relations<K, R extends Relation<?>> {
+public class Relations<K> {
 
-    protected final SetMultimap<K, R> incomingRelations;
-    protected final SetMultimap<K, R> outgoingRelations;
+    protected final SetMultimap<K, Relation<K>> incomingRelations;
+    protected final SetMultimap<K, Relation<K>> outgoingRelations;
 
     public Relations() {
         incomingRelations = HashMultimap.create();
         outgoingRelations = HashMultimap.create();
     }
 
-    public Set<R> getDirectRelationsFrom( K sourceFile ) {
+    public Set<Relation<K>> getDirectRelationsFrom( K sourceFile ) {
         return outgoingRelations.get( sourceFile );
     }
 
-    public Set<R> getDirectRelationsTo( K targetFile ) {
+    public Set<Relation<K>> getDirectRelationsTo( K targetFile ) {
         return incomingRelations.get( targetFile );
     }
 
@@ -33,16 +33,18 @@ public class Relations<K, R extends Relation<?>> {
         outgoingRelations.removeAll( sourceFile );
     }
 
-    public Collection<R> getAllDirectRelations() {
+    public Collection<Relation<K>> getAllDirectRelations() {
         return Collections.unmodifiableCollection( outgoingRelations.values() );
     }
 
-    public void add( R relation, K sourceKey, K targetKey ) {
+    protected void add( K sourceKey, K targetKey ) {
+        Relation<K> relation = new Relation<K>( sourceKey, targetKey );
         outgoingRelations.put( sourceKey, relation );
         incomingRelations.put( targetKey, relation );
     }
 
-    public void remove( R relation, K sourceKey, K targetKey ) {
+    public void remove( K sourceKey, K targetKey ) {
+        Relation<K> relation = new Relation<K>( sourceKey, targetKey );
         outgoingRelations.remove( sourceKey, relation );
         incomingRelations.remove( targetKey, relation );
     }
@@ -55,11 +57,11 @@ public class Relations<K, R extends Relation<?>> {
         return union( outgoingRelations.keySet(), incomingRelations.keySet() );
     }
 
-    protected Set<R> getOutgoingRelationsFrom( K key ) {
+    protected Set<Relation<K>> getOutgoingRelationsFrom( K key ) {
         return outgoingRelations.get( key );
     }
 
-    protected Set<R> getIncomingRelationsTo( K key ) {
+    protected Set<Relation<K>> getIncomingRelationsTo( K key ) {
         return incomingRelations.get( key );
     }
 }
