@@ -10,15 +10,11 @@ import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.IHotspot;
-import org.projectusus.core.internal.coverage.TestCoverage;
 import org.projectusus.core.internal.proportions.FileSupport;
-
-import com.mountainminds.eclemma.core.analysis.IJavaElementCoverage;
 
 class ProjectRawData extends RawData<IFile, FileRawData> {
 
     // private final IProject projectOfRawData;
-    private IJavaElementCoverage coverage;
     private WarningsCount projectMarkers = new WarningsCount();
     private RawDataMapWrapper<IFile, MiscFileRawData> miscRawData = new RawDataMapWrapper<IFile, MiscFileRawData>();
 
@@ -53,17 +49,6 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
             fileRD.dropRawData();
         }
         removeAll();
-    }
-
-    public void setInstructionCoverage( IJavaElementCoverage coverage ) {
-        this.coverage = coverage;
-    }
-
-    public TestCoverage getInstructionCoverage() {
-        if( coverage != null ) {
-            return new TestCoverage( coverage.getInstructionCounter() );
-        }
-        return new TestCoverage( 0, 0 );
     }
 
     public void setWarningsCount( IFile file, int markerCount ) {

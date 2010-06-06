@@ -4,8 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
-import static org.projectusus.core.basis.CodeProportionKind.TA;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +15,6 @@ import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.IHotspot;
-import org.projectusus.core.internal.coverage.TestCoverage;
 
 class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
@@ -43,17 +40,9 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         int violations;
         CodeStatistic basis;
         List<IHotspot> hotspots;
-        if( metric == TA ) { // for the time being
-            int total = getInstructionCoverage().getTotalCount();
-            violations = total - getInstructionCoverage().getCoveredCount();
-            basis = new CodeStatistic( TA.getUnit(), total );
-            hotspots = new ArrayList<IHotspot>();
-            // TODO lf add hotspots
-        } else {
-            violations = getViolationCount( metric );
-            basis = getCodeStatistic( metric.getUnit() );
-            hotspots = computeHotspots( metric );
-        }
+        violations = getViolationCount( metric );
+        basis = getCodeStatistic( metric.getUnit() );
+        hotspots = computeHotspots( metric );
         return new CodeProportion( metric, violations, basis, hotspots );
     }
 
@@ -79,17 +68,4 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         return allClassRawData;
     }
 
-    TestCoverage getInstructionCoverage() {
-        TestCoverage result = new TestCoverage( 0, 0 );
-        for( ProjectRawData projectRD : getAllRawDataElements() ) {
-            result = result.add( projectRD.getInstructionCoverage() );
-        }
-        return result;
-    }
-
-    public void resetInstructionCoverage() {
-        for( ProjectRawData projectRD : getAllRawDataElements() ) {
-            projectRD.setInstructionCoverage( null );
-        }
-    }
 }

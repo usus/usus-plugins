@@ -18,7 +18,6 @@ import org.osgi.framework.BundleListener;
 import org.osgi.service.prefs.BackingStoreException;
 import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.IUsusModel;
-import org.projectusus.core.internal.coverage.LaunchObserver;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.rawdata.NullMetricsWriter;
@@ -32,7 +31,6 @@ public class UsusCorePlugin extends Plugin {
     // some jobs still run
     public static final String PLUGIN_ID = "org.projectusus.core"; //$NON-NLS-1$
     private static UsusCorePlugin plugin;
-    private final LaunchObserver launchObserver = new LaunchObserver();
     private UsusModel ususModel;
 
     public static UsusCorePlugin getDefault() {
@@ -92,7 +90,6 @@ public class UsusCorePlugin extends Plugin {
             public void bundleChanged( BundleEvent event ) {
                 if( event.getType() == BundleEvent.STARTED ) {
                     context.removeBundleListener( this );
-                    performInits();
                 }
             }
         } );
@@ -100,15 +97,10 @@ public class UsusCorePlugin extends Plugin {
 
     @Override
     public void stop( BundleContext context ) throws Exception {
-        launchObserver.dispose();
         plugin = null;
         UsusModel.clear();
         ususModel = null;
         super.stop( context );
-    }
-
-    synchronized void performInits() {
-        launchObserver.connect();
     }
 
     public boolean getAutocompute() {

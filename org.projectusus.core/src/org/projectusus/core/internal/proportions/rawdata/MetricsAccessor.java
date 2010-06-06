@@ -8,7 +8,6 @@ import static org.projectusus.core.basis.CodeProportionKind.KG;
 import static org.projectusus.core.basis.CodeProportionKind.ML;
 import static org.projectusus.core.basis.CodeProportionKind.PC;
 import static org.projectusus.core.basis.CodeProportionUnit.PROJECT;
-import static org.projectusus.core.internal.project.UsusProjectSupport.isUsusProject;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +17,6 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
@@ -42,8 +40,6 @@ import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.util.CoreTexts;
-
-import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
 public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     private final WorkspaceRawData workspaceRawData;
@@ -109,15 +105,6 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
             // nothing
         }
         return null;
-    }
-
-    public void updateCoverage( IJavaModelCoverage javaModelCoverage ) {
-        for( IJavaProject javaProject : javaModelCoverage.getInstrumentedProjects() ) {
-            IProject project = javaProject.getProject();
-            if( isUsusProject( project ) ) {
-                getProjectRawData( project ).setInstructionCoverage( javaModelCoverage.getCoverageFor( javaProject ) );
-            }
-        }
     }
 
     public void setWarningsCount( IFile file, int markerCount ) {

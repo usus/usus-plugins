@@ -87,9 +87,6 @@
            commandId="org.projectusus.ui.internal.proportions.infopresenter.ShowUsusInfo"
            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
    </extension>
-   <extension point="org.projectusus.core.testSuiteSelectors">
-      <selector class="org.projectusus.ui.internal.coveredprojects.TestSuiteSelector"/>
-   </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension

@@ -7,8 +7,6 @@ package org.projectusus.core;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
 
-import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
-
 public interface IUsusModel {
 
     IUsusElement[] getElements();
@@ -23,5 +21,4 @@ public interface IUsusModel {
 
     IMetricsAccessor getMetricsAccessor();
 
-    void collectCoverageInfo( IJavaModelCoverage javaModelCoverage );
 }

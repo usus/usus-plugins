@@ -24,8 +24,6 @@ import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
 
-import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
-
 public class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
     private final Set<IUsusModelListener> listeners;
@@ -61,16 +59,6 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
     // interface of IUsusModel
     // ////////////////////////
-
-    public void collectCoverageInfo( IJavaModelCoverage javaModelCoverage ) {
-        if( javaModelCoverage.getInstrumentedProjects().length == 0 ) {
-            return;
-        }
-        metrics.updateCoverage( javaModelCoverage );
-        CodeProportion codeProportion = getCodeProportion( CodeProportionKind.TA );
-        cache.refresh( codeProportion );
-        notifyListeners();
-    }
 
     public IUsusElement[] getElements() {
         return cache.getElements().clone();
