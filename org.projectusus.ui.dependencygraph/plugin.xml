@@ -72,19 +72,19 @@
                id="org.projectusus.ui.dependencygraph.ClassGraphView"
                minimized="false"
                relationship="stack"
-               relative="org.projectusus.ui.internal.history.HistoryView">
+               relative="org.projectusus.ui.internal.hotspots.HotSpotsView">
          </view>
          <view
                id="org.projectusus.ui.dependencygraph.PackageGraphView"
                minimized="false"
                relationship="stack"
-               relative="org.projectusus.ui.dependencygraph.ClassGraphView">
+               relative="org.projectusus.ui.internal.hotspots.HotSpotsView">
          </view>
          <view
                id="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView"
                minimized="false"
                relationship="stack"
-               relative="org.projectusus.ui.dependencygraph.PackageGraphView">
+               relative="org.projectusus.ui.internal.hotspots.HotSpotsView">
          </view>
       </perspectiveExtension>
    </extension>

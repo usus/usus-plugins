@@ -23,14 +23,12 @@ import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
-import org.projectusus.core.internal.proportions.modelupdate.checkpoints.CheckpointHistory;
 
 import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
 public class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
     private final Set<IUsusModelListener> listeners;
-    private final CheckpointHistory history;
     private final UsusModelCache cache;
     private final MetricsAccessor metrics;
     private boolean needsFullRecompute;
@@ -38,7 +36,6 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
     public UsusModel() {
         cache = new UsusModelCache();
         listeners = new HashSet<IUsusModelListener>();
-        history = new CheckpointHistory();
         metrics = new MetricsAccessor();
         needsFullRecompute = false;
     }
@@ -50,7 +47,6 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
         needsFullRecompute = !computationSuccessful;
         metrics.cleanupRelations( monitor );
         ArrayList<CodeProportion> codeProportions = metrics.getCodeProportions();
-        history.addComputationResult( codeProportions );
         cache.refreshAll( codeProportions );
         notifyListeners();
     }
@@ -72,13 +68,8 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
         }
         metrics.updateCoverage( javaModelCoverage );
         CodeProportion codeProportion = getCodeProportion( CodeProportionKind.TA );
-        history.addTestResult( codeProportion );
         cache.refresh( codeProportion );
         notifyListeners();
-    }
-
-    public CheckpointHistory getHistory() {
-        return history;
     }
 
     public IUsusElement[] getElements() {

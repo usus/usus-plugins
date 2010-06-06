@@ -6,7 +6,6 @@ package org.projectusus.ui.internal.proportions.cockpit;
 
 import static org.eclipse.swt.SWT.COLOR_GRAY;
 import static org.projectusus.core.basis.CodeProportionKind.TA;
-import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 import static org.projectusus.ui.internal.proportions.cockpit.CockpitColumnDesc.INDICATOR;
 
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -52,13 +51,9 @@ public class CockpitLP extends UsusModelLabelProvider implements ITableLabelProv
         boolean result = false;
         if( element instanceof CodeProportion ) {
             CodeProportion codeProportion = (CodeProportion)element;
-            result = isTestCoverageMetric( codeProportion ) && lastStatusIsStale();
+            result = isTestCoverageMetric( codeProportion ) && false;
         }
         return result;
-    }
-
-    private boolean lastStatusIsStale() {
-        return getUsusModel().getHistory().isStale();
     }
 
     private boolean isTestCoverageMetric( CodeProportion codeProportion ) {

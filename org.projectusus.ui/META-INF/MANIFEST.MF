@@ -24,7 +24,6 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.projectusus.ui.internal,
  org.projectusus.ui.internal.coveredprojects;x-internal:=true,
- org.projectusus.ui.internal.history,
  org.projectusus.ui.internal.hotspots;x-friends:="org.projectusus.ui.test",
  org.projectusus.ui.internal.hotspots.actions,
  org.projectusus.ui.internal.hotspots.pages;x-internal:=true,

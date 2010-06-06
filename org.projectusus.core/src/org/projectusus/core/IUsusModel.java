@@ -6,15 +6,12 @@ package org.projectusus.core;
 
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
-import org.projectusus.core.basis.ICheckpointHistory;
 
 import com.mountainminds.eclemma.core.analysis.IJavaModelCoverage;
 
 public interface IUsusModel {
 
     IUsusElement[] getElements();
-
-    ICheckpointHistory getHistory();
 
     void addUsusModelListener( IUsusModelListener listener );
 

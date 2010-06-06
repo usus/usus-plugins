@@ -29,11 +29,6 @@
             id="org.projectusus.ui.internal.hotspots.HotSpotsView"
             category="org.projectusus.ui.viewCategory"
             name="Usus Hotspots"/>
-      <view class="org.projectusus.ui.internal.history.HistoryView"
-            icon="icons/full/eview16/history.gif"
-            id="org.projectusus.ui.internal.history.HistoryView"
-            category="org.projectusus.ui.viewCategory"
-            name="Usus History"/>
       <view class="org.projectusus.ui.internal.coveredprojects.CoveredProjectsView"
             icon="icons/full/eview16/coveredprojects.gif"
             id="org.projectusus.ui.internal.coveredprojects.CoveredProjectsView"
