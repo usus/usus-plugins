@@ -4,14 +4,10 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.cockpit;
 
-import static org.eclipse.swt.SWT.COLOR_GRAY;
-import static org.projectusus.core.basis.CodeProportionKind.TA;
 import static org.projectusus.ui.internal.proportions.cockpit.CockpitColumnDesc.INDICATOR;
 
 import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.ui.internal.proportions.UsusModelLabelProvider;
 
@@ -35,30 +31,8 @@ public class CockpitLP extends UsusModelLabelProvider implements ITableLabelProv
         return result;
     }
 
-    @Override
-    public Color getForeground( Object element ) {
-        Color result = null;
-        if( isStaleBecauseOfMissingTestCoverage( element ) ) {
-            result = Display.getDefault().getSystemColor( COLOR_GRAY );
-        }
-        return result;
-    }
-
     // internal methods
     // ////////////////
-
-    private boolean isStaleBecauseOfMissingTestCoverage( Object element ) {
-        boolean result = false;
-        if( element instanceof CodeProportion ) {
-            CodeProportion codeProportion = (CodeProportion)element;
-            result = isTestCoverageMetric( codeProportion ) && false;
-        }
-        return result;
-    }
-
-    private boolean isTestCoverageMetric( CodeProportion codeProportion ) {
-        return codeProportion.getMetric() == TA;
-    }
 
     private String getColumnTextFor( CodeProportion element, int columnIndex ) {
         return CockpitColumnDesc.values()[columnIndex].getLabel( element );

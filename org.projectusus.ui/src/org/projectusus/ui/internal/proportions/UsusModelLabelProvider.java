@@ -6,7 +6,6 @@ package org.projectusus.ui.internal.proportions;
 
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_CODE_PROPORTIONS;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_INFO;
-import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_TEST_COVERAGE;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_WARNINGS;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
@@ -15,7 +14,6 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.core.ICodeProportions;
-import org.projectusus.core.ITestCoverage;
 import org.projectusus.core.IWarnings;
 import org.projectusus.core.basis.CodeProportion;
 
@@ -30,8 +28,6 @@ public abstract class UsusModelLabelProvider extends LabelProvider implements IC
         String result = super.getText( element );
         if( element instanceof ICodeProportions ) {
             result = "Code proportions";
-        } else if( element instanceof ITestCoverage ) {
-            result = "Test coverage";
         } else if( element instanceof IWarnings ) {
             result = "Static analysis warnings";
         }
@@ -42,8 +38,6 @@ public abstract class UsusModelLabelProvider extends LabelProvider implements IC
         Image result = null;
         if( element instanceof ICodeProportions ) {
             result = getSharedImages().getImage( OBJ_CODE_PROPORTIONS );
-        } else if( element instanceof ITestCoverage ) {
-            result = getSharedImages().getImage( OBJ_TEST_COVERAGE );
         } else if( element instanceof IWarnings ) {
             result = getSharedImages().getImage( OBJ_WARNINGS );
         } else if( !(element instanceof CodeProportion) ) {

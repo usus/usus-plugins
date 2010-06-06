@@ -15,7 +15,6 @@ public interface ISharedUsusImages {
 
     String OBJ_CODE_PROPORTIONS = ID + ".OBJ_CODE_PROPORTIONS";
     String OBJ_INFO = ID + ".OBJ_INFO";
-    String OBJ_TEST_COVERAGE = ID + ".OBJ_TEST_COVERAGE";
     String OBJ_WARNINGS = ID + ".OBJ_WARNINGS";
 
     String VIEW_WARNING = ID + ".VIEW_WARNING";

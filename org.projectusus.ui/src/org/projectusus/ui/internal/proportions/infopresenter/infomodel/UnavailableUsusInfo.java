@@ -20,10 +20,6 @@ class UnavailableUsusInfo implements IUsusInfo {
         return MESSAGE;
     }
 
-    public String[] getTestCoverageInfos() {
-        return MESSAGE;
-    }
-
     public String[] getWarningInfos() {
         return MESSAGE;
     }

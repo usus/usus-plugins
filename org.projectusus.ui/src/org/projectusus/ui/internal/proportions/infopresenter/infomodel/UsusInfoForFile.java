@@ -38,10 +38,6 @@ class UsusInfoForFile implements IUsusInfo {
         // dummy for subclasses
     }
 
-    public String[] getTestCoverageInfos() {
-        return new String[] { "Not yet available" };
-    }
-
     public String[] getWarningInfos() {
         String[] result = new String[1];
         result[0] = UsusModelElementFormatter.format( CW.getLabel() + " (of file)", UsusCorePlugin.getMetricsAccessor().getNumberOfWarnings( file ) );

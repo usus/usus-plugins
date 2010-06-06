@@ -11,7 +11,6 @@ import static org.projectusus.core.basis.CodeProportionKind.CW;
 import static org.projectusus.core.basis.CodeProportionKind.KG;
 import static org.projectusus.core.basis.CodeProportionKind.ML;
 import static org.projectusus.core.basis.CodeProportionKind.PC;
-import static org.projectusus.core.basis.CodeProportionKind.TA;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -54,7 +53,6 @@ public class CodeProportionsKindTest {
         assertEquals( "Class size", KG.getLabel() ); //$NON-NLS-1$
         assertEquals( "Method length", ML.getLabel() ); //$NON-NLS-1$
         assertEquals( "Packages in cycles", PC.getLabel() ); //$NON-NLS-1$
-        assertEquals( "Test coverage", TA.getLabel() ); //$NON-NLS-1$
     }
 
     @Test
@@ -65,7 +63,6 @@ public class CodeProportionsKindTest {
         assertEquals( CodeProportionUnit.CLASS, KG.getUnit() );
         assertEquals( CodeProportionUnit.METHOD, ML.getUnit() );
         assertEquals( CodeProportionUnit.PACKAGE, PC.getUnit() );
-        assertEquals( CodeProportionUnit.LINE, TA.getUnit() );
     }
 
     @Test
@@ -76,7 +73,6 @@ public class CodeProportionsKindTest {
         assertFalse( KG.isViolatedBy( methodRawDataOK ) );
         assertFalse( ML.isViolatedBy( methodRawDataOK ) );
         assertFalse( PC.isViolatedBy( methodRawDataOK ) );
-        assertFalse( TA.isViolatedBy( methodRawDataOK ) );
     }
 
     @Test
@@ -87,7 +83,6 @@ public class CodeProportionsKindTest {
         assertFalse( KG.isViolatedBy( methodRawDataFailing ) );
         assertTrue( ML.isViolatedBy( methodRawDataFailing ) );
         assertFalse( PC.isViolatedBy( methodRawDataFailing ) );
-        assertFalse( TA.isViolatedBy( methodRawDataFailing ) );
     }
 
     @Test
@@ -99,7 +94,6 @@ public class CodeProportionsKindTest {
         assertFalse( KG.isViolatedBy( classRawDataOK ) );
         assertFalse( ML.isViolatedBy( classRawDataOK ) );
         assertFalse( PC.isViolatedBy( classRawDataOK ) );
-        assertFalse( TA.isViolatedBy( classRawDataOK ) );
     }
 
     @Test
@@ -111,7 +105,6 @@ public class CodeProportionsKindTest {
         assertTrue( KG.isViolatedBy( classRawDataFailing ) );
         assertFalse( ML.isViolatedBy( classRawDataFailing ) );
         assertFalse( PC.isViolatedBy( classRawDataFailing ) );
-        assertFalse( TA.isViolatedBy( classRawDataFailing ) );
     }
 
     @Test
@@ -122,7 +115,6 @@ public class CodeProportionsKindTest {
         assertFalse( KG.isMethodKind() );
         assertTrue( ML.isMethodKind() );
         assertFalse( PC.isMethodKind() );
-        assertFalse( TA.isMethodKind() );
     }
 
     @Test
@@ -133,6 +125,5 @@ public class CodeProportionsKindTest {
         assertEquals( 0, KG.getValueFor( methodRawDataFailing ) );
         assertEquals( 16, ML.getValueFor( methodRawDataFailing ) );
         assertEquals( 0, PC.getValueFor( methodRawDataFailing ) );
-        assertEquals( 0, TA.getValueFor( methodRawDataFailing ) );
     }
 }

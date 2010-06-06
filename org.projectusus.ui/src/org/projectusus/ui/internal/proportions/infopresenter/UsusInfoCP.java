@@ -5,7 +5,6 @@
 package org.projectusus.ui.internal.proportions.infopresenter;
 
 import org.projectusus.core.ICodeProportions;
-import org.projectusus.core.ITestCoverage;
 import org.projectusus.core.IWarnings;
 import org.projectusus.ui.internal.proportions.cockpit.CockpitCP;
 import org.projectusus.ui.internal.proportions.infopresenter.infomodel.IUsusInfo;
@@ -23,8 +22,6 @@ class UsusInfoCP extends CockpitCP {
         Object[] result = new Object[0];
         if( parentElement instanceof ICodeProportions ) {
             result = ususInfo.getCodeProportionInfos();
-        } else if( parentElement instanceof ITestCoverage ) {
-            result = ususInfo.getTestCoverageInfos();
         } else if( parentElement instanceof IWarnings ) {
             result = ususInfo.getWarningInfos();
         }

@@ -15,5 +15,4 @@ public interface IUsusInfo {
 
     String[] getWarningInfos();
 
-    String[] getTestCoverageInfos();
 }

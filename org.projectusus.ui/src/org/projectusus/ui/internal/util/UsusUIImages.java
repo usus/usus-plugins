@@ -53,7 +53,6 @@ public class UsusUIImages implements ISharedUsusImages {
     private void declareImages() {
         declare( OBJ_CODE_PROPORTIONS, OBJECT + "codeproportions.gif" );
         declare( OBJ_INFO, OBJECT + "info.gif" );
-        declare( OBJ_TEST_COVERAGE, OBJECT + "testcoverage.gif" );
         declare( OBJ_WARNINGS, OBJECT + "warnings.gif" );
         declare( VIEW_WARNING, VIEW + "warning.gif" );
     }

@@ -10,13 +10,11 @@ import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_cw;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_kg;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ml;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_pc;
-import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ta;
 
 import org.projectusus.core.internal.UsusCorePlugin;
 
 public enum CodeProportionKind {
 
-    TA( isisMetrics_ta, CodeProportionUnit.LINE ), //
     PC( isisMetrics_pc, CodeProportionUnit.PACKAGE ), //
     CC( isisMetrics_cc, CodeProportionUnit.METHOD ) {
         @Override

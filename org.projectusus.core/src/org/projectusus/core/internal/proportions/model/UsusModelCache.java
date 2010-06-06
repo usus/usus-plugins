@@ -5,7 +5,6 @@
 package org.projectusus.core.internal.proportions.model;
 
 import static org.projectusus.core.basis.CodeProportionKind.CW;
-import static org.projectusus.core.basis.CodeProportionKind.TA;
 
 import java.util.List;
 
@@ -15,19 +14,16 @@ import org.projectusus.core.basis.CodeProportionKind;
 
 public class UsusModelCache {
 
-    private final TestCoverage testCoverageCache = new TestCoverage();
     private final CodeProportions codeProportionsCache = new CodeProportions();
     private final Warnings warningsCache = new Warnings();
 
     public IUsusElement[] getElements() {
-        return new IUsusElement[] { codeProportionsCache, warningsCache, testCoverageCache };
+        return new IUsusElement[] { codeProportionsCache, warningsCache };
     }
 
     public void refresh( CodeProportion proportion ) {
         CodeProportionKind metric = proportion.getMetric();
-        if( metric == TA ) {
-            testCoverageCache.refresh( proportion );
-        } else if( metric == CW ) {
+        if( metric == CW ) {
             warningsCache.refresh( proportion );
         } else {
             codeProportionsCache.refresh( proportion );
@@ -41,9 +37,6 @@ public class UsusModelCache {
     }
 
     public CodeProportion getCodeProportion( CodeProportionKind kind ) {
-        if( kind == TA ) {
-            return testCoverageCache.getProportion();
-        }
         if( kind == CW ) {
             return warningsCache.getProportion();
         }

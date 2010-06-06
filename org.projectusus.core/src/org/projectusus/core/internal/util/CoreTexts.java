@@ -24,13 +24,9 @@ public final class CoreTexts extends NLS {
     public static String isisMetrics_kg;
     public static String isisMetrics_ml;
     public static String isisMetrics_pc;
-    public static String isisMetrics_ta;
 
     public static String jdtDriver_errors;
 
-    public static String saveCheckpointsJob_name;
-
-    public static String testCoverage;
     public static String ususModel_UpdatingFileRelations;
 
     public static String ususModelStatus_ok;
