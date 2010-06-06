@@ -1,0 +1,8 @@
+
+public class CC_conditional {
+
+	public void m1(){
+    	int x = true ? 0 : 1;
+		boolean y = true && false || true;
+	}
+}

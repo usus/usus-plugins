@@ -1,0 +1,8 @@
+
+public class CC_logical {
+
+	public void m1(){
+		boolean y = true & false | true;
+		int x = 1 & 0 | 1;
+	}
+}
