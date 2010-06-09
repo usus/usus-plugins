@@ -45,7 +45,7 @@
                id="org.projectusus.ui.bugreport.bugsView"
                minimized="false"
                relationship="stack"
-               relative="org.projectusus.ui.internal.history.HistoryView">
+               relative="org.eclipse.ui.views.ProblemView">
          </view>
          <view
                id="org.projectusus.ui.bugreport.averageCodeProportionsView"
