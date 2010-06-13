@@ -7,10 +7,7 @@ import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.Name;
-import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
@@ -104,20 +101,20 @@ public class ACDCollector extends Collector {
         return true;
     }
 
-    @Override
-    public boolean visit( QualifiedName node ) {
-        Name qualifier = node.getQualifier();
-        if( qualifier == null ) {
-            return true;
-        }
-        int nodeType = qualifier.getNodeType();
-        ITypeBinding typeBinding = qualifier.resolveTypeBinding();
-        if( typeBinding == null ) {
-            return true;
-        }
-        System.out.println( "QualifiedName: " + node.toString() + " type: " + nodeType + " type binding: " + typeBinding.getName() );
-        return true;
-    }
+    // @Override
+    // public boolean visit( QualifiedName node ) {
+    // Name qualifier = node.getQualifier();
+    // if( qualifier == null ) {
+    // return true;
+    // }
+    // int nodeType = qualifier.getNodeType();
+    // ITypeBinding typeBinding = qualifier.resolveTypeBinding();
+    // if( typeBinding == null ) {
+    // return true;
+    // }
+    // System.out.println( "QualifiedName: " + node.toString() + " type: " + nodeType + " type binding: " + typeBinding.getName() );
+    // return true;
+    // }
 
     private void setCurrentType( AbstractTypeDeclaration node ) {
         currentType = BoundType.of( node );
