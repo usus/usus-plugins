@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Projectusus Adapter
 Bundle-SymbolicName: org.projectusus.adapter;singleton:=true
-Bundle-Version: 0.4.2
+Bundle-Version: 0.4.3
 Bundle-Activator: org.projectusus.adapter.UsusAdapterPlugin
 Bundle-Vendor: projectusus.org
 Export-Package: org.projectusus.adapter

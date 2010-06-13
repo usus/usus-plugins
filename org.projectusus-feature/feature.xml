@@ -2,7 +2,7 @@
 <feature
       id="org.projectusus"
       label="Project Usus"
-      version="0.4.2"
+      version="0.4.3"
       provider-name="projectusus.org">
 
    <description url="http://projectusus.org">
@@ -48,35 +48,35 @@ can be found at http://www.eclipse.org/legal/epl-v10.html.
          id="org.projectusus.core"
          download-size="0"
          install-size="0"
-         version="0.4.2"
+         version="0.4.3"
          unpack="false"/>
 
    <plugin
          id="org.projectusus.ui"
          download-size="0"
          install-size="0"
-         version="0.4.2"
+         version="0.4.3"
          unpack="false"/>
 
    <plugin
          id="org.projectusus.projectsettings.ui"
          download-size="0"
          install-size="0"
-         version="0.4.2"
+         version="0.4.3"
          unpack="false"/>
 
    <plugin
          id="org.projectusus.projectsettings.core"
          download-size="0"
          install-size="0"
-         version="0.4.2"
+         version="0.4.3"
          unpack="false"/>
 
    <plugin
          id="org.projectusus.adapter"
          download-size="0"
          install-size="0"
-         version="0.4.2"
+         version="0.4.3"
          unpack="false"/>
 
 </feature>
