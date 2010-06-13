@@ -31,7 +31,7 @@ public abstract class XmlLoader<T> {
     }
 
     public List<T> load() {
-        ArrayList<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<T>();
         Reader reader = null;
         try {
             if( new File( getFileName() ).exists() ) {
@@ -48,7 +48,7 @@ public abstract class XmlLoader<T> {
         return result;
     }
 
-    protected Reader loadElements( ArrayList<T> result ) throws Exception {
+    protected Reader loadElements( List<T> result ) throws Exception {
         Reader reader = new InputStreamReader( new FileInputStream( getFileName() ) );
         DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Element rootElement = parser.parse( new InputSource( reader ) ).getDocumentElement();
@@ -56,7 +56,7 @@ public abstract class XmlLoader<T> {
         return reader;
     }
 
-    protected abstract void read( ArrayList<T> result, Element rootElement );
+    protected abstract void read( List<T> result, Element rootElement );
 
     protected abstract String getFileName();
 

@@ -4,8 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -44,7 +44,7 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
     public void updateAfterComputationRun( boolean computationSuccessful, IProgressMonitor monitor ) {
         needsFullRecompute = !computationSuccessful;
         metrics.cleanupRelations( monitor );
-        ArrayList<CodeProportion> codeProportions = metrics.getCodeProportions();
+        List<CodeProportion> codeProportions = metrics.getCodeProportions();
         cache.refreshAll( codeProportions );
         notifyListeners();
     }

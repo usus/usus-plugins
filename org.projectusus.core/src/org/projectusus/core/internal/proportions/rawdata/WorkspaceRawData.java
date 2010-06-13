@@ -68,4 +68,14 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         return allClassRawData;
     }
 
+    public void acceptAndGuide( MetricsResultVisitor visitor ) {
+        JavaModelPath path = visitor.getPath();
+        if( path.isRestrictedToProject() ) {
+            this.getProjectRawData( path.getProject() ).acceptAndGuide( visitor );
+        } else {
+            for( ProjectRawData projectRD : getAllRawDataElements() ) {
+                projectRD.acceptAndGuide( visitor );
+            }
+        }
+    }
 }

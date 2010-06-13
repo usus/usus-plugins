@@ -4,7 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.bugprison.core.internal;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.projectusus.bugprison.core.Bug;
 import org.projectusus.core.internal.XmlLoader;
@@ -24,7 +24,7 @@ public class LoadBugs extends XmlLoader<Bug> {
     }
 
     @Override
-    protected void read( ArrayList<Bug> result, Element rootElement ) {
+    protected void read( List<Bug> result, Element rootElement ) {
         new BugFileReader( rootElement ).read( result );
     }
 

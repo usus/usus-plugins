@@ -131,4 +131,16 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
     public boolean hasWarnings() {
         return getViolationCount( CodeProportionKind.CW ) > 0;
     }
+
+    public void acceptAndGuide( MetricsResultVisitor visitor ) {
+        visitor.inspect( this );
+        JavaModelPath path = visitor.getPath();
+        if( path.isRestrictedToFile() ) {
+            this.getFileRawData( path.getFile() ).acceptAndGuide( visitor );
+        } else {
+            for( FileRawData rawData : getAllRawDataElements() ) {
+                rawData.acceptAndGuide( visitor );
+            }
+        }
+    }
 }

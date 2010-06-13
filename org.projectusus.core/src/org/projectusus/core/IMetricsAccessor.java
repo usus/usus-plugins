@@ -4,12 +4,11 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.jdt.core.IMethod;
-import org.eclipse.jdt.core.IType;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.basis.YellowCountResult;
+import org.projectusus.core.internal.proportions.rawdata.MetricsResultVisitor;
 
 public interface IMetricsAccessor {
 
@@ -17,13 +16,9 @@ public interface IMetricsAccessor {
 
     int getNumberOf( IProject project, CodeProportionUnit unit );
 
-    int getNumberOfMethods( IType type );
-
     int getOverallMetric( CodeProportionKind metric );
 
     int getOverallMetric( IProject project, CodeProportionKind metric );
-
-    int getCCD( IType type );
 
     int getViolationCount( IProject project, CodeProportionKind metric );
 
@@ -33,10 +28,6 @@ public interface IMetricsAccessor {
 
     Set<GraphNode> getAllCrossPackageClasses();
 
-    int getCCValue( IMethod method );
-
-    int getMLValue( IMethod method );
-
     double getRelativeACD();
 
     int getNumberOfWarnings( IFile file );
@@ -44,5 +35,7 @@ public interface IMetricsAccessor {
     YellowCountResult getWarnings();
 
     int getNumberOfProjectsViolatingCW();
+
+    void acceptAndGuide( MetricsResultVisitor visitor );
 
 }

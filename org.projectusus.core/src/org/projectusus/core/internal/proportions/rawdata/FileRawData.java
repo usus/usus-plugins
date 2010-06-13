@@ -175,4 +175,16 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
         }
         removeAll();
     }
+
+    public void acceptAndGuide( MetricsResultVisitor visitor ) {
+        visitor.inspect( this );
+        JavaModelPath path = visitor.getPath();
+        if( path.isRestrictedToType() ) {
+            this.getRawData( path.getType() ).acceptAndGuide( visitor );
+        } else {
+            for( ClassRawData classRD : getAllRawDataElements() ) {
+                classRD.acceptAndGuide( visitor );
+            }
+        }
+    }
 }

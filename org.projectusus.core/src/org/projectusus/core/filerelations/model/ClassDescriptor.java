@@ -14,11 +14,10 @@ public class ClassDescriptor {
 
     private static Map<ClassDescriptorKey, ClassDescriptor> classes = new HashMap<ClassDescriptorKey, ClassDescriptor>();
 
-    private ClassDescriptorKey key;
-
-    protected final Set<ClassDescriptor> children;
     protected final Set<ClassDescriptor> parents;
+    protected final Set<ClassDescriptor> children;
 
+    private ClassDescriptorKey key;
     private Set<ClassDescriptor> transitiveChildrenCache = new HashSet<ClassDescriptor>();
 
     public static void clear() {

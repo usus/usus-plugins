@@ -1,4 +1,7 @@
 public class Tasks {
+
+    // Tasks for USUS 1.0
+
     void namensgebung() {
         // TODO Namensgebung geradeziehen: Kind -> Metrics. Was noch?
     }
@@ -35,14 +38,6 @@ public class Tasks {
         // TODO Violations: Linear statt konstant. Ergibt sich ganz einfach aus dem vorherigen.
     }
 
-    void makeJobCancellable() {
-        // TODO UsusModel: Berechnung abbrechen, wenn der Benutzer dies verlangt. Danach voller Rebuild.
-    }
-
-    void improveGraphLayoutsWithZest() {
-        // TODO ZEST Layouting verbessern.
-    }
-
     void createMudHoleHotspots() {
         // TODO Aggregierte Hotspots = "Schlammlšöcher"
     }
@@ -50,6 +45,21 @@ public class Tasks {
     void makeMetricsPluggable() {
         // TODO Metriken pluggable machen: Collectors zufŸügen, Werte in RawData Struktur werden in einer Map
         // gehalten, pro Metrik ein gespeichertes Werteobjekt.
+    }
+
+    void createExplanatoryDocumentation() {
+        // TODO Doku: Warum soll ich meinen Code äŠndern? Wo kann ich weiterlesen?
+        // - Position Paper: Usus vs. Checkstyle, PMD, ...
+    }
+
+    // ///////// Tasks for versions after USUS 1.0
+
+    void makeJobCancellable() {
+        // TODO UsusModel: Berechnung abbrechen, wenn der Benutzer dies verlangt. Danach voller Rebuild.
+    }
+
+    void improveGraphLayoutsWithZest() {
+        // TODO ZEST Layouting verbessern.
     }
 
     void createNewMetrics() {
@@ -83,17 +93,8 @@ public class Tasks {
         // TODO Wertehistorie: Verbesserte und verschlechterte Werte ausweisen und danach sortieren.
     }
 
-    void createExplanatoryDocumentation() {
-        // TODO Doku: Warum soll ich meinen Code äŠndern? Wo kann ich weiterlesen?
-        // - Position Paper: Usus vs. Checkstyle, PMD, ...
-    }
-
     void repairAndExtendCheatsheet() {
         // TODO CheatSheet reparieren und erweitern
-    }
-
-    void createProjectYellowHotspots() {
-        // TODO Hotspots füŸr YellowCount am Projekt
     }
 
     void createPackagecycleHotspots() {

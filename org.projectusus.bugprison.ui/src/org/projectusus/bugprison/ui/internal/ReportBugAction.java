@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -30,6 +31,7 @@ import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.project.NullUsusProject;
+import org.projectusus.core.internal.proportions.rawdata.MethodVisitor;
 import org.projectusus.ui.internal.UsusUIPlugin;
 import org.projectusus.ui.internal.selection.EditorInputAnalysis;
 import org.projectusus.ui.internal.selection.JDTWorkspaceEditorInputAnalysis;
@@ -94,8 +96,13 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
     }
 
     private void fillMethodMetrics( Bug bug, IMethod method ) {
-        bug.getBugMetrics().setCyclomaticComplexity( metrics.getCCValue( method ) );
-        bug.getBugMetrics().setMethodLength( metrics.getMLValue( method ) );
+        try {
+            MethodVisitor visitor = new MethodVisitor( method );
+            bug.getBugMetrics().setCyclomaticComplexity( visitor.getCCValue() );
+            bug.getBugMetrics().setMethodLength( visitor.getMLValue() );
+        } catch( JavaModelException e ) {
+            // do nothing
+        }
     }
 
     private IMethod getSelectedMethod() {

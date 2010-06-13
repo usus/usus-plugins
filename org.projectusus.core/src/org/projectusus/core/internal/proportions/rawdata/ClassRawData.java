@@ -160,4 +160,16 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
             System.out.println( "Could not remove class " + className + ", descriptor == null" ); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
+
+    public void acceptAndGuide( MetricsResultVisitor visitor ) {
+        visitor.inspect( this );
+        JavaModelPath path = visitor.getPath();
+        if( path.isRestrictedToMethod() ) {
+            this.getMethodRawData( path.getMethod() ).acceptAndGuide( visitor );
+        } else {
+            for( MethodRawData rawData : getAllRawDataElements() ) {
+                rawData.acceptAndGuide( visitor );
+            }
+        }
+    }
 }

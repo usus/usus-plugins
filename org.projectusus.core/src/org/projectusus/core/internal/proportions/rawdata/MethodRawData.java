@@ -84,4 +84,8 @@ public class MethodRawData implements IRawData, IMethodRawData {
     public int getLineNumber() {
         return lineNumber;
     }
+
+    public void acceptAndGuide( MetricsResultVisitor visitor ) {
+        visitor.inspect( this );
+    }
 }

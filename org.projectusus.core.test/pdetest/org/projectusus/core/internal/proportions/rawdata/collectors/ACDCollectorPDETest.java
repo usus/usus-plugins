@@ -466,6 +466,33 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         Assert.assertEquals( 3 / 4.0, getACD(), 0.0001 );
     }
 
+    @Test
+    @Ignore( value = "Does not work yet" )
+    public void staticFieldWithClassName() throws Exception {
+        createWSFolder( "acd_staticfields" );
+        createJavaWSFile( "acd_staticfields/Acd_static1.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "acd_staticfields/Acd_static2.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getMetricsAccessor().getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    @Ignore( value = "Does not work yet" )
+    // @Ignore( value = "Test fails, but tested code works in productive system" )
+    public void staticFieldWithoutClassName() throws Exception {
+        createWSFolder( "acd_staticfields" );
+        createJavaWSFile( "acd_staticfields/Acd_static1.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "acd_staticfields/Acd_static3.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getMetricsAccessor().getNumberOf( CodeProportionUnit.CLASS ) );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        Assert.assertEquals( 3 / 4.0, getACD(), 0.0001 );
+    }
+
     // twoFilesOneClassIsRemovedFromFile
 
     private double getACD() {

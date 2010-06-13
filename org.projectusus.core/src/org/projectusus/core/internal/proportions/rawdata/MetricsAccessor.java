@@ -17,9 +17,6 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jdt.core.IMethod;
-import org.eclipse.jdt.core.IType;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -94,25 +91,16 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         return workspaceRawData.getProjectRawData( project );
     }
 
-    private ClassRawData getClassRawData( IType clazz ) {
-        try {
-            IFile file = (IFile)clazz.getUnderlyingResource();
-            FileRawData fileResults = getFileRawData( file );
-            if( fileResults != null ) {
-                return fileResults.getRawData( clazz );
-            }
-        } catch( JavaModelException jme ) {
-            // nothing
-        }
-        return null;
-    }
-
     public void setWarningsCount( IFile file, int markerCount ) {
         getProjectRawData( file.getProject() ).setWarningsCount( file, markerCount );
     }
 
     public void setWarningsCount( IProject project, int markerCount ) {
         getProjectRawData( project ).setWarningsCount( markerCount );
+    }
+
+    public void acceptAndGuide( MetricsResultVisitor visitor ) {
+        workspaceRawData.acceptAndGuide( visitor );
     }
 
     private CodeProportion getCodeProportion( CodeProportionKind metric ) {
@@ -147,14 +135,6 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         return projectRD.getNumberOf( unit );
     }
 
-    public int getNumberOfMethods( IType type ) {
-        ClassRawData classRawData = getClassRawData( type );
-        if( classRawData == null ) {
-            return 0;
-        }
-        return classRawData.getNumberOfMethods();
-    }
-
     public int getOverallMetric( CodeProportionKind metric ) {
         return workspaceRawData.getOverallMetric( metric );
     }
@@ -165,14 +145,6 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
             return projectRD.getOverallMetric( metric );
         }
         return 0;
-    }
-
-    public int getCCD( IType type ) {
-        ClassRawData classRawData = getClassRawData( type );
-        if( classRawData == null ) {
-            return 0;
-        }
-        return classRawData.getCCDResult();
     }
 
     public int getViolationCount( IProject project, CodeProportionKind metric ) {
@@ -191,26 +163,6 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         return CrossPackageClassRepresenter.transformToRepresenterSet( ClassDescriptor.getAll(), new CrossPackageClassRelations() );
     }
 
-    public int getCCValue( IMethod method ) {
-        return getMethodRawData( method ).getCCValue();
-    }
-
-    public int getMLValue( IMethod method ) {
-        return getMethodRawData( method ).getMLValue();
-    }
-
-    private MethodRawData getMethodRawData( IMethod method ) {
-        ClassRawData classRawData = getClassRawData( method.getDeclaringType() );
-        if( classRawData == null ) {
-            throw new IllegalStateException();
-        }
-        MethodRawData methodRawData = classRawData.getMethodRawData( method );
-        if( methodRawData == null ) {
-            throw new IllegalStateException();
-        }
-        return methodRawData;
-    }
-
     public double getRelativeACD() {
         return ACDCalculator.getRelativeACD();
     }
@@ -223,8 +175,8 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         return new YellowCountResult( this.getNumberOf( PROJECT ), this.getNumberOf( CW.getUnit() ), this.getOverallMetric( CW ), this.getNumberOfProjectsViolatingCW() );
     }
 
-    public ArrayList<CodeProportion> getCodeProportions() {
-        ArrayList<CodeProportion> entries = new ArrayList<CodeProportion>();
+    public List<CodeProportion> getCodeProportions() {
+        List<CodeProportion> entries = new ArrayList<CodeProportion>();
         for( CodeProportionKind metric : asList( CC, KG, ML, ACD, CW, PC ) ) {
             entries.add( getCodeProportion( metric ) );
         }
