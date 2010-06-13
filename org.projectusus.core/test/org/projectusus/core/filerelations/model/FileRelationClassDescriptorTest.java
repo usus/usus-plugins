@@ -9,7 +9,6 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class FileRelationClassDescriptorTest {
@@ -162,7 +161,7 @@ public class FileRelationClassDescriptorTest {
 
     private void checkNull() {
         assertEquals( 0, ClassDescriptor.getAll().size() );
-        assertEquals( 0.0, ACDCalculator.getRelativeACD(), 0.0001 );
+        assertEquals( 0.0, getACD(), 0.0001 );
     }
 
     private void checkOne() {
@@ -172,7 +171,7 @@ public class FileRelationClassDescriptorTest {
             assertEquals( 1, descriptor.getCCD() );
             assertEquals( 1, descriptor.getTransitiveParentCount() );
         }
-        assertEquals( 1.0, ACDCalculator.getRelativeACD(), 0.0001 );
+        assertEquals( 1.0, getACD(), 0.0001 );
     }
 
     private void checkTwo() {
@@ -189,7 +188,7 @@ public class FileRelationClassDescriptorTest {
                 fail( "Found unknown ClassDescriptor" ); //$NON-NLS-1$
             }
         }
-        assertEquals( 3 / 4.0, ACDCalculator.getRelativeACD(), 0.0001 );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
     }
 
     private void checkThree() {
@@ -209,7 +208,7 @@ public class FileRelationClassDescriptorTest {
                 fail( "Found unknown ClassDescriptor" ); //$NON-NLS-1$
             }
         }
-        assertEquals( 6 / 9.0, ACDCalculator.getRelativeACD(), 0.0001 );
+        assertEquals( 6 / 9.0, getACD(), 0.0001 );
     }
 
     private void cleanupDescriptors( int count ) {
@@ -220,4 +219,15 @@ public class FileRelationClassDescriptorTest {
         }
     }
 
+    private double getACD() {
+        int numberOfClasses = ClassDescriptor.getAll().size();
+        if( numberOfClasses == 0 ) {
+            return 0.0;
+        }
+        int ccdSum = 0;
+        for( ClassDescriptor descriptor : ClassDescriptor.getAll() ) {
+            ccdSum += descriptor.getCCD();
+        }
+        return ccdSum / (double)(numberOfClasses * numberOfClasses);
+    }
 }

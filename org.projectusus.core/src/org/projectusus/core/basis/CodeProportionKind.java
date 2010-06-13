@@ -11,7 +11,7 @@ import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_kg;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ml;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_pc;
 
-import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.proportions.rawdata.ClassCountVisitor;
 
 public enum CodeProportionKind {
 
@@ -30,8 +30,7 @@ public enum CodeProportionKind {
     ACD( isisMetrics_acd, CodeProportionUnit.CLASS ) {
         @Override
         public boolean isViolatedBy( IClassRawData rawData ) {
-            int classCount = UsusCorePlugin.getMetricsAccessor().getNumberOf( CodeProportionUnit.CLASS );
-            double limit = calculateCcdLimit( classCount );
+            double limit = calculateCcdLimit( new ClassCountVisitor().getClassCount() );
             return rawData.getCCDResult() > limit;
         }
     }, //

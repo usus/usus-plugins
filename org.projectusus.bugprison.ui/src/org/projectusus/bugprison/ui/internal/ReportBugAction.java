@@ -27,10 +27,10 @@ import org.projectusus.bugprison.core.Bug;
 import org.projectusus.bugprison.core.IBuggyProject;
 import org.projectusus.bugprison.core.NullBuggyProject;
 import org.projectusus.core.IMetricsAccessor;
-import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.project.NullUsusProject;
+import org.projectusus.core.internal.proportions.rawdata.MethodCountVisitor;
 import org.projectusus.core.internal.proportions.rawdata.MethodVisitor;
 import org.projectusus.ui.internal.UsusUIPlugin;
 import org.projectusus.ui.internal.selection.EditorInputAnalysis;
@@ -91,8 +91,7 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
     }
 
     private void fillClassMetrics( Bug bug ) {
-        int numberOfMethods = metrics.getNumberOf( CodeProportionUnit.METHOD );
-        bug.getBugMetrics().setNumberOfMethods( numberOfMethods );
+        bug.getBugMetrics().setNumberOfMethods( new MethodCountVisitor().getMethodCount() );
     }
 
     private void fillMethodMetrics( Bug bug, IMethod method ) {

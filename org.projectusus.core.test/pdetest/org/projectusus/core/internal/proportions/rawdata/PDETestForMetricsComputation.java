@@ -17,7 +17,6 @@ import org.eclipse.core.runtime.Platform;
 import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.IUsusModel;
 import org.projectusus.core.basis.CodeProportionKind;
-import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.PDETestUsingWSProject;
 import org.projectusus.core.internal.UsusCorePlugin;
 
@@ -27,7 +26,7 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
         IFile file = createWSFile( "A.java", loadContent( "A.test" ) );
         buildFullyAndWait();
         assertEquals( 1, getMetricsAccessor().getViolationCount( file.getProject(), CodeProportionKind.ML ) );
-        assertEquals( 2, getMetricsAccessor().getNumberOf( file.getProject(), CodeProportionUnit.METHOD ) );
+        assertEquals( 2, new MethodCountVisitor( new JavaModelPath( file.getProject() ) ).getMethodCount() );
     }
 
     protected String loadContent( String fileName ) throws Exception {
@@ -80,5 +79,13 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
 
     public IUsusModel getModel() {
         return UsusCorePlugin.getUsusModel();
+    }
+
+    public int getNumberOfMethods() {
+        return new MethodCountVisitor().getMethodCount();
+    }
+
+    public int getNumberOfClasses() {
+        return new ClassCountVisitor().getClassCount();
     }
 }

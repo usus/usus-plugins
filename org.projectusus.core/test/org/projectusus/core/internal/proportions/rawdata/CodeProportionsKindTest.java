@@ -32,9 +32,6 @@ public class CodeProportionsKindTest {
         methodRawDataOK.setMLValue( 1 );
         methodRawDataOK.setCCValue( 2 );
 
-        MetricsAccessor metrics = mock( MetricsAccessor.class );
-        when( new Integer( metrics.getNumberOf( CodeProportionUnit.CLASS ) ) ).thenReturn( new Integer( 100 ) );
-
         classRawDataOK = mock( ClassRawData.class );
         when( new Integer( classRawDataOK.getNumberOfMethods() ) ).thenReturn( new Integer( 1 ) );
         when( new Integer( classRawDataOK.getCCDResult() ) ).thenReturn( new Integer( 0 ) );

@@ -1,12 +1,15 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
-
 public class CCDSumVisitor extends DefaultMetricsResultVisitor {
 
     private int ccdCount = 0;
 
     public CCDSumVisitor( JavaModelPath path ) {
         super( path );
+    }
+
+    public CCDSumVisitor() {
+        super();
     }
 
     @Override

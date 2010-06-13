@@ -127,14 +127,6 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         return workspaceRawData.getNumberOf( unit );
     }
 
-    public int getNumberOf( IProject project, CodeProportionUnit unit ) {
-        ProjectRawData projectRD = workspaceRawData.getRawData( project );
-        if( projectRD == null ) {
-            return 0;
-        }
-        return projectRD.getNumberOf( unit );
-    }
-
     public int getOverallMetric( CodeProportionKind metric ) {
         return workspaceRawData.getOverallMetric( metric );
     }

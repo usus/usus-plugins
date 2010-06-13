@@ -9,8 +9,10 @@ import static org.projectusus.bugprison.core.texts.BugPrisonTexts.AverageMetrics
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.basis.CodeProportionKind;
-import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.proportions.rawdata.ClassCountVisitor;
+import org.projectusus.core.internal.proportions.rawdata.JavaModelPath;
+import org.projectusus.core.internal.proportions.rawdata.MethodCountVisitor;
 
 public class AverageMetrics implements IAverageMetrics {
 
@@ -38,12 +40,12 @@ public class AverageMetrics implements IAverageMetrics {
         return calculateAverage( numberOfMethods, numberOfClasses );
     }
 
-    // TODO nr: direkt die Summen aus dem WorkspaceRD geben lassen?
     public void addProjectResults( IProject project ) {
-        IMetricsAccessor metricsAccessor = UsusCorePlugin.getMetricsAccessor();
-        numberOfMethods += metricsAccessor.getNumberOf( project, CodeProportionUnit.METHOD );
-        numberOfClasses += metricsAccessor.getNumberOf( project, CodeProportionUnit.CLASS );
+        JavaModelPath path = new JavaModelPath( project );
+        numberOfMethods += new MethodCountVisitor( path ).getMethodCount();
+        numberOfClasses += new ClassCountVisitor( path ).getClassCount();
 
+        IMetricsAccessor metricsAccessor = UsusCorePlugin.getMetricsAccessor();
         totalCC += metricsAccessor.getOverallMetric( project, CodeProportionKind.CC );
         totalML += metricsAccessor.getOverallMetric( project, CodeProportionKind.ML );
     }

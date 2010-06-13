@@ -5,16 +5,11 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.basis.CodeProportionKind;
-import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.basis.YellowCountResult;
 import org.projectusus.core.internal.proportions.rawdata.MetricsResultVisitor;
 
 public interface IMetricsAccessor {
-
-    int getNumberOf( CodeProportionUnit unit );
-
-    int getNumberOf( IProject project, CodeProportionUnit unit );
 
     int getOverallMetric( CodeProportionKind metric );
 
@@ -28,8 +23,6 @@ public interface IMetricsAccessor {
 
     Set<GraphNode> getAllCrossPackageClasses();
 
-    double getRelativeACD();
-
     int getNumberOfWarnings( IFile file );
 
     YellowCountResult getWarnings();
@@ -37,5 +30,7 @@ public interface IMetricsAccessor {
     int getNumberOfProjectsViolatingCW();
 
     void acceptAndGuide( MetricsResultVisitor visitor );
+
+    double getRelativeACD(); // TODO wo soll die sein?
 
 }

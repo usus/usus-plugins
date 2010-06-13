@@ -8,6 +8,10 @@ public class ClassCountVisitor extends DefaultMetricsResultVisitor {
         super( path );
     }
 
+    public ClassCountVisitor() {
+        super();
+    }
+
     @Override
     public void inspect( @SuppressWarnings( "unused" ) ClassRawData classRawData ) {
         classCount++;
