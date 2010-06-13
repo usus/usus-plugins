@@ -7,7 +7,6 @@ Bundle-Activator: org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin
 Bundle-Vendor: projectusus.org
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
- org.eclipse.debug.core,
  org.eclipse.debug.ui,
  org.eclipse.jdt.core,
  org.eclipse.jdt.launching,
