@@ -172,4 +172,12 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
             }
         }
     }
+
+    public int getStartPosition() {
+        return startPosition;
+    }
+
+    public int getLineNumber() {
+        return lineNumber;
+    }
 }

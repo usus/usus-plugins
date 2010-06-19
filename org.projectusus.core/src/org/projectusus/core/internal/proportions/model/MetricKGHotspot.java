@@ -4,29 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.model;
 
-import org.projectusus.core.IMetricKGHotspot;
-
-public class MetricKGHotspot extends Hotspot implements IMetricKGHotspot {
-
-    private final String className;
-    private final int classSize;
+public class MetricKGHotspot extends Hotspot {
 
     public MetricKGHotspot( String className, int classSize, int sourcePosition, int lineNumber ) {
-        super( classSize, sourcePosition, lineNumber );
-        this.className = className;
-        this.classSize = classSize;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public int getClassSize() {
-        return classSize;
+        super( className, classSize, sourcePosition, lineNumber );
     }
 
     @Override
     public String toString() {
-        return getClassName() + " (KG = " + getClassSize() + ")"; //$NON-NLS-1$//$NON-NLS-2$ 
+        return getName() + " (KG = " + getMetricsValue() + ")"; //$NON-NLS-1$//$NON-NLS-2$ 
     }
 }

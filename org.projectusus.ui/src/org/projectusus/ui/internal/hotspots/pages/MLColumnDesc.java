@@ -6,7 +6,6 @@ package org.projectusus.ui.internal.hotspots.pages;
 
 import static org.projectusus.ui.viewer.ColumnAlignment.RIGHT;
 
-import org.projectusus.core.IMetricMLHotspot;
 import org.projectusus.core.basis.IHotspot;
 import org.projectusus.ui.viewer.UsusTreeColumn;
 
@@ -15,32 +14,25 @@ public enum MLColumnDesc implements IHotspotsPageColumnDesc {
     @UsusTreeColumn( header = "Length", align = RIGHT, weight = 10 )
     LENGTH {
         public String getLabel( IHotspot element ) {
-            IMetricMLHotspot hotspot = (IMetricMLHotspot)element;
-            return String.valueOf( hotspot.getMethodLength() );
+            return String.valueOf( element.getMetricsValue() );
         }
     },
-    @UsusTreeColumn( header = "Method", weight = 35 )
-    METHOD {
+    @UsusTreeColumn( header = "Name", weight = 25 )
+    Name {
         public String getLabel( IHotspot element ) {
-            return ((IMetricMLHotspot)element).getMethodName();
-        }
-    },
-    @UsusTreeColumn( header = "Class", weight = 25 )
-    CLASS {
-        public String getLabel( IHotspot element ) {
-            return ((IMetricMLHotspot)element).getClassName();
+            return element.getName();
         }
     },
     @UsusTreeColumn( header = "Path", weight = 20 )
     PATH {
         public String getLabel( IHotspot element ) {
-            return ((IMetricMLHotspot)element).getFile().getFullPath().removeLastSegments( 1 ).toOSString();
+            return element.getFile().getFullPath().removeLastSegments( 1 ).toOSString();
         }
     },
     @UsusTreeColumn( header = "Line", align = RIGHT, weight = 10 )
     LINE {
         public String getLabel( IHotspot element ) {
-            return String.valueOf( ((IMetricMLHotspot)element).getLineNumber() );
+            return String.valueOf( element.getLineNumber() );
         }
     };
 

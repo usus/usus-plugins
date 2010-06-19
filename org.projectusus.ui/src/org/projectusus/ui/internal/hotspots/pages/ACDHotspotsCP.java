@@ -5,15 +5,15 @@
 package org.projectusus.ui.internal.hotspots.pages;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.projectusus.core.IMetricACDHotspot;
+import org.projectusus.core.basis.IHotspot;
 
 class ACDHotspotsCP extends HotspotsCP implements IStructuredContentProvider {
 
     @Override
     public Object[] getChildren( Object parentElement ) {
         Object[] result = null;
-        if( parentElement instanceof IMetricACDHotspot ) {
-            IMetricACDHotspot acdHotspot = (IMetricACDHotspot)parentElement;
+        if( parentElement instanceof IHotspot ) {
+            IHotspot acdHotspot = (IHotspot)parentElement;
             // TODO lf get the children - what interface should they have?
         }
         return result;

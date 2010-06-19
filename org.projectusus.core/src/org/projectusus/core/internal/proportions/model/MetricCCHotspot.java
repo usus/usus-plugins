@@ -4,35 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.model;
 
-import org.projectusus.core.IMetricCCHotspot;
-
-public class MetricCCHotspot extends Hotspot implements IMetricCCHotspot {
-
-    private final String className;
-    private final String methodName;
-    private final int cyclomaticComplexity;
+public class MetricCCHotspot extends Hotspot {
 
     public MetricCCHotspot( String className, String methodName, int cyclomaticComplexity, int sourcePosition, int lineNumber ) {
-        super( cyclomaticComplexity, sourcePosition, lineNumber );
-        this.className = className;
-        this.methodName = methodName;
-        this.cyclomaticComplexity = cyclomaticComplexity;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public int getCyclomaticComplexity() {
-        return cyclomaticComplexity;
-    }
-
-    public String getMethodName() {
-        return methodName;
+        super( className + "." + methodName, cyclomaticComplexity, sourcePosition, lineNumber );
     }
 
     @Override
     public String toString() {
-        return getClassName() + "." + getMethodName() + " (CC = " + getCyclomaticComplexity() + ")"; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+        return getName() + " (CC = " + getMetricsValue() + ")"; //$NON-NLS-1$//$NON-NLS-2$ 
     }
 }

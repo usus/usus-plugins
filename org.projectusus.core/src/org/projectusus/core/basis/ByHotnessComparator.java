@@ -11,6 +11,6 @@ import java.util.Comparator;
 public class ByHotnessComparator implements Comparator<IHotspot> {
 
     public int compare( IHotspot left, IHotspot right ) {
-        return new Integer( right.getHotness() ).compareTo( new Integer( left.getHotness() ) );
+        return new Integer( right.getMetricsValue() ).compareTo( new Integer( left.getMetricsValue() ) );
     }
 }

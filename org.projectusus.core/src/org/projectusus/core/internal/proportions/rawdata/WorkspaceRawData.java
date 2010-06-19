@@ -37,23 +37,21 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
     }
 
     public CodeProportion getCodeProportion( CodeProportionKind metric ) {
-        int violations = getViolationStatistic( metric );
         CodeStatistic basis = getCodeStatistic( metric.getUnit() );
-        List<IHotspot> hotspots = computeHotspots( metric );
-        return new CodeProportion( metric, violations, basis, hotspots );
-    }
-
-    private int getViolationStatistic( CodeProportionKind metric ) {
+        DefaultStatistic statistic = null;
         if( metric == CodeProportionKind.ML ) {
-            return new MethodLengthStatistic().getViolations();
+            statistic = new MethodLengthStatistic();
         }
         if( metric == CodeProportionKind.CC ) {
-            return new CyclomaticComplexityStatistic().getViolations();
+            statistic = new CyclomaticComplexityStatistic();
         }
         if( metric == CodeProportionKind.KG ) {
-            return new ClassSizeStatistic().getViolations();
+            statistic = new ClassSizeStatistic();
         }
-        return getViolationCount( metric );
+        if( statistic == null ) {
+            throw new IllegalArgumentException( "Cannot get code statistic of code proportion kind " + metric ); //$NON-NLS-1$
+        }
+        return new CodeProportion( metric, statistic.getViolations(), basis, statistic.getHotspots() );
     }
 
     // TODO CodeStatistic cachen?

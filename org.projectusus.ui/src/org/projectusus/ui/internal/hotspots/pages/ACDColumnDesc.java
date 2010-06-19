@@ -6,7 +6,6 @@ package org.projectusus.ui.internal.hotspots.pages;
 
 import static org.projectusus.ui.viewer.ColumnAlignment.RIGHT;
 
-import org.projectusus.core.IMetricACDHotspot;
 import org.projectusus.core.basis.IHotspot;
 import org.projectusus.ui.viewer.UsusTreeColumn;
 
@@ -14,14 +13,13 @@ public enum ACDColumnDesc implements IHotspotsPageColumnDesc {
     @UsusTreeColumn( header = "CCD", align = RIGHT, weight = 10 )
     SIZE {
         public String getLabel( IHotspot element ) {
-            IMetricACDHotspot hotspot = (IMetricACDHotspot)element;
-            return String.valueOf( hotspot.getClassCCD() );
+            return String.valueOf( element.getMetricsValue() );
         }
     },
     @UsusTreeColumn( header = "Class", weight = 25 )
     CLASS {
         public String getLabel( IHotspot element ) {
-            return ((IMetricACDHotspot)element).getClassName();
+            return element.getName();
         }
     },
     @UsusTreeColumn( header = "Path", weight = 20 )

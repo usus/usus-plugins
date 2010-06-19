@@ -88,4 +88,8 @@ public class MethodRawData implements IRawData, IMethodRawData {
     public void acceptAndGuide( MetricsResultVisitor visitor ) {
         visitor.inspect( this );
     }
+
+    public String getClassName() {
+        return className;
+    }
 }

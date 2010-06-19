@@ -10,10 +10,12 @@ public interface IHotspot {
 
     IFile getFile();
 
+    String getName();
+
     int getSourcePosition();
 
     int getLineNumber();
 
-    int getHotness();
+    int getMetricsValue();
 
 }

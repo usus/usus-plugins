@@ -10,22 +10,28 @@ import org.projectusus.core.basis.IHotspot;
 public class Hotspot implements IHotspot {
 
     private IFile file;
-    private final int hotness;
+    private final String name;
+    private final int metricsValue;
     private final int sourcePosition;
     private final int lineNumber;
 
-    public Hotspot( int hotness, int sourcePosition, int lineNumber ) {
-        this.hotness = hotness;
+    public Hotspot( String name, int metricsValue, int sourcePosition, int lineNumber ) {
+        this.name = name;
+        this.metricsValue = metricsValue;
         this.sourcePosition = sourcePosition;
         this.lineNumber = lineNumber;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public IFile getFile() {
         return file;
     }
 
-    public int getHotness() {
-        return hotness;
+    public int getMetricsValue() {
+        return metricsValue;
     }
 
     public int getSourcePosition() {

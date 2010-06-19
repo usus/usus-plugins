@@ -6,7 +6,6 @@ package org.projectusus.ui.internal.hotspots.pages;
 
 import static org.projectusus.ui.viewer.ColumnAlignment.RIGHT;
 
-import org.projectusus.core.IMetricCCHotspot;
 import org.projectusus.core.basis.IHotspot;
 import org.projectusus.ui.viewer.UsusTreeColumn;
 
@@ -15,20 +14,13 @@ public enum CCColumnDesc implements IHotspotsPageColumnDesc {
     @UsusTreeColumn( header = "Cyclomatic complexity", align = RIGHT, weight = 10 )
     COMPLEXITY {
         public String getLabel( IHotspot element ) {
-            IMetricCCHotspot hotspot = (IMetricCCHotspot)element;
-            return String.valueOf( hotspot.getCyclomaticComplexity() );
+            return String.valueOf( element.getMetricsValue() );
         }
     },
-    @UsusTreeColumn( header = "Method", weight = 35 )
-    METHOD {
+    @UsusTreeColumn( header = "Name", weight = 25 )
+    Name {
         public String getLabel( IHotspot element ) {
-            return ((IMetricCCHotspot)element).getMethodName();
-        }
-    },
-    @UsusTreeColumn( header = "Class", weight = 25 )
-    CLASS {
-        public String getLabel( IHotspot element ) {
-            return ((IMetricCCHotspot)element).getClassName();
+            return element.getName();
         }
     },
     @UsusTreeColumn( header = "Path", weight = 20 )

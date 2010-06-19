@@ -20,12 +20,10 @@ public class HotspotsLP extends LabelProvider implements ITableLabelProvider {
     }
 
     public String getColumnText( Object element, int columnIndex ) {
-        String result = element.toString();
         if( element instanceof IHotspot ) {
-            IHotspot hotspot = (IHotspot)element;
-            result = columnDescs.get( columnIndex ).getLabel( hotspot );
+            return columnDescs.get( columnIndex ).getLabel( (IHotspot)element );
         }
-        return result;
+        return element.toString();
     }
 
     public Image getColumnImage( Object element, int columnIndex ) {
