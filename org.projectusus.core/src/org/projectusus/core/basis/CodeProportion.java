@@ -36,8 +36,8 @@ public class CodeProportion extends PlatformObject {
         this.level = levelValue;
     }
 
-    public Double getLevel() {
-        return new Double( level );
+    public double getLevel() {
+        return level;
     }
 
     public int getViolations() {

@@ -4,12 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core;
 
+import java.util.List;
+
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
 
 public interface IUsusModel {
 
-    IUsusElement[] getElements();
+    List<CodeProportion> getCodeProportions();
 
     void addUsusModelListener( IUsusModelListener listener );
 

@@ -12,7 +12,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.projectusus.core.IMetricsAccessor;
-import org.projectusus.core.IUsusElement;
 import org.projectusus.core.IUsusModel;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.CodeProportion;
@@ -60,8 +59,8 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
     // interface of IUsusModel
     // ////////////////////////
 
-    public IUsusElement[] getElements() {
-        return cache.getElements().clone();
+    public List<CodeProportion> getCodeProportions() {
+        return cache.getEntries();
     }
 
     // ///////////////////////////////////////////////////////////////////////

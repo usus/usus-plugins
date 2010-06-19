@@ -4,7 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.cockpit;
 
-import static org.projectusus.ui.internal.proportions.cockpit.CockpitColumnDesc.INDICATOR;
+import static org.projectusus.ui.internal.proportions.cockpit.CockpitColumnDesc.Indicator;
 
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -14,21 +14,19 @@ import org.projectusus.ui.internal.proportions.UsusModelLabelProvider;
 public class CockpitLP extends UsusModelLabelProvider implements ITableLabelProvider {
 
     public Image getColumnImage( Object element, int columnIndex ) {
-        Image result = null;
         if( CockpitColumnDesc.values()[columnIndex].hasImage() ) {
-            result = getColumnImageFor( element );
+            return getColumnImageFor( element );
         }
-        return result;
+        return null;
     }
 
     public String getColumnText( Object element, int columnIndex ) {
-        String result = null;
         if( element instanceof CodeProportion ) {
-            result = getColumnTextFor( (CodeProportion)element, columnIndex );
-        } else if( CockpitColumnDesc.values()[columnIndex] == INDICATOR ) {
-            result = getNodeTextFor( element );
+            return getColumnTextFor( (CodeProportion)element, columnIndex );
+        } else if( CockpitColumnDesc.values()[columnIndex] == Indicator ) {
+            return getNodeTextFor( element );
         }
-        return result;
+        return null;
     }
 
     // internal methods
@@ -37,4 +35,5 @@ public class CockpitLP extends UsusModelLabelProvider implements ITableLabelProv
     private String getColumnTextFor( CodeProportion element, int columnIndex ) {
         return CockpitColumnDesc.values()[columnIndex].getLabel( element );
     }
+
 }

@@ -7,7 +7,6 @@ package org.projectusus.ui.internal.proportions.cockpit;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.widgets.Composite;
-import org.projectusus.core.IUsusElement;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.ui.viewer.UsusTreeViewer;
 
@@ -29,8 +28,8 @@ class CockpitTreeViewer extends UsusTreeViewer<CodeProportion> {
 
     private void selectCodeProportionInTree( CodeProportion codeProportion ) {
         for( Object element : getExpandedElements() ) {
-            if( element instanceof IUsusElement ) {
-                for( CodeProportion cp : ((IUsusElement)element).getEntries() ) {
+            if( element instanceof MetricStatistics ) {
+                for( CodeProportion cp : ((MetricStatistics)element).getChildren() ) {
                     if( cp.getMetric().equals( codeProportion.getMetric() ) ) {
                         setSelection( createTreeSelection( new Object[] { element, cp } ) );
                     }

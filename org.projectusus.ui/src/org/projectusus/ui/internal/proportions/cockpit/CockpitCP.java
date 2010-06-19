@@ -6,25 +6,22 @@ package org.projectusus.ui.internal.proportions.cockpit;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.projectusus.core.IUsusElement;
-import org.projectusus.core.IUsusModel;
 
 public class CockpitCP implements ITreeContentProvider {
 
     public Object[] getElements( Object inputElement ) {
-        if( inputElement instanceof IUsusModel ) {
-            return ((IUsusModel)inputElement).getElements();
+        if( inputElement instanceof CockpitModel ) {
+            return ((CockpitModel)inputElement).getCategories();
         }
         return new Object[] {};
     }
 
     public Object[] getChildren( Object parentElement ) {
-        Object[] result = new Object[0];
-        if( parentElement instanceof IUsusElement ) {
-            IUsusElement ususElement = (IUsusElement)parentElement;
-            result = ususElement.getEntries().toArray();
+        if( parentElement instanceof CockpitCategory ) {
+            CockpitCategory category = (CockpitCategory)parentElement;
+            return category.getChildren();
         }
-        return result;
+        return new Object[0];
     }
 
     public Object getParent( Object element ) {

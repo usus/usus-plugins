@@ -4,23 +4,23 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.model;
 
-import java.util.List;
+import static java.util.Collections.sort;
+import static java.util.Collections.unmodifiableList;
 
-import org.projectusus.core.IUsusElement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
 
 public class UsusModelCache {
+    private final Map<CodeProportionKind, CodeProportion> isisMetricsValues;
 
-    private final CodeProportions codeProportionsCache = new CodeProportions();
-
-    public IUsusElement[] getElements() {
-        return new IUsusElement[] { codeProportionsCache };
-        // TODO hier das YCR zufügen
-    }
-
-    public void refresh( CodeProportion proportion ) {
-        codeProportionsCache.refresh( proportion );
+    public UsusModelCache() {
+        super();
+        isisMetricsValues = new HashMap<CodeProportionKind, CodeProportion>();
     }
 
     public void refreshAll( List<CodeProportion> proportions ) {
@@ -30,6 +30,18 @@ public class UsusModelCache {
     }
 
     public CodeProportion getCodeProportion( CodeProportionKind kind ) {
-        return codeProportionsCache.forKind( kind );
+        return isisMetricsValues.get( kind );
     }
+
+    void refresh( CodeProportion proportion ) {
+        isisMetricsValues.put( proportion.getMetric(), proportion );
+    }
+
+    public List<CodeProportion> getEntries() {
+        List<CodeProportion> result = new ArrayList<CodeProportion>();
+        result.addAll( isisMetricsValues.values() );
+        sort( result, new ByIsisMetricsComparator() );
+        return unmodifiableList( result );
+    }
+
 }

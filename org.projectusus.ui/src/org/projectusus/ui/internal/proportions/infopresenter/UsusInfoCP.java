@@ -4,8 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter;
 
-import org.projectusus.core.ICodeProportions;
 import org.projectusus.ui.internal.proportions.cockpit.CockpitCP;
+import org.projectusus.ui.internal.proportions.cockpit.CockpitCategory;
 import org.projectusus.ui.internal.proportions.infopresenter.infomodel.IUsusInfo;
 
 class UsusInfoCP extends CockpitCP {
@@ -19,7 +19,7 @@ class UsusInfoCP extends CockpitCP {
     @Override
     public Object[] getChildren( Object parentElement ) {
         Object[] result = new Object[0];
-        if( parentElement instanceof ICodeProportions ) {
+        if( parentElement instanceof CockpitCategory ) {
             result = ususInfo.getCodeProportionInfos();
         }
         return result;

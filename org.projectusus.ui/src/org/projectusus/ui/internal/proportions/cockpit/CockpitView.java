@@ -158,7 +158,7 @@ public class CockpitView extends ViewPart {
     private void createViewer( Composite parent ) {
         parent.setLayout( new FillLayout() );
         treeViewer = new CockpitTreeViewer( parent );
-        treeViewer.setInput( getUsusModel() );
+        treeViewer.setInput( new CockpitModel( getUsusModel() ) );
     }
 
 }

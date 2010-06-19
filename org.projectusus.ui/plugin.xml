@@ -57,6 +57,15 @@
                style="push"
                toolbarPath="additions"
                tooltip="Run proportions analysis over the workspace and refresh the data shown on this view."/>
+         <action
+               class="org.projectusus.ui.internal.proportions.actions.TakeSnapshot"
+               icon="icons/full/elcl16/snapshot.gif"
+               id="org.projectusus.ui.internal.proportions.actions.TakeSnapshot"
+               label="Snapshot"
+               menubarPath="additions"
+               style="push"
+               toolbarPath="additions"
+               tooltip="Save the current values in a snapshot "/>
       </viewContribution>
    </extension>
    <!-- editor actions -->
