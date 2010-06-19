@@ -41,14 +41,6 @@ class RawData<S, T extends IRawData> implements IRawData {
         wrapper.removeAll();
     }
 
-    public synchronized int getViolationCount( CodeProportionKind metric ) {
-        int violations = 0;
-        for( T result : wrapper.getAllRawDataElements() ) {
-            violations = violations + result.getViolationCount( metric );
-        }
-        return violations;
-    }
-
     public synchronized int getNumberOf( CodeProportionUnit unit ) {
         int basis = 0;
         for( T result : wrapper.getAllRawDataElements() ) {

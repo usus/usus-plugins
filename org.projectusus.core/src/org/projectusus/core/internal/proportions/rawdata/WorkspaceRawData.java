@@ -4,9 +4,9 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
-import java.util.ArrayList;
+import static org.projectusus.core.basis.CodeProportionKind.ACD;
+
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
@@ -14,7 +14,6 @@ import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.CodeStatistic;
-import org.projectusus.core.basis.IHotspot;
 
 class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
@@ -48,6 +47,12 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         if( metric == CodeProportionKind.KG ) {
             statistic = new ClassSizeStatistic();
         }
+        if( metric == ACD ) {
+            ACDStatistic acdStatistic = new ACDStatistic();
+            double levelValue = 100.0 - 100.0 * acdStatistic.getRelativeACD();
+            return new CodeProportion( metric, acdStatistic.getViolations(), basis, levelValue, acdStatistic.getHotspots() );
+        }
+
         if( statistic == null ) {
             throw new IllegalArgumentException( "Cannot get code statistic of code proportion kind " + metric ); //$NON-NLS-1$
         }
@@ -63,12 +68,6 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
             return new MethodCountVisitor().getCodeStatistic();
         }
         throw new IllegalArgumentException( "Cannot get code statistic of code proportion unit " + unit ); //$NON-NLS-1$
-    }
-
-    List<IHotspot> computeHotspots( CodeProportionKind metric ) {
-        List<IHotspot> hotspots = new ArrayList<IHotspot>();
-        addToHotspots( metric, hotspots );
-        return hotspots;
     }
 
     public Set<ClassRawData> getAllClassRawData() {

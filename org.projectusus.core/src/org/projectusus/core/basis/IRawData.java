@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface IRawData {
 
-    int getViolationCount( CodeProportionKind metric );
-
     int getNumberOf( CodeProportionUnit unit );
 
     void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots );

@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
-import org.projectusus.core.internal.proportions.rawdata.CCDSumVisitor;
+import org.projectusus.core.internal.proportions.rawdata.ACDStatistic;
 import org.projectusus.core.internal.proportions.rawdata.MethodCountVisitor;
 import org.projectusus.core.internal.proportions.rawdata.JavaModelPath;
 
@@ -23,7 +23,7 @@ public class UsusInfoForClass extends UsusInfoForFile {
     protected void addFormattedProportion( List<String> result ) throws JavaModelException {
         super.addFormattedProportion( result );
         result.add( UsusModelElementFormatter.format( KG, new MethodCountVisitor( path ).getMethodCount() ) );
-        result.add( UsusModelElementFormatter.format( "Cumulative Component Dependency (of class)", new CCDSumVisitor( path ).getCCDSum() ) );
+        result.add( UsusModelElementFormatter.format( "Cumulative Component Dependency (of class)", new ACDStatistic( path ).getCCDSum() ) );
     }
 
     @Override

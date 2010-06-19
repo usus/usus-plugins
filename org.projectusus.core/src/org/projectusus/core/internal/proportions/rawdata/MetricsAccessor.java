@@ -99,14 +99,6 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
             return new CodeProportion( metric, violations, basis, hotspots );
         }
 
-        if( metric == ACD ) {
-            CodeStatistic basis = new ClassCountVisitor().getCodeStatistic();
-            int violations = workspaceRawData.getViolationCount( metric );
-            List<IHotspot> hotspots = workspaceRawData.computeHotspots( metric );
-            double levelValue = 100.0 - 100.0 * getRelativeACD();
-            return new CodeProportion( metric, violations, basis, levelValue, hotspots );
-        }
-
         return workspaceRawData.getCodeProportion( metric );
     }
 

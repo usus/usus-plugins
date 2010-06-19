@@ -6,8 +6,6 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import static org.projectusus.core.internal.proportions.rawdata.JDTSupport.getCompilationUnit;
 
-import java.util.List;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
@@ -15,16 +13,12 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.IClassRawData;
-import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.internal.proportions.model.MetricACDHotspot;
-import org.projectusus.core.internal.proportions.model.MetricKGHotspot;
 
 public class ClassRawData extends RawData<Integer, MethodRawData> implements IClassRawData {
 
@@ -114,31 +108,6 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
             return super.getNumberOf( unit );
         }
         return 1;
-    }
-
-    @Override
-    public int getViolationCount( CodeProportionKind metric ) {
-        if( metric.isMethodKind() ) {
-            return super.getViolationCount( metric );
-        }
-        return metric.isViolatedBy( this ) ? 1 : 0;
-    }
-
-    @Override
-    public void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots ) {
-        if( metric.isMethodKind() ) {
-            super.addToHotspots( metric, hotspots );
-            return;
-        }
-
-        if( metric.isViolatedBy( this ) ) {
-            if( metric.equals( CodeProportionKind.KG ) ) {
-                hotspots.add( new MetricKGHotspot( className, getNumberOfMethods(), startPosition, lineNumber ) );
-            }
-            if( metric.equals( CodeProportionKind.ACD ) ) {
-                hotspots.add( new MetricACDHotspot( className, getCCDResult(), startPosition, lineNumber ) );
-            }
-        }
     }
 
     public int getNumberOfMethods() {

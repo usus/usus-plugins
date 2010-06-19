@@ -6,9 +6,6 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import static org.projectusus.core.internal.proportions.rawdata.JDTSupport.getCompilationUnit;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
@@ -16,12 +13,9 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.IFileRawData;
-import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.Classname;
-import org.projectusus.core.internal.proportions.model.Hotspot;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
 
 public class FileRawData extends RawData<Integer, ClassRawData> implements IFileRawData {
@@ -67,25 +61,6 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
             return null;
         }
         return getRawData( BoundType.of( node ), node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
-    }
-
-    @Override
-    public void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots ) {
-        List<IHotspot> localHotspots = getHotspotsForThisFile( metric );
-        addFileInfoToHotspots( localHotspots );
-        hotspots.addAll( localHotspots );
-    }
-
-    private void addFileInfoToHotspots( List<IHotspot> localHotspots ) {
-        for( IHotspot hotspot : localHotspots ) {
-            ((Hotspot)hotspot).setFile( fileOfRawData );
-        }
-    }
-
-    private List<IHotspot> getHotspotsForThisFile( CodeProportionKind metric ) {
-        List<IHotspot> localHotspots = new ArrayList<IHotspot>();
-        super.addToHotspots( metric, localHotspots );
-        return localHotspots;
     }
 
     private ClassRawData getRawData( BoundType typeBinding, int start, int lineNumber, String name ) {
