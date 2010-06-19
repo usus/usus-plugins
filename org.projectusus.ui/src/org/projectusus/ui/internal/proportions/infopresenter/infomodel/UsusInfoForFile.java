@@ -4,15 +4,12 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter.infomodel;
 
-import static org.projectusus.core.basis.CodeProportionKind.CW;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jdt.core.JavaModelException;
-import org.projectusus.core.internal.UsusCorePlugin;
 
 class UsusInfoForFile implements IUsusInfo {
 
@@ -36,12 +33,6 @@ class UsusInfoForFile implements IUsusInfo {
     @SuppressWarnings( "unused" )
     protected void addFormattedProportion( List<String> result ) throws JavaModelException {
         // dummy for subclasses
-    }
-
-    public String[] getWarningInfos() {
-        String[] result = new String[1];
-        result[0] = UsusModelElementFormatter.format( CW.getLabel() + " (of file)", UsusCorePlugin.getMetricsAccessor().getNumberOfWarnings( file ) );
-        return result;
     }
 
     public String formatTitle() {

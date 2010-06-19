@@ -5,7 +5,6 @@
 package org.projectusus.ui.internal.proportions.cockpit;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
-import static org.projectusus.core.basis.CodeProportionKind.CW;
 import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
@@ -31,7 +30,6 @@ import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.internal.project.FindUsusProjects;
 import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
 import org.projectusus.ui.internal.proportions.actions.RefreshHotspots;
-import org.projectusus.ui.internal.proportions.actions.ShowProblemsView;
 import org.projectusus.ui.internal.proportions.actions.ToggleAutoCompute;
 import org.projectusus.ui.internal.selection.ExtractCodeProportion;
 import org.projectusus.ui.internal.util.ISharedUsusImages;
@@ -89,11 +87,12 @@ public class CockpitView extends ViewPart {
 
     protected void addContextActionsFor( IMenuManager manager, ISelection selection ) {
         CodeProportion codeProportion = new ExtractCodeProportion( selection ).compute();
-        if( codeProportion != null ) {
-            if( codeProportion.getMetric() == CW ) {
-                manager.add( new ShowProblemsView() );
-            }
-        }
+        // if( codeProportion != null ) {
+        // if( codeProportion.getMetric() == CW ) {
+        // manager.add( new ShowProblemsView() );
+        // }
+        // }
+        // TODO was anstelle dessen?
     }
 
     private void initActionBars() {

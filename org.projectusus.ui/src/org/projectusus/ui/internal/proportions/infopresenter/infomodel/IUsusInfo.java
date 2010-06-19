@@ -13,6 +13,4 @@ public interface IUsusInfo {
 
     String formatTitle();
 
-    String[] getWarningInfos();
-
 }

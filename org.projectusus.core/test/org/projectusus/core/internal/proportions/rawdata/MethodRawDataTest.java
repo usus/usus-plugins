@@ -12,7 +12,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.basis.CodeProportionKind;
-import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.IHotspot;
 
 public class MethodRawDataTest {
@@ -26,15 +25,6 @@ public class MethodRawDataTest {
     @Before
     public void setup() {
         methodResults = new MethodRawData( SOURCEPOSITION, LINENUMBER, CLASSNAME, METHODNAME );
-    }
-
-    @Test
-    public void basisIs1() {
-        assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.CLASS ) );
-        assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.METHOD ) );
-        assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.ANYFILE ) );
-        assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.PACKAGE ) );
-        assertEquals( 1, methodResults.getNumberOf( CodeProportionUnit.LINE ) );
     }
 
     @Test

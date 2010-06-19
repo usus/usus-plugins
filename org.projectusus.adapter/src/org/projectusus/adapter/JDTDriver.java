@@ -12,12 +12,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.projectusus.core.basis.YellowCountCache;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.FileSupport;
 import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
-import org.projectusus.core.internal.proportions.rawdata.jdtdriver.FileDriver;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.JavaFileDriver;
-import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ProjectDriver;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.StatusCollector;
 
 public class JDTDriver {
@@ -33,6 +32,7 @@ public class JDTDriver {
     public void run( IProgressMonitor monitor ) throws CoreException {
         for( IProject removedProject : target.getRemovedProjects() ) {
             model.dropRawData( removedProject );
+            YellowCountCache.yellowCountCache().clear( removedProject );
         }
         monitor.beginTask( null, countTicks( target.getProjects() ) );
         for( IProject project : target.getProjects() ) {
@@ -40,6 +40,7 @@ public class JDTDriver {
             for( IFile removedFile : target.getRemovedFiles( project ) ) {
                 model.dropRawData( removedFile );
             }
+            YellowCountCache.yellowCountCache().add( project );
             computeChangedFiles( project, monitor );
         }
         monitor.done();
@@ -64,7 +65,7 @@ public class JDTDriver {
 
     private void runDriver( IProject project, Collection<IFile> files, StatusCollector statusCollector, IProgressMonitor monitor ) {
         computationStarted( project );
-        new ProjectDriver( project ).compute();
+
         for( IFile file : files ) {
             fileStarted( file );
             runDriverOnFile( file, statusCollector, monitor );
@@ -73,16 +74,14 @@ public class JDTDriver {
 
     private void runDriverOnFile( IFile file, StatusCollector statusCollector, IProgressMonitor monitor ) {
         try {
-            driverForFile( file ).compute();
+            if( FileSupport.isJavaFile( file ) ) {
+                new JavaFileDriver( file ).compute();
+            }
         } catch( Exception ex ) {
             statusCollector.add( ex );
         } finally {
             monitor.worked( 1 );
         }
-    }
-
-    private FileDriver driverForFile( IFile file ) {
-        return FileSupport.isJavaFile( file ) ? new JavaFileDriver( file ) : new FileDriver( file );
     }
 
     private void computationStarted( IProject project ) {

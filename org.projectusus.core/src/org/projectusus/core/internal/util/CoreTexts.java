@@ -12,11 +12,8 @@ public final class CoreTexts extends NLS {
     public static String codeProportionsComputerJob_name;
 
     public static String codeProportionUnit_CLASS_label;
-    public static String codeProportionUnit_FILE_label;
-    public static String codeProportionUnit_LINE_label;
     public static String codeProportionUnit_METHOD_label;
     public static String codeProportionUnit_PACKAGE_label;
-    public static String codeProportionUnit_PROJECT_label;
 
     public static String isisMetrics_acd;
     public static String isisMetrics_cc;

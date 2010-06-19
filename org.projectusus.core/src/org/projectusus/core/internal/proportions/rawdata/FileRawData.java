@@ -28,8 +28,6 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
 
     private final IFile fileOfRawData;
 
-    private WarningsCount yellowCount = new WarningsCount();
-
     public FileRawData( IFile file ) {
         super(); // sagt AL ;)
         this.fileOfRawData = file;
@@ -41,7 +39,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
 
     @Override
     public String toString() {
-        return "Data for " + fileOfRawData.getFullPath() + ", " + getNumberOfClasses() + " classes"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return "Data for " + fileOfRawData.getFullPath() + ", " + getRawDataElementCount() + " classes"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     public void setCCValue( MethodDeclaration methodDecl, int value ) {
@@ -60,10 +58,6 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
         getRawData( initializer ).setMLValue( initializer, value );
     }
 
-    public void setYellowCount( int count ) {
-        yellowCount.setWarningsCount( count );
-    }
-
     public void addClass( AbstractTypeDeclaration node ) {
         getClassRawData( node );
     }
@@ -73,10 +67,6 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
             return null;
         }
         return getRawData( BoundType.of( node ), node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
-    }
-
-    public int getNumberOfClasses() {
-        return getRawDataElementCount();
     }
 
     @Override
@@ -94,11 +84,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
 
     private List<IHotspot> getHotspotsForThisFile( CodeProportionKind metric ) {
         List<IHotspot> localHotspots = new ArrayList<IHotspot>();
-        if( metric == CodeProportionKind.CW && metric.isViolatedBy( this ) ) {
-            localHotspots.add( yellowCount.createHotspot() );
-        } else {
-            super.addToHotspots( metric, localHotspots );
-        }
+        super.addToHotspots( metric, localHotspots );
         return localHotspots;
     }
 
@@ -142,22 +128,6 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
             }
         }
         return null;
-    }
-
-    @Override
-    public int getViolationCount( CodeProportionKind metric ) {
-        if( metric == CodeProportionKind.CW ) {
-            return yellowCount.getViolationCount( metric );
-        }
-        return super.getViolationCount( metric );
-    }
-
-    @Override
-    public synchronized int getOverallMetric( CodeProportionKind metric ) {
-        if( metric == CodeProportionKind.CW ) {
-            return yellowCount.getOverallMetric( metric );
-        }
-        return super.getOverallMetric( metric );
     }
 
     public ClassRawData findClass( Classname classname ) {

@@ -6,7 +6,6 @@ package org.projectusus.ui.internal.hotspots;
 
 import static org.projectusus.core.basis.CodeProportionKind.ACD;
 import static org.projectusus.core.basis.CodeProportionKind.CC;
-import static org.projectusus.core.basis.CodeProportionKind.CW;
 import static org.projectusus.core.basis.CodeProportionKind.KG;
 import static org.projectusus.core.basis.CodeProportionKind.ML;
 
@@ -18,7 +17,6 @@ import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.ui.internal.hotspots.pages.ACDHotspotsPage;
 import org.projectusus.ui.internal.hotspots.pages.CCColumnDesc;
-import org.projectusus.ui.internal.hotspots.pages.CWColumnDesc;
 import org.projectusus.ui.internal.hotspots.pages.HotspotsPage;
 import org.projectusus.ui.internal.hotspots.pages.IHotspotsPage;
 import org.projectusus.ui.internal.hotspots.pages.KGColumnDesc;
@@ -54,7 +52,6 @@ public class PageFactory implements IAdapterFactory {
     private void initPages() {
         pages.put( CC, new HotspotsPage( CC, CCColumnDesc.values() ) );
         pages.put( ML, new HotspotsPage( ML, MLColumnDesc.values() ) );
-        pages.put( CW, new HotspotsPage( CW, CWColumnDesc.values() ) );
         pages.put( KG, new HotspotsPage( KG, KGColumnDesc.values() ) );
         pages.put( ACD, new ACDHotspotsPage() );
     }

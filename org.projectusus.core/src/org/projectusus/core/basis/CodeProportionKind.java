@@ -6,7 +6,6 @@ package org.projectusus.core.basis;
 
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_acd;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_cc;
-import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_cw;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_kg;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ml;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_pc;
@@ -50,22 +49,6 @@ public enum CodeProportionKind {
         public int getValueFor( IMethodRawData rawData ) {
             return rawData.getMLValue();
         }
-    }, //
-    CW( isisMetrics_cw, CodeProportionUnit.ANYFILE ) {
-        @Override
-        public boolean operatesOnNonJavaFiles() {
-            return true;
-        }
-
-        @Override
-        public boolean isViolatedBy( IFileRawData fileRawData ) {
-            return fileRawData.getViolationCount( CW ) > 0;
-        }
-
-        @Override
-        public boolean isViolatedBy( IMiscFileRawData miscFileRawData ) {
-            return miscFileRawData.getViolationCount( CW ) > 0;
-        }
     };
 
     private final String label;
@@ -106,10 +89,6 @@ public enum CodeProportionKind {
 
     public int getValueFor( @SuppressWarnings( "unused" ) IMethodRawData rawData ) {
         return 0;
-    }
-
-    public boolean operatesOnNonJavaFiles() {
-        return false;
     }
 
     public int calculateCcdLimit( int classCount ) {

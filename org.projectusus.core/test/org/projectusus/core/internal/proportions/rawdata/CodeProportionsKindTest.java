@@ -7,7 +7,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.projectusus.core.basis.CodeProportionKind.ACD;
 import static org.projectusus.core.basis.CodeProportionKind.CC;
-import static org.projectusus.core.basis.CodeProportionKind.CW;
 import static org.projectusus.core.basis.CodeProportionKind.KG;
 import static org.projectusus.core.basis.CodeProportionKind.ML;
 import static org.projectusus.core.basis.CodeProportionKind.PC;
@@ -46,7 +45,6 @@ public class CodeProportionsKindTest {
     public void testGetLabel() {
         assertEquals( "Average component dependency", ACD.getLabel() ); //$NON-NLS-1$
         assertEquals( "Cyclomatic complexity", CC.getLabel() ); //$NON-NLS-1$
-        assertEquals( "Warnings", CW.getLabel() ); //$NON-NLS-1$
         assertEquals( "Class size", KG.getLabel() ); //$NON-NLS-1$
         assertEquals( "Method length", ML.getLabel() ); //$NON-NLS-1$
         assertEquals( "Packages in cycles", PC.getLabel() ); //$NON-NLS-1$
@@ -56,7 +54,6 @@ public class CodeProportionsKindTest {
     public void testGetUnit() {
         assertEquals( CodeProportionUnit.CLASS, ACD.getUnit() );
         assertEquals( CodeProportionUnit.METHOD, CC.getUnit() );
-        assertEquals( CodeProportionUnit.ANYFILE, CW.getUnit() );
         assertEquals( CodeProportionUnit.CLASS, KG.getUnit() );
         assertEquals( CodeProportionUnit.METHOD, ML.getUnit() );
         assertEquals( CodeProportionUnit.PACKAGE, PC.getUnit() );
@@ -66,7 +63,6 @@ public class CodeProportionsKindTest {
     public void testIsViolatedByMethodRawDataOK() {
         assertFalse( ACD.isViolatedBy( methodRawDataOK ) );
         assertFalse( CC.isViolatedBy( methodRawDataOK ) );
-        assertFalse( CW.isViolatedBy( methodRawDataOK ) );
         assertFalse( KG.isViolatedBy( methodRawDataOK ) );
         assertFalse( ML.isViolatedBy( methodRawDataOK ) );
         assertFalse( PC.isViolatedBy( methodRawDataOK ) );
@@ -76,7 +72,6 @@ public class CodeProportionsKindTest {
     public void testIsViolatedByMethodRawDataFailing() {
         assertFalse( ACD.isViolatedBy( methodRawDataFailing ) );
         assertTrue( CC.isViolatedBy( methodRawDataFailing ) );
-        assertFalse( CW.isViolatedBy( methodRawDataFailing ) );
         assertFalse( KG.isViolatedBy( methodRawDataFailing ) );
         assertTrue( ML.isViolatedBy( methodRawDataFailing ) );
         assertFalse( PC.isViolatedBy( methodRawDataFailing ) );
@@ -87,7 +82,6 @@ public class CodeProportionsKindTest {
         // assertFalse( ACD.isViolatedBy( classRawDataOK ) );
         // TODO geht hier nicht wg. Zugriff aufs Usus Model
         assertFalse( CC.isViolatedBy( classRawDataOK ) );
-        assertFalse( CW.isViolatedBy( classRawDataOK ) );
         assertFalse( KG.isViolatedBy( classRawDataOK ) );
         assertFalse( ML.isViolatedBy( classRawDataOK ) );
         assertFalse( PC.isViolatedBy( classRawDataOK ) );
@@ -98,7 +92,6 @@ public class CodeProportionsKindTest {
         // assertTrue( ACD.isViolatedBy( classRawDataFailing ) );
         // TODO geht hier nicht wg. Zugriff aufs Usus Model
         assertFalse( CC.isViolatedBy( classRawDataFailing ) );
-        assertFalse( CW.isViolatedBy( classRawDataFailing ) );
         assertTrue( KG.isViolatedBy( classRawDataFailing ) );
         assertFalse( ML.isViolatedBy( classRawDataFailing ) );
         assertFalse( PC.isViolatedBy( classRawDataFailing ) );
@@ -108,7 +101,6 @@ public class CodeProportionsKindTest {
     public void testIsMethodTest() {
         assertFalse( ACD.isMethodKind() );
         assertTrue( CC.isMethodKind() );
-        assertFalse( CW.isMethodKind() );
         assertFalse( KG.isMethodKind() );
         assertTrue( ML.isMethodKind() );
         assertFalse( PC.isMethodKind() );
@@ -118,7 +110,6 @@ public class CodeProportionsKindTest {
     public void testGetValueFor() {
         assertEquals( 0, ACD.getValueFor( methodRawDataFailing ) );
         assertEquals( 22, CC.getValueFor( methodRawDataFailing ) );
-        assertEquals( 0, CW.getValueFor( methodRawDataFailing ) );
         assertEquals( 0, KG.getValueFor( methodRawDataFailing ) );
         assertEquals( 16, ML.getValueFor( methodRawDataFailing ) );
         assertEquals( 0, PC.getValueFor( methodRawDataFailing ) );

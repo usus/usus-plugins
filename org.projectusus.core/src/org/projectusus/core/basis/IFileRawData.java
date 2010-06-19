@@ -6,6 +6,4 @@ package org.projectusus.core.basis;
 
 public interface IFileRawData {
 
-    int getViolationCount( CodeProportionKind cw );
-
 }

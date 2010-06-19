@@ -1,7 +1,6 @@
 package org.projectusus.core.internal.proportions;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -20,9 +19,4 @@ public interface IMetricsWriter {
     void setMLValue( IFile file, MethodDeclaration methodDecl, int value );
 
     void setMLValue( IFile file, Initializer initializer, int value );
-
-    void setWarningsCount( IFile file, int markerCount );
-
-    void setWarningsCount( IProject project, int markerCount );
-
 }

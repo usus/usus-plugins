@@ -10,12 +10,6 @@ public class ReflectionUtil {
 
     private static final boolean DISABLE_SECURITY = true;
 
-    @SuppressWarnings( { "unchecked" } )
-    private static Field getField( final Class clazz, final String fieldName ) throws SecurityException, NoSuchFieldException {
-        final Field declaredField = clazz.getDeclaredField( fieldName );
-        return declaredField;
-    }
-
     public static Object getValue( final Object object, final String fieldName ) throws IllegalArgumentException, IllegalAccessException, SecurityException, NoSuchFieldException {
         return getValue( object.getClass(), object, fieldName );
     }
@@ -23,7 +17,7 @@ public class ReflectionUtil {
     @SuppressWarnings( { "unchecked" } )
     public static Object getValue( final Class clazz, final Object object, final String fieldName ) throws IllegalArgumentException, IllegalAccessException, SecurityException,
             NoSuchFieldException {
-        final Field field = ReflectionUtil.getField( clazz, fieldName );
+        final Field field = clazz.getDeclaredField( fieldName );
         boolean oldAccessible = field.isAccessible();
         field.setAccessible( DISABLE_SECURITY );
         Object result = field.get( object );
@@ -39,7 +33,7 @@ public class ReflectionUtil {
     @SuppressWarnings( { "unchecked" } )
     public static void setValue( final Class clazz, final Object target, final Object value, final String fieldName ) throws IllegalArgumentException, IllegalAccessException,
             SecurityException, NoSuchFieldException {
-        final Field field = ReflectionUtil.getField( clazz, fieldName );
+        final Field field = clazz.getDeclaredField( fieldName );
         boolean oldAccessible = field.isAccessible();
         field.setAccessible( DISABLE_SECURITY );
         field.set( target, value );
@@ -49,7 +43,7 @@ public class ReflectionUtil {
     @SuppressWarnings( { "unchecked" } )
     public static void setIntValue( final Class clazz, final Object target, final int value, final String fieldName ) throws IllegalArgumentException, IllegalAccessException,
             SecurityException, NoSuchFieldException {
-        final Field field = ReflectionUtil.getField( clazz, fieldName );
+        final Field field = clazz.getDeclaredField( fieldName );
         boolean oldAccessible = field.isAccessible();
         field.setAccessible( DISABLE_SECURITY );
         field.setInt( target, value );

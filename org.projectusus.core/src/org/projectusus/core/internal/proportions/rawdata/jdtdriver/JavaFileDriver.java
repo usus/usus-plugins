@@ -20,20 +20,20 @@ import org.projectusus.core.internal.proportions.rawdata.collectors.CCCollector;
 import org.projectusus.core.internal.proportions.rawdata.collectors.ClassCollector;
 import org.projectusus.core.internal.proportions.rawdata.collectors.MLCollector;
 
-public class JavaFileDriver extends FileDriver {
+public class JavaFileDriver {
+
+    private final IFile file;
 
     public JavaFileDriver( IFile file ) {
-        super( file );
+        this.file = file;
     }
 
-    @Override
     public void compute() {
         ICompilationUnit compilationUnit = createCompilationUnitFrom( file );
         CompilationUnit parse = parse( compilationUnit );
         for( ASTVisitor visitor : asList( new ClassCollector( file ), new MLCollector( file ), new CCCollector( file ), new ACDCollector( file ) ) ) {
             parse.accept( visitor );
         }
-        super.compute();
     }
 
     private CompilationUnit parse( ICompilationUnit unit ) {

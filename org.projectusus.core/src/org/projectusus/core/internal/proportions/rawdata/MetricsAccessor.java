@@ -3,14 +3,11 @@ package org.projectusus.core.internal.proportions.rawdata;
 import static java.util.Arrays.asList;
 import static org.projectusus.core.basis.CodeProportionKind.ACD;
 import static org.projectusus.core.basis.CodeProportionKind.CC;
-import static org.projectusus.core.basis.CodeProportionKind.CW;
 import static org.projectusus.core.basis.CodeProportionKind.KG;
 import static org.projectusus.core.basis.CodeProportionKind.ML;
 import static org.projectusus.core.basis.CodeProportionKind.PC;
-import static org.projectusus.core.basis.CodeProportionUnit.PROJECT;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -27,6 +24,7 @@ import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.YellowCountCache;
 import org.projectusus.core.basis.YellowCountResult;
 import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
 import org.projectusus.core.filerelations.internal.model.CrossPackageClassRelations;
@@ -91,19 +89,13 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         return workspaceRawData.getProjectRawData( project );
     }
 
-    public void setWarningsCount( IFile file, int markerCount ) {
-        getProjectRawData( file.getProject() ).setWarningsCount( file, markerCount );
-    }
-
-    public void setWarningsCount( IProject project, int markerCount ) {
-        getProjectRawData( project ).setWarningsCount( markerCount );
-    }
-
     public void acceptAndGuide( MetricsResultVisitor visitor ) {
         workspaceRawData.acceptAndGuide( visitor );
     }
 
     private CodeProportion getCodeProportion( CodeProportionKind metric ) {
+        // return new CodeProportionStatisticsVisitor( metric ).getCodeProportion();
+
         if( metric == PC ) {
             CodeStatistic basis = new CodeStatistic( metric.getUnit(), Packagename.getAll().size() );
             int violations = new PackageRelations().getPackageCycles().numberOfPackagesInAnyCycles();
@@ -159,29 +151,16 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         return ACDCalculator.getRelativeACD();
     }
 
-    public int getNumberOfWarnings( IFile file ) {
-        return getFileRawData( file ).getViolationCount( CW );
-    }
-
     public YellowCountResult getWarnings() {
-        return new YellowCountResult( this.getNumberOf( PROJECT ), this.getNumberOf( CW.getUnit() ), this.getOverallMetric( CW ), this.getNumberOfProjectsViolatingCW() );
+        return YellowCountCache.yellowCountCache().getResult();
     }
 
     public List<CodeProportion> getCodeProportions() {
         List<CodeProportion> entries = new ArrayList<CodeProportion>();
-        for( CodeProportionKind metric : asList( CC, KG, ML, ACD, CW, PC ) ) {
+        for( CodeProportionKind metric : asList( CC, KG, ML, ACD, PC ) ) {
             entries.add( getCodeProportion( metric ) );
         }
         return entries;
-    }
-
-    public int getNumberOfProjectsViolatingCW() {
-        int count = 0;
-        Collection<ProjectRawData> allRawDataElements = workspaceRawData.getAllRawDataElements();
-        for( ProjectRawData projectRawData : allRawDataElements ) {
-            count = count + (projectRawData.hasWarnings() ? 1 : 0);
-        }
-        return count;
     }
 
     public void cleanupRelations( IProgressMonitor monitor ) {

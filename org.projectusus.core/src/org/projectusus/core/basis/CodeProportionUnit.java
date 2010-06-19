@@ -5,11 +5,8 @@
 package org.projectusus.core.basis;
 
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_CLASS_label;
-import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_FILE_label;
-import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_LINE_label;
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_METHOD_label;
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_PACKAGE_label;
-import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_PROJECT_label;
 
 public enum CodeProportionUnit {
 
@@ -20,11 +17,7 @@ public enum CodeProportionUnit {
         }
     }, //
     CLASS( codeProportionUnit_CLASS_label ), //
-    PACKAGE( codeProportionUnit_PACKAGE_label ), //
-    LINE( codeProportionUnit_LINE_label ), //
-    JAVAFILE( codeProportionUnit_FILE_label ), //
-    PROJECT( codeProportionUnit_PROJECT_label ), //
-    ANYFILE( codeProportionUnit_FILE_label );
+    PACKAGE( codeProportionUnit_PACKAGE_label );
 
     private final String label;
 

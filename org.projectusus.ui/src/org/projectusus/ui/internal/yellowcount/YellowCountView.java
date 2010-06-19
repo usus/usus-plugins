@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.basis.YellowCountCache;
 import org.projectusus.core.basis.YellowCountResult;
 import org.projectusus.core.internal.UsusCorePlugin;
 
@@ -42,12 +43,12 @@ public class YellowCountView extends ViewPart {
         listener = new IUsusModelListener() {
 
             public void ususModelChanged() {
-                display( UsusCorePlugin.getMetricsAccessor().getWarnings() );
+                display( YellowCountCache.yellowCountCache().getResult() );
             }
         };
         UsusCorePlugin.getUsusModel().addUsusModelListener( listener );
 
-        display( UsusCorePlugin.getMetricsAccessor().getWarnings() );
+        display( YellowCountCache.yellowCountCache().getResult() );
     }
 
     @Override
@@ -81,7 +82,7 @@ public class YellowCountView extends ViewPart {
     }
 
     private Color getBackgroundColor() {
-        int fade = UsusCorePlugin.getMetricsAccessor().getWarnings().getYellowCount();
+        int fade = YellowCountCache.yellowCountCache().getResult().getYellowCount();
         RGB rgb = new RGB( 255, 255, Math.max( 255 - fade, 0 ) );
         if( !colorRegistry.hasValueFor( rgb.toString() ) ) {
             colorRegistry.put( rgb.toString(), rgb );

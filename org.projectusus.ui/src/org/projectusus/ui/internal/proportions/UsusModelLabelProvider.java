@@ -14,8 +14,8 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.core.ICodeProportions;
-import org.projectusus.core.IWarnings;
 import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.YellowCountResult;
 
 /**
  * basic capacities to display Usus Model elements; This class is intended to be subclassed in order to make a specialized tree or table label provider.
@@ -28,7 +28,7 @@ public abstract class UsusModelLabelProvider extends LabelProvider implements IC
         String result = super.getText( element );
         if( element instanceof ICodeProportions ) {
             result = "Code proportions";
-        } else if( element instanceof IWarnings ) {
+        } else if( element instanceof YellowCountResult ) {
             result = "Static analysis warnings";
         }
         return result;
@@ -38,7 +38,7 @@ public abstract class UsusModelLabelProvider extends LabelProvider implements IC
         Image result = null;
         if( element instanceof ICodeProportions ) {
             result = getSharedImages().getImage( OBJ_CODE_PROPORTIONS );
-        } else if( element instanceof IWarnings ) {
+        } else if( element instanceof YellowCountResult ) {
             result = getSharedImages().getImage( OBJ_WARNINGS );
         } else if( !(element instanceof CodeProportion) ) {
             result = getSharedImages().getImage( OBJ_INFO );

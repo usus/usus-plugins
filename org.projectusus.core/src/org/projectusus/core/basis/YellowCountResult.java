@@ -14,21 +14,15 @@ public class YellowCountResult {
     private final int projectCount;
     private final int yellowCount;
     private final int yellowProjectCount;
-    private final int fileCount;
 
-    public YellowCountResult( int projectCount, int fileCount, int yellowCount, int yellowProjectCount ) {
+    public YellowCountResult( int projectCount, int yellowCount, int yellowProjectCount ) {
         this.projectCount = projectCount;
-        this.fileCount = fileCount;
         this.yellowCount = yellowCount;
         this.yellowProjectCount = yellowProjectCount;
     }
 
     public int getYellowCount() {
         return yellowCount;
-    }
-
-    public int getFileCount() {
-        return fileCount;
     }
 
     public int getYellowProjectCount() {
