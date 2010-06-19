@@ -10,12 +10,7 @@ import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_PA
 
 public enum CodeProportionUnit {
 
-    METHOD( codeProportionUnit_METHOD_label ) {
-        @Override
-        public boolean isMethodKind() {
-            return true;
-        }
-    }, //
+    METHOD( codeProportionUnit_METHOD_label ), //
     CLASS( codeProportionUnit_CLASS_label ), //
     PACKAGE( codeProportionUnit_PACKAGE_label );
 
@@ -27,9 +22,5 @@ public enum CodeProportionUnit {
 
     public String getLabel() {
         return label;
-    }
-
-    public boolean isMethodKind() {
-        return false;
     }
 }

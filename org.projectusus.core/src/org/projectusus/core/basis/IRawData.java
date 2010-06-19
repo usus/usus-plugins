@@ -4,11 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.basis;
 
-import java.util.List;
-
 public interface IRawData {
-
-    int getNumberOf( CodeProportionUnit unit );
-
-    void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots );
+    // nothing in here...
 }

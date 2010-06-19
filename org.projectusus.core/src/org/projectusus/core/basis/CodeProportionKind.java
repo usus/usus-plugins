@@ -10,46 +10,13 @@ import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_kg;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_ml;
 import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_pc;
 
-import org.projectusus.core.internal.proportions.rawdata.ClassCountVisitor;
-
 public enum CodeProportionKind {
 
     PC( isisMetrics_pc, CodeProportionUnit.PACKAGE ), //
-    ACD( isisMetrics_acd, CodeProportionUnit.CLASS ) {
-        @Override
-        public boolean isViolatedBy( IClassRawData rawData ) {
-            double limit = calculateCcdLimit( new ClassCountVisitor().getClassCount() );
-            return rawData.getCCDResult() > limit;
-        }
-    }, //
-    CC( isisMetrics_cc, CodeProportionUnit.METHOD ) {
-        @Override
-        public boolean isViolatedBy( IMethodRawData rawData ) {
-            return getValueFor( rawData ) > MetricsLimits.CC_LIMIT;
-        }
-
-        @Override
-        public int getValueFor( IMethodRawData rawData ) {
-            return rawData.getCCValue();
-        }
-    },
-    KG( isisMetrics_kg, CodeProportionUnit.CLASS ) {
-        @Override
-        public boolean isViolatedBy( IClassRawData rawData ) {
-            return rawData.getNumberOfMethods() > MetricsLimits.KG_LIMIT;
-        }
-    }, //
-    ML( isisMetrics_ml, CodeProportionUnit.METHOD ) {
-        @Override
-        public boolean isViolatedBy( IMethodRawData rawData ) {
-            return rawData.getMLValue() > MetricsLimits.ML_LIMIT;
-        }
-
-        @Override
-        public int getValueFor( IMethodRawData rawData ) {
-            return rawData.getMLValue();
-        }
-    };
+    ACD( isisMetrics_acd, CodeProportionUnit.CLASS ), //
+    CC( isisMetrics_cc, CodeProportionUnit.METHOD ), //
+    KG( isisMetrics_kg, CodeProportionUnit.CLASS ), //
+    ML( isisMetrics_ml, CodeProportionUnit.METHOD );
 
     private final String label;
     private final CodeProportionUnit unit;
@@ -65,36 +32,5 @@ public enum CodeProportionKind {
 
     public final CodeProportionUnit getUnit() {
         return unit;
-    }
-
-    public boolean isViolatedBy( @SuppressWarnings( "unused" ) IMethodRawData rawData ) {
-        return false;
-    }
-
-    public boolean isViolatedBy( @SuppressWarnings( "unused" ) IClassRawData rawData ) {
-        return false;
-    }
-
-    public boolean isViolatedBy( @SuppressWarnings( "unused" ) IMiscFileRawData miscFileRawData ) {
-        return false;
-    }
-
-    public boolean isViolatedBy( @SuppressWarnings( "unused" ) IFileRawData fileRawData ) {
-        return false;
-    }
-
-    public final boolean isMethodKind() {
-        return getUnit() == CodeProportionUnit.METHOD;
-    }
-
-    public int getValueFor( @SuppressWarnings( "unused" ) IMethodRawData rawData ) {
-        return 0;
-    }
-
-    public int calculateCcdLimit( int classCount ) {
-        double log_5_classCount = Math.log( classCount ) / Math.log( 5 );
-        double factor = 1.5 / Math.pow( 2, log_5_classCount );
-        double limit = factor * classCount;
-        return (int)limit;
     }
 }

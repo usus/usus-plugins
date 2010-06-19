@@ -12,7 +12,7 @@ public class ClassSizeStatistic extends DefaultStatistic {
 
     @Override
     public void inspect( ClassRawData classRawData ) {
-        addViolation( classRawData.getNumberOfMethods(), new Hotspot( classRawData.getClassName(), classRawData.getNumberOfMethods(), classRawData.getStartPosition(), classRawData
-                .getLineNumber() ) );
+        addViolation( classRawData.getRawDataElementCount(), new Hotspot( classRawData.getClassName(), classRawData.getRawDataElementCount(), classRawData.getStartPosition(),
+                classRawData.getLineNumber() ) );
     }
 }

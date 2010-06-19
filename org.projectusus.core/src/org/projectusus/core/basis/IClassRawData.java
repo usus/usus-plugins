@@ -8,6 +8,4 @@ public interface IClassRawData {
 
     int getCCDResult();
 
-    int getNumberOfMethods();
-
 }

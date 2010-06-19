@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.IClassRawData;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
@@ -47,7 +46,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     // for debugging:
     @Override
     public String toString() {
-        return "Class " + className + " in line " + lineNumber + " with " + getNumberOfMethods() + " methods."; //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$ //$NON-NLS-4$
+        return "Class " + className + " in line " + lineNumber + " with " + getRawDataElementCount() + " methods."; //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$ //$NON-NLS-4$
     }
 
     void setCCValue( MethodDeclaration node, int value ) {
@@ -100,18 +99,6 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         } catch( JavaModelException e ) {
             return null;
         }
-    }
-
-    @Override
-    public int getNumberOf( CodeProportionUnit unit ) {
-        if( unit.isMethodKind() ) {
-            return super.getNumberOf( unit );
-        }
-        return 1;
-    }
-
-    public int getNumberOfMethods() {
-        return getNumberOf( CodeProportionUnit.METHOD );
     }
 
     public int getCCDResult() {

@@ -20,6 +20,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.basis.IHotspot;
@@ -48,7 +49,10 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     }
 
     public void dropRawData( IFile file ) {
-        workspaceRawData.getProjectRawData( file.getProject() ).dropRawData( file );
+        ProjectRawData projectRawData = workspaceRawData.getProjectRawData( file.getProject() );
+        if( projectRawData != null ) {
+            projectRawData.dropRawData( file );
+        }
     }
 
     public void addClassReference( BoundType sourceType, BoundType targetType ) {
@@ -77,11 +81,15 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     }
 
     private FileRawData getOrCreateFileRawData( IFile file ) {
-        return workspaceRawData.getProjectRawData( file.getProject() ).getOrCreateFileRawData( file );
+        return workspaceRawData.getOrCreateProjectRawData( file.getProject() ).getOrCreateFileRawData( file );
     }
 
     private FileRawData getFileRawData( IFile file ) {
-        return workspaceRawData.getProjectRawData( file.getProject() ).getFileRawData( file );
+        ProjectRawData projectRawData = workspaceRawData.getProjectRawData( file.getProject() );
+        if( projectRawData == null ) {
+            return null;
+        }
+        return projectRawData.getFileRawData( file );
     }
 
     public void acceptAndGuide( MetricsResultVisitor visitor ) {
@@ -89,17 +97,49 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     }
 
     private CodeProportion getCodeProportion( CodeProportionKind metric ) {
-        // return new CodeProportionStatisticsVisitor( metric ).getCodeProportion();
+        CodeStatistic basis = getCodeStatistic( metric.getUnit() );
 
         if( metric == PC ) {
-            CodeStatistic basis = new PackageCountVisitor().getCodeStatistic();
             int violations = new PackageRelations().getPackageCycles().numberOfPackagesInAnyCycles();
             List<IHotspot> hotspots = new ArrayList<IHotspot>();
             // TODO add hotspots
             return new CodeProportion( metric, violations, basis, hotspots );
         }
+        if( metric == ACD ) {
+            ACDStatistic acdStatistic = new ACDStatistic();
+            double levelValue = 100.0 - 100.0 * acdStatistic.getRelativeACD();
+            return new CodeProportion( metric, acdStatistic.getViolations(), basis, levelValue, acdStatistic.getHotspots() );
+        }
 
-        return workspaceRawData.getCodeProportion( metric );
+        DefaultStatistic statistic = null;
+        if( metric == CodeProportionKind.ML ) {
+            statistic = new MethodLengthStatistic();
+        }
+        if( metric == CodeProportionKind.CC ) {
+            statistic = new CyclomaticComplexityStatistic();
+        }
+        if( metric == CodeProportionKind.KG ) {
+            statistic = new ClassSizeStatistic();
+        }
+
+        if( statistic == null ) {
+            throw new IllegalArgumentException( "Cannot get code statistic of code proportion kind " + metric ); //$NON-NLS-1$
+        }
+        return new CodeProportion( metric, statistic.getViolations(), basis, statistic.getHotspots() );
+    }
+
+    // TODO CodeStatistic cachen?
+    private CodeStatistic getCodeStatistic( CodeProportionUnit unit ) {
+        if( unit == CodeProportionUnit.PACKAGE ) {
+            return new PackageCountVisitor().getCodeStatistic();
+        }
+        if( unit == CodeProportionUnit.CLASS ) {
+            return new ClassCountVisitor().getCodeStatistic();
+        }
+        if( unit == CodeProportionUnit.METHOD ) {
+            return new MethodCountVisitor().getCodeStatistic();
+        }
+        throw new IllegalArgumentException( "Cannot get code statistic of code proportion unit " + unit ); //$NON-NLS-1$
     }
 
     public Set<GraphNode> getAllClassRepresenters() {

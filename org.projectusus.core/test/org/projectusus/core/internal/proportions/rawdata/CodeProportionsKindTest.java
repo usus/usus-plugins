@@ -1,45 +1,16 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.projectusus.core.basis.CodeProportionKind.ACD;
 import static org.projectusus.core.basis.CodeProportionKind.CC;
 import static org.projectusus.core.basis.CodeProportionKind.KG;
 import static org.projectusus.core.basis.CodeProportionKind.ML;
 import static org.projectusus.core.basis.CodeProportionKind.PC;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.basis.CodeProportionUnit;
 
 public class CodeProportionsKindTest {
-
-    private MethodRawData methodRawDataOK;
-    private MethodRawData methodRawDataFailing;
-    private ClassRawData classRawDataOK;
-    private ClassRawData classRawDataFailing;
-
-    @Before
-    public void setup() {
-        methodRawDataFailing = new MethodRawData( 1, 1, "className", "methodName" ); //$NON-NLS-1$ //$NON-NLS-2$
-        methodRawDataFailing.setMLValue( 16 );
-        methodRawDataFailing.setCCValue( 22 );
-        methodRawDataOK = new MethodRawData( 1, 1, "className", "methodName" ); //$NON-NLS-1$ //$NON-NLS-2$
-        methodRawDataOK.setMLValue( 1 );
-        methodRawDataOK.setCCValue( 2 );
-
-        classRawDataOK = mock( ClassRawData.class );
-        when( new Integer( classRawDataOK.getNumberOfMethods() ) ).thenReturn( new Integer( 1 ) );
-        when( new Integer( classRawDataOK.getCCDResult() ) ).thenReturn( new Integer( 0 ) );
-
-        classRawDataFailing = mock( ClassRawData.class );
-        when( new Integer( classRawDataFailing.getNumberOfMethods() ) ).thenReturn( new Integer( 128 ) );
-        when( new Integer( classRawDataFailing.getCCDResult() ) ).thenReturn( new Integer( 1000 ) );
-
-    }
 
     @Test
     public void testGetLabel() {
@@ -57,61 +28,5 @@ public class CodeProportionsKindTest {
         assertEquals( CodeProportionUnit.CLASS, KG.getUnit() );
         assertEquals( CodeProportionUnit.METHOD, ML.getUnit() );
         assertEquals( CodeProportionUnit.PACKAGE, PC.getUnit() );
-    }
-
-    @Test
-    public void testIsViolatedByMethodRawDataOK() {
-        assertFalse( ACD.isViolatedBy( methodRawDataOK ) );
-        assertFalse( CC.isViolatedBy( methodRawDataOK ) );
-        assertFalse( KG.isViolatedBy( methodRawDataOK ) );
-        assertFalse( ML.isViolatedBy( methodRawDataOK ) );
-        assertFalse( PC.isViolatedBy( methodRawDataOK ) );
-    }
-
-    @Test
-    public void testIsViolatedByMethodRawDataFailing() {
-        assertFalse( ACD.isViolatedBy( methodRawDataFailing ) );
-        assertTrue( CC.isViolatedBy( methodRawDataFailing ) );
-        assertFalse( KG.isViolatedBy( methodRawDataFailing ) );
-        assertTrue( ML.isViolatedBy( methodRawDataFailing ) );
-        assertFalse( PC.isViolatedBy( methodRawDataFailing ) );
-    }
-
-    @Test
-    public void testIsViolatedByClassRawDataOK() {
-        // assertFalse( ACD.isViolatedBy( classRawDataOK ) );
-        // TODO geht hier nicht wg. Zugriff aufs Usus Model
-        assertFalse( CC.isViolatedBy( classRawDataOK ) );
-        assertFalse( KG.isViolatedBy( classRawDataOK ) );
-        assertFalse( ML.isViolatedBy( classRawDataOK ) );
-        assertFalse( PC.isViolatedBy( classRawDataOK ) );
-    }
-
-    @Test
-    public void testIsViolatedByClassRawDataFailing() {
-        // assertTrue( ACD.isViolatedBy( classRawDataFailing ) );
-        // TODO geht hier nicht wg. Zugriff aufs Usus Model
-        assertFalse( CC.isViolatedBy( classRawDataFailing ) );
-        assertTrue( KG.isViolatedBy( classRawDataFailing ) );
-        assertFalse( ML.isViolatedBy( classRawDataFailing ) );
-        assertFalse( PC.isViolatedBy( classRawDataFailing ) );
-    }
-
-    @Test
-    public void testIsMethodTest() {
-        assertFalse( ACD.isMethodKind() );
-        assertTrue( CC.isMethodKind() );
-        assertFalse( KG.isMethodKind() );
-        assertTrue( ML.isMethodKind() );
-        assertFalse( PC.isMethodKind() );
-    }
-
-    @Test
-    public void testGetValueFor() {
-        assertEquals( 0, ACD.getValueFor( methodRawDataFailing ) );
-        assertEquals( 22, CC.getValueFor( methodRawDataFailing ) );
-        assertEquals( 0, KG.getValueFor( methodRawDataFailing ) );
-        assertEquals( 16, ML.getValueFor( methodRawDataFailing ) );
-        assertEquals( 0, PC.getValueFor( methodRawDataFailing ) );
     }
 }

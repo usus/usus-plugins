@@ -4,16 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
-import static org.projectusus.core.basis.CodeProportionKind.ACD;
-
-import java.util.HashSet;
-import java.util.Set;
-
 import org.eclipse.core.resources.IProject;
-import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.basis.CodeProportionKind;
-import org.projectusus.core.basis.CodeProportionUnit;
-import org.projectusus.core.basis.CodeStatistic;
 
 class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
@@ -21,8 +12,8 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         super();
     }
 
-    ProjectRawData getProjectRawData( IProject project ) {
-        ProjectRawData rawData = super.getRawData( project );
+    ProjectRawData getOrCreateProjectRawData( IProject project ) {
+        ProjectRawData rawData = getProjectRawData( project );
         if( rawData == null ) {
             rawData = new ProjectRawData();
             super.addRawData( project, rawData );
@@ -30,60 +21,25 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         return rawData;
     }
 
+    ProjectRawData getProjectRawData( IProject project ) {
+        return super.getRawData( project );
+    }
+
     public void dropRawData( IProject project ) {
-        getProjectRawData( project ).dropRawData();
-        remove( project );
-    }
-
-    public CodeProportion getCodeProportion( CodeProportionKind metric ) {
-        CodeStatistic basis = getCodeStatistic( metric.getUnit() );
-        DefaultStatistic statistic = null;
-        if( metric == CodeProportionKind.ML ) {
-            statistic = new MethodLengthStatistic();
+        ProjectRawData projectRawData = getProjectRawData( project );
+        if( projectRawData != null ) {
+            projectRawData.dropRawData();
+            remove( project );
         }
-        if( metric == CodeProportionKind.CC ) {
-            statistic = new CyclomaticComplexityStatistic();
-        }
-        if( metric == CodeProportionKind.KG ) {
-            statistic = new ClassSizeStatistic();
-        }
-        if( metric == ACD ) {
-            ACDStatistic acdStatistic = new ACDStatistic();
-            double levelValue = 100.0 - 100.0 * acdStatistic.getRelativeACD();
-            return new CodeProportion( metric, acdStatistic.getViolations(), basis, levelValue, acdStatistic.getHotspots() );
-        }
-
-        if( statistic == null ) {
-            throw new IllegalArgumentException( "Cannot get code statistic of code proportion kind " + metric ); //$NON-NLS-1$
-        }
-        return new CodeProportion( metric, statistic.getViolations(), basis, statistic.getHotspots() );
-    }
-
-    // TODO CodeStatistic cachen?
-    CodeStatistic getCodeStatistic( CodeProportionUnit unit ) {
-        if( unit == CodeProportionUnit.CLASS ) {
-            return new ClassCountVisitor().getCodeStatistic();
-        }
-        if( unit == CodeProportionUnit.METHOD ) {
-            return new MethodCountVisitor().getCodeStatistic();
-        }
-        throw new IllegalArgumentException( "Cannot get code statistic of code proportion unit " + unit ); //$NON-NLS-1$
-    }
-
-    public Set<ClassRawData> getAllClassRawData() {
-        Set<ClassRawData> allClassRawData = new HashSet<ClassRawData>();
-        for( ProjectRawData projectRD : getAllRawDataElements() ) {
-            for( FileRawData fileRD : projectRD.getAllRawDataElements() ) {
-                allClassRawData.addAll( fileRD.getAllRawDataElements() );
-            }
-        }
-        return allClassRawData;
     }
 
     public void acceptAndGuide( MetricsResultVisitor visitor ) {
         JavaModelPath path = visitor.getPath();
         if( path.isRestrictedToProject() ) {
-            this.getProjectRawData( path.getProject() ).acceptAndGuide( visitor );
+            ProjectRawData projectRawData = this.getProjectRawData( path.getProject() );
+            if( projectRawData != null ) {
+                projectRawData.acceptAndGuide( visitor );
+            }
         } else {
             for( ProjectRawData projectRD : getAllRawDataElements() ) {
                 projectRD.acceptAndGuide( visitor );
