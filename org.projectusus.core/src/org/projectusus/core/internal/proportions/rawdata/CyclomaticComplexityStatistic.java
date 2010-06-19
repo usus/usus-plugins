@@ -1,6 +1,5 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
-import org.projectusus.core.internal.proportions.model.Hotspot;
 
 public class CyclomaticComplexityStatistic extends DefaultStatistic {
 
@@ -15,9 +14,8 @@ public class CyclomaticComplexityStatistic extends DefaultStatistic {
     }
 
     @Override
-    public void inspect( MethodRawData methodRawData ) {
-        addViolation( methodRawData.getCCValue(), new Hotspot( methodRawData.getClassName() + "." + methodRawData.getMethodName(), methodRawData.getCCValue(), methodRawData
-                .getSourcePosition(), methodRawData.getLineNumber() ) );
+    public void inspect( SourceCodeLocation location, MethodRawData methodRawData ) {
+        addViolation( location, methodRawData.getCCValue() );
     }
 
 }

@@ -1,7 +1,6 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.internal.proportions.model.Hotspot;
 
 public class ACDStatistic extends DefaultStatistic {
 
@@ -14,9 +13,8 @@ public class ACDStatistic extends DefaultStatistic {
     }
 
     @Override
-    public void inspect( ClassRawData classRawData ) {
-        addViolation( classRawData.getCCDResult(), new Hotspot( classRawData.getClassName(), classRawData.getCCDResult(), classRawData.getStartPosition(), classRawData
-                .getLineNumber() ) );
+    public void inspect( SourceCodeLocation location, ClassRawData classRawData ) {
+        addViolation( location, classRawData.getCCDResult() );
     }
 
     public int getCCDSum() {

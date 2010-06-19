@@ -16,7 +16,7 @@ public class ClassCountVisitor extends DefaultMetricsResultVisitor implements Co
     }
 
     @Override
-    public void inspect( @SuppressWarnings( "unused" ) ClassRawData classRawData ) {
+    public void inspect( @SuppressWarnings( "unused" ) SourceCodeLocation location, @SuppressWarnings( "unused" ) ClassRawData classRawData ) {
         classCount++;
     }
 

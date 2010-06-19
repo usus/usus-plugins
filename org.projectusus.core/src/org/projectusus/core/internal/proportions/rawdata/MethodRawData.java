@@ -9,19 +9,14 @@ import org.projectusus.core.basis.IRawData;
 
 public class MethodRawData implements IRawData, IMethodRawData {
 
-    private final int startPosition;
-    private final String className;
-    private final String methodName;
-    private final int lineNumber;
+    private SourceCodeLocation location;
+    // private MetricsResults
 
     private int ccValue;
     private int mlValue;
 
     public MethodRawData( int startPosition, int lineNumber, String className, String methodName ) {
-        this.startPosition = startPosition;
-        this.lineNumber = lineNumber;
-        this.className = className;
-        this.methodName = methodName;
+        location = new SourceCodeLocation( className + "." + methodName, startPosition, lineNumber ); //$NON-NLS-1$
     }
 
     public void setCCValue( int value ) {
@@ -40,23 +35,7 @@ public class MethodRawData implements IRawData, IMethodRawData {
         return mlValue;
     }
 
-    public String getMethodName() {
-        return methodName;
-    }
-
-    public int getSourcePosition() {
-        return startPosition;
-    }
-
-    public int getLineNumber() {
-        return lineNumber;
-    }
-
     public void acceptAndGuide( MetricsResultVisitor visitor ) {
-        visitor.inspect( this );
-    }
-
-    public String getClassName() {
-        return className;
+        visitor.inspect( location, this );
     }
 }

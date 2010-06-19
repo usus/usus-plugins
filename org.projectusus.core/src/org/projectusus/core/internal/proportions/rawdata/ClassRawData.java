@@ -21,16 +21,12 @@ import org.projectusus.core.filerelations.model.Packagename;
 
 public class ClassRawData extends RawData<Integer, MethodRawData> implements IClassRawData {
 
-    private final int startPosition;
-    private final int lineNumber;
-    private final String className;
+    private final SourceCodeLocation location;
     private ClassDescriptor descriptor;
 
     private ClassRawData( String name, int startPosition, int line ) {
         super();
-        this.className = name;
-        this.startPosition = startPosition;
-        this.lineNumber = line;
+        location = new SourceCodeLocation( name, startPosition, line );
     }
 
     public ClassRawData( BoundType binding, String name, int startPosition, int line ) {
@@ -46,7 +42,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     // for debugging:
     @Override
     public String toString() {
-        return "Class " + className + " in line " + lineNumber + " with " + getRawDataElementCount() + " methods."; //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$ //$NON-NLS-4$
+        return "Class " + location.getName() + " in line " + location.getLineNumber() + " with " + getRawDataElementCount() + " methods."; //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$ //$NON-NLS-4$
     }
 
     void setCCValue( MethodDeclaration node, int value ) {
@@ -77,7 +73,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         Integer startObject = new Integer( start );
         MethodRawData rawData = super.getRawData( startObject );
         if( rawData == null ) {
-            rawData = new MethodRawData( start, lineNr, className, methodName );
+            rawData = new MethodRawData( start, lineNr, location.getName(), methodName );
             super.addRawData( startObject, rawData );
         }
         return rawData;
@@ -105,20 +101,16 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         return descriptor.getCCD();
     }
 
-    public String getClassName() {
-        return className;
-    }
-
     public void dropRawData() {
         if( descriptor != null ) {
             descriptor.prepareRemoval();
         } else {
-            System.out.println( "Could not remove class " + className + ", descriptor == null" ); //$NON-NLS-1$ //$NON-NLS-2$
+            System.out.println( "Could not remove class " + location.getName() + ", descriptor == null" ); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
     public void acceptAndGuide( MetricsResultVisitor visitor ) {
-        visitor.inspect( this );
+        visitor.inspect( location, this );
         JavaModelPath path = visitor.getPath();
         if( path.isRestrictedToMethod() ) {
             this.getMethodRawData( path.getMethod() ).acceptAndGuide( visitor );
@@ -129,11 +121,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         }
     }
 
-    public int getStartPosition() {
-        return startPosition;
-    }
-
-    public int getLineNumber() {
-        return lineNumber;
+    public boolean hasName( Classname classname ) {
+        return location.getName().equals( classname.toString() );
     }
 }

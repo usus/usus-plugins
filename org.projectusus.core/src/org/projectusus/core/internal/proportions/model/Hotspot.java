@@ -6,24 +6,22 @@ package org.projectusus.core.internal.proportions.model;
 
 import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.internal.proportions.rawdata.SourceCodeLocation;
 
 public class Hotspot implements IHotspot {
 
     private IFile file;
-    private final String name;
     private final int metricsValue;
-    private final int sourcePosition;
-    private final int lineNumber;
+    private final SourceCodeLocation location;
 
-    public Hotspot( String name, int metricsValue, int sourcePosition, int lineNumber ) {
-        this.name = name;
+    public Hotspot( SourceCodeLocation location, int metricsValue, IFile file ) {
+        this.location = location;
         this.metricsValue = metricsValue;
-        this.sourcePosition = sourcePosition;
-        this.lineNumber = lineNumber;
+        this.file = file;
     }
 
     public String getName() {
-        return name;
+        return location.getName();
     }
 
     public IFile getFile() {
@@ -35,7 +33,7 @@ public class Hotspot implements IHotspot {
     }
 
     public int getSourcePosition() {
-        return sourcePosition;
+        return location.getSourcePosition();
     }
 
     public void setFile( IFile file ) {
@@ -43,6 +41,6 @@ public class Hotspot implements IHotspot {
     }
 
     public int getLineNumber() {
-        return lineNumber;
+        return location.getLineNumber();
     }
 }

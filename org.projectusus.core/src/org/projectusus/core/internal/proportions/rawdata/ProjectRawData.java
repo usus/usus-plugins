@@ -8,8 +8,6 @@ import org.eclipse.core.resources.IFile;
 
 class ProjectRawData extends RawData<IFile, FileRawData> {
 
-    // private final IProject projectOfRawData;
-
     public FileRawData getOrCreateFileRawData( IFile file ) {
         FileRawData rawData = getFileRawData( file );
         if( rawData == null ) {

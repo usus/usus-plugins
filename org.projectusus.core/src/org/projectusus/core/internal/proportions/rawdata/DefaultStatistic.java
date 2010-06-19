@@ -32,12 +32,11 @@ public abstract class DefaultStatistic extends DefaultMetricsResultVisitor {
         visit();
     }
 
-    protected void addViolation( int count, IHotspot hotspot ) {
+    protected void addViolation( SourceCodeLocation location, int count ) {
         violationSum += count;
         if( count > violationLimit ) {
             violations++;
-            ((Hotspot)hotspot).setFile( currentFile );
-            hotspots.add( hotspot );
+            hotspots.add( new Hotspot( location, count, currentFile ) );
         }
     }
 

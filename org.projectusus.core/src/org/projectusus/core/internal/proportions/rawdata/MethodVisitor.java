@@ -13,7 +13,7 @@ public class MethodVisitor extends DefaultMetricsResultVisitor {
     }
 
     @Override
-    public void inspect( MethodRawData methodRawData ) {
+    public void inspect( @SuppressWarnings( "unused" ) SourceCodeLocation location, MethodRawData methodRawData ) {
         ccValueCount = ccValueCount + methodRawData.getCCValue();
         mlValueCount = mlValueCount + methodRawData.getMLValue();
     }

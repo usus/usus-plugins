@@ -1,6 +1,5 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
-import org.projectusus.core.internal.proportions.model.Hotspot;
 
 public class ClassSizeStatistic extends DefaultStatistic {
 
@@ -11,8 +10,7 @@ public class ClassSizeStatistic extends DefaultStatistic {
     }
 
     @Override
-    public void inspect( ClassRawData classRawData ) {
-        addViolation( classRawData.getRawDataElementCount(), new Hotspot( classRawData.getClassName(), classRawData.getRawDataElementCount(), classRawData.getStartPosition(),
-                classRawData.getLineNumber() ) );
+    public void inspect( SourceCodeLocation location, ClassRawData classRawData ) {
+        addViolation( location, classRawData.getRawDataElementCount() );
     }
 }

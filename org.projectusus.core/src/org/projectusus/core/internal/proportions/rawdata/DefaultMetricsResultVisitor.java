@@ -22,11 +22,11 @@ public abstract class DefaultMetricsResultVisitor implements MetricsResultVisito
         // do nothing with the data
     }
 
-    public void inspect( @SuppressWarnings( "unused" ) ClassRawData classRawData ) {
+    public void inspect( @SuppressWarnings( "unused" ) SourceCodeLocation location, @SuppressWarnings( "unused" ) ClassRawData classRawData ) {
         // do nothing with the data
     }
 
-    public void inspect( @SuppressWarnings( "unused" ) MethodRawData methodRawData ) {
+    public void inspect( @SuppressWarnings( "unused" ) SourceCodeLocation location, @SuppressWarnings( "unused" ) MethodRawData methodRawData ) {
         // do nothing with the data
     }
 

@@ -107,7 +107,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
 
     public ClassRawData findClass( Classname classname ) {
         for( ClassRawData classRD : getAllRawDataElements() ) {
-            if( classRD.getClassName().equals( classname.toString() ) ) {
+            if( classRD.hasName( classname ) ) {
                 return classRD;
             }
         }
