@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Test;
-import org.projectusus.core.basis.CodeProportionKind;
+import org.projectusus.core.internal.proportions.rawdata.MethodLengthStatistic;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
 
 public class MLCollectorPDETest extends PDETestForMetricsComputation {
@@ -15,7 +15,11 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_empty" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 0, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 0, getMethodLengths() );
+    }
+
+    private int getMethodLengths() {
+        return new MethodLengthStatistic().getViolationSum();
     }
 
     @Test
@@ -23,7 +27,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_assign" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 1, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMethodLengths() );
     }
 
     @Test
@@ -31,7 +35,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_ite" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 1, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMethodLengths() );
     }
 
     @Test
@@ -39,7 +43,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_iteassign" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 3, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 3, getMethodLengths() );
     }
 
     @Test
@@ -47,7 +51,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_init" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 1, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMethodLengths() );
     }
 
     @Test
@@ -55,7 +59,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_staticinit" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 1, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMethodLengths() );
     }
 
     @Test
@@ -63,7 +67,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_anon" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 1, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMethodLengths() );
     }
 
     @Test
@@ -71,7 +75,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_anon3after" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 4, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 4, getMethodLengths() );
     }
 
     @Test
@@ -79,7 +83,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_anon3before" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 4, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 4, getMethodLengths() );
     }
 
     @Test
@@ -87,7 +91,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_anonWmeth" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 2, getNumberOfMethods() );
-        assertEquals( 1, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 1, getMethodLengths() );
     }
 
     @Test
@@ -95,7 +99,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_anonWmeth3after" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 2, getNumberOfMethods() );
-        assertEquals( 4, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 4, getMethodLengths() );
     }
 
     @Test
@@ -103,7 +107,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_anonWmeth3before" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 2, getNumberOfMethods() );
-        assertEquals( 4, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 4, getMethodLengths() );
     }
 
     @Test
@@ -111,7 +115,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_anonW4meth" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 5, getNumberOfMethods() );
-        assertEquals( 7, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 7, getMethodLengths() );
     }
 
     @Test
@@ -119,7 +123,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_2assign" );
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, getNumberOfMethods() );
-        assertEquals( 2, getMetricsAccessor().getOverallMetric( CodeProportionKind.ML ) );
+        assertEquals( 2, getMethodLengths() );
     }
 
     protected IFile createFileAndBuild( String filenumber ) throws CoreException, Exception {

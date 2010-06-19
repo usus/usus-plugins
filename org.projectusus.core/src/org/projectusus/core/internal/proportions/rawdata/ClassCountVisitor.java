@@ -1,6 +1,9 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
-public class ClassCountVisitor extends DefaultMetricsResultVisitor {
+import org.projectusus.core.basis.CodeProportionUnit;
+import org.projectusus.core.basis.CodeStatistic;
+
+public class ClassCountVisitor extends DefaultMetricsResultVisitor implements CodeStatisticCalculator {
 
     private int classCount = 0;
 
@@ -20,6 +23,10 @@ public class ClassCountVisitor extends DefaultMetricsResultVisitor {
     public int getClassCount() {
         visit();
         return classCount;
+    }
+
+    public CodeStatistic getCodeStatistic() {
+        return new CodeStatistic( CodeProportionUnit.CLASS, getClassCount() );
     }
 
 }

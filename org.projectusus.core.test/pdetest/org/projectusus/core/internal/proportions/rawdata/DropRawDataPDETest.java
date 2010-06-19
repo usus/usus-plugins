@@ -3,8 +3,6 @@ package org.projectusus.core.internal.proportions.rawdata;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.projectusus.core.IMetricsAccessor;
-import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.internal.UsusCorePlugin;
 
 public class DropRawDataPDETest extends PDETestForMetricsComputation {
@@ -24,24 +22,22 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
     }
 
     private void checkProjectRawDataIsEmpty() {
-        IMetricsAccessor metrics = UsusCorePlugin.getMetricsAccessor();
         assertEquals( 0, getNumberOfClassesInProject() );
         assertEquals( 0, getNumberOfMethodsInProject() );
-        assertEquals( 0, metrics.getViolationCount( project, CodeProportionKind.KG ) );
-        assertEquals( 0, metrics.getViolationCount( project, CodeProportionKind.ML ) );
-        assertEquals( 0, metrics.getViolationCount( project, CodeProportionKind.CC ) );
+        assertEquals( 0, new ClassSizeStatistic().getViolations() );
+        assertEquals( 0, new MethodLengthStatistic().getViolations() );
+        assertEquals( 0, new CyclomaticComplexityStatistic().getViolations() );
         assertEquals( 0, getNumberOfClasses() );
     }
 
     private void computeFile1AndCheckPreconditions() throws Exception {
         createFileAndBuild( "Reset" + "1" );
 
-        IMetricsAccessor metrics = UsusCorePlugin.getMetricsAccessor();
         assertEquals( 1, getNumberOfClassesInProject() );
-        assertEquals( 0, metrics.getViolationCount( project, CodeProportionKind.KG ) );
+        assertEquals( 0, new ClassSizeStatistic().getViolations() );
         assertEquals( 2, getNumberOfMethodsInProject() );
-        assertEquals( 1, metrics.getViolationCount( project, CodeProportionKind.ML ) );
-        assertEquals( 1, metrics.getViolationCount( project, CodeProportionKind.CC ) );
+        assertEquals( 1, new MethodLengthStatistic().getViolations() );
+        assertEquals( 1, new CyclomaticComplexityStatistic().getViolations() );
         assertEquals( 1, getNumberOfClasses() );
     }
 
@@ -49,12 +45,11 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
         createFile( "Reset" + "2" );
         createFileAndBuild( "Reset" + "1" );
 
-        IMetricsAccessor metrics = UsusCorePlugin.getMetricsAccessor();
         assertEquals( 2, getNumberOfClassesInProject() );
-        assertEquals( 0, metrics.getViolationCount( project, CodeProportionKind.KG ) );
+        assertEquals( 0, new ClassSizeStatistic().getViolations() );
         assertEquals( 3, getNumberOfMethodsInProject() );
-        assertEquals( 1, metrics.getViolationCount( project, CodeProportionKind.ML ) );
-        assertEquals( 1, metrics.getViolationCount( project, CodeProportionKind.CC ) );
+        assertEquals( 1, new MethodLengthStatistic().getViolations() );
+        assertEquals( 1, new CyclomaticComplexityStatistic().getViolations() );
         assertEquals( 2, getNumberOfClasses() );
     }
 

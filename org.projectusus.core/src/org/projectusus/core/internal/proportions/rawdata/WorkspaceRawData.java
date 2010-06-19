@@ -37,19 +37,34 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
     }
 
     public CodeProportion getCodeProportion( CodeProportionKind metric ) {
-        int violations;
-        CodeStatistic basis;
-        List<IHotspot> hotspots;
-        violations = getViolationCount( metric );
-        basis = getCodeStatistic( metric.getUnit() );
-        hotspots = computeHotspots( metric );
+        int violations = getViolationStatistic( metric );
+        CodeStatistic basis = getCodeStatistic( metric.getUnit() );
+        List<IHotspot> hotspots = computeHotspots( metric );
         return new CodeProportion( metric, violations, basis, hotspots );
+    }
+
+    private int getViolationStatistic( CodeProportionKind metric ) {
+        if( metric == CodeProportionKind.ML ) {
+            return new MethodLengthStatistic().getViolations();
+        }
+        if( metric == CodeProportionKind.CC ) {
+            return new CyclomaticComplexityStatistic().getViolations();
+        }
+        if( metric == CodeProportionKind.KG ) {
+            return new ClassSizeStatistic().getViolations();
+        }
+        return getViolationCount( metric );
     }
 
     // TODO CodeStatistic cachen?
     CodeStatistic getCodeStatistic( CodeProportionUnit unit ) {
-        int basis = getNumberOf( unit );
-        return new CodeStatistic( unit, basis );
+        if( unit == CodeProportionUnit.CLASS ) {
+            return new ClassCountVisitor().getCodeStatistic();
+        }
+        if( unit == CodeProportionUnit.METHOD ) {
+            return new MethodCountVisitor().getCodeStatistic();
+        }
+        throw new IllegalArgumentException( "Cannot get code statistic of code proportion unit " + unit ); //$NON-NLS-1$
     }
 
     List<IHotspot> computeHotspots( CodeProportionKind metric ) {

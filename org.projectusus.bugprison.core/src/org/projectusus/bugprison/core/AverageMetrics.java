@@ -7,12 +7,11 @@ package org.projectusus.bugprison.core;
 import static org.projectusus.bugprison.core.texts.BugPrisonTexts.AverageMetrics_overall;
 
 import org.eclipse.core.resources.IProject;
-import org.projectusus.core.IMetricsAccessor;
-import org.projectusus.core.basis.CodeProportionKind;
-import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.rawdata.ClassCountVisitor;
+import org.projectusus.core.internal.proportions.rawdata.CyclomaticComplexityStatistic;
 import org.projectusus.core.internal.proportions.rawdata.JavaModelPath;
 import org.projectusus.core.internal.proportions.rawdata.MethodCountVisitor;
+import org.projectusus.core.internal.proportions.rawdata.MethodLengthStatistic;
 
 public class AverageMetrics implements IAverageMetrics {
 
@@ -45,9 +44,8 @@ public class AverageMetrics implements IAverageMetrics {
         numberOfMethods += new MethodCountVisitor( path ).getMethodCount();
         numberOfClasses += new ClassCountVisitor( path ).getClassCount();
 
-        IMetricsAccessor metricsAccessor = UsusCorePlugin.getMetricsAccessor();
-        totalCC += metricsAccessor.getOverallMetric( project, CodeProportionKind.CC );
-        totalML += metricsAccessor.getOverallMetric( project, CodeProportionKind.ML );
+        totalCC += new CyclomaticComplexityStatistic( path ).getViolationSum();
+        totalML += new MethodLengthStatistic( path ).getViolationSum();
     }
 
     public String getName() {

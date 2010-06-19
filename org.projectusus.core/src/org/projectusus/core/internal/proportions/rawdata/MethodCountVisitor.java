@@ -1,6 +1,9 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
-public class MethodCountVisitor extends DefaultMetricsResultVisitor {
+import org.projectusus.core.basis.CodeProportionUnit;
+import org.projectusus.core.basis.CodeStatistic;
+
+public class MethodCountVisitor extends DefaultMetricsResultVisitor implements CodeStatisticCalculator {
 
     private int methodCount = 0;
 
@@ -20,6 +23,10 @@ public class MethodCountVisitor extends DefaultMetricsResultVisitor {
     public int getMethodCount() {
         visit();
         return methodCount;
+    }
+
+    public CodeStatistic getCodeStatistic() {
+        return new CodeStatistic( CodeProportionUnit.METHOD, getMethodCount() );
     }
 
 }

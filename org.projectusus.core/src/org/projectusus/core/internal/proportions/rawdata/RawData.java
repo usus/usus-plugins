@@ -63,15 +63,6 @@ class RawData<S, T extends IRawData> implements IRawData {
         }
     }
 
-    public synchronized int getOverallMetric( CodeProportionKind metric ) {
-        int overallMetricValue = 0;
-        Collection<T> allDataElements = wrapper.getAllRawDataElements();
-        for( T currentResult : allDataElements ) {
-            overallMetricValue += currentResult.getOverallMetric( metric );
-        }
-        return overallMetricValue;
-    }
-
     synchronized Set<S> getAllKeys() {
         return wrapper.getAllKeys();
     }

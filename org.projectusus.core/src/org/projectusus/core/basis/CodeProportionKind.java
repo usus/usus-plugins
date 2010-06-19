@@ -15,6 +15,13 @@ import org.projectusus.core.internal.proportions.rawdata.ClassCountVisitor;
 public enum CodeProportionKind {
 
     PC( isisMetrics_pc, CodeProportionUnit.PACKAGE ), //
+    ACD( isisMetrics_acd, CodeProportionUnit.CLASS ) {
+        @Override
+        public boolean isViolatedBy( IClassRawData rawData ) {
+            double limit = calculateCcdLimit( new ClassCountVisitor().getClassCount() );
+            return rawData.getCCDResult() > limit;
+        }
+    }, //
     CC( isisMetrics_cc, CodeProportionUnit.METHOD ) {
         @Override
         public boolean isViolatedBy( IMethodRawData rawData ) {
@@ -26,13 +33,6 @@ public enum CodeProportionKind {
             return rawData.getCCValue();
         }
     },
-    ACD( isisMetrics_acd, CodeProportionUnit.CLASS ) {
-        @Override
-        public boolean isViolatedBy( IClassRawData rawData ) {
-            double limit = calculateCcdLimit( new ClassCountVisitor().getClassCount() );
-            return rawData.getCCDResult() > limit;
-        }
-    }, //
     KG( isisMetrics_kg, CodeProportionUnit.CLASS ) {
         @Override
         public boolean isViolatedBy( IClassRawData rawData ) {
@@ -42,7 +42,7 @@ public enum CodeProportionKind {
     ML( isisMetrics_ml, CodeProportionUnit.METHOD ) {
         @Override
         public boolean isViolatedBy( IMethodRawData rawData ) {
-            return getValueFor( rawData ) > MetricsLimits.ML_LIMIT;
+            return rawData.getMLValue() > MetricsLimits.ML_LIMIT;
         }
 
         @Override

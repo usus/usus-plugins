@@ -13,6 +13,4 @@ public interface IRawData {
     int getNumberOf( CodeProportionUnit unit );
 
     void addToHotspots( CodeProportionKind metric, List<IHotspot> hotspots );
-
-    int getOverallMetric( CodeProportionKind metric );
 }

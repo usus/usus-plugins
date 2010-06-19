@@ -20,7 +20,6 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeProportionKind;
-import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.basis.IHotspot;
@@ -85,10 +84,6 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         return workspaceRawData.getProjectRawData( file.getProject() ).getFileRawData( file );
     }
 
-    private ProjectRawData getProjectRawData( IProject project ) {
-        return workspaceRawData.getProjectRawData( project );
-    }
-
     public void acceptAndGuide( MetricsResultVisitor visitor ) {
         workspaceRawData.acceptAndGuide( visitor );
     }
@@ -97,7 +92,7 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         // return new CodeProportionStatisticsVisitor( metric ).getCodeProportion();
 
         if( metric == PC ) {
-            CodeStatistic basis = new CodeStatistic( metric.getUnit(), Packagename.getAll().size() );
+            CodeStatistic basis = new PackageCountVisitor().getCodeStatistic();
             int violations = new PackageRelations().getPackageCycles().numberOfPackagesInAnyCycles();
             List<IHotspot> hotspots = new ArrayList<IHotspot>();
             // TODO add hotspots
@@ -105,7 +100,7 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         }
 
         if( metric == ACD ) {
-            CodeStatistic basis = workspaceRawData.getCodeStatistic( metric.getUnit() );
+            CodeStatistic basis = new ClassCountVisitor().getCodeStatistic();
             List<IHotspot> hotspots = workspaceRawData.computeHotspots( metric );
             int violations = workspaceRawData.getViolationCount( metric );
             double levelValue = 100.0 - 100.0 * getRelativeACD();
@@ -113,26 +108,6 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         }
 
         return workspaceRawData.getCodeProportion( metric );
-    }
-
-    public int getNumberOf( CodeProportionUnit unit ) {
-        return workspaceRawData.getNumberOf( unit );
-    }
-
-    public int getOverallMetric( CodeProportionKind metric ) {
-        return workspaceRawData.getOverallMetric( metric );
-    }
-
-    public int getOverallMetric( IProject project, CodeProportionKind metric ) {
-        ProjectRawData projectRD = workspaceRawData.getRawData( project );
-        if( projectRD != null ) {
-            return projectRD.getOverallMetric( metric );
-        }
-        return 0;
-    }
-
-    public int getViolationCount( IProject project, CodeProportionKind metric ) {
-        return getProjectRawData( project ).getViolationCount( metric );
     }
 
     public Set<GraphNode> getAllClassRepresenters() {
