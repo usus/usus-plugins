@@ -10,15 +10,15 @@ import org.eclipse.jface.viewers.Viewer;
 public class CockpitCP implements ITreeContentProvider {
 
     public Object[] getElements( Object inputElement ) {
-        if( inputElement instanceof CockpitModel ) {
-            return ((CockpitModel)inputElement).getCategories();
+        if( inputElement instanceof AnalysisDisplayModel ) {
+            return ((AnalysisDisplayModel)inputElement).getCategories();
         }
         return new Object[] {};
     }
 
     public Object[] getChildren( Object parentElement ) {
-        if( parentElement instanceof CockpitCategory ) {
-            CockpitCategory category = (CockpitCategory)parentElement;
+        if( parentElement instanceof AnalysisDisplayCategory ) {
+            AnalysisDisplayCategory category = (AnalysisDisplayCategory)parentElement;
             return category.getChildren();
         }
         return new Object[0];

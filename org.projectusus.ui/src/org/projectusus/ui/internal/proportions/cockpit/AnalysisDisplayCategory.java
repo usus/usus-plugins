@@ -2,9 +2,9 @@ package org.projectusus.ui.internal.proportions.cockpit;
 
 import org.eclipse.swt.graphics.Image;
 
-public interface CockpitCategory {
+public interface AnalysisDisplayCategory {
 
-    Object[] getChildren();
+    AnalysisDisplayEntry[] getChildren();
 
     String getLabel();
 

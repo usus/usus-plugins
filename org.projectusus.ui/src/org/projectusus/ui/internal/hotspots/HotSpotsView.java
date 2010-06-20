@@ -4,37 +4,36 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.hotspots;
 
-import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
-import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.ui.internal.hotspots.pages.DefaultHotspotsPage;
+import org.projectusus.ui.internal.hotspots.pages.HotspotsPage;
 import org.projectusus.ui.internal.hotspots.pages.IHotspotsPage;
+import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayEntry;
 
 public class HotSpotsView extends ViewPart {
 
     private PageBook book;
     private IHotspotsPage defaultPage;
     private IHotspotsPage activePage;
+    private final Set<IHotspotsPage> pages = new HashSet<IHotspotsPage>();
 
-    public void update( CodeProportionKind kind ) {
-        if( kind != null ) {
-            CodeProportion codeProportion = getUsusModel().getCodeProportion( kind );
-            if( codeProportion != null ) {
-                updatePage( codeProportion );
-            }
+    public void update( AnalysisDisplayEntry entry ) {
+        if( entry != null ) {
+            updatePage( entry );
         }
     }
 
     @Override
     public void createPartControl( Composite parent ) {
         book = new PageBook( parent, SWT.NONE );
-
         defaultPage = new DefaultHotspotsPage();
         defaultPage.createControl( book );
         showPage( defaultPage );
@@ -77,36 +76,45 @@ public class HotSpotsView extends ViewPart {
         }
     }
 
-    private IHotspotsPage createPage( CodeProportion codeProportion ) {
-        IHotspotsPage page = extractHotspotsPage( codeProportion );
+    private IHotspotsPage createPage( AnalysisDisplayEntry entry ) {
+        IHotspotsPage page = getPageFor( entry );
         if( page != null && !page.isInitialized() ) {
             page.createControl( book );
         }
         return page;
     }
 
-    private IHotspotsPage extractHotspotsPage( CodeProportion codeProportion ) {
-        IHotspotsPage result = null;
-        Object adapter = codeProportion.getAdapter( IHotspotsPage.class );
-        if( adapter instanceof IHotspotsPage ) {
-            result = (IHotspotsPage)adapter;
+    private IHotspotsPage getPageFor( AnalysisDisplayEntry entry ) {
+        if( !entry.hasHotspots() ) {
+            return null;
         }
-        return result;
+        for( IHotspotsPage page : pages ) {
+            if( page.matches( entry ) ) {
+                return page;
+            }
+        }
+        HotspotsPage page = new HotspotsPage( entry );
+        pages.add( page );
+        return page;
     }
 
-    private void updatePage( CodeProportion codeProportion ) {
-        IHotspotsPage page = createPage( codeProportion );
+    private void updatePage( AnalysisDisplayEntry entry ) {
+        IHotspotsPage page = createPage( entry );
         if( page != null ) {
-            page.setInput( codeProportion );
+            page.setInput( entry );
             showPage( page );
         } else {
             showPage( defaultPage );
         }
     }
 
-    public void refreshActivePage() {
-        if( activePage != null ) {
-            activePage.refresh();
+    public void refreshActivePage( List<AnalysisDisplayEntry> entries ) {
+        for( AnalysisDisplayEntry entry : entries ) {
+            if( activePage != null ) {
+                if( activePage.matches( entry ) ) {
+                    activePage.setInput( entry );
+                }
+            }
         }
     }
 }

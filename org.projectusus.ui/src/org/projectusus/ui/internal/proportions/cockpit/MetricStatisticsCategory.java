@@ -6,18 +6,17 @@ import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
-import org.projectusus.core.basis.CodeProportion;
 
-public class MetricStatistics implements CockpitCategory {
+public class MetricStatisticsCategory implements AnalysisDisplayCategory {
 
-    private final List<CodeProportion> entries;
+    private final List<AnalysisDisplayEntry> entries;
 
-    public MetricStatistics( List<CodeProportion> entries ) {
+    public MetricStatisticsCategory( List<AnalysisDisplayEntry> entries ) {
         this.entries = entries;
     }
 
-    public CodeProportion[] getChildren() {
-        return entries.toArray( new CodeProportion[entries.size()] );
+    public AnalysisDisplayEntry[] getChildren() {
+        return entries.toArray( new AnalysisDisplayEntry[entries.size()] );
     }
 
     public String getLabel() {

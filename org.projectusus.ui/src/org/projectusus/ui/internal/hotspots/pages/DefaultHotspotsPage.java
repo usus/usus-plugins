@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.Page;
-import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayEntry;
 
 public class DefaultHotspotsPage extends Page implements IHotspotsPage {
 
@@ -33,7 +33,7 @@ public class DefaultHotspotsPage extends Page implements IHotspotsPage {
         }
     }
 
-    public void setInput( CodeProportion element ) {
+    public void setInput( AnalysisDisplayEntry element ) {
         // nothing to do on the default page
     }
 
@@ -47,5 +47,9 @@ public class DefaultHotspotsPage extends Page implements IHotspotsPage {
 
     public void refresh() {
         // nothing to refresh
+    }
+
+    public boolean matches( AnalysisDisplayEntry entry ) {
+        return false;
     }
 }

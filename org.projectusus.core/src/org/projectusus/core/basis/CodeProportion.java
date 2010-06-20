@@ -19,19 +19,17 @@ public class CodeProportion extends PlatformObject {
     private final CodeStatistic basis;
     private final double level;
     private final List<IHotspot> hotspots;
+    private final boolean hasHotspots;
 
-    public CodeProportion( CodeProportionKind metric ) {
-        this( metric, 0, new CodeStatistic( CodeProportionUnit.CLASS ), new ArrayList<IHotspot>() );
+    public CodeProportion( CodeProportionKind metric, int violations, CodeStatistic basis, List<IHotspot> hotspots, boolean hasHotspots ) {
+        this( metric, violations, basis, computeInverse( violations, basis ), hotspots, hasHotspots );
     }
 
-    public CodeProportion( CodeProportionKind metric, int violations, CodeStatistic basis, List<IHotspot> hotspots ) {
-        this( metric, violations, basis, computeInverse( violations, basis ), hotspots );
-    }
-
-    public CodeProportion( CodeProportionKind metric, int violations, CodeStatistic basis, double levelValue, List<IHotspot> hotspots ) {
+    public CodeProportion( CodeProportionKind metric, int violations, CodeStatistic basis, double levelValue, List<IHotspot> hotspots, boolean hasHotspots ) {
         this.metric = metric;
         this.violations = violations;
         this.basis = basis;
+        this.hasHotspots = hasHotspots;
         this.hotspots = sort( hotspots );
         this.level = levelValue;
     }
@@ -66,5 +64,9 @@ public class CodeProportion extends PlatformObject {
         result.addAll( passedHotspots );
         Collections.sort( result, new ByHotnessComparator() );
         return result;
+    }
+
+    public boolean hasHotspots() {
+        return hasHotspots;
     }
 }

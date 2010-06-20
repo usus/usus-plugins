@@ -7,10 +7,9 @@ package org.projectusus.ui.internal.proportions.cockpit;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.widgets.Composite;
-import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.ui.viewer.UsusTreeViewer;
 
-class CockpitTreeViewer extends UsusTreeViewer<CodeProportion> {
+class CockpitTreeViewer extends UsusTreeViewer<AnalysisDisplayEntry> {
 
     CockpitTreeViewer( Composite parent ) {
         super( parent, CockpitColumnDesc.values() );
@@ -21,17 +20,17 @@ class CockpitTreeViewer extends UsusTreeViewer<CodeProportion> {
     }
 
     void selectInTree( Object object ) {
-        if( object instanceof CodeProportion ) {
-            selectCodeProportionInTree( ((CodeProportion)object) );
+        if( object instanceof AnalysisDisplayEntry ) {
+            selectCodeProportionInTree( ((AnalysisDisplayEntry)object) );
         }
     }
 
-    private void selectCodeProportionInTree( CodeProportion codeProportion ) {
+    private void selectCodeProportionInTree( AnalysisDisplayEntry displayEntry ) {
         for( Object element : getExpandedElements() ) {
-            if( element instanceof MetricStatistics ) {
-                for( CodeProportion cp : ((MetricStatistics)element).getChildren() ) {
-                    if( cp.getMetric().equals( codeProportion.getMetric() ) ) {
-                        setSelection( createTreeSelection( new Object[] { element, cp } ) );
+            if( element instanceof MetricStatisticsCategory ) {
+                for( AnalysisDisplayEntry entry : ((MetricStatisticsCategory)element).getChildren() ) {
+                    if( entry.isSameKindAs( displayEntry ) ) {
+                        setSelection( createTreeSelection( new Object[] { element, entry } ) );
                     }
                 }
             }

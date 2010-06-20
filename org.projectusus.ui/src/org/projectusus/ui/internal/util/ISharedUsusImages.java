@@ -17,6 +17,9 @@ public interface ISharedUsusImages {
     String OBJ_INFO = ID + ".OBJ_INFO";
     String OBJ_WARNINGS = ID + ".OBJ_WARNINGS";
 
+    String OBJ_LEVELUP = ID + ".OBJ_LEVELUP";
+    String OBJ_LEVELDOWN = ID + ".OBJ_LEVELDOWN";
+
     String VIEW_WARNING = ID + ".VIEW_WARNING";
 
     Image getImage( String key );

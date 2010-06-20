@@ -12,10 +12,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
-import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.ui.internal.UsusUIPlugin;
 import org.projectusus.ui.internal.hotspots.HotSpotsView;
+import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayEntry;
 
 public class OpenHotspots extends Action {
 
@@ -31,7 +30,7 @@ public class OpenHotspots extends Action {
         boolean result = false;
         if( !selection.isEmpty() && selection instanceof IStructuredSelection ) {
             IStructuredSelection ssel = (IStructuredSelection)selection;
-            result = ssel.getFirstElement() instanceof CodeProportion;
+            result = ssel.getFirstElement() instanceof AnalysisDisplayEntry;
         }
         return result;
     }
@@ -40,17 +39,17 @@ public class OpenHotspots extends Action {
     public void run() {
         if( !selection.isEmpty() && selection instanceof IStructuredSelection ) {
             Object element = ((IStructuredSelection)selection).getFirstElement();
-            if( element instanceof CodeProportion ) {
-                showHotspotsView( ((CodeProportion)element).getMetric() );
+            if( element instanceof AnalysisDisplayEntry ) {
+                showHotspotsView( ((AnalysisDisplayEntry)element) );
             }
         }
     }
 
-    private void showHotspotsView( CodeProportionKind codeProportionKind ) {
+    private void showHotspotsView( AnalysisDisplayEntry entry ) {
         try {
             IViewPart viewPart = getPage().showView( HotSpotsView.class.getName() );
             if( viewPart instanceof HotSpotsView ) {
-                ((HotSpotsView)viewPart).update( codeProportionKind );
+                ((HotSpotsView)viewPart).update( entry );
             }
         } catch( PartInitException paix ) {
             UsusUIPlugin.getDefault().getLog().log( paix.getStatus() );

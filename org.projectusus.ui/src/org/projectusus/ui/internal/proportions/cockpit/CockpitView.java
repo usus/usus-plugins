@@ -116,6 +116,9 @@ public class CockpitView extends ViewPart {
 
     private void handleUsusModelChanged() {
         if( hasUsusProjects() ) {
+            if( AnalysisDisplayModel.getInstance().getSnapshot().isEmpty() ) {
+                AnalysisDisplayModel.getInstance().createSnapshot();
+            }
             enableViewer( true );
             refresh();
         } else {
@@ -150,7 +153,7 @@ public class CockpitView extends ViewPart {
             treeViewer.expandAll();
             if( !selection.isEmpty() ) {
                 treeViewer.selectInTree( ((TreeSelection)selection).getFirstElement() );
-                new RefreshHotspots().run();
+                new RefreshHotspots( AnalysisDisplayModel.getInstance() ).run();
             }
         }
     }
@@ -158,7 +161,7 @@ public class CockpitView extends ViewPart {
     private void createViewer( Composite parent ) {
         parent.setLayout( new FillLayout() );
         treeViewer = new CockpitTreeViewer( parent );
-        treeViewer.setInput( new CockpitModel( getUsusModel() ) );
+        treeViewer.setInput( AnalysisDisplayModel.getInstance() );
     }
 
 }

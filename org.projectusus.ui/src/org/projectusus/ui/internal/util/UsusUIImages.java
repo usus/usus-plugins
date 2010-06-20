@@ -55,6 +55,8 @@ public class UsusUIImages implements ISharedUsusImages {
         declare( OBJ_INFO, OBJECT + "info.gif" );
         declare( OBJ_WARNINGS, OBJECT + "warnings.gif" );
         declare( VIEW_WARNING, VIEW + "warning.gif" );
+        declare( OBJ_LEVELUP, OBJECT + "levelup.gif" );
+        declare( OBJ_LEVELDOWN, OBJECT + "leveldown.gif" );
     }
 
     private void declare( final String key, final String path ) {

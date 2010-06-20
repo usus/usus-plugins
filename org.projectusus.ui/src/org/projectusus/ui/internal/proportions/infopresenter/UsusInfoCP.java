@@ -5,7 +5,7 @@
 package org.projectusus.ui.internal.proportions.infopresenter;
 
 import org.projectusus.ui.internal.proportions.cockpit.CockpitCP;
-import org.projectusus.ui.internal.proportions.cockpit.CockpitCategory;
+import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayCategory;
 import org.projectusus.ui.internal.proportions.infopresenter.infomodel.IUsusInfo;
 
 class UsusInfoCP extends CockpitCP {
@@ -19,7 +19,7 @@ class UsusInfoCP extends CockpitCP {
     @Override
     public Object[] getChildren( Object parentElement ) {
         Object[] result = new Object[0];
-        if( parentElement instanceof CockpitCategory ) {
+        if( parentElement instanceof AnalysisDisplayCategory ) {
             result = ususInfo.getCodeProportionInfos();
         }
         return result;

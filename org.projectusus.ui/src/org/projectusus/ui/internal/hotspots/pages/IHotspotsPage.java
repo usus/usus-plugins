@@ -5,13 +5,15 @@
 package org.projectusus.ui.internal.hotspots.pages;
 
 import org.eclipse.ui.part.IPageBookViewPage;
-import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayEntry;
 
 public interface IHotspotsPage extends IPageBookViewPage {
 
-    void setInput( CodeProportion element );
+    void setInput( AnalysisDisplayEntry element );
 
     boolean isInitialized();
 
     void refresh();
+
+    boolean matches( AnalysisDisplayEntry entry );
 }

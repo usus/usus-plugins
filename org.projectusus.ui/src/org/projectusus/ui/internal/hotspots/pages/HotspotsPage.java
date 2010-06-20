@@ -5,7 +5,6 @@
 package org.projectusus.ui.internal.hotspots.pages;
 
 import static java.util.Arrays.asList;
-import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -13,10 +12,9 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.part.Page;
-import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.basis.IHotspot;
 import org.projectusus.ui.internal.hotspots.actions.OpenHotspotInEditor;
+import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayEntry;
 import org.projectusus.ui.internal.selection.ExtractHotspot;
 import org.projectusus.ui.viewer.UsusTreeViewer;
 
@@ -24,11 +22,12 @@ public class HotspotsPage extends Page implements IHotspotsPage {
 
     protected UsusTreeViewer<IHotspot> viewer;
     private final IHotspotsPageColumnDesc[] columnDescs;
-    private final CodeProportionKind kind;
+    private final AnalysisDisplayEntry entry;
 
-    public HotspotsPage( CodeProportionKind kind, IHotspotsPageColumnDesc[] columnDescs ) {
-        this.kind = kind;
-        this.columnDescs = columnDescs;
+    public HotspotsPage( AnalysisDisplayEntry entry ) {
+        super();
+        this.entry = entry;
+        this.columnDescs = HotspotsColumnDesc.values();
     }
 
     public boolean isInitialized() {
@@ -56,8 +55,8 @@ public class HotspotsPage extends Page implements IHotspotsPage {
         } );
     }
 
-    public void setInput( CodeProportion codeProportion ) {
-        viewer.setInput( codeProportion );
+    public void setInput( AnalysisDisplayEntry entry ) {
+        viewer.setInput( entry );
     }
 
     @Override
@@ -79,6 +78,10 @@ public class HotspotsPage extends Page implements IHotspotsPage {
     }
 
     public void refresh() {
-        setInput( getUsusModel().getCodeProportion( kind ) );
+        setInput( entry );
+    }
+
+    public boolean matches( AnalysisDisplayEntry otherEntry ) {
+        return entry.isSameKindAs( otherEntry );
     }
 }

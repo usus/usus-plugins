@@ -36,13 +36,6 @@
             name="Projects covered by Usus"/>
    </extension>
    <!-- register page book pages for model objects -->
-   <extension point="org.eclipse.core.runtime.adapters">
-       <factory
-             adaptableType="org.projectusus.core.basis.CodeProportion"
-             class="org.projectusus.ui.internal.hotspots.PageFactory">
-          <adapter type="org.projectusus.ui.internal.hotspots.pages.IHotspotsPage" />
-       </factory>
-   </extension>
    <!-- view actions --> 
    <extension point="org.eclipse.ui.viewActions">
       <viewContribution

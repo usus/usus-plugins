@@ -4,13 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter;
 
-import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
-
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.projectusus.ui.internal.proportions.cockpit.CockpitModel;
+import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayModel;
 import org.projectusus.ui.internal.proportions.infopresenter.infomodel.IUsusInfo;
 
 public class UsusInfoViewer extends TreeViewer {
@@ -20,6 +18,6 @@ public class UsusInfoViewer extends TreeViewer {
         setLabelProvider( new LabelProvider() );
         setLabelProvider( new UsusInfoLP() );
         setContentProvider( new UsusInfoCP( ususInfo ) );
-        setInput( new CockpitModel( getUsusModel() ) );
+        setInput( AnalysisDisplayModel.getInstance() );
     }
 }

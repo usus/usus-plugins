@@ -101,14 +101,12 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
 
         if( metric == PC ) {
             int violations = new PackageRelations().getPackageCycles().numberOfPackagesInAnyCycles();
-            List<IHotspot> hotspots = new ArrayList<IHotspot>();
-            // TODO add hotspots
-            return new CodeProportion( metric, violations, basis, hotspots );
+            return new CodeProportion( metric, violations, basis, new ArrayList<IHotspot>(), false );
         }
         if( metric == ACD ) {
             ACDStatistic acdStatistic = new ACDStatistic();
             double levelValue = 100.0 - 100.0 * acdStatistic.getRelativeACD();
-            return new CodeProportion( metric, acdStatistic.getViolations(), basis, levelValue, acdStatistic.getHotspots() );
+            return new CodeProportion( metric, acdStatistic.getViolations(), basis, levelValue, acdStatistic.getHotspots(), true );
         }
 
         DefaultStatistic statistic = null;
@@ -125,7 +123,7 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         if( statistic == null ) {
             throw new IllegalArgumentException( "Cannot get code statistic of code proportion kind " + metric ); //$NON-NLS-1$
         }
-        return new CodeProportion( metric, statistic.getViolations(), basis, statistic.getHotspots() );
+        return new CodeProportion( metric, statistic.getViolations(), basis, statistic.getHotspots(), true );
     }
 
     // TODO CodeStatistic cachen?

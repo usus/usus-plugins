@@ -6,15 +6,14 @@ package org.projectusus.ui.internal.hotspots.pages;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayEntry;
 
 class HotspotsCP implements ITreeContentProvider {
 
     public Object[] getElements( Object inputElement ) {
         Object[] result = new Object[0];
-        if( inputElement instanceof CodeProportion ) {
-            CodeProportion codeProportion = (CodeProportion)inputElement;
-            result = codeProportion.getHotspots().toArray();
+        if( inputElement instanceof AnalysisDisplayEntry ) {
+            result = ((AnalysisDisplayEntry)inputElement).getHotspots().toArray();
         }
         return result;
     }

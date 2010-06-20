@@ -9,10 +9,10 @@ import static org.projectusus.ui.viewer.ColumnAlignment.RIGHT;
 import org.projectusus.core.basis.IHotspot;
 import org.projectusus.ui.viewer.UsusTreeColumn;
 
-public enum CCColumnDesc implements IHotspotsPageColumnDesc {
+public enum HotspotsColumnDesc implements IHotspotsPageColumnDesc {
 
-    @UsusTreeColumn( header = "Cyclomatic complexity", align = RIGHT, weight = 10 )
-    COMPLEXITY {
+    @UsusTreeColumn( header = "Value", align = RIGHT, weight = 5 )
+    Value {
         public String getLabel( IHotspot element ) {
             return String.valueOf( element.getMetricsValue() );
         }
@@ -24,15 +24,9 @@ public enum CCColumnDesc implements IHotspotsPageColumnDesc {
         }
     },
     @UsusTreeColumn( header = "Path", weight = 20 )
-    PATH {
+    Path {
         public String getLabel( IHotspot element ) {
             return element.getFile().getFullPath().removeLastSegments( 1 ).toOSString();
-        }
-    },
-    @UsusTreeColumn( header = "Line", align = RIGHT, weight = 10 )
-    LINE {
-        public String getLabel( IHotspot element ) {
-            return String.valueOf( element.getLineNumber() );
         }
     };
 

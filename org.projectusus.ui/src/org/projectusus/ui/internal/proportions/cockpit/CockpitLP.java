@@ -8,21 +8,24 @@ import static org.projectusus.ui.internal.proportions.cockpit.CockpitColumnDesc.
 
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.ui.internal.proportions.UsusModelLabelProvider;
 
 public class CockpitLP extends UsusModelLabelProvider implements ITableLabelProvider {
 
     public Image getColumnImage( Object element, int columnIndex ) {
-        if( CockpitColumnDesc.values()[columnIndex].hasImage() ) {
+        CockpitColumnDesc cockpitColumnDesc = CockpitColumnDesc.values()[columnIndex];
+        if( cockpitColumnDesc == CockpitColumnDesc.Trend && element instanceof AnalysisDisplayEntry ) {
+            return ((AnalysisDisplayEntry)element).getTrendImage();
+        }
+        if( cockpitColumnDesc.hasImage() ) {
             return getColumnImageFor( element );
         }
         return null;
     }
 
     public String getColumnText( Object element, int columnIndex ) {
-        if( element instanceof CodeProportion ) {
-            return getColumnTextFor( (CodeProportion)element, columnIndex );
+        if( element instanceof AnalysisDisplayEntry ) {
+            return getColumnTextFor( (AnalysisDisplayEntry)element, columnIndex );
         } else if( CockpitColumnDesc.values()[columnIndex] == Indicator ) {
             return getNodeTextFor( element );
         }
@@ -32,7 +35,7 @@ public class CockpitLP extends UsusModelLabelProvider implements ITableLabelProv
     // internal methods
     // ////////////////
 
-    private String getColumnTextFor( CodeProportion element, int columnIndex ) {
+    private String getColumnTextFor( AnalysisDisplayEntry element, int columnIndex ) {
         return CockpitColumnDesc.values()[columnIndex].getLabel( element );
     }
 

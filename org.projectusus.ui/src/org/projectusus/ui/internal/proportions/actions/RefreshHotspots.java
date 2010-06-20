@@ -10,11 +10,15 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.projectusus.ui.internal.hotspots.HotSpotsView;
+import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayModel;
 
 public class RefreshHotspots extends Action {
 
-    public RefreshHotspots() {
+    private final AnalysisDisplayModel model;
+
+    public RefreshHotspots( AnalysisDisplayModel analysisDisplayModel ) {
         super( "Refresh Hotspots" );
+        model = analysisDisplayModel;
     }
 
     @Override
@@ -27,8 +31,9 @@ public class RefreshHotspots extends Action {
         IViewPart viewPart = getPage().findView( HotSpotsView.class.getName() );
         if( viewPart instanceof HotSpotsView ) {
             HotSpotsView hotSpotsView = (HotSpotsView)viewPart;
-            hotSpotsView.refreshActivePage();
+            hotSpotsView.refreshActivePage( model.getEntriesOfAllCategories() );
         }
+
     }
 
     private IWorkbenchPage getPage() {
