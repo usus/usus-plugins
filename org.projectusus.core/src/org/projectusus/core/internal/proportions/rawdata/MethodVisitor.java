@@ -13,9 +13,9 @@ public class MethodVisitor extends DefaultMetricsResultVisitor {
     }
 
     @Override
-    public void inspect( @SuppressWarnings( "unused" ) SourceCodeLocation location, MethodRawData methodRawData ) {
-        ccValueCount = ccValueCount + methodRawData.getCCValue();
-        mlValueCount = mlValueCount + methodRawData.getMLValue();
+    public void inspectMethod( @SuppressWarnings( "unused" ) SourceCodeLocation location, MetricsResults result ) {
+        ccValueCount = ccValueCount + ((Integer)result.get( MetricsResults.CC )).intValue();
+        mlValueCount = mlValueCount + ((Integer)result.get( MetricsResults.ML )).intValue();
     }
 
     public int getCCValue() {

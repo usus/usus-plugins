@@ -4,38 +4,27 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
-import org.projectusus.core.basis.IMethodRawData;
 import org.projectusus.core.basis.IRawData;
 
-public class MethodRawData implements IRawData, IMethodRawData {
+public class MethodRawData implements IRawData {
 
     private SourceCodeLocation location;
-    // private MetricsResults
-
-    private int ccValue;
-    private int mlValue;
+    private MetricsResults data;
 
     public MethodRawData( int startPosition, int lineNumber, String className, String methodName ) {
-        location = new SourceCodeLocation( className + "." + methodName, startPosition, lineNumber ); //$NON-NLS-1$
+        location = new SourceCodeLocation( className + "." + methodName + "()", startPosition, lineNumber ); //$NON-NLS-1$ //$NON-NLS-2$
+        data = new MetricsResults();
     }
 
     public void setCCValue( int value ) {
-        ccValue = value;
-    }
-
-    public int getCCValue() {
-        return ccValue;
+        data.add( MetricsResults.CC, new Integer( value ) );
     }
 
     public void setMLValue( int value ) {
-        mlValue = value;
-    }
-
-    public int getMLValue() {
-        return mlValue;
+        data.add( MetricsResults.ML, new Integer( value ) );
     }
 
     public void acceptAndGuide( MetricsResultVisitor visitor ) {
-        visitor.inspect( location, this );
+        visitor.inspectMethod( location, data );
     }
 }

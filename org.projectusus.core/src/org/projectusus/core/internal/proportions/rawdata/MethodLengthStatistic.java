@@ -1,6 +1,5 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
-
 public class MethodLengthStatistic extends DefaultStatistic {
 
     private static int ML_LIMIT = 15;
@@ -14,8 +13,8 @@ public class MethodLengthStatistic extends DefaultStatistic {
     }
 
     @Override
-    public void inspect( SourceCodeLocation location, MethodRawData methodRawData ) {
-        addViolation( location, methodRawData.getMLValue() );
+    public void inspectMethod( SourceCodeLocation location, MetricsResults result ) {
+        addViolation( location, result.get( MetricsResults.ML ) );
     }
 
 }

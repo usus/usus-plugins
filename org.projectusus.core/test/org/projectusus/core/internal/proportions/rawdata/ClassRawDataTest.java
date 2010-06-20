@@ -7,15 +7,11 @@ package org.projectusus.core.internal.proportions.rawdata;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
@@ -88,7 +84,7 @@ public class ClassRawDataTest {
 
     @Test
     public void addHotspotsNoMethods() {
-        List<IHotspot> nameList = new ArrayList<IHotspot>();
+        // List<IHotspot> nameList = new ArrayList<IHotspot>();
         // classRawData.addToHotspots( CodeProportionKind.KG, nameList );
         // assertEquals( 0, nameList.size() );
         // classRawData.addToHotspots( CodeProportionKind.CC, nameList );

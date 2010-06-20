@@ -13,27 +13,23 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.projectusus.core.basis.IFileRawData;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
 
-public class FileRawData extends RawData<Integer, ClassRawData> implements IFileRawData {
+public class FileRawData extends RawData<Integer, ClassRawData> {
 
-    private final IFile fileOfRawData;
+    private MetricsResults data;
 
     public FileRawData( IFile file ) {
         super(); // sagt AL ;)
-        this.fileOfRawData = file;
-    }
-
-    public IFile getFileOfRawData() {
-        return fileOfRawData;
+        data = new MetricsResults();
+        data.add( MetricsResults.FILE, file );
     }
 
     @Override
     public String toString() {
-        return "Data for " + fileOfRawData.getFullPath() + ", " + getRawDataElementCount() + " classes"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return "Data for " + ((IFile)data.get( MetricsResults.FILE )).getFullPath() + ", " + getRawDataElementCount() + " classes"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     public void setCCValue( MethodDeclaration methodDecl, int value ) {
@@ -107,7 +103,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
 
     public ClassRawData findClass( Classname classname ) {
         for( ClassRawData classRD : getAllRawDataElements() ) {
-            if( classRD.hasName( classname ) ) {
+            if( classRD.isCalled( classname ) ) {
                 return classRD;
             }
         }
@@ -122,7 +118,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> implements IFile
     }
 
     public void acceptAndGuide( MetricsResultVisitor visitor ) {
-        visitor.inspect( this );
+        visitor.inspectFile( data );
         JavaModelPath path = visitor.getPath();
         if( path.isRestrictedToType() ) {
             this.getRawData( path.getType() ).acceptAndGuide( visitor );

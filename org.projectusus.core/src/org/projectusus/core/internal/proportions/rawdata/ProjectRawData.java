@@ -8,6 +8,12 @@ import org.eclipse.core.resources.IFile;
 
 class ProjectRawData extends RawData<IFile, FileRawData> {
 
+    MetricsResults data;
+
+    public ProjectRawData() {
+        data = new MetricsResults();
+    }
+
     public FileRawData getOrCreateFileRawData( IFile file ) {
         FileRawData rawData = getFileRawData( file );
         if( rawData == null ) {
@@ -42,7 +48,7 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
     }
 
     public void acceptAndGuide( MetricsResultVisitor visitor ) {
-        visitor.inspect( this );
+        visitor.inspectProject( data );
         JavaModelPath path = visitor.getPath();
         if( path.isRestrictedToFile() ) {
             this.getFileRawData( path.getFile() ).acceptAndGuide( visitor );

@@ -103,7 +103,7 @@ public class JavaModelPath {
     @Override
     public String toString() {
         ToStringBuilder builder = new ToStringBuilder( this );
-        builder.append( "Project", project ).append( "File", file ).append( "Type", type ).append( "Method", method );
+        builder.append( "Project", project ).append( "File", file ).append( "Type", type ).append( "Method", method ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         return builder.toString();
     }
 

@@ -1,6 +1,5 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
-
 public class ClassSizeStatistic extends DefaultStatistic {
 
     private static int KG_LIMIT = 20;
@@ -10,7 +9,7 @@ public class ClassSizeStatistic extends DefaultStatistic {
     }
 
     @Override
-    public void inspect( SourceCodeLocation location, ClassRawData classRawData ) {
-        addViolation( location, classRawData.getRawDataElementCount() );
+    public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
+        addViolation( location, results.get( MetricsResults.METHODS ) );
     }
 }

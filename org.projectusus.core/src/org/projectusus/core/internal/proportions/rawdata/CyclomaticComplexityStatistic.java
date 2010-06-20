@@ -1,6 +1,5 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
-
 public class CyclomaticComplexityStatistic extends DefaultStatistic {
 
     private static int CC_LIMIT = 5;
@@ -14,8 +13,8 @@ public class CyclomaticComplexityStatistic extends DefaultStatistic {
     }
 
     @Override
-    public void inspect( SourceCodeLocation location, MethodRawData methodRawData ) {
-        addViolation( location, methodRawData.getCCValue() );
+    public void inspectMethod( SourceCodeLocation location, MetricsResults results ) {
+        addViolation( location, results.get( MetricsResults.CC ) );
     }
 
 }

@@ -32,7 +32,11 @@ public abstract class DefaultStatistic extends DefaultMetricsResultVisitor {
         visit();
     }
 
-    protected void addViolation( SourceCodeLocation location, int count ) {
+    protected void addViolation( SourceCodeLocation location, Object element ) {
+        if( element == null ) {
+            return;
+        }
+        int count = ((Integer)element).intValue();
         violationSum += count;
         if( count > violationLimit ) {
             violations++;
@@ -41,8 +45,8 @@ public abstract class DefaultStatistic extends DefaultMetricsResultVisitor {
     }
 
     @Override
-    public void inspect( FileRawData fileRawData ) {
-        currentFile = fileRawData.getFileOfRawData();
+    public void inspectFile( MetricsResults result ) {
+        currentFile = (IFile)result.get( MetricsResults.FILE );
     }
 
     public int getViolations() {

@@ -13,20 +13,22 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.projectusus.core.basis.IClassRawData;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
 
-public class ClassRawData extends RawData<Integer, MethodRawData> implements IClassRawData {
+public class ClassRawData extends RawData<Integer, MethodRawData> {
 
     private final SourceCodeLocation location;
+    private MetricsResults data;
+
     private ClassDescriptor descriptor;
 
     private ClassRawData( String name, int startPosition, int line ) {
         super();
         location = new SourceCodeLocation( name, startPosition, line );
+        data = new MetricsResults();
     }
 
     public ClassRawData( BoundType binding, String name, int startPosition, int line ) {
@@ -97,10 +99,6 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         }
     }
 
-    public int getCCDResult() {
-        return descriptor.getCCD();
-    }
-
     public void dropRawData() {
         if( descriptor != null ) {
             descriptor.prepareRemoval();
@@ -110,7 +108,8 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
     }
 
     public void acceptAndGuide( MetricsResultVisitor visitor ) {
-        visitor.inspect( location, this );
+        updateData();
+        visitor.inspectClass( location, data );
         JavaModelPath path = visitor.getPath();
         if( path.isRestrictedToMethod() ) {
             this.getMethodRawData( path.getMethod() ).acceptAndGuide( visitor );
@@ -121,7 +120,12 @@ public class ClassRawData extends RawData<Integer, MethodRawData> implements ICl
         }
     }
 
-    public boolean hasName( Classname classname ) {
+    private void updateData() {
+        data.add( MetricsResults.METHODS, new Integer( getRawDataElementCount() ) );
+        data.add( MetricsResults.CCD, new Integer( descriptor.getCCD() ) );
+    }
+
+    public boolean isCalled( Classname classname ) {
         return location.getName().equals( classname.toString() );
     }
 }

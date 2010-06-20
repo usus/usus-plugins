@@ -12,12 +12,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.rawdata.MetricsAccessor;
 
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings( { "unchecked", "unused" } )
 public class IncrementalUsusBuilder extends IncrementalProjectBuilder {
 
-    private static final String BUILDER_ID = "com.example.builders.mybuilder";
+    private static final String BUILDER_ID = "com.example.builders.mybuilder"; //$NON-NLS-1$
 
     public IncrementalUsusBuilder() {
+        super();
     }
 
     public static void addBuilderToProject( IProject project ) {

@@ -2,13 +2,13 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 public interface MetricsResultVisitor {
 
-    void inspect( ProjectRawData projectRawData );
+    void inspectProject( MetricsResults results );
 
-    void inspect( FileRawData fileRawData );
+    void inspectFile( MetricsResults results );
 
-    void inspect( SourceCodeLocation location, ClassRawData classRawData );
+    void inspectClass( SourceCodeLocation location, MetricsResults results );
 
-    void inspect( SourceCodeLocation location, MethodRawData methodRawData );
+    void inspectMethod( SourceCodeLocation location, MetricsResults results );
 
     JavaModelPath getPath();
 }

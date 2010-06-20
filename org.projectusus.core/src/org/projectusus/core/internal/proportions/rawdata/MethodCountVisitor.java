@@ -16,7 +16,7 @@ public class MethodCountVisitor extends DefaultMetricsResultVisitor implements C
     }
 
     @Override
-    public void inspect( @SuppressWarnings( "unused" ) SourceCodeLocation location, @SuppressWarnings( "unused" ) MethodRawData methodRawData ) {
+    public void inspectMethod( @SuppressWarnings( "unused" ) SourceCodeLocation location, @SuppressWarnings( "unused" ) MetricsResults results ) {
         methodCount++;
     }
 

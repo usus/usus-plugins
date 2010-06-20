@@ -13,8 +13,8 @@ public class ACDStatistic extends DefaultStatistic {
     }
 
     @Override
-    public void inspect( SourceCodeLocation location, ClassRawData classRawData ) {
-        addViolation( location, classRawData.getCCDResult() );
+    public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
+        addViolation( location, results.get( MetricsResults.CCD ) );
     }
 
     public int getCCDSum() {

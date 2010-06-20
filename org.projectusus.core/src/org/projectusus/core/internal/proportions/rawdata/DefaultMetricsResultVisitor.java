@@ -14,19 +14,19 @@ public abstract class DefaultMetricsResultVisitor implements MetricsResultVisito
         path = modelPath;
     }
 
-    public void inspect( @SuppressWarnings( "unused" ) ProjectRawData projectRawData ) {
+    public void inspectProject( @SuppressWarnings( "unused" ) MetricsResults results ) {
         // do nothing with the data
     }
 
-    public void inspect( @SuppressWarnings( "unused" ) FileRawData fileRawData ) {
+    public void inspectFile( @SuppressWarnings( "unused" ) MetricsResults results ) {
         // do nothing with the data
     }
 
-    public void inspect( @SuppressWarnings( "unused" ) SourceCodeLocation location, @SuppressWarnings( "unused" ) ClassRawData classRawData ) {
+    public void inspectClass( @SuppressWarnings( "unused" ) SourceCodeLocation location, @SuppressWarnings( "unused" ) MetricsResults results ) {
         // do nothing with the data
     }
 
-    public void inspect( @SuppressWarnings( "unused" ) SourceCodeLocation location, @SuppressWarnings( "unused" ) MethodRawData methodRawData ) {
+    public void inspectMethod( @SuppressWarnings( "unused" ) SourceCodeLocation location, @SuppressWarnings( "unused" ) MetricsResults results ) {
         // do nothing with the data
     }
 
