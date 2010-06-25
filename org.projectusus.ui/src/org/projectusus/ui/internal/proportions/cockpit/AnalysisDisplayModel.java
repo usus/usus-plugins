@@ -8,6 +8,7 @@ import org.projectusus.core.IUsusModel;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class AnalysisDisplayModel {
 
@@ -19,7 +20,7 @@ public class AnalysisDisplayModel {
 
     public static AnalysisDisplayModel getInstance() {
         if( instance == null ) {
-            instance = new AnalysisDisplayModel( UsusCorePlugin.getUsusModel() );
+            instance = new AnalysisDisplayModel( UsusModel.ususModel() );
         }
         return instance;
     }

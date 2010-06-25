@@ -1,9 +1,8 @@
 package org.projectusus.ui.dependencygraph.common;
 
-import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
-
 import java.util.Set;
 
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -22,6 +21,7 @@ import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.GraphNode;
+import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public abstract class DependencyGraphView extends ViewPart implements FilterLimitProvider {
     private static final String SCALE_TOOLTIP_TEXT = "Change the number of visible nodes by moving the slider";
@@ -139,6 +139,14 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
         // do nothing
     }
 
+    public void switchToClassView() {
+        ISelection selection = graphViewer.getSelection();
+        if( !selection.isEmpty() ) {
+
+        }
+
+    }
+
     public int getFilterLimit() {
         return filterLimit;
     }
@@ -149,13 +157,13 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
 
     @Override
     public void dispose() {
-        getUsusModel().removeUsusModelListener( listener );
+        UsusModel.ususModel().removeUsusModelListener( listener );
         super.dispose();
     }
 
     private void initUsusModelListener() {
         listener = new IUsusModelListener() {
-            public void ususModelChanged( ) {
+            public void ususModelChanged() {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         model.invalidate();
@@ -164,7 +172,7 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
                 } );
             }
         };
-        getUsusModel().addUsusModelListener( listener );
+        UsusModel.ususModel().addUsusModelListener( listener );
     }
 
     private void updateSpinnerAndFilter() {

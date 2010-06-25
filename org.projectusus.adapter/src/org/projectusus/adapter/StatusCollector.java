@@ -2,11 +2,10 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.proportions.rawdata.jdtdriver;
+package org.projectusus.adapter;
 
 import static org.eclipse.core.runtime.IStatus.ERROR;
 import static org.projectusus.core.internal.UsusCorePlugin.PLUGIN_ID;
-import static org.projectusus.core.internal.util.CoreTexts.jdtDriver_errors;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +16,8 @@ import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 
 public class StatusCollector {
+
+    public static String jdtDriver_errors = "Errors occurred during code proportions computation.";
 
     private final Set<IStatus> errors = new HashSet<IStatus>();
 

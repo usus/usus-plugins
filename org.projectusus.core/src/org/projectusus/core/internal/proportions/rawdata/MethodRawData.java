@@ -5,6 +5,9 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import org.projectusus.core.basis.IRawData;
+import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.statistics.MetricsResultVisitor;
 
 public class MethodRawData implements IRawData {
 

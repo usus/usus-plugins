@@ -24,8 +24,8 @@ public class UsusModelCache {
     }
 
     public void refreshAll( List<CodeProportion> proportions ) {
-        for( CodeProportion metric : proportions ) {
-            refresh( metric );
+        for( CodeProportion proportion : proportions ) {
+            refresh( proportion );
         }
     }
 
@@ -33,7 +33,7 @@ public class UsusModelCache {
         return isisMetricsValues.get( kind );
     }
 
-    void refresh( CodeProportion proportion ) {
+    public void refresh( CodeProportion proportion ) {
         isisMetricsValues.put( proportion.getMetric(), proportion );
     }
 

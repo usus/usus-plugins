@@ -14,6 +14,7 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.basis.JavaModelPath;
 
 public class MetricsResultPathTest {
 

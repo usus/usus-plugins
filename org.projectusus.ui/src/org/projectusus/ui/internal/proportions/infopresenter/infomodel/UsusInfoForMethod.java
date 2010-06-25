@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
-import org.projectusus.core.internal.proportions.rawdata.MethodVisitor;
+import org.projectusus.core.statistics.MethodVisitor;
 
 public class UsusInfoForMethod extends UsusInfoForClass {
 
@@ -21,9 +21,9 @@ public class UsusInfoForMethod extends UsusInfoForClass {
     @Override
     protected void addFormattedProportion( List<String> result ) throws JavaModelException {
         super.addFormattedProportion( result );
-        MethodVisitor visitor = new MethodVisitor( method );
-        result.add( UsusModelElementFormatter.format( CC, visitor.getCCValue() ) );
-        result.add( UsusModelElementFormatter.format( ML, visitor.getMLValue() ) );
+        MethodVisitor visitor = new MethodVisitor( method ).visit();
+        result.add( UsusModelElementFormatter.format( CC.getLabel(), visitor.getCCValue() ) );
+        result.add( UsusModelElementFormatter.format( ML.getLabel(), visitor.getMLValue() ) );
     }
 
     @Override

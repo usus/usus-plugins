@@ -5,7 +5,6 @@
 package org.projectusus.ui.internal.proportions.cockpit;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
-import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
 import org.eclipse.core.resources.IProject;
@@ -28,6 +27,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.internal.project.FindUsusProjects;
+import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
 import org.projectusus.ui.internal.proportions.actions.RefreshHotspots;
 import org.projectusus.ui.internal.proportions.actions.ToggleAutoCompute;
@@ -58,7 +58,7 @@ public class CockpitView extends ViewPart {
 
     @Override
     public void dispose() {
-        getUsusModel().removeUsusModelListener( listener );
+        UsusModel.ususModel().removeUsusModelListener( listener );
         super.dispose();
     }
 
@@ -111,7 +111,7 @@ public class CockpitView extends ViewPart {
                 } );
             }
         };
-        getUsusModel().addUsusModelListener( listener );
+        UsusModel.ususModel().addUsusModelListener( listener );
     }
 
     private void handleUsusModelChanged() {

@@ -16,13 +16,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 import org.osgi.service.prefs.BackingStoreException;
-import org.projectusus.core.IMetricsAccessor;
-import org.projectusus.core.IUsusModel;
-import org.projectusus.core.internal.proportions.IMetricsWriter;
-import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
-import org.projectusus.core.internal.proportions.rawdata.NullMetricsWriter;
-import org.projectusus.core.internal.proportions.rawdata.NullUsusModelForAdapter;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class UsusCorePlugin extends Plugin {
 
@@ -31,38 +24,9 @@ public class UsusCorePlugin extends Plugin {
     // some jobs still run
     public static final String PLUGIN_ID = "org.projectusus.core"; //$NON-NLS-1$
     private static UsusCorePlugin plugin;
-    private UsusModel ususModel;
 
     public static UsusCorePlugin getDefault() {
         return plugin;
-    }
-
-    public static IMetricsAccessor getMetricsAccessor() {
-        return getUsusModel().getMetricsAccessor();
-    }
-
-    public static synchronized IUsusModel getUsusModel() {
-        return getDefault().ususModel;
-    }
-
-    public static synchronized IUsusModelForAdapter getUsusModelForAdapter() {
-        UsusCorePlugin ususCorePlugin = UsusCorePlugin.getDefault();
-        // inside a background job, the plugin might have been
-        // shut down meanwhile
-        if( ususCorePlugin != null ) {
-            return ususCorePlugin.ususModel;
-        }
-        return new NullUsusModelForAdapter();
-    }
-
-    public static synchronized IMetricsWriter getMetricsWriter() {
-        UsusCorePlugin ususCorePlugin = UsusCorePlugin.getDefault();
-        // inside a background job, the plugin might have been
-        // shut down meanwhile
-        if( ususCorePlugin != null ) {
-            return ususCorePlugin.ususModel.getMetricsWriter();
-        }
-        return new NullMetricsWriter();
     }
 
     public static void log( Exception ex ) {
@@ -85,7 +49,6 @@ public class UsusCorePlugin extends Plugin {
     public void start( final BundleContext context ) throws Exception {
         super.start( context );
         plugin = this;
-        ususModel = new UsusModel();
         context.addBundleListener( new BundleListener() {
             public void bundleChanged( BundleEvent event ) {
                 if( event.getType() == BundleEvent.STARTED ) {
@@ -98,8 +61,6 @@ public class UsusCorePlugin extends Plugin {
     @Override
     public void stop( BundleContext context ) throws Exception {
         plugin = null;
-        UsusModel.clear();
-        ususModel = null;
         super.stop( context );
     }
 

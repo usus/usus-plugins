@@ -1,32 +1,30 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.statistics;
 
-import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.basis.SourceCodeLocation;
 
 public class ACDStatistic extends DefaultStatistic {
 
     public ACDStatistic( JavaModelPath path ) {
-        super( path, calculateCcdLimit( new ClassCountVisitor().getClassCount() ) );
+        super( path, calculateCcdLimit( new ClassCountVisitor().visit().getClassCount() ) );
     }
 
     public ACDStatistic() {
-        super( calculateCcdLimit( new ClassCountVisitor().getClassCount() ) );
+        super( calculateCcdLimit( new ClassCountVisitor().visit().getClassCount() ) );
     }
 
     @Override
     public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
-        addViolation( location, results.get( MetricsResults.CCD ) );
-    }
-
-    public int getCCDSum() {
-        return getViolationSum();
+        addViolation( location, results.getIntValue( MetricsResults.CCD, 1 ) );
     }
 
     public double getRelativeACD() {
-        int numberOfClasses = ClassDescriptor.getAll().size();
+        int numberOfClasses = new ClassCountVisitor().visit().getClassCount();
         if( numberOfClasses == 0 ) {
             return 0.0;
         }
-        return getCCDSum() / (double)(numberOfClasses * numberOfClasses);
+        return getMetricsSum() / (double)(numberOfClasses * numberOfClasses);
     }
 
     public static int calculateCcdLimit( int classCount ) {
@@ -35,6 +33,12 @@ public class ACDStatistic extends DefaultStatistic {
         double factor = 1.5 / Math.pow( 2, log_5_classCount );
         double limit = factor * classCount;
         return (int)limit;
+    }
+
+    @Override
+    public ACDStatistic visit() {
+        super.visit();
+        return this;
     }
 
 }

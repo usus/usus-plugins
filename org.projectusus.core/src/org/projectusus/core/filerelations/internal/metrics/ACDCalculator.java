@@ -1,7 +1,7 @@
 package org.projectusus.core.filerelations.internal.metrics;
 
 import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.internal.proportions.rawdata.ACDStatistic;
+import org.projectusus.core.statistics.ACDStatistic;
 
 public class ACDCalculator {
 
@@ -12,6 +12,6 @@ public class ACDCalculator {
         if( numberOfClasses == 0 ) {
             return 0.0;
         }
-        return new ACDStatistic().getCCDSum() / (double)(numberOfClasses * numberOfClasses);
+        return new ACDStatistic().visit().getMetricsSum() / (double)(numberOfClasses * numberOfClasses);
     }
 }

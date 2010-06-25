@@ -7,7 +7,6 @@ package org.projectusus.core;
 import java.util.List;
 
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.basis.CodeProportionKind;
 
 public interface IUsusModel {
 
@@ -17,10 +16,5 @@ public interface IUsusModel {
 
     void removeUsusModelListener( IUsusModelListener listener );
 
-    CodeProportion getCodeProportion( CodeProportionKind metric );
-
     boolean needsFullRecompute();
-
-    IMetricsAccessor getMetricsAccessor();
-
 }

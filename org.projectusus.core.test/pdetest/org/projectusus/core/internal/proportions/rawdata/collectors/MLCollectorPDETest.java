@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Test;
-import org.projectusus.core.internal.proportions.rawdata.MethodLengthStatistic;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
+import org.projectusus.core.statistics.MethodLengthStatistic;
 
 public class MLCollectorPDETest extends PDETestForMetricsComputation {
 
@@ -19,7 +19,7 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     private int getMethodLengths() {
-        return new MethodLengthStatistic().getViolationSum();
+        return new MethodLengthStatistic().visit().getMetricsSum();
     }
 
     @Test

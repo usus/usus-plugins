@@ -5,6 +5,8 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import org.eclipse.core.resources.IProject;
+import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.statistics.MetricsResultVisitor;
 
 class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 

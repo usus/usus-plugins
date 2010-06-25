@@ -1,7 +1,10 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.statistics;
 
 import org.projectusus.core.basis.CodeProportionUnit;
 import org.projectusus.core.basis.CodeStatistic;
+import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.basis.SourceCodeLocation;
 
 public class ClassCountVisitor extends DefaultMetricsResultVisitor implements CodeStatisticCalculator {
 
@@ -21,12 +24,17 @@ public class ClassCountVisitor extends DefaultMetricsResultVisitor implements Co
     }
 
     public int getClassCount() {
-        visit();
         return classCount;
     }
 
     public CodeStatistic getCodeStatistic() {
         return new CodeStatistic( CodeProportionUnit.CLASS, getClassCount() );
+    }
+
+    @Override
+    public ClassCountVisitor visit() {
+        super.visit();
+        return this;
     }
 
 }

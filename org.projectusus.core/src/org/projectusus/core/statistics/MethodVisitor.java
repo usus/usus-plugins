@@ -1,7 +1,10 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.statistics;
 
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
+import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.basis.SourceCodeLocation;
 
 public class MethodVisitor extends DefaultMetricsResultVisitor {
     private int ccValueCount = 0;
@@ -9,13 +12,12 @@ public class MethodVisitor extends DefaultMetricsResultVisitor {
 
     public MethodVisitor( IMethod method ) throws JavaModelException {
         super( new JavaModelPath( method ) );
-        visit();
     }
 
     @Override
     public void inspectMethod( @SuppressWarnings( "unused" ) SourceCodeLocation location, MetricsResults result ) {
-        ccValueCount = ccValueCount + ((Integer)result.get( MetricsResults.CC )).intValue();
-        mlValueCount = mlValueCount + ((Integer)result.get( MetricsResults.ML )).intValue();
+        ccValueCount = ccValueCount + result.getIntValue( MetricsResults.CC, 1 );
+        mlValueCount = mlValueCount + result.getIntValue( MetricsResults.ML, 1 );
     }
 
     public int getCCValue() {
@@ -26,4 +28,9 @@ public class MethodVisitor extends DefaultMetricsResultVisitor {
         return mlValueCount;
     }
 
+    @Override
+    public MethodVisitor visit() {
+        super.visit();
+        return this;
+    }
 }

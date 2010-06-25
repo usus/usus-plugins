@@ -11,8 +11,8 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.projectusus.adapter.ForcedRecompute;
+import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
 
 public class ACDCollectorPDETest extends PDETestForMetricsComputation {
@@ -495,7 +495,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     // twoFilesOneClassIsRemovedFromFile
 
     private double getACD() {
-        return UsusCorePlugin.getMetricsAccessor().getRelativeACD();
+        return UsusModelProvider.getMetricsAccessor().getRelativeACD();
     }
 
     protected IFile createFile( String filenumber ) throws Exception {

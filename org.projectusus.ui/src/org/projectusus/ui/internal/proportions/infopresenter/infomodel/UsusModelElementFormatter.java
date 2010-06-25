@@ -4,13 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter.infomodel;
 
-import org.projectusus.core.basis.CodeProportionKind;
 
 class UsusModelElementFormatter {
-
-    static String format( CodeProportionKind metric, int value ) {
-        return format( metric.getLabel(), value );
-    }
 
     static String format( String label, int value ) {
         StringBuilder sb = new StringBuilder();

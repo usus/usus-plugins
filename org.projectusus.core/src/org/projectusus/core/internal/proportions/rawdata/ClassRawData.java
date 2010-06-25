@@ -13,10 +13,14 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.basis.SourceCodeLocation;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.statistics.MetricsResultVisitor;
 
 public class ClassRawData extends RawData<Integer, MethodRawData> {
 

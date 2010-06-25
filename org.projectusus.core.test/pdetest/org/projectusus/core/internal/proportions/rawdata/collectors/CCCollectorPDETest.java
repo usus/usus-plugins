@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
-import org.projectusus.core.internal.proportions.rawdata.CyclomaticComplexityStatistic;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
+import org.projectusus.core.statistics.CyclomaticComplexityStatistic;
 
 public class CCCollectorPDETest extends PDETestForMetricsComputation {
 
@@ -110,6 +110,6 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     private int getMetricsSum() {
-        return new CyclomaticComplexityStatistic().getViolationSum();
+        return new CyclomaticComplexityStatistic().visit().getMetricsSum();
     }
 }

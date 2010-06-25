@@ -13,23 +13,27 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
+import org.projectusus.core.statistics.MetricsResultVisitor;
 
 public class FileRawData extends RawData<Integer, ClassRawData> {
 
     private MetricsResults data;
+    private final IFile file;
 
     public FileRawData( IFile file ) {
         super(); // sagt AL ;)
+        this.file = file;
         data = new MetricsResults();
-        data.add( MetricsResults.FILE, file );
     }
 
     @Override
     public String toString() {
-        return "Data for " + ((IFile)data.get( MetricsResults.FILE )).getFullPath() + ", " + getRawDataElementCount() + " classes"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return "Data for " + file.getFullPath() + ", " + getRawDataElementCount() + " classes"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     public void setCCValue( MethodDeclaration methodDecl, int value ) {
@@ -118,7 +122,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
     }
 
     public void acceptAndGuide( MetricsResultVisitor visitor ) {
-        visitor.inspectFile( data );
+        visitor.inspectFile( file, data );
         JavaModelPath path = visitor.getPath();
         if( path.isRestrictedToType() ) {
             this.getRawData( path.getType() ).acceptAndGuide( visitor );

@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.basis;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;

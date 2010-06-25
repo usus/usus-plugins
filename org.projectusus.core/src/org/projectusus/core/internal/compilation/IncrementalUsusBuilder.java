@@ -9,8 +9,7 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.projectusus.core.internal.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.rawdata.MetricsAccessor;
+import org.projectusus.core.UsusModelProvider;
 
 @SuppressWarnings( { "unchecked", "unused" } )
 public class IncrementalUsusBuilder extends IncrementalProjectBuilder {
@@ -88,6 +87,6 @@ public class IncrementalUsusBuilder extends IncrementalProjectBuilder {
 
     @Override
     protected void clean( IProgressMonitor monitor ) {
-        ((MetricsAccessor)UsusCorePlugin.getMetricsAccessor()).dropRawData( getProject() );
+        UsusModelProvider.ususModelForAdapter().dropRawData( getProject() );
     }
 }

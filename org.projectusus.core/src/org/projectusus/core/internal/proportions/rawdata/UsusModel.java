@@ -15,7 +15,6 @@ import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.IUsusModel;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.basis.CodeProportionKind;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.Packagename;
@@ -25,16 +24,22 @@ import org.projectusus.core.internal.proportions.model.UsusModelCache;
 
 public class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
+    private static UsusModel instance = new UsusModel();
+
     private final Set<IUsusModelListener> listeners;
     private final UsusModelCache cache;
     private final MetricsAccessor metrics;
     private boolean needsFullRecompute;
 
-    public UsusModel() {
+    private UsusModel() {
         cache = new UsusModelCache();
         listeners = new HashSet<IUsusModelListener>();
         metrics = new MetricsAccessor();
         needsFullRecompute = false;
+    }
+
+    public static UsusModel ususModel() {
+        return instance;
     }
 
     // interface of IUsusModelWriteAccess
@@ -56,18 +61,19 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
         metrics.dropRawData( file );
     }
 
+    public IMetricsAccessor getMetricsAccessor() {
+        return metrics;
+    }
+
+    public IMetricsWriter getMetricsWriter() {
+        return metrics;
+    }
+
     // interface of IUsusModel
     // ////////////////////////
 
     public List<CodeProportion> getCodeProportions() {
         return cache.getEntries();
-    }
-
-    // ///////////////////////////////////////////////////////////////////////
-
-    // Methoden, die auf WorkspaceRawData zugreifen:
-    public CodeProportion getCodeProportion( CodeProportionKind metric ) {
-        return cache.getCodeProportion( metric );
     }
 
     // //////////////////////////////////
@@ -93,15 +99,8 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
         return needsFullRecompute;
     }
 
-    public IMetricsAccessor getMetricsAccessor() {
-        return metrics;
-    }
-
-    public IMetricsWriter getMetricsWriter() {
-        return metrics;
-    }
-
     public static void clear() {
+        instance = new UsusModel();
         ClassDescriptor.clear();
         ClassDescriptorCleanup.clear();
         Packagename.clear();

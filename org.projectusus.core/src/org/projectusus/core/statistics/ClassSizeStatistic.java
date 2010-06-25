@@ -1,4 +1,7 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.statistics;
+
+import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.basis.SourceCodeLocation;
 
 public class ClassSizeStatistic extends DefaultStatistic {
 
@@ -10,6 +13,7 @@ public class ClassSizeStatistic extends DefaultStatistic {
 
     @Override
     public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
-        addViolation( location, results.get( MetricsResults.METHODS ) );
+        addViolation( location, results.getIntValue( MetricsResults.METHODS ) );
     }
+
 }

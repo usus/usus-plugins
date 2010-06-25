@@ -6,7 +6,6 @@ package org.projectusus.core.internal.proportions;
 
 import static org.eclipse.core.runtime.jobs.Job.getJobManager;
 import static org.junit.Assert.assertEquals;
-import static org.projectusus.core.internal.UsusCorePlugin.getUsusModel;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Before;
@@ -14,6 +13,7 @@ import org.junit.Test;
 import org.projectusus.adapter.CodeProportionsComputerJob;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class CodeProportionsPDETest {
 
@@ -24,14 +24,14 @@ public class CodeProportionsPDETest {
 
     @Test
     public void listenerHandling() throws InterruptedException {
-        IUsusModelForAdapter ususModelWriteAccess = UsusCorePlugin.getUsusModelForAdapter();
+        IUsusModelForAdapter ususModelWriteAccess = UsusModel.ususModel();
         DummyCodeProportionsListener listener = new DummyCodeProportionsListener();
-        getUsusModel().addUsusModelListener( listener );
+        UsusModel.ususModel().addUsusModelListener( listener );
 
         ususModelWriteAccess.updateAfterComputationRun( false, new NullProgressMonitor() );
         assertEquals( 1, listener.getCallCount() );
 
-        getUsusModel().removeUsusModelListener( listener );
+        UsusModel.ususModel().removeUsusModelListener( listener );
         ususModelWriteAccess.updateAfterComputationRun( false, new NullProgressMonitor() );
         // no more calls
         assertEquals( 1, listener.getCallCount() );

@@ -40,7 +40,7 @@ public class PDETestUsingWSProject {
         project.open( new NullProgressMonitor() );
         makeUsusProject( true );
         addJavaNature();
-        UsusCorePlugin.getUsusModelForAdapter().dropRawData( project );
+        UsusModel.ususModel().dropRawData( project );
         UsusAdapterPlugin.getDefault(); // to load bundle with ResourceChangeListener
     }
 

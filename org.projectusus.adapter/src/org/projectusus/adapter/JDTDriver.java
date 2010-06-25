@@ -12,12 +12,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.basis.YellowCountCache;
-import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.FileSupport;
 import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.JavaFileDriver;
-import org.projectusus.core.internal.proportions.rawdata.jdtdriver.StatusCollector;
 
 public class JDTDriver {
 
@@ -25,7 +24,7 @@ public class JDTDriver {
     private final ICodeProportionComputationTarget target;
 
     public JDTDriver( ICodeProportionComputationTarget target ) {
-        model = UsusCorePlugin.getUsusModelForAdapter();
+        model = UsusModelProvider.ususModelForAdapter();
         this.target = target;
     }
 

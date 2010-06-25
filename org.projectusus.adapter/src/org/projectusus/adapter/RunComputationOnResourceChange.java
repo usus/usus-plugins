@@ -9,6 +9,7 @@ import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.internal.UsusCorePlugin;
 
 public class RunComputationOnResourceChange implements IResourceChangeListener {
@@ -26,7 +27,7 @@ public class RunComputationOnResourceChange implements IResourceChangeListener {
 
     private void runComputationJob( IResourceDelta delta ) throws CoreException {
         ICodeProportionComputationTarget target = null;
-        if( UsusCorePlugin.getUsusModel().needsFullRecompute() ) {
+        if( UsusModelProvider.ususModel().needsFullRecompute() ) {
             target = new WorkspaceCodeProportionComputationTarget();
         } else {
             target = new DeltaCodeProportionComputationTarget( delta );

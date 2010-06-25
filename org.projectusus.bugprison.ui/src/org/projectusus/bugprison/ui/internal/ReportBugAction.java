@@ -26,19 +26,16 @@ import org.eclipse.ui.PlatformUI;
 import org.projectusus.bugprison.core.Bug;
 import org.projectusus.bugprison.core.IBuggyProject;
 import org.projectusus.bugprison.core.NullBuggyProject;
-import org.projectusus.core.IMetricsAccessor;
-import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.project.NullUsusProject;
-import org.projectusus.core.internal.proportions.rawdata.MethodCountVisitor;
-import org.projectusus.core.internal.proportions.rawdata.MethodVisitor;
+import org.projectusus.core.statistics.MethodCountVisitor;
+import org.projectusus.core.statistics.MethodVisitor;
 import org.projectusus.ui.internal.UsusUIPlugin;
 import org.projectusus.ui.internal.selection.EditorInputAnalysis;
 import org.projectusus.ui.internal.selection.JDTWorkspaceEditorInputAnalysis;
 
 public class ReportBugAction extends Action implements IEditorActionDelegate {
 
-    private static final IMetricsAccessor metrics = UsusCorePlugin.getMetricsAccessor();
     private ICompilationUnit selectedJavaClass;
     private IJavaElement selectedElement;
 
@@ -91,12 +88,12 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
     }
 
     private void fillClassMetrics( Bug bug ) {
-        bug.getBugMetrics().setNumberOfMethods( new MethodCountVisitor().getMethodCount() );
+        bug.getBugMetrics().setNumberOfMethods( new MethodCountVisitor().visit().getMethodCount() );
     }
 
     private void fillMethodMetrics( Bug bug, IMethod method ) {
         try {
-            MethodVisitor visitor = new MethodVisitor( method );
+            MethodVisitor visitor = new MethodVisitor( method ).visit();
             bug.getBugMetrics().setCyclomaticComplexity( visitor.getCCValue() );
             bug.getBugMetrics().setMethodLength( visitor.getMLValue() );
         } catch( JavaModelException e ) {

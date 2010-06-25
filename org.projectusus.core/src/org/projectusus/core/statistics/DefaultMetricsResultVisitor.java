@@ -1,6 +1,10 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.statistics;
 
-import org.projectusus.core.internal.UsusCorePlugin;
+import org.eclipse.core.resources.IFile;
+import org.projectusus.core.UsusModelProvider;
+import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.basis.SourceCodeLocation;
 
 public abstract class DefaultMetricsResultVisitor implements MetricsResultVisitor {
 
@@ -18,7 +22,7 @@ public abstract class DefaultMetricsResultVisitor implements MetricsResultVisito
         // do nothing with the data
     }
 
-    public void inspectFile( @SuppressWarnings( "unused" ) MetricsResults results ) {
+    public void inspectFile( @SuppressWarnings( "unused" ) IFile file, @SuppressWarnings( "unused" ) MetricsResults results ) {
         // do nothing with the data
     }
 
@@ -34,8 +38,9 @@ public abstract class DefaultMetricsResultVisitor implements MetricsResultVisito
         return path;
     }
 
-    protected void visit() {
-        UsusCorePlugin.getMetricsAccessor().acceptAndGuide( this );
+    public MetricsResultVisitor visit() {
+        UsusModelProvider.getMetricsAccessor().acceptAndGuide( this );
+        return this;
     }
 
 }

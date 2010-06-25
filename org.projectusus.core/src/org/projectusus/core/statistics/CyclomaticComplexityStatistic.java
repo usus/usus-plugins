@@ -1,4 +1,8 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.statistics;
+
+import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.basis.SourceCodeLocation;
 
 public class CyclomaticComplexityStatistic extends DefaultStatistic {
 
@@ -14,7 +18,7 @@ public class CyclomaticComplexityStatistic extends DefaultStatistic {
 
     @Override
     public void inspectMethod( SourceCodeLocation location, MetricsResults results ) {
-        addViolation( location, results.get( MetricsResults.CC ) );
+        addViolation( location, results.getIntValue( MetricsResults.CC, 1 ) );
     }
 
 }

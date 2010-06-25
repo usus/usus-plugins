@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.projectusus.core.internal.proportions.rawdata.ACDStatistic;
+import org.projectusus.core.statistics.ACDStatistic;
 
 public class AcdLimitTest {
 

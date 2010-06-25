@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.statistics;
 
 import org.projectusus.core.basis.CodeStatistic;
 

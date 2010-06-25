@@ -5,6 +5,9 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import org.eclipse.core.resources.IFile;
+import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.statistics.MetricsResultVisitor;
 
 class ProjectRawData extends RawData<IFile, FileRawData> {
 

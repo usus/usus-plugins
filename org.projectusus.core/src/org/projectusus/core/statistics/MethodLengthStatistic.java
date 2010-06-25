@@ -1,4 +1,8 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.statistics;
+
+import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.basis.SourceCodeLocation;
 
 public class MethodLengthStatistic extends DefaultStatistic {
 
@@ -14,7 +18,7 @@ public class MethodLengthStatistic extends DefaultStatistic {
 
     @Override
     public void inspectMethod( SourceCodeLocation location, MetricsResults result ) {
-        addViolation( location, result.get( MetricsResults.ML ) );
+        addViolation( location, result.getIntValue( MetricsResults.ML ) );
     }
 
 }

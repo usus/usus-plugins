@@ -19,6 +19,7 @@ import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.YellowCountCache;
 import org.projectusus.core.basis.YellowCountResult;
 import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 /**
  * A simple view that displays the current yellow count to the user.
@@ -46,7 +47,7 @@ public class YellowCountView extends ViewPart {
                 display( YellowCountCache.yellowCountCache().getResult() );
             }
         };
-        UsusCorePlugin.getUsusModel().addUsusModelListener( listener );
+        UsusModel.ususModel().addUsusModelListener( listener );
 
         display( YellowCountCache.yellowCountCache().getResult() );
     }
@@ -60,7 +61,7 @@ public class YellowCountView extends ViewPart {
 
     @Override
     public void dispose() {
-        UsusCorePlugin.getUsusModel().removeUsusModelListener( listener );
+        UsusModel.ususModel().removeUsusModelListener( listener );
         super.dispose();
     }
 

@@ -7,11 +7,11 @@ package org.projectusus.bugprison.core;
 import static org.projectusus.bugprison.core.texts.BugPrisonTexts.AverageMetrics_overall;
 
 import org.eclipse.core.resources.IProject;
-import org.projectusus.core.internal.proportions.rawdata.ClassCountVisitor;
-import org.projectusus.core.internal.proportions.rawdata.CyclomaticComplexityStatistic;
-import org.projectusus.core.internal.proportions.rawdata.JavaModelPath;
-import org.projectusus.core.internal.proportions.rawdata.MethodCountVisitor;
-import org.projectusus.core.internal.proportions.rawdata.MethodLengthStatistic;
+import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.statistics.ClassCountVisitor;
+import org.projectusus.core.statistics.CyclomaticComplexityStatistic;
+import org.projectusus.core.statistics.MethodCountVisitor;
+import org.projectusus.core.statistics.MethodLengthStatistic;
 
 public class AverageMetrics implements IAverageMetrics {
 
@@ -41,11 +41,11 @@ public class AverageMetrics implements IAverageMetrics {
 
     public void addProjectResults( IProject project ) {
         JavaModelPath path = new JavaModelPath( project );
-        numberOfMethods += new MethodCountVisitor( path ).getMethodCount();
-        numberOfClasses += new ClassCountVisitor( path ).getClassCount();
+        numberOfMethods += new MethodCountVisitor( path ).visit().getMethodCount();
+        numberOfClasses += new ClassCountVisitor( path ).visit().getClassCount();
 
-        totalCC += new CyclomaticComplexityStatistic( path ).getViolationSum();
-        totalML += new MethodLengthStatistic( path ).getViolationSum();
+        totalCC += new CyclomaticComplexityStatistic( path ).visit().getMetricsSum();
+        totalML += new MethodLengthStatistic( path ).visit().getMetricsSum();
     }
 
     public String getName() {

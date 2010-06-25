@@ -16,16 +16,19 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
 import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.IUsusModel;
+import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.internal.PDETestUsingWSProject;
-import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.statistics.ClassCountVisitor;
+import org.projectusus.core.statistics.MethodCountVisitor;
+import org.projectusus.core.statistics.MethodLengthStatistic;
 
 public class PDETestForMetricsComputation extends PDETestUsingWSProject {
 
     public void simpleCaseTestDemo() throws Exception {
         IFile file = createWSFile( "A.java", loadContent( "A.test" ) );
         buildFullyAndWait();
-        assertEquals( 1, new MethodLengthStatistic().getViolations() );
-        assertEquals( 2, new MethodCountVisitor( new JavaModelPath( file.getProject() ) ).getMethodCount() );
+        assertEquals( 1, new MethodLengthStatistic().visit().getViolations() );
+        assertEquals( 2, new MethodCountVisitor( new JavaModelPath( file.getProject() ) ).visit().getMethodCount() );
     }
 
     protected String loadContent( String fileName ) throws Exception {
@@ -73,18 +76,18 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
     }
 
     public IMetricsAccessor getMetricsAccessor() {
-        return UsusCorePlugin.getMetricsAccessor();
+        return UsusModel.ususModel().getMetricsAccessor();
     }
 
     public IUsusModel getModel() {
-        return UsusCorePlugin.getUsusModel();
+        return UsusModel.ususModel();
     }
 
     public int getNumberOfMethods() {
-        return new MethodCountVisitor().getMethodCount();
+        return new MethodCountVisitor().visit().getMethodCount();
     }
 
     public int getNumberOfClasses() {
-        return new ClassCountVisitor().getClassCount();
+        return new ClassCountVisitor().visit().getClassCount();
     }
 }
