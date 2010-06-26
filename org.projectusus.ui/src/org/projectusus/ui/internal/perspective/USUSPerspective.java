@@ -26,7 +26,6 @@ public class USUSPerspective implements IPerspectiveFactory {
         layoutViews( layout );
         createViewShortcuts( layout );
         createPerspectiveShortcuts( layout );
-        createActionSets( layout );
     }
 
     private void layoutViews( IPageLayout layout ) {
@@ -63,16 +62,11 @@ public class USUSPerspective implements IPerspectiveFactory {
         layout.addPerspectiveShortcut( "org.eclipse.pde.ui.PDEPerspective" );
     }
 
-    private void createActionSets( IPageLayout layout ) {
-        layout.addActionSet( "com.mountainminds.eclemma.ui.CoverageActionSet" );
-    }
-
     private static List<String> collectInterestingViews() {
         List<String> result = new ArrayList<String>();
         result.add( "org.eclipse.ui.views.TaskList" );
         result.add( "org.eclipse.ui.views.ProblemView" );
         result.add( "org.eclipse.jdt.junit.ResultView" );
-        result.add( "com.mountainminds.eclemma.ui.CoverageView" );
         return result;
     }
 }
