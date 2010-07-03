@@ -5,11 +5,12 @@ import java.util.Set;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -17,20 +18,22 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.ZestStyles;
-import org.eclipse.zest.layouts.LayoutStyles;
-import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public abstract class DependencyGraphView extends ViewPart implements FilterLimitProvider {
+    private static final String LAYOUT_LABEL = "Layout:";
+
     private static final String SCALE_TOOLTIP_TEXT = "Change the number of visible nodes by moving the slider";
 
     private GraphViewer graphViewer;
     private int filterLimit = -1;
+    private GraphLayouts layout;
     private final DependencyGraphModel model;
     private IUsusModelListener listener;
     private Scale scale;
+    private Combo layoutCombo;
 
     public DependencyGraphView( DependencyGraphModel model ) {
         super();
@@ -56,18 +59,15 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
     private void createFilterArea( Composite composite ) {
         Composite filterArea = new Composite( composite, SWT.BORDER );
         filterArea.setToolTipText( SCALE_TOOLTIP_TEXT );
-        filterArea.setLayout( new GridLayout( 3, false ) );
+        filterArea.setLayout( new GridLayout( 5, false ) );
         createLabel( filterArea, getScaleLeftLabelText() );
 
         scale = new Scale( filterArea, SWT.HORIZONTAL );
         scale.setMinimum( 0 );
         scale.setMaximum( 9999999 );
         scale.setSelection( getFilterLimit() );
-        scale.addSelectionListener( new SelectionListener() {
-            public void widgetDefaultSelected( SelectionEvent e ) {
-                // we don't need that
-            }
-
+        scale.addSelectionListener( new SelectionAdapter() {
+            @Override
             public void widgetSelected( SelectionEvent e ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
@@ -79,6 +79,26 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
             }
         } );
         createLabel( filterArea, getScaleRightLabelText() );
+
+        createLabel( filterArea, LAYOUT_LABEL );
+        layoutCombo = new Combo( filterArea, SWT.DROP_DOWN | SWT.READ_ONLY );
+        layoutCombo.setItems( GraphLayouts.asStrings() );
+        layoutCombo.select( 0 );
+        layoutCombo.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                Display.getDefault().asyncExec( new Runnable() {
+                    public void run() {
+                        setLayoutFor( layoutCombo.getSelectionIndex() );
+                        drawGraphUnconditionally();
+                    }
+                } );
+            }
+        } );
+    }
+
+    private void setLayoutFor( int index ) {
+        setLayout( GraphLayouts.forIndex( index ) );
     }
 
     protected abstract String getScaleRightLabelText();
@@ -103,9 +123,13 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
         graphViewer.setConnectionStyle( ZestStyles.CONNECTIONS_DIRECTED );
         graphViewer.setContentProvider( new NodeContentProvider() );
         graphViewer.setLabelProvider( new NodeLabelProvider() );
-        SpringLayoutAlgorithm layoutAlgorithm = new SpringLayoutAlgorithm( LayoutStyles.NO_LAYOUT_NODE_RESIZING );
-        graphViewer.setLayoutAlgorithm( layoutAlgorithm, false );
         graphViewer.setFilters( new ViewerFilter[] { new NodeFilter( this ) } );
+        setLayout( GraphLayouts.getFirst() );
+    }
+
+    private void setLayout( GraphLayouts layout ) {
+        this.layout = layout;
+        graphViewer.setLayoutAlgorithm( layout.createAlgorithm(), false );
     }
 
     public void refresh() {

@@ -3,9 +3,6 @@ package org.projectusus.ui.dependencygraph;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-/**
- * The activator class controls the plug-in life cycle
- */
 public class DependencyGraphPlugin extends AbstractUIPlugin {
 
     public static final String PLUGIN_ID = "org.projectusus.ui.dependencygraph";
