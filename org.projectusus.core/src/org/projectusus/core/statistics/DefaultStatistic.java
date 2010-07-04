@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.basis.JavaModelPath;
@@ -18,12 +19,13 @@ public abstract class DefaultStatistic extends DefaultMetricsResultVisitor {
     private IFile currentFile;
     private List<IHotspot> hotspots;
 
-    public DefaultStatistic( int violationLimit ) {
+    public DefaultStatistic( String label, int violationLimit ) {
+        super( label );
         init( violationLimit );
     }
 
-    public DefaultStatistic( JavaModelPath path, int violationLimit ) {
-        super( path );
+    public DefaultStatistic( String label, JavaModelPath path, int violationLimit ) {
+        super( label, path );
         init( violationLimit );
     }
 
@@ -63,5 +65,9 @@ public abstract class DefaultStatistic extends DefaultMetricsResultVisitor {
     public DefaultStatistic visit() {
         super.visit();
         return this;
+    }
+
+    public CodeProportion getCodeProportion() {
+        return new CodeProportion( getLabel(), getViolations(), getBasis(), getHotspots(), true );
     }
 }

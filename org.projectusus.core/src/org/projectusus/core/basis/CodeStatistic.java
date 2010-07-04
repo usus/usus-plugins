@@ -10,20 +10,16 @@ import org.eclipse.core.runtime.PlatformObject;
 
 public class CodeStatistic extends PlatformObject {
 
-    private final CodeProportionUnit unit;
     private final int value;
+    private final String label;
 
-    public CodeStatistic( CodeProportionUnit unit ) {
-        this( unit, 0 );
+    public CodeStatistic( String label ) {
+        this( label, 0 );
     }
 
-    public CodeStatistic( CodeProportionUnit metric, int value ) {
-        this.unit = metric;
+    public CodeStatistic( String label, int value ) {
+        this.label = label;
         this.value = value;
-    }
-
-    public CodeProportionUnit getUnit() {
-        return unit;
     }
 
     public int getValue() {
@@ -40,6 +36,6 @@ public class CodeStatistic extends PlatformObject {
 
     @Override
     public String toString() {
-        return value + " " + unit.getLabel(); //$NON-NLS-1$
+        return value + " " + label; //$NON-NLS-1$
     }
 }

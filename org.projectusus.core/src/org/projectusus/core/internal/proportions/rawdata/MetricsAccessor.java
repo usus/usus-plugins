@@ -1,14 +1,5 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
-import static java.util.Arrays.asList;
-import static org.projectusus.core.basis.CodeProportionKind.ACD;
-import static org.projectusus.core.basis.CodeProportionKind.CC;
-import static org.projectusus.core.basis.CodeProportionKind.KG;
-import static org.projectusus.core.basis.CodeProportionKind.ML;
-import static org.projectusus.core.basis.CodeProportionKind.PC;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -18,12 +9,7 @@ import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsAccessor;
-import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.basis.CodeProportionKind;
-import org.projectusus.core.basis.CodeProportionUnit;
-import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.GraphNode;
-import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.basis.YellowCountCache;
 import org.projectusus.core.basis.YellowCountResult;
 import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
@@ -35,13 +21,6 @@ import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.util.CoreTexts;
-import org.projectusus.core.statistics.ACDStatistic;
-import org.projectusus.core.statistics.ClassCountVisitor;
-import org.projectusus.core.statistics.ClassSizeStatistic;
-import org.projectusus.core.statistics.CyclomaticComplexityStatistic;
-import org.projectusus.core.statistics.DefaultStatistic;
-import org.projectusus.core.statistics.MethodCountVisitor;
-import org.projectusus.core.statistics.MethodLengthStatistic;
 import org.projectusus.core.statistics.MetricsResultVisitor;
 
 public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
@@ -104,50 +83,6 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         workspaceRawData.acceptAndGuide( visitor );
     }
 
-    private CodeProportion getCodeProportion( CodeProportionKind metric ) {
-        CodeStatistic basis = getCodeStatistic( metric.getUnit() );
-
-        if( metric == PC ) {
-            int violations = new PackageRelations().getPackageCycles().numberOfPackagesInAnyCycles();
-            return new CodeProportion( metric, violations, basis, new ArrayList<IHotspot>(), false );
-        }
-        if( metric == ACD ) {
-            ACDStatistic acdStatistic = new ACDStatistic().visit();
-            double levelValue = 100.0 - 100.0 * acdStatistic.getRelativeACD();
-            return new CodeProportion( metric, acdStatistic.getViolations(), basis, levelValue, acdStatistic.getHotspots(), true );
-        }
-
-        DefaultStatistic statistic = null;
-        if( metric == CodeProportionKind.ML ) {
-            statistic = new MethodLengthStatistic().visit();
-        }
-        if( metric == CodeProportionKind.CC ) {
-            statistic = new CyclomaticComplexityStatistic().visit();
-        }
-        if( metric == CodeProportionKind.KG ) {
-            statistic = new ClassSizeStatistic().visit();
-        }
-
-        if( statistic == null ) {
-            throw new IllegalArgumentException( "Cannot get code statistic of code proportion kind " + metric ); //$NON-NLS-1$
-        }
-        return new CodeProportion( metric, statistic.getViolations(), basis, statistic.getHotspots(), true );
-    }
-
-    // TODO CodeStatistic cachen?
-    private CodeStatistic getCodeStatistic( CodeProportionUnit unit ) {
-        if( unit == CodeProportionUnit.PACKAGE ) {
-            return new CodeStatistic( CodeProportionUnit.PACKAGE, Packagename.getAll().size() );
-        }
-        if( unit == CodeProportionUnit.CLASS ) {
-            return new ClassCountVisitor().visit().getCodeStatistic();
-        }
-        if( unit == CodeProportionUnit.METHOD ) {
-            return new MethodCountVisitor().visit().getCodeStatistic();
-        }
-        throw new IllegalArgumentException( "Cannot get code statistic of code proportion unit " + unit ); //$NON-NLS-1$
-    }
-
     public Set<GraphNode> getAllClassRepresenters() {
         return ClassRepresenter.transformToRepresenterSet( ClassDescriptor.getAll() );
     }
@@ -166,14 +101,6 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
 
     public YellowCountResult getWarnings() {
         return YellowCountCache.yellowCountCache().getResult();
-    }
-
-    public List<CodeProportion> getCodeProportions() {
-        List<CodeProportion> entries = new ArrayList<CodeProportion>();
-        for( CodeProportionKind metric : asList( CC, KG, ML, ACD, PC ) ) {
-            entries.add( getCodeProportion( metric ) );
-        }
-        return entries;
     }
 
     public void cleanupRelations( IProgressMonitor monitor ) {

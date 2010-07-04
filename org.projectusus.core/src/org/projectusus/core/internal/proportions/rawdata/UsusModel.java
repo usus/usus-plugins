@@ -21,6 +21,11 @@ import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
+import org.projectusus.core.statistics.ACDStatistic;
+import org.projectusus.core.statistics.ClassSizeStatistic;
+import org.projectusus.core.statistics.CyclomaticComplexityStatistic;
+import org.projectusus.core.statistics.MethodLengthStatistic;
+import org.projectusus.core.statistics.PackageCycleStatistic;
 
 public class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
@@ -31,6 +36,10 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
     private final MetricsAccessor metrics;
     private boolean needsFullRecompute;
 
+    public static UsusModel ususModel() {
+        return instance;
+    }
+
     private UsusModel() {
         cache = new UsusModelCache();
         listeners = new HashSet<IUsusModelListener>();
@@ -38,18 +47,17 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
         needsFullRecompute = false;
     }
 
-    public static UsusModel ususModel() {
-        return instance;
-    }
-
-    // interface of IUsusModelWriteAccess
+     // interface of IUsusModelWriteAccess
     // //////////////////////////////////
 
     public void updateAfterComputationRun( boolean computationSuccessful, IProgressMonitor monitor ) {
         needsFullRecompute = !computationSuccessful;
         metrics.cleanupRelations( monitor );
-        List<CodeProportion> codeProportions = metrics.getCodeProportions();
-        cache.refreshAll( codeProportions );
+        cache.refresh( new MethodLengthStatistic().visit().getCodeProportion() );
+        cache.refresh( new CyclomaticComplexityStatistic().visit().getCodeProportion() );
+        cache.refresh( new ClassSizeStatistic().visit().getCodeProportion() );
+        cache.refresh( new PackageCycleStatistic().visit().getCodeProportion() );
+        cache.refresh( new ACDStatistic().visit().getCodeProportion() );
         notifyListeners();
     }
 

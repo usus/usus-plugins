@@ -2,19 +2,22 @@ package org.projectusus.core.statistics;
 
 import org.eclipse.core.resources.IFile;
 import org.projectusus.core.UsusModelProvider;
+import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
 
 public abstract class DefaultMetricsResultVisitor implements MetricsResultVisitor {
 
-    private JavaModelPath path;
+    JavaModelPath path;
+    final String label;
 
-    public DefaultMetricsResultVisitor() {
-        path = new JavaModelPath();
+    public DefaultMetricsResultVisitor( String label ) {
+        this( label, new JavaModelPath() );
     }
 
-    public DefaultMetricsResultVisitor( JavaModelPath modelPath ) {
+    public DefaultMetricsResultVisitor( String label, JavaModelPath modelPath ) {
+        this.label = label;
         path = modelPath;
     }
 
@@ -43,4 +46,19 @@ public abstract class DefaultMetricsResultVisitor implements MetricsResultVisito
         return this;
     }
 
+    public CodeStatistic numberOfPackages() {
+        return new PackageCountVisitor().visit().getCodeStatistic();
+    }
+
+    public CodeStatistic numberOfClasses() {
+        return new ClassCountVisitor().visit().getCodeStatistic();
+    }
+
+    public CodeStatistic numberOfMethods() {
+        return new MethodCountVisitor().visit().getCodeStatistic();
+    }
+
+    public String getLabel() {
+        return label;
+    }
 }

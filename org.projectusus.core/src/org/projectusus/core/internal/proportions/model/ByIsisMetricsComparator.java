@@ -8,10 +8,9 @@ import java.util.Comparator;
 
 import org.projectusus.core.basis.CodeProportion;
 
-
 class ByIsisMetricsComparator implements Comparator<CodeProportion> {
 
     public int compare( CodeProportion left, CodeProportion right ) {
-        return left.getMetric().compareTo( right.getMetric() );
+        return left.getMetricLabel().compareTo( right.getMetricLabel() );
     }
 }

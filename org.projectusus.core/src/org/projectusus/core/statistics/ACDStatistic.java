@@ -1,5 +1,9 @@
 package org.projectusus.core.statistics;
 
+import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_acd;
+
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
@@ -7,11 +11,11 @@ import org.projectusus.core.basis.SourceCodeLocation;
 public class ACDStatistic extends DefaultStatistic {
 
     public ACDStatistic( JavaModelPath path ) {
-        super( path, calculateCcdLimit( new ClassCountVisitor().visit().getClassCount() ) );
+        super( isisMetrics_acd, path, calculateCcdLimit( new ClassCountVisitor().visit().getClassCount() ) );
     }
 
     public ACDStatistic() {
-        super( calculateCcdLimit( new ClassCountVisitor().visit().getClassCount() ) );
+        super( isisMetrics_acd, calculateCcdLimit( new ClassCountVisitor().visit().getClassCount() ) );
     }
 
     @Override
@@ -39,6 +43,16 @@ public class ACDStatistic extends DefaultStatistic {
     public ACDStatistic visit() {
         super.visit();
         return this;
+    }
+
+    public CodeStatistic getBasis() {
+        return numberOfClasses();
+    }
+
+    @Override
+    public CodeProportion getCodeProportion() {
+        double levelValue = 100.0 - 100.0 * getRelativeACD();
+        return new CodeProportion( getLabel(), getViolations(), getBasis(), levelValue, getHotspots(), true );
     }
 
 }

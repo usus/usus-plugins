@@ -14,19 +14,19 @@ import org.eclipse.core.runtime.PlatformObject;
 
 public class CodeProportion extends PlatformObject {
 
-    private final CodeProportionKind metric;
     private final int violations;
     private final CodeStatistic basis;
     private final double level;
     private final List<IHotspot> hotspots;
     private final boolean hasHotspots;
+    private final String label;
 
-    public CodeProportion( CodeProportionKind metric, int violations, CodeStatistic basis, List<IHotspot> hotspots, boolean hasHotspots ) {
-        this( metric, violations, basis, computeInverse( violations, basis ), hotspots, hasHotspots );
+    public CodeProportion( String label, int violations, CodeStatistic basis, List<IHotspot> hotspots, boolean hasHotspots ) {
+        this( label, violations, basis, computeInverse( violations, basis ), hotspots, hasHotspots );
     }
 
-    public CodeProportion( CodeProportionKind metric, int violations, CodeStatistic basis, double levelValue, List<IHotspot> hotspots, boolean hasHotspots ) {
-        this.metric = metric;
+    public CodeProportion( String label, int violations, CodeStatistic basis, double levelValue, List<IHotspot> hotspots, boolean hasHotspots ) {
+        this.label = label;
         this.violations = violations;
         this.basis = basis;
         this.hasHotspots = hasHotspots;
@@ -48,11 +48,11 @@ public class CodeProportion extends PlatformObject {
 
     @Override
     public String toString() {
-        return metric.toString() + ": " + violations + " / " + basis; //$NON-NLS-1$ //$NON-NLS-2$
+        return label + ": " + violations + " / " + basis; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public CodeProportionKind getMetric() {
-        return metric;
+    public String getMetricLabel() {
+        return label;
     }
 
     public List<IHotspot> getHotspots() {

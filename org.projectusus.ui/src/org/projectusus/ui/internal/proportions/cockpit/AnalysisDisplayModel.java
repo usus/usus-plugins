@@ -7,7 +7,6 @@ import java.util.List;
 import org.projectusus.core.IUsusModel;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.IHotspot;
-import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class AnalysisDisplayModel {
@@ -37,7 +36,7 @@ public class AnalysisDisplayModel {
     private List<AnalysisDisplayEntry> createDisplayEntries( List<CodeProportion> codeProportions ) {
         List<AnalysisDisplayEntry> result = new ArrayList<AnalysisDisplayEntry>();
         for( CodeProportion codeProportion : codeProportions ) {
-            String label = codeProportion.getMetric().getLabel();
+            String label = codeProportion.getMetricLabel();
             double level = codeProportion.getLevel();
             int violations = codeProportion.getViolations();
             String basis = codeProportion.getBasis().toString();

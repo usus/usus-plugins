@@ -1,6 +1,6 @@
 package org.projectusus.core.statistics;
 
-import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_CLASS_label;
+import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_PACKAGE_label;
 
 import java.util.List;
 
@@ -8,37 +8,28 @@ import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.basis.JavaModelPath;
-import org.projectusus.core.basis.MetricsResults;
-import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.filerelations.model.Packagename;
 
-public class ClassCountVisitor extends DefaultMetricsResultVisitor implements CodeStatisticCalculator {
+public class PackageCountVisitor extends DefaultMetricsResultVisitor implements CodeStatisticCalculator {
 
-    private int classCount = 0;
-
-    public ClassCountVisitor( JavaModelPath path ) {
-        super( codeProportionUnit_CLASS_label, path );
+    public PackageCountVisitor( JavaModelPath path ) {
+        super( codeProportionUnit_PACKAGE_label, path );
     }
 
-    public ClassCountVisitor() {
-        super( codeProportionUnit_CLASS_label );
+    public PackageCountVisitor() {
+        super( codeProportionUnit_PACKAGE_label );
     }
 
-    @Override
-    public void inspectClass( @SuppressWarnings( "unused" ) SourceCodeLocation location, @SuppressWarnings( "unused" ) MetricsResults result ) {
-        classCount++;
-    }
-
-    public int getClassCount() {
-        return classCount;
+    public int getPackageCount() {
+        return Packagename.getAll().size();
     }
 
     public CodeStatistic getCodeStatistic() {
-        return new CodeStatistic( codeProportionUnit_CLASS_label, getClassCount() );
+        return new CodeStatistic( codeProportionUnit_PACKAGE_label, getPackageCount() );
     }
 
     @Override
-    public ClassCountVisitor visit() {
-        super.visit();
+    public PackageCountVisitor visit() {
         return this;
     }
 

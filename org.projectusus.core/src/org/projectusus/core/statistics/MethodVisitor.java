@@ -1,7 +1,12 @@
 package org.projectusus.core.statistics;
 
+import java.util.List;
+
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
+import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeStatistic;
+import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
@@ -11,7 +16,7 @@ public class MethodVisitor extends DefaultMetricsResultVisitor {
     private int mlValueCount = 0;
 
     public MethodVisitor( IMethod method ) throws JavaModelException {
-        super( new JavaModelPath( method ) );
+        super( "Aspects of a single method", new JavaModelPath( method ) );
     }
 
     @Override
@@ -32,5 +37,30 @@ public class MethodVisitor extends DefaultMetricsResultVisitor {
     public MethodVisitor visit() {
         super.visit();
         return this;
+    }
+
+    public CodeStatistic getBasis() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public CodeProportion getCodeProportion() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public List<IHotspot> getHotspots() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public int getMetricsSum() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public int getViolations() {
+        // TODO Auto-generated method stub
+        return 0;
     }
 }

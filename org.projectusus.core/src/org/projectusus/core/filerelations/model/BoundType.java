@@ -52,10 +52,14 @@ public class BoundType {
             return null;
         }
         ITypeBinding erasedType = type.getErasure();
-        if( erasedType == null || isATypeVariable( erasedType ) || resourceIsNotInUsusProject( erasedType ) ) {
+        if( invalidType( erasedType ) ) {
             return null;
         }
         return new BoundType( erasedType );
+    }
+
+    private static boolean invalidType( ITypeBinding erasedType ) {
+        return erasedType == null || isATypeVariable( erasedType ) || resourceIsNotInUsusProject( erasedType );
     }
 
     private static boolean resourceIsNotInUsusProject( ITypeBinding binding ) {

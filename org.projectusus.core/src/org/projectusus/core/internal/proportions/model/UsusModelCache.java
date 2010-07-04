@@ -13,28 +13,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.basis.CodeProportionKind;
 
 public class UsusModelCache {
-    private final Map<CodeProportionKind, CodeProportion> isisMetricsValues;
+    private final Map<String, CodeProportion> isisMetricsValues;
 
     public UsusModelCache() {
         super();
-        isisMetricsValues = new HashMap<CodeProportionKind, CodeProportion>();
-    }
-
-    public void refreshAll( List<CodeProportion> proportions ) {
-        for( CodeProportion proportion : proportions ) {
-            refresh( proportion );
-        }
-    }
-
-    public CodeProportion getCodeProportion( CodeProportionKind kind ) {
-        return isisMetricsValues.get( kind );
+        isisMetricsValues = new HashMap<String, CodeProportion>();
     }
 
     public void refresh( CodeProportion proportion ) {
-        isisMetricsValues.put( proportion.getMetric(), proportion );
+        isisMetricsValues.put( proportion.getMetricLabel(), proportion );
     }
 
     public List<CodeProportion> getEntries() {

@@ -81,24 +81,31 @@ public class ACDCollector extends Collector {
     public boolean visit( MethodInvocation node ) {
         Expression targetExpression = node.getExpression();
         if( targetExpression != null ) {
-            if( targetExpression.getNodeType() == ASTNode.SIMPLE_NAME ) {
-                BoundType targetType = BoundType.of( (SimpleName)targetExpression );
-                if( currentType != null && targetType != null ) {
-                    // we found a static method invocation
-                    getMetricsWriter().addClassReference( currentType, targetType );
-                }
-            }
+            visitMethodWithTargetExpression( targetExpression );
         } else {
-            // method invocation without target expression
-            BoundType declaringType = BoundType.of( node );
-            if( currentType != null && declaringType != null && !currentType.equals( declaringType ) ) {
-                getMetricsWriter().addClassReference( currentType, declaringType );
-            }
-            // if( declaringType == null ) {
-            // System.out.println( "Declaring type of invocation " + node.toString() + " in class " + currentType.getClassname() + " is null" );
-            // }
+            visitMethodWithoutTargetExpression( node );
         }
         return true;
+    }
+
+    private void visitMethodWithoutTargetExpression( MethodInvocation node ) {
+        BoundType declaringType = BoundType.of( node );
+        if( currentType != null && declaringType != null && !currentType.equals( declaringType ) ) {
+            getMetricsWriter().addClassReference( currentType, declaringType );
+        }
+        // if( declaringType == null ) {
+        // System.out.println( "Declaring type of invocation " + node.toString() + " in class " + currentType.getClassname() + " is null" );
+        // }
+    }
+
+    private void visitMethodWithTargetExpression( Expression targetExpression ) {
+        if( targetExpression.getNodeType() == ASTNode.SIMPLE_NAME ) {
+            BoundType targetType = BoundType.of( (SimpleName)targetExpression );
+            if( currentType != null && targetType != null ) {
+                // we found a static method invocation
+                getMetricsWriter().addClassReference( currentType, targetType );
+            }
+        }
     }
 
     // @Override
