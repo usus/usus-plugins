@@ -46,12 +46,15 @@ public class FindUsusProjectsPDETest extends PDETestUsingWSProject {
     @Test
     public void multipleProjectsMixed() throws CoreException {
         IProject bla = createAdditionalProject( "bla", true ); //$NON-NLS-1$
-        createAdditionalProject( "blubb", false ); //$NON-NLS-1$
+        IProject blubb = createAdditionalProject( "blubb", false ); //$NON-NLS-1$
         List<IProject> result = computeWithAllProjects();
 
         assertEquals( 2, result.size() );
         assertTrue( result.contains( project ) );
         assertTrue( result.contains( bla ) );
+
+        bla.delete( true, new NullProgressMonitor() );
+        blubb.delete( true, new NullProgressMonitor() );
     }
 
     @Test

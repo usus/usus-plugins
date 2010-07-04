@@ -41,7 +41,7 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 1, target.getProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
         assertEquals( otherProject, affectedProject );
-        // TODO zweites Projekt schlie§en!!
+        otherProject.delete( true, new NullProgressMonitor() );
     }
 
     @Test
