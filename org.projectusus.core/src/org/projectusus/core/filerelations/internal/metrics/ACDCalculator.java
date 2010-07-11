@@ -12,6 +12,8 @@ public class ACDCalculator {
         if( numberOfClasses == 0 ) {
             return 0.0;
         }
-        return new ACDStatistic().visit().getMetricsSum() / (double)(numberOfClasses * numberOfClasses);
+        ACDStatistic statistic = new ACDStatistic();
+        statistic.visit();
+        return statistic.getMetricsSum() / (double)(numberOfClasses * numberOfClasses);
     }
 }

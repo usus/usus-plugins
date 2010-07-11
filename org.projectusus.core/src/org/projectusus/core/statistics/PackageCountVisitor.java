@@ -28,8 +28,7 @@ public class PackageCountVisitor extends DefaultMetricsResultVisitor implements 
         return new CodeStatistic( codeProportionUnit_PACKAGE_label, getPackageCount() );
     }
 
-    @Override
-    public PackageCountVisitor visit() {
+    public PackageCountVisitor visitAndReturn() {
         return this;
     }
 

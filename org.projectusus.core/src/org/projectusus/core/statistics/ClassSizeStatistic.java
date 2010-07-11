@@ -28,4 +28,8 @@ public class ClassSizeStatistic extends DefaultStatistic {
         return numberOfClasses();
     }
 
+    public ClassSizeStatistic visitAndReturn() {
+        visit();
+        return this;
+    }
 }

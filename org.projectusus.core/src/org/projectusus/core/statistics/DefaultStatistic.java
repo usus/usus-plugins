@@ -61,12 +61,6 @@ public abstract class DefaultStatistic extends DefaultMetricsResultVisitor {
         return hotspots;
     }
 
-    @Override
-    public DefaultStatistic visit() {
-        super.visit();
-        return this;
-    }
-
     public CodeProportion getCodeProportion() {
         return new CodeProportion( getLabel(), getViolations(), getBasis(), getHotspots(), true );
     }

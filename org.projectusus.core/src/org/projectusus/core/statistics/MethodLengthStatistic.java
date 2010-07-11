@@ -28,4 +28,9 @@ public class MethodLengthStatistic extends DefaultStatistic {
         return numberOfMethods();
     }
 
+    public MethodLengthStatistic visitAndReturn() {
+        visit();
+        return this;
+    }
+
 }

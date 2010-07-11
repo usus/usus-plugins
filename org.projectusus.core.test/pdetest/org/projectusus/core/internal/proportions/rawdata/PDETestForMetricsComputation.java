@@ -27,8 +27,8 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
     public void simpleCaseTestDemo() throws Exception {
         IFile file = createWSFile( "A.java", loadContent( "A.test" ) );
         buildFullyAndWait();
-        assertEquals( 1, new MethodLengthStatistic().visit().getViolations() );
-        assertEquals( 2, new MethodCountVisitor( new JavaModelPath( file.getProject() ) ).visit().getMethodCount() );
+        assertEquals( 1, new MethodLengthStatistic().visitAndReturn().getViolations() );
+        assertEquals( 2, new MethodCountVisitor( new JavaModelPath( file.getProject() ) ).visitAndReturn().getMethodCount() );
     }
 
     protected String loadContent( String fileName ) throws Exception {
@@ -84,10 +84,10 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
     }
 
     public int getNumberOfMethods() {
-        return new MethodCountVisitor().visit().getMethodCount();
+        return new MethodCountVisitor().visitAndReturn().getMethodCount();
     }
 
     public int getNumberOfClasses() {
-        return new ClassCountVisitor().visit().getClassCount();
+        return new ClassCountVisitor().visitAndReturn().getClassCount();
     }
 }

@@ -33,4 +33,6 @@ public interface MetricsResultVisitor {
     int getViolations();
 
     int getMetricsSum();
+
+    void visit();
 }

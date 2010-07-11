@@ -10,7 +10,12 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.ISafeRunnable;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SafeRunner;
 import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.IUsusModel;
 import org.projectusus.core.IUsusModelListener;
@@ -21,11 +26,7 @@ import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
-import org.projectusus.core.statistics.ACDStatistic;
-import org.projectusus.core.statistics.ClassSizeStatistic;
-import org.projectusus.core.statistics.CyclomaticComplexityStatistic;
-import org.projectusus.core.statistics.MethodLengthStatistic;
-import org.projectusus.core.statistics.PackageCycleStatistic;
+import org.projectusus.core.statistics.MetricsResultVisitor;
 
 public class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
@@ -47,18 +48,46 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
         needsFullRecompute = false;
     }
 
-     // interface of IUsusModelWriteAccess
+    // interface of IUsusModelWriteAccess
     // //////////////////////////////////
 
     public void updateAfterComputationRun( boolean computationSuccessful, IProgressMonitor monitor ) {
         needsFullRecompute = !computationSuccessful;
         metrics.cleanupRelations( monitor );
-        cache.refresh( new MethodLengthStatistic().visit().getCodeProportion() );
-        cache.refresh( new CyclomaticComplexityStatistic().visit().getCodeProportion() );
-        cache.refresh( new ClassSizeStatistic().visit().getCodeProportion() );
-        cache.refresh( new PackageCycleStatistic().visit().getCodeProportion() );
-        cache.refresh( new ACDStatistic().visit().getCodeProportion() );
+        runStatisticsExtensions();
+        // cache.refresh( new MethodLengthStatistic().visit().getCodeProportion() );
+        // cache.refresh( new CyclomaticComplexityStatistic().visit().getCodeProportion() );
+        // cache.refresh( new ClassSizeStatistic().visit().getCodeProportion() );
+        // cache.refresh( new PackageCycleStatistic().visit().getCodeProportion() );
+        // cache.refresh( new ACDStatistic().visit().getCodeProportion() );
         notifyListeners();
+    }
+
+    private void runStatisticsExtensions() {
+        String STATISTICS_ID = "org.projectusus.core.statistics";
+        IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor( STATISTICS_ID );
+        try {
+            for( IConfigurationElement e : config ) {
+                System.out.println( "Evaluating extension" );
+                final Object o = e.createExecutableExtension( "class" );
+                if( o instanceof MetricsResultVisitor ) {
+                    final MetricsResultVisitor visitor = (MetricsResultVisitor)o;
+                    ISafeRunnable runnable = new ISafeRunnable() {
+                        public void handleException( Throwable exception ) {
+                            System.out.println( "Exception in client" );
+                        }
+
+                        public void run() throws Exception {
+                            visitor.visit();
+                            cache.refresh( visitor.getCodeProportion() );
+                        }
+                    };
+                    SafeRunner.run( runnable );
+                }
+            }
+        } catch( CoreException ex ) {
+            System.out.println( ex.getMessage() );
+        }
     }
 
     public void dropRawData( IProject project ) {

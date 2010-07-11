@@ -20,7 +20,7 @@ public class UsusInfoForMethod extends UsusInfoForClass {
     @Override
     protected void addFormattedProportion( List<String> result ) throws JavaModelException {
         super.addFormattedProportion( result );
-        MethodVisitor visitor = new MethodVisitor( method ).visit();
+        MethodVisitor visitor = new MethodVisitor( method ).visitAndReturn();
         result.add( UsusModelElementFormatter.format( new CyclomaticComplexityStatistic().getLabel(), visitor.getCCValue() ) );
         result.add( UsusModelElementFormatter.format( new MethodLengthStatistic().getLabel(), visitor.getMLValue() ) );
     }

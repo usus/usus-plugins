@@ -11,11 +11,11 @@ import org.projectusus.core.basis.SourceCodeLocation;
 public class ACDStatistic extends DefaultStatistic {
 
     public ACDStatistic( JavaModelPath path ) {
-        super( isisMetrics_acd, path, calculateCcdLimit( new ClassCountVisitor().visit().getClassCount() ) );
+        super( isisMetrics_acd, path, calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) );
     }
 
     public ACDStatistic() {
-        super( isisMetrics_acd, calculateCcdLimit( new ClassCountVisitor().visit().getClassCount() ) );
+        super( isisMetrics_acd, calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) );
     }
 
     @Override
@@ -24,7 +24,7 @@ public class ACDStatistic extends DefaultStatistic {
     }
 
     public double getRelativeACD() {
-        int numberOfClasses = new ClassCountVisitor().visit().getClassCount();
+        int numberOfClasses = new ClassCountVisitor().visitAndReturn().getClassCount();
         if( numberOfClasses == 0 ) {
             return 0.0;
         }
@@ -39,12 +39,6 @@ public class ACDStatistic extends DefaultStatistic {
         return (int)limit;
     }
 
-    @Override
-    public ACDStatistic visit() {
-        super.visit();
-        return this;
-    }
-
     public CodeStatistic getBasis() {
         return numberOfClasses();
     }
@@ -53,6 +47,11 @@ public class ACDStatistic extends DefaultStatistic {
     public CodeProportion getCodeProportion() {
         double levelValue = 100.0 - 100.0 * getRelativeACD();
         return new CodeProportion( getLabel(), getViolations(), getBasis(), levelValue, getHotspots(), true );
+    }
+
+    public ACDStatistic visitAndReturn() {
+        visit();
+        return this;
     }
 
 }

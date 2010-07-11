@@ -110,6 +110,6 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     private int getMetricsSum() {
-        return new CyclomaticComplexityStatistic().visit().getMetricsSum();
+        return new CyclomaticComplexityStatistic().visitAndReturn().getMetricsSum();
     }
 }

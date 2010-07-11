@@ -33,8 +33,7 @@ public class MethodVisitor extends DefaultMetricsResultVisitor {
         return mlValueCount;
     }
 
-    @Override
-    public MethodVisitor visit() {
+    public MethodVisitor visitAndReturn() {
         super.visit();
         return this;
     }

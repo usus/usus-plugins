@@ -41,21 +41,20 @@ public abstract class DefaultMetricsResultVisitor implements MetricsResultVisito
         return path;
     }
 
-    public MetricsResultVisitor visit() {
+    public void visit() {
         UsusModelProvider.getMetricsAccessor().acceptAndGuide( this );
-        return this;
     }
 
     public CodeStatistic numberOfPackages() {
-        return new PackageCountVisitor().visit().getCodeStatistic();
+        return new PackageCountVisitor().visitAndReturn().getCodeStatistic();
     }
 
     public CodeStatistic numberOfClasses() {
-        return new ClassCountVisitor().visit().getCodeStatistic();
+        return new ClassCountVisitor().visitAndReturn().getCodeStatistic();
     }
 
     public CodeStatistic numberOfMethods() {
-        return new MethodCountVisitor().visit().getCodeStatistic();
+        return new MethodCountVisitor().visitAndReturn().getCodeStatistic();
     }
 
     public String getLabel() {

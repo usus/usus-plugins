@@ -88,12 +88,12 @@ public class ReportBugAction extends Action implements IEditorActionDelegate {
     }
 
     private void fillClassMetrics( Bug bug ) {
-        bug.getBugMetrics().setNumberOfMethods( new MethodCountVisitor().visit().getMethodCount() );
+        bug.getBugMetrics().setNumberOfMethods( new MethodCountVisitor().visitAndReturn().getMethodCount() );
     }
 
     private void fillMethodMetrics( Bug bug, IMethod method ) {
         try {
-            MethodVisitor visitor = new MethodVisitor( method ).visit();
+            MethodVisitor visitor = new MethodVisitor( method ).visitAndReturn();
             bug.getBugMetrics().setCyclomaticComplexity( visitor.getCCValue() );
             bug.getBugMetrics().setMethodLength( visitor.getMLValue() );
         } catch( JavaModelException e ) {

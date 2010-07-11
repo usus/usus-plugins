@@ -36,8 +36,7 @@ public class MethodCountVisitor extends DefaultMetricsResultVisitor implements C
         return new CodeStatistic( codeProportionUnit_METHOD_label, getMethodCount() );
     }
 
-    @Override
-    public MethodCountVisitor visit() {
+    public MethodCountVisitor visitAndReturn() {
         super.visit();
         return this;
     }

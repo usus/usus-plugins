@@ -2,6 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="testSuiteSelectors" name="Test Suites For Coverage Selectors" schema="schema/testSuiteSelectors.exsd"/>
+   <extension-point id="org.projectusus.core.statistics" name="USUS Statistics" schema="schema/org.projectusus.core.statistics.exsd"/>
     <extension point="org.eclipse.core.runtime.preferences">
        <initializer class="org.projectusus.core.internal.util.UsusPreferenceInitializer"/>
     </extension>
@@ -13,5 +14,23 @@
              class="org.projectusus.core.internal.project.UsusProjectFactory">
           <adapter type="org.projectusus.core.internal.project.IUSUSProject" />
        </factory>
+    </extension>
+    <extension
+          point="org.projectusus.core.statistics">
+       <statistics
+             class="org.projectusus.core.statistics.ACDStatistic">
+       </statistics>
+       <statistics
+             class="org.projectusus.core.statistics.ClassSizeStatistic">
+       </statistics>
+       <statistics
+             class="org.projectusus.core.statistics.CyclomaticComplexityStatistic">
+       </statistics>
+       <statistics
+             class="org.projectusus.core.statistics.MethodLengthStatistic">
+       </statistics>
+       <statistics
+             class="org.projectusus.core.statistics.PackageCycleStatistic">
+       </statistics>
     </extension>
 </plugin>

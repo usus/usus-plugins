@@ -41,11 +41,11 @@ public class AverageMetrics implements IAverageMetrics {
 
     public void addProjectResults( IProject project ) {
         JavaModelPath path = new JavaModelPath( project );
-        numberOfMethods += new MethodCountVisitor( path ).visit().getMethodCount();
-        numberOfClasses += new ClassCountVisitor( path ).visit().getClassCount();
+        numberOfMethods += new MethodCountVisitor( path ).visitAndReturn().getMethodCount();
+        numberOfClasses += new ClassCountVisitor( path ).visitAndReturn().getClassCount();
 
-        totalCC += new CyclomaticComplexityStatistic( path ).visit().getMetricsSum();
-        totalML += new MethodLengthStatistic( path ).visit().getMetricsSum();
+        totalCC += new CyclomaticComplexityStatistic( path ).visitAndReturn().getMetricsSum();
+        totalML += new MethodLengthStatistic( path ).visitAndReturn().getMetricsSum();
     }
 
     public String getName() {

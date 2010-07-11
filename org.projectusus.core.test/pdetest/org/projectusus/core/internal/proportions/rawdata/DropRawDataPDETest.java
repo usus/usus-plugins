@@ -29,9 +29,9 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
     private void checkProjectRawDataIsEmpty() {
         assertEquals( 0, getNumberOfClassesInProject() );
         assertEquals( 0, getNumberOfMethodsInProject() );
-        assertEquals( 0, new ClassSizeStatistic().visit().getViolations() );
-        assertEquals( 0, new MethodLengthStatistic().visit().getViolations() );
-        assertEquals( 0, new CyclomaticComplexityStatistic().visit().getViolations() );
+        assertEquals( 0, new ClassSizeStatistic().visitAndReturn().getViolations() );
+        assertEquals( 0, new MethodLengthStatistic().visitAndReturn().getViolations() );
+        assertEquals( 0, new CyclomaticComplexityStatistic().visitAndReturn().getViolations() );
         assertEquals( 0, getNumberOfClasses() );
     }
 
@@ -39,10 +39,10 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "Reset" + "1" );
 
         assertEquals( 1, getNumberOfClassesInProject() );
-        assertEquals( 0, new ClassSizeStatistic().visit().getViolations() );
+        assertEquals( 0, new ClassSizeStatistic().visitAndReturn().getViolations() );
         assertEquals( 2, getNumberOfMethodsInProject() );
-        assertEquals( 1, new MethodLengthStatistic().visit().getViolations() );
-        assertEquals( 1, new CyclomaticComplexityStatistic().visit().getViolations() );
+        assertEquals( 1, new MethodLengthStatistic().visitAndReturn().getViolations() );
+        assertEquals( 1, new CyclomaticComplexityStatistic().visitAndReturn().getViolations() );
         assertEquals( 1, getNumberOfClasses() );
     }
 
@@ -51,18 +51,18 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "Reset" + "1" );
 
         assertEquals( 2, getNumberOfClassesInProject() );
-        assertEquals( 0, new ClassSizeStatistic().visit().getViolations() );
+        assertEquals( 0, new ClassSizeStatistic().visitAndReturn().getViolations() );
         assertEquals( 3, getNumberOfMethodsInProject() );
-        assertEquals( 1, new MethodLengthStatistic().visit().getViolations() );
-        assertEquals( 1, new CyclomaticComplexityStatistic().visit().getViolations() );
+        assertEquals( 1, new MethodLengthStatistic().visitAndReturn().getViolations() );
+        assertEquals( 1, new CyclomaticComplexityStatistic().visitAndReturn().getViolations() );
         assertEquals( 2, getNumberOfClasses() );
     }
 
     private int getNumberOfMethodsInProject() {
-        return new MethodCountVisitor( new JavaModelPath( project ) ).visit().getMethodCount();
+        return new MethodCountVisitor( new JavaModelPath( project ) ).visitAndReturn().getMethodCount();
     }
 
     private int getNumberOfClassesInProject() {
-        return new ClassCountVisitor( new JavaModelPath( project ) ).visit().getClassCount();
+        return new ClassCountVisitor( new JavaModelPath( project ) ).visitAndReturn().getClassCount();
     }
 }

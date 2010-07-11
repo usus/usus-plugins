@@ -36,9 +36,8 @@ public class ClassCountVisitor extends DefaultMetricsResultVisitor implements Co
         return new CodeStatistic( codeProportionUnit_CLASS_label, getClassCount() );
     }
 
-    @Override
-    public ClassCountVisitor visit() {
-        super.visit();
+    public ClassCountVisitor visitAndReturn() {
+        visit();
         return this;
     }
 

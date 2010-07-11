@@ -28,4 +28,9 @@ public class CyclomaticComplexityStatistic extends DefaultStatistic {
         return numberOfMethods();
     }
 
+    public CyclomaticComplexityStatistic visitAndReturn() {
+        visit();
+        return this;
+    }
+
 }
