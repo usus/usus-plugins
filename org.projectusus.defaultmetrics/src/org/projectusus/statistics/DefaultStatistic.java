@@ -1,4 +1,4 @@
-package org.projectusus.core.statistics;
+package org.projectusus.statistics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +6,10 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.Hotspot;
-import org.projectusus.core.basis.IHotspot;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.statistics.DefaultMetricsResultVisitor;
 
 public abstract class DefaultStatistic extends DefaultMetricsResultVisitor {
 
@@ -17,7 +17,7 @@ public abstract class DefaultStatistic extends DefaultMetricsResultVisitor {
     private int violationSum;
     private int violationLimit;
     private IFile currentFile;
-    private List<IHotspot> hotspots;
+    private List<Hotspot> hotspots;
 
     public DefaultStatistic( String label, int violationLimit ) {
         super( label );
@@ -33,7 +33,7 @@ public abstract class DefaultStatistic extends DefaultMetricsResultVisitor {
         violations = 0;
         violationSum = 0;
         this.violationLimit = limit;
-        hotspots = new ArrayList<IHotspot>();
+        hotspots = new ArrayList<Hotspot>();
     }
 
     protected void addViolation( SourceCodeLocation location, int count ) {
@@ -45,7 +45,7 @@ public abstract class DefaultStatistic extends DefaultMetricsResultVisitor {
     }
 
     @Override
-    public void inspectFile( IFile file, @SuppressWarnings( "unused" ) MetricsResults result ) {
+    public void inspectFile( IFile file, MetricsResults result ) {
         currentFile = file;
     }
 
@@ -57,7 +57,7 @@ public abstract class DefaultStatistic extends DefaultMetricsResultVisitor {
         return violationSum;
     }
 
-    public List<IHotspot> getHotspots() {
+    public List<Hotspot> getHotspots() {
         return hotspots;
     }
 

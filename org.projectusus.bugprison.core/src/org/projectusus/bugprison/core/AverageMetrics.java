@@ -9,9 +9,9 @@ import static org.projectusus.bugprison.core.texts.BugPrisonTexts.AverageMetrics
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.statistics.ClassCountVisitor;
-import org.projectusus.core.statistics.CyclomaticComplexityStatistic;
+import org.projectusus.core.statistics.CyclomaticComplexityCountVisitor;
 import org.projectusus.core.statistics.MethodCountVisitor;
-import org.projectusus.core.statistics.MethodLengthStatistic;
+import org.projectusus.core.statistics.MethodLengthCountVisitor;
 
 public class AverageMetrics implements IAverageMetrics {
 
@@ -44,8 +44,8 @@ public class AverageMetrics implements IAverageMetrics {
         numberOfMethods += new MethodCountVisitor( path ).visitAndReturn().getMethodCount();
         numberOfClasses += new ClassCountVisitor( path ).visitAndReturn().getClassCount();
 
-        totalCC += new CyclomaticComplexityStatistic( path ).visitAndReturn().getMetricsSum();
-        totalML += new MethodLengthStatistic( path ).visitAndReturn().getMetricsSum();
+        totalCC += new CyclomaticComplexityCountVisitor( path ).visitAndReturn().getMetricsSum();
+        totalML += new MethodLengthCountVisitor( path ).visitAndReturn().getMetricsSum();
     }
 
     public String getName() {

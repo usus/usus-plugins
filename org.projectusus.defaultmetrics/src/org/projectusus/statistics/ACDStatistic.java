@@ -1,14 +1,15 @@
-package org.projectusus.core.statistics;
-
-import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_acd;
+package org.projectusus.statistics;
 
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.statistics.ClassCountVisitor;
 
 public class ACDStatistic extends DefaultStatistic {
+
+    private static final String isisMetrics_acd = "Average component dependency";
 
     public ACDStatistic( JavaModelPath path ) {
         super( isisMetrics_acd, path, calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) );

@@ -15,13 +15,6 @@ public final class CoreTexts extends NLS {
     public static String codeProportionUnit_METHOD_label;
     public static String codeProportionUnit_PACKAGE_label;
 
-    public static String isisMetrics_acd;
-    public static String isisMetrics_cc;
-    public static String isisMetrics_cw;
-    public static String isisMetrics_kg;
-    public static String isisMetrics_ml;
-    public static String isisMetrics_pc;
-
     public static String ususModel_UpdatingFileRelations;
 
     public static String ususModelStatus_ok;

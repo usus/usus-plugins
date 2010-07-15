@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.projectusus.core.IUsusModel;
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class AnalysisDisplayModel {
@@ -40,7 +40,7 @@ public class AnalysisDisplayModel {
             double level = codeProportion.getLevel();
             int violations = codeProportion.getViolations();
             String basis = codeProportion.getBasis().toString();
-            List<IHotspot> hotspots = codeProportion.getHotspots();
+            List<Hotspot> hotspots = codeProportion.getHotspots();
             result.add( new AnalysisDisplayEntry( label, level, violations, basis, codeProportion.hasHotspots(), hotspots, trendValueFor( label ) ) );
         }
         return result;

@@ -5,10 +5,10 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.statistics.ClassCountVisitor;
-import org.projectusus.core.statistics.ClassSizeStatistic;
-import org.projectusus.core.statistics.CyclomaticComplexityStatistic;
 import org.projectusus.core.statistics.MethodCountVisitor;
-import org.projectusus.core.statistics.MethodLengthStatistic;
+import org.projectusus.statistics.ClassSizeStatistic;
+import org.projectusus.statistics.CyclomaticComplexityStatistic;
+import org.projectusus.statistics.MethodLengthStatistic;
 
 public class DropRawDataPDETest extends PDETestForMetricsComputation {
 

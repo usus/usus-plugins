@@ -15,14 +15,14 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.ide.IDE;
-import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.Hotspot;
 import org.projectusus.ui.internal.UsusUIPlugin;
 
 public class OpenHotspotInEditor extends Action {
 
-    private final IHotspot hotspot;
+    private final Hotspot hotspot;
 
-    public OpenHotspotInEditor( IHotspot hotspot ) {
+    public OpenHotspotInEditor( Hotspot hotspot ) {
         this.hotspot = hotspot;
     }
 

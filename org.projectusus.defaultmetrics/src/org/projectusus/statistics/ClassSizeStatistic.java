@@ -1,6 +1,4 @@
-package org.projectusus.core.statistics;
-
-import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_kg;
+package org.projectusus.statistics;
 
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.JavaModelPath;
@@ -10,6 +8,7 @@ import org.projectusus.core.basis.SourceCodeLocation;
 public class ClassSizeStatistic extends DefaultStatistic {
 
     private static int KG_LIMIT = 20;
+    private static String isisMetrics_kg = "Class size";
 
     public ClassSizeStatistic() {
         super( isisMetrics_kg, KG_LIMIT );

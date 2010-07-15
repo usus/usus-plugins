@@ -20,7 +20,7 @@ import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.internal.PDETestUsingWSProject;
 import org.projectusus.core.statistics.ClassCountVisitor;
 import org.projectusus.core.statistics.MethodCountVisitor;
-import org.projectusus.core.statistics.MethodLengthStatistic;
+import org.projectusus.statistics.MethodLengthStatistic;
 
 public class PDETestForMetricsComputation extends PDETestUsingWSProject {
 

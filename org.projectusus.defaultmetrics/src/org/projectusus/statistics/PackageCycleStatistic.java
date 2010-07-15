@@ -1,16 +1,16 @@
-package org.projectusus.core.statistics;
-
-import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_pc;
+package org.projectusus.statistics;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
-import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.filerelations.internal.model.PackageRelations;
 
 public class PackageCycleStatistic extends DefaultStatistic {
+
+    private static String isisMetrics_pc = "Packages in cycles";
 
     public PackageCycleStatistic() {
         super( isisMetrics_pc, 0 );
@@ -31,8 +31,8 @@ public class PackageCycleStatistic extends DefaultStatistic {
     }
 
     @Override
-    public List<IHotspot> getHotspots() {
-        return new ArrayList<IHotspot>();
+    public List<Hotspot> getHotspots() {
+        return new ArrayList<Hotspot>();
     }
 
 }

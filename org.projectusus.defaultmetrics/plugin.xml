@@ -3,8 +3,21 @@
 <plugin>
    <extension
          point="org.projectusus.core.statistics">
-      <statistics
-            class="org.projectusus.statistics.Test"></statistics>
+       <statistics
+             class="org.projectusus.statistics.ACDStatistic">
+       </statistics>
+       <statistics
+             class="org.projectusus.statistics.ClassSizeStatistic">
+       </statistics>
+       <statistics
+             class="org.projectusus.statistics.CyclomaticComplexityStatistic">
+       </statistics>
+       <statistics
+             class="org.projectusus.statistics.MethodLengthStatistic">
+       </statistics>
+       <statistics
+             class="org.projectusus.statistics.PackageCycleStatistic">
+       </statistics>
    </extension>
 
 </plugin>

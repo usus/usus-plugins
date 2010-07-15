@@ -6,7 +6,7 @@ package org.projectusus.core.basis;
 
 import org.eclipse.core.resources.IFile;
 
-public class Hotspot implements IHotspot {
+public class Hotspot {
 
     private IFile file;
     private final int metricsValue;
@@ -32,10 +32,6 @@ public class Hotspot implements IHotspot {
 
     public int getSourcePosition() {
         return location.getSourcePosition();
-    }
-
-    public void setFile( IFile file ) {
-        this.file = file;
     }
 
     public int getLineNumber() {

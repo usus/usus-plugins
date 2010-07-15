@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
-import org.projectusus.core.statistics.CyclomaticComplexityStatistic;
+import org.projectusus.statistics.CyclomaticComplexityStatistic;
 
 public class CCCollectorPDETest extends PDETestForMetricsComputation {
 

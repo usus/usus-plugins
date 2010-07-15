@@ -12,7 +12,6 @@ import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.basis.YellowCountCache;
 import org.projectusus.core.basis.YellowCountResult;
-import org.projectusus.core.filerelations.internal.metrics.ACDCalculator;
 import org.projectusus.core.filerelations.internal.model.CrossPackageClassRelations;
 import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.BoundType;
@@ -93,10 +92,6 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
 
     public Set<GraphNode> getAllCrossPackageClasses() {
         return CrossPackageClassRepresenter.transformToRepresenterSet( ClassDescriptor.getAll(), new CrossPackageClassRelations() );
-    }
-
-    public double getRelativeACD() {
-        return ACDCalculator.getRelativeACD();
     }
 
     public YellowCountResult getWarnings() {

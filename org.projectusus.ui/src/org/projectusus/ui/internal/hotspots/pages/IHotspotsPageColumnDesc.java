@@ -4,11 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.hotspots.pages;
 
-import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.Hotspot;
 import org.projectusus.ui.viewer.IColumnDesc;
 
-public interface IHotspotsPageColumnDesc extends IColumnDesc<IHotspot> {
+public interface IHotspotsPageColumnDesc extends IColumnDesc<Hotspot> {
 
-    String getLabel( IHotspot element );
+    String getLabel( Hotspot element );
 
 }

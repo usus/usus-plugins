@@ -6,11 +6,9 @@ package org.projectusus.core.basis;
 
 import java.util.Comparator;
 
+public class ByHotnessComparator implements Comparator<Hotspot> {
 
-
-public class ByHotnessComparator implements Comparator<IHotspot> {
-
-    public int compare( IHotspot left, IHotspot right ) {
+    public int compare( Hotspot left, Hotspot right ) {
         return new Integer( right.getMetricsValue() ).compareTo( new Integer( left.getMetricsValue() ) );
     }
 }

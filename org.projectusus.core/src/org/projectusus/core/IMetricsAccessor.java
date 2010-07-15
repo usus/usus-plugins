@@ -14,7 +14,4 @@ public interface IMetricsAccessor {
     Set<GraphNode> getAllCrossPackageClasses();
 
     void acceptAndGuide( MetricsResultVisitor visitor );
-
-    double getRelativeACD(); // TODO wo soll die sein?
-
 }

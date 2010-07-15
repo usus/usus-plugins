@@ -12,7 +12,7 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.part.Page;
-import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.Hotspot;
 import org.projectusus.ui.internal.hotspots.actions.OpenHotspotInEditor;
 import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayEntry;
 import org.projectusus.ui.internal.selection.ExtractHotspot;
@@ -20,7 +20,7 @@ import org.projectusus.ui.viewer.UsusTreeViewer;
 
 public class HotspotsPage extends Page implements IHotspotsPage {
 
-    protected UsusTreeViewer<IHotspot> viewer;
+    protected UsusTreeViewer<Hotspot> viewer;
     private final IHotspotsPageColumnDesc[] columnDescs;
     private final AnalysisDisplayEntry entry;
 
@@ -39,7 +39,7 @@ public class HotspotsPage extends Page implements IHotspotsPage {
     }
 
     private void createViewer( Composite parent ) {
-        viewer = new UsusTreeViewer<IHotspot>( parent, columnDescs );
+        viewer = new UsusTreeViewer<Hotspot>( parent, columnDescs );
         viewer.setLabelProvider( new HotspotsLP( asList( columnDescs ) ) );
         viewer.setContentProvider( createContentProvider() );
     }
@@ -47,7 +47,7 @@ public class HotspotsPage extends Page implements IHotspotsPage {
     protected void initOpenListener() {
         viewer.addOpenListener( new IOpenListener() {
             public void open( OpenEvent event ) {
-                IHotspot hotspot = new ExtractHotspot( event.getSelection() ).compute();
+                Hotspot hotspot = new ExtractHotspot( event.getSelection() ).compute();
                 if( hotspot != null ) {
                     new OpenHotspotInEditor( hotspot ).run();
                 }

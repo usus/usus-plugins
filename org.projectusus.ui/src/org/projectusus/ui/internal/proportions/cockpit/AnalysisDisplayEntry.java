@@ -7,7 +7,7 @@ import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
-import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.Hotspot;
 
 public class AnalysisDisplayEntry implements Cloneable {
 
@@ -16,10 +16,10 @@ public class AnalysisDisplayEntry implements Cloneable {
     private final int violations;
     private final String basis;
     private final Double levelOfSnapshot;
-    private final List<IHotspot> hotspots;
+    private final List<Hotspot> hotspots;
     private final boolean hasHotspots;
 
-    public AnalysisDisplayEntry( String label, double level, int violations, String basis, boolean hasHotspots, List<IHotspot> hotspots, Double levelOfSnapshot ) {
+    public AnalysisDisplayEntry( String label, double level, int violations, String basis, boolean hasHotspots, List<Hotspot> hotspots, Double levelOfSnapshot ) {
         super();
         this.label = label;
         this.level = level;
@@ -54,7 +54,7 @@ public class AnalysisDisplayEntry implements Cloneable {
         return getLabel().equals( otherLabel );
     }
 
-    public List<IHotspot> getHotspots() {
+    public List<Hotspot> getHotspots() {
         return hotspots;
     }
 

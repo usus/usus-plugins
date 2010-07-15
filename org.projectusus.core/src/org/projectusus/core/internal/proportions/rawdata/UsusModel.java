@@ -55,26 +55,19 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
         needsFullRecompute = !computationSuccessful;
         metrics.cleanupRelations( monitor );
         runStatisticsExtensions();
-        // cache.refresh( new MethodLengthStatistic().visit().getCodeProportion() );
-        // cache.refresh( new CyclomaticComplexityStatistic().visit().getCodeProportion() );
-        // cache.refresh( new ClassSizeStatistic().visit().getCodeProportion() );
-        // cache.refresh( new PackageCycleStatistic().visit().getCodeProportion() );
-        // cache.refresh( new ACDStatistic().visit().getCodeProportion() );
         notifyListeners();
     }
 
     private void runStatisticsExtensions() {
         String STATISTICS_ID = "org.projectusus.core.statistics";
-        IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor( STATISTICS_ID );
+        IConfigurationElement[] statisticsElements = Platform.getExtensionRegistry().getConfigurationElementsFor( STATISTICS_ID );
         try {
-            for( IConfigurationElement e : config ) {
-                System.out.println( "Evaluating extension" );
-                final Object o = e.createExecutableExtension( "class" );
-                if( o instanceof MetricsResultVisitor ) {
-                    final MetricsResultVisitor visitor = (MetricsResultVisitor)o;
+            for( IConfigurationElement statisticElement : statisticsElements ) {
+                final Object extension = statisticElement.createExecutableExtension( "class" );
+                if( extension instanceof MetricsResultVisitor ) {
+                    final MetricsResultVisitor visitor = (MetricsResultVisitor)extension;
                     ISafeRunnable runnable = new ISafeRunnable() {
                         public void handleException( Throwable exception ) {
-                            System.out.println( "Exception in client" );
                         }
 
                         public void run() throws Exception {

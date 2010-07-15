@@ -15,22 +15,4 @@
           <adapter type="org.projectusus.core.internal.project.IUSUSProject" />
        </factory>
     </extension>
-    <extension
-          point="org.projectusus.core.statistics">
-       <statistics
-             class="org.projectusus.core.statistics.ACDStatistic">
-       </statistics>
-       <statistics
-             class="org.projectusus.core.statistics.ClassSizeStatistic">
-       </statistics>
-       <statistics
-             class="org.projectusus.core.statistics.CyclomaticComplexityStatistic">
-       </statistics>
-       <statistics
-             class="org.projectusus.core.statistics.MethodLengthStatistic">
-       </statistics>
-       <statistics
-             class="org.projectusus.core.statistics.PackageCycleStatistic">
-       </statistics>
-    </extension>
 </plugin>

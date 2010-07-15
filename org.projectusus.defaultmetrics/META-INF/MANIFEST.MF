@@ -2,11 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Defaultmetrics
 Bundle-SymbolicName: org.projectusus.defaultmetrics;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.4.5
 Bundle-Activator: org.projectusus.defaultmetrics.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.projectusus.core,
  org.eclipse.jdt.core;bundle-version="3.5.2",
- org.eclipse.debug.core;bundle-version="3.5.1"
+ org.eclipse.debug.core;bundle-version="3.5.1",
+ org.projectusus.externals.test;bundle-version="0.0.1";resolution:=optional
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.projectusus.statistics

@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
-import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
@@ -16,7 +16,7 @@ public class MethodVisitor extends DefaultMetricsResultVisitor {
     private int mlValueCount = 0;
 
     public MethodVisitor( IMethod method ) throws JavaModelException {
-        super( "Aspects of a single method", new JavaModelPath( method ) );
+        super( "Aspects of a single method", new JavaModelPath( method ) ); //$NON-NLS-1$
     }
 
     @Override
@@ -48,7 +48,7 @@ public class MethodVisitor extends DefaultMetricsResultVisitor {
         return null;
     }
 
-    public List<IHotspot> getHotspots() {
+    public List<Hotspot> getHotspots() {
         // TODO Auto-generated method stub
         return null;
     }

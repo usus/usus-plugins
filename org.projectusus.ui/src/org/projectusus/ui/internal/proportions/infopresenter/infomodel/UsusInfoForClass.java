@@ -5,10 +5,8 @@ import java.util.List;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.projectusus.core.basis.JavaModelPath;
-import org.projectusus.core.statistics.ACDStatistic;
-import org.projectusus.core.statistics.ClassSizeStatistic;
+import org.projectusus.core.statistics.CCDCountVisitor;
 import org.projectusus.core.statistics.MethodCountVisitor;
-import org.projectusus.core.statistics.MetricsResultVisitor;
 
 public class UsusInfoForClass extends UsusInfoForFile {
 
@@ -22,9 +20,8 @@ public class UsusInfoForClass extends UsusInfoForFile {
     @Override
     protected void addFormattedProportion( List<String> result ) throws JavaModelException {
         super.addFormattedProportion( result );
-        MetricsResultVisitor statistic = new ClassSizeStatistic( path ).visitAndReturn();
-        result.add( UsusModelElementFormatter.format( statistic.getLabel(), new MethodCountVisitor( path ).visitAndReturn().getMethodCount() ) );
-        result.add( UsusModelElementFormatter.format( "Cumulative Component Dependency (of class)", new ACDStatistic( path ).visitAndReturn().getMetricsSum() ) );
+        result.add( UsusModelElementFormatter.format( "Class size", new MethodCountVisitor( path ).visitAndReturn().getMethodCount() ) );
+        result.add( UsusModelElementFormatter.format( "Cumulative Component Dependency (of class)", new CCDCountVisitor( path ).visitAndReturn().getMetricsSum() ) );
     }
 
     @Override

@@ -6,7 +6,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Test;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
-import org.projectusus.core.statistics.MethodLengthStatistic;
+import org.projectusus.statistics.MethodLengthStatistic;
 
 public class MLCollectorPDETest extends PDETestForMetricsComputation {
 

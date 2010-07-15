@@ -1,6 +1,4 @@
-package org.projectusus.core.statistics;
-
-import static org.projectusus.core.internal.util.CoreTexts.isisMetrics_cc;
+package org.projectusus.statistics;
 
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.JavaModelPath;
@@ -10,6 +8,7 @@ import org.projectusus.core.basis.SourceCodeLocation;
 public class CyclomaticComplexityStatistic extends DefaultStatistic {
 
     private static int CC_LIMIT = 5;
+    private static String isisMetrics_cc = "Cyclomatic complexity";
 
     public CyclomaticComplexityStatistic() {
         super( isisMetrics_cc, CC_LIMIT );

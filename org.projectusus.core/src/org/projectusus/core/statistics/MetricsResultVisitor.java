@@ -5,7 +5,7 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
-import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
@@ -26,7 +26,7 @@ public interface MetricsResultVisitor {
 
     String getLabel();
 
-    List<IHotspot> getHotspots();
+    List<Hotspot> getHotspots();
 
     CodeProportion getCodeProportion();
 

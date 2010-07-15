@@ -9,7 +9,7 @@ import java.util.List;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.projectusus.core.basis.IHotspot;
+import org.projectusus.core.basis.Hotspot;
 
 public class HotspotsLP extends LabelProvider implements ITableLabelProvider {
 
@@ -20,8 +20,8 @@ public class HotspotsLP extends LabelProvider implements ITableLabelProvider {
     }
 
     public String getColumnText( Object element, int columnIndex ) {
-        if( element instanceof IHotspot ) {
-            return columnDescs.get( columnIndex ).getLabel( (IHotspot)element );
+        if( element instanceof Hotspot ) {
+            return columnDescs.get( columnIndex ).getLabel( (Hotspot)element );
         }
         return element.toString();
     }
