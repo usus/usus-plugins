@@ -22,13 +22,7 @@ public class Tasks {
         // TODO Packagenamen ¸überall mit Eclipse Appearance Regeln darstellen (Package View, Hotspots, ...).
     }
 
-    void changesForCockpit() {
-        // TODO Cockpit: Ein Trend-Pfeil pro Metrik.
-        // Werte seit letztem CheckIn / CheckOut? Oder seit dem Start? Oder mit Reset-Button?
-        // Dazu Level sehr exakt bestimmen.
-    }
-
-    void makeCalculationsPluggable() {
+    void wip_makeCalculationsPluggable() {
         // TODO Berechnungsalgorithmen fü¸r die Violations pluggable machen. Dazu Implementierung eines
         // Visitor-Collectors, der den RawData Baum besucht und sich aus allen Knoten das Gewü¸nschte
         // zusammensucht: Hotspots, Violations, Metrikwerte etc.
@@ -50,6 +44,18 @@ public class Tasks {
     void createExplanatoryDocumentation() {
         // TODO Doku: Warum soll ich meinen Code ‰ändern? Wo kann ich weiterlesen?
         // - Position Paper: Usus vs. Checkstyle, PMD, ...
+    }
+
+    void bugACDAnalysis() {
+        // TODO static fields are not regarded. fix it.
+    }
+
+    void createPackageView() {
+        // TODO PackageView: Packages im Package Graph ausw‰ählen, die enthaltenen Klassen im Class View darstellen
+    }
+
+    void createPrefsPaneForExtensions() {
+        // TODO
     }
 
     // ///////// Tasks for versions after USUS 1.0
@@ -83,10 +89,6 @@ public class Tasks {
 
     void pimpDependencyGraphForRemoving() {
         // TODO DependencyGraph: Man kann ausgew‰ählte Knoten aus den Graphen entfernen
-    }
-
-    void createPackageView() {
-        // TODO PackageView: Packages ausw‰ählen, die enthaltenen Klassen im Class View darstellen
     }
 
     void createTrends() {

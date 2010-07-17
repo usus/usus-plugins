@@ -2,13 +2,9 @@ package org.projectusus.core.statistics;
 
 import org.eclipse.core.resources.IFile;
 import org.projectusus.core.UsusModelProvider;
-import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.statistics.visitors.ClassCountVisitor;
-import org.projectusus.core.statistics.visitors.MethodCountVisitor;
-import org.projectusus.core.statistics.visitors.PackageCountVisitor;
 
 public abstract class DefaultMetricsResultVisitor implements IMetricsResultVisitor {
 
@@ -46,16 +42,16 @@ public abstract class DefaultMetricsResultVisitor implements IMetricsResultVisit
         UsusModelProvider.getMetricsAccessor().acceptAndGuide( this );
     }
 
-    public CodeStatistic numberOfPackages() {
-        return new PackageCountVisitor().visitAndReturn().getCodeStatistic();
-    }
-
-    public CodeStatistic numberOfClasses() {
-        return new ClassCountVisitor().visitAndReturn().getCodeStatistic();
-    }
-
-    public CodeStatistic numberOfMethods() {
-        return new MethodCountVisitor().visitAndReturn().getCodeStatistic();
-    }
+    // public CodeStatistic numberOfPackages() {
+    // return new PackageCountVisitor().visitAndReturn().getCodeStatistic();
+    // }
+    //
+    // public CodeStatistic numberOfClasses() {
+    // return new ClassCountVisitor().visitAndReturn().getCodeStatistic();
+    // }
+    //
+    // public CodeStatistic numberOfMethods() {
+    // return new MethodCountVisitor().visitAndReturn().getCodeStatistic();
+    // }
 
 }

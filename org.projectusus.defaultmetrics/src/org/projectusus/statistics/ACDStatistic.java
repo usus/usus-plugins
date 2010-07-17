@@ -1,7 +1,8 @@
 package org.projectusus.statistics;
 
+import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_CLASS_label;
+
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
 import org.projectusus.core.statistics.DefaultCockpitExtension;
@@ -12,7 +13,7 @@ public class ACDStatistic extends DefaultCockpitExtension {
     private static final String isisMetrics_acd = "Average component dependency";
 
     public ACDStatistic() {
-        super( isisMetrics_acd, calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) );
+        super( isisMetrics_acd, codeProportionUnit_CLASS_label, calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) );
     }
 
     @Override
@@ -29,26 +30,15 @@ public class ACDStatistic extends DefaultCockpitExtension {
     }
 
     public static int calculateCcdLimit( int classCount ) {
-        // int classCount = new ClassCountVisitor().getClassCount();
         double log_5_classCount = Math.log( classCount ) / Math.log( 5 );
         double factor = 1.5 / Math.pow( 2, log_5_classCount );
         double limit = factor * classCount;
         return (int)limit;
     }
 
-    public CodeStatistic getBasis() {
-        return numberOfClasses();
-    }
-
     @Override
     public CodeProportion getCodeProportion() {
         double levelValue = 100.0 - 100.0 * getRelativeACD();
-        return new CodeProportion( getLabel(), getViolations(), getBasis(), levelValue, getHotspots() );
+        return new CodeProportion( getLabel(), getViolations(), getBasisStatistic(), levelValue, getHotspots() );
     }
-
-    public ACDStatistic visitAndReturn() {
-        visit();
-        return this;
-    }
-
 }

@@ -59,11 +59,11 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
     }
 
     private void runStatisticsExtensions() {
-        String STATISTICS_ID = "org.projectusus.core.statistics";
+        String STATISTICS_ID = "org.projectusus.core.statistics"; //$NON-NLS-1$
         IConfigurationElement[] statisticsElements = Platform.getExtensionRegistry().getConfigurationElementsFor( STATISTICS_ID );
         try {
             for( IConfigurationElement statisticElement : statisticsElements ) {
-                final Object extension = statisticElement.createExecutableExtension( "class" );
+                final Object extension = statisticElement.createExecutableExtension( "class" ); //$NON-NLS-1$
                 if( extension instanceof ICockpitExtension ) {
                     final ICockpitExtension cockpitExtension = (ICockpitExtension)extension;
                     ISafeRunnable runnable = new ISafeRunnable() {

@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.adapter.CodeProportionsComputerJob;
 import org.projectusus.core.IUsusModelListener;
-import org.projectusus.core.internal.UsusCorePlugin;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class CodeProportionsPDETest {

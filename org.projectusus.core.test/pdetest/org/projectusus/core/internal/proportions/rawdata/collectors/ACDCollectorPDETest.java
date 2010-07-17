@@ -495,9 +495,9 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     // twoFilesOneClassIsRemovedFromFile
 
     private double getACD() {
-        // return ACDCalculator.getRelativeACD();
-
-        return new ACDStatistic().visitAndReturn().getRelativeACD();
+        ACDStatistic statistic = new ACDStatistic();
+        statistic.visit();
+        return statistic.getRelativeACD();
     }
 
     protected IFile createFile( String filenumber ) throws Exception {

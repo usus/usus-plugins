@@ -12,27 +12,32 @@ import org.projectusus.core.basis.SourceCodeLocation;
 
 public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisitor implements ICockpitExtension {
 
+    private int basis;
     private int violations;
     private int violationSum;
     private int violationLimit;
     private IFile currentFile;
     private List<Hotspot> hotspots;
     private String label;
+    private String unit;
 
-    public DefaultCockpitExtension( String label, int violationLimit ) {
+    public DefaultCockpitExtension( String label, String unit, int violationLimit ) {
         super();
         this.label = label;
+        this.unit = unit;
         this.violationLimit = violationLimit;
         reset();
     }
 
     private void reset() {
+        basis = 0;
         violations = 0;
         violationSum = 0;
         hotspots = new ArrayList<Hotspot>();
     }
 
     protected void addViolation( SourceCodeLocation location, int count ) {
+        basis++;
         violationSum += count;
         if( count > violationLimit ) {
             violations++;
@@ -41,7 +46,7 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
     }
 
     @Override
-    public void inspectFile( IFile file, MetricsResults result ) {
+    public void inspectFile( IFile file, @SuppressWarnings( "unused" ) MetricsResults result ) {
         currentFile = file;
     }
 
@@ -58,12 +63,14 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
     }
 
     public CodeProportion getCodeProportion() {
-        return new CodeProportion( getLabel(), getViolations(), getBasis(), getHotspots() );
+        return new CodeProportion( getLabel(), getViolations(), getBasisStatistic(), getHotspots() );
     }
 
     public String getLabel() {
         return label;
     }
 
-    public abstract CodeStatistic getBasis();
+    public CodeStatistic getBasisStatistic() {
+        return new CodeStatistic( unit, basis );
+    }
 }

@@ -1,9 +1,5 @@
 package org.projectusus.core.statistics.visitors;
 
-import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_CLASS_label;
-
-import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
@@ -18,7 +14,7 @@ public class ClassCountVisitor extends DefaultMetricsResultVisitor {
     }
 
     public ClassCountVisitor() {
-        super( );
+        super();
     }
 
     @Override
@@ -30,17 +26,8 @@ public class ClassCountVisitor extends DefaultMetricsResultVisitor {
         return classCount;
     }
 
-    public CodeStatistic getCodeStatistic() {
-        return new CodeStatistic( codeProportionUnit_CLASS_label, getClassCount() );
-    }
-
     public ClassCountVisitor visitAndReturn() {
         visit();
         return this;
-    }
-
-    public CodeProportion getCodeProportion() {
-        // TODO Auto-generated method stub
-        return null;
     }
 }
