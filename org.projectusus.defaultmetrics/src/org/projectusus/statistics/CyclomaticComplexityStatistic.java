@@ -1,21 +1,17 @@
 package org.projectusus.statistics;
 
 import org.projectusus.core.basis.CodeStatistic;
-import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.statistics.DefaultCockpitExtension;
 
-public class CyclomaticComplexityStatistic extends DefaultStatistic {
+public class CyclomaticComplexityStatistic extends DefaultCockpitExtension {
 
     private static int CC_LIMIT = 5;
     private static String isisMetrics_cc = "Cyclomatic complexity";
 
     public CyclomaticComplexityStatistic() {
         super( isisMetrics_cc, CC_LIMIT );
-    }
-
-    public CyclomaticComplexityStatistic( JavaModelPath path ) {
-        super( isisMetrics_cc, path, CC_LIMIT );
     }
 
     @Override
@@ -26,10 +22,4 @@ public class CyclomaticComplexityStatistic extends DefaultStatistic {
     public CodeStatistic getBasis() {
         return numberOfMethods();
     }
-
-    public CyclomaticComplexityStatistic visitAndReturn() {
-        visit();
-        return this;
-    }
-
 }

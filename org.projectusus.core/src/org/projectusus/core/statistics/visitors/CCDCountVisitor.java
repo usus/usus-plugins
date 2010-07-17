@@ -1,22 +1,20 @@
-package org.projectusus.core.statistics;
-
-import java.util.List;
+package org.projectusus.core.statistics.visitors;
 
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
-import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.statistics.DefaultMetricsResultVisitor;
 
-public class CCDCountVisitor extends DefaultMetricsResultVisitor implements CodeStatisticCalculator {
+public class CCDCountVisitor extends DefaultMetricsResultVisitor {
 
     private static final String isisMetrics_acd = "Average component dependency";
 
     private int violationSum = 0;
 
     public CCDCountVisitor( JavaModelPath path ) {
-        super( isisMetrics_acd, path );
+        super( path );
     }
 
     @Override
@@ -53,24 +51,11 @@ public class CCDCountVisitor extends DefaultMetricsResultVisitor implements Code
         violationSum += count;
     }
 
-    public int getViolations() {
-        return 0;
-    }
-
     public int getMetricsSum() {
         return violationSum;
-    }
-
-    public List<Hotspot> getHotspots() {
-        return null;
     }
 
     public CodeProportion getCodeProportion() {
         return null;
     }
-
-    public CodeStatistic getCodeStatistic() {
-        return null;
-    }
-
 }

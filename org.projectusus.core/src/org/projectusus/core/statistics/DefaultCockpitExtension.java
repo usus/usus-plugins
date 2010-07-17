@@ -1,38 +1,34 @@
-package org.projectusus.statistics;
+package org.projectusus.core.statistics;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.Hotspot;
-import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.statistics.DefaultMetricsResultVisitor;
 
-public abstract class DefaultStatistic extends DefaultMetricsResultVisitor {
+public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisitor implements ICockpitExtension {
 
     private int violations;
     private int violationSum;
     private int violationLimit;
     private IFile currentFile;
     private List<Hotspot> hotspots;
+    private String label;
 
-    public DefaultStatistic( String label, int violationLimit ) {
-        super( label );
-        init( violationLimit );
+    public DefaultCockpitExtension( String label, int violationLimit ) {
+        super();
+        this.label = label;
+        this.violationLimit = violationLimit;
+        reset();
     }
 
-    public DefaultStatistic( String label, JavaModelPath path, int violationLimit ) {
-        super( label, path );
-        init( violationLimit );
-    }
-
-    private void init( int limit ) {
+    private void reset() {
         violations = 0;
         violationSum = 0;
-        this.violationLimit = limit;
         hotspots = new ArrayList<Hotspot>();
     }
 
@@ -62,6 +58,12 @@ public abstract class DefaultStatistic extends DefaultMetricsResultVisitor {
     }
 
     public CodeProportion getCodeProportion() {
-        return new CodeProportion( getLabel(), getViolations(), getBasis(), getHotspots(), true );
+        return new CodeProportion( getLabel(), getViolations(), getBasis(), getHotspots() );
     }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public abstract CodeStatistic getBasis();
 }

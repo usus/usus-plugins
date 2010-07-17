@@ -7,7 +7,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
-import org.projectusus.core.statistics.MetricsResultVisitor;
+import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 class ProjectRawData extends RawData<IFile, FileRawData> {
 
@@ -50,7 +50,7 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
         removeAll();
     }
 
-    public void acceptAndGuide( MetricsResultVisitor visitor ) {
+    public void acceptAndGuide( IMetricsResultVisitor visitor ) {
         visitor.inspectProject( data );
         JavaModelPath path = visitor.getPath();
         if( path.isRestrictedToFile() ) {

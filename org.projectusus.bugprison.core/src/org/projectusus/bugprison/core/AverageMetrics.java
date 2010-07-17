@@ -8,10 +8,10 @@ import static org.projectusus.bugprison.core.texts.BugPrisonTexts.AverageMetrics
 
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.basis.JavaModelPath;
-import org.projectusus.core.statistics.ClassCountVisitor;
-import org.projectusus.core.statistics.CyclomaticComplexityCountVisitor;
-import org.projectusus.core.statistics.MethodCountVisitor;
-import org.projectusus.core.statistics.MethodLengthCountVisitor;
+import org.projectusus.core.statistics.visitors.ClassCountVisitor;
+import org.projectusus.core.statistics.visitors.CyclomaticComplexityCountVisitor;
+import org.projectusus.core.statistics.visitors.MethodCountVisitor;
+import org.projectusus.core.statistics.visitors.MethodLengthCountVisitor;
 
 public class AverageMetrics implements IAverageMetrics {
 

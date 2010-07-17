@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
-import org.projectusus.core.statistics.CyclomaticComplexityCountVisitor;
-import org.projectusus.core.statistics.MethodLengthCountVisitor;
-import org.projectusus.core.statistics.MethodVisitor;
+import org.projectusus.core.statistics.visitors.MethodVisitor;
 
 public class UsusInfoForMethod extends UsusInfoForClass {
 
@@ -21,8 +19,8 @@ public class UsusInfoForMethod extends UsusInfoForClass {
     protected void addFormattedProportion( List<String> result ) throws JavaModelException {
         super.addFormattedProportion( result );
         MethodVisitor visitor = new MethodVisitor( method ).visitAndReturn();
-        result.add( UsusModelElementFormatter.format( new CyclomaticComplexityCountVisitor().getLabel(), visitor.getCCValue() ) );
-        result.add( UsusModelElementFormatter.format( new MethodLengthCountVisitor().getLabel(), visitor.getMLValue() ) );
+        result.add( UsusModelElementFormatter.format( "Cyclomatic complexity", visitor.getCCValue() ) );
+        result.add( UsusModelElementFormatter.format( "Method length", visitor.getMLValue() ) );
     }
 
     @Override

@@ -6,7 +6,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.basis.JavaModelPath;
-import org.projectusus.core.statistics.MetricsResultVisitor;
+import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
@@ -35,7 +35,7 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         }
     }
 
-    public void acceptAndGuide( MetricsResultVisitor visitor ) {
+    public void acceptAndGuide( IMetricsResultVisitor visitor ) {
         JavaModelPath path = visitor.getPath();
         if( path.isRestrictedToProject() ) {
             ProjectRawData projectRawData = this.getProjectRawData( path.getProject() );

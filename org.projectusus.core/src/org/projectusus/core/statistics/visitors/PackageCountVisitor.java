@@ -1,4 +1,4 @@
-package org.projectusus.core.statistics;
+package org.projectusus.core.statistics.visitors;
 
 import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_PACKAGE_label;
 
@@ -9,15 +9,17 @@ import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.statistics.CodeStatisticCalculator;
+import org.projectusus.core.statistics.DefaultMetricsResultVisitor;
 
 public class PackageCountVisitor extends DefaultMetricsResultVisitor implements CodeStatisticCalculator {
 
     public PackageCountVisitor( JavaModelPath path ) {
-        super( codeProportionUnit_PACKAGE_label, path );
+        super( path );
     }
 
     public PackageCountVisitor() {
-        super( codeProportionUnit_PACKAGE_label );
+        super( );
     }
 
     public int getPackageCount() {

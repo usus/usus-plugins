@@ -26,7 +26,7 @@ import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
-import org.projectusus.core.statistics.MetricsResultVisitor;
+import org.projectusus.core.statistics.ICockpitExtension;
 
 public class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
@@ -64,15 +64,15 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
         try {
             for( IConfigurationElement statisticElement : statisticsElements ) {
                 final Object extension = statisticElement.createExecutableExtension( "class" );
-                if( extension instanceof MetricsResultVisitor ) {
-                    final MetricsResultVisitor visitor = (MetricsResultVisitor)extension;
+                if( extension instanceof ICockpitExtension ) {
+                    final ICockpitExtension cockpitExtension = (ICockpitExtension)extension;
                     ISafeRunnable runnable = new ISafeRunnable() {
                         public void handleException( Throwable exception ) {
                         }
 
                         public void run() throws Exception {
-                            visitor.visit();
-                            cache.refresh( visitor.getCodeProportion() );
+                            cockpitExtension.visit();
+                            cache.refresh( cockpitExtension.getCodeProportion() );
                         }
                     };
                     SafeRunner.run( runnable );

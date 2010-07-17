@@ -18,7 +18,7 @@ import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
-import org.projectusus.core.statistics.MetricsResultVisitor;
+import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 public class FileRawData extends RawData<Integer, ClassRawData> {
 
@@ -121,7 +121,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
         removeAll();
     }
 
-    public void acceptAndGuide( MetricsResultVisitor visitor ) {
+    public void acceptAndGuide( IMetricsResultVisitor visitor ) {
         visitor.inspectFile( file, data );
         JavaModelPath path = visitor.getPath();
         if( path.isRestrictedToType() ) {

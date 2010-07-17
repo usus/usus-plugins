@@ -1,14 +1,11 @@
 package org.projectusus.statistics;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
-import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.filerelations.internal.model.PackageRelations;
+import org.projectusus.core.statistics.DefaultCockpitExtension;
 
-public class PackageCycleStatistic extends DefaultStatistic {
+public class PackageCycleStatistic extends DefaultCockpitExtension {
 
     private static String isisMetrics_pc = "Packages in cycles";
 
@@ -18,7 +15,7 @@ public class PackageCycleStatistic extends DefaultStatistic {
 
     @Override
     public CodeProportion getCodeProportion() {
-        return new CodeProportion( getLabel(), getViolations(), getBasis(), getHotspots(), false );
+        return new CodeProportion( getLabel(), getViolations(), getBasis() );
     }
 
     public CodeStatistic getBasis() {
@@ -29,10 +26,4 @@ public class PackageCycleStatistic extends DefaultStatistic {
     public int getViolations() {
         return new PackageRelations().getPackageCycles().numberOfPackagesInAnyCycles();
     }
-
-    @Override
-    public List<Hotspot> getHotspots() {
-        return new ArrayList<Hotspot>();
-    }
-
 }

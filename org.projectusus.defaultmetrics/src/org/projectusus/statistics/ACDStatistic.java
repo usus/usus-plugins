@@ -2,18 +2,14 @@ package org.projectusus.statistics;
 
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
-import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.statistics.ClassCountVisitor;
+import org.projectusus.core.statistics.DefaultCockpitExtension;
+import org.projectusus.core.statistics.visitors.ClassCountVisitor;
 
-public class ACDStatistic extends DefaultStatistic {
+public class ACDStatistic extends DefaultCockpitExtension {
 
     private static final String isisMetrics_acd = "Average component dependency";
-
-    public ACDStatistic( JavaModelPath path ) {
-        super( isisMetrics_acd, path, calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) );
-    }
 
     public ACDStatistic() {
         super( isisMetrics_acd, calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) );
@@ -47,7 +43,7 @@ public class ACDStatistic extends DefaultStatistic {
     @Override
     public CodeProportion getCodeProportion() {
         double levelValue = 100.0 - 100.0 * getRelativeACD();
-        return new CodeProportion( getLabel(), getViolations(), getBasis(), levelValue, getHotspots(), true );
+        return new CodeProportion( getLabel(), getViolations(), getBasis(), levelValue, getHotspots() );
     }
 
     public ACDStatistic visitAndReturn() {

@@ -19,7 +19,9 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     private int getMethodLengths() {
-        return new MethodLengthStatistic().visitAndReturn().getMetricsSum();
+        MethodLengthStatistic r = new MethodLengthStatistic();
+        r.visit();
+        return r.getMetricsSum();
     }
 
     @Test

@@ -7,7 +7,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 import org.projectusus.core.basis.IRawData;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.statistics.MetricsResultVisitor;
+import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 public class MethodRawData implements IRawData {
 
@@ -27,7 +27,7 @@ public class MethodRawData implements IRawData {
         data.add( MetricsResults.ML, new Integer( value ) );
     }
 
-    public void acceptAndGuide( MetricsResultVisitor visitor ) {
+    public void acceptAndGuide( IMetricsResultVisitor visitor ) {
         visitor.inspectMethod( location, data );
     }
 }

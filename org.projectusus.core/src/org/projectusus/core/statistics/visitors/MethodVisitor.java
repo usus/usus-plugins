@@ -1,42 +1,40 @@
-package org.projectusus.core.statistics;
-
-import static org.projectusus.core.internal.util.CoreTexts.codeProportionUnit_METHOD_label;
+package org.projectusus.core.statistics.visitors;
 
 import java.util.List;
 
+import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.JavaModelException;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.statistics.DefaultMetricsResultVisitor;
 
-public class MethodCountVisitor extends DefaultMetricsResultVisitor implements CodeStatisticCalculator {
+public class MethodVisitor extends DefaultMetricsResultVisitor {
+    private int ccValueCount = 0;
+    private int mlValueCount = 0;
 
-    private int methodCount = 0;
-
-    public MethodCountVisitor() {
-        super( codeProportionUnit_METHOD_label );
-    }
-
-    public MethodCountVisitor( JavaModelPath path ) {
-        super( codeProportionUnit_METHOD_label, path );
+    public MethodVisitor( IMethod method ) throws JavaModelException {
+        super( new JavaModelPath( method ) ); //$NON-NLS-1$
     }
 
     @Override
-    public void inspectMethod( @SuppressWarnings( "unused" ) SourceCodeLocation location, @SuppressWarnings( "unused" ) MetricsResults results ) {
-        methodCount++;
+    public void inspectMethod( @SuppressWarnings( "unused" ) SourceCodeLocation location, MetricsResults result ) {
+        ccValueCount = ccValueCount + result.getIntValue( MetricsResults.CC, 1 );
+        mlValueCount = mlValueCount + result.getIntValue( MetricsResults.ML, 1 );
     }
 
-    public int getMethodCount() {
-        return methodCount;
+    public int getCCValue() {
+        return ccValueCount;
     }
 
-    public CodeStatistic getCodeStatistic() {
-        return new CodeStatistic( codeProportionUnit_METHOD_label, getMethodCount() );
+    public int getMLValue() {
+        return mlValueCount;
     }
 
-    public MethodCountVisitor visitAndReturn() {
+    public MethodVisitor visitAndReturn() {
         super.visit();
         return this;
     }
@@ -65,5 +63,4 @@ public class MethodCountVisitor extends DefaultMetricsResultVisitor implements C
         // TODO Auto-generated method stub
         return 0;
     }
-
 }

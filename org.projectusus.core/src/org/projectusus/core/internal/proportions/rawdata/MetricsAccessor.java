@@ -20,7 +20,7 @@ import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.util.CoreTexts;
-import org.projectusus.core.statistics.MetricsResultVisitor;
+import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     private final WorkspaceRawData workspaceRawData;
@@ -78,7 +78,7 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         return projectRawData.getFileRawData( file );
     }
 
-    public void acceptAndGuide( MetricsResultVisitor visitor ) {
+    public void acceptAndGuide( IMetricsResultVisitor visitor ) {
         workspaceRawData.acceptAndGuide( visitor );
     }
 

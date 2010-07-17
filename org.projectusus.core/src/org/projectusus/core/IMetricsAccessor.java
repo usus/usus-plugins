@@ -3,7 +3,7 @@ package org.projectusus.core;
 import java.util.Set;
 
 import org.projectusus.core.basis.GraphNode;
-import org.projectusus.core.statistics.MetricsResultVisitor;
+import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 public interface IMetricsAccessor {
 
@@ -13,5 +13,5 @@ public interface IMetricsAccessor {
 
     Set<GraphNode> getAllCrossPackageClasses();
 
-    void acceptAndGuide( MetricsResultVisitor visitor );
+    void acceptAndGuide( IMetricsResultVisitor visitor );
 }

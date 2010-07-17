@@ -5,8 +5,8 @@ import java.util.List;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.projectusus.core.basis.JavaModelPath;
-import org.projectusus.core.statistics.CCDCountVisitor;
-import org.projectusus.core.statistics.MethodCountVisitor;
+import org.projectusus.core.statistics.visitors.CCDCountVisitor;
+import org.projectusus.core.statistics.visitors.MethodCountVisitor;
 
 public class UsusInfoForClass extends UsusInfoForFile {
 

@@ -20,7 +20,7 @@ import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.statistics.MetricsResultVisitor;
+import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 public class ClassRawData extends RawData<Integer, MethodRawData> {
 
@@ -111,7 +111,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
         }
     }
 
-    public void acceptAndGuide( MetricsResultVisitor visitor ) {
+    public void acceptAndGuide( IMetricsResultVisitor visitor ) {
         updateData();
         visitor.inspectClass( location, data );
         JavaModelPath path = visitor.getPath();

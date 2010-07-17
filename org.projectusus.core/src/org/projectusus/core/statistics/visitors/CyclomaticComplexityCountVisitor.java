@@ -1,4 +1,4 @@
-package org.projectusus.core.statistics;
+package org.projectusus.core.statistics.visitors;
 
 import java.util.List;
 
@@ -8,19 +8,20 @@ import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.statistics.DefaultMetricsResultVisitor;
 
-public class CyclomaticComplexityCountVisitor extends DefaultMetricsResultVisitor implements CodeStatisticCalculator {
+public class CyclomaticComplexityCountVisitor extends DefaultMetricsResultVisitor {
 
     private static String isisMetrics_cc = "Cyclomatic complexity count";
 
     private int violationSum = 0;
 
     public CyclomaticComplexityCountVisitor() {
-        super( isisMetrics_cc );
+        super( );
     }
 
     public CyclomaticComplexityCountVisitor( JavaModelPath path ) {
-        super( isisMetrics_cc, path );
+        super( path );
     }
 
     // drin!

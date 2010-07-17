@@ -6,18 +6,19 @@ import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.statistics.visitors.ClassCountVisitor;
+import org.projectusus.core.statistics.visitors.MethodCountVisitor;
+import org.projectusus.core.statistics.visitors.PackageCountVisitor;
 
-public abstract class DefaultMetricsResultVisitor implements MetricsResultVisitor {
+public abstract class DefaultMetricsResultVisitor implements IMetricsResultVisitor {
 
     JavaModelPath path;
-    final String label;
 
-    public DefaultMetricsResultVisitor( String label ) {
-        this( label, new JavaModelPath() );
+    public DefaultMetricsResultVisitor() {
+        this( new JavaModelPath() );
     }
 
-    public DefaultMetricsResultVisitor( String label, JavaModelPath modelPath ) {
-        this.label = label;
+    public DefaultMetricsResultVisitor( JavaModelPath modelPath ) {
         path = modelPath;
     }
 
@@ -57,7 +58,4 @@ public abstract class DefaultMetricsResultVisitor implements MetricsResultVisito
         return new MethodCountVisitor().visitAndReturn().getCodeStatistic();
     }
 
-    public String getLabel() {
-        return label;
-    }
 }

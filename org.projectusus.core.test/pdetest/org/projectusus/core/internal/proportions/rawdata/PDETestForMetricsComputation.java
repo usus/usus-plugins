@@ -18,8 +18,8 @@ import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.IUsusModel;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.internal.PDETestUsingWSProject;
-import org.projectusus.core.statistics.ClassCountVisitor;
-import org.projectusus.core.statistics.MethodCountVisitor;
+import org.projectusus.core.statistics.visitors.ClassCountVisitor;
+import org.projectusus.core.statistics.visitors.MethodCountVisitor;
 import org.projectusus.statistics.MethodLengthStatistic;
 
 public class PDETestForMetricsComputation extends PDETestUsingWSProject {
@@ -27,7 +27,9 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
     public void simpleCaseTestDemo() throws Exception {
         IFile file = createWSFile( "A.java", loadContent( "A.test" ) );
         buildFullyAndWait();
-        assertEquals( 1, new MethodLengthStatistic().visitAndReturn().getViolations() );
+        MethodLengthStatistic stat = new MethodLengthStatistic();
+        stat.visit();
+        assertEquals( 1, stat.getViolations() );
         assertEquals( 2, new MethodCountVisitor( new JavaModelPath( file.getProject() ) ).visitAndReturn().getMethodCount() );
     }
 

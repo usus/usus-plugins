@@ -1,21 +1,17 @@
 package org.projectusus.statistics;
 
 import org.projectusus.core.basis.CodeStatistic;
-import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.statistics.DefaultCockpitExtension;
 
-public class ClassSizeStatistic extends DefaultStatistic {
+public class ClassSizeStatistic extends DefaultCockpitExtension {
 
     private static int KG_LIMIT = 20;
     private static String isisMetrics_kg = "Class size";
 
     public ClassSizeStatistic() {
         super( isisMetrics_kg, KG_LIMIT );
-    }
-
-    public ClassSizeStatistic( JavaModelPath path ) {
-        super( isisMetrics_kg, path, KG_LIMIT );
     }
 
     @Override
@@ -25,10 +21,5 @@ public class ClassSizeStatistic extends DefaultStatistic {
 
     public CodeStatistic getBasis() {
         return numberOfClasses();
-    }
-
-    public ClassSizeStatistic visitAndReturn() {
-        visit();
-        return this;
     }
 }

@@ -1,4 +1,4 @@
-package org.projectusus.core.statistics;
+package org.projectusus.core.statistics.visitors;
 
 import java.util.List;
 
@@ -8,6 +8,8 @@ import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.statistics.CodeStatisticCalculator;
+import org.projectusus.core.statistics.DefaultMetricsResultVisitor;
 
 public class MethodLengthCountVisitor extends DefaultMetricsResultVisitor implements CodeStatisticCalculator {
 
@@ -16,11 +18,11 @@ public class MethodLengthCountVisitor extends DefaultMetricsResultVisitor implem
     private int violationSum = 0;
 
     public MethodLengthCountVisitor() {
-        super( isisMetrics_ml );
+        super( );
     }
 
     public MethodLengthCountVisitor( JavaModelPath path ) {
-        super( isisMetrics_ml, path );
+        super( path );
     }
 
     protected void addViolation( SourceCodeLocation location, int count ) {
