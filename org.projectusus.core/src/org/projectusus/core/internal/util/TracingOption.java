@@ -6,7 +6,7 @@ package org.projectusus.core.internal.util;
 
 import static org.eclipse.core.runtime.Platform.getDebugOption;
 
-import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.UsusCorePlugin;
 
 public enum TracingOption {
 

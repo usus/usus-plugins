@@ -10,11 +10,8 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SafeRunner;
 import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.IUsusModel;
@@ -27,13 +24,14 @@ import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
 import org.projectusus.core.statistics.ICockpitExtension;
+import org.projectusus.core.statistics.RegisteredCockpitExtensionsCollector;
 
 public class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
     private static UsusModel instance = new UsusModel();
 
     private final Set<IUsusModelListener> listeners;
-    private final UsusModelCache cache;
+    private UsusModelCache cache;
     private final MetricsAccessor metrics;
     private boolean needsFullRecompute;
 
@@ -59,27 +57,18 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
     }
 
     private void runStatisticsExtensions() {
-        String STATISTICS_ID = "org.projectusus.core.statistics"; //$NON-NLS-1$
-        IConfigurationElement[] statisticsElements = Platform.getExtensionRegistry().getConfigurationElementsFor( STATISTICS_ID );
-        try {
-            for( IConfigurationElement statisticElement : statisticsElements ) {
-                final Object extension = statisticElement.createExecutableExtension( "class" ); //$NON-NLS-1$
-                if( extension instanceof ICockpitExtension ) {
-                    final ICockpitExtension cockpitExtension = (ICockpitExtension)extension;
-                    ISafeRunnable runnable = new ISafeRunnable() {
-                        public void handleException( Throwable exception ) {
-                        }
-
-                        public void run() throws Exception {
-                            cockpitExtension.visit();
-                            cache.refresh( cockpitExtension.getCodeProportion() );
-                        }
-                    };
-                    SafeRunner.run( runnable );
+        cache = new UsusModelCache();
+        for( final ICockpitExtension cockpitExtension : RegisteredCockpitExtensionsCollector.getEnabled() ) {
+            ISafeRunnable runnable = new ISafeRunnable() {
+                public void handleException( Throwable exception ) {
                 }
-            }
-        } catch( CoreException ex ) {
-            System.out.println( ex.getMessage() );
+
+                public void run() throws Exception {
+                    cockpitExtension.visit();
+                    cache.refresh( cockpitExtension.getCodeProportion() );
+                }
+            };
+            SafeRunner.run( runnable );
         }
     }
 
@@ -119,7 +108,7 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
     // internal
     // ////////
 
-    private void notifyListeners() {
+    public void notifyListeners() {
         for( IUsusModelListener listener : listeners ) {
             listener.ususModelChanged();
         }

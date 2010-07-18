@@ -2,10 +2,9 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal;
+package org.projectusus.core;
 
 import static org.eclipse.core.runtime.IStatus.ERROR;
-import static org.projectusus.core.internal.util.UsusPreferenceKeys.AUTO_COMPUTE;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
@@ -41,8 +40,16 @@ public class UsusCorePlugin extends Plugin {
         }
     }
 
-    private IEclipsePreferences getPreferences() {
+    public IEclipsePreferences getPreferences() {
         return new InstanceScope().getNode( PLUGIN_ID );
+    }
+
+    public void savePreferences() {
+        try {
+            getPreferences().flush();
+        } catch( BackingStoreException bastox ) {
+            UsusCorePlugin.log( bastox );
+        }
     }
 
     @Override
@@ -60,21 +67,9 @@ public class UsusCorePlugin extends Plugin {
 
     @Override
     public void stop( BundleContext context ) throws Exception {
+        plugin.savePreferences();
         plugin = null;
         super.stop( context );
     }
 
-    public boolean getAutocompute() {
-        return getPreferences().getBoolean( AUTO_COMPUTE, true );
-    }
-
-    public void setAutoCompute( boolean autoCompute ) {
-        try {
-            IEclipsePreferences prefs = getPreferences();
-            prefs.putBoolean( AUTO_COMPUTE, autoCompute );
-            prefs.flush();
-        } catch( BackingStoreException bastox ) {
-            UsusCorePlugin.log( bastox );
-        }
-    }
 }

@@ -8,7 +8,8 @@ import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
-import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.UsusCorePlugin;
+import org.projectusus.core.UsusPreferenceKeys;
 
 public class UsusPreferenceInitializer extends AbstractPreferenceInitializer {
 

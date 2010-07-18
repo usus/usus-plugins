@@ -15,6 +15,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.projectusus.core.UsusCorePlugin;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
