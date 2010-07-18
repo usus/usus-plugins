@@ -9,8 +9,8 @@ import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.projectusus.core.UsusCorePlugin;
 import org.projectusus.core.UsusModelProvider;
-import org.projectusus.core.internal.UsusCorePlugin;
 
 public class RunComputationOnResourceChange implements IResourceChangeListener {
 

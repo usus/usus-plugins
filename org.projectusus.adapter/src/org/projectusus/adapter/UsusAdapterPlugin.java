@@ -1,8 +1,11 @@
 package org.projectusus.adapter;
 
+import static org.projectusus.core.UsusPreferenceKeys.AUTO_COMPUTE;
+
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.framework.BundleContext;
-import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.UsusCorePlugin;
 
 public class UsusAdapterPlugin extends Plugin {
 
@@ -24,12 +27,16 @@ public class UsusAdapterPlugin extends Plugin {
     }
 
     public boolean getAutocompute() {
-        return UsusCorePlugin.getDefault().getAutocompute();
+        return getUsusPreferences().getBoolean( AUTO_COMPUTE, true );
     }
 
     public void setAutoCompute( boolean autoCompute ) {
-        UsusCorePlugin.getDefault().setAutoCompute( autoCompute );
-        autoComputer.setAutoCompute( autoCompute );
+        getUsusPreferences().putBoolean( AUTO_COMPUTE, autoCompute );
+        UsusCorePlugin.getDefault().savePreferences();
+    }
+
+    private IEclipsePreferences getUsusPreferences() {
+        return UsusCorePlugin.getDefault().getPreferences();
     }
 
 }

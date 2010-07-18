@@ -5,7 +5,7 @@
 package org.projectusus.adapter;
 
 import static org.eclipse.core.runtime.IStatus.ERROR;
-import static org.projectusus.core.internal.UsusCorePlugin.PLUGIN_ID;
+import static org.projectusus.core.UsusCorePlugin.PLUGIN_ID;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -9,17 +9,16 @@ import static org.eclipse.jdt.core.JavaCore.removePreProcessingResourceChangedLi
 
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
-import org.projectusus.core.internal.UsusCorePlugin;
 
 public class AutoComputeSetting {
     private final IResourceChangeListener resourcelistener = new RunComputationOnResourceChange();
 
     public AutoComputeSetting() {
-        applyAutoCompute( UsusCorePlugin.getDefault().getAutocompute() );
+        applyAutoCompute( UsusAdapterPlugin.getDefault().getAutocompute() );
     }
 
     public void setAutoCompute( boolean autoCompute ) {
-        UsusCorePlugin.getDefault().setAutoCompute( autoCompute );
+        UsusAdapterPlugin.getDefault().setAutoCompute( autoCompute );
         applyAutoCompute( autoCompute );
     }
 
