@@ -15,7 +15,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.Job;
 import org.projectusus.bugprison.core.BugList;
 import org.projectusus.bugprison.core.texts.BugPrisonTexts;
-import org.projectusus.core.internal.UsusCorePlugin;
+import org.projectusus.core.UsusCorePlugin;
 
 public class SaveBugsJob extends Job {
 
