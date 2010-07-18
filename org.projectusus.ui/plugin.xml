@@ -110,4 +110,12 @@
          </perspectiveShortcut>
       </perspectiveExtension>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.projectusus.ui.preferences.UsusPreferencePage"
+            id="org.projectusus.ui.preferences.UsusPreferences"
+            name="USUS Preferences">
+      </page>
+   </extension>
 </plugin>
