@@ -5,12 +5,13 @@
 package org.projectusus.core.basis;
 
 import static java.text.MessageFormat.format;
-import static org.projectusus.core.internal.util.CoreTexts.wiseCrack_cool;
-import static org.projectusus.core.internal.util.CoreTexts.wiseCrack_shame;
-import static org.projectusus.core.internal.util.CoreTexts.yellowCountResult_msg;
 
 public class YellowCountResult {
     private static final int COUNT_POSITION = 16;
+    private static String wiseCrack_cool = " That's cool."; //$NON-NLS-1$
+    private static String wiseCrack_shame = " That's a shame."; //$NON-NLS-1$
+    private static String yellowCountResult_msg = "Yellow count is {0} ({1} of {2} projects are yellow)."; //$NON-NLS-1$
+
     private final int projectCount;
     private final int yellowCount;
     private final int yellowProjectCount;
@@ -47,7 +48,7 @@ public class YellowCountResult {
         Integer iYellowProjectCount = new Integer( yellowProjectCount );
         Integer iProjectCount = new Integer( projectCount );
         String wiseCrack = getWiseCrackString( yellowCount );
-        return format( yellowCountResult_msg, iYellowCount, iYellowProjectCount, iProjectCount ) + " " + wiseCrack; //$NON-NLS-1$
+        return format( yellowCountResult_msg, iYellowCount, iYellowProjectCount, iProjectCount ) + wiseCrack;
     }
 
     private String getWiseCrackString( int count ) {

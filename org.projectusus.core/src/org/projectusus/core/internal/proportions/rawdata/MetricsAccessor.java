@@ -19,7 +19,6 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
-import org.projectusus.core.internal.util.CoreTexts;
 import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
@@ -101,7 +100,7 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     public void cleanupRelations( IProgressMonitor monitor ) {
         Set<ClassDescriptor> candidates = ClassDescriptorCleanup.extractDescriptorsRegisteredForCleanup();
         monitor.beginTask( null, candidates.size() );
-        monitor.subTask( CoreTexts.ususModel_UpdatingFileRelations );
+        monitor.subTask( "Updating file relations" ); //$NON-NLS-1$
         for( ClassDescriptor descriptor : candidates ) {
             removeRelationIfTargetIsGone( descriptor );
             monitor.worked( 1 );

@@ -5,8 +5,6 @@
 package org.projectusus.adapter;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
-import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_computing;
-import static org.projectusus.core.internal.util.CoreTexts.codeProportionsComputerJob_name;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -18,6 +16,9 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.projectusus.core.UsusModelProvider;
 
 public class CodeProportionsComputerJob extends Job {
+
+    public static String codeProportionsComputerJob_computing = "Computing code proportions for Java files";
+    public static String codeProportionsComputerJob_name = "Code proportions computer";
 
     public static final Object FAMILY = new Object();
     private final ICodeProportionComputationTarget target;
