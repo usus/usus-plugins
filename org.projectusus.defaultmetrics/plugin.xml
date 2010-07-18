@@ -18,6 +18,15 @@
        <statistics
              class="org.projectusus.statistics.PackageCycleStatistic">
        </statistics>
+       <statistics
+             class="org.projectusus.statistics.LinearClassSizeStatistic">
+       </statistics>
+       <statistics
+             class="org.projectusus.statistics.LinearMethodLengthStatistic">
+       </statistics>
+       <statistics
+             class="org.projectusus.statistics.LinearCyclomaticComplexityStatistic">
+       </statistics>
    </extension>
 
 </plugin>

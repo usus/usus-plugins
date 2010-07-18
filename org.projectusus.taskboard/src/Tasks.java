@@ -22,16 +22,6 @@ public class Tasks {
         // TODO Packagenamen üŸberall mit Eclipse Appearance Regeln darstellen (Package View, Hotspots, ...).
     }
 
-    void wip_makeCalculationsPluggable() {
-        // TODO Berechnungsalgorithmen fŸür die Violations pluggable machen. Dazu Implementierung eines
-        // Visitor-Collectors, der den RawData Baum besucht und sich aus allen Knoten das GewŸünschte
-        // zusammensucht: Hotspots, Violations, Metrikwerte etc.
-    }
-
-    void convertViolationFunction() {
-        // TODO Violations: Linear statt konstant. Ergibt sich ganz einfach aus dem vorherigen.
-    }
-
     void createMudHoleHotspots() {
         // TODO Aggregierte Hotspots = "Schlammlšöcher"
     }
@@ -73,7 +63,6 @@ public class Tasks {
         // Code Smells
         // Feature Envy
         // Useless Comments
-        // Klassenzyklen innerhalb / zwischen Paketen
     }
 
     void createRealAcd() {

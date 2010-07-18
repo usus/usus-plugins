@@ -4,8 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.basis;
 
-import java.math.BigDecimal;
-
 import org.eclipse.core.runtime.PlatformObject;
 
 public class CodeStatistic extends PlatformObject {
@@ -24,14 +22,6 @@ public class CodeStatistic extends PlatformObject {
 
     public int getValue() {
         return value;
-    }
-
-    public BigDecimal asBigDecimal() {
-        return new BigDecimal( value );
-    }
-
-    public boolean isEmpty() {
-        return value == 0;
     }
 
     @Override

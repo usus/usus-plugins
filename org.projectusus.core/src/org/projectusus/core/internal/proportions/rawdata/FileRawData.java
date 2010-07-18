@@ -60,7 +60,11 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
         if( node == null ) {
             return null;
         }
-        return getRawData( BoundType.of( node ), node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
+        BoundType boundType = BoundType.of( node );
+        if( boundType == null ) {
+            return null;
+        }
+        return getRawData( boundType, node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
     }
 
     private ClassRawData getRawData( BoundType typeBinding, int start, int lineNumber, String name ) {

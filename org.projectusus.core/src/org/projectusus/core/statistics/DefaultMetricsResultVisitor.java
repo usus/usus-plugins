@@ -13,6 +13,8 @@ import org.projectusus.core.basis.SourceCodeLocation;
  * <p>
  * The visitors can visit the whole raw data tree or only a subtree. To identify the subtree to be visited, the visitor specifies the root node of the subtree by passing a
  * <code>JavaModelPath</code> object in the constructor.
+ * <p>
+ * To let the visitor visit the raw data tree, invoke the <code>visit()</code> method on it.
  * 
  * @author Nicole Rauch
  * 

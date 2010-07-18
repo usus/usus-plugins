@@ -4,8 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.basis;
 
-import static org.projectusus.core.basis.CodeProportionsRatio.computeInverse;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,14 +18,6 @@ public class CodeProportion extends PlatformObject {
     private final List<Hotspot> hotspots;
     private final boolean hasHotspots;
     private final String label;
-
-    public CodeProportion( String label, int violations, CodeStatistic basis, List<Hotspot> hotspots ) {
-        this( label, violations, basis, computeInverse( violations, basis ), hotspots, true );
-    }
-
-    public CodeProportion( String label, int violations, CodeStatistic basis ) {
-        this( label, violations, basis, computeInverse( violations, basis ), new ArrayList<Hotspot>(), false );
-    }
 
     public CodeProportion( String label, int violations, CodeStatistic basis, double levelValue ) {
         this( label, violations, basis, levelValue, new ArrayList<Hotspot>(), false );

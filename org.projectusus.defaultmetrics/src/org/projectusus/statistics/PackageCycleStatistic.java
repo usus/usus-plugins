@@ -16,9 +16,10 @@ public class PackageCycleStatistic extends DefaultCockpitExtension {
 
     @Override
     public CodeProportion getCodeProportion() {
-        return new CodeProportion( getLabel(), getViolations(), getBasisStatistic() );
+        return new CodeProportion( getLabel(), getViolations(), getBasisStatistic(), getLevel() );
     }
 
+    @Override
     public CodeStatistic getBasisStatistic() {
         return new PackageCountVisitor().visitAndReturn().getCodeStatistic();
     }

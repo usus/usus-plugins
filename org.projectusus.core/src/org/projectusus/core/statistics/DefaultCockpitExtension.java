@@ -1,5 +1,8 @@
 package org.projectusus.core.statistics;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,8 +79,16 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
         return violations;
     }
 
+    public int getBasis() {
+        return basis;
+    }
+
     public CodeStatistic getBasisStatistic() {
         return new CodeStatistic( unit, basis );
+    }
+
+    public double getLevel() {
+        return calculateLevel( getViolations(), getBasis() );
     }
 
     public List<Hotspot> getHotspots() {
@@ -85,6 +96,14 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
     }
 
     public CodeProportion getCodeProportion() {
-        return new CodeProportion( getLabel(), getViolations(), getBasisStatistic(), getHotspots() );
+        return new CodeProportion( getLabel(), getViolations(), getBasisStatistic(), getLevel(), getHotspots() );
     }
+
+    public static double calculateLevel( double numberOfViolations, double numberOfBaseElems ) {
+        if( numberOfBaseElems == 0 ) {
+            return 0.0;
+        }
+        return 100.0 - max( 0, min( 100 * numberOfViolations / numberOfBaseElems, 100 ) );
+    }
+
 }
