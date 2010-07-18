@@ -10,6 +10,20 @@ import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
 
+/**
+ * Default implementation of <code>ICockpitExtension</code>.
+ * <p>
+ * Implementors of extensions for the <code>org.projectusus.core.statistics</code> extension point can use this implementation as a basis for their own implementations. It provides
+ * a default mechanism to create a CodeProportion object. Implementors need to invoke the <code>addViolation()</code> method in order for this mechanism to work. Examples can be
+ * found in the <code>org.projectusus.defaultmetrics</code> project.
+ * <p>
+ * The default implementation visits the whole raw data tree. Technically, it would be possible to restrict the analysis to a subtree, but it does not really make sense to do so
+ * because the <code>JavaModelPath</code> object pointing to the subtree needs to be statically integrated into the visitor and thus cannot be adapted to the code currently being
+ * analyzed.
+ * 
+ * @author Nicole Rauch
+ * 
+ */
 public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisitor implements ICockpitExtension {
 
     private int basis;
@@ -50,12 +64,20 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
         currentFile = file;
     }
 
+    public int getMetricsSum() {
+        return violationSum;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
     public int getViolations() {
         return violations;
     }
 
-    public int getMetricsSum() {
-        return violationSum;
+    public CodeStatistic getBasisStatistic() {
+        return new CodeStatistic( unit, basis );
     }
 
     public List<Hotspot> getHotspots() {
@@ -64,13 +86,5 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
 
     public CodeProportion getCodeProportion() {
         return new CodeProportion( getLabel(), getViolations(), getBasisStatistic(), getHotspots() );
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public CodeStatistic getBasisStatistic() {
-        return new CodeStatistic( unit, basis );
     }
 }
