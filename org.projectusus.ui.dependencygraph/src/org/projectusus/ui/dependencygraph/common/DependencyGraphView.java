@@ -29,7 +29,6 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
 
     private GraphViewer graphViewer;
     private int filterLimit = -1;
-    private GraphLayouts layout;
     private final DependencyGraphModel model;
     private IUsusModelListener listener;
     private Scale scale;
@@ -128,7 +127,6 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
     }
 
     private void setLayout( GraphLayouts layout ) {
-        this.layout = layout;
         graphViewer.setLayoutAlgorithm( layout.createAlgorithm(), false );
     }
 

@@ -11,3 +11,6 @@ Require-Bundle: org.eclipse.ui,
  org.projectusus.core;bundle-version="0.3.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.projectusus.ui.dependencygraph;x-internal:=true,
+ org.projectusus.ui.dependencygraph.action;x-internal:=true,
+ org.projectusus.ui.dependencygraph.common;x-internal:=true

@@ -31,4 +31,5 @@ Export-Package: org.projectusus.ui.internal,
  org.projectusus.ui.internal.selection,
  org.projectusus.ui.internal.util;x-internal:=true,
  org.projectusus.ui.internal.yellowcount,
+ org.projectusus.ui.preferences;x-internal:=true,
  org.projectusus.ui.viewer

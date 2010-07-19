@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.SafeRunner;
 import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.IUsusModel;
 import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.UsusCorePlugin;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
@@ -61,6 +62,7 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
         for( final ICockpitExtension cockpitExtension : RegisteredCockpitExtensionsCollector.getEnabled() ) {
             ISafeRunnable runnable = new ISafeRunnable() {
                 public void handleException( Throwable exception ) {
+                    UsusCorePlugin.log( exception );
                 }
 
                 public void run() throws Exception {

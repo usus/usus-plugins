@@ -14,8 +14,7 @@ public class ReflectionUtil {
         return getValue( object.getClass(), object, fieldName );
     }
 
-    @SuppressWarnings( { "unchecked" } )
-    public static Object getValue( final Class clazz, final Object object, final String fieldName ) throws IllegalArgumentException, IllegalAccessException, SecurityException,
+    public static Object getValue( final Class<?> clazz, final Object object, final String fieldName ) throws IllegalArgumentException, IllegalAccessException, SecurityException,
             NoSuchFieldException {
         final Field field = clazz.getDeclaredField( fieldName );
         boolean oldAccessible = field.isAccessible();
@@ -30,8 +29,7 @@ public class ReflectionUtil {
         setValue( target.getClass(), target, value, fieldName );
     }
 
-    @SuppressWarnings( { "unchecked" } )
-    public static void setValue( final Class clazz, final Object target, final Object value, final String fieldName ) throws IllegalArgumentException, IllegalAccessException,
+    public static void setValue( final Class<?> clazz, final Object target, final Object value, final String fieldName ) throws IllegalArgumentException, IllegalAccessException,
             SecurityException, NoSuchFieldException {
         final Field field = clazz.getDeclaredField( fieldName );
         boolean oldAccessible = field.isAccessible();
@@ -40,8 +38,7 @@ public class ReflectionUtil {
         field.setAccessible( oldAccessible );
     }
 
-    @SuppressWarnings( { "unchecked" } )
-    public static void setIntValue( final Class clazz, final Object target, final int value, final String fieldName ) throws IllegalArgumentException, IllegalAccessException,
+    public static void setIntValue( final Class<?> clazz, final Object target, final int value, final String fieldName ) throws IllegalArgumentException, IllegalAccessException,
             SecurityException, NoSuchFieldException {
         final Field field = clazz.getDeclaredField( fieldName );
         boolean oldAccessible = field.isAccessible();

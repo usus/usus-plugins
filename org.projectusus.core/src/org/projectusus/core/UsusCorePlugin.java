@@ -28,14 +28,14 @@ public class UsusCorePlugin extends Plugin {
         return plugin;
     }
 
-    public static void log( Exception ex ) {
-        String msg = ex.getMessage() == null ? "[No details.]" : ex.getMessage(); //$NON-NLS-1$
-        log( msg, ex );
+    public static void log( Throwable throwable ) {
+        String msg = throwable.getMessage() == null ? "[No details.]" : throwable.getMessage(); //$NON-NLS-1$
+        log( msg, throwable );
     }
 
-    public static void log( String msg, Exception ex ) {
+    public static void log( String msg, Throwable throwable ) {
         if( getDefault() != null ) {
-            IStatus status = new Status( ERROR, PLUGIN_ID, 0, msg, ex );
+            IStatus status = new Status( ERROR, PLUGIN_ID, 0, msg, throwable );
             getDefault().getLog().log( status );
         }
     }

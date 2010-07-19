@@ -9,6 +9,8 @@ import org.projectusus.core.UsusCorePlugin;
 
 public class UsusAdapterPlugin extends Plugin {
 
+    public static final String PLUGIN_ID = "org.projectusus.adapter";
+
     private static UsusAdapterPlugin plugin;
     private AutoComputeSetting autoComputer;
 

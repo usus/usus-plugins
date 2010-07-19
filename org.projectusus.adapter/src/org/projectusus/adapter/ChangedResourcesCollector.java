@@ -7,8 +7,8 @@ package org.projectusus.adapter;
 import static org.eclipse.core.resources.IResourceDelta.ADDED;
 import static org.eclipse.core.resources.IResourceDelta.CHANGED;
 import static org.eclipse.core.resources.IResourceDelta.REMOVED;
+import static org.projectusus.adapter.TracingOption.RESOURCE_CHANGES;
 import static org.projectusus.core.internal.project.UsusProjectSupport.isUsusProject;
-import static org.projectusus.core.internal.util.TracingOption.RESOURCE_CHANGES;
 
 import java.util.ArrayList;
 import java.util.List;

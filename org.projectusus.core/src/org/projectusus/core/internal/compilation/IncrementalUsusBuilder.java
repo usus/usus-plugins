@@ -10,8 +10,9 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.projectusus.core.UsusModelProvider;
+import org.projectusus.core.util.Defect;
 
-@SuppressWarnings( { "unchecked", "unused" } )
+@SuppressWarnings( { "unused" } )
 public class IncrementalUsusBuilder extends IncrementalProjectBuilder {
 
     private static final String BUILDER_ID = "com.example.builders.mybuilder"; //$NON-NLS-1$
@@ -27,8 +28,7 @@ public class IncrementalUsusBuilder extends IncrementalProjectBuilder {
             }
             addNewBuilderToProject( project );
         } catch( CoreException e ) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new Defect( e );
         }
     }
 

@@ -4,7 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.adapter;
 
-import static org.projectusus.core.internal.util.TracingOption.SQI;
+import static org.projectusus.adapter.TracingOption.SQI;
 
 import java.util.Collection;
 
