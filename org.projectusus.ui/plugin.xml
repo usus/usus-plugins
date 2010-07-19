@@ -115,7 +115,7 @@
       <page
             class="org.projectusus.ui.preferences.UsusPreferencePage"
             id="org.projectusus.ui.preferences.UsusPreferences"
-            name="USUS Preferences">
+            name="Project Usus">
       </page>
    </extension>
 </plugin>
