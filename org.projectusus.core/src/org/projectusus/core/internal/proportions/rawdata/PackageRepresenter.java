@@ -70,4 +70,8 @@ public class PackageRepresenter implements GraphNode {
         return 0;
     }
 
+    public boolean isPackage() {
+        return true;
+    }
+
 }

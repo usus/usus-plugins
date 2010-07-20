@@ -72,4 +72,8 @@ public class ClassRepresenter implements GraphNode {
     public int getFilterValue() {
         return BottleneckCalculator.getBottleneckCount( this.clazz );
     }
+
+    public boolean isPackage() {
+        return false;
+    }
 }

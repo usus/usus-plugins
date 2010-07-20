@@ -70,4 +70,8 @@ public class CrossPackageClassRepresenter implements GraphNode {
         return 0;
     }
 
+    public boolean isPackage() {
+        return false;
+    }
+
 }

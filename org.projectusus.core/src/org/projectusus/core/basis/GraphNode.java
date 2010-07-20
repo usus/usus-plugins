@@ -17,4 +17,6 @@ public interface GraphNode {
     int getFilterValue();
 
     boolean isVisibleFor( int limit );
+
+    boolean isPackage();
 }
