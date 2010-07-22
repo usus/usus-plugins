@@ -71,6 +71,7 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
         return violationSum;
     }
 
+    @Override
     public String getLabel() {
         return label;
     }

@@ -36,4 +36,6 @@ public interface IMetricsResultVisitor {
     void inspectMethod( SourceCodeLocation location, MetricsResults results );
 
     JavaModelPath getPath();
+
+    String getLabel();
 }

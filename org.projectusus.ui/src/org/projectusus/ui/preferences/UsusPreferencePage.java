@@ -2,12 +2,14 @@ package org.projectusus.ui.preferences;
 
 import static org.eclipse.jface.viewers.CheckboxTableViewer.newCheckList;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -20,6 +22,7 @@ import org.projectusus.core.statistics.RegisteredCockpitExtensionsCollector;
 public class UsusPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
     private SortedSet<CockpitExtensionPref> extensionsStates;
+    private CheckboxTableViewer viewer;
 
     public UsusPreferencePage() {
         super();
@@ -32,9 +35,9 @@ public class UsusPreferencePage extends PreferencePage implements IWorkbenchPref
 
     @Override
     protected Control createContents( Composite parent ) {
-        CheckboxTableViewer viewer = newCheckList( parent, SWT.BORDER );
+        viewer = newCheckList( parent, SWT.BORDER );
         viewer.setContentProvider( new UsusPreferencesContentProvider() );
-        viewer.setLabelProvider( new UsusPreferencesLabelProvider() );
+        viewer.setLabelProvider( new DelegatingStyledCellLabelProvider( new UsusPreferencesStyledLabelProvider() ) );
         viewer.setInput( extensionsStates );
         viewer.setCheckedElements( collectCheckedElements() );
         viewer.addCheckStateListener( new ICheckStateListener() {
@@ -46,14 +49,13 @@ public class UsusPreferencePage extends PreferencePage implements IWorkbenchPref
     }
 
     private CockpitExtensionPref[] collectCheckedElements() {
-        SortedSet<CockpitExtensionPref> checkedElements = new TreeSet<CockpitExtensionPref>();
+        Set<CockpitExtensionPref> checkedElements = new HashSet<CockpitExtensionPref>();
         for( CockpitExtensionPref pref : extensionsStates ) {
             if( pref.isOn() ) {
                 checkedElements.add( pref );
             }
         }
-        CockpitExtensionPref[] array = checkedElements.toArray( new CockpitExtensionPref[0] );
-        return array;
+        return checkedElements.toArray( new CockpitExtensionPref[0] );
     }
 
     protected void updatePrefsElement( Object element, boolean checked ) {
@@ -64,7 +66,7 @@ public class UsusPreferencePage extends PreferencePage implements IWorkbenchPref
 
     @Override
     public boolean performOk() {
-        RegisteredCockpitExtensionsCollector.updateExtensionsStates( extensionsStates );
+        RegisteredCockpitExtensionsCollector.saveExtensionsStates( extensionsStates );
         return super.performOk();
     }
 }

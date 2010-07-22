@@ -21,7 +21,7 @@ import org.projectusus.core.basis.SourceCodeLocation;
  */
 public abstract class DefaultMetricsResultVisitor implements IMetricsResultVisitor {
 
-    JavaModelPath path;
+    private final JavaModelPath path;
 
     public DefaultMetricsResultVisitor() {
         this( new JavaModelPath() );
@@ -53,5 +53,9 @@ public abstract class DefaultMetricsResultVisitor implements IMetricsResultVisit
 
     public void visit() {
         UsusModelProvider.getMetricsAccessor().acceptAndGuide( this );
+    }
+
+    public String getLabel() {
+        return ""; //$NON-NLS-1$
     }
 }
