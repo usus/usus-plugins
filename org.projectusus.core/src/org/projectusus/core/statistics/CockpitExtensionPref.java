@@ -4,12 +4,14 @@ import java.text.MessageFormat;
 
 public class CockpitExtensionPref {
 
+    public static final boolean ON_BY_DEFAULT = true;
+
     private final String className;
     private final String label;
     private boolean on;
 
     public CockpitExtensionPref( String className, String label ) {
-        this( className, label, true );
+        this( className, label, ON_BY_DEFAULT );
     }
 
     public CockpitExtensionPref( String className, boolean on ) {
@@ -46,6 +48,16 @@ public class CockpitExtensionPref {
 
     public void setOn( boolean checked ) {
         on = checked;
+    }
+
+    public void resetOnToDefault() {
+        setOn( ON_BY_DEFAULT );
+    }
+
+    public static void restoreDefaults( Iterable<CockpitExtensionPref> extensions ) {
+        for( CockpitExtensionPref pref : extensions ) {
+            pref.resetOnToDefault();
+        }
     }
 
     @Override

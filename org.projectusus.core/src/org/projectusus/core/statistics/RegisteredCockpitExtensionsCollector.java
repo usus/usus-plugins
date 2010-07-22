@@ -7,6 +7,7 @@ import static com.google.common.collect.Sets.filter;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.eclipse.core.runtime.Platform.getExtensionRegistry;
 import static org.projectusus.core.internal.proportions.rawdata.UsusModel.ususModel;
+import static org.projectusus.core.statistics.CockpitExtensionPref.ON_BY_DEFAULT;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -51,7 +52,7 @@ public class RegisteredCockpitExtensionsCollector {
 
     private static boolean isEnabled( ICockpitExtension extension, Set<CockpitExtensionPref> allStates ) {
         CockpitExtensionPref extensionPref = findByClassName( allStates, extension.getClass().getName() );
-        return extensionPref == null ? true : extensionPref.isOn();
+        return extensionPref == null ? ON_BY_DEFAULT : extensionPref.isOn();
     }
 
     public static Set<ICockpitExtension> allExtensions() {
@@ -91,7 +92,7 @@ public class RegisteredCockpitExtensionsCollector {
     }
 
     private static CockpitExtensionPref findByClassName( Set<CockpitExtensionPref> extensions, String className ) {
-        Set<CockpitExtensionPref> filtered = filter( extensions, equalTo( new CockpitExtensionPref( className, true ) ) );
+        Set<CockpitExtensionPref> filtered = filter( extensions, equalTo( new CockpitExtensionPref( className, ON_BY_DEFAULT ) ) );
         return getOnlyElement( filtered, null );
     }
 
@@ -106,7 +107,7 @@ public class RegisteredCockpitExtensionsCollector {
         Preferences preferences = loadPreferences();
         for( String className : childrenNames( preferences ) ) {
             Preferences node = preferences.node( className );
-            boolean on = node.getBoolean( ENABLED, true );
+            boolean on = node.getBoolean( ENABLED, ON_BY_DEFAULT );
             known.add( new CockpitExtensionPref( className, on ) );
         }
         return known;

@@ -69,4 +69,11 @@ public class UsusPreferencePage extends PreferencePage implements IWorkbenchPref
         RegisteredCockpitExtensionsCollector.saveExtensionsStates( extensionsStates );
         return super.performOk();
     }
+
+    @Override
+    protected void performDefaults() {
+        CockpitExtensionPref.restoreDefaults( extensionsStates );
+        viewer.setCheckedElements( collectCheckedElements() );
+        super.performDefaults();
+    }
 }
