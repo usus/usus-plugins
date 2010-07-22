@@ -1,5 +1,7 @@
 package org.projectusus.ui.dependencygraph.common;
 
+import static org.projectusus.core.internal.proportions.rawdata.UsusModel.ususModel;
+
 import java.util.Set;
 
 import org.eclipse.jface.viewers.ISelection;
@@ -23,13 +25,13 @@ import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public abstract class DependencyGraphView extends ViewPart implements FilterLimitProvider {
-    private static final String LAYOUT_LABEL = "Layout:";
 
+    private static final String LAYOUT_LABEL = "Layout:";
     private static final String SCALE_TOOLTIP_TEXT = "Change the number of visible nodes by moving the slider";
 
+    private final DependencyGraphModel model;
     private GraphViewer graphViewer;
     private int filterLimit = -1;
-    private final DependencyGraphModel model;
     private IUsusModelListener listener;
     private Scale scale;
     private Combo layoutCombo;
@@ -43,9 +45,16 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
     @Override
     public void createPartControl( Composite parent ) {
         Composite composite = new Composite( parent, SWT.NONE );
-        composite.setLayout( new GridLayout( 1, false ) );
-        createFilterArea( composite );
+        GridLayout layout = new GridLayout( 1, false );
+        layout.marginHeight = 0;
+        layout.marginWidth = 0;
+        composite.setLayout( layout );
+        Composite filterArea = createFilterArea( composite );
+        GridData data = new GridData();
+        data.horizontalAlignment = SWT.FILL;
+        filterArea.setLayoutData( data );
         createGraphArea( composite );
+        refresh();
     }
 
     private void initFilterLimit( int maxFilterValue ) {
@@ -55,10 +64,40 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
         }
     }
 
-    private void createFilterArea( Composite composite ) {
-        Composite filterArea = new Composite( composite, SWT.BORDER );
+    private Composite createFilterArea( Composite composite ) {
+        Composite filterArea = new Composite( composite, SWT.NONE );
         filterArea.setToolTipText( SCALE_TOOLTIP_TEXT );
-        filterArea.setLayout( new GridLayout( 5, false ) );
+
+        GridLayout layout = new GridLayout( 5, false );
+        layout.marginHeight = 0;
+        layout.marginTop = 5;
+        filterArea.setLayout( layout );
+
+        createScale( filterArea );
+        createLayoutCombo( filterArea );
+
+        return filterArea;
+    }
+
+    private void createLayoutCombo( Composite filterArea ) {
+        createLabel( filterArea, LAYOUT_LABEL );
+        layoutCombo = new Combo( filterArea, SWT.DROP_DOWN | SWT.READ_ONLY );
+        layoutCombo.setItems( GraphLayouts.asStrings() );
+        layoutCombo.select( 0 );
+        layoutCombo.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                Display.getDefault().asyncExec( new Runnable() {
+                    public void run() {
+                        setLayoutFor( layoutCombo.getSelectionIndex() );
+                        drawGraphUnconditionally();
+                    }
+                } );
+            }
+        } );
+    }
+
+    private void createScale( Composite filterArea ) {
         createLabel( filterArea, getScaleLeftLabelText() );
 
         scale = new Scale( filterArea, SWT.HORIZONTAL );
@@ -77,23 +116,11 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
                 } );
             }
         } );
-        createLabel( filterArea, getScaleRightLabelText() );
 
-        createLabel( filterArea, LAYOUT_LABEL );
-        layoutCombo = new Combo( filterArea, SWT.DROP_DOWN | SWT.READ_ONLY );
-        layoutCombo.setItems( GraphLayouts.asStrings() );
-        layoutCombo.select( 0 );
-        layoutCombo.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                Display.getDefault().asyncExec( new Runnable() {
-                    public void run() {
-                        setLayoutFor( layoutCombo.getSelectionIndex() );
-                        drawGraphUnconditionally();
-                    }
-                } );
-            }
-        } );
+        Label filterText = createLabel( filterArea, getScaleRightLabelText() );
+        GridData gridData = new GridData();
+        gridData.grabExcessHorizontalSpace = true;
+        filterText.setLayoutData( gridData );
     }
 
     private void setLayoutFor( int index ) {
@@ -104,17 +131,18 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
 
     protected abstract String getScaleLeftLabelText();
 
-    private void createLabel( Composite parent, String labelText ) {
-        Label filterText = new Label( parent, SWT.NONE );
-        filterText.setText( labelText );
+    private Label createLabel( Composite parent, String labelText ) {
+        Label label = new Label( parent, SWT.NONE );
+        label.setText( labelText );
+        return label;
     }
 
-    private void createGraphArea( Composite composite ) {
+    private Composite createGraphArea( Composite composite ) {
         Composite graphArea = new Composite( composite, SWT.BORDER );
         graphArea.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true ) );
         graphArea.setLayout( new FillLayout() );
         createGraphViewer( graphArea );
-        refresh();
+        return graphArea;
     }
 
     private void createGraphViewer( Composite graphArea ) {
@@ -194,7 +222,7 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
                 } );
             }
         };
-        UsusModel.ususModel().addUsusModelListener( listener );
+        ususModel().addUsusModelListener( listener );
     }
 
     private void updateSpinnerAndFilter() {
