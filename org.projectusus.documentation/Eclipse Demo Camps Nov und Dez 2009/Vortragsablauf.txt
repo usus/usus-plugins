@@ -1,0 +1,36 @@
+Vortragsablauf
+
+Checkliste
+
+Bisherige Checkpoints gelöscht? (Grafik)
+Error Log View geschlossen? (Reset Perspektive)
+Bugs View / Average Code Proportions geöffnet?
+Zwei Messpunkte sind erfasst (damit man im Diagramm schon was sieht)
+
+Ablauf Script
+
+Leif: Hi wie geht’s, wie läufts Projekt?
+Stefan: Bin gerade am refaktorisieren.
+Leif: Oh ihr nehmt euch die Zeit im Projekt um zu Refaktorisierugen, das ist ja super.
+Stefan: Na klar das ist hier Usus!
+Leif: Und was refaktorisiert du so gerade?
+Stefan Duplizierter Code viel zu lange Methoden und zu viele If else und For Schleifen.
+Leif stöhnt: Ohje solche Stellen haben wir auch viele im Code. Ich hab mir auch schon öfters vorgenommen das mal in Angriff zu nehmen.
+Stefan: Ja dafür hab ich ein cooles Tool: Usus. Das zeigt mir immer gleich wo auffällige Code Stellen sind. Probier mal aus
+Leif probiert und findet die Stelle die Stefan refaktorisieren will. Leif fragt während er probiert öfters nach wo er hinklicken soll und was die Views bedeuten. Leif entdeckt auch das Diagramm für Code Proportions.
+Nachdem Leif die zu refaktorisierende Code Stelle gefunden hat: Ja gefällt mir auch nicht. Hab das Gefühl, dass immer wenn ich Bugs fixe ich an solche Stellen ran muss.
+Stefan: Ja stimmt an der Stelle sind auch schon Bugs aufgetreten.
+Leif: Und da erinnerst du dich noch dran?
+Stefan: Wir merken uns unsere Bugs mit Usus.
+Leif Ihr merkt euch eure Bugs? Das ist ja super!
+Stefan Na klar das ist hier im Projekt Usus. Stefan zeigt Bugs View
+Leif: Cool und wie erfasst man die Bugs?
+Stefan zeigt Bugs erfassen Dialog. Stefan: So jetzt muss ich aber weiterarbeiten und refaktorisieren.
+Leif: Wenn du echt was verbesserst dann müsste man das dann doch auch im Diagramm sehen.
+Stefan: Erster Refaktorisierungs Schritt: Wir haben zu lange zu komplexe Methode => Extract Method. Außerdem werden die Compiler Warnings entfernt
+Leif will den nächsten Messpunkt erfassen und ist gespannt wie sich das Diagramm entwickelt. Leif entdeckt, dass es eine Verletzung bei der Klassengröße gibt und erkennt dass die Klasse zu viel macht. Keine klaren Verantwortlichkeiten
+Stefan: Zweiter Refaktorisierungs Schritt: Klare Verantwortlichkeiten => Mehrere Klassen
+Leif will den nächsten Messpunkt erfassen. Leif erkennt: jetzt könnten ist das ganze auch viel leichter testbar. Da könnte man auch nen Test schreiben
+Stefan: Dritter Refaktorisierungs Schritt: Test schreiben
+Leif will den letzten Messpunkt erfassen. Und zieht Fazit: Usus lenkt den Entwickler an die Stellen bei denen er aktiv werden muss. Usus ist die Entwicklung integriert und bringt den Entwickler dazu zu handeln statt nur zu beobachten. Usus macht Spass weil man den Erfolg von kleinen Refaktorisierungs Schritten gleich sehen kann.
+Leif: Usus- das will ich auch haben wo gibt’s das? Bei www.projectusus.org
