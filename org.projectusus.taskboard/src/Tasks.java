@@ -2,16 +2,17 @@ public class Tasks {
 
     // Tasks for USUS 1.0
 
+    void nicole_makeMetricsPluggable() {
+        // TODO Metriken pluggable machen: Collectors zufŸügen, Werte in RawData Struktur werden in einer Map
+        // gehalten, pro Metrik ein gespeichertes Werteobjekt.
+    }
+
     void namensgebung() {
-        // TODO Namensgebung geradeziehen: Kind -> Metrics. Was noch?
+        // TODO Namensgebung geradeziehen: Was?
     }
 
     void documentationOfCalculations() {
         // TODO Doku der Usus-Interna. Welche Schwellwerte? Was sind die Level? etc.
-    }
-
-    void introduceNullObjects() {
-        // TODO Null-Objekte in die RawData-Hierarchie einfŸühren.
     }
 
     void maximizeTablesInCockpitAndHotspots() {
@@ -24,11 +25,6 @@ public class Tasks {
 
     void createMudHoleHotspots() {
         // TODO Aggregierte Hotspots = "Schlammlšöcher"
-    }
-
-    void makeMetricsPluggable() {
-        // TODO Metriken pluggable machen: Collectors zufŸügen, Werte in RawData Struktur werden in einer Map
-        // gehalten, pro Metrik ein gespeichertes Werteobjekt.
     }
 
     void createExplanatoryDocumentation() {
@@ -44,18 +40,26 @@ public class Tasks {
         // TODO PackageView: Packages im Package Graph auswäŠhlen, die enthaltenen Klassen im Class View darstellen
     }
 
-    void createPrefsPaneForExtensions() {
-        // TODO
+    void improveGraphLayoutsWithZest() {
+        // TODO ZEST Layouting verbessern.
     }
 
     // ///////// Tasks for versions after USUS 1.0
 
-    void makeJobCancellable() {
-        // TODO UsusModel: Berechnung abbrechen, wenn der Benutzer dies verlangt. Danach voller Rebuild.
+    void pimpDependencyGraphForRemoving() {
+        // TODO DependencyGraph: Man kann ausgewäŠhlte Knoten aus den Graphen entfernen
     }
 
-    void improveGraphLayoutsWithZest() {
-        // TODO ZEST Layouting verbessern.
+    void createShadowForMarc() {
+        // TODO Schatten am InfoPresenter (extra fŸür Marc :-)
+    }
+
+    void createTrends() {
+        // TODO Wertehistorie: Verbesserte und verschlechterte Werte ausweisen und danach sortieren.
+    }
+
+    void makeJobCancellable() {
+        // TODO UsusModel: Berechnung abbrechen, wenn der Benutzer dies verlangt. Danach voller Rebuild.
     }
 
     void createNewMetrics() {
@@ -76,24 +80,12 @@ public class Tasks {
         // Verschiedene ACD-Klassen machen und schauen, wie sich die Geflechte verhalten.
     }
 
-    void pimpDependencyGraphForRemoving() {
-        // TODO DependencyGraph: Man kann ausgewäŠhlte Knoten aus den Graphen entfernen
-    }
-
-    void createTrends() {
-        // TODO Wertehistorie: Verbesserte und verschlechterte Werte ausweisen und danach sortieren.
-    }
-
     void repairAndExtendCheatsheet() {
         // TODO CheatSheet reparieren und erweitern
     }
 
     void createPackagecycleHotspots() {
         // TODO Hotspots fŸür Package Cycles?? Hotspot ^=^ Zyklus-Objekt. Relevant: # Packages im Zyklus
-    }
-
-    void createShadowForMarc() {
-        // TODO Schatten am InfoPresenter (extra fŸür Marc :-)
     }
 
     void createNatureInsteadSeperateView() {
