@@ -4,8 +4,13 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.Initializer;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
@@ -14,7 +19,7 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         super();
     }
 
-    ProjectRawData getOrCreateProjectRawData( IProject project ) {
+    private ProjectRawData getOrCreateProjectRawData( IProject project ) {
         ProjectRawData rawData = getProjectRawData( project );
         if( rawData == null ) {
             rawData = new ProjectRawData();
@@ -23,7 +28,7 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         return rawData;
     }
 
-    ProjectRawData getProjectRawData( IProject project ) {
+    private ProjectRawData getProjectRawData( IProject project ) {
         return super.getRawData( project );
     }
 
@@ -32,6 +37,13 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         if( projectRawData != null ) {
             projectRawData.dropRawData();
             remove( project );
+        }
+    }
+
+    public void dropRawData( IFile file ) {
+        ProjectRawData projectRawData = getProjectRawData( file.getProject() );
+        if( projectRawData != null ) {
+            projectRawData.dropRawData( file );
         }
     }
 
@@ -46,6 +58,34 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
             for( ProjectRawData projectRD : getAllRawDataElements() ) {
                 projectRD.acceptAndGuide( visitor );
             }
+        }
+    }
+
+    public void putData( IFile file, MethodDeclaration methodDecl, String dataKey, int value ) {
+        ProjectRawData projectRawData = getOrCreateProjectRawData( file.getProject() );
+        if( projectRawData != null ) {
+            projectRawData.putData( file, methodDecl, dataKey, value );
+        }
+    }
+
+    public void putData( IFile file, Initializer initializer, String dataKey, int value ) {
+        ProjectRawData projectRawData = getOrCreateProjectRawData( file.getProject() );
+        if( projectRawData != null ) {
+            projectRawData.putData( file, initializer, dataKey, value );
+        }
+    }
+
+    public void putData( IFile file, AbstractTypeDeclaration node, String dataKey, int value ) {
+        ProjectRawData projectRawData = getOrCreateProjectRawData( file.getProject() );
+        if( projectRawData != null ) {
+            projectRawData.putData( file, node, dataKey, value );
+        }
+    }
+
+    public void removeRelationIfTargetIsGone( ClassDescriptor descriptor ) {
+        ProjectRawData projectRawData = getProjectRawData( descriptor.getFile().getProject() );
+        if( projectRawData != null ) {
+            projectRawData.removeRelationIfTargetIsGone( descriptor );
         }
     }
 }

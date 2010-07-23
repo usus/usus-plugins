@@ -1,16 +1,16 @@
 package org.projectusus.core.internal.proportions.rawdata.collectors;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.basis.MetricsResults;
 
 public class MLCollector extends Collector {
 
     private Counter statementCount = new Counter();
 
-    public MLCollector( IFile file ) {
-        super( file );
+    public MLCollector() {
+        super();
     }
 
     @Override
@@ -28,13 +28,13 @@ public class MLCollector extends Collector {
     @Override
     public void endVisit( MethodDeclaration node ) {
         int count = statementCount.getAndClearCount();
-        getMetricsWriter().setMLValue( file, node, count );
+        getMetricsWriter().putData( file, node, MetricsResults.ML, count );
     }
 
     @Override
     public void endVisit( Initializer node ) {
         int count = statementCount.getAndClearCount();
-        getMetricsWriter().setMLValue( file, node, count );
+        getMetricsWriter().putData( file, node, MetricsResults.ML, count );
     }
 
     @Override

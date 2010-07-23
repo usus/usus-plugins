@@ -18,8 +18,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.internal.proportions.rawdata.collectors.Counter;
-import org.projectusus.core.internal.proportions.rawdata.collectors.MLCollector;
+import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.testutil.ReflectionUtil;
 
 public class MLTest {
@@ -31,7 +30,8 @@ public class MLTest {
     @Before
     public void setup() {
         block = mock( Block.class );
-        mlChecker = new MLCollector( mock( IFile.class ) );
+        mlChecker = new MLCollector();
+        mlChecker.setup( mock( IFile.class ), UsusModelProvider.getMetricsWriter() );
     }
 
     @Test

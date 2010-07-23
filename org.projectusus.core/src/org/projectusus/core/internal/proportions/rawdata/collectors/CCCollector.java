@@ -1,6 +1,5 @@
 package org.projectusus.core.internal.proportions.rawdata.collectors;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.CatchClause;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 import org.eclipse.jdt.core.dom.DoStatement;
@@ -13,14 +12,15 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.projectusus.core.basis.MetricsResults;
 
 @SuppressWarnings( "unused" )
 public class CCCollector extends Collector {
 
     private Counter ccCount = new Counter();
 
-    public CCCollector( IFile file ) {
-        super( file );
+    public CCCollector() {
+        super();
     }
 
     @Override
@@ -93,11 +93,11 @@ public class CCCollector extends Collector {
     }
 
     private void submit( MethodDeclaration node ) {
-        getMetricsWriter().setCCValue( file, node, ccCount.getAndClearCount() );
+        getMetricsWriter().putData( file, node, MetricsResults.CC, ccCount.getAndClearCount() );
     }
 
     private void submit( Initializer node ) {
-        getMetricsWriter().setCCValue( file, node, ccCount.getAndClearCount() );
+        getMetricsWriter().putData( file, node, MetricsResults.CC, ccCount.getAndClearCount() );
     }
 
     private boolean increase() {

@@ -51,41 +51,29 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
         return "Class " + location.getName() + " in line " + location.getLineNumber() + " with " + getRawDataElementCount() + " methods."; //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$ //$NON-NLS-4$
     }
 
-    void setCCValue( MethodDeclaration node, int value ) {
-        getRawData( node ).setCCValue( value );
-    }
-
-    void setCCValue( Initializer node, int value ) {
-        getRawData( node ).setCCValue( value );
-    }
-
-    void setMLValue( MethodDeclaration node, int value ) {
-        getRawData( node ).setMLValue( value );
-    }
-
-    void setMLValue( Initializer node, int value ) {
-        getRawData( node ).setMLValue( value );
-    }
-
-    private MethodRawData getRawData( MethodDeclaration node ) {
-        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
-    }
-
-    private MethodRawData getRawData( Initializer node ) {
-        return getRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), "initializer" ); //$NON-NLS-1$
-    }
-
-    private MethodRawData getRawData( int start, int lineNr, String methodName ) {
-        Integer startObject = new Integer( start );
-        MethodRawData rawData = super.getRawData( startObject );
-        if( rawData == null ) {
-            rawData = new MethodRawData( start, lineNr, location.getName(), methodName );
-            super.addRawData( startObject, rawData );
+    void putData( MethodDeclaration node, String dataKey, int value ) {
+        MethodRawData methodRawData = getOrCreateMethodRawData( node );
+        if( methodRawData != null ) {
+            methodRawData.putData( dataKey, value );
         }
-        return rawData;
     }
 
-    public MethodRawData getMethodRawData( IMethod method ) {
+    void putData( Initializer node, String dataKey, int value ) {
+        MethodRawData methodRawData = getOrCreateMethodRawData( node );
+        if( methodRawData != null ) {
+            methodRawData.putData( dataKey, value );
+        }
+    }
+
+    private MethodRawData getOrCreateMethodRawData( MethodDeclaration node ) {
+        return getOrCreateMethodRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
+    }
+
+    private MethodRawData getOrCreateMethodRawData( Initializer node ) {
+        return getOrCreateMethodRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), "initializer" ); //$NON-NLS-1$
+    }
+
+    private MethodRawData getOrCreateMethodRawData( IMethod method ) {
         ICompilationUnit compilationUnit = getCompilationUnit( method );
         if( compilationUnit == null ) {
             return null;
@@ -94,13 +82,23 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
             for( Integer start : getAllKeys() ) {
                 IJavaElement foundElement = compilationUnit.getElementAt( start.intValue() );
                 if( method.equals( foundElement ) ) {
-                    return getRawData( start.intValue(), 0, "" ); //$NON-NLS-1$
+                    return getOrCreateMethodRawData( start.intValue(), 0, "" ); //$NON-NLS-1$
                 }
             }
             return null;
         } catch( JavaModelException e ) {
             return null;
         }
+    }
+
+    private MethodRawData getOrCreateMethodRawData( int start, int lineNr, String methodName ) {
+        Integer startObject = new Integer( start );
+        MethodRawData rawData = super.getRawData( startObject );
+        if( rawData == null ) {
+            rawData = new MethodRawData( start, lineNr, location.getName(), methodName );
+            super.addRawData( startObject, rawData );
+        }
+        return rawData;
     }
 
     public void dropRawData() {
@@ -116,7 +114,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
         visitor.inspectClass( location, data );
         JavaModelPath path = visitor.getPath();
         if( path.isRestrictedToMethod() ) {
-            this.getMethodRawData( path.getMethod() ).acceptAndGuide( visitor );
+            this.getOrCreateMethodRawData( path.getMethod() ).acceptAndGuide( visitor );
         } else {
             for( MethodRawData rawData : getAllRawDataElements() ) {
                 rawData.acceptAndGuide( visitor );
@@ -125,8 +123,12 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
     }
 
     private void updateData() {
-        data.add( MetricsResults.METHODS, new Integer( getRawDataElementCount() ) );
-        data.add( MetricsResults.CCD, new Integer( descriptor.getCCD() ) );
+        putData( MetricsResults.METHODS, getRawDataElementCount() );
+        putData( MetricsResults.CCD, descriptor.getCCD() );
+    }
+
+    public void putData( String dataKey, int value ) {
+        data.put( dataKey, value );
     }
 
     public boolean isCalled( Classname classname ) {

@@ -1,6 +1,5 @@
 package org.projectusus.core.internal.proportions.rawdata.collectors;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
@@ -18,8 +17,8 @@ public class ACDCollector extends Collector {
 
     private BoundType currentType;
 
-    public ACDCollector( IFile file ) {
-        super( file );
+    public ACDCollector() {
+        super();
     }
 
     @Override

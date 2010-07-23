@@ -1,7 +1,6 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -19,32 +18,17 @@ public class NullMetricsWriter implements IMetricsWriter {
         // just do nothing harmful
     }
 
-    public void setCCValue( IFile file, MethodDeclaration methodDecl, int value ) {
-        // just do nothing harmful
-    }
-
-    public void setCCValue( IFile file, Initializer initializer, int value ) {
-        // just do nothing harmful
-    }
-
-    public void setMLValue( IFile file, MethodDeclaration methodDecl, int value ) {
-        // just do nothing harmful
-    }
-
-    public void setMLValue( IFile file, Initializer initializer, int value ) {
-        // just do nothing harmful
-    }
-
-    public void resetInstructionCoverage() {
+    public void putData( IFile file, MethodDeclaration methodDecl, String dataKey, int value ) {
         // TODO Auto-generated method stub
+
     }
 
-    public void setWarningsCount( IFile file, int markerCount ) {
+    public void putData( IFile file, Initializer initializer, String dataKey, int value ) {
         // TODO Auto-generated method stub
+
     }
 
-    public void setWarningsCount( IProject project, int markerCount ) {
-        // TODO Auto-generated method stub
+    public void putData( IFile file, AbstractTypeDeclaration node, String dataKey, int value ) {
     }
 
 }

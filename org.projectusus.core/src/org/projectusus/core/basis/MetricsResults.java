@@ -9,11 +9,12 @@ public class MetricsResults {
     public static final String CCD = "CCD"; //$NON-NLS-1$
     public static final String CC = "CyclomaticComplexity"; //$NON-NLS-1$
     public static final String ML = "MethodLength"; //$NON-NLS-1$
+    public static final String CLASS_CREATION = "ClassCreation"; //$NON-NLS-1$
 
     private Map<String, Integer> results = new HashMap<String, Integer>();
 
-    public void add( String key, Integer value ) {
-        results.put( key, value );
+    public void put( String key, int value ) {
+        results.put( key, new Integer( value ) );
     }
 
     public Integer get( String key ) {

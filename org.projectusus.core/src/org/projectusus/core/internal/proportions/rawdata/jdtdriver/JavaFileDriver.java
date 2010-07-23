@@ -13,11 +13,12 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.internal.proportions.rawdata.collectors.ACDCollector;
 import org.projectusus.core.internal.proportions.rawdata.collectors.CCCollector;
 import org.projectusus.core.internal.proportions.rawdata.collectors.ClassCollector;
+import org.projectusus.core.internal.proportions.rawdata.collectors.Collector;
 import org.projectusus.core.internal.proportions.rawdata.collectors.MLCollector;
 
 public class JavaFileDriver {
@@ -31,7 +32,8 @@ public class JavaFileDriver {
     public void compute() {
         ICompilationUnit compilationUnit = createCompilationUnitFrom( file );
         CompilationUnit parse = parse( compilationUnit );
-        for( ASTVisitor visitor : asList( new ClassCollector( file ), new MLCollector( file ), new CCCollector( file ), new ACDCollector( file ) ) ) {
+        for( Collector visitor : asList( new ClassCollector(), new MLCollector(), new CCCollector(), new ACDCollector() ) ) {
+            visitor.setup( file, UsusModelProvider.getMetricsWriter() );
             parse.accept( visitor );
         }
     }

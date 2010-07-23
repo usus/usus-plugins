@@ -6,7 +6,7 @@ import org.projectusus.core.statistics.DefaultCockpitExtension;
 
 public class LinearCyclomaticComplexityStatistic extends DefaultCockpitExtension {
 
-    private static int CC_LIMIT = 5;
+    private static int CC_LIMIT = 4;
     private static String isisMetrics_cc = "Cyclomatic complexity (linear)"; //$NON-NLS-1$
 
     private double linearViolations = 0.0;

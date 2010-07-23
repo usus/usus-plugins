@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.internal.proportions.IMetricsWriter;
 
 public class MetricsAccessorTest {
 
@@ -23,8 +24,10 @@ public class MetricsAccessorTest {
         IFile file = mock( IFile.class );
         when( sourceBinding.getUnderlyingResource() ).thenReturn( file );
         when( targetBinding.getUnderlyingResource() ).thenReturn( file );
-        MetricsAccessor model = new MetricsAccessor();
+        IMetricsWriter model = new MetricsAccessor();
 
         model.addClassReference( sourceBinding, targetBinding );
+
+        // TODO und was jetzt?? Was wollen wir hier testen?
     }
 }

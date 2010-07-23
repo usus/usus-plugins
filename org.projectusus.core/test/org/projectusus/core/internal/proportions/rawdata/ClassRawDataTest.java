@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
@@ -52,7 +53,7 @@ public class ClassRawDataTest {
 
     @Test
     public void numberOf1Method() {
-        classRawData.setCCValue( method1, 0 );
+        classRawData.putData( method1, MetricsResults.CC, 0 );
         // assertEquals( 1, classRawData.getNumberOf( CodeProportionUnit.CLASS ) );
         // assertEquals( 1, classRawData.getNumberOf( CodeProportionUnit.METHOD ) );
     }
@@ -67,7 +68,7 @@ public class ClassRawDataTest {
     @Test
     public void violationCountCC1Method() {
         int value = 6;
-        classRawData.setCCValue( method1, value );
+        classRawData.putData( method1, MetricsResults.CC, value );
         // assertEquals( 0, classRawData.getViolationCount( CodeProportionKind.KG ) );
         // assertEquals( 1, classRawData.getViolationCount( CodeProportionKind.CC ) );
         // assertEquals( 0, classRawData.getViolationCount( CodeProportionKind.ML ) );
@@ -76,7 +77,7 @@ public class ClassRawDataTest {
     @Test
     public void violationCountML1Method() {
         int value = 16;
-        classRawData.setMLValue( method1, value );
+        classRawData.putData( method1, MetricsResults.ML, value );
         // assertEquals( 0, classRawData.getViolationCount( CodeProportionKind.KG ) );
         // assertEquals( 0, classRawData.getViolationCount( CodeProportionKind.CC ) );
         // assertEquals( 1, classRawData.getViolationCount( CodeProportionKind.ML ) );

@@ -12,7 +12,7 @@ import org.projectusus.core.statistics.DefaultCockpitExtension;
  */
 public class LinearClassSizeStatistic extends DefaultCockpitExtension {
 
-    private static int KG_LIMIT = 20;
+    private static int KG_LIMIT = 12;
     private static String isisMetrics_kg = "Class size (linear)"; //$NON-NLS-1$
 
     private double linearViolations = 0.0;

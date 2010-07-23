@@ -10,8 +10,6 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsAccessor;
 import org.projectusus.core.basis.GraphNode;
-import org.projectusus.core.basis.YellowCountCache;
-import org.projectusus.core.basis.YellowCountResult;
 import org.projectusus.core.filerelations.internal.model.CrossPackageClassRelations;
 import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.BoundType;
@@ -22,59 +20,27 @@ import org.projectusus.core.internal.proportions.IMetricsWriter;
 import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
-    private final WorkspaceRawData workspaceRawData;
+    public final WorkspaceRawData workspaceRawData;
 
     public MetricsAccessor() {
         super();
         workspaceRawData = new WorkspaceRawData();
     }
 
-    public void dropRawData( IProject project ) {
-        workspaceRawData.dropRawData( project );
-    }
-
-    public void dropRawData( IFile file ) {
-        ProjectRawData projectRawData = workspaceRawData.getProjectRawData( file.getProject() );
-        if( projectRawData != null ) {
-            projectRawData.dropRawData( file );
-        }
-    }
-
     public void addClassReference( BoundType sourceType, BoundType targetType ) {
         ClassDescriptor.of( sourceType ).addChild( ClassDescriptor.of( targetType ) );
     }
 
-    public void setCCValue( IFile file, MethodDeclaration methodDecl, int value ) {
-        getOrCreateFileRawData( file ).setCCValue( methodDecl, value );
+    public void putData( IFile file, MethodDeclaration methodDecl, String dataKey, int value ) {
+        workspaceRawData.putData( file, methodDecl, dataKey, value );
     }
 
-    public void setCCValue( IFile file, Initializer initializer, int value ) {
-        getOrCreateFileRawData( file ).setCCValue( initializer, value );
+    public void putData( IFile file, Initializer initializer, String dataKey, int value ) {
+        workspaceRawData.putData( file, initializer, dataKey, value );
     }
 
-    public void addClass( IFile file, AbstractTypeDeclaration node ) {
-        getOrCreateFileRawData( file ).addClass( node );
-        // TODO Aufruf dieser Methode ersetzen durch FileRawData.getOrCreateRawData
-    }
-
-    public void setMLValue( IFile file, MethodDeclaration methodDecl, int value ) {
-        getOrCreateFileRawData( file ).setMLValue( methodDecl, value );
-    }
-
-    public void setMLValue( IFile file, Initializer initializer, int value ) {
-        getOrCreateFileRawData( file ).setMLValue( initializer, value );
-    }
-
-    private FileRawData getOrCreateFileRawData( IFile file ) {
-        return workspaceRawData.getOrCreateProjectRawData( file.getProject() ).getOrCreateFileRawData( file );
-    }
-
-    private FileRawData getFileRawData( IFile file ) {
-        ProjectRawData projectRawData = workspaceRawData.getProjectRawData( file.getProject() );
-        if( projectRawData == null ) {
-            return null;
-        }
-        return projectRawData.getFileRawData( file );
+    public void putData( IFile file, AbstractTypeDeclaration node, String dataKey, int value ) {
+        workspaceRawData.putData( file, node, dataKey, value );
     }
 
     public void acceptAndGuide( IMetricsResultVisitor visitor ) {
@@ -93,8 +59,12 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         return CrossPackageClassRepresenter.transformToRepresenterSet( ClassDescriptor.getAll(), new CrossPackageClassRelations() );
     }
 
-    public YellowCountResult getWarnings() {
-        return YellowCountCache.yellowCountCache().getResult();
+    public void dropRawData( IProject project ) {
+        workspaceRawData.dropRawData( project );
+    }
+
+    public void dropRawData( IFile file ) {
+        workspaceRawData.dropRawData( file );
     }
 
     public void cleanupRelations( IProgressMonitor monitor ) {
@@ -102,23 +72,9 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
         monitor.beginTask( null, candidates.size() );
         monitor.subTask( "Updating file relations" ); //$NON-NLS-1$
         for( ClassDescriptor descriptor : candidates ) {
-            removeRelationIfTargetIsGone( descriptor );
+            workspaceRawData.removeRelationIfTargetIsGone( descriptor );
             monitor.worked( 1 );
         }
         monitor.done();
     }
-
-    private void removeRelationIfTargetIsGone( ClassDescriptor descriptor ) {
-        IFile targetFile = descriptor.getFile();
-        FileRawData fileRawData = getFileRawData( targetFile );
-        if( fileRawData == null ) {
-            descriptor.removeFromPool();
-        } else {
-            ClassRawData classRawData = fileRawData.findClass( descriptor.getClassname() );
-            if( classRawData == null ) {
-                descriptor.removeFromPool();
-            }
-        }
-    }
-
 }

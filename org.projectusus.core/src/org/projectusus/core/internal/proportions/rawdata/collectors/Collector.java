@@ -2,19 +2,28 @@ package org.projectusus.core.internal.proportions.rawdata.collectors;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.internal.proportions.IMetricsWriter;
 
 public abstract class Collector extends ASTVisitor {
 
-    protected final IFile file;
+    protected IFile file;
+    protected IMetricsWriter metricsWriter;
 
-    public Collector( IFile file ) {
+    public Collector() {
         super();
-        this.file = file;
+    }
+
+    // public Collector( IFile file ) {
+    // super();
+    // this.file = file;
+    // }
+
+    public void setup( IFile newFile, IMetricsWriter newMetricsWriter ) {
+        this.file = newFile;
+        this.metricsWriter = newMetricsWriter;
     }
 
     protected IMetricsWriter getMetricsWriter() {
-        return UsusModelProvider.getMetricsWriter();
+        return metricsWriter;
     }
 }

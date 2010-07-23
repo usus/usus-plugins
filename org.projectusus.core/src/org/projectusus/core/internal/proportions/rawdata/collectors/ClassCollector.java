@@ -1,15 +1,15 @@
 package org.projectusus.core.internal.proportions.rawdata.collectors;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.projectusus.core.basis.MetricsResults;
 
 public class ClassCollector extends Collector {
 
-    public ClassCollector( IFile file ) {
-        super( file );
+    public ClassCollector() {
+        super();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ClassCollector extends Collector {
     }
 
     private boolean addAbstractTypeDeclaration( AbstractTypeDeclaration node ) {
-        getMetricsWriter().addClass( file, node );
+        getMetricsWriter().putData( file, node, MetricsResults.CLASS_CREATION, 0 );
         return true;
     }
 }

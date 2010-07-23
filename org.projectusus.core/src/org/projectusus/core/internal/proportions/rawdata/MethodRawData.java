@@ -19,12 +19,8 @@ public class MethodRawData implements IRawData {
         data = new MetricsResults();
     }
 
-    public void setCCValue( int value ) {
-        data.add( MetricsResults.CC, new Integer( value ) );
-    }
-
-    public void setMLValue( int value ) {
-        data.add( MetricsResults.ML, new Integer( value ) );
+    public void putData( String dataKey, int value ) {
+        data.put( dataKey, value );
     }
 
     public void acceptAndGuide( IMetricsResultVisitor visitor ) {

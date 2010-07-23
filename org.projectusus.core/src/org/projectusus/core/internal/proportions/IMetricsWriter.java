@@ -10,13 +10,9 @@ public interface IMetricsWriter {
 
     void addClassReference( BoundType sourceType, BoundType targetType );
 
-    void setCCValue( IFile file, MethodDeclaration methodDecl, int value );
+    void putData( IFile file, MethodDeclaration methodDecl, String dataKey, int value );
 
-    void setCCValue( IFile file, Initializer initializer, int value );
+    void putData( IFile file, Initializer initializer, String dataKey, int value );
 
-    void addClass( IFile file, AbstractTypeDeclaration node );
-
-    void setMLValue( IFile file, MethodDeclaration methodDecl, int value );
-
-    void setMLValue( IFile file, Initializer initializer, int value );
+    void putData( IFile file, AbstractTypeDeclaration node, String dataKey, int value );
 }
