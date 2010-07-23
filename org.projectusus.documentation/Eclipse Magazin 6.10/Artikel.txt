@@ -1,0 +1,8 @@
+Abstract
+
+Zum Inhalt: Beginnen würden wir mit einer Abgrenzung zu anderen Analyse-Werkzeugen 
+wie Checkstyle, FindBugs, PMD etc. Anschließend würden wir das Entwickeln mit 
+Usus-Unterstützung -- wie von Ihnen vorgeschlagen -- anhand eines Beispiels 
+demonstrieren. Abschließend würden wir auf die Erweiterbarkeit von Usus 
+(an der wir gerade arbeiten) zu sprechen kommen und einen Ausblick auf mögliche 
+zukünftige Features geben.
