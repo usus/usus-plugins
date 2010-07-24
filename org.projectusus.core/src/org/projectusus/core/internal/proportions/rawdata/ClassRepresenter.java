@@ -3,7 +3,6 @@ package org.projectusus.core.internal.proportions.rawdata;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.internal.metrics.BottleneckCalculator;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
@@ -11,9 +10,8 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 
-public class ClassRepresenter implements GraphNode {
+public class ClassRepresenter extends AbstractClassRepresenter {
 
-    private final ClassDescriptor clazz;
     private Set<GraphNode> childrenCache = null;
 
     public static Set<GraphNode> transformToRepresenterSet( Set<ClassDescriptor> classes ) {
@@ -26,7 +24,7 @@ public class ClassRepresenter implements GraphNode {
     }
 
     public ClassRepresenter( ClassDescriptor clazz ) {
-        this.clazz = clazz;
+        super( clazz );
     }
 
     public Set<GraphNode> getChildren() {
@@ -42,22 +40,10 @@ public class ClassRepresenter implements GraphNode {
 
     @Override
     public boolean equals( Object obj ) {
-        return obj instanceof ClassRepresenter && clazz.equals( ((ClassRepresenter)obj).clazz );
+        return obj instanceof ClassRepresenter && super.equals( obj );
     }
 
     @Override
-    public int hashCode() {
-        return clazz.hashCode();
-    }
-
-    public String getEdgeStartLabel() {
-        return ""; // + relations.getTransitiveParentCount( clazz ); //$NON-NLS-1$
-    }
-
-    public String getEdgeMiddleLabel() {
-        return ""; //$NON-NLS-1$
-    }
-
     public String getEdgeEndLabel() {
         return String.valueOf( getRelationCount() );
     }
@@ -74,11 +60,4 @@ public class ClassRepresenter implements GraphNode {
         return BottleneckCalculator.getBottleneckCount( this.clazz );
     }
 
-    public boolean isPackage() {
-        return false;
-    }
-
-    public IFile getFile() {
-        return clazz.getFile();
-    }
 }
