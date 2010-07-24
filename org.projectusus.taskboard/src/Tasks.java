@@ -7,55 +7,54 @@ public class Tasks {
         // gehalten, pro Metrik ein gespeichertes Werteobjekt.
     }
 
-    void namensgebung() {
-        // TODO Namensgebung geradeziehen: Was?
-    }
-
-    void documentationOfCalculations() {
+    void nicole_documentationOfCalculations() {
         // TODO Doku der Usus-Interna. Welche Schwellwerte? Was sind die Level? etc.
     }
 
-    void maximizeTablesInCockpitAndHotspots() {
+    void andreas_marc_maximizeTablesInCockpitAndHotspots() {
         // TODO Tabellen sollten ab einer gewissen Fensterbreite "magnetisch" die ganze Breite des Fensters einnehmen.
     }
 
-    void useEclipseDisplayInPackagenames() {
+    void nicole_marc_useEclipseDisplayInPackagenames() {
         // TODO Packagenamen üŸberall mit Eclipse Appearance Regeln darstellen (Package View, Hotspots, ...).
+        // Nicole liefert hierzu ein JavaElement für die Packages
     }
+
+    void nicole_marc_createExplanatoryDocumentation() {
+        // TODO Doku: Warum soll ich meinen Code äŠndern? Wo kann ich weiterlesen?
+        // - Position Paper: Usus vs. Checkstyle, PMD, ...
+        // Dies fliesst ein in den Eclipse Magazin Artikel 6.10
+    }
+
+    void nicole_evtl_marc_bugACDAnalysis() {
+        // TODO static fields are not regarded. fix it.
+    }
+
+    void marc_improveGraphLayoutsWithZest() {
+        // TODO ZEST Layouting verbessern.
+        // Spring Layout als Default.
+    }
+
+    void evtl_nicole_createPackageView() {
+        // TODO PackageView: Packages im Package Graph auswäŠhlen, die enthaltenen Klassen im Class View darstellen
+    }
+
+    void leif_createShadowForMarc() {
+        // TODO Schatten am InfoPresenter (extra fŸür Marc :-)
+    }
+
+    void andreas_createTrends() {
+        // TODO Wertehistorie: Verbesserte und verschlechterte Werte ausweisen und danach sortieren.
+    }
+
+    // ///////// Tasks for versions after USUS 1.0
 
     void createMudHoleHotspots() {
         // TODO Aggregierte Hotspots = "Schlammlšöcher"
     }
 
-    void createExplanatoryDocumentation() {
-        // TODO Doku: Warum soll ich meinen Code äŠndern? Wo kann ich weiterlesen?
-        // - Position Paper: Usus vs. Checkstyle, PMD, ...
-    }
-
-    void bugACDAnalysis() {
-        // TODO static fields are not regarded. fix it.
-    }
-
-    void createPackageView() {
-        // TODO PackageView: Packages im Package Graph auswäŠhlen, die enthaltenen Klassen im Class View darstellen
-    }
-
-    void improveGraphLayoutsWithZest() {
-        // TODO ZEST Layouting verbessern.
-    }
-
-    // ///////// Tasks for versions after USUS 1.0
-
     void pimpDependencyGraphForRemoving() {
         // TODO DependencyGraph: Man kann ausgewäŠhlte Knoten aus den Graphen entfernen
-    }
-
-    void createShadowForMarc() {
-        // TODO Schatten am InfoPresenter (extra fŸür Marc :-)
-    }
-
-    void createTrends() {
-        // TODO Wertehistorie: Verbesserte und verschlechterte Werte ausweisen und danach sortieren.
     }
 
     void makeJobCancellable() {
@@ -67,6 +66,7 @@ public class Tasks {
         // Code Smells
         // Feature Envy
         // Useless Comments
+        // Data Classes
     }
 
     void createRealAcd() {
@@ -88,7 +88,7 @@ public class Tasks {
         // TODO Hotspots fŸür Package Cycles?? Hotspot ^=^ Zyklus-Objekt. Relevant: # Packages im Zyklus
     }
 
-    void createNatureInsteadSeperateView() {
+    void createNatureInsteadOfASeparateView() {
         // TODO Projektaktivierung in den Project Prefs statt in einem eigenen View?
         // Decorator am Projekt. Eigene Nature zufŸügen.
     }
