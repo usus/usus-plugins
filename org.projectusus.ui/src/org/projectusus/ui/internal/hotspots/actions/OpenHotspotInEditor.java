@@ -5,18 +5,11 @@
 package org.projectusus.ui.internal.hotspots.actions;
 
 import static org.eclipse.jdt.core.JavaCore.createCompilationUnitFrom;
-import static org.eclipse.jdt.ui.JavaUI.openInEditor;
-import static org.eclipse.ui.PlatformUI.getWorkbench;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jface.action.Action;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.ide.IDE;
 import org.projectusus.core.basis.Hotspot;
-import org.projectusus.ui.internal.UsusUIPlugin;
+import org.projectusus.ui.util.EditorOpener;
 
 public class OpenHotspotInEditor extends Action {
 
@@ -29,55 +22,23 @@ public class OpenHotspotInEditor extends Action {
     @Override
     public void run() {
         ICompilationUnit compilationUnit = extractCompilationUnit();
+        EditorOpener opener = new EditorOpener();
         if( compilationUnit != null ) {
-            openEditorAt( compilationUnit );
+            opener.openEditorAt( compilationUnit, hotspot.getSourcePosition() );
         } else {
-            openEditorAt( hotspot.getFile() );
-        }
-    }
-
-    private void openEditorAt( IFile file ) {
-        try {
-            IDE.openEditor( getActivePage(), file );
-        } catch( PartInitException paix ) {
-            UsusUIPlugin.getDefault().getLog().log( paix.getStatus() );
+            opener.openEditor( hotspot.getFile() );
         }
     }
 
     private ICompilationUnit extractCompilationUnit() {
-        ICompilationUnit result = null;
         try {
-            result = createCompilationUnitFrom( hotspot.getFile() );
+            return createCompilationUnitFrom( hotspot.getFile() );
         } catch( Exception ex ) {
             // The contract says that it returns null when a compilation unit
             // couldn't be loaded (e.g. it's a non-Java file); but actually,
             // the request fires an exception. Well, in any case, we know there
             // is no compilation unit...
+            return null;
         }
-        return result;
-    }
-
-    private void openEditorAt( ICompilationUnit compilationUnit ) {
-        if( compilationUnit != null ) {
-            try {
-                openJavaEditor( compilationUnit );
-            } catch( Exception ex ) {
-                UsusUIPlugin.getDefault().log( ex );
-            }
-        }
-    }
-
-    private void openJavaEditor( ICompilationUnit compilationUnit ) throws Exception {
-        IJavaElement javaElement = compilationUnit.getElementAt( hotspot.getSourcePosition() );
-        if( javaElement == null ) {
-            javaElement = compilationUnit.getPrimaryElement();
-        }
-        if( javaElement != null ) {
-            openInEditor( javaElement, true, true );
-        }
-    }
-
-    private IWorkbenchPage getActivePage() {
-        return getWorkbench().getActiveWorkbenchWindow().getActivePage();
     }
 }

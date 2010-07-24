@@ -3,6 +3,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.internal.metrics.BottleneckCalculator;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
@@ -75,5 +76,9 @@ public class ClassRepresenter implements GraphNode {
 
     public boolean isPackage() {
         return false;
+    }
+
+    public IFile getFile() {
+        return clazz.getFile();
     }
 }

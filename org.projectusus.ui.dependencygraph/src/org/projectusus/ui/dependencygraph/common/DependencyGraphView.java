@@ -4,7 +4,10 @@ import static org.projectusus.core.internal.proportions.rawdata.UsusModel.ususMo
 
 import java.util.Set;
 
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -23,6 +26,7 @@ import org.eclipse.zest.core.widgets.ZestStyles;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
+import org.projectusus.ui.util.EditorOpener;
 
 public abstract class DependencyGraphView extends ViewPart implements FilterLimitProvider {
 
@@ -151,6 +155,17 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
         graphViewer.setContentProvider( new NodeContentProvider() );
         graphViewer.setLabelProvider( new NodeLabelProvider() );
         graphViewer.setFilters( new ViewerFilter[] { new NodeFilter( this ) } );
+        graphViewer.addDoubleClickListener( new IDoubleClickListener() {
+            public void doubleClick( DoubleClickEvent event ) {
+                ISelection selection = graphViewer.getSelection();
+                Object selected = ((IStructuredSelection)selection).getFirstElement();
+                if( selected instanceof GraphNode ) {
+                    GraphNode graphNode = (GraphNode)selected;
+                    EditorOpener opener = new EditorOpener();
+                    opener.openEditor( graphNode.getFile() );
+                }
+            }
+        } );
         setLayout( GraphLayouts.getFirst() );
     }
 

@@ -2,6 +2,8 @@ package org.projectusus.core.basis;
 
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
+
 public interface GraphNode {
 
     Set<? extends GraphNode> getChildren();
@@ -19,4 +21,6 @@ public interface GraphNode {
     boolean isVisibleFor( int limit );
 
     boolean isPackage();
+
+    IFile getFile();
 }
