@@ -30,11 +30,6 @@ public class Tasks {
         // TODO static fields are not regarded. fix it.
     }
 
-    void marc_improveGraphLayoutsWithZest() {
-        // TODO ZEST Layouting verbessern.
-        // Spring Layout als Default.
-    }
-
     void evtl_nicole_createPackageView() {
         // TODO PackageView: Packages im Package Graph ausw‰ählen, die enthaltenen Klassen im Class View darstellen
     }

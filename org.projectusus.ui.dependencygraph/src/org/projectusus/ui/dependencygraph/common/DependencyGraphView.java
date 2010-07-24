@@ -1,13 +1,20 @@
 package org.projectusus.ui.dependencygraph.common;
 
+import static java.util.Arrays.sort;
 import static org.projectusus.core.internal.proportions.rawdata.UsusModel.ususModel;
 
 import java.util.Set;
 
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -15,7 +22,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -38,7 +44,6 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
     private int filterLimit = -1;
     private IUsusModelListener listener;
     private Scale scale;
-    private Combo layoutCombo;
 
     public DependencyGraphView( DependencyGraphModel model ) {
         super();
@@ -85,15 +90,19 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
 
     private void createLayoutCombo( Composite filterArea ) {
         createLabel( filterArea, LAYOUT_LABEL );
-        layoutCombo = new Combo( filterArea, SWT.DROP_DOWN | SWT.READ_ONLY );
-        layoutCombo.setItems( GraphLayouts.asStrings() );
-        layoutCombo.select( 0 );
-        layoutCombo.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
+        ComboViewer comboViewer = new ComboViewer( filterArea, SWT.READ_ONLY );
+        comboViewer.setContentProvider( new ArrayContentProvider() );
+        comboViewer.setLabelProvider( new LabelProvider() );
+        GraphLayouts[] layouts = GraphLayouts.values();
+        sort( layouts, new GraphLayoutsComparator() );
+        comboViewer.setInput( layouts );
+        comboViewer.setSelection( new StructuredSelection( GraphLayouts.getDefault() ) );
+        comboViewer.addSelectionChangedListener( new ISelectionChangedListener() {
+            public void selectionChanged( final SelectionChangedEvent event ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
-                        setLayoutFor( layoutCombo.getSelectionIndex() );
+                        IStructuredSelection selection = (IStructuredSelection)event.getSelection();
+                        setLayout( (GraphLayouts)selection.getFirstElement() );
                         drawGraphUnconditionally();
                     }
                 } );
@@ -125,10 +134,6 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
         GridData gridData = new GridData();
         gridData.grabExcessHorizontalSpace = true;
         filterText.setLayoutData( gridData );
-    }
-
-    private void setLayoutFor( int index ) {
-        setLayout( GraphLayouts.forIndex( index ) );
     }
 
     protected abstract String getScaleRightLabelText();
@@ -166,7 +171,7 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
                 }
             }
         } );
-        setLayout( GraphLayouts.getFirst() );
+        setLayout( GraphLayouts.getDefault() );
     }
 
     private void setLayout( GraphLayouts layout ) {

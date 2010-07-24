@@ -1,8 +1,5 @@
 package org.projectusus.ui.dependencygraph.common;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.zest.layouts.LayoutAlgorithm;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.GridLayoutAlgorithm;
@@ -13,7 +10,7 @@ import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.VerticalLayoutAlgorithm;
 
-public enum GraphLayouts {
+public enum GraphLayouts implements Comparable<GraphLayouts> {
 
     GRID( "Grid" ) {
         @Override
@@ -22,14 +19,14 @@ public enum GraphLayouts {
         }
     },
 
-    HORIZONTAL( "Horizontal" ) {
+    HORIZONTAL( "Linear (horizontal)" ) {
         @Override
         public LayoutAlgorithm createAlgorithm() {
             return new HorizontalLayoutAlgorithm( DEFAULT_STYLE );
         }
     },
 
-    HORIZONTAL_TREE( "Horizontal Tree" ) {
+    HORIZONTAL_TREE( "Tree (horizontal)" ) {
         @Override
         public LayoutAlgorithm createAlgorithm() {
             return new HorizontalTreeLayoutAlgorithm( DEFAULT_STYLE );
@@ -50,14 +47,14 @@ public enum GraphLayouts {
         }
     },
 
-    TREE( "Tree" ) {
+    TREE( "Tree (vertical)" ) {
         @Override
         public LayoutAlgorithm createAlgorithm() {
             return new TreeLayoutAlgorithm( DEFAULT_STYLE );
         }
     },
 
-    VERTICAL( "Vertical" ) {
+    VERTICAL( "Linear (vertical)" ) {
         @Override
         public LayoutAlgorithm createAlgorithm() {
             return new VerticalLayoutAlgorithm( DEFAULT_STYLE );
@@ -65,29 +62,25 @@ public enum GraphLayouts {
     };
 
     private static final int DEFAULT_STYLE = LayoutStyles.NO_LAYOUT_NODE_RESIZING;
+
     private final String title;
 
     GraphLayouts( String title ) {
         this.title = title;
     }
 
+    public String title() {
+        return title;
+    }
+
+    @Override
+    public String toString() {
+        return title();
+    }
+
     public abstract LayoutAlgorithm createAlgorithm();
 
-    public static GraphLayouts getFirst() {
-        return forIndex( 0 );
-    }
-
-    public static String[] asStrings() {
-        GraphLayouts[] values = values();
-        int length = values.length;
-        List<String> result = new ArrayList<String>( length );
-        for( GraphLayouts layout : values ) {
-            result.add( layout.title );
-        }
-        return result.toArray( new String[length] );
-    }
-
-    public static GraphLayouts forIndex( int index ) {
-        return values()[index];
+    public static GraphLayouts getDefault() {
+        return SPRING;
     }
 }
