@@ -14,7 +14,7 @@ import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 public class FileRelationClassDescriptorTest {
 
     private IFile file = mock( IFile.class );
-    private Packagename packagename = Packagename.of( "packagename" ); //$NON-NLS-1$
+    private Packagename packagename = Packagename.of( "packagename", null ); //$NON-NLS-1$
     private String class1 = "Name1"; //$NON-NLS-1$
     private Classname classname1 = new Classname( class1 );
     private String class2 = "Name2"; //$NON-NLS-1$

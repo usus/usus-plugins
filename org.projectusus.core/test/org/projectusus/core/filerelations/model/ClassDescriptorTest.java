@@ -38,8 +38,8 @@ public class ClassDescriptorTest {
         assertEquals( classname1, classname2 );
         assertNotSame( classname1, classname2 );
 
-        Packagename packagename1 = Packagename.of( "packagename" ); //$NON-NLS-1$
-        Packagename packagename2 = Packagename.of( "packagename" ); //$NON-NLS-1$
+        Packagename packagename1 = Packagename.of( "packagename", null ); //$NON-NLS-1$
+        Packagename packagename2 = Packagename.of( "packagename", null ); //$NON-NLS-1$
         assertEquals( packagename1, packagename2 );
         assertSame( packagename1, packagename2 );
 
@@ -80,8 +80,8 @@ public class ClassDescriptorTest {
 
     @Test
     public void isCrossPackage() {
-        ClassDescriptor first = createDescriptor( Packagename.of( "x" ) ); //$NON-NLS-1$
-        ClassDescriptor second = createDescriptor( Packagename.of( "y" ) ); //$NON-NLS-1$
+        ClassDescriptor first = createDescriptor( Packagename.of( "x", null ) ); //$NON-NLS-1$
+        ClassDescriptor second = createDescriptor( Packagename.of( "y", null ) ); //$NON-NLS-1$
         first.addChild( second );
         assertThat( first.getChildrenInOtherPackages(), hasItems( second ) );
     }

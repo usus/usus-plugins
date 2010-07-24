@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.eclipse.jdt.core.IJavaElement;
 
 public class Packagename {
 
@@ -13,16 +14,17 @@ public class Packagename {
     private Set<ClassDescriptor> classesInPackage = new HashSet<ClassDescriptor>();
 
     private static Map<String, Packagename> allPackages = new HashMap<String, Packagename>();
+    private final IJavaElement javaElement;
 
     public static void clear() {
         allPackages = new HashMap<String, Packagename>();
     }
 
-    public static Packagename of( String name ) {
+    public static Packagename of( String name, IJavaElement javaElement ) {
         if( allPackages.containsKey( name ) ) {
             return allPackages.get( name );
         }
-        Packagename newPackage = new Packagename( name );
+        Packagename newPackage = new Packagename( name, javaElement );
         allPackages.put( name, newPackage );
         return newPackage;
     }
@@ -31,8 +33,9 @@ public class Packagename {
         return new HashSet<Packagename>( allPackages.values() );
     }
 
-    private Packagename( String name ) {
+    private Packagename( String name, IJavaElement javaElement ) {
         this.name = name;
+        this.javaElement = javaElement;
     }
 
     public void addClass( ClassDescriptor clazz ) {
@@ -67,6 +70,10 @@ public class Packagename {
     @Override
     public String toString() {
         return name;
+    }
+
+    public IJavaElement getJavaElement() {
+        return javaElement;
     }
 
     public Relation<Packagename> getRelationTo( Packagename target ) {

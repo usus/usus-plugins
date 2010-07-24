@@ -88,7 +88,7 @@ public class BoundType {
 
     private BoundType( ITypeBinding binding ) {
         classname = new Classname( binding.getName() );
-        packagename = Packagename.of( binding.getPackage().getName() );
+        packagename = Packagename.of( binding.getPackage().getName(), binding.getPackage().getJavaElement() );
         underlyingResource = determineUnderlyingResource( binding );
     }
 

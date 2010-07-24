@@ -6,7 +6,6 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import static org.projectusus.core.internal.proportions.rawdata.JDTSupport.getCompilationUnit;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
@@ -19,7 +18,6 @@ import org.projectusus.core.basis.SourceCodeLocation;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
-import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 public class ClassRawData extends RawData<Integer, MethodRawData> {
@@ -38,11 +36,6 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
     public ClassRawData( BoundType binding, String name, int startPosition, int line ) {
         this( name, startPosition, line );
         this.descriptor = ClassDescriptor.of( binding );
-    }
-
-    public ClassRawData( IFile file, String packageName, String name, int startPosition, int line ) {
-        this( name, startPosition, line );
-        this.descriptor = ClassDescriptor.of( file, new Classname( name ), Packagename.of( packageName ) );
     }
 
     // for debugging:

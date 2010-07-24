@@ -41,7 +41,7 @@ public class ClassRawDataTest {
         IFile resourceMock = mock( IFile.class );
         when( typeBinding.getUnderlyingResource() ).thenReturn( resourceMock );
         when( typeBinding.getClassname() ).thenReturn( new Classname( CLASSNAME ) );
-        when( typeBinding.getPackagename() ).thenReturn( Packagename.of( PACKAGENAME ) );
+        when( typeBinding.getPackagename() ).thenReturn( Packagename.of( PACKAGENAME, null ) );
         return typeBinding;
     }
 

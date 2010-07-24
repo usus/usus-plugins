@@ -14,7 +14,7 @@ public class ClassDescriptorDirectChildrenTest {
     private Classname classname1 = new Classname( classNameString + "1" );
     private Classname classname2 = new Classname( classNameString + "2" );
     private Classname classname3 = new Classname( classNameString + "3" );
-    private Packagename packagename = Packagename.of( "packagename" );
+    private Packagename packagename = Packagename.of( "packagename", null );
     private ClassDescriptor descriptor1 = ClassDescriptor.of( file, classname1, packagename );
     private ClassDescriptor descriptor2 = ClassDescriptor.of( file, classname2, packagename );
     private ClassDescriptor descriptor3 = ClassDescriptor.of( file, classname3, packagename );

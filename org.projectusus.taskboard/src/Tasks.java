@@ -2,11 +2,6 @@ public class Tasks {
 
     // Tasks for USUS 1.0
 
-    void nicole_makeMetricsPluggable() {
-        // TODO Metriken pluggable machen: Collectors zufŸügen, Werte in RawData Struktur werden in einer Map
-        // gehalten, pro Metrik ein gespeichertes Werteobjekt.
-    }
-
     void nicole_documentationOfCalculations() {
         // TODO Doku der Usus-Interna. Welche Schwellwerte? Was sind die Level? etc.
     }
@@ -15,19 +10,14 @@ public class Tasks {
         // TODO Tabellen sollten ab einer gewissen Fensterbreite "magnetisch" die ganze Breite des Fensters einnehmen.
     }
 
-    void nicole_marc_useEclipseDisplayInPackagenames() {
+    void marc_useEclipseDisplayInPackagenames() {
         // TODO Packagenamen üŸberall mit Eclipse Appearance Regeln darstellen (Package View, Hotspots, ...).
-        // Nicole liefert hierzu ein JavaElement für die Packages
     }
 
     void nicole_marc_createExplanatoryDocumentation() {
         // TODO Doku: Warum soll ich meinen Code äŠndern? Wo kann ich weiterlesen?
         // - Position Paper: Usus vs. Checkstyle, PMD, ...
         // Dies fliesst ein in den Eclipse Magazin Artikel 6.10
-    }
-
-    void nicole_evtl_marc_bugACDAnalysis() {
-        // TODO static fields are not regarded. fix it.
     }
 
     void evtl_nicole_createPackageView() {
@@ -40,6 +30,17 @@ public class Tasks {
 
     void andreas_createTrends() {
         // TODO Wertehistorie: Verbesserte und verschlechterte Werte ausweisen und danach sortieren.
+    }
+
+    // ----------------
+
+    void nicole_evtl_marc_bugACDAnalysis() {
+        // TODO static fields are not regarded. fix it.
+    }
+
+    void nicole_makeMetricsPluggable() {
+        // TODO Metriken pluggable machen: Collectors zufŸügen, Werte in RawData Struktur werden in einer Map
+        // gehalten, pro Metrik ein gespeichertes Werteobjekt.
     }
 
     // ///////// Tasks for versions after USUS 1.0

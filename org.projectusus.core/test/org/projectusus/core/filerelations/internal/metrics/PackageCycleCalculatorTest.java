@@ -12,10 +12,10 @@ import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class PackageCycleCalculatorTest {
 
-    private static Packagename I = Packagename.of( "I" ); //$NON-NLS-1$
-    private static Packagename II = Packagename.of( "II" ); //$NON-NLS-1$
-    private static Packagename III = Packagename.of( "III" ); //$NON-NLS-1$
-    private static Packagename IV = Packagename.of( "IV" ); //$NON-NLS-1$
+    private static Packagename I = Packagename.of( "I", null ); //$NON-NLS-1$
+    private static Packagename II = Packagename.of( "II", null ); //$NON-NLS-1$
+    private static Packagename III = Packagename.of( "III", null ); //$NON-NLS-1$
+    private static Packagename IV = Packagename.of( "IV", null ); //$NON-NLS-1$
 
     private ClassDescriptor I_A;
     private ClassDescriptor I_B;

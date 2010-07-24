@@ -18,7 +18,7 @@ public class MetricsAccessorTest {
         BoundType targetBinding = mock( BoundType.class );
         when( sourceBinding.getClassname() ).thenReturn( new Classname( "sourceName" ) ); //$NON-NLS-1$
         when( targetBinding.getClassname() ).thenReturn( new Classname( "targetName" ) ); //$NON-NLS-1$
-        Packagename packagename = Packagename.of( "package" ); //$NON-NLS-1$
+        Packagename packagename = Packagename.of( "package", null ); //$NON-NLS-1$
         when( sourceBinding.getPackagename() ).thenReturn( packagename );
         when( targetBinding.getPackagename() ).thenReturn( packagename );
         IFile file = mock( IFile.class );
