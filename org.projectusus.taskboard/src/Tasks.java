@@ -14,10 +14,6 @@ public class Tasks {
         // TODO Tabellen sollten ab einer gewissen Fensterbreite "magnetisch" die ganze Breite des Fensters einnehmen.
     }
 
-    void marc_useEclipseDisplayInPackagenames() {
-        // TODO Packagenamen üŸberall mit Eclipse Appearance Regeln darstellen (Package View, Hotspots, ...).
-    }
-
     void nicole_marc_createExplanatoryDocumentation() {
         // TODO Doku: Warum soll ich meinen Code äŠndern? Wo kann ich weiterlesen?
         // - Position Paper: Usus vs. Checkstyle, PMD, ...
