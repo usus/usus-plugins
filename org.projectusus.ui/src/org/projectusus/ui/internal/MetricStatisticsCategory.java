@@ -1,24 +1,20 @@
-package org.projectusus.ui.internal.proportions.cockpit;
+package org.projectusus.ui.internal;
 
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_CODE_PROPORTIONS;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
-import java.util.List;
-
 import org.eclipse.swt.graphics.Image;
-import org.projectusus.ui.internal.AnalysisDisplayCategory;
-import org.projectusus.ui.internal.AnalysisDisplayEntry;
 
 public class MetricStatisticsCategory implements AnalysisDisplayCategory {
 
-    private final List<AnalysisDisplayEntry> entries;
+    private final AnalysisDisplayEntry[] entries;
 
-    public MetricStatisticsCategory( List<AnalysisDisplayEntry> entries ) {
+    public MetricStatisticsCategory( AnalysisDisplayEntry[] entries ) {
         this.entries = entries;
     }
 
     public AnalysisDisplayEntry[] getChildren() {
-        return entries.toArray( new AnalysisDisplayEntry[entries.size()] );
+        return entries;
     }
 
     public String getLabel() {

@@ -108,7 +108,6 @@ public class CockpitView extends ViewPart {
     private void refresh( AnalysisDisplayModel model ) {
         if( treeViewer != null && !treeViewer.getControl().isDisposed() ) {
             ISelection selection = treeViewer.getSelection();
-            treeViewer.refresh();
             treeViewer.setInput( model );
             treeViewer.expandAll();
             if( !selection.isEmpty() ) {

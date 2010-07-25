@@ -4,12 +4,10 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter;
 
-import java.util.ArrayList;
-
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.projectusus.ui.internal.AnalysisDisplayEntry;
-import org.projectusus.ui.internal.proportions.cockpit.MetricStatisticsCategory;
+import org.projectusus.ui.internal.MetricStatisticsCategory;
 import org.projectusus.ui.internal.proportions.infopresenter.infomodel.IUsusInfo;
 
 class UsusInfoCP implements ITreeContentProvider {
@@ -34,7 +32,7 @@ class UsusInfoCP implements ITreeContentProvider {
 
     public Object[] getElements( Object inputElement ) {
         Object[] result = new Object[1];
-        result[0] = new MetricStatisticsCategory( new ArrayList<AnalysisDisplayEntry>() );
+        result[0] = new MetricStatisticsCategory( new AnalysisDisplayEntry[0] );
         return result;
     }
 

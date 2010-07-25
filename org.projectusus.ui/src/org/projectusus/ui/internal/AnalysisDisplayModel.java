@@ -10,20 +10,16 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
-import org.projectusus.core.IUsusModel;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.internal.project.FindUsusProjects;
-import org.projectusus.ui.internal.proportions.cockpit.MetricStatisticsCategory;
 
 public class AnalysisDisplayModel {
 
     private static AnalysisDisplayModel instance;
 
     private final Set<IDisplayModelListener> listeners;
-
-    private final IUsusModel ususModel;
 
     private List<AnalysisDisplayEntry> snapshot = new ArrayList<AnalysisDisplayEntry>();
 
@@ -33,14 +29,13 @@ public class AnalysisDisplayModel {
 
     public static AnalysisDisplayModel displayModel() {
         if( instance == null ) {
-            instance = new AnalysisDisplayModel( ususModel() );
+            instance = new AnalysisDisplayModel();
         }
         return instance;
     }
 
-    private AnalysisDisplayModel( IUsusModel ususModel ) {
+    private AnalysisDisplayModel() {
         super();
-        this.ususModel = ususModel;
         listeners = new HashSet<IDisplayModelListener>();
         displayCategories = new DisplayCategories();
         initModelListener();
@@ -61,8 +56,7 @@ public class AnalysisDisplayModel {
                 createSnapshot();
             }
         }
-        AnalysisDisplayCategory[] categories = new AnalysisDisplayCategory[] { new MetricStatisticsCategory( createDisplayEntries( ususModel.getCodeProportions() ) ) };
-        displayCategories.replaceCategories( categories );
+        displayCategories.replaceCategories( createMetricsCategory() );
         notifyListeners();
     }
 
@@ -70,7 +64,8 @@ public class AnalysisDisplayModel {
         return displayCategories.getCategories();
     }
 
-    private List<AnalysisDisplayEntry> createDisplayEntries( List<CodeProportion> codeProportions ) {
+    private MetricStatisticsCategory createMetricsCategory() {
+        List<CodeProportion> codeProportions = ususModel().getCodeProportions();
         List<AnalysisDisplayEntry> result = new ArrayList<AnalysisDisplayEntry>();
         for( CodeProportion codeProportion : codeProportions ) {
             String label = codeProportion.getMetricLabel();
@@ -80,7 +75,7 @@ public class AnalysisDisplayModel {
             List<Hotspot> hotspots = codeProportion.getHotspots();
             result.add( new AnalysisDisplayEntry( label, level, violations, basis, codeProportion.hasHotspots(), hotspots, trendValueFor( label ) ) );
         }
-        return result;
+        return new MetricStatisticsCategory( result.toArray( new AnalysisDisplayEntry[result.size()] ) );
     }
 
     public List<AnalysisDisplayEntry> getEntriesOfAllCategories() {
