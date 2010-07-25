@@ -22,15 +22,17 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.ui.internal.AnalysisDisplayModel;
 import org.projectusus.ui.internal.IDisplayModelListener;
+import org.projectusus.ui.internal.Snapshot;
 import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
 import org.projectusus.ui.internal.proportions.actions.RefreshHotspots;
 import org.projectusus.ui.internal.proportions.actions.ToggleAutoCompute;
 import org.projectusus.ui.internal.selection.ExtractCodeProportion;
 
-public class CockpitView extends ViewPart {
+public class CockpitView extends ViewPart implements ISnapshotView {
 
     private CockpitTreeViewer treeViewer;
     private IDisplayModelListener listener;
+    private SnapshotInfoUpdater updater;
 
     @Override
     public void createPartControl( Composite parent ) {
@@ -39,7 +41,17 @@ public class CockpitView extends ViewPart {
         initActionBars();
         initContextMenuBehavior();
         initModelListener();
+        initSnapshotInfoUpdater();
         getViewSite().setSelectionProvider( treeViewer );
+    }
+
+    private void initSnapshotInfoUpdater() {
+        updater = new SnapshotInfoUpdater( this );
+        updater.start();
+    }
+
+    public void updateSnapshotInfo( String info ) {
+        setContentDescription( info );
     }
 
     @Override
@@ -51,6 +63,7 @@ public class CockpitView extends ViewPart {
 
     @Override
     public void dispose() {
+        updater.stop();
         displayModel().removeModelListener( listener );
         super.dispose();
     }
@@ -94,6 +107,14 @@ public class CockpitView extends ViewPart {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         handleDisplayModelChanged( model );
+                    }
+                } );
+            }
+
+            public void snapshotCreated( final Snapshot snapshot ) {
+                Display.getDefault().asyncExec( new Runnable() {
+                    public void run() {
+                        updater.update( snapshot );
                     }
                 } );
             }

@@ -21,7 +21,7 @@ public class AnalysisDisplayModel {
 
     private final Set<IDisplayModelListener> listeners;
 
-    private List<AnalysisDisplayEntry> snapshot = new ArrayList<AnalysisDisplayEntry>();
+    private Snapshot snapshot = new Snapshot();
 
     private IUsusModelListener listener;
 
@@ -41,6 +41,10 @@ public class AnalysisDisplayModel {
         initModelListener();
     }
 
+    public Snapshot getSnapshot() {
+        return snapshot;
+    }
+
     private void initModelListener() {
         listener = new IUsusModelListener() {
             public void ususModelChanged() {
@@ -57,7 +61,7 @@ public class AnalysisDisplayModel {
             }
         }
         displayCategories.replaceCategories( createMetricsCategory() );
-        notifyListeners();
+        fireUpdateCategories();
     }
 
     public AnalysisDisplayCategory[] getCategories() {
@@ -87,11 +91,8 @@ public class AnalysisDisplayModel {
     }
 
     public void createSnapshot() {
-        snapshot = getEntriesOfAllCategories();
-    }
-
-    public List<AnalysisDisplayEntry> getSnapshot() {
-        return snapshot;
+        snapshot = new Snapshot( getEntriesOfAllCategories() );
+        fireSnapshotCreated();
     }
 
     private Double trendValueFor( String label ) {
@@ -114,9 +115,15 @@ public class AnalysisDisplayModel {
     // internal
     // ////////
 
-    public void notifyListeners() {
+    private void fireUpdateCategories() {
         for( IDisplayModelListener listener : listeners ) {
             listener.updateCategories( this );
+        }
+    }
+
+    private void fireSnapshotCreated() {
+        for( IDisplayModelListener listener : listeners ) {
+            listener.snapshotCreated( snapshot );
         }
     }
 

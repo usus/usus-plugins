@@ -4,4 +4,6 @@ public interface IDisplayModelListener {
 
     void updateCategories( AnalysisDisplayModel model );
 
+    void snapshotCreated( Snapshot snapshot );
+
 }
