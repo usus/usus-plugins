@@ -7,6 +7,7 @@ package org.projectusus.ui.internal.proportions.cockpit;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.widgets.Composite;
+import org.projectusus.ui.internal.AnalysisDisplayEntry;
 import org.projectusus.ui.viewer.UsusTreeViewer;
 
 class CockpitTreeViewer extends UsusTreeViewer<AnalysisDisplayEntry> {

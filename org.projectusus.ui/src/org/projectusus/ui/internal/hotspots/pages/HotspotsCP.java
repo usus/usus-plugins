@@ -6,7 +6,7 @@ package org.projectusus.ui.internal.hotspots.pages;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayEntry;
+import org.projectusus.ui.internal.AnalysisDisplayEntry;
 
 class HotspotsCP implements ITreeContentProvider {
 

@@ -6,6 +6,8 @@ package org.projectusus.ui.internal.proportions.cockpit;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.projectusus.ui.internal.AnalysisDisplayCategory;
+import org.projectusus.ui.internal.AnalysisDisplayModel;
 
 public class CockpitCP implements ITreeContentProvider {
 

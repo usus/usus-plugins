@@ -1,4 +1,4 @@
-package org.projectusus.ui.internal.proportions.cockpit;
+package org.projectusus.ui.internal;
 
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_LEVELDOWN;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_LEVELUP;

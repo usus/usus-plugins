@@ -8,6 +8,7 @@ import static org.projectusus.ui.internal.proportions.cockpit.CockpitColumnDesc.
 
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.projectusus.ui.internal.AnalysisDisplayEntry;
 import org.projectusus.ui.internal.proportions.UsusModelLabelProvider;
 
 public class CockpitLP extends UsusModelLabelProvider implements ITableLabelProvider {

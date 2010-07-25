@@ -1,6 +1,10 @@
 public class Tasks {
 
     // Tasks for USUS 1.0
+	
+	void checkContextMenuInCockpit() {
+		// TODO soll das so bleiben?
+	}
 
     void nicole_documentationOfCalculations() {
         // TODO Doku der Usus-Interna. Welche Schwellwerte? Was sind die Level? etc.

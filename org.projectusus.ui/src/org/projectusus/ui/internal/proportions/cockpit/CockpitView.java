@@ -4,40 +4,33 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.cockpit;
 
-import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
-import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
+import static org.projectusus.ui.internal.AnalysisDisplayModel.displayModel;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.TreeSelection;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
-import org.projectusus.core.IUsusModelListener;
-import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.internal.project.FindUsusProjects;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
+import org.projectusus.ui.internal.AnalysisDisplayModel;
+import org.projectusus.ui.internal.IDisplayModelListener;
 import org.projectusus.ui.internal.proportions.actions.OpenHotspots;
 import org.projectusus.ui.internal.proportions.actions.RefreshHotspots;
 import org.projectusus.ui.internal.proportions.actions.ToggleAutoCompute;
 import org.projectusus.ui.internal.selection.ExtractCodeProportion;
-import org.projectusus.ui.internal.util.ISharedUsusImages;
 
 public class CockpitView extends ViewPart {
 
     private CockpitTreeViewer treeViewer;
-    private IUsusModelListener listener;
+    private IDisplayModelListener listener;
 
     @Override
     public void createPartControl( Composite parent ) {
@@ -58,7 +51,7 @@ public class CockpitView extends ViewPart {
 
     @Override
     public void dispose() {
-        UsusModel.ususModel().removeUsusModelListener( listener );
+        displayModel().removeModelListener( listener );
         super.dispose();
     }
 
@@ -86,13 +79,7 @@ public class CockpitView extends ViewPart {
     }
 
     protected void addContextActionsFor( IMenuManager manager, ISelection selection ) {
-        CodeProportion codeProportion = new ExtractCodeProportion( selection ).compute();
-        // if( codeProportion != null ) {
-        // if( codeProportion.getMetric() == CW ) {
-        // manager.add( new ShowProblemsView() );
-        // }
-        // }
-        // TODO was anstelle dessen?
+        new ExtractCodeProportion( selection ).compute();
     }
 
     private void initActionBars() {
@@ -102,58 +89,31 @@ public class CockpitView extends ViewPart {
     }
 
     private void initModelListener() {
-        listener = new IUsusModelListener() {
-            public void ususModelChanged() {
+        listener = new IDisplayModelListener() {
+            public void updateCategories( final AnalysisDisplayModel model ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
-                        handleUsusModelChanged();
+                        handleDisplayModelChanged( model );
                     }
                 } );
             }
         };
-        UsusModel.ususModel().addUsusModelListener( listener );
+        displayModel().addModelListener( listener );
     }
 
-    private void handleUsusModelChanged() {
-        if( hasUsusProjects() ) {
-            if( AnalysisDisplayModel.getInstance().getSnapshot().isEmpty() ) {
-                AnalysisDisplayModel.getInstance().createSnapshot();
-            }
-            enableViewer( true );
-            refresh();
-        } else {
-            enableViewer( false );
-            getStatusLine().setMessage( getWarningImage(), "No projects selected for use with Usus." );
-        }
+    private void handleDisplayModelChanged( AnalysisDisplayModel model ) {
+        refresh( model );
     }
 
-    private boolean hasUsusProjects() {
-        IProject[] wsProjects = getWorkspace().getRoot().getProjects();
-        return new FindUsusProjects( wsProjects ).compute().size() > 0;
-    }
-
-    private void enableViewer( boolean enabled ) {
-        if( treeViewer != null && !treeViewer.getControl().isDisposed() ) {
-            treeViewer.getControl().setEnabled( enabled );
-        }
-    }
-
-    private Image getWarningImage() {
-        return getSharedImages().getImage( ISharedUsusImages.OBJ_WARNINGS );
-    }
-
-    private IStatusLineManager getStatusLine() {
-        return getViewSite().getActionBars().getStatusLineManager();
-    }
-
-    private void refresh() {
+    private void refresh( AnalysisDisplayModel model ) {
         if( treeViewer != null && !treeViewer.getControl().isDisposed() ) {
             ISelection selection = treeViewer.getSelection();
             treeViewer.refresh();
+            treeViewer.setInput( model );
             treeViewer.expandAll();
             if( !selection.isEmpty() ) {
                 treeViewer.selectInTree( ((TreeSelection)selection).getFirstElement() );
-                new RefreshHotspots( AnalysisDisplayModel.getInstance() ).run();
+                new RefreshHotspots( model ).run();
             }
         }
     }
@@ -161,7 +121,6 @@ public class CockpitView extends ViewPart {
     private void createViewer( Composite parent ) {
         parent.setLayout( new FillLayout() );
         treeViewer = new CockpitTreeViewer( parent );
-        treeViewer.setInput( AnalysisDisplayModel.getInstance() );
     }
 
 }

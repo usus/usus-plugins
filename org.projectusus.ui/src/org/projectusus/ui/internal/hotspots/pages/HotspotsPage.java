@@ -13,8 +13,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.part.Page;
 import org.projectusus.core.basis.Hotspot;
+import org.projectusus.ui.internal.AnalysisDisplayEntry;
 import org.projectusus.ui.internal.hotspots.actions.OpenHotspotInEditor;
-import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayEntry;
 import org.projectusus.ui.internal.selection.ExtractHotspot;
 import org.projectusus.ui.viewer.UsusTreeViewer;
 

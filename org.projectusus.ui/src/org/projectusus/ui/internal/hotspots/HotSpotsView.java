@@ -13,10 +13,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
+import org.projectusus.ui.internal.AnalysisDisplayEntry;
 import org.projectusus.ui.internal.hotspots.pages.DefaultHotspotsPage;
 import org.projectusus.ui.internal.hotspots.pages.HotspotsPage;
 import org.projectusus.ui.internal.hotspots.pages.IHotspotsPage;
-import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayEntry;
 
 public class HotSpotsView extends ViewPart {
 

@@ -9,6 +9,7 @@ import static org.projectusus.ui.viewer.ColumnAlignment.RIGHT;
 
 import java.text.DecimalFormat;
 
+import org.projectusus.ui.internal.AnalysisDisplayEntry;
 import org.projectusus.ui.viewer.IColumnDesc;
 import org.projectusus.ui.viewer.UsusTreeColumn;
 

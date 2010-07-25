@@ -6,6 +6,8 @@ import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
+import org.projectusus.ui.internal.AnalysisDisplayCategory;
+import org.projectusus.ui.internal.AnalysisDisplayEntry;
 
 public class MetricStatisticsCategory implements AnalysisDisplayCategory {
 

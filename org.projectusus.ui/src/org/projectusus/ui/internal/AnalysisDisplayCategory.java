@@ -1,4 +1,4 @@
-package org.projectusus.ui.internal.proportions.cockpit;
+package org.projectusus.ui.internal;
 
 import org.eclipse.swt.graphics.Image;
 

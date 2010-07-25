@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.Page;
-import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayEntry;
+import org.projectusus.ui.internal.AnalysisDisplayEntry;
 
 public class DefaultHotspotsPage extends Page implements IHotspotsPage {
 

@@ -4,11 +4,15 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter;
 
-import org.projectusus.ui.internal.proportions.cockpit.CockpitCP;
-import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayCategory;
+import java.util.ArrayList;
+
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.Viewer;
+import org.projectusus.ui.internal.AnalysisDisplayEntry;
+import org.projectusus.ui.internal.proportions.cockpit.MetricStatisticsCategory;
 import org.projectusus.ui.internal.proportions.infopresenter.infomodel.IUsusInfo;
 
-class UsusInfoCP extends CockpitCP {
+class UsusInfoCP implements ITreeContentProvider {
 
     private final IUsusInfo ususInfo;
 
@@ -16,12 +20,33 @@ class UsusInfoCP extends CockpitCP {
         this.ususInfo = ususInfo;
     }
 
-    @Override
+    public void dispose() {
+        // unused
+    }
+
     public Object[] getChildren( Object parentElement ) {
         Object[] result = new Object[0];
-        if( parentElement instanceof AnalysisDisplayCategory ) {
+        if( !(parentElement instanceof String) ) {
             result = ususInfo.getCodeProportionInfos();
         }
         return result;
+    }
+
+    public Object[] getElements( Object inputElement ) {
+        Object[] result = new Object[1];
+        result[0] = new MetricStatisticsCategory( new ArrayList<AnalysisDisplayEntry>() );
+        return result;
+    }
+
+    public Object getParent( Object element ) {
+        return null;
+    }
+
+    public boolean hasChildren( Object element ) {
+        return getChildren( element ).length > 0;
+    }
+
+    public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
+        // unused
     }
 }

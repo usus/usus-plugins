@@ -5,7 +5,7 @@
 package org.projectusus.ui.internal.hotspots.pages;
 
 import org.eclipse.ui.part.IPageBookViewPage;
-import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayEntry;
+import org.projectusus.ui.internal.AnalysisDisplayEntry;
 
 public interface IHotspotsPage extends IPageBookViewPage {
 

@@ -12,9 +12,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.projectusus.ui.internal.AnalysisDisplayEntry;
 import org.projectusus.ui.internal.UsusUIPlugin;
 import org.projectusus.ui.internal.hotspots.HotSpotsView;
-import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayEntry;
 
 public class OpenHotspots extends Action {
 

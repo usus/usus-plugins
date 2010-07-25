@@ -9,8 +9,8 @@ import static org.eclipse.ui.PlatformUI.getWorkbench;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.projectusus.ui.internal.AnalysisDisplayModel;
 import org.projectusus.ui.internal.hotspots.HotSpotsView;
-import org.projectusus.ui.internal.proportions.cockpit.AnalysisDisplayModel;
 
 public class RefreshHotspots extends Action {
 
