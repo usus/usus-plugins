@@ -23,17 +23,14 @@ class UsusInfoCP implements ITreeContentProvider {
     }
 
     public Object[] getChildren( Object parentElement ) {
-        Object[] result = new Object[0];
-        if( !(parentElement instanceof String) ) {
-            result = ususInfo.getCodeProportionInfos();
+        if( (parentElement instanceof String) ) {
+            return new Object[0];
         }
-        return result;
+        return ususInfo.getCodeProportionInfos();
     }
 
     public Object[] getElements( Object inputElement ) {
-        Object[] result = new Object[1];
-        result[0] = new MetricStatisticsCategory( new AnalysisDisplayEntry[0] );
-        return result;
+        return new Object[] { new MetricStatisticsCategory( new AnalysisDisplayEntry[0] ) };
     }
 
     public Object getParent( Object element ) {

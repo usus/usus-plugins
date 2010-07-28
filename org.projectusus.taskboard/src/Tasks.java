@@ -24,10 +24,6 @@ public class Tasks {
         // TODO PackageView: Packages im Package Graph auswäŠhlen, die enthaltenen Klassen im Class View darstellen
     }
 
-    void leif_createShadowForMarc() {
-        // TODO Schatten am InfoPresenter (extra fŸür Marc :-)
-    }
-
     void andreas_createTrends() {
         // TODO Wertehistorie: Verbesserte und verschlechterte Werte ausweisen und danach sortieren.
     }
