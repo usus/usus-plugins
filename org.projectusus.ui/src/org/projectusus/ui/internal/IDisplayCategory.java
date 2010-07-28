@@ -2,7 +2,7 @@ package org.projectusus.ui.internal;
 
 import org.eclipse.swt.graphics.Image;
 
-public interface AnalysisDisplayCategory {
+public interface IDisplayCategory {
 
     AnalysisDisplayEntry[] getChildren();
 

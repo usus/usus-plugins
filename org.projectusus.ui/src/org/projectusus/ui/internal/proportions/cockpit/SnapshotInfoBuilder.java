@@ -11,9 +11,6 @@ import org.projectusus.ui.internal.Snapshot;
 public class SnapshotInfoBuilder {
 
     public String buildInfo( Snapshot snapshot ) {
-        if( snapshot.isEmpty() ) {
-            return "";
-        }
         Date date = snapshot.getDate();
         return "Snapshot taken at " + format( date ) + " (" + buildAgoMessage( date ) + ")";
     }

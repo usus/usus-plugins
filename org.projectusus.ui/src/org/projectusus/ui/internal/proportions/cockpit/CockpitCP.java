@@ -6,7 +6,7 @@ package org.projectusus.ui.internal.proportions.cockpit;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.projectusus.ui.internal.AnalysisDisplayCategory;
+import org.projectusus.ui.internal.IDisplayCategory;
 import org.projectusus.ui.internal.AnalysisDisplayModel;
 
 public class CockpitCP implements ITreeContentProvider {
@@ -19,8 +19,8 @@ public class CockpitCP implements ITreeContentProvider {
     }
 
     public Object[] getChildren( Object parentElement ) {
-        if( parentElement instanceof AnalysisDisplayCategory ) {
-            AnalysisDisplayCategory category = (AnalysisDisplayCategory)parentElement;
+        if( parentElement instanceof IDisplayCategory ) {
+            IDisplayCategory category = (IDisplayCategory)parentElement;
             return category.getChildren();
         }
         return new Object[0];

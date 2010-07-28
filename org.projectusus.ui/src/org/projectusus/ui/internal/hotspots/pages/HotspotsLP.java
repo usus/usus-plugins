@@ -7,26 +7,34 @@ package org.projectusus.ui.internal.hotspots.pages;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.projectusus.core.basis.Hotspot;
+import org.projectusus.ui.internal.DisplayHotspot;
+import org.projectusus.ui.internal.proportions.UsusModelLabelProvider;
 
-public class HotspotsLP extends LabelProvider implements ITableLabelProvider {
+public class HotspotsLP extends UsusModelLabelProvider implements ITableLabelProvider {
 
-    private final List<? extends IHotspotsPageColumnDesc> columnDescs;
+    private final List<? extends HotspotsColumnDesc> columnDescs;
 
-    public HotspotsLP( List<? extends IHotspotsPageColumnDesc> columnDescs ) {
+    public HotspotsLP( List<? extends HotspotsColumnDesc> columnDescs ) {
         this.columnDescs = columnDescs;
     }
 
     public String getColumnText( Object element, int columnIndex ) {
-        if( element instanceof Hotspot ) {
-            return columnDescs.get( columnIndex ).getLabel( (Hotspot)element );
+        if( element instanceof DisplayHotspot ) {
+            return columnDescs.get( columnIndex ).getLabel( (DisplayHotspot)element );
         }
         return element.toString();
     }
 
     public Image getColumnImage( Object element, int columnIndex ) {
+        HotspotsColumnDesc cockpitColumnDesc = HotspotsColumnDesc.values()[columnIndex];
+        if( cockpitColumnDesc == HotspotsColumnDesc.Trend && element instanceof DisplayHotspot ) {
+            return ((DisplayHotspot)element).getTrendImage();
+        }
+        if( cockpitColumnDesc.hasImage() ) {
+            return getColumnImageFor( element );
+        }
         return null;
     }
+
 }

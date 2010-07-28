@@ -1,7 +1,5 @@
 package org.projectusus.ui.internal.proportions.cockpit;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
@@ -9,16 +7,12 @@ import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 
 import java.util.Date;
-import java.util.List;
 
 import org.junit.Test;
-import org.projectusus.core.basis.Hotspot;
-import org.projectusus.ui.internal.AnalysisDisplayEntry;
 import org.projectusus.ui.internal.Snapshot;
 
 public class SnapshotInfoBuilderTest {
 
-    private static final List<Hotspot> NO_HOTSPOTS = emptyList();
     private static final int MINUTES = 60;
     private static final int HOURS = MINUTES * 60;
     private static final int DAYS = HOURS * 24;
@@ -28,8 +22,7 @@ public class SnapshotInfoBuilderTest {
 
     @Test
     public void buildInfo() {
-        assertThat( builder.buildInfo( new Snapshot() ), equalTo( "" ) );
-        String info = builder.buildInfo( new Snapshot( asList( new AnalysisDisplayEntry( "", 1d, 0, "", false, NO_HOTSPOTS, null ) ) ) );
+        String info = builder.buildInfo( new Snapshot() );
         assertThat( info, startsWith( "Snapshot taken at " ) );
         assertThat( info, endsWith( " (just now)" ) );
     }

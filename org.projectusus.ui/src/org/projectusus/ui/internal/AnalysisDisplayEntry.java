@@ -4,46 +4,41 @@ import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_LEVELDOWN;
 import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_LEVELUP;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
-import org.projectusus.core.basis.Hotspot;
+import org.projectusus.core.basis.CodeProportion;
 
-public class AnalysisDisplayEntry implements Cloneable {
+public class AnalysisDisplayEntry {
 
-    private final String label;
-    private final double level;
-    private final int violations;
-    private final String basis;
-    private final Double levelOfSnapshot;
-    private final List<Hotspot> hotspots;
-    private final boolean hasHotspots;
+    private CodeProportion history;
+    private CodeProportion current;
 
-    public AnalysisDisplayEntry( String label, double level, int violations, String basis, boolean hasHotspots, List<Hotspot> hotspots, Double levelOfSnapshot ) {
+    public AnalysisDisplayEntry( CodeProportion codeProportion ) {
         super();
-        this.label = label;
-        this.level = level;
-        this.violations = violations;
-        this.basis = basis;
-        this.hasHotspots = hasHotspots;
-        this.hotspots = hotspots;
-        this.levelOfSnapshot = levelOfSnapshot;
+        history = codeProportion;
+        setCodeProportion( codeProportion );
+    }
+
+    public void setCodeProportion( CodeProportion codeProportion ) {
+        current = codeProportion;
     }
 
     public String getLabel() {
-        return label;
+        return current.getMetricLabel();
     }
 
     public double getLevel() {
-        return level;
+        return current.getLevel();
     }
 
     public int getViolations() {
-        return violations;
+        return current.getViolations();
     }
 
     public String getBasis() {
-        return basis;
+        return current.getBasis().toString();
     }
 
     public boolean isSameKindAs( AnalysisDisplayEntry displayEntry ) {
@@ -54,24 +49,44 @@ public class AnalysisDisplayEntry implements Cloneable {
         return getLabel().equals( otherLabel );
     }
 
-    public List<Hotspot> getHotspots() {
-        return hotspots;
+    public List<DisplayHotspot> getHotspots() {
+        if( hasHotspots() ) {
+            return createDisplayHotspots();
+        }
+        return new ArrayList<DisplayHotspot>();
+    }
+
+    private List<DisplayHotspot> createDisplayHotspots() {
+        return new DisplayHotspotCreator( history.getHotspots(), current.getHotspots() ).hotspots();
     }
 
     public boolean hasHotspots() {
-        return hasHotspots;
+        return current.hasHotspots();
     }
 
     public Image getTrendImage() {
-        if( levelOfSnapshot == null ) {
-            return null;
+        String imageName = "";
+        if( hasHotspots() ) {
+            int diff = getHotspots().size() - history.getHotspots().size();
+            if( diff == 0 ) {
+                return null;
+            }
+            imageName = diff < 0 ? OBJ_LEVELUP : OBJ_LEVELDOWN;
+        } else {
+            double diff = getLevel() - history.getLevel();
+            if( diff == 0.0 ) {
+                return null;
+            }
+            imageName = diff < 0 ? OBJ_LEVELDOWN : OBJ_LEVELUP;
         }
-        double diff = getLevel() - levelOfSnapshot.doubleValue();
-        if( diff == 0.0 ) {
-            return null;
-        }
-        String imageName = diff < 0 ? OBJ_LEVELDOWN : OBJ_LEVELUP;
         return getSharedImages().getImage( imageName );
     }
 
+    public boolean matches( CodeProportion codeProportion ) {
+        return isSameKindAs( codeProportion.getMetricLabel() );
+    }
+
+    public void createSnapshot() {
+        history = current;
+    }
 }

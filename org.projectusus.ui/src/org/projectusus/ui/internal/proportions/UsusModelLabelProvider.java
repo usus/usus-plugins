@@ -12,7 +12,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.ui.internal.AnalysisDisplayCategory;
+import org.projectusus.ui.internal.IDisplayCategory;
 
 /**
  * basic capacities to display Usus Model elements; This class is intended to be subclassed in order to make a specialized tree or table label provider.
@@ -23,23 +23,18 @@ public abstract class UsusModelLabelProvider extends LabelProvider implements IC
 
     protected String getNodeTextFor( Object element ) {
         String result = super.getText( element );
-        if( element instanceof AnalysisDisplayCategory ) {
-            result = ((AnalysisDisplayCategory)element).getLabel();
-            // } else if( element instanceof YellowCountResult ) {
-            // result = "Static analysis warnings";
+        if( element instanceof IDisplayCategory ) {
+            result = ((IDisplayCategory)element).getLabel();
         }
         return result;
     }
 
     protected Image getColumnImageFor( Object element ) {
         Image result = null;
-        if( element instanceof AnalysisDisplayCategory ) {
-            result = ((AnalysisDisplayCategory)element).getImage();
+        if( element instanceof IDisplayCategory ) {
+            result = ((IDisplayCategory)element).getImage();
         } else if( !(element instanceof CodeProportion) ) {
             result = getSharedImages().getImage( OBJ_INFO );
-            // build in later again
-            // } else if( element instanceof YellowCountResult ) {
-            // result = getSharedImages().getImage( OBJ_WARNINGS );
         }
         return result;
     }

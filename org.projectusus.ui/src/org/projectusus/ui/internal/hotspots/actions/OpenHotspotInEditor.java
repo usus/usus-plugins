@@ -9,22 +9,27 @@ import static org.eclipse.jdt.core.JavaCore.createCompilationUnitFrom;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jface.action.Action;
 import org.projectusus.core.basis.Hotspot;
+import org.projectusus.ui.internal.DisplayHotspot;
 import org.projectusus.ui.util.EditorOpener;
 
 public class OpenHotspotInEditor extends Action {
 
-    private final Hotspot hotspot;
+    private final DisplayHotspot hotspot;
 
-    public OpenHotspotInEditor( Hotspot hotspot ) {
+    public OpenHotspotInEditor( DisplayHotspot hotspot ) {
         this.hotspot = hotspot;
     }
 
     @Override
     public void run() {
+        Hotspot realHotspot = hotspot.getHotspot();
+        if( realHotspot == null ) {
+            return;
+        }
         ICompilationUnit compilationUnit = extractCompilationUnit();
         EditorOpener opener = new EditorOpener();
         if( compilationUnit != null ) {
-            opener.openEditorAt( compilationUnit, hotspot.getSourcePosition() );
+            opener.openEditorAt( compilationUnit, realHotspot.getSourcePosition() );
         } else {
             opener.openEditor( hotspot.getFile() );
         }

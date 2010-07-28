@@ -4,33 +4,50 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.hotspots.pages;
 
+import static org.projectusus.ui.viewer.ColumnAlignment.CENTER;
 import static org.projectusus.ui.viewer.ColumnAlignment.RIGHT;
 
-import org.projectusus.core.basis.Hotspot;
+import org.projectusus.ui.internal.DisplayHotspot;
+import org.projectusus.ui.viewer.IColumnDesc;
 import org.projectusus.ui.viewer.UsusTreeColumn;
 
-public enum HotspotsColumnDesc implements IHotspotsPageColumnDesc {
+public enum HotspotsColumnDesc implements IColumnDesc<DisplayHotspot> {
 
     @UsusTreeColumn( header = "Value", align = RIGHT, weight = 5 )
     Value {
-        public String getLabel( Hotspot element ) {
+        @Override
+        public String getLabel( DisplayHotspot element ) {
             return String.valueOf( element.getMetricsValue() );
         }
     },
     @UsusTreeColumn( header = "Name", weight = 25 )
     Name {
-        public String getLabel( Hotspot element ) {
+        @Override
+        public String getLabel( DisplayHotspot element ) {
             return element.getName();
         }
     },
     @UsusTreeColumn( header = "Path", weight = 20 )
     Path {
-        public String getLabel( Hotspot element ) {
+        @Override
+        public String getLabel( DisplayHotspot element ) {
             return element.getFile().getFullPath().removeLastSegments( 1 ).toOSString();
+        }
+    },
+    @UsusTreeColumn( header = "Trend", align = CENTER, weight = 8 )
+    Trend() {
+        @Override
+        public boolean hasImage() {
+            return true;
         }
     };
 
     public boolean hasImage() {
         return false;
     }
+
+    public String getLabel( DisplayHotspot element ) {
+        return "";
+    }
+
 }

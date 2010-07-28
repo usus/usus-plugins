@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.projectusus.externals.test;resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.apache.commons.lang,
+Export-Package: com.google.common.collect,
+ org.apache.commons.lang,
  org.apache.commons.lang.builder,
  org.apache.commons.lang.enums,
  org.apache.commons.lang.exception,

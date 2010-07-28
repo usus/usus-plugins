@@ -4,9 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.basis;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
 
-public class Hotspot {
+public class Hotspot implements Comparable<Hotspot> {
 
     private IFile file;
     private final int metricsValue;
@@ -36,5 +38,23 @@ public class Hotspot {
 
     public int getLineNumber() {
         return location.getLineNumber();
+    }
+
+    @Override
+    public boolean equals( Object obj ) {
+        if( !(obj instanceof Hotspot) ) {
+            return false;
+        }
+        Hotspot other = (Hotspot)obj;
+        return new EqualsBuilder().append( getName(), other.getName() ).append( getFile(), other.getFile() ).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append( getName() ).append( getFile() ).toHashCode();
+    }
+
+    public int compareTo( Hotspot o ) {
+        return getName().compareTo( o.getName() );
     }
 }

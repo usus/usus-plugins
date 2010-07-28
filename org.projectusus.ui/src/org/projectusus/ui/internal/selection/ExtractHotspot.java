@@ -6,7 +6,7 @@ package org.projectusus.ui.internal.selection;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.projectusus.core.basis.Hotspot;
+import org.projectusus.ui.internal.DisplayHotspot;
 
 public class ExtractHotspot {
     private final ISelection selection;
@@ -15,12 +15,12 @@ public class ExtractHotspot {
         this.selection = selection;
     }
 
-    public Hotspot compute() {
-        Hotspot result = null;
+    public DisplayHotspot compute() {
+        DisplayHotspot result = null;
         if( !selection.isEmpty() && selection instanceof IStructuredSelection ) {
             Object element = ((IStructuredSelection)selection).getFirstElement();
-            if( element instanceof Hotspot ) {
-                result = (Hotspot)element;
+            if( element instanceof DisplayHotspot ) {
+                result = (DisplayHotspot)element;
             }
         }
         return result;

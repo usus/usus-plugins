@@ -4,7 +4,6 @@ import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.projectusus.core.internal.proportions.rawdata.UsusModel.ususModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +11,6 @@ import java.util.Set;
 import org.eclipse.core.resources.IProject;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.internal.project.FindUsusProjects;
 
 public class AnalysisDisplayModel {
@@ -55,16 +53,11 @@ public class AnalysisDisplayModel {
     }
 
     protected void handleUsusModelChanged() {
-        if( hasUsusProjects() ) {
-            if( getSnapshot().isEmpty() ) {
-                createSnapshot();
-            }
-        }
         displayCategories.replaceCategories( createMetricsCategory() );
         fireUpdateCategories();
     }
 
-    public AnalysisDisplayCategory[] getCategories() {
+    public IDisplayCategory[] getCategories() {
         return displayCategories.getCategories();
     }
 
@@ -72,36 +65,32 @@ public class AnalysisDisplayModel {
         List<CodeProportion> codeProportions = ususModel().getCodeProportions();
         List<AnalysisDisplayEntry> result = new ArrayList<AnalysisDisplayEntry>();
         for( CodeProportion codeProportion : codeProportions ) {
-            String label = codeProportion.getMetricLabel();
-            double level = codeProportion.getLevel();
-            int violations = codeProportion.getViolations();
-            String basis = codeProportion.getBasis().toString();
-            List<Hotspot> hotspots = codeProportion.getHotspots();
-            result.add( new AnalysisDisplayEntry( label, level, violations, basis, codeProportion.hasHotspots(), hotspots, trendValueFor( label ) ) );
+            result.add( displayEntryFor( codeProportion ) );
         }
         return new MetricStatisticsCategory( result.toArray( new AnalysisDisplayEntry[result.size()] ) );
     }
 
-    public List<AnalysisDisplayEntry> getEntriesOfAllCategories() {
-        List<AnalysisDisplayEntry> result = new ArrayList<AnalysisDisplayEntry>();
-        for( AnalysisDisplayCategory category : getCategories() ) {
-            result.addAll( Arrays.asList( category.getChildren() ) );
+    private AnalysisDisplayEntry displayEntryFor( CodeProportion codeProportion ) {
+        displayCategories.getAllEntries();
+        for( AnalysisDisplayEntry entry : displayCategories.getAllEntries() ) {
+            if( entry.matches( codeProportion ) ) {
+                entry.setCodeProportion( codeProportion );
+                return entry;
+            }
         }
-        return result;
+        return new AnalysisDisplayEntry( codeProportion );
+    }
+
+    public List<AnalysisDisplayEntry> getEntriesOfAllCategories() {
+        return displayCategories.getAllEntries();
     }
 
     public void createSnapshot() {
-        snapshot = new Snapshot( getEntriesOfAllCategories() );
-        fireSnapshotCreated();
-    }
-
-    private Double trendValueFor( String label ) {
-        for( AnalysisDisplayEntry codeProportion : snapshot ) {
-            if( codeProportion.isSameKindAs( label ) ) {
-                return Double.valueOf( codeProportion.getLevel() );
-            }
+        for( AnalysisDisplayEntry entry : getEntriesOfAllCategories() ) {
+            entry.createSnapshot();
         }
-        return null;
+        snapshot = new Snapshot();
+        fireSnapshotCreated();
     }
 
     public void addModelListener( IDisplayModelListener listener ) {
