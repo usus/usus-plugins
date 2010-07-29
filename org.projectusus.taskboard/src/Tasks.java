@@ -20,7 +20,7 @@ public class Tasks {
         // Dies fliesst ein in den Eclipse Magazin Artikel 6.10
     }
 
-    void evtl_nicole_createPackageView() {
+    void marc_nicole_createPackageView() {
         // TODO PackageView: Packages im Package Graph ausw‰ählen, die enthaltenen Klassen im Class View darstellen
     }
 

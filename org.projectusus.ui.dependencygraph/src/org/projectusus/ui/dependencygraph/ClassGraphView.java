@@ -3,6 +3,9 @@ package org.projectusus.ui.dependencygraph;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
 
 public class ClassGraphView extends DependencyGraphView {
+
+    public static final String VIEW_ID = ClassGraphView.class.getName();
+
     private static final String SCALE_LEFT_TEXT = "All";
     private static final String SCALE_RIGHT_TEXT = "None";
 

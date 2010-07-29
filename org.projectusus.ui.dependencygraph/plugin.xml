@@ -3,18 +3,18 @@
 <plugin>
    <extension point="org.eclipse.ui.views">
        <view class="org.projectusus.ui.dependencygraph.ClassGraphView"
-            icon="icons/graph.gif"
+            icon="icons/graph-class.gif"
             id="org.projectusus.ui.dependencygraph.ClassGraphView"
             category="org.projectusus.ui.viewCategory"
             name="Usus Class Graph"/>
        <view class="org.projectusus.ui.dependencygraph.PackageGraphView"
-            icon="icons/graph.gif"
+            icon="icons/graph-package.gif"
             id="org.projectusus.ui.dependencygraph.PackageGraphView"
             category="org.projectusus.ui.viewCategory"
             name="Usus Package Graph"/>
        <view
              class="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView"
-             icon="icons/graph.gif"
+             icon="icons/graph-cross-package.gif"
              id="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView"
              category="org.projectusus.ui.viewCategory"
              name="Cross-Package Class Graph"
@@ -34,6 +34,17 @@
                style="push"
                toolbarPath="additions"
                tooltip="Redraws the class dependency graph."/>
+         <action
+               class="org.projectusus.ui.dependencygraph.action.FilterByPackageSelection"
+               icon="icons/package-filter.gif"
+               id="org.projectusus.ui.dependencygraph.action.FilterByPackageSelection"
+               label="Filter by packages"
+               menubarPath="additions"
+               state="false"
+               style="toggle"
+               toolbarPath="additions"
+               tooltip="Hides any nodes in packages that are not currently selected in the Package Graph view.">
+         </action>
       </viewContribution>
       <viewContribution
             id="org.projectusus.ui.dependencygraph.viewContribution_PackageView_Refresh"
@@ -71,20 +82,20 @@
          <view
                id="org.projectusus.ui.dependencygraph.ClassGraphView"
                minimized="false"
-               relationship="stack"
+               relationship="top"
                relative="org.projectusus.ui.internal.hotspots.HotSpotsView">
          </view>
          <view
                id="org.projectusus.ui.dependencygraph.PackageGraphView"
                minimized="false"
-               relationship="stack"
-               relative="org.projectusus.ui.internal.hotspots.HotSpotsView">
+               relationship="right"
+               relative="org.projectusus.ui.dependencygraph.ClassGraphView">
          </view>
          <view
                id="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView"
                minimized="false"
                relationship="stack"
-               relative="org.projectusus.ui.internal.hotspots.HotSpotsView">
+               relative="org.projectusus.ui.dependencygraph.ClassGraphView">
          </view>
       </perspectiveExtension>
    </extension>

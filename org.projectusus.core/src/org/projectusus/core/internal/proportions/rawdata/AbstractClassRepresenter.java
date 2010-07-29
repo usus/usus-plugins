@@ -1,8 +1,11 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
+import java.util.Collection;
+
 import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.Packagename;
 
 abstract class AbstractClassRepresenter implements GraphNode {
 
@@ -40,6 +43,10 @@ abstract class AbstractClassRepresenter implements GraphNode {
     @Override
     public int hashCode() {
         return clazz.hashCode();
+    }
+
+    public boolean isPackageOneOf( Collection<Packagename> packages ) {
+        return packages.contains( clazz.getPackagename() );
     }
 
 }

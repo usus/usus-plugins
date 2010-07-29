@@ -1,5 +1,6 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -82,6 +83,14 @@ public class PackageRepresenter implements GraphNode {
 
     public IFile getFile() {
         return null;
+    }
+
+    public Packagename getPackagename() {
+        return packagename;
+    }
+
+    public boolean isPackageOneOf( Collection<Packagename> packages ) {
+        return packages.contains( packagename );
     }
 
 }

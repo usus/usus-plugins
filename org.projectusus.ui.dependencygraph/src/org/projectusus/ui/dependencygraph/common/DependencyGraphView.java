@@ -26,15 +26,19 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
+import org.projectusus.ui.dependencygraph.filters.IFilterLimitProvider;
+import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
+import org.projectusus.ui.dependencygraph.filters.NodeFilter;
 import org.projectusus.ui.util.EditorOpener;
 
-public abstract class DependencyGraphView extends ViewPart implements FilterLimitProvider {
+public abstract class DependencyGraphView extends ViewPart implements IFilterLimitProvider {
 
     private static final String LAYOUT_LABEL = "Layout:";
     private static final String SCALE_TOOLTIP_TEXT = "Change the number of visible nodes by moving the slider";
@@ -44,6 +48,7 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
     private int filterLimit = -1;
     private IUsusModelListener listener;
     private Scale scale;
+    private ViewerFilter customFilter;
 
     public DependencyGraphView( DependencyGraphModel model ) {
         super();
@@ -63,7 +68,12 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
         data.horizontalAlignment = SWT.FILL;
         filterArea.setLayoutData( data );
         createGraphArea( composite );
+        getViewSite().setSelectionProvider( graphViewer );
         refresh();
+    }
+
+    protected void configure( IViewSite viewSite ) {
+        getViewSite().setSelectionProvider( graphViewer );
     }
 
     private void initFilterLimit( int maxFilterValue ) {
@@ -159,7 +169,7 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
         graphViewer.setConnectionStyle( ZestStyles.CONNECTIONS_DIRECTED );
         graphViewer.setContentProvider( new NodeContentProvider() );
         graphViewer.setLabelProvider( new NodeLabelProvider() );
-        graphViewer.setFilters( new ViewerFilter[] { new NodeFilter( this ) } );
+        graphViewer.setFilters( new ViewerFilter[] { new LimitNodeFilter( this ) } );
         graphViewer.addDoubleClickListener( new IDoubleClickListener() {
             public void doubleClick( DoubleClickEvent event ) {
                 ISelection selection = graphViewer.getSelection();
@@ -172,6 +182,25 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
             }
         } );
         setLayout( GraphLayouts.getDefault() );
+    }
+
+    public synchronized void setCustomFilter( NodeFilter customFilter ) {
+        unsetCustomFilter();
+        this.customFilter = customFilter;
+        graphViewer.addFilter( customFilter );
+        setContentDescription( customFilter.getDescription() );
+    }
+
+    public synchronized void unsetCustomFilter() {
+        if( customFilter != null ) {
+            graphViewer.removeFilter( customFilter );
+            customFilter = null;
+            setContentDescription( "" );
+        }
+    }
+
+    protected IStructuredSelection getSelection() {
+        return (IStructuredSelection)graphViewer.getSelection();
     }
 
     private void setLayout( GraphLayouts layout ) {
@@ -207,14 +236,6 @@ public abstract class DependencyGraphView extends ViewPart implements FilterLimi
     @Override
     public void setFocus() {
         // do nothing
-    }
-
-    public void switchToClassView() {
-        ISelection selection = graphViewer.getSelection();
-        if( !selection.isEmpty() ) {
-
-        }
-
     }
 
     public int getFilterLimit() {

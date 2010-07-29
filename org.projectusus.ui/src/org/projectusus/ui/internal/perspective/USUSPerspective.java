@@ -39,9 +39,8 @@ public class USUSPerspective implements IPerspectiveFactory {
         // right-hand side
         IFolderLayout analysis = layout.createFolder( "analysis", BOTTOM, 0.33f, layout.getEditorArea() );
         analysis.addView( HotSpotsView.class.getName() );
-        IFolderLayout inputs = layout.createFolder( "inputs", BOTTOM, 0.5f, HotSpotsView.class.getName() );
         for( String viewId : INTERESTING_THIRD_PARTY_VIEWS ) {
-            inputs.addView( viewId );
+            analysis.addView( viewId );
         }
     }
 

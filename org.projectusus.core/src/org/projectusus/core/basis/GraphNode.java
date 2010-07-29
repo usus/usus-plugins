@@ -1,8 +1,10 @@
 package org.projectusus.core.basis;
 
+import java.util.Collection;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.projectusus.core.filerelations.model.Packagename;
 
 public interface GraphNode {
 
@@ -23,4 +25,6 @@ public interface GraphNode {
     boolean isPackage();
 
     IFile getFile();
+
+    public abstract boolean isPackageOneOf( Collection<Packagename> packages );
 }
