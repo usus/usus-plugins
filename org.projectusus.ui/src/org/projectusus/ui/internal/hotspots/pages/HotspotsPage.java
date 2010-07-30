@@ -9,6 +9,8 @@ import static java.util.Arrays.asList;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.part.Page;
@@ -21,13 +23,11 @@ import org.projectusus.ui.viewer.UsusTreeViewer;
 public class HotspotsPage extends Page implements IHotspotsPage {
 
     protected UsusTreeViewer<DisplayHotspot> viewer;
-    private final HotspotsColumnDesc[] columnDescs;
     private final AnalysisDisplayEntry entry;
 
     public HotspotsPage( AnalysisDisplayEntry entry ) {
         super();
         this.entry = entry;
-        this.columnDescs = HotspotsColumnDesc.values();
     }
 
     public boolean isInitialized() {
@@ -39,9 +39,20 @@ public class HotspotsPage extends Page implements IHotspotsPage {
     }
 
     private void createViewer( Composite parent ) {
+        HotspotsColumnDesc[] columnDescs = HotspotsColumnDesc.values();
         viewer = new UsusTreeViewer<DisplayHotspot>( parent, columnDescs );
         viewer.setLabelProvider( new HotspotsLP( asList( columnDescs ) ) );
         viewer.setContentProvider( createContentProvider() );
+        ViewerComparator comparator = new ViewerComparator() {
+            @Override
+            public int compare( Viewer viewer, Object e1, Object e2 ) {
+                DisplayHotspot hotspot1 = (DisplayHotspot)e1;
+                DisplayHotspot hotspot2 = (DisplayHotspot)e2;
+                return hotspot1.getMetricsValue() - hotspot2.getMetricsValue();
+            }
+        };
+        viewer.setComparator( comparator );
+
     }
 
     protected void initOpenListener() {
