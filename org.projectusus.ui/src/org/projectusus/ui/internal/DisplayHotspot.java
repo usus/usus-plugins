@@ -41,6 +41,13 @@ public class DisplayHotspot {
         return currentHotspot;
     }
 
+    /**
+     * result may be null!
+     */
+    Hotspot getOldHotspot() {
+        return historyHotspot;
+    }
+
     public Image getTrendImage() {
         if( currentHotspot != null && historyHotspot != null ) {
             double diff = getMetricsValue() - historyHotspot.getMetricsValue();
