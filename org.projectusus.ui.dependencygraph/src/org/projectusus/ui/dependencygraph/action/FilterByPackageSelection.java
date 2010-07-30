@@ -22,18 +22,25 @@ public class FilterByPackageSelection implements IViewActionDelegate, ISelection
 
     public void run( IAction action ) {
         ISelectionProvider selectionProvider = findPackageGraphSelectionProvider();
-        if( action.isChecked() ) {
+        if( action.isChecked() && selectionProvider != null ) {
             selectionProvider.addSelectionChangedListener( this );
             selectionChanged( selectionProvider.getSelection() );
         } else {
             view.unsetCustomFilter();
-            selectionProvider.removeSelectionChangedListener( this );
+            if( selectionProvider != null ) {
+                selectionProvider.removeSelectionChangedListener( this );
+            }
             filter.resetPackages();
+            action.setChecked( false );
         }
     }
 
     private ISelectionProvider findPackageGraphSelectionProvider() {
-        return view.getSite().getPage().findView( PackageGraphView.VIEW_ID ).getViewSite().getSelectionProvider();
+        IViewPart packageGraphView = view.getSite().getPage().findView( PackageGraphView.VIEW_ID );
+        if( packageGraphView != null ) {
+            return packageGraphView.getViewSite().getSelectionProvider();
+        }
+        return null;
     }
 
     public void selectionChanged( IAction action, ISelection selection ) {
