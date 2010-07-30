@@ -25,4 +25,6 @@ public interface ISharedUsusImages {
     Image getImage( String key );
 
     ImageDescriptor getDescriptor( String key );
+
+    Image getTrendImage( int level );
 }

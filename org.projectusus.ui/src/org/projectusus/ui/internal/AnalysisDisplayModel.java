@@ -1,6 +1,5 @@
 package org.projectusus.ui.internal;
 
-import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.projectusus.core.internal.proportions.rawdata.UsusModel.ususModel;
 
 import java.util.ArrayList;
@@ -8,10 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.resources.IProject;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.internal.project.FindUsusProjects;
 
 public class AnalysisDisplayModel {
 
@@ -113,12 +110,8 @@ public class AnalysisDisplayModel {
     private void fireSnapshotCreated() {
         for( IDisplayModelListener listener : listeners ) {
             listener.snapshotCreated( snapshot );
+            listener.updateCategories( this );
         }
-    }
-
-    private boolean hasUsusProjects() {
-        IProject[] wsProjects = getWorkspace().getRoot().getProjects();
-        return new FindUsusProjects( wsProjects ).compute().size() > 0;
     }
 
 }

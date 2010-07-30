@@ -1,14 +1,12 @@
 package org.projectusus.ui.internal;
 
-import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_LEVELDOWN;
-import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_LEVELUP;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.core.basis.Hotspot;
 
-public class DisplayHotspot {
+public class DisplayHotspot implements Comparable<DisplayHotspot> {
 
     private final Hotspot historyHotspot;
     private final Hotspot currentHotspot;
@@ -43,27 +41,40 @@ public class DisplayHotspot {
 
     /**
      * result may be null!
+     * 
+     * testing backdoor
      */
     Hotspot getOldHotspot() {
         return historyHotspot;
     }
 
     public Image getTrendImage() {
-        if( currentHotspot != null && historyHotspot != null ) {
-            double diff = getMetricsValue() - historyHotspot.getMetricsValue();
-            if( diff == 0.0 ) {
-                return null;
-            }
-            String imageName = diff < 0 ? OBJ_LEVELUP : OBJ_LEVELDOWN;
-            return getSharedImages().getImage( imageName );
-        }
-        if( currentHotspot == null ) {
-            return getSharedImages().getImage( OBJ_LEVELUP );
-        }
-        return getSharedImages().getImage( OBJ_LEVELDOWN );
+        return getSharedImages().getTrendImage( getTrend() );
     }
 
     public Hotspot getCurrentOrOldHotspot() {
         return currentHotspot != null ? currentHotspot : historyHotspot;
+    }
+
+    /**
+     * package private for testing
+     */
+    int getTrend() {
+        if( currentHotspot != null && historyHotspot != null ) {
+            return -(getMetricsValue() - historyHotspot.getMetricsValue());
+        }
+        if( currentHotspot == null ) {
+            return 1;
+        }
+        return -1;
+    }
+
+    @Override
+    public String toString() {
+        return getName() + "-" + getMetricsValue() + "[" + super.toString() + "]";
+    }
+
+    public int compareTo( DisplayHotspot o ) {
+        return getName().compareTo( o.getName() );
     }
 }

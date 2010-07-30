@@ -22,12 +22,13 @@ public class OpenHotspotInEditor extends Action {
 
     @Override
     public void run() {
+        EditorOpener opener = new EditorOpener();
         Hotspot realHotspot = hotspot.getHotspot();
         if( realHotspot == null ) {
+            opener.openEditor( hotspot.getFile() );
             return;
         }
         ICompilationUnit compilationUnit = extractCompilationUnit();
-        EditorOpener opener = new EditorOpener();
         if( compilationUnit != null ) {
             opener.openEditorAt( compilationUnit, realHotspot.getSourcePosition() );
         } else {

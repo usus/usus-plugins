@@ -57,4 +57,9 @@ public class Hotspot implements Comparable<Hotspot> {
     public int compareTo( Hotspot o ) {
         return getName().compareTo( o.getName() );
     }
+
+    @Override
+    public String toString() {
+        return getName() + "-" + getMetricsValue() + "[" + super.toString() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    }
 }

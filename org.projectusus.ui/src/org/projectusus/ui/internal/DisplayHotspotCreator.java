@@ -23,6 +23,8 @@ class DisplayHotspotCreator {
     }
 
     public List<DisplayHotspot> hotspots() {
+        long currentTimeMillis = System.currentTimeMillis();
+        System.out.println( "Creating Hotspots now: " + currentTimeMillis );
         Set<DisplayHotspot> result = new HashSet<DisplayHotspot>();
         SetView<Hotspot> oldNotInNew = Sets.difference( oldHotspots, currentHotspots );
         for( Hotspot hotspot : oldNotInNew ) {
@@ -50,6 +52,10 @@ class DisplayHotspotCreator {
             result.add( new DisplayHotspot( oldHotspot, newHotspot ) );
         }
 
-        return new ArrayList<DisplayHotspot>( result );
+        ArrayList<DisplayHotspot> resultList = new ArrayList<DisplayHotspot>( result );
+        Collections.sort( resultList );
+        long diff = System.currentTimeMillis() - currentTimeMillis;
+        System.out.println( "Finished Creating Hotspots took: " + diff + " for " + resultList.size() + " hotspots" );
+        return resultList;
     }
 }

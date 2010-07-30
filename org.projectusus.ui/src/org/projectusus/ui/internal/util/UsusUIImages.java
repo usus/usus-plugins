@@ -89,4 +89,11 @@ public class UsusUIImages implements ISharedUsusImages {
         return new URL( baseUrl, iconPath );
     }
 
+    public Image getTrendImage( int trend ) {
+        if( trend == 0 ) {
+            return null;
+        }
+        return getImage( trend > 0 ? OBJ_LEVELUP : OBJ_LEVELDOWN );
+    }
+
 }

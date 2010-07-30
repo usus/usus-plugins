@@ -1,7 +1,7 @@
 package org.projectusus.ui.internal;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 
@@ -22,8 +22,6 @@ public class DisplayHotspotCreatorTest {
     private final SourceCodeLocation location2 = new SourceCodeLocation( "y", 2, 2 );
     private final SourceCodeLocation location3 = new SourceCodeLocation( "z", 3, 3 );
     private final IFile file1 = mock( IFile.class );
-    private final IFile file2 = mock( IFile.class );
-    private final IFile file3 = mock( IFile.class );
     private final Hotspot hotspot1_1_1 = new Hotspot( location1, 1, file1 );
     private final Hotspot hotspot1_2_1 = new Hotspot( location1, 2, file1 );
     private final Hotspot hotspot2_1_1 = new Hotspot( location2, 1, file1 );
@@ -50,6 +48,7 @@ public class DisplayHotspotCreatorTest {
 
         assertEquals( 1, result.size() );
         checkContains( result, hotspot1_1_1, null );
+        checkTrendPositive( result.get( 0 ) );
     }
 
     @Test
@@ -59,6 +58,7 @@ public class DisplayHotspotCreatorTest {
 
         assertEquals( 1, result.size() );
         checkContains( result, null, hotspot1_1_1 );
+        checkTrendNegative( result.get( 0 ) );
     }
 
     @Test
@@ -69,7 +69,7 @@ public class DisplayHotspotCreatorTest {
 
         assertEquals( 1, result.size() );
         checkContains( result, hotspot1_1_1, hotspot1_1_1 );
-        assertNull( result.get( 0 ).getTrendImage() );
+        checkTrendConstant( result.get( 0 ) );
     }
 
     @Test
@@ -80,6 +80,7 @@ public class DisplayHotspotCreatorTest {
 
         assertEquals( 1, result.size() );
         checkContains( result, hotspot1_1_1, hotspot1_2_1 );
+        checkTrendNegative( result.get( 0 ) );
     }
 
     @Test
@@ -90,6 +91,7 @@ public class DisplayHotspotCreatorTest {
 
         assertEquals( 1, result.size() );
         checkContains( result, hotspot1_2_1, hotspot1_1_1 );
+        checkTrendPositive( result.get( 0 ) );
     }
 
     @Test
@@ -101,6 +103,8 @@ public class DisplayHotspotCreatorTest {
         assertEquals( 2, result.size() );
         checkContains( result, hotspot1_1_1, null );
         checkContains( result, null, hotspot2_1_1 );
+        checkTrendPositive( result.get( 0 ) );
+        checkTrendNegative( result.get( 1 ) );
     }
 
     @Test
@@ -115,6 +119,9 @@ public class DisplayHotspotCreatorTest {
         checkContains( result, hotspot1_1_1, null );
         checkContains( result, hotspot2_1_1, hotspot2_1_1 );
         checkContains( result, null, hotspot3_1_1 );
+        checkTrendPositive( result.get( 0 ) );
+        checkTrendConstant( result.get( 1 ) );
+        checkTrendNegative( result.get( 2 ) );
     }
 
     @Test
@@ -129,6 +136,9 @@ public class DisplayHotspotCreatorTest {
         checkContains( result, hotspot1_1_1, null );
         checkContains( result, hotspot2_1_1, hotspot2_2_1 );
         checkContains( result, null, hotspot3_1_1 );
+        checkTrendPositive( result.get( 0 ) );
+        checkTrendNegative( result.get( 1 ) );
+        checkTrendNegative( result.get( 2 ) );
     }
 
     @Test
@@ -145,6 +155,9 @@ public class DisplayHotspotCreatorTest {
         checkContains( result, hotspot1_1_1, hotspot1_1_1 );
         checkContains( result, hotspot2_1_1, hotspot2_2_1 );
         checkContains( result, hotspot3_1_1, hotspot3_1_1 );
+        checkTrendConstant( result.get( 0 ) );
+        checkTrendNegative( result.get( 1 ) );
+        checkTrendConstant( result.get( 2 ) );
     }
 
     private void checkContains( List<DisplayHotspot> result, Hotspot oldHotspot, Hotspot newHotspot ) {
@@ -172,4 +185,17 @@ public class DisplayHotspotCreatorTest {
         DisplayHotspotCreator creator = new DisplayHotspotCreator( oldHotspots, currentHotspots );
         return creator.hotspots();
     }
+
+    private void checkTrendPositive( DisplayHotspot displayHotspot ) {
+        assertTrue( "expected positive trend ", displayHotspot.getTrend() > 0 );
+    }
+
+    private void checkTrendNegative( DisplayHotspot displayHotspot ) {
+        assertTrue( "expected positive trend ", displayHotspot.getTrend() < 0 );
+    }
+
+    private void checkTrendConstant( DisplayHotspot displayHotspot ) {
+        assertTrue( "expected positive trend ", displayHotspot.getTrend() == 0 );
+    }
+
 }

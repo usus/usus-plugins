@@ -1,7 +1,5 @@
 package org.projectusus.ui.internal;
 
-import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_LEVELDOWN;
-import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_LEVELUP;
 import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
 import java.util.ArrayList;
@@ -15,6 +13,8 @@ public class AnalysisDisplayEntry {
     private CodeProportion history;
     private CodeProportion current;
 
+    private List<DisplayHotspot> displayHotspots;
+
     public AnalysisDisplayEntry( CodeProportion codeProportion ) {
         super();
         history = codeProportion;
@@ -23,6 +23,7 @@ public class AnalysisDisplayEntry {
 
     public void setCodeProportion( CodeProportion codeProportion ) {
         current = codeProportion;
+        displayHotspots = null;
     }
 
     public String getLabel() {
@@ -50,14 +51,18 @@ public class AnalysisDisplayEntry {
     }
 
     public List<DisplayHotspot> getHotspots() {
-        if( hasHotspots() ) {
-            return createDisplayHotspots();
+        if( displayHotspots == null ) {
+            createHotspots();
         }
-        return new ArrayList<DisplayHotspot>();
+        return displayHotspots;
     }
 
-    private List<DisplayHotspot> createDisplayHotspots() {
-        return new DisplayHotspotCreator( history.getHotspots(), current.getHotspots() ).hotspots();
+    private void createHotspots() {
+        if( hasHotspots() ) {
+            displayHotspots = new DisplayHotspotCreator( history.getHotspots(), current.getHotspots() ).hotspots();
+        } else {
+            displayHotspots = new ArrayList<DisplayHotspot>();
+        }
     }
 
     public boolean hasHotspots() {
@@ -65,21 +70,7 @@ public class AnalysisDisplayEntry {
     }
 
     public Image getTrendImage() {
-        String imageName = "";
-        if( hasHotspots() ) {
-            int diff = getHotspots().size() - history.getHotspots().size();
-            if( diff == 0 ) {
-                return null;
-            }
-            imageName = diff < 0 ? OBJ_LEVELUP : OBJ_LEVELDOWN;
-        } else {
-            double diff = getLevel() - history.getLevel();
-            if( diff == 0.0 ) {
-                return null;
-            }
-            imageName = diff < 0 ? OBJ_LEVELDOWN : OBJ_LEVELUP;
-        }
-        return getSharedImages().getImage( imageName );
+        return getSharedImages().getTrendImage( getAdvancedTrend() );
     }
 
     public boolean matches( CodeProportion codeProportion ) {
@@ -88,5 +79,34 @@ public class AnalysisDisplayEntry {
 
     public void createSnapshot() {
         history = current;
+        displayHotspots = null;
     }
+
+    /**
+     * package private for testing
+     */
+    int getTrend() {
+        if( hasHotspots() ) {
+            return -(getHotspots().size() - history.getHotspots().size());
+        }
+        return (int)-(getLevel() - history.getLevel());
+    }
+
+    /**
+     * package private for testing
+     */
+    int getAdvancedTrend() {
+        if( hasHotspots() ) {
+            int result = 0;
+            for( DisplayHotspot hotspot : getHotspots() ) {
+                if( hotspot.getTrend() < 0 ) {
+                    return -1;
+                }
+                result += hotspot.getTrend();
+            }
+            return result;
+        }
+        return getTrend();
+    }
+
 }
