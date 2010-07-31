@@ -56,10 +56,7 @@ public class DisplayHotspot implements Comparable<DisplayHotspot> {
         return currentHotspot != null ? currentHotspot : historyHotspot;
     }
 
-    /**
-     * package private for testing
-     */
-    int getTrend() {
+    public int getTrend() {
         if( currentHotspot != null && historyHotspot != null ) {
             return -(getMetricsValue() - historyHotspot.getMetricsValue());
         }

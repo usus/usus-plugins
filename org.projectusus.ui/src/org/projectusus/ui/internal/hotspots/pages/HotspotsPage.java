@@ -48,7 +48,14 @@ public class HotspotsPage extends Page implements IHotspotsPage {
             public int compare( Viewer viewer, Object e1, Object e2 ) {
                 DisplayHotspot hotspot1 = (DisplayHotspot)e1;
                 DisplayHotspot hotspot2 = (DisplayHotspot)e2;
-                return hotspot1.getMetricsValue() - hotspot2.getMetricsValue();
+                int trend1 = hotspot1.getTrend();
+                int trend2 = hotspot2.getTrend();
+                if( trend1 < 0 || trend2 < 0 ) {
+                    if( trend1 != trend2 ) {
+                        return trend1 - trend2;
+                    }
+                }
+                return hotspot2.getMetricsValue() - hotspot1.getMetricsValue();
             }
         };
         viewer.setComparator( comparator );
