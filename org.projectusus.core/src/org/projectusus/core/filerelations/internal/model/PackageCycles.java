@@ -36,4 +36,8 @@ public class PackageCycles {
         }
         return false;
     }
+
+    public List<Cycle<Packagename>> getPackageCycles() {
+        return packageCycles;
+    }
 }

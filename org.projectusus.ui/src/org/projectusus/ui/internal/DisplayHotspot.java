@@ -4,6 +4,7 @@ import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.swt.graphics.Image;
+import org.projectusus.core.basis.FileHotspot;
 import org.projectusus.core.basis.Hotspot;
 
 public class DisplayHotspot implements Comparable<DisplayHotspot> {
@@ -29,7 +30,10 @@ public class DisplayHotspot implements Comparable<DisplayHotspot> {
     }
 
     public IFile getFile() {
-        return getCurrentOrOldHotspot().getFile();
+        if( isFileHotspot() ) {
+            return ((FileHotspot)getCurrentOrOldHotspot()).getFile();
+        }
+        return null; // for the time being... later: open package cycle graph
     }
 
     /**
@@ -73,5 +77,13 @@ public class DisplayHotspot implements Comparable<DisplayHotspot> {
 
     public int compareTo( DisplayHotspot o ) {
         return getName().compareTo( o.getName() );
+    }
+
+    public String getPath() {
+        return getCurrentOrOldHotspot().getPath();
+    }
+
+    public boolean isFileHotspot() {
+        return getCurrentOrOldHotspot() instanceof FileHotspot;
     }
 }

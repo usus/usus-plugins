@@ -24,4 +24,8 @@ public class Cycle<Element> {
         return elementsInCycle.contains( packagename );
     }
 
+    public Set<Element> getElementsInCycle() {
+        return elementsInCycle;
+    }
+
 }

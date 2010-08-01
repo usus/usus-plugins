@@ -8,6 +8,7 @@ import static org.eclipse.jdt.core.JavaCore.createCompilationUnitFrom;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jface.action.Action;
+import org.projectusus.core.basis.FileHotspot;
 import org.projectusus.core.basis.Hotspot;
 import org.projectusus.ui.internal.DisplayHotspot;
 import org.projectusus.ui.util.EditorOpener;
@@ -22,6 +23,9 @@ public class OpenHotspotInEditor extends Action {
 
     @Override
     public void run() {
+        if( !hotspot.isFileHotspot() ) {
+            return;
+        }
         EditorOpener opener = new EditorOpener();
         Hotspot realHotspot = hotspot.getHotspot();
         if( realHotspot == null ) {
@@ -30,7 +34,7 @@ public class OpenHotspotInEditor extends Action {
         }
         ICompilationUnit compilationUnit = extractCompilationUnit();
         if( compilationUnit != null ) {
-            opener.openEditorAt( compilationUnit, realHotspot.getSourcePosition() );
+            opener.openEditorAt( compilationUnit, ((FileHotspot)realHotspot).getSourcePosition() );
         } else {
             opener.openEditor( hotspot.getFile() );
         }

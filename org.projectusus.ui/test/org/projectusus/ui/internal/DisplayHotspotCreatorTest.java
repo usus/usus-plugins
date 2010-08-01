@@ -11,6 +11,7 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.basis.FileHotspot;
 import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.SourceCodeLocation;
 
@@ -22,11 +23,11 @@ public class DisplayHotspotCreatorTest {
     private final SourceCodeLocation location2 = new SourceCodeLocation( "y", 2, 2 );
     private final SourceCodeLocation location3 = new SourceCodeLocation( "z", 3, 3 );
     private final IFile file1 = mock( IFile.class );
-    private final Hotspot hotspot1_1_1 = new Hotspot( location1, 1, file1 );
-    private final Hotspot hotspot1_2_1 = new Hotspot( location1, 2, file1 );
-    private final Hotspot hotspot2_1_1 = new Hotspot( location2, 1, file1 );
-    private final Hotspot hotspot2_2_1 = new Hotspot( location2, 2, file1 );
-    private final Hotspot hotspot3_1_1 = new Hotspot( location3, 1, file1 );
+    private final Hotspot hotspot1_1_1 = new FileHotspot( location1, 1, file1 );
+    private final Hotspot hotspot1_2_1 = new FileHotspot( location1, 2, file1 );
+    private final Hotspot hotspot2_1_1 = new FileHotspot( location2, 1, file1 );
+    private final Hotspot hotspot2_2_1 = new FileHotspot( location2, 2, file1 );
+    private final Hotspot hotspot3_1_1 = new FileHotspot( location3, 1, file1 );
 
     @Before
     public void setup() {

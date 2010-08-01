@@ -31,7 +31,7 @@ public enum HotspotsColumnDesc implements IColumnDesc<DisplayHotspot> {
     Path {
         @Override
         public String getLabel( DisplayHotspot element ) {
-            return element.getFile().getFullPath().removeLastSegments( 1 ).toOSString();
+            return element.getPath();
         }
     },
     @UsusTreeColumn( header = "Trend", align = CENTER, weight = 8, numeric = true )

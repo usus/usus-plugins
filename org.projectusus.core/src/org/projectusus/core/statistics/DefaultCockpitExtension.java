@@ -9,6 +9,7 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
+import org.projectusus.core.basis.FileHotspot;
 import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
@@ -58,7 +59,7 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
         violationSum += count;
         if( count > violationLimit ) {
             violations++;
-            hotspots.add( new Hotspot( location, count, currentFile ) );
+            hotspots.add( new FileHotspot( location, count, currentFile ) );
         }
     }
 
