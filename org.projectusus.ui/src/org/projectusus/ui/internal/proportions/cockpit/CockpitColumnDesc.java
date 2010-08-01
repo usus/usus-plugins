@@ -21,14 +21,13 @@ enum CockpitColumnDesc implements IColumnDesc<AnalysisDisplayEntry> {
             return element.getLabel();
         }
     },
-    @UsusTreeColumn( header = "Level", align = RIGHT, weight = 8 )
+    @UsusTreeColumn( header = "Level", align = RIGHT, weight = 8, numeric = true )
     Level( false ) {
         public String getLabel( AnalysisDisplayEntry element ) {
-            DecimalFormat formatter = new DecimalFormat( "#.##" );
-            return String.valueOf( formatter.format( element.getLevel() ) );
+            return formatter.format( element.getLevel() );
         }
     },
-    @UsusTreeColumn( header = "Violations", align = RIGHT, weight = 14 )
+    @UsusTreeColumn( header = "Violations", align = RIGHT, weight = 14, numeric = true )
     Violations( false ) {
         public String getLabel( AnalysisDisplayEntry element ) {
             return String.valueOf( element.getViolations() );
@@ -40,7 +39,7 @@ enum CockpitColumnDesc implements IColumnDesc<AnalysisDisplayEntry> {
             return element.getBasis();
         }
     },
-    @UsusTreeColumn( header = "Trend", align = CENTER, weight = 8 )
+    @UsusTreeColumn( header = "Trend", align = CENTER, weight = 8, sortable = false )
     Trend( false ) {
         public String getLabel( AnalysisDisplayEntry element ) {
             return ""; // using image
@@ -48,6 +47,7 @@ enum CockpitColumnDesc implements IColumnDesc<AnalysisDisplayEntry> {
     };
 
     private final boolean hasImage;
+    private final static DecimalFormat formatter = new DecimalFormat( "#.##" );
 
     CockpitColumnDesc( boolean hasImage ) {
         this.hasImage = hasImage;

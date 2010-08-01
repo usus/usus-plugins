@@ -39,10 +39,14 @@ public class UsusTreeViewer<T> extends TreeViewer {
     }
 
     private void createColumns( TableLayout layout, IColumnDesc<T>[] columns ) {
-        for( IColumnDesc<T> desc : columns ) {
+        for( int i = 0; i < columns.length; i++ ) {
+            IColumnDesc<T> desc = columns[i];
             UsusTreeColumn ususTreeColumn = new AnnotationReader( desc ).compute();
             TreeViewerColumn column = createColumn( ususTreeColumn.align().toSwtStyle() );
             column.getColumn().setText( ususTreeColumn.header() );
+            if( ususTreeColumn.sortable() ) {
+                new ColumnByLabelSorter( this, column.getColumn(), i, ususTreeColumn.numeric() );
+            }
             layout.addColumnData( new ColumnWeightData( ususTreeColumn.weight() ) );
         }
     }

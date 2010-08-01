@@ -13,7 +13,7 @@ import org.projectusus.ui.viewer.UsusTreeColumn;
 
 public enum HotspotsColumnDesc implements IColumnDesc<DisplayHotspot> {
 
-    @UsusTreeColumn( header = "Value", align = RIGHT, weight = 5 )
+    @UsusTreeColumn( header = "Value", align = RIGHT, weight = 5, numeric = true )
     Value {
         @Override
         public String getLabel( DisplayHotspot element ) {
@@ -27,18 +27,23 @@ public enum HotspotsColumnDesc implements IColumnDesc<DisplayHotspot> {
             return element.getName();
         }
     },
-    @UsusTreeColumn( header = "Path", weight = 20 )
+    @UsusTreeColumn( header = "Path", weight = 60 )
     Path {
         @Override
         public String getLabel( DisplayHotspot element ) {
             return element.getFile().getFullPath().removeLastSegments( 1 ).toOSString();
         }
     },
-    @UsusTreeColumn( header = "Trend", align = CENTER, weight = 8 )
+    @UsusTreeColumn( header = "Trend", align = CENTER, weight = 8, numeric = true )
     Trend() {
         @Override
         public boolean hasImage() {
             return true;
+        }
+
+        @Override
+        public String getLabel( DisplayHotspot element ) {
+            return String.valueOf( element.getTrend() );
         }
     };
 

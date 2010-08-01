@@ -15,4 +15,8 @@ public @interface UsusTreeColumn {
 
     ColumnAlignment align() default ColumnAlignment.LEFT;
 
+    boolean numeric() default false;
+
+    boolean sortable() default true;
+
 }
