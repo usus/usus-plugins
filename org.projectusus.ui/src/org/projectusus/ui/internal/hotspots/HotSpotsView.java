@@ -117,4 +117,8 @@ public class HotSpotsView extends ViewPart {
             }
         }
     }
+
+    public void resetSort() {
+        activePage.resetSort();
+    }
 }

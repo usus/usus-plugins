@@ -16,4 +16,6 @@ public interface IHotspotsPage extends IPageBookViewPage {
     void refresh();
 
     boolean matches( AnalysisDisplayEntry entry );
+
+    void resetSort();
 }

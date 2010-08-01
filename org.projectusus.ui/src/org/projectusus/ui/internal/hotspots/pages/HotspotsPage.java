@@ -24,6 +24,7 @@ public class HotspotsPage extends Page implements IHotspotsPage {
 
     protected UsusTreeViewer<DisplayHotspot> viewer;
     private final AnalysisDisplayEntry entry;
+    private ViewerComparator comparator;
 
     public HotspotsPage( AnalysisDisplayEntry entry ) {
         super();
@@ -43,7 +44,7 @@ public class HotspotsPage extends Page implements IHotspotsPage {
         viewer = new UsusTreeViewer<DisplayHotspot>( parent, columnDescs );
         viewer.setLabelProvider( new HotspotsLP( asList( columnDescs ) ) );
         viewer.setContentProvider( createContentProvider() );
-        ViewerComparator comparator = new ViewerComparator() {
+        comparator = new ViewerComparator() {
             @Override
             public int compare( Viewer viewer, Object e1, Object e2 ) {
                 DisplayHotspot hotspot1 = (DisplayHotspot)e1;
@@ -101,5 +102,10 @@ public class HotspotsPage extends Page implements IHotspotsPage {
 
     public boolean matches( AnalysisDisplayEntry otherEntry ) {
         return entry.isSameKindAs( otherEntry );
+    }
+
+    public void resetSort() {
+        viewer.setComparator( comparator );
+        viewer.resetColumnSorting();
     }
 }

@@ -60,6 +60,20 @@
                toolbarPath="additions"
                tooltip="Save the current values in a snapshot "/>
       </viewContribution>
+      <viewContribution
+            id="org.projectusus.ui.internal.viewContribution_HotspotsView"
+            targetID="org.projectusus.ui.internal.hotspots.HotSpotsView">
+         <action
+               class="org.projectusus.ui.internal.proportions.actions.ResetSort"
+               icon="icons/full/elcl16/alphab_sort_co.gif"
+               id="org.projectusus.ui.internal.proportions.actions.ResetSort"
+               label="ResetSort"
+               menubarPath="additions"
+               style="push"
+               toolbarPath="additions"
+               tooltip="Resets the sort order to default">
+         </action>
+      </viewContribution>
    </extension>
    <!-- editor actions -->
    <extension point="org.eclipse.ui.commands">

@@ -52,4 +52,8 @@ public class DefaultHotspotsPage extends Page implements IHotspotsPage {
     public boolean matches( AnalysisDisplayEntry entry ) {
         return false;
     }
+
+    public void resetSort() {
+        // do nothing
+    }
 }

@@ -57,4 +57,9 @@ public class UsusTreeViewer<T> extends TreeViewer {
         column.getColumn().setMoveable( true );
         return column;
     }
+
+    public void resetColumnSorting() {
+        getTree().setSortColumn( null );
+        getTree().setSortDirection( SWT.NONE );
+    }
 }
