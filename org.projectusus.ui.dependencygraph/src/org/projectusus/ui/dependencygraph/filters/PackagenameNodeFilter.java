@@ -9,6 +9,8 @@ import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.rawdata.PackageRepresenter;
 
+import com.google.common.base.Joiner;
+
 public class PackagenameNodeFilter extends NodeFilter {
 
     private Collection<Packagename> packages;
@@ -42,6 +44,6 @@ public class PackagenameNodeFilter extends NodeFilter {
 
     @Override
     public String getDescription() {
-        return "Only classes in one of the following packages: " + packages;
+        return "Only classes in one of the following packages: " + Joiner.on( ", " ).join( packages );
     }
 }

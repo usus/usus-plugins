@@ -26,7 +26,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
-import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.ZestStyles;
@@ -49,10 +48,12 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     private IUsusModelListener listener;
     private Scale scale;
     private ViewerFilter customFilter;
+    private final WorkbenchContext customFilterContext;
 
     public DependencyGraphView( DependencyGraphModel model ) {
         super();
         this.model = model;
+        customFilterContext = new WorkbenchContext( getClass().getName() + ".context.customFilter" );
         initUsusModelListener();
     }
 
@@ -70,10 +71,6 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         createGraphArea( composite );
         getViewSite().setSelectionProvider( graphViewer );
         refresh();
-    }
-
-    protected void configure( IViewSite viewSite ) {
-        getViewSite().setSelectionProvider( graphViewer );
     }
 
     private void initFilterLimit( int maxFilterValue ) {
@@ -185,22 +182,24 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     }
 
     public synchronized void setCustomFilter( NodeFilter customFilter ) {
-        unsetCustomFilter();
+        clearCustomFilter();
         this.customFilter = customFilter;
         graphViewer.addFilter( customFilter );
         setContentDescription( customFilter.getDescription() );
+        customFilterContext.activate();
     }
 
-    public synchronized void unsetCustomFilter() {
+    protected String getCustomFilterContextId() {
+        return getClass().getName() + ".context.customFilter";
+    }
+
+    public synchronized void clearCustomFilter() {
         if( customFilter != null ) {
+            customFilterContext.deactivate();
             graphViewer.removeFilter( customFilter );
             customFilter = null;
             setContentDescription( "" );
         }
-    }
-
-    protected IStructuredSelection getSelection() {
-        return (IStructuredSelection)graphViewer.getSelection();
     }
 
     private void setLayout( GraphLayouts layout ) {
