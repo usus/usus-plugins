@@ -3,6 +3,7 @@ package org.projectusus.ui.dependencygraph.filters;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.projectusus.core.basis.GraphNode;
@@ -23,18 +24,40 @@ public class PackagenameNodeFilter extends NodeFilter {
         setPackages( null );
     }
 
-    public void setPackagesFrom( ISelection selection ) {
-        setPackages( collectPackagenames( (IStructuredSelection)selection ) );
+    public static PackagenameNodeFilter from( ISelection selection ) {
+        PackagenameNodeFilter filter = new PackagenameNodeFilter();
+        if( selection instanceof IStructuredSelection ) {
+            filter.setPackages( collectPackagenames( (IStructuredSelection)selection ) );
+        }
+        return filter;
     }
 
-    private Collection<Packagename> collectPackagenames( IStructuredSelection selection ) {
+    private static Collection<Packagename> collectPackagenames( IStructuredSelection selection ) {
         final Collection<Packagename> packages = new LinkedList<Packagename>();
         for( Object item : selection.toList() ) {
-            if( item instanceof PackageRepresenter ) {
-                packages.add( ((PackageRepresenter)item).getPackagename() );
-            }
+            add( packages, item );
         }
         return packages;
+    }
+
+    private static void add( final Collection<Packagename> packages, Object item ) {
+        if( item instanceof PackageRepresenter ) {
+            add( packages, (PackageRepresenter)item );
+        } else if( item instanceof IPackageFragment ) {
+            add( packages, (IPackageFragment)item );
+        }
+    }
+
+    private static void add( final Collection<Packagename> packages, IPackageFragment fragment ) {
+        packages.add( Packagename.of( fragment.getElementName(), fragment ) );
+    }
+
+    private static void add( final Collection<Packagename> packages, PackageRepresenter representer ) {
+        packages.add( representer.getPackagename() );
+    }
+
+    public boolean isEmpty() {
+        return packages == null || packages.isEmpty();
     }
 
     @Override

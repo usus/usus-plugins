@@ -23,9 +23,7 @@ public class ShowPackagesInClassGraph extends AbstractHandler {
     }
 
     public PackagenameNodeFilter createFilter( ExecutionEvent event ) throws ExecutionException {
-        PackagenameNodeFilter filter = new PackagenameNodeFilter();
-        filter.setPackagesFrom( getCurrentSelectionChecked( event ) );
-        return filter;
+        return PackagenameNodeFilter.from( getCurrentSelectionChecked( event ) );
     }
 
     public DependencyGraphView activateTargetView( ExecutionEvent event ) throws ExecutionException {

@@ -52,6 +52,21 @@
          <viewShortcut
                id="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView">
          </viewShortcut>
+         <showInPart
+               id="org.projectusus.ui.dependencygraph.ClassGraphView">
+         </showInPart>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <showInPart
+               id="org.projectusus.ui.dependencygraph.ClassGraphView">
+         </showInPart>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaBrowsingPerspective">
+         <showInPart
+               id="org.projectusus.ui.dependencygraph.ClassGraphView">
+         </showInPart>
       </perspectiveExtension>
    </extension>
    <extension
