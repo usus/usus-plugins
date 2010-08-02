@@ -16,7 +16,7 @@ import org.projectusus.core.statistics.visitors.PackageCountVisitor;
 
 public class PackageCycleStatistic extends DefaultCockpitExtension {
 
-    private static String isisMetrics_pc = "Packages in cycles"; //$NON-NLS-1$
+    private static String isisMetrics_pc = "Packages with cyclic dependencies"; //$NON-NLS-1$
 
     public PackageCycleStatistic() {
         super( isisMetrics_pc, "", 0 ); //$NON-NLS-1$
@@ -39,7 +39,6 @@ public class PackageCycleStatistic extends DefaultCockpitExtension {
                 hotspots.add( new PackageHotspot( pack, cyclesize ) );
             }
         }
-
         return hotspots;
     }
 

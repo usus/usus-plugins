@@ -13,5 +13,4 @@ public class NodeContentProvider extends ArrayContentProvider implements IGraphE
         }
         throw new RuntimeException( "Type not supported" );
     }
-
 }

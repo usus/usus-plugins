@@ -49,4 +49,21 @@ abstract class AbstractClassRepresenter implements GraphNode {
         return packages.contains( clazz.getPackagename() );
     }
 
+    public boolean isAtEitherEndOf( Packagename source, Packagename dest ) {
+        if( clazz.getPackagename().equals( source ) ) {
+            for( ClassDescriptor child : clazz.getChildren() ) {
+                if( child.getPackagename().equals( dest ) ) {
+                    return true;
+                }
+            }
+        }
+        if( clazz.getPackagename().equals( dest ) ) {
+            for( ClassDescriptor parent : clazz.getParents() ) {
+                if( parent.getPackagename().equals( source ) ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

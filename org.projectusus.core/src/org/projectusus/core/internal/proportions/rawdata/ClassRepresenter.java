@@ -59,5 +59,4 @@ public class ClassRepresenter extends AbstractClassRepresenter {
     public int getFilterValue() {
         return BottleneckCalculator.getBottleneckCount( this.clazz );
     }
-
 }

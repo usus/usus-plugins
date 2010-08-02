@@ -51,5 +51,4 @@ public class CrossPackageClassRepresenter extends AbstractClassRepresenter {
     public int getFilterValue() {
         return 0;
     }
-
 }

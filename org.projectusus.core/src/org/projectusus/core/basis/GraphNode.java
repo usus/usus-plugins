@@ -27,4 +27,6 @@ public interface GraphNode {
     IFile getFile();
 
     public abstract boolean isPackageOneOf( Collection<Packagename> packages );
+
+    boolean isAtEitherEndOf( Packagename source, Packagename dest );
 }

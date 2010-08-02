@@ -120,6 +120,7 @@
       <handler
             class="org.projectusus.ui.dependencygraph.handlers.ShowPackagesInClassGraph"
             commandId="org.projectusus.ui.dependencygraph.command.ShowPackagesInClassGraph">
+<!--
          <activeWhen>
             <with
                   variable="selection">
@@ -132,6 +133,7 @@
                </iterate>
             </with>
          </activeWhen>
+         -->
       </handler>
       <handler
             class="org.projectusus.ui.dependencygraph.handlers.RefreshGraphView"

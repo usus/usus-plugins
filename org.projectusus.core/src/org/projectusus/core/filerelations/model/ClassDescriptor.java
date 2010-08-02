@@ -124,6 +124,10 @@ public class ClassDescriptor {
         return Collections.unmodifiableSet( children );
     }
 
+    public Set<ClassDescriptor> getParents() {
+        return Collections.unmodifiableSet( parents );
+    }
+
     public Set<ClassDescriptor> getChildrenInOtherPackages() {
         Set<ClassDescriptor> result = new HashSet<ClassDescriptor>();
         for( ClassDescriptor target : children ) {
