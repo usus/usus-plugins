@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jdt.core.IJavaElement;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Packagename;
@@ -47,7 +48,15 @@ abstract class AbstractClassRepresenter implements GraphNode {
     }
 
     public boolean isPackageOneOf( Collection<Packagename> packages ) {
-        return packages.contains( clazz.getPackagename() );
+        return packages.contains( getPackagename() );
+    }
+
+    public IJavaElement getNodeJavaElement() {
+        return getPackagename().getJavaElement();
+    }
+
+    public Packagename getPackagename() {
+        return clazz.getPackagename();
     }
 
     public boolean isAtEitherEndOf( Packagename source, Packagename dest ) {

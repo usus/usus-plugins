@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jdt.core.IJavaElement;
 import org.projectusus.core.filerelations.model.Packagename;
 
 public interface GraphNode {
@@ -26,7 +27,9 @@ public interface GraphNode {
 
     IFile getFile();
 
-    public abstract boolean isPackageOneOf( Collection<Packagename> packages );
+    boolean isPackageOneOf( Collection<Packagename> packages );
+
+    IJavaElement getNodeJavaElement();
 
     boolean isAtEitherEndOf( Packagename source, Packagename dest );
 }

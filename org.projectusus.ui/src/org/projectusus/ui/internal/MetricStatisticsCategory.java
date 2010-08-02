@@ -1,7 +1,7 @@
 package org.projectusus.ui.internal;
 
-import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_CODE_PROPORTIONS;
-import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
+import static org.projectusus.ui.colors.ISharedUsusImages.OBJ_CODE_PROPORTIONS;
+import static org.projectusus.ui.colors.UsusUIImages.getSharedImages;
 
 import org.eclipse.swt.graphics.Image;
 

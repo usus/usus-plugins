@@ -4,8 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions;
 
-import static org.projectusus.ui.internal.util.ISharedUsusImages.OBJ_INFO;
-import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
+import static org.projectusus.ui.colors.ISharedUsusImages.OBJ_INFO;
+import static org.projectusus.ui.colors.UsusUIImages.getSharedImages;
 
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.LabelProvider;

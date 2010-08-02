@@ -1,6 +1,6 @@
 package org.projectusus.ui.internal;
 
-import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
+import static org.projectusus.ui.colors.UsusUIImages.getSharedImages;
 
 import java.util.ArrayList;
 import java.util.List;

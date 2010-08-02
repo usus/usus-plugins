@@ -1,6 +1,6 @@
 package org.projectusus.ui.internal;
 
-import static org.projectusus.ui.internal.util.UsusUIImages.getSharedImages;
+import static org.projectusus.ui.colors.UsusUIImages.getSharedImages;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.swt.graphics.Image;

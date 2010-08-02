@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.ui,
  org.projectusus.externals.test;resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.projectusus.ui.internal,
+Export-Package: org.projectusus.ui.colors,
+ org.projectusus.ui.internal,
  org.projectusus.ui.internal.coveredprojects;x-internal:=true,
  org.projectusus.ui.internal.hotspots;x-friends:="org.projectusus.ui.test",
  org.projectusus.ui.internal.hotspots.actions,
@@ -29,7 +30,6 @@ Export-Package: org.projectusus.ui.internal,
  org.projectusus.ui.internal.proportions.infopresenter;x-friends:="org.projectusus.ui.test",
  org.projectusus.ui.internal.proportions.infopresenter.infomodel,
  org.projectusus.ui.internal.selection,
- org.projectusus.ui.internal.util;x-internal:=true,
  org.projectusus.ui.internal.yellowcount,
  org.projectusus.ui.preferences;x-internal:=true,
  org.projectusus.ui.util,
