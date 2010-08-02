@@ -34,6 +34,7 @@ public class UsusAdapterPlugin extends Plugin {
 
     public void setAutoCompute( boolean autoCompute ) {
         getUsusPreferences().putBoolean( AUTO_COMPUTE, autoCompute );
+        autoComputer.setAutoCompute( autoCompute );
         UsusCorePlugin.getDefault().savePreferences();
     }
 

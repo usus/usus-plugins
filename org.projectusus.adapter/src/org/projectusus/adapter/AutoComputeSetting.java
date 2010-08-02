@@ -18,7 +18,6 @@ public class AutoComputeSetting {
     }
 
     public void setAutoCompute( boolean autoCompute ) {
-        UsusAdapterPlugin.getDefault().setAutoCompute( autoCompute );
         applyAutoCompute( autoCompute );
     }
 
@@ -29,7 +28,6 @@ public class AutoComputeSetting {
     private void applyAutoCompute( boolean autoCompute ) {
         if( autoCompute ) {
             addPreProcessingResourceChangedListener( resourcelistener, IResourceChangeEvent.POST_BUILD );
-            new ForcedRecompute().schedule();
         } else {
             removePreProcessingResourceChangedListener( resourcelistener );
         }

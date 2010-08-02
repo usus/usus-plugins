@@ -44,7 +44,7 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
         cache = new UsusModelCache();
         listeners = new HashSet<IUsusModelListener>();
         metrics = new MetricsAccessor();
-        needsFullRecompute = false;
+        needsFullRecompute = true;
     }
 
     // interface of IUsusModelWriteAccess
