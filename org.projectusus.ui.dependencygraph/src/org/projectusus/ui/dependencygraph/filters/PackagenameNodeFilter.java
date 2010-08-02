@@ -79,17 +79,35 @@ public class PackagenameNodeFilter extends NodeFilter {
     }
 
     public boolean isEmpty() {
-        return (packages == null || packages.isEmpty()) && (edges == null || edges.isEmpty());
+        return packagesAreEmpty() && edgesAreEmpty();
+    }
+
+    private boolean edgesAreEmpty() {
+        return edges == null || edges.isEmpty();
+    }
+
+    private boolean packagesAreEmpty() {
+        return packages == null || packages.isEmpty();
     }
 
     @Override
     public boolean select( GraphNode node ) {
-        return (packages == null || node.isPackageOneOf( packages )) || (edges == null || isPartOfEdges( node ));
+        return selectedByPackages( node ) || selectedByEdges( node );
+    }
+
+    private boolean selectedByEdges( GraphNode node ) {
+        return edges == null || isPartOfEdges( node );
+    }
+
+    private boolean selectedByPackages( GraphNode node ) {
+        return packages == null || node.isPackageOneOf( packages );
     }
 
     private boolean isPartOfEdges( GraphNode node ) {
         for( EntityConnectionData edge : edges ) {
-            if( node.isAtEitherEndOf( ((PackageRepresenter)edge.source).getPackagename(), ((PackageRepresenter)edge.dest).getPackagename() ) ) {
+            Packagename sourcePackage = ((PackageRepresenter)edge.source).getPackagename();
+            Packagename destPackage = ((PackageRepresenter)edge.dest).getPackagename();
+            if( node.isAtEitherEndOf( sourcePackage, destPackage ) ) {
                 return true;
             }
         }

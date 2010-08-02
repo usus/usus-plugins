@@ -43,15 +43,6 @@ public class ClassRepresenter extends AbstractClassRepresenter {
         return obj instanceof ClassRepresenter && super.equals( obj );
     }
 
-    @Override
-    public String getEdgeEndLabel() {
-        return String.valueOf( getRelationCount() );
-    }
-
-    private int getRelationCount() {
-        return clazz.getCCD();
-    }
-
     public boolean isVisibleFor( int limit ) {
         return getFilterValue() >= limit;
     }

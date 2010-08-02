@@ -1,6 +1,7 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import java.util.Collection;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.GraphNode;
@@ -50,16 +51,13 @@ abstract class AbstractClassRepresenter implements GraphNode {
     }
 
     public boolean isAtEitherEndOf( Packagename source, Packagename dest ) {
-        if( clazz.getPackagename().equals( source ) ) {
-            for( ClassDescriptor child : clazz.getChildren() ) {
-                if( child.getPackagename().equals( dest ) ) {
-                    return true;
-                }
-            }
-        }
-        if( clazz.getPackagename().equals( dest ) ) {
-            for( ClassDescriptor parent : clazz.getParents() ) {
-                if( parent.getPackagename().equals( source ) ) {
+        return connects( source, clazz.getChildren(), dest ) || connects( dest, clazz.getParents(), source );
+    }
+
+    private boolean connects( Packagename classPackage, Set<ClassDescriptor> relateds, Packagename relatedPackage ) {
+        if( clazz.getPackagename().equals( classPackage ) ) {
+            for( ClassDescriptor related : relateds ) {
+                if( related.getPackagename().equals( relatedPackage ) ) {
                     return true;
                 }
             }
