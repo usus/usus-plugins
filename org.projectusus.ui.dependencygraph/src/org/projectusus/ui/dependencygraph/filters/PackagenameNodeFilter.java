@@ -79,15 +79,11 @@ public class PackagenameNodeFilter extends NodeFilter {
     }
 
     public boolean isEmpty() {
-        return packagesAreEmpty() && edgesAreEmpty();
+        return nullOrEmpty( packages ) && nullOrEmpty( edges );
     }
 
-    private boolean edgesAreEmpty() {
-        return edges == null || edges.isEmpty();
-    }
-
-    private boolean packagesAreEmpty() {
-        return packages == null || packages.isEmpty();
+    public boolean nullOrEmpty( Collection<?> collection ) {
+        return collection == null || collection.isEmpty();
     }
 
     @Override
@@ -105,9 +101,9 @@ public class PackagenameNodeFilter extends NodeFilter {
 
     private boolean isPartOfEdges( GraphNode node ) {
         for( EntityConnectionData edge : edges ) {
-            Packagename sourcePackage = ((PackageRepresenter)edge.source).getPackagename();
-            Packagename destPackage = ((PackageRepresenter)edge.dest).getPackagename();
-            if( node.isAtEitherEndOf( sourcePackage, destPackage ) ) {
+            Packagename source = ((PackageRepresenter)edge.source).getPackagename();
+            Packagename target = ((PackageRepresenter)edge.dest).getPackagename();
+            if( node.isAtEitherEndOf( source, target ) ) {
                 return true;
             }
         }
@@ -116,6 +112,11 @@ public class PackagenameNodeFilter extends NodeFilter {
 
     @Override
     public String getDescription() {
+        return descriptionForPackages();
+    }
+
+    public String descriptionForPackages() {
         return "Only classes in one of the following packages: " + Joiner.on( ", " ).join( packages );
     }
+
 }

@@ -11,9 +11,9 @@ import org.eclipse.ui.PartInitException;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
 import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
 
-public class ShowPackagesInClassGraph extends AbstractHandler {
+public class ShowInClassGraph extends AbstractHandler {
 
-    private static final String TARGET_VIEW_ID_PARAMETER = ShowPackagesInClassGraph.class.getName() + ".targetViewId";
+    private static final String TARGET_VIEW_ID_PARAMETER = ShowInClassGraph.class.getName() + ".targetViewId";
 
     public Object execute( ExecutionEvent event ) throws ExecutionException {
         PackagenameNodeFilter filter = createFilter( event );

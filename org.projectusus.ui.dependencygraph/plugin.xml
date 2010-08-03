@@ -118,22 +118,16 @@
          </activeWhen>
       </handler>
       <handler
-            class="org.projectusus.ui.dependencygraph.handlers.ShowPackagesInClassGraph"
-            commandId="org.projectusus.ui.dependencygraph.command.ShowPackagesInClassGraph">
-<!--
+            class="org.projectusus.ui.dependencygraph.handlers.ShowInClassGraph"
+            commandId="org.projectusus.ui.dependencygraph.command.ShowInClassGraph">
          <activeWhen>
             <with
                   variable="selection">
-               <iterate
-                     ifEmpty="false"
-                     operator="or">
-                  <instanceof
-                        value="org.projectusus.core.internal.proportions.rawdata.PackageRepresenter">
-                  </instanceof>
-               </iterate>
+               <count
+                     value="+">
+               </count>
             </with>
          </activeWhen>
-         -->
       </handler>
       <handler
             class="org.projectusus.ui.dependencygraph.handlers.RefreshGraphView"
@@ -156,10 +150,10 @@
             name="Clear custom filter">
       </command>
       <command
-            id="org.projectusus.ui.dependencygraph.command.ShowPackagesInClassGraph"
+            id="org.projectusus.ui.dependencygraph.command.ShowInClassGraph"
             name="Show in class graph">
          <commandParameter
-               id="org.projectusus.ui.dependencygraph.handlers.ShowPackagesInClassGraph.targetViewId"
+               id="org.projectusus.ui.dependencygraph.handlers.ShowInClassGraph.targetViewId"
                name="targetViewId"
                optional="true">
          </commandParameter>
@@ -200,22 +194,22 @@
             allPopups="false"
             locationURI="toolbar:org.projectusus.ui.dependencygraph.PackageGraphView">
          <command
-               commandId="org.projectusus.ui.dependencygraph.command.ShowPackagesInClassGraph"
+               commandId="org.projectusus.ui.dependencygraph.command.ShowInClassGraph"
                icon="icons/graph-class.gif"
                label="Show in class graph"
                style="push">
             <parameter
-                  name="org.projectusus.ui.dependencygraph.handlers.ShowPackagesInClassGraph.targetViewId"
+                  name="org.projectusus.ui.dependencygraph.handlers.ShowInClassGraph.targetViewId"
                   value="org.projectusus.ui.dependencygraph.ClassGraphView">
             </parameter>
          </command>
          <command
-               commandId="org.projectusus.ui.dependencygraph.command.ShowPackagesInClassGraph"
+               commandId="org.projectusus.ui.dependencygraph.command.ShowInClassGraph"
                icon="icons/graph-cross-package.gif"
                label="Show in cross-package class graph"
                style="push">
             <parameter
-                  name="org.projectusus.ui.dependencygraph.handlers.ShowPackagesInClassGraph.targetViewId"
+                  name="org.projectusus.ui.dependencygraph.handlers.ShowInClassGraph.targetViewId"
                   value="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView">
             </parameter>
          </command>
