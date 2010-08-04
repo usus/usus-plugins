@@ -28,11 +28,11 @@ public class PackagenameNodeFilter extends NodeFilter {
     private Collection<Packagename> packages;
     private Collection<EntityConnectionData> edges;
 
-    private void setPackages( Collection<Packagename> packages ) {
+    public void setPackages( Collection<Packagename> packages ) {
         this.packages = packages;
     }
 
-    private void setEdges( Collection<EntityConnectionData> collectedEdges ) {
+    public void setEdges( Collection<EntityConnectionData> collectedEdges ) {
         edges = collectedEdges;
     }
 
@@ -145,13 +145,13 @@ public class PackagenameNodeFilter extends NodeFilter {
         if( edgesAreEmpty() ) {
             return;
         }
-        parts.add( "Only classes that cause one of the following package references: " + commaJoiner.join( transform( edges, toArrowSeparatedStrings ) ) );
+        parts.add( "Only items that cause one of the following package references: " + commaJoiner.join( transform( edges, toArrowSeparatedStrings ) ) );
     }
 
     private void describePackagesTo( Collection<String> parts ) {
         if( packagesAreEmpty() ) {
             return;
         }
-        parts.add( "Only classes in one of the following packages: " + commaJoiner.join( packages ) );
+        parts.add( "Only items in one of the following packages: " + commaJoiner.join( packages ) );
     }
 }

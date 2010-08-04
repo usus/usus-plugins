@@ -13,7 +13,7 @@ public class AnalysisDisplayEntry {
     private CodeProportion history;
     private CodeProportion current;
 
-    private List<DisplayHotspot> displayHotspots;
+    private List<DisplayHotspot<?>> displayHotspots;
 
     public AnalysisDisplayEntry( CodeProportion codeProportion ) {
         super();
@@ -50,7 +50,7 @@ public class AnalysisDisplayEntry {
         return getLabel().equals( otherLabel );
     }
 
-    public List<DisplayHotspot> getHotspots() {
+    public List<DisplayHotspot<?>> getHotspots() {
         if( displayHotspots == null ) {
             createHotspots();
         }
@@ -61,7 +61,7 @@ public class AnalysisDisplayEntry {
         if( hasHotspots() ) {
             displayHotspots = new DisplayHotspotCreator( history.getHotspots(), current.getHotspots() ).hotspots();
         } else {
-            displayHotspots = new ArrayList<DisplayHotspot>();
+            displayHotspots = new ArrayList<DisplayHotspot<?>>();
         }
     }
 
@@ -98,7 +98,7 @@ public class AnalysisDisplayEntry {
     int getAdvancedTrend() {
         if( hasHotspots() ) {
             int result = 0;
-            for( DisplayHotspot hotspot : getHotspots() ) {
+            for( DisplayHotspot<?> hotspot : getHotspots() ) {
                 if( hotspot.getTrend() < 0 ) {
                     return -1;
                 }

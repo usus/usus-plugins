@@ -84,11 +84,32 @@
             id="org.projectusus.ui.internal.proportions.infopresenter.ShowUsusInfo"
             name="Show Info"
             categoryId="org.projectusus.ui.commandCategory"/>
+      <command
+            categoryId="org.projectusus.ui.commandCategory"
+            id="org.projectusus.ui.commands.OpenHotspot"
+            name="Open Hotspot">
+      </command>
    </extension>
    <extension point="org.eclipse.ui.handlers">
       <handler
             class="org.projectusus.ui.internal.proportions.infopresenter.ShowUsusInfo"
             commandId="org.projectusus.ui.internal.proportions.infopresenter.ShowUsusInfo" />
+      <handler
+            class="org.projectusus.ui.internal.hotspots.commands.OpenHotspotInEditor"
+            commandId="org.projectusus.ui.commands.OpenHotspot">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <instanceof
+                        value="org.projectusus.ui.internal.FileDisplayHotspot">
+                  </instanceof>
+               </iterate>
+            </with>
+         </activeWhen>
+      </handler>
    </extension>
    <extension point="org.eclipse.ui.menus">
       <menuContribution locationURI="popup:#CompilationUnitEditorContext">

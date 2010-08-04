@@ -94,7 +94,7 @@ public class PackageRepresenter implements GraphNode {
     }
 
     public boolean isAtEitherEndOf( Packagename source, Packagename dest ) {
-        return false;
+        return packagename.equals( source ) || packagename.equals( dest );
     }
 
 }

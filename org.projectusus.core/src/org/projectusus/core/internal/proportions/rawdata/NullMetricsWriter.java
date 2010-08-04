@@ -19,16 +19,15 @@ public class NullMetricsWriter implements IMetricsWriter {
     }
 
     public void putData( IFile file, MethodDeclaration methodDecl, String dataKey, int value ) {
-        // TODO Auto-generated method stub
-
+        // just do nothing harmful
     }
 
     public void putData( IFile file, Initializer initializer, String dataKey, int value ) {
-        // TODO Auto-generated method stub
-
+        // just do nothing harmful
     }
 
     public void putData( IFile file, AbstractTypeDeclaration node, String dataKey, int value ) {
+        // just do nothing harmful
     }
 
 }

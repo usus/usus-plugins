@@ -11,26 +11,26 @@ import org.projectusus.ui.internal.DisplayHotspot;
 import org.projectusus.ui.viewer.IColumnDesc;
 import org.projectusus.ui.viewer.UsusTreeColumn;
 
-public enum HotspotsColumnDesc implements IColumnDesc<DisplayHotspot> {
+public enum HotspotsColumnDesc implements IColumnDesc<DisplayHotspot<?>> {
 
     @UsusTreeColumn( header = "Value", align = RIGHT, weight = 5, numeric = true )
     Value {
         @Override
-        public String getLabel( DisplayHotspot element ) {
+        public String getLabel( DisplayHotspot<?> element ) {
             return String.valueOf( element.getMetricsValue() );
         }
     },
     @UsusTreeColumn( header = "Name", weight = 25 )
     Name {
         @Override
-        public String getLabel( DisplayHotspot element ) {
+        public String getLabel( DisplayHotspot<?> element ) {
             return element.getName();
         }
     },
     @UsusTreeColumn( header = "Path", weight = 60 )
     Path {
         @Override
-        public String getLabel( DisplayHotspot element ) {
+        public String getLabel( DisplayHotspot<?> element ) {
             return element.getPath();
         }
     },
@@ -42,7 +42,7 @@ public enum HotspotsColumnDesc implements IColumnDesc<DisplayHotspot> {
         }
 
         @Override
-        public String getLabel( DisplayHotspot element ) {
+        public String getLabel( DisplayHotspot<?> element ) {
             return String.valueOf( element.getTrend() );
         }
     };
@@ -51,7 +51,7 @@ public enum HotspotsColumnDesc implements IColumnDesc<DisplayHotspot> {
         return false;
     }
 
-    public String getLabel( DisplayHotspot element ) {
+    public String getLabel( DisplayHotspot<?> element ) {
         return "";
     }
 

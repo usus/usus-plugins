@@ -36,7 +36,7 @@ public class PackageCycleStatistic extends DefaultCockpitExtension {
         for( Cycle<Packagename> cycle : packageCycles.getPackageCycles() ) {
             int cyclesize = cycle.numberOfElements();
             for( Packagename pack : cycle.getElementsInCycle() ) {
-                hotspots.add( new PackageHotspot( pack, cyclesize ) );
+                hotspots.add( new PackageHotspot( pack, cyclesize, cycle ) );
             }
         }
         return hotspots;

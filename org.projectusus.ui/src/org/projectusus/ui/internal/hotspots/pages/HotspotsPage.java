@@ -5,24 +5,34 @@
 package org.projectusus.ui.internal.hotspots.pages;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.EMPTY_MAP;
 
+import java.util.List;
+
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.jface.viewers.IOpenListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.part.Page;
+import org.projectusus.core.util.Defect;
 import org.projectusus.ui.internal.AnalysisDisplayEntry;
 import org.projectusus.ui.internal.DisplayHotspot;
-import org.projectusus.ui.internal.hotspots.actions.OpenHotspotInEditor;
-import org.projectusus.ui.internal.selection.ExtractHotspot;
+import org.projectusus.ui.internal.hotspots.commands.AbstractOpenHotspotHandler;
+import org.projectusus.ui.internal.selection.ExtractHotspots;
 import org.projectusus.ui.viewer.UsusTreeViewer;
 
 public class HotspotsPage extends Page implements IHotspotsPage {
 
-    protected UsusTreeViewer<DisplayHotspot> viewer;
+    protected UsusTreeViewer<DisplayHotspot<?>> viewer;
     private final AnalysisDisplayEntry entry;
     private ViewerComparator comparator;
 
@@ -41,14 +51,14 @@ public class HotspotsPage extends Page implements IHotspotsPage {
 
     private void createViewer( Composite parent ) {
         HotspotsColumnDesc[] columnDescs = HotspotsColumnDesc.values();
-        viewer = new UsusTreeViewer<DisplayHotspot>( parent, columnDescs );
+        viewer = new UsusTreeViewer<DisplayHotspot<?>>( parent, columnDescs );
         viewer.setLabelProvider( new HotspotsLP( asList( columnDescs ) ) );
         viewer.setContentProvider( createContentProvider() );
         comparator = new ViewerComparator() {
             @Override
             public int compare( Viewer viewer, Object e1, Object e2 ) {
-                DisplayHotspot hotspot1 = (DisplayHotspot)e1;
-                DisplayHotspot hotspot2 = (DisplayHotspot)e2;
+                DisplayHotspot<?> hotspot1 = (DisplayHotspot<?>)e1;
+                DisplayHotspot<?> hotspot2 = (DisplayHotspot<?>)e2;
                 int trend1 = hotspot1.getTrend();
                 int trend2 = hotspot2.getTrend();
                 if( trend1 < 0 || trend2 < 0 ) {
@@ -66,9 +76,15 @@ public class HotspotsPage extends Page implements IHotspotsPage {
     protected void initOpenListener() {
         viewer.addOpenListener( new IOpenListener() {
             public void open( OpenEvent event ) {
-                DisplayHotspot hotspot = new ExtractHotspot( event.getSelection() ).compute();
-                if( hotspot != null ) {
-                    new OpenHotspotInEditor( hotspot ).run();
+                List<DisplayHotspot<?>> hotspots = new ExtractHotspots( event.getSelection() ).compute();
+                ICommandService service = (ICommandService)PlatformUI.getWorkbench().getService( ICommandService.class );
+                Command command = service.getCommand( AbstractOpenHotspotHandler.COMMAND_ID );
+                try {
+                    command.executeWithChecks( new ExecutionEvent( command, EMPTY_MAP, event.getSource(), hotspots ) );
+                } catch( NotHandledException ignore ) {
+                    // to be ignored
+                } catch( Exception exception ) {
+                    throw new Defect( exception );
                 }
             }
         } );
@@ -107,5 +123,9 @@ public class HotspotsPage extends Page implements IHotspotsPage {
     public void resetSort() {
         viewer.setComparator( comparator );
         viewer.resetColumnSorting();
+    }
+
+    public ISelectionProvider getSelectionProvider() {
+        return viewer;
     }
 }

@@ -37,7 +37,7 @@ public class DisplayHotspotCreatorTest {
 
     @Test
     public void emptyLists() {
-        List<DisplayHotspot> result = createDisplay( oldHotspots, currentHotspots );
+        List<DisplayHotspot<?>> result = createDisplay( oldHotspots, currentHotspots );
 
         assertEquals( 0, result.size() );
     }
@@ -45,7 +45,7 @@ public class DisplayHotspotCreatorTest {
     @Test
     public void oneOld() {
         oldHotspots.add( hotspot1_1_1 );
-        List<DisplayHotspot> result = createDisplay( oldHotspots, currentHotspots );
+        List<DisplayHotspot<?>> result = createDisplay( oldHotspots, currentHotspots );
 
         assertEquals( 1, result.size() );
         checkContains( result, hotspot1_1_1, null );
@@ -55,7 +55,7 @@ public class DisplayHotspotCreatorTest {
     @Test
     public void oneNew() {
         currentHotspots.add( hotspot1_1_1 );
-        List<DisplayHotspot> result = createDisplay( oldHotspots, currentHotspots );
+        List<DisplayHotspot<?>> result = createDisplay( oldHotspots, currentHotspots );
 
         assertEquals( 1, result.size() );
         checkContains( result, null, hotspot1_1_1 );
@@ -66,7 +66,7 @@ public class DisplayHotspotCreatorTest {
     public void oldAndNewIdentical() {
         oldHotspots.add( hotspot1_1_1 );
         currentHotspots.add( hotspot1_1_1 );
-        List<DisplayHotspot> result = createDisplay( oldHotspots, currentHotspots );
+        List<DisplayHotspot<?>> result = createDisplay( oldHotspots, currentHotspots );
 
         assertEquals( 1, result.size() );
         checkContains( result, hotspot1_1_1, hotspot1_1_1 );
@@ -77,7 +77,7 @@ public class DisplayHotspotCreatorTest {
     public void oldBetterThanNew() {
         oldHotspots.add( hotspot1_1_1 );
         currentHotspots.add( hotspot1_2_1 );
-        List<DisplayHotspot> result = createDisplay( oldHotspots, currentHotspots );
+        List<DisplayHotspot<?>> result = createDisplay( oldHotspots, currentHotspots );
 
         assertEquals( 1, result.size() );
         checkContains( result, hotspot1_1_1, hotspot1_2_1 );
@@ -88,7 +88,7 @@ public class DisplayHotspotCreatorTest {
     public void oldWorseThanNew() {
         oldHotspots.add( hotspot1_2_1 );
         currentHotspots.add( hotspot1_1_1 );
-        List<DisplayHotspot> result = createDisplay( oldHotspots, currentHotspots );
+        List<DisplayHotspot<?>> result = createDisplay( oldHotspots, currentHotspots );
 
         assertEquals( 1, result.size() );
         checkContains( result, hotspot1_2_1, hotspot1_1_1 );
@@ -99,7 +99,7 @@ public class DisplayHotspotCreatorTest {
     public void oldAndNewDifferentLocations() {
         oldHotspots.add( hotspot1_1_1 );
         currentHotspots.add( hotspot2_1_1 );
-        List<DisplayHotspot> result = createDisplay( oldHotspots, currentHotspots );
+        List<DisplayHotspot<?>> result = createDisplay( oldHotspots, currentHotspots );
 
         assertEquals( 2, result.size() );
         checkContains( result, hotspot1_1_1, null );
@@ -114,7 +114,7 @@ public class DisplayHotspotCreatorTest {
         oldHotspots.add( hotspot2_1_1 );
         currentHotspots.add( hotspot2_1_1 );
         currentHotspots.add( hotspot3_1_1 );
-        List<DisplayHotspot> result = createDisplay( oldHotspots, currentHotspots );
+        List<DisplayHotspot<?>> result = createDisplay( oldHotspots, currentHotspots );
 
         assertEquals( 3, result.size() );
         checkContains( result, hotspot1_1_1, null );
@@ -131,7 +131,7 @@ public class DisplayHotspotCreatorTest {
         oldHotspots.add( hotspot2_1_1 );
         currentHotspots.add( hotspot2_2_1 );
         currentHotspots.add( hotspot3_1_1 );
-        List<DisplayHotspot> result = createDisplay( oldHotspots, currentHotspots );
+        List<DisplayHotspot<?>> result = createDisplay( oldHotspots, currentHotspots );
 
         assertEquals( 3, result.size() );
         checkContains( result, hotspot1_1_1, null );
@@ -150,7 +150,7 @@ public class DisplayHotspotCreatorTest {
         currentHotspots.add( hotspot1_1_1 );
         currentHotspots.add( hotspot2_2_1 );
         currentHotspots.add( hotspot3_1_1 );
-        List<DisplayHotspot> result = createDisplay( oldHotspots, currentHotspots );
+        List<DisplayHotspot<?>> result = createDisplay( oldHotspots, currentHotspots );
 
         assertEquals( 3, result.size() );
         checkContains( result, hotspot1_1_1, hotspot1_1_1 );
@@ -161,8 +161,8 @@ public class DisplayHotspotCreatorTest {
         checkTrendConstant( result.get( 2 ) );
     }
 
-    private void checkContains( List<DisplayHotspot> result, Hotspot oldHotspot, Hotspot newHotspot ) {
-        for( DisplayHotspot displayHotspot : result ) {
+    private void checkContains( List<DisplayHotspot<?>> result, Hotspot oldHotspot, Hotspot newHotspot ) {
+        for( DisplayHotspot<?> displayHotspot : result ) {
             if( compare( oldHotspot, displayHotspot.getOldHotspot() ) ) {
                 if( compare( newHotspot, displayHotspot.getHotspot() ) ) {
                     if( compareMetricsValue( newHotspot, displayHotspot ) ) {
@@ -174,7 +174,7 @@ public class DisplayHotspotCreatorTest {
         fail( "List does not contain any elements matching the conditions." );
     }
 
-    private boolean compareMetricsValue( Hotspot newHotspot, DisplayHotspot displayHotspot ) {
+    private boolean compareMetricsValue( Hotspot newHotspot, DisplayHotspot<?> displayHotspot ) {
         return (newHotspot == null && displayHotspot.getMetricsValue() == 0) || (newHotspot != null && newHotspot.getMetricsValue() == displayHotspot.getMetricsValue());
     }
 
@@ -182,20 +182,20 @@ public class DisplayHotspotCreatorTest {
         return (expected == null && actual == null) || (expected != null && expected.equals( actual ));
     }
 
-    private List<DisplayHotspot> createDisplay( List<Hotspot> oldHotspots, List<Hotspot> currentHotspots ) {
+    private List<DisplayHotspot<?>> createDisplay( List<Hotspot> oldHotspots, List<Hotspot> currentHotspots ) {
         DisplayHotspotCreator creator = new DisplayHotspotCreator( oldHotspots, currentHotspots );
         return creator.hotspots();
     }
 
-    private void checkTrendPositive( DisplayHotspot displayHotspot ) {
+    private void checkTrendPositive( DisplayHotspot<?> displayHotspot ) {
         assertTrue( "expected positive trend ", displayHotspot.getTrend() > 0 );
     }
 
-    private void checkTrendNegative( DisplayHotspot displayHotspot ) {
+    private void checkTrendNegative( DisplayHotspot<?> displayHotspot ) {
         assertTrue( "expected positive trend ", displayHotspot.getTrend() < 0 );
     }
 
-    private void checkTrendConstant( DisplayHotspot displayHotspot ) {
+    private void checkTrendConstant( DisplayHotspot<?> displayHotspot ) {
         assertTrue( "expected positive trend ", displayHotspot.getTrend() == 0 );
     }
 

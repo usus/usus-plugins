@@ -6,10 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.projectusus.core.basis.FileHotspot;
 import org.projectusus.core.basis.Hotspot;
+import org.projectusus.core.basis.PackageHotspot;
 
 import com.google.common.collect.Sets;
-import com.google.common.collect.Sets.SetView;
 
 class DisplayHotspotCreator {
 
@@ -22,18 +23,18 @@ class DisplayHotspotCreator {
         this.currentHotspots = new HashSet<Hotspot>( currentHotspots );
     }
 
-    public List<DisplayHotspot> hotspots() {
-        Set<DisplayHotspot> result = new HashSet<DisplayHotspot>();
-        SetView<Hotspot> oldNotInNew = Sets.difference( oldHotspots, currentHotspots );
+    public List<DisplayHotspot<?>> hotspots() {
+        Set<DisplayHotspot<?>> result = new HashSet<DisplayHotspot<?>>();
+        Set<Hotspot> oldNotInNew = Sets.difference( oldHotspots, currentHotspots );
         for( Hotspot hotspot : oldNotInNew ) {
-            result.add( new DisplayHotspot( hotspot, null ) );
+            result.add( createDisplayHotspot( hotspot, null ) );
         }
-        SetView<Hotspot> newNotInOld = Sets.difference( currentHotspots, oldHotspots );
+        Set<Hotspot> newNotInOld = Sets.difference( currentHotspots, oldHotspots );
         for( Hotspot hotspot : newNotInOld ) {
-            result.add( new DisplayHotspot( null, hotspot ) );
+            result.add( createDisplayHotspot( null, hotspot ) );
         }
-        SetView<Hotspot> oldAlsoInNew = Sets.difference( oldHotspots, oldNotInNew );
-        SetView<Hotspot> newAlsoInOld = Sets.difference( currentHotspots, newNotInOld );
+        Set<Hotspot> oldAlsoInNew = Sets.difference( oldHotspots, oldNotInNew );
+        Set<Hotspot> newAlsoInOld = Sets.difference( currentHotspots, newNotInOld );
 
         List<Hotspot> oldInNewSorted = new ArrayList<Hotspot>( oldAlsoInNew );
         List<Hotspot> newInOldSorted = new ArrayList<Hotspot>( newAlsoInOld );
@@ -47,11 +48,18 @@ class DisplayHotspotCreator {
             if( !oldHotspot.getName().equals( newHotspot.getName() ) ) {
                 continue; // TODO throw Exception?
             }
-            result.add( new DisplayHotspot( oldHotspot, newHotspot ) );
+            result.add( createDisplayHotspot( oldHotspot, newHotspot ) );
         }
 
-        ArrayList<DisplayHotspot> resultList = new ArrayList<DisplayHotspot>( result );
+        List<DisplayHotspot<?>> resultList = new ArrayList<DisplayHotspot<?>>( result );
         Collections.sort( resultList );
         return resultList;
+    }
+
+    private DisplayHotspot<?> createDisplayHotspot( Hotspot oldHotspot, Hotspot newHotspot ) {
+        if( oldHotspot instanceof FileHotspot || newHotspot instanceof FileHotspot ) {
+            return new FileDisplayHotspot( (FileHotspot)oldHotspot, (FileHotspot)newHotspot );
+        }
+        return new PackageDisplayHotspot( (PackageHotspot)oldHotspot, (PackageHotspot)newHotspot );
     }
 }

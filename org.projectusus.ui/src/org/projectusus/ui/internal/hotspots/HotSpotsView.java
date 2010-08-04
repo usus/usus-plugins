@@ -24,6 +24,7 @@ public class HotSpotsView extends ViewPart {
     private IHotspotsPage defaultPage;
     private IHotspotsPage activePage;
     private final Set<IHotspotsPage> pages = new HashSet<IHotspotsPage>();
+    private final DelegatingSelectionProvider selectionProvider = new DelegatingSelectionProvider();
 
     public void update( AnalysisDisplayEntry entry ) {
         if( entry != null ) {
@@ -33,6 +34,7 @@ public class HotSpotsView extends ViewPart {
 
     @Override
     public void createPartControl( Composite parent ) {
+        getSite().setSelectionProvider( selectionProvider );
         book = new PageBook( parent, SWT.NONE );
         defaultPage = new DefaultHotspotsPage();
         defaultPage.createControl( book );
@@ -65,14 +67,16 @@ public class HotSpotsView extends ViewPart {
     // ////////
 
     private void showPage( IHotspotsPage page ) {
-        if( activePage != page ) {
-            activePage = page;
-            Control pageControl = activePage.getControl();
-            if( pageControl != null && !pageControl.isDisposed() ) {
-                // Verify that the page control is not disposed
-                // If we are closing, it may have already been disposed
-                book.showPage( pageControl );
-            }
+        if( activePage == page ) {
+            return;
+        }
+        activePage = page;
+        Control pageControl = activePage.getControl();
+        if( pageControl != null && !pageControl.isDisposed() ) {
+            // Verify that the page control is not disposed
+            // If we are closing, it may have already been disposed
+            selectionProvider.switchTo( page.getSelectionProvider() );
+            book.showPage( pageControl );
         }
     }
 

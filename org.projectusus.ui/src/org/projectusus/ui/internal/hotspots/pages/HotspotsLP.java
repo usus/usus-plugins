@@ -21,7 +21,7 @@ public class HotspotsLP extends UsusModelLabelProvider implements ITableLabelPro
 
     public String getColumnText( Object element, int columnIndex ) {
         if( element instanceof DisplayHotspot ) {
-            return columnDescs.get( columnIndex ).getLabel( (DisplayHotspot)element );
+            return columnDescs.get( columnIndex ).getLabel( (DisplayHotspot<?>)element );
         }
         return element.toString();
     }
@@ -29,7 +29,7 @@ public class HotspotsLP extends UsusModelLabelProvider implements ITableLabelPro
     public Image getColumnImage( Object element, int columnIndex ) {
         HotspotsColumnDesc cockpitColumnDesc = HotspotsColumnDesc.values()[columnIndex];
         if( cockpitColumnDesc == HotspotsColumnDesc.Trend && element instanceof DisplayHotspot ) {
-            return ((DisplayHotspot)element).getTrendImage();
+            return ((DisplayHotspot<?>)element).getTrendImage();
         }
         if( cockpitColumnDesc.hasImage() ) {
             return getColumnImageFor( element );

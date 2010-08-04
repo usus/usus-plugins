@@ -1,17 +1,22 @@
 package org.projectusus.core.basis;
 
+import java.util.Set;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.projectusus.core.filerelations.model.Cycle;
 import org.projectusus.core.filerelations.model.Packagename;
 
 public class PackageHotspot implements Hotspot {
 
     private final Packagename packagename;
     private final int metricsValue;
+    private final Cycle<Packagename> cycle;
 
-    public PackageHotspot( Packagename packagename, int metricsValue ) {
+    public PackageHotspot( Packagename packagename, int metricsValue, Cycle<Packagename> cycle ) {
         this.packagename = packagename;
         this.metricsValue = metricsValue;
+        this.cycle = cycle;
     }
 
     public int getMetricsValue() {
@@ -44,4 +49,7 @@ public class PackageHotspot implements Hotspot {
         return new HashCodeBuilder().append( getName() ).append( getPath() ).toHashCode();
     }
 
+    public Set<Packagename> getElementsInCycle() {
+        return cycle.getElementsInCycle();
+    }
 }

@@ -118,6 +118,30 @@
          </activeWhen>
       </handler>
       <handler
+            class="org.projectusus.ui.dependencygraph.handlers.ClearCustomFilter"
+            commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter">
+         <activeWhen>
+            <and>
+               <with
+                     variable="activePartId">
+                  <equals
+                        value="org.projectusus.ui.dependencygraph.PackageGraphView">
+                  </equals>
+               </with>
+               <with
+                     variable="activeContexts">
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+                     <equals
+                           value="org.projectusus.ui.dependencygraph.PackageGraphView.context.customFilter">
+                     </equals>
+                  </iterate>
+               </with>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             class="org.projectusus.ui.dependencygraph.handlers.ShowInClassGraph"
             commandId="org.projectusus.ui.dependencygraph.command.ShowInClassGraph">
          <activeWhen>
@@ -138,6 +162,22 @@
                <instanceof
                      value="org.projectusus.ui.dependencygraph.common.DependencyGraphView">
                </instanceof>
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.projectusus.ui.dependencygraph.handlers.OpenHotspotInPackageGraph"
+            commandId="org.projectusus.ui.commands.OpenHotspot">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <instanceof
+                        value="org.projectusus.ui.internal.PackageDisplayHotspot">
+                  </instanceof>
+               </iterate>
             </with>
          </activeWhen>
       </handler>
@@ -212,6 +252,14 @@
                   name="org.projectusus.ui.dependencygraph.handlers.ShowInClassGraph.targetViewId"
                   value="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView">
             </parameter>
+         </command>
+         <separator
+               name="org.projectusus.ui.dependencygraph.PackageGraphView.toolbar.separator"
+               visible="true">
+         </separator>
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter"
+               style="push">
          </command>
          <command
                commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView"

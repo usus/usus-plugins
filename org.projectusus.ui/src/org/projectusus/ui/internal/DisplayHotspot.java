@@ -4,15 +4,14 @@ import static org.projectusus.ui.colors.UsusUIImages.getSharedImages;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.swt.graphics.Image;
-import org.projectusus.core.basis.FileHotspot;
 import org.projectusus.core.basis.Hotspot;
 
-public class DisplayHotspot implements Comparable<DisplayHotspot> {
+public abstract class DisplayHotspot<T extends Hotspot> implements Comparable<DisplayHotspot<T>> {
 
-    private final Hotspot historyHotspot;
-    private final Hotspot currentHotspot;
+    private final T historyHotspot;
+    private final T currentHotspot;
 
-    public DisplayHotspot( Hotspot historyHotspot, Hotspot currentHotspot ) {
+    public DisplayHotspot( T historyHotspot, T currentHotspot ) {
         super();
         this.historyHotspot = historyHotspot;
         this.currentHotspot = currentHotspot;
@@ -29,17 +28,10 @@ public class DisplayHotspot implements Comparable<DisplayHotspot> {
         return getCurrentOrOldHotspot().getMetricsValue();
     }
 
-    public IFile getFile() {
-        if( isFileHotspot() ) {
-            return ((FileHotspot)getCurrentOrOldHotspot()).getFile();
-        }
-        return null; // for the time being... later: open package cycle graph
-    }
-
     /**
      * result may be null!
      */
-    public Hotspot getHotspot() {
+    public T getHotspot() {
         return currentHotspot;
     }
 
@@ -48,7 +40,7 @@ public class DisplayHotspot implements Comparable<DisplayHotspot> {
      * 
      * testing backdoor
      */
-    Hotspot getOldHotspot() {
+    T getOldHotspot() {
         return historyHotspot;
     }
 
@@ -56,8 +48,8 @@ public class DisplayHotspot implements Comparable<DisplayHotspot> {
         return getSharedImages().getTrendImage( getTrend() );
     }
 
-    public Hotspot getCurrentOrOldHotspot() {
-        return currentHotspot != null ? currentHotspot : historyHotspot;
+    public T getCurrentOrOldHotspot() {
+        return currentHotspot == null ? historyHotspot : currentHotspot;
     }
 
     public int getTrend() {
@@ -75,7 +67,7 @@ public class DisplayHotspot implements Comparable<DisplayHotspot> {
         return getName() + "-" + getMetricsValue() + "[" + super.toString() + "]";
     }
 
-    public int compareTo( DisplayHotspot o ) {
+    public int compareTo( DisplayHotspot<T> o ) {
         return getName().compareTo( o.getName() );
     }
 
@@ -83,7 +75,5 @@ public class DisplayHotspot implements Comparable<DisplayHotspot> {
         return getCurrentOrOldHotspot().getPath();
     }
 
-    public boolean isFileHotspot() {
-        return getCurrentOrOldHotspot() instanceof FileHotspot;
-    }
+    public abstract IFile getFile();
 }

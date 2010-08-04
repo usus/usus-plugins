@@ -4,16 +4,19 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.hotspots.pages;
 
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.Page;
 import org.projectusus.ui.internal.AnalysisDisplayEntry;
+import org.projectusus.ui.internal.hotspots.NullSelectionProvider;
 
 public class DefaultHotspotsPage extends Page implements IHotspotsPage {
 
     private Label control;
+    private final ISelectionProvider selectionProvider = new NullSelectionProvider();
 
     @Override
     public void createControl( Composite parent ) {
@@ -56,4 +59,9 @@ public class DefaultHotspotsPage extends Page implements IHotspotsPage {
     public void resetSort() {
         // do nothing
     }
+
+    public ISelectionProvider getSelectionProvider() {
+        return selectionProvider;
+    }
+
 }
