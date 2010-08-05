@@ -41,8 +41,7 @@ public abstract class XmlLoader<T> {
         } catch( Exception ex ) {
             result.clear();
             // not directly displayed to the user, but into the error log
-            String msg = "Unable to load file."; //$NON-NLS-1$
-            UsusCorePlugin.log( msg, ex );
+            UsusCorePlugin.log( "Unable to load file.", ex ); //$NON-NLS-1$
         } finally {
             safeClose( reader );
         }

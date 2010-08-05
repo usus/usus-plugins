@@ -53,13 +53,9 @@ public abstract class DisplayHotspot<T extends Hotspot> implements Comparable<Di
     }
 
     public int getTrend() {
-        if( currentHotspot != null && historyHotspot != null ) {
-            return -(getMetricsValue() - historyHotspot.getMetricsValue());
-        }
-        if( currentHotspot == null ) {
-            return 1;
-        }
-        return -1;
+        int currentMetricsValue = currentHotspot == null ? 0 : getMetricsValue();
+        int oldMetricsValue = historyHotspot == null ? 0 : historyHotspot.getMetricsValue();
+        return -(currentMetricsValue - oldMetricsValue);
     }
 
     @Override
