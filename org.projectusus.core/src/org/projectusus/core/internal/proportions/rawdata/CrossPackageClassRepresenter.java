@@ -33,7 +33,7 @@ public class CrossPackageClassRepresenter extends AbstractClassRepresenter {
     }
 
     public String getNodeName() {
-        return clazz.qualifiedClassName();
+        return clazz.getClassname().toString();
     }
 
     public boolean isVisibleFor( int limit ) {
