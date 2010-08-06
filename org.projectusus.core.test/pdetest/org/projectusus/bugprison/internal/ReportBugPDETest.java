@@ -23,7 +23,7 @@ public class ReportBugPDETest extends PDETestUsingWSProject {
     private static final DateTime TODAY = new DateMidnight().toDateTime();
 
     protected IBuggyProject getBuggyProjectAdapter() {
-        return (IBuggyProject)project.getAdapter( IBuggyProject.class );
+        return (IBuggyProject)project1.getAdapter( IBuggyProject.class );
     }
 
     @Test
@@ -50,7 +50,7 @@ public class ReportBugPDETest extends PDETestUsingWSProject {
         assertEquals( 8, bug.getBugMetrics().getMethodLength() );
         assertEquals( 7, bug.getBugMetrics().getNumberOfMethods() );
 
-        assertEquals( PROJECT_NAME, bug.getLocation().getProject() );
+        assertEquals( PROJECT_NAME_1, bug.getLocation().getProject() );
         assertEquals( "pde.test.package", bug.getLocation().getPackageName() );
         assertEquals( "TestClassName", bug.getLocation().getClassName() );
         assertEquals( "testMethodName", bug.getLocation().getMethodName() );

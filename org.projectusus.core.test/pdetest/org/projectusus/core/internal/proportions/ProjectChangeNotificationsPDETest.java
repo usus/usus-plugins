@@ -47,7 +47,7 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
     @Test
     public void projectClosed() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
-        project.close( new NullProgressMonitor() );
+        project1.close( new NullProgressMonitor() );
 
         listener.assertNoException();
 
@@ -55,20 +55,17 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 0, target.getProjects().size() );
         assertEquals( 1, target.getRemovedProjects().size() );
         IProject removedProject = target.getRemovedProjects().iterator().next();
-        assertEquals( project, removedProject );
-        project.open( new NullProgressMonitor() ); // this fixes some following tests
+        assertEquals( project1, removedProject );
+        project1.open( new NullProgressMonitor() ); // this fixes some following tests
     }
-
-    // TODO lf will this be enough? if the project was removed from consideration,
-    // wouldn't we also need the full list of files in the project?
 
     @Test
     public void projectOpened() throws Exception {
-        createWSFile( "someFile.java", "some content" );
-        project.close( new NullProgressMonitor() );
+        createWSFile( "someFile.java", "some content", project1 );
+        project1.close( new NullProgressMonitor() );
         buildFullyAndWait();
         getWorkspace().addResourceChangeListener( listener );
-        project.open( new NullProgressMonitor() );
+        project1.open( new NullProgressMonitor() );
 
         listener.assertNoException();
 
@@ -76,13 +73,13 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 1, target.getProjects().size() );
         assertEquals( 0, target.getRemovedProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
-        assertEquals( project, affectedProject );
+        assertEquals( project1, affectedProject );
     }
 
     @Test
     public void projectDeleted() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
-        project.delete( true, new NullProgressMonitor() );
+        project1.delete( true, new NullProgressMonitor() );
 
         listener.assertNoException();
 
@@ -90,7 +87,7 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 0, target.getProjects().size() );
         assertEquals( 1, target.getRemovedProjects().size() );
         IProject removedProject = target.getRemovedProjects().iterator().next();
-        assertEquals( project, removedProject );
+        assertEquals( project1, removedProject );
     }
 
     private IProject createAdditionalProjectWithFile() throws CoreException {

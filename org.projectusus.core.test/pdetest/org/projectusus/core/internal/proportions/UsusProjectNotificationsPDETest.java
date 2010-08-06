@@ -29,9 +29,9 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
 
     @Test
     public void projectAddedToUsus() throws Exception {
-        makeUsusProject( false );
+        makeUsusProject( false, project1 );
         getWorkspace().addResourceChangeListener( listener );
-        makeUsusProject( true );
+        makeUsusProject( true, project1 );
 
         listener.assertNoException();
 
@@ -39,8 +39,8 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 0, target.getRemovedProjects().size() );
         assertEquals( 1, target.getProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
-        assertEquals( project, affectedProject );
-        Collection<IFile> files = target.getFiles( project );
+        assertEquals( project1, affectedProject );
+        Collection<IFile> files = target.getFiles( project1 );
         assertEquals( 1, files.size() );
         assertEquals( "org.projectusus.core.prefs", files.iterator().next().getName() );
     }
@@ -48,12 +48,12 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
     @Test
     public void projectRemovedFromUsus() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
-        createWSFile( "a.java", "created before removing project from usus" );
+        createWSFile( "a.java", "created before removing project from usus", project1 );
 
         listener.assertNoException();
         assertEquals( 1, listener.getTarget().getProjects().size() );
 
-        makeUsusProject( false );
+        makeUsusProject( false, project1 );
 
         listener.assertNoException();
 
@@ -64,9 +64,9 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
 
     @Test
     public void excludeNonUsusProjects() throws Exception {
-        makeUsusProject( false );
+        makeUsusProject( false, project1 );
         getWorkspace().addResourceChangeListener( listener );
-        createWSFile( "a.java", "file that is ignored because in non-usus project" );
+        createWSFile( "a.java", "file that is ignored because in non-usus project", project1 );
 
         listener.assertNoException();
 
@@ -82,6 +82,6 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
     private void assertRemovedProject( ICodeProportionComputationTarget target ) {
         assertEquals( 1, target.getRemovedProjects().size() );
         IProject removedProject = target.getRemovedProjects().iterator().next();
-        assertEquals( project, removedProject );
+        assertEquals( project1, removedProject );
     }
 }

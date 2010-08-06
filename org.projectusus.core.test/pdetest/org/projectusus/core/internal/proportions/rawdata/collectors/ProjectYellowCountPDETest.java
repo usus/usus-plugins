@@ -30,14 +30,14 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void findMarkerOnProject() throws CoreException {
-        project.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
+        project1.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
         assertEquals( 1, yellowCountCache().yellows() );
     }
 
     @Test
     public void findMarkerOnJavaFile() throws CoreException {
-        IFile file = createWSFile( "a.java", "no content" );
+        IFile file = createWSFile( "a.java", "no content", project1 );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
         assertEquals( 1, yellowCountCache().yellows() );
@@ -45,7 +45,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void findMarkerOnNonJavaFile() throws Exception {
-        IFile file = createWSFile( "a", "no content" );
+        IFile file = createWSFile( "a", "no content", project1 );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
         assertEquals( 1, yellowCountCache().yellows() );
@@ -53,7 +53,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void findMultipleMarkersOnFile() throws CoreException {
-        IFile file = createWSFile( "a", "no content\non two lines" );
+        IFile file = createWSFile( "a", "no content\non two lines", project1 );
         IMarker marker1 = file.createMarker( PROBLEM );
         marker1.setAttribute( LINE_NUMBER, 1 );
         marker1.setAttribute( SEVERITY, SEVERITY_WARNING );
@@ -67,9 +67,9 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void findMarkersOnMultipleFiles() throws Exception {
-        IFile file1 = createWSFile( "a", "no content" );
+        IFile file1 = createWSFile( "a", "no content", project1 );
         file1.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        IFile file2 = createWSFile( "b.java", "no content" );
+        IFile file2 = createWSFile( "b.java", "no content", project1 );
         file2.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
         assertEquals( 2, yellowCountCache().yellows() );
@@ -77,9 +77,9 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void hotspotsOnMultipleNonJavaFiles() throws Exception {
-        IFile fileA = createWSFile( "a", "no content" );
+        IFile fileA = createWSFile( "a", "no content", project1 );
         fileA.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        IFile fileB = createWSFile( "b", "no content" );
+        IFile fileB = createWSFile( "b", "no content", project1 );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
@@ -88,9 +88,9 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void hotspotsOnMultipleJavaFiles() throws CoreException {
-        IFile fileA = createWSFile( "a.java", "no content" );
+        IFile fileA = createWSFile( "a.java", "no content", project1 );
         fileA.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        IFile fileB = createWSFile( "b.java", "no content" );
+        IFile fileB = createWSFile( "b.java", "no content", project1 );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         buildFullyAndWait();
@@ -99,7 +99,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void findOnlyWarningMarkers() throws CoreException {
-        IFile file = createWSFile( "a", "no content" );
+        IFile file = createWSFile( "a", "no content", project1 );
         // put stuff we want to ignore
         file.createMarker( BOOKMARK );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_INFO );

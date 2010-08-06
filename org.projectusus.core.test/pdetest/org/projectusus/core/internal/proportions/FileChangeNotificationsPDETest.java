@@ -6,7 +6,7 @@ package org.projectusus.core.internal.proportions;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -34,20 +34,21 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
     @Test
     public void fileAdded() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
-        IFile file = createWSFile( "Bla.java", "really interesting stuff" );
+        IFile file = createWSFile( "Bla.java", "really interesting stuff", project1 );
 
         listener.assertNoException();
 
         ICodeProportionComputationTarget target = listener.getTarget();
+        assertEquals( 1, target.getProjects().size() );
         assertThatAffectedProjectIsTheExpectedOne( target );
-        assertEquals( 1, target.getFiles( project ).size() );
-        IFile affectedFile = target.getFiles( project ).iterator().next();
+        assertEquals( 1, target.getFiles( project1 ).size() );
+        IFile affectedFile = target.getFiles( project1 ).iterator().next();
         assertEquals( file, affectedFile );
     }
 
     @Test
     public void fileDeleted() throws Exception {
-        IFile file = createWSFile( "Bla.java", "stuff that didn't survive" );
+        IFile file = createWSFile( "Bla.java", "stuff that didn't survive", project1 );
         buildFullyAndWait();
 
         getWorkspace().addResourceChangeListener( listener );
@@ -56,16 +57,17 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         listener.assertNoException();
 
         ICodeProportionComputationTarget target = listener.getTarget();
+        assertEquals( 1, target.getProjects().size() );
         assertThatAffectedProjectIsTheExpectedOne( target );
-        assertEquals( 0, target.getFiles( project ).size() );
-        assertEquals( 1, target.getRemovedFiles( project ).size() );
-        IFile affectedFile = target.getRemovedFiles( project ).iterator().next();
+        assertEquals( 0, target.getFiles( project1 ).size() );
+        assertEquals( 1, target.getRemovedFiles( project1 ).size() );
+        IFile affectedFile = target.getRemovedFiles( project1 ).iterator().next();
         assertEquals( file, affectedFile );
     }
 
     @Test
     public void fileChanged() throws Exception {
-        IFile file = createWSFile( "Bla.java", "stuff that will be replaced" );
+        IFile file = createWSFile( "Bla.java", "stuff that will be replaced", project1 );
         buildFullyAndWait();
 
         getWorkspace().addResourceChangeListener( listener );
@@ -74,17 +76,18 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         listener.assertNoException();
 
         ICodeProportionComputationTarget target = listener.getTarget();
+        assertEquals( 1, target.getProjects().size() );
         assertThatAffectedProjectIsTheExpectedOne( target );
-        assertEquals( 0, target.getRemovedFiles( project ).size() );
-        assertEquals( 1, target.getFiles( project ).size() );
-        IFile affectedFile = target.getFiles( project ).iterator().next();
+        assertEquals( 0, target.getRemovedFiles( project1 ).size() );
+        assertEquals( 1, target.getFiles( project1 ).size() );
+        IFile affectedFile = target.getFiles( project1 ).iterator().next();
         assertEquals( file, affectedFile );
     }
 
     @Test
     public void fileMoved() throws Exception {
-        IFile file = createWSFile( "Bla.java", "stuff that will be replaced" );
-        IFolder folder = createWSFolder( "dir" );
+        IFile file = createWSFile( "Bla.java", "stuff that will be replaced", project1 );
+        IFolder folder = createWSFolder( "dir", project1 );
         buildFullyAndWait();
 
         getWorkspace().addResourceChangeListener( listener );
@@ -93,16 +96,17 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         listener.assertNoException();
 
         ICodeProportionComputationTarget target = listener.getTarget();
+        assertEquals( 1, target.getProjects().size() );
         assertThatAffectedProjectIsTheExpectedOne( target );
         // original file comes along as deleted
-        assertEquals( 1, target.getRemovedFiles( project ).size() );
-        IFile removedFile = target.getRemovedFiles( project ).iterator().next();
-        assertEquals( new Path( "/p/Bla.java" ), removedFile.getFullPath() );
+        assertEquals( 1, target.getRemovedFiles( project1 ).size() );
+        IFile removedFile = target.getRemovedFiles( project1 ).iterator().next();
+        assertEquals( new Path( "/" + PROJECT_NAME_1 + "/Bla.java" ), removedFile.getFullPath() );
 
         // file at new location is registered as affected file
-        assertEquals( 1, target.getFiles( project ).size() );
-        IFile affectedFile = target.getFiles( project ).iterator().next();
-        assertEquals( new Path( "/p/dir/Bla.java" ), affectedFile.getFullPath() );
+        assertEquals( 1, target.getFiles( project1 ).size() );
+        IFile affectedFile = target.getFiles( project1 ).iterator().next();
+        assertEquals( new Path( "/" + PROJECT_NAME_1 + "/dir/Bla.java" ), affectedFile.getFullPath() );
     }
 
     @Test
@@ -111,9 +115,9 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         // run in batch so that we get only one cumulative notification
         getWorkspace().run( new IWorkspaceRunnable() {
             public void run( IProgressMonitor monitor ) throws CoreException {
-                createWSFile( "a.java", "really" );
-                createWSFile( "b.java", "interesting" );
-                createWSFile( "c.java", "stuff" );
+                createWSFile( "a.java", "really", project1 );
+                createWSFile( "b.java", "interesting", project1 );
+                createWSFile( "c.java", "stuff", project1 );
             }
         }, new NullProgressMonitor() );
         buildFullyAndWait();
@@ -121,15 +125,14 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         listener.assertNoException();
 
         ICodeProportionComputationTarget target = listener.getTarget();
+        assertEquals( 2, target.getProjects().size() );
         assertThatAffectedProjectIsTheExpectedOne( target );
-        IProject affectedProject = project;
+        IProject affectedProject = project1;
         assertEquals( 3, target.getFiles( affectedProject ).size() );
     }
 
     private void assertThatAffectedProjectIsTheExpectedOne( ICodeProportionComputationTarget target ) {
-        assertEquals( 1, target.getProjects().size() );
-        IProject affectedProject = target.getProjects().iterator().next();
-        assertSame( project, affectedProject );
+        assertTrue( target.getProjects().contains( project1 ) );
     }
 
 }

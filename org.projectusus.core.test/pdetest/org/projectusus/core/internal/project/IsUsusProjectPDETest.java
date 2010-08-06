@@ -16,20 +16,20 @@ public class IsUsusProjectPDETest extends PDETestUsingWSProject {
 
     @Test
     public void ususProject() {
-        assertTrue(  isUsusProject( project ));
+        assertTrue(  isUsusProject( project1 ));
     }
 
     @Test
     public void nonUsusProject() throws CoreException {
-        makeUsusProject( false );
-        assertFalse( isUsusProject( project ));
+        makeUsusProject( false, project1 );
+        assertFalse( isUsusProject( project1 ));
     }
 
     @Test
     public void inaccessibleProject() throws CoreException {
-        project.close( new NullProgressMonitor() );
+        project1.close( new NullProgressMonitor() );
         buildFullyAndWait();
-        assertFalse( isUsusProject( project ));
-        project.open( new NullProgressMonitor() ); // this fixes some following tests
+        assertFalse( isUsusProject( project1 ));
+        project1.open( new NullProgressMonitor() ); // this fixes some following tests
     }
 }

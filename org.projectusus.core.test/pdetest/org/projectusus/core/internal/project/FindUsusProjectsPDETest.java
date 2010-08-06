@@ -7,6 +7,7 @@ package org.projectusus.core.internal.project;
 import static java.util.Arrays.asList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -27,18 +28,23 @@ public class FindUsusProjectsPDETest extends PDETestUsingWSProject {
 
     @Test
     public void singleUsusProject() {
-        assertEquals( 1, computeWithAllProjects().size() );
+        assertEquals( 2, computeWithAllProjects().size() );
     }
 
     @Test
     public void singleNonUsusProject() throws CoreException {
-        makeUsusProject( false );
+        makeUsusProject( false, project1 );
+        assertEquals( 1, computeWithAllProjects().size() );
+        makeUsusProject( false, project2 );
         assertTrue( computeWithAllProjects().isEmpty() );
     }
 
     @Test
     public void noProjects() throws CoreException {
-        project.delete( true, new NullProgressMonitor() );
+        project1.delete( true, new NullProgressMonitor() );
+        buildFullyAndWait();
+        assertFalse( computeWithAllProjects().isEmpty() );
+        project2.delete( true, new NullProgressMonitor() );
         buildFullyAndWait();
         assertTrue( computeWithAllProjects().isEmpty() );
     }
@@ -49,8 +55,8 @@ public class FindUsusProjectsPDETest extends PDETestUsingWSProject {
         IProject blubb = createAdditionalProject( "blubb", false ); //$NON-NLS-1$
         List<IProject> result = computeWithAllProjects();
 
-        assertEquals( 2, result.size() );
-        assertTrue( result.contains( project ) );
+        assertEquals( 3, result.size() );
+        assertTrue( result.contains( project1 ) );
         assertTrue( result.contains( bla ) );
 
         bla.delete( true, new NullProgressMonitor() );
@@ -59,11 +65,11 @@ public class FindUsusProjectsPDETest extends PDETestUsingWSProject {
 
     @Test
     public void mixedCandidates() {
-        Object[] candidates = new Object[] { new Object(), project };
+        Object[] candidates = new Object[] { new Object(), project1 };
         List<IProject> result = new FindUsusProjects( candidates ).compute();
 
         assertEquals( 1, result.size() );
-        assertEquals( project, result.get( 0 ) );
+        assertEquals( project1, result.get( 0 ) );
     }
 
     private List<IProject> computeWithAllProjects() {

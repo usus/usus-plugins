@@ -25,7 +25,7 @@ import org.projectusus.statistics.MethodLengthStatistic;
 public class PDETestForMetricsComputation extends PDETestUsingWSProject {
 
     public void simpleCaseTestDemo() throws Exception {
-        IFile file = createWSFile( "A.java", loadContent( "A.test" ) );
+        IFile file = createWSFile( "A.java", loadContent( "A.test" ), project1 );
         buildFullyAndWait();
         MethodLengthStatistic stat = new MethodLengthStatistic();
         stat.visit();
@@ -43,7 +43,7 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
     }
 
     protected IFile createJavaWSFile( String fileName ) throws Exception {
-        return createWSFile( fileName, loadJavaContent( fileName ) );
+        return createWSFile( fileName, loadJavaContent( fileName ), project1 );
     }
 
     protected String loadJavaContent( String fileName ) throws Exception {
@@ -74,7 +74,7 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
     }
 
     protected IFile createFile( String name ) throws Exception {
-        return createWSFile( name + ".java", loadContent( name + ".test" ) );
+        return createWSFile( name + ".java", loadContent( name + ".test" ), project1 );
     }
 
     public IMetricsAccessor getMetricsAccessor() {

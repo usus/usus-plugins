@@ -18,35 +18,31 @@ import java.io.InputStream;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jdt.core.JavaCore;
 import org.junit.After;
 import org.junit.Before;
 import org.projectusus.adapter.UsusAdapterPlugin;
-import org.projectusus.core.internal.project.IUSUSProject;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class PDETestUsingWSProject {
 
-    protected static final String PROJECT_NAME = "p";
-    protected IProject project;
+    protected static final String PROJECT_NAME_1 = "p1";
+    protected static final String PROJECT_NAME_2 = "p2";
+    protected IProject project1;
+    protected IProject project2;
 
     @Before
     public void setUp() throws CoreException {
-        project = getWorkspace().getRoot().getProject( PROJECT_NAME );
-        project.create( new NullProgressMonitor() );
-        project.open( new NullProgressMonitor() );
-        makeUsusProject( true );
-        addJavaNature();
-        UsusModel.ususModel().dropRawData( project );
+        project1 = new TestProjectCreator( PROJECT_NAME_1 ).getProject();
+        project2 = new TestProjectCreator( PROJECT_NAME_2 ).getProject();
         UsusAdapterPlugin.getDefault(); // to load bundle with ResourceChangeListener
     }
 
     @After
     public void tearDown() throws CoreException {
-        project.delete( true, new NullProgressMonitor() );
+        project1.delete( true, new NullProgressMonitor() );
+        project2.delete( true, new NullProgressMonitor() );
         UsusModel.clear();
     }
 
@@ -77,8 +73,8 @@ public class PDETestUsingWSProject {
         System.out.println( " OK." );
     }
 
-    protected IFile createWSFile( String fileName, String content ) throws CoreException {
-        IFile result = project.getFile( fileName );
+    protected IFile createWSFile( String fileName, String content, IProject theProject ) throws CoreException {
+        IFile result = theProject.getFile( fileName );
         result.create( createInputStream( content ), true, new NullProgressMonitor() );
         return result;
     }
@@ -91,24 +87,14 @@ public class PDETestUsingWSProject {
         file.setContents( createInputStream( newContent ), true, false, new NullProgressMonitor() );
     }
 
-    protected IFolder createWSFolder( String name ) throws CoreException {
-        IFolder result = project.getFolder( name );
+    protected IFolder createWSFolder( String name, IProject theProject ) throws CoreException {
+        IFolder result = theProject.getFolder( name );
         result.create( true, true, new NullProgressMonitor() );
         return result;
     }
 
-    protected void makeUsusProject( boolean makeUsusProject ) throws CoreException {
-        getUsusProjectAdapter().setUsusProject( makeUsusProject );
-    }
-
-    private IUSUSProject getUsusProjectAdapter() {
-        return (IUSUSProject)project.getAdapter( IUSUSProject.class );
-    }
-
-    private void addJavaNature() throws CoreException {
-        IProjectDescription description = project.getDescription();
-        description.setNatureIds( new String[] { JavaCore.NATURE_ID } );
-        project.setDescription( description, new NullProgressMonitor() );
+    protected void makeUsusProject( boolean makeUsusProject, IProject theProject ) throws CoreException {
+        TestProjectCreator.makeUsusProject( makeUsusProject, theProject );
     }
 
     private InputStream createInputStream( String content ) {

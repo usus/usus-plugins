@@ -86,6 +86,9 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         ProjectRawData projectRawData = getProjectRawData( descriptor.getFile().getProject() );
         if( projectRawData != null ) {
             projectRawData.removeRelationIfTargetIsGone( descriptor );
+        } else { // project dropped
+            descriptor.removeFromPool();
         }
     }
+
 }
