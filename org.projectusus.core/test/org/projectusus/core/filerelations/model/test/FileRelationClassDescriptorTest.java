@@ -1,4 +1,4 @@
-package org.projectusus.core.filerelations.model;
+package org.projectusus.core.filerelations.model.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -9,6 +9,10 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
+import org.projectusus.core.filerelations.model.Classname;
+import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class FileRelationClassDescriptorTest {

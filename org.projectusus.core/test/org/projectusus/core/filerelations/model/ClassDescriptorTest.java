@@ -7,11 +7,16 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.projectusus.core.filerelations.model.TestServiceManager.createDescriptor;
+import static org.projectusus.core.filerelations.model.test.TestServiceManager.createDescriptor;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.ClassDescriptorKey;
+import org.projectusus.core.filerelations.model.Classname;
+import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.filerelations.model.test.TestServiceManager;
 
 public class ClassDescriptorTest {
 

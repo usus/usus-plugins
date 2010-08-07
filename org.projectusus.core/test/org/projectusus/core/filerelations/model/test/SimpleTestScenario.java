@@ -1,8 +1,9 @@
-package org.projectusus.core.filerelations.model;
+package org.projectusus.core.filerelations.model.test;
 
-import static org.projectusus.core.filerelations.model.TestServiceManager.createFileMock;
+import static org.projectusus.core.filerelations.model.test.TestServiceManager.createFileMock;
 
 import org.eclipse.core.resources.IFile;
+import org.projectusus.core.filerelations.model.Classname;
 
 public class SimpleTestScenario {
 

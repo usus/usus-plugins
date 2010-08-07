@@ -1,4 +1,4 @@
-package org.projectusus.core.basis;
+package org.projectusus.core.basis.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyBoolean;
@@ -13,6 +13,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.basis.YellowCountCache;
 import org.projectusus.core.testutil.ReflectionUtil;
 
 public class YellowCountCacheTest {

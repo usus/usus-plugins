@@ -1,4 +1,4 @@
-package org.projectusus.core.basis;
+package org.projectusus.core.basis.test;
 
 import static org.junit.Assert.assertEquals;
 

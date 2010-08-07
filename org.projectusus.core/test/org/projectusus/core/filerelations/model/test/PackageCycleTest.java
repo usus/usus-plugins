@@ -1,4 +1,4 @@
-package org.projectusus.core.filerelations.model;
+package org.projectusus.core.filerelations.model.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
+import org.projectusus.core.filerelations.model.Cycle;
+import org.projectusus.core.filerelations.model.Packagename;
 
 public class PackageCycleTest {
 

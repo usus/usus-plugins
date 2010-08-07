@@ -1,4 +1,4 @@
-package org.projectusus.core.filerelations.model;
+package org.projectusus.core.filerelations.model.test;
 
 import static org.mockito.Mockito.mock;
 
@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.Classname;
+import org.projectusus.core.filerelations.model.Packagename;
 
 public class TestServiceManager {
 

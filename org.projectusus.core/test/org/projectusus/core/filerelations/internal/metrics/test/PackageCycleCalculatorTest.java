@@ -1,10 +1,11 @@
-package org.projectusus.core.filerelations.internal.metrics;
+package org.projectusus.core.filerelations.internal.metrics.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.projectusus.core.filerelations.model.TestServiceManager.createDescriptor;
+import static org.projectusus.core.filerelations.model.test.TestServiceManager.createDescriptor;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.filerelations.internal.metrics.PackageCycleCalculator;
 import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Packagename;

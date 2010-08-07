@@ -1,10 +1,13 @@
-package org.projectusus.core.filerelations.model;
+package org.projectusus.core.filerelations.model.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.Classname;
+import org.projectusus.core.filerelations.model.Packagename;
 
 @SuppressWarnings( "nls" )
 public class ClassDescriptorDirectChildrenTest {

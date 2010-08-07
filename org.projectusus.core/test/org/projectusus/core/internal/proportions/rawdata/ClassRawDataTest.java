@@ -16,6 +16,7 @@ import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 
 public class ClassRawDataTest {
 

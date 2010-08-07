@@ -1,8 +1,9 @@
-package org.projectusus.core.filerelations.model;
+package org.projectusus.core.filerelations.model.test;
 
 import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
+import org.projectusus.core.filerelations.model.Packagename;
 
 public class PackagenameTest {
 

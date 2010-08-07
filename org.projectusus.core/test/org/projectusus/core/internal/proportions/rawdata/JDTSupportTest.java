@@ -2,6 +2,7 @@ package org.projectusus.core.internal.proportions.rawdata;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.projectusus.core.internal.proportions.rawdata.JDTSupport;
 
 public class JDTSupportTest {
 
