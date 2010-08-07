@@ -1,10 +1,10 @@
 public class Tasks {
 
     // Tasks for USUS 1.0
-	
-	void checkContextMenuInCockpit() {
-		// TODO soll das so bleiben?
-	}
+
+    void checkContextMenuInCockpit() {
+        // TODO soll das so bleiben?
+    }
 
     void nicole_documentationOfCalculations() {
         // TODO Doku der Usus-Interna. Welche Schwellwerte? Was sind die Level? etc.
@@ -20,10 +20,6 @@ public class Tasks {
         // Dies fliesst ein in den Eclipse Magazin Artikel 6.10
     }
 
-    void marc_nicole_createPackageView() {
-        // TODO PackageView: Packages im Package Graph auswäŠhlen, die enthaltenen Klassen im Class View darstellen
-    }
-
     // ----------------
 
     void nicole_evtl_marc_bugACDAnalysis() {
@@ -36,6 +32,15 @@ public class Tasks {
     }
 
     // ///////// Tasks for versions after USUS 1.0
+
+    void addLayoutCacheForZest() {
+        // TODO "Layout Cache", der sich die Positionen der Knoten in den Graphen
+        // merkt, auch über ein Ein- und Ausblenden der Knoten hinweg
+    }
+
+    void statisticsForRelations() {
+        // TODO Statistics für die Relation Metrics bauen. Daraus ein Pattern extrahieren.
+    }
 
     void createMudHoleHotspots() {
         // TODO Aggregierte Hotspots = "Schlammlšöcher"
@@ -72,10 +77,6 @@ public class Tasks {
         // TODO CheatSheet reparieren und erweitern
     }
 
-    void createPackagecycleHotspots() {
-        // TODO Hotspots fŸür Package Cycles?? Hotspot ^=^ Zyklus-Objekt. Relevant: # Packages im Zyklus
-    }
-
     void createNatureInsteadOfASeparateView() {
         // TODO Projektaktivierung in den Project Prefs statt in einem eigenen View?
         // Decorator am Projekt. Eigene Nature zufŸügen.
@@ -91,5 +92,15 @@ public class Tasks {
 
     void createCancelInGraphUpdates() {
         // TODO Graph Views: Canceln eines wartenden Updates (durch Verschieben des Sliders ausgelšöst)?
+    }
+
+    void ususEinschraenkenAufBearbeitetes() {
+        // TODO wie genau soll diese Einschränkung aussehen? -> Leif
+    }
+
+    void testabdeckung() {
+        // TODO was davon soll eigentlich in Usus hinein?
+        // Evtl. EclEmma um eine projektübergreifende Summe ergänzen?
+        // Erfassung der Testabdeckung + Summenbildung einschränken auf die Usus-Projekte?
     }
 }
