@@ -12,8 +12,6 @@ import com.google.common.collect.Collections2;
 
 public class ClassRepresenter extends AbstractClassRepresenter {
 
-    private Set<GraphNode> childrenCache = null;
-
     public static Set<GraphNode> transformToRepresenterSet( Set<ClassDescriptor> classes ) {
         Function<ClassDescriptor, ClassRepresenter> function = new Function<ClassDescriptor, ClassRepresenter>() {
             public ClassRepresenter apply( ClassDescriptor descriptor ) {
@@ -28,10 +26,7 @@ public class ClassRepresenter extends AbstractClassRepresenter {
     }
 
     public Set<GraphNode> getChildren() {
-        if( childrenCache == null ) {
-            childrenCache = transformToRepresenterSet( clazz.getChildren() );
-        }
-        return childrenCache;
+        return transformToRepresenterSet( clazz.getChildren() );
     }
 
     public String getNodeName() {

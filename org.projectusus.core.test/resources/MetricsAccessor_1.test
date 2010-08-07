@@ -1,0 +1,9 @@
+public class MetricsAccessor_1 {
+
+	private String string;
+	
+	public String getString(){
+		return string;
+	}
+	
+}
