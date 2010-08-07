@@ -6,8 +6,8 @@ package org.projectusus.ui.internal.proportions.cockpit;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.projectusus.ui.internal.IDisplayCategory;
 import org.projectusus.ui.internal.AnalysisDisplayModel;
+import org.projectusus.ui.internal.IDisplayCategory;
 
 public class CockpitCP implements ITreeContentProvider {
 
@@ -26,7 +26,7 @@ public class CockpitCP implements ITreeContentProvider {
         return new Object[0];
     }
 
-    public Object getParent( Object element ) {
+    public Object getParent( @SuppressWarnings( "unused" ) Object element ) {
         return null;
     }
 
@@ -38,7 +38,7 @@ public class CockpitCP implements ITreeContentProvider {
         // unused
     }
 
-    public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
+    public void inputChanged( @SuppressWarnings( "unused" ) Viewer viewer, @SuppressWarnings( "unused" ) Object oldInput, @SuppressWarnings( "unused" ) Object newInput ) {
         // unused
     }
 }

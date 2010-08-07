@@ -14,7 +14,7 @@ public class UsusInfoDialog extends PopupDialog {
     private final IUsusInfo ususInfo;
 
     public UsusInfoDialog( Shell parent, IUsusInfo ususInfo ) {
-        super( parent, PopupDialog.INFOPOPUPRESIZE_SHELLSTYLE, true, false, false, true, false, ususInfo.formatTitle(), "Project Usus Infos" );
+        super( parent, PopupDialog.INFOPOPUPRESIZE_SHELLSTYLE, true, false, false, true, false, ususInfo.formatTitle(), "Project Usus Infos" ); //$NON-NLS-1$
         this.ususInfo = ususInfo;
     }
 

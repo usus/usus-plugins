@@ -19,8 +19,8 @@ public class UsusInfoForMethod extends UsusInfoForClass {
     protected void addFormattedProportion( List<String> result ) throws JavaModelException {
         super.addFormattedProportion( result );
         MethodVisitor visitor = new MethodVisitor( method ).visitAndReturn();
-        result.add( UsusModelElementFormatter.format( "Cyclomatic complexity", visitor.getCCValue() ) );
-        result.add( UsusModelElementFormatter.format( "Method length", visitor.getMLValue() ) );
+        result.add( UsusModelElementFormatter.format( "Cyclomatic complexity", visitor.getCCValue() ) ); //$NON-NLS-1$
+        result.add( UsusModelElementFormatter.format( "Method length", visitor.getMLValue() ) ); //$NON-NLS-1$
     }
 
     @Override

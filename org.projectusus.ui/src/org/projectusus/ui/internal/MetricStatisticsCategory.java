@@ -18,7 +18,7 @@ public class MetricStatisticsCategory implements IDisplayCategory {
     }
 
     public String getLabel() {
-        return "Code proportions";
+        return "Code proportions"; //$NON-NLS-1$
     }
 
     public Image getImage() {

@@ -41,13 +41,13 @@ enum CockpitColumnDesc implements IColumnDesc<AnalysisDisplayEntry> {
     },
     @UsusTreeColumn( header = "Trend", align = CENTER, weight = 8, sortable = false )
     Trend( false ) {
-        public String getLabel( AnalysisDisplayEntry element ) {
-            return ""; // using image
+        public String getLabel( @SuppressWarnings( "unused" ) AnalysisDisplayEntry element ) {
+            return ""; // using image //$NON-NLS-1$
         }
     };
 
     private final boolean hasImage;
-    private final static DecimalFormat formatter = new DecimalFormat( "#.##" );
+    private final static DecimalFormat formatter = new DecimalFormat( "#.##" ); //$NON-NLS-1$
 
     CockpitColumnDesc( boolean hasImage ) {
         this.hasImage = hasImage;

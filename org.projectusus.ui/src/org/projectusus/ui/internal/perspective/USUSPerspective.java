@@ -30,14 +30,14 @@ public class USUSPerspective implements IPerspectiveFactory {
 
     private void layoutViews( IPageLayout layout ) {
         // left-hand side
-        IFolderLayout projects = layout.createFolder( "projects", LEFT, 0.4f, layout.getEditorArea() );
-        projects.addView( "org.eclipse.jdt.ui.PackageExplorer" );
+        IFolderLayout projects = layout.createFolder( "projects", LEFT, 0.4f, layout.getEditorArea() ); //$NON-NLS-1$
+        projects.addView( "org.eclipse.jdt.ui.PackageExplorer" ); //$NON-NLS-1$
         projects.addView( CoveredProjectsView.class.getName() );
-        layout.addView( CockpitView.class.getName(), BOTTOM, 0.5f, "projects" );
+        layout.addView( CockpitView.class.getName(), BOTTOM, 0.5f, "projects" ); //$NON-NLS-1$
         layout.addView( YellowCountView.class.getName(), BOTTOM, 0.8f, CockpitView.class.getName() );
 
         // right-hand side
-        IFolderLayout analysis = layout.createFolder( "analysis", BOTTOM, 0.33f, layout.getEditorArea() );
+        IFolderLayout analysis = layout.createFolder( "analysis", BOTTOM, 0.33f, layout.getEditorArea() ); //$NON-NLS-1$
         analysis.addView( HotSpotsView.class.getName() );
         for( String viewId : INTERESTING_THIRD_PARTY_VIEWS ) {
             analysis.addView( viewId );
@@ -53,19 +53,19 @@ public class USUSPerspective implements IPerspectiveFactory {
         for( String viewId : INTERESTING_THIRD_PARTY_VIEWS ) {
             layout.addShowViewShortcut( viewId );
         }
-        layout.addShowViewShortcut( "org.eclipse.jdt.ui.PackageExplorer" );
+        layout.addShowViewShortcut( "org.eclipse.jdt.ui.PackageExplorer" ); //$NON-NLS-1$
     }
 
     private void createPerspectiveShortcuts( IPageLayout layout ) {
-        layout.addPerspectiveShortcut( "org.eclipse.jdt.ui.JavaPerspective" );
-        layout.addPerspectiveShortcut( "org.eclipse.pde.ui.PDEPerspective" );
+        layout.addPerspectiveShortcut( "org.eclipse.jdt.ui.JavaPerspective" ); //$NON-NLS-1$
+        layout.addPerspectiveShortcut( "org.eclipse.pde.ui.PDEPerspective" ); //$NON-NLS-1$
     }
 
     private static List<String> collectInterestingViews() {
         List<String> result = new ArrayList<String>();
-        result.add( "org.eclipse.ui.views.TaskList" );
-        result.add( "org.eclipse.ui.views.ProblemView" );
-        result.add( "org.eclipse.jdt.junit.ResultView" );
+        result.add( "org.eclipse.ui.views.TaskList" ); //$NON-NLS-1$
+        result.add( "org.eclipse.ui.views.ProblemView" ); //$NON-NLS-1$
+        result.add( "org.eclipse.jdt.junit.ResultView" ); //$NON-NLS-1$
         return result;
     }
 }

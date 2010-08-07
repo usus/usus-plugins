@@ -7,11 +7,11 @@ import org.eclipse.jface.viewers.StructuredSelection;
 
 public class NullSelectionProvider implements ISelectionProvider {
 
-    public void addSelectionChangedListener( ISelectionChangedListener listener ) {
+    public void addSelectionChangedListener( @SuppressWarnings( "unused" ) ISelectionChangedListener listener ) {
         // do nothing
     }
 
-    public void removeSelectionChangedListener( ISelectionChangedListener listener ) {
+    public void removeSelectionChangedListener( @SuppressWarnings( "unused" ) ISelectionChangedListener listener ) {
         // do nothing
     }
 
@@ -19,7 +19,7 @@ public class NullSelectionProvider implements ISelectionProvider {
         return StructuredSelection.EMPTY;
     }
 
-    public void setSelection( ISelection selection ) {
+    public void setSelection( @SuppressWarnings( "unused" ) ISelection selection ) {
         // do nothing
     }
 }

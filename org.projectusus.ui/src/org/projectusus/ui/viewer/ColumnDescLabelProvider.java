@@ -29,7 +29,7 @@ public abstract class ColumnDescLabelProvider<T> extends LabelProvider implement
         return result;
     }
 
-    public Image getColumnImage( Object element, int columnIndex ) {
+    public Image getColumnImage( @SuppressWarnings( "unused" ) Object element, @SuppressWarnings( "unused" ) int columnIndex ) {
         return null;
     }
 }

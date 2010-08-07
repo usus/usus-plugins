@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 
 class ColumnByLabelSorter extends ViewerComparator {
-    private final static DecimalFormat formatter = new DecimalFormat( "#.##" );
+    private final static DecimalFormat formatter = new DecimalFormat( "#.##" ); //$NON-NLS-1$
 
     private final TreeColumn column;
 
@@ -34,7 +34,7 @@ class ColumnByLabelSorter extends ViewerComparator {
         this.column.addSelectionListener( new SelectionAdapter() {
 
             @Override
-            public void widgetSelected( SelectionEvent e ) {
+            public void widgetSelected( @SuppressWarnings( "unused" ) SelectionEvent e ) {
                 sortAndActualizeSortOrder();
             }
         } );
@@ -54,7 +54,7 @@ class ColumnByLabelSorter extends ViewerComparator {
     }
 
     @Override
-    public int compare( Viewer viewer, Object o1, Object o2 ) {
+    public int compare( @SuppressWarnings( "unused" ) Viewer viewr, Object o1, Object o2 ) {
         return (ascending ? 1 : -1) * doCompare( o1, o2 );
     }
 

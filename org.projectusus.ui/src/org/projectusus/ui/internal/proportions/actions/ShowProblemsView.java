@@ -7,6 +7,6 @@ package org.projectusus.ui.internal.proportions.actions;
 public class ShowProblemsView extends ShowViewById {
 
     public ShowProblemsView() {
-        super( "Show Problems View", "org.eclipse.ui.views.ProblemView" );
+        super( "Show Problems View", "org.eclipse.ui.views.ProblemView" ); //$NON-NLS-1$ //$NON-NLS-2$
     }
 }

@@ -90,27 +90,27 @@ public class AnalysisDisplayModel {
         fireSnapshotCreated();
     }
 
-    public void addModelListener( IDisplayModelListener listener ) {
-        listeners.add( listener );
+    public void addModelListener( IDisplayModelListener listen ) {
+        listeners.add( listen );
     }
 
-    public void removeModelListener( IDisplayModelListener listener ) {
-        listeners.remove( listener );
+    public void removeModelListener( IDisplayModelListener listen ) {
+        listeners.remove( listen );
     }
 
     // internal
     // ////////
 
     private void fireUpdateCategories() {
-        for( IDisplayModelListener listener : listeners ) {
-            listener.updateCategories( this );
+        for( IDisplayModelListener listen : listeners ) {
+            listen.updateCategories( this );
         }
     }
 
     private void fireSnapshotCreated() {
-        for( IDisplayModelListener listener : listeners ) {
-            listener.snapshotCreated( snapshot );
-            listener.updateCategories( this );
+        for( IDisplayModelListener listen : listeners ) {
+            listen.snapshotCreated( snapshot );
+            listen.updateCategories( this );
         }
     }
 

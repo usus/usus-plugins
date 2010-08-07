@@ -19,9 +19,9 @@ public class DisplayHotspotCreatorTest {
 
     private List<Hotspot> oldHotspots;
     private List<Hotspot> currentHotspots;
-    private final SourceCodeLocation location1 = new SourceCodeLocation( "x", 1, 1 );
-    private final SourceCodeLocation location2 = new SourceCodeLocation( "y", 2, 2 );
-    private final SourceCodeLocation location3 = new SourceCodeLocation( "z", 3, 3 );
+    private final SourceCodeLocation location1 = new SourceCodeLocation( "x", 1, 1 ); //$NON-NLS-1$
+    private final SourceCodeLocation location2 = new SourceCodeLocation( "y", 2, 2 ); //$NON-NLS-1$
+    private final SourceCodeLocation location3 = new SourceCodeLocation( "z", 3, 3 ); //$NON-NLS-1$
     private final IFile file1 = mock( IFile.class );
     private final Hotspot hotspot1_1_1 = new FileHotspot( location1, 1, file1 );
     private final Hotspot hotspot1_2_1 = new FileHotspot( location1, 2, file1 );
@@ -171,7 +171,7 @@ public class DisplayHotspotCreatorTest {
                 }
             }
         }
-        fail( "List does not contain any elements matching the conditions." );
+        fail( "List does not contain any elements matching the conditions." ); //$NON-NLS-1$
     }
 
     private boolean compareMetricsValue( Hotspot newHotspot, DisplayHotspot<?> displayHotspot ) {
@@ -182,23 +182,22 @@ public class DisplayHotspotCreatorTest {
         return (expected == null && actual == null) || (expected != null && expected.equals( actual ));
     }
 
-    private List<DisplayHotspot<?>> createDisplay( List<Hotspot> oldHotspots, List<Hotspot> currentHotspots ) {
-        DisplayHotspotCreator creator = new DisplayHotspotCreator( oldHotspots, currentHotspots );
-        return creator.hotspots();
+    private List<DisplayHotspot<?>> createDisplay( List<Hotspot> oldHots, List<Hotspot> currentHots ) {
+        return new DisplayHotspotCreator( oldHots, currentHots ).hotspots();
     }
 
     private void checkTrendPositive( int expected, DisplayHotspot<?> displayHotspot ) {
-        assertTrue( "expected positive trend ", displayHotspot.getTrend() > 0 );
+        assertTrue( "expected positive trend ", displayHotspot.getTrend() > 0 ); //$NON-NLS-1$
         assertEquals( expected, displayHotspot.getTrend() );
     }
 
     private void checkTrendNegative( int expected, DisplayHotspot<?> displayHotspot ) {
-        assertTrue( "expected negative trend ", displayHotspot.getTrend() < 0 );
+        assertTrue( "expected negative trend ", displayHotspot.getTrend() < 0 ); //$NON-NLS-1$
         assertEquals( expected, displayHotspot.getTrend() );
     }
 
     private void checkTrendConstant( DisplayHotspot<?> displayHotspot ) {
-        assertTrue( "expected constant trend ", displayHotspot.getTrend() == 0 );
+        assertTrue( "expected constant trend ", displayHotspot.getTrend() == 0 ); //$NON-NLS-1$
     }
 
 }

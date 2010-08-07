@@ -56,7 +56,7 @@ public class HotspotsPage extends Page implements IHotspotsPage {
         viewer.setContentProvider( createContentProvider() );
         comparator = new ViewerComparator() {
             @Override
-            public int compare( Viewer viewer, Object e1, Object e2 ) {
+            public int compare( @SuppressWarnings( "unused" ) Viewer viewr, Object e1, Object e2 ) {
                 DisplayHotspot<?> hotspot1 = (DisplayHotspot<?>)e1;
                 DisplayHotspot<?> hotspot2 = (DisplayHotspot<?>)e2;
                 int trend1 = hotspot1.getTrend();

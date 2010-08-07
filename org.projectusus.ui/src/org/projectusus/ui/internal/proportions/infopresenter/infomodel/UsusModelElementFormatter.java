@@ -4,7 +4,6 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.infopresenter.infomodel;
 
-
 class UsusModelElementFormatter {
 
     static String format( String label, int value ) {
@@ -15,7 +14,7 @@ class UsusModelElementFormatter {
 
     private static void formatKeyValue( String key, String value, StringBuilder sb ) {
         sb.append( key );
-        sb.append( ": " );
+        sb.append( ": " ); //$NON-NLS-1$
         sb.append( value );
     }
 }

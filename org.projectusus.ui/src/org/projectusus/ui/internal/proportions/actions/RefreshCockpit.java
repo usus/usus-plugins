@@ -12,15 +12,15 @@ import org.projectusus.adapter.ForcedRecompute;
 
 public class RefreshCockpit implements IViewActionDelegate {
 
-    public void run( IAction action ) {
+    public void run( @SuppressWarnings( "unused" ) IAction action ) {
         new ForcedRecompute().schedule();
     }
 
-    public void init( IViewPart view ) {
+    public void init( @SuppressWarnings( "unused" ) IViewPart view ) {
         // unused
     }
 
-    public void selectionChanged( IAction action, ISelection selection ) {
+    public void selectionChanged( @SuppressWarnings( "unused" ) IAction action, @SuppressWarnings( "unused" ) ISelection selection ) {
         // unused
     }
 

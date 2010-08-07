@@ -11,8 +11,8 @@ import org.eclipse.swt.widgets.Display;
 
 public class UsusColors {
 
-    public static final String RED = "RED";
-    public static final String BLACK = "BLACK";
+    public static final String RED = "RED"; //$NON-NLS-1$
+    public static final String BLACK = "BLACK"; //$NON-NLS-1$
 
     private static final UsusColors _instance = new UsusColors();
     private ColorRegistry colorRegistry;

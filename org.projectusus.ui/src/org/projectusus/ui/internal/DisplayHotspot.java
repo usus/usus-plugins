@@ -60,7 +60,7 @@ public abstract class DisplayHotspot<T extends Hotspot> implements Comparable<Di
 
     @Override
     public String toString() {
-        return getName() + "-" + getMetricsValue() + "[" + super.toString() + "]";
+        return getName() + "-" + getMetricsValue() + "[" + super.toString() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     public int compareTo( DisplayHotspot<T> o ) {

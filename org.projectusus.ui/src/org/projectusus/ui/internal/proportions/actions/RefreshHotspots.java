@@ -17,7 +17,7 @@ public class RefreshHotspots extends Action {
     private final AnalysisDisplayModel model;
 
     public RefreshHotspots( AnalysisDisplayModel analysisDisplayModel ) {
-        super( "Refresh Hotspots" );
+        super( "Refresh Hotspots" ); //$NON-NLS-1$
         model = analysisDisplayModel;
     }
 

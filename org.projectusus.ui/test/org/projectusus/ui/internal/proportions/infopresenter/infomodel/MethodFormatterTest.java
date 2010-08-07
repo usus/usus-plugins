@@ -13,34 +13,34 @@ import org.junit.Test;
 
 public class MethodFormatterTest {
 
-    private IMethod javaElement = mock( IMethod.class );
+    private final IMethod javaElement = mock( IMethod.class );
 
     @Test
     public void formatHeadForArrayParameter() throws Exception {
-        prepareExpectations( "([Ljava.lang.String;)QString;", "QString;" );
+        prepareExpectations( "([Ljava.lang.String;)QString;", "QString;" ); //$NON-NLS-1$ //$NON-NLS-2$
 
         MethodFormatter formatter = new MethodFormatter( javaElement );
-        assertEquals( "String n(java.lang.String[])", formatter.formatHeadInfo() );
+        assertEquals( "String n(java.lang.String[])", formatter.formatHeadInfo() ); //$NON-NLS-1$
     }
 
     @Test
     public void formatHeadForMultipleParameters() throws Exception {
-        prepareExpectations( "(QString;I)V", "V" );
+        prepareExpectations( "(QString;I)V", "V" ); //$NON-NLS-1$ //$NON-NLS-2$
 
         MethodFormatter formatter = new MethodFormatter( javaElement );
-        assertEquals( "void n(String, int)", formatter.formatHeadInfo() );
+        assertEquals( "void n(String, int)", formatter.formatHeadInfo() ); //$NON-NLS-1$
     }
 
     @Test
     public void formatHeadWithoutParameters() throws Exception {
-        prepareExpectations( "()I", "I" );
+        prepareExpectations( "()I", "I" ); //$NON-NLS-1$ //$NON-NLS-2$
 
         MethodFormatter formatter = new MethodFormatter( javaElement );
-        assertEquals( "int n()", formatter.formatHeadInfo() );
+        assertEquals( "int n()", formatter.formatHeadInfo() ); //$NON-NLS-1$
     }
 
     private void prepareExpectations( String signature, String returnType ) throws Exception {
-        when( javaElement.getElementName() ).thenReturn( "n" );
+        when( javaElement.getElementName() ).thenReturn( "n" ); //$NON-NLS-1$
         when( javaElement.getSignature() ).thenReturn( signature );
         when( javaElement.getReturnType() ).thenReturn( returnType );
     }

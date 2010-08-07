@@ -10,7 +10,7 @@ import org.projectusus.adapter.UsusAdapterPlugin;
 public class ToggleAutoCompute extends Action {
 
     public ToggleAutoCompute() {
-        super( "Compute automatically", AS_CHECK_BOX );
+        super( "Compute automatically", AS_CHECK_BOX ); //$NON-NLS-1$
         init();
     }
 

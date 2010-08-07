@@ -11,7 +11,7 @@ import org.projectusus.ui.util.EditorOpener;
 public class OpenHotspotInEditor extends AbstractOpenHotspotHandler<FileHotspot> {
 
     @Override
-    protected void open( ExecutionEvent event, DisplayHotspot<FileHotspot> hotspot ) {
+    protected void open( @SuppressWarnings( "unused" ) ExecutionEvent event, DisplayHotspot<FileHotspot> hotspot ) {
         FileHotspot realHotspot = hotspot.getHotspot();
         ICompilationUnit compilationUnit = extractCompilationUnit( hotspot );
         EditorOpener opener = new EditorOpener();

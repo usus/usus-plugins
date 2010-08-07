@@ -17,8 +17,8 @@ public class DisplayCategories {
         return categories;
     }
 
-    void replaceCategories( IDisplayCategory... categories ) {
-        this.categories = categories;
+    void replaceCategories( IDisplayCategory... cats ) {
+        this.categories = cats;
     }
 
     List<AnalysisDisplayEntry> getAllEntries() {

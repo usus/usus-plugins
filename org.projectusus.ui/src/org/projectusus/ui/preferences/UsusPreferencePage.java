@@ -26,10 +26,10 @@ public class UsusPreferencePage extends PreferencePage implements IWorkbenchPref
 
     public UsusPreferencePage() {
         super();
-        setDescription( "Enable/disable the registered Usus Metric Statistics:" );
+        setDescription( "Enable/disable the registered Usus Metric Statistics:" ); //$NON-NLS-1$
     }
 
-    public void init( IWorkbench workbench ) {
+    public void init( @SuppressWarnings( "unused" ) IWorkbench workbench ) {
         extensionsStates = RegisteredCockpitExtensionsCollector.getExtensionsStates();
     }
 

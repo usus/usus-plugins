@@ -26,7 +26,7 @@ class UsusInfoForFile implements IUsusInfo {
             addFormattedProportion( result );
             return result.toArray( new String[0] );
         } catch( JavaModelException jmox ) {
-            return new String[] { "Error in calculating metrics values." };
+            return new String[] { "Error in calculating metrics values." }; //$NON-NLS-1$
         }
     }
 

@@ -36,7 +36,7 @@ public class DefaultHotspotsPage extends Page implements IHotspotsPage {
         }
     }
 
-    public void setInput( AnalysisDisplayEntry element ) {
+    public void setInput( @SuppressWarnings( "unused" ) AnalysisDisplayEntry element ) {
         // nothing to do on the default page
     }
 
@@ -45,14 +45,14 @@ public class DefaultHotspotsPage extends Page implements IHotspotsPage {
     }
 
     private String getInfoText() {
-        return "No content to display at this time.\nSelect an entry on the Cockpit view and choose 'Open Hotspots'.";
+        return "No content to display at this time.\nSelect an entry on the Cockpit view and choose 'Open Hotspots'."; //$NON-NLS-1$
     }
 
     public void refresh() {
         // nothing to refresh
     }
 
-    public boolean matches( AnalysisDisplayEntry entry ) {
+    public boolean matches( @SuppressWarnings( "unused" ) AnalysisDisplayEntry entry ) {
         return false;
     }
 

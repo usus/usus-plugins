@@ -20,8 +20,8 @@ public class UsusInfoForClass extends UsusInfoForFile {
     @Override
     protected void addFormattedProportion( List<String> result ) throws JavaModelException {
         super.addFormattedProportion( result );
-        result.add( UsusModelElementFormatter.format( "Class size", new MethodCountVisitor( path ).visitAndReturn().getMethodCount() ) );
-        result.add( UsusModelElementFormatter.format( "Cumulative Component Dependency (of class)", new CCDCountVisitor( path ).visitAndReturn().getMetricsSum() ) );
+        result.add( UsusModelElementFormatter.format( "Class size", new MethodCountVisitor( path ).visitAndReturn().getMethodCount() ) ); //$NON-NLS-1$
+        result.add( UsusModelElementFormatter.format( "Cumulative Component Dependency (of class)", new CCDCountVisitor( path ).visitAndReturn().getMetricsSum() ) ); //$NON-NLS-1$
     }
 
     @Override

@@ -29,11 +29,11 @@ class UsusInfoCP implements ITreeContentProvider {
         return ususInfo.getCodeProportionInfos();
     }
 
-    public Object[] getElements( Object inputElement ) {
+    public Object[] getElements( @SuppressWarnings( "unused" ) Object inputElement ) {
         return new Object[] { new MetricStatisticsCategory( new AnalysisDisplayEntry[0] ) };
     }
 
-    public Object getParent( Object element ) {
+    public Object getParent( @SuppressWarnings( "unused" ) Object element ) {
         return null;
     }
 
@@ -41,7 +41,7 @@ class UsusInfoCP implements ITreeContentProvider {
         return getChildren( element ).length > 0;
     }
 
-    public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
+    public void inputChanged( @SuppressWarnings( "unused" ) Viewer viewer, @SuppressWarnings( "unused" ) Object oldInput, @SuppressWarnings( "unused" ) Object newInput ) {
         // unused
     }
 }

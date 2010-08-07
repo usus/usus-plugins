@@ -4,10 +4,9 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.coveredprojects;
 
-
 enum ColumnDesc {
 
-    PROJECT( "Project", 87, true, true );
+    PROJECT( "Project", 87, true, true ); //$NON-NLS-1$
 
     private final String headLabel;
     private final int weight;

@@ -21,7 +21,7 @@ public class OpenHotspots extends Action {
     private final ISelection selection;
 
     public OpenHotspots( ISelection selection ) {
-        super( "Open Hotspots" );
+        super( "Open Hotspots" ); //$NON-NLS-1$
         this.selection = selection;
     }
 

@@ -22,15 +22,15 @@ class HotspotsCP implements ITreeContentProvider {
         // unused
     }
 
-    public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
+    public void inputChanged( @SuppressWarnings( "unused" ) Viewer viewer, @SuppressWarnings( "unused" ) Object oldInput, @SuppressWarnings( "unused" ) Object newInput ) {
         // unused
     }
 
-    public Object[] getChildren( Object parentElement ) {
+    public Object[] getChildren( @SuppressWarnings( "unused" ) Object parentElement ) {
         return null;
     }
 
-    public Object getParent( Object element ) {
+    public Object getParent( @SuppressWarnings( "unused" ) Object element ) {
         return null;
     }
 

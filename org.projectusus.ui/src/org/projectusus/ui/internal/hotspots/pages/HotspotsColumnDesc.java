@@ -51,8 +51,8 @@ public enum HotspotsColumnDesc implements IColumnDesc<DisplayHotspot<?>> {
         return false;
     }
 
-    public String getLabel( DisplayHotspot<?> element ) {
-        return "";
+    public String getLabel( @SuppressWarnings( "unused" ) DisplayHotspot<?> element ) {
+        return ""; //$NON-NLS-1$
     }
 
 }

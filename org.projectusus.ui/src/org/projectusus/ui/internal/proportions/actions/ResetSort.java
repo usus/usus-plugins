@@ -10,16 +10,16 @@ public class ResetSort implements IViewActionDelegate {
 
     private HotSpotsView view;
 
-    public void run( IAction action ) {
+    public void run( @SuppressWarnings( "unused" ) IAction action ) {
         view.resetSort();
     }
 
-    public void selectionChanged( IAction action, ISelection selection ) {
+    public void selectionChanged( @SuppressWarnings( "unused" ) IAction action, @SuppressWarnings( "unused" ) ISelection selection ) {
         //
     }
 
-    public void init( IViewPart view ) {
-        this.view = (HotSpotsView)view;
+    public void init( IViewPart viewPart ) {
+        this.view = (HotSpotsView)viewPart;
     }
 
 }

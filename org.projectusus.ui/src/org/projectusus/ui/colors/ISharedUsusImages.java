@@ -13,14 +13,14 @@ public interface ISharedUsusImages {
     // prefix all constants with the plugin id
     String ID = UsusUIPlugin.getPluginId();
 
-    String OBJ_CODE_PROPORTIONS = ID + ".OBJ_CODE_PROPORTIONS";
-    String OBJ_INFO = ID + ".OBJ_INFO";
-    String OBJ_WARNINGS = ID + ".OBJ_WARNINGS";
+    String OBJ_CODE_PROPORTIONS = ID + ".OBJ_CODE_PROPORTIONS"; //$NON-NLS-1$
+    String OBJ_INFO = ID + ".OBJ_INFO"; //$NON-NLS-1$
+    String OBJ_WARNINGS = ID + ".OBJ_WARNINGS"; //$NON-NLS-1$
 
-    String OBJ_LEVELUP = ID + ".OBJ_LEVELUP";
-    String OBJ_LEVELDOWN = ID + ".OBJ_LEVELDOWN";
+    String OBJ_LEVELUP = ID + ".OBJ_LEVELUP"; //$NON-NLS-1$
+    String OBJ_LEVELDOWN = ID + ".OBJ_LEVELDOWN"; //$NON-NLS-1$
 
-    String VIEW_WARNING = ID + ".VIEW_WARNING";
+    String VIEW_WARNING = ID + ".VIEW_WARNING"; //$NON-NLS-1$
 
     Image getImage( String key );
 

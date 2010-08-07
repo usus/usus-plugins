@@ -42,11 +42,11 @@ public abstract class UsusModelLabelProvider extends LabelProvider implements IC
     // IColorProvider
     // //////////////
 
-    public Color getBackground( Object element ) {
+    public Color getBackground( @SuppressWarnings( "unused" ) Object element ) {
         return null; // no special treatment
     }
 
-    public Color getForeground( Object element ) {
+    public Color getForeground( @SuppressWarnings( "unused" ) Object element ) {
         return null; // no special treatment
     }
 }

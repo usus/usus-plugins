@@ -12,15 +12,15 @@ import org.projectusus.ui.internal.proportions.cockpit.CockpitMetricsSnapshot;
 
 public class TakeSnapshot implements IViewActionDelegate {
 
-    public void run( IAction action ) {
+    public void run( @SuppressWarnings( "unused" ) IAction action ) {
         CockpitMetricsSnapshot.click();
     }
 
-    public void init( IViewPart view ) {
+    public void init( @SuppressWarnings( "unused" ) IViewPart view ) {
         // unused
     }
 
-    public void selectionChanged( IAction action, ISelection selection ) {
+    public void selectionChanged( @SuppressWarnings( "unused" ) IAction action, @SuppressWarnings( "unused" ) ISelection selection ) {
         // unused
     }
 

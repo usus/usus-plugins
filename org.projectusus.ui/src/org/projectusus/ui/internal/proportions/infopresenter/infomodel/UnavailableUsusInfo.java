@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.IMethod;
 
 class UnavailableUsusInfo implements IUsusInfo {
 
-    private static final String[] MESSAGE = new String[] { "No information available at this time." };
+    private static final String[] MESSAGE = new String[] { "No information available at this time." }; //$NON-NLS-1$
     private final IJavaElement element;
 
     UnavailableUsusInfo( IJavaElement element ) {
@@ -28,6 +28,6 @@ class UnavailableUsusInfo implements IUsusInfo {
         if( element instanceof IMethod ) {
             return new MethodFormatter( (IMethod)element ).formatHeadInfo();
         }
-        return "n.n.";
+        return "n.n."; //$NON-NLS-1$
     }
 }

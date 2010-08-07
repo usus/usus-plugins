@@ -70,14 +70,14 @@ public class CockpitView extends ViewPart implements ISnapshotView {
 
     private void initOpenBehavior() {
         treeViewer.addOpenListener( new IOpenListener() {
-            public void open( OpenEvent event ) {
+            public void open( @SuppressWarnings( "unused" ) OpenEvent event ) {
                 new OpenHotspots( treeViewer.getSelection() ).run();
             }
         } );
     }
 
     private void initContextMenuBehavior() {
-        MenuManager menuManager = new MenuManager( "#PopupMenu" );
+        MenuManager menuManager = new MenuManager( "#PopupMenu" ); //$NON-NLS-1$
         menuManager.addMenuListener( new IMenuListener() {
             public void menuAboutToShow( IMenuManager manager ) {
                 manager.add( new OpenHotspots( treeViewer.getSelection() ) );
@@ -91,7 +91,7 @@ public class CockpitView extends ViewPart implements ISnapshotView {
         getSite().registerContextMenu( menuManager, treeViewer );
     }
 
-    protected void addContextActionsFor( IMenuManager manager, ISelection selection ) {
+    protected void addContextActionsFor( @SuppressWarnings( "unused" ) IMenuManager manager, ISelection selection ) {
         new ExtractCodeProportion( selection ).compute();
     }
 

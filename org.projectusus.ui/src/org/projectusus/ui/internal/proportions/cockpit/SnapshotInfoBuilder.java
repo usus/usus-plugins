@@ -12,7 +12,7 @@ public class SnapshotInfoBuilder {
 
     public String buildInfo( Snapshot snapshot ) {
         Date date = snapshot.getDate();
-        return "Snapshot taken at " + format( date ) + " (" + buildAgoMessage( date ) + ")";
+        return "Snapshot taken at " + format( date ) + " (" + buildAgoMessage( date ) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     protected String buildAgoMessage( Date date ) {
@@ -35,25 +35,25 @@ public class SnapshotInfoBuilder {
 
     private boolean inSeconds( long seconds, StringBuilder result ) {
         if( seconds < 0 ) {
-            result.append( "in the future" );
+            result.append( "in the future" ); //$NON-NLS-1$
         } else if( seconds < 10 ) {
-            result.append( "just now" );
+            result.append( "just now" ); //$NON-NLS-1$
         } else {
-            result.append( "less than a minute ago" );
+            result.append( "less than a minute ago" ); //$NON-NLS-1$
         }
         return true;
     }
 
     private boolean inMinutes( long seconds, StringBuilder result ) {
-        return inUnit( seconds, 60, "about a minute ago", "about {0} minutes ago", result );
+        return inUnit( seconds, 60, "about a minute ago", "about {0} minutes ago", result ); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private boolean inHours( long seconds, StringBuilder result ) {
-        return inUnit( seconds, 60 * 60, "about an hour ago", "about {0} hours ago", result );
+        return inUnit( seconds, 60 * 60, "about an hour ago", "about {0} hours ago", result ); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private boolean inDays( long seconds, StringBuilder result ) {
-        return inUnit( seconds, 60 * 60 * 24, "about a day ago", "about {0} days ago", result );
+        return inUnit( seconds, 60 * 60 * 24, "about a day ago", "about {0} days ago", result ); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private boolean inUnit( long seconds, int denominator, String singleUnit, String multipleUnits, StringBuilder result ) {

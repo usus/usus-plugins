@@ -17,7 +17,7 @@ public class RefreshViewerOnResourceChange implements IResourceChangeListener {
         this.viewer = viewer;
     }
 
-    public void resourceChanged( IResourceChangeEvent event ) {
+    public void resourceChanged( @SuppressWarnings( "unused" ) IResourceChangeEvent event ) {
         if( viewer != null && !viewer.getControl().isDisposed() ) {
             Display.getDefault().asyncExec( new Runnable() {
                 public void run() {

@@ -22,17 +22,17 @@ public class UsusUIImages implements ISharedUsusImages {
     private ImageRegistry imageRegistry;
 
     static {
-        String pathPrefix = "icons/full/";
+        String pathPrefix = "icons/full/"; //$NON-NLS-1$
         try {
             Bundle bundle = UsusUIPlugin.getDefault().getBundle();
-            baseUrl = new URL( bundle.getEntry( "/" ), pathPrefix );
+            baseUrl = new URL( bundle.getEntry( "/" ), pathPrefix ); //$NON-NLS-1$
         } catch( MalformedURLException malfux ) {
             throw new Defect( malfux );
         }
     }
 
-    private final static String OBJECT = "obj16/"; // basic colors - size 16x16
-    private final static String VIEW = "eview16/"; // basic colors - size 16x16
+    private final static String OBJECT = "obj16/"; // basic colors - size 16x16 //$NON-NLS-1$
+    private final static String VIEW = "eview16/"; // basic colors - size 16x16 //$NON-NLS-1$
 
     private UsusUIImages() {
         // no instantiation
@@ -51,12 +51,12 @@ public class UsusUIImages implements ISharedUsusImages {
     }
 
     private void declareImages() {
-        declare( OBJ_CODE_PROPORTIONS, OBJECT + "codeproportions.gif" );
-        declare( OBJ_INFO, OBJECT + "info.gif" );
-        declare( OBJ_WARNINGS, OBJECT + "warnings.gif" );
-        declare( VIEW_WARNING, VIEW + "warning.gif" );
-        declare( OBJ_LEVELUP, OBJECT + "levelup.gif" );
-        declare( OBJ_LEVELDOWN, OBJECT + "leveldown.gif" );
+        declare( OBJ_CODE_PROPORTIONS, OBJECT + "codeproportions.gif" ); //$NON-NLS-1$
+        declare( OBJ_INFO, OBJECT + "info.gif" ); //$NON-NLS-1$
+        declare( OBJ_WARNINGS, OBJECT + "warnings.gif" ); //$NON-NLS-1$
+        declare( VIEW_WARNING, VIEW + "warning.gif" ); //$NON-NLS-1$
+        declare( OBJ_LEVELUP, OBJECT + "levelup.gif" ); //$NON-NLS-1$
+        declare( OBJ_LEVELDOWN, OBJECT + "leveldown.gif" ); //$NON-NLS-1$
     }
 
     private void declare( final String key, final String path ) {

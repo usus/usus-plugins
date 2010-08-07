@@ -12,7 +12,7 @@ public class UsusPreferencesContentProvider implements IStructuredContentProvide
         // not needed
     }
 
-    public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
+    public void inputChanged( @SuppressWarnings( "unused" ) Viewer viewer, @SuppressWarnings( "unused" ) Object oldInput, @SuppressWarnings( "unused" ) Object newInput ) {
         // not needed
     }
 

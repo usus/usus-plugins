@@ -10,7 +10,7 @@ import org.projectusus.ui.internal.DisplayHotspot;
 
 public abstract class AbstractOpenHotspotHandler<T extends Hotspot> extends AbstractHandler {
 
-    public static final String COMMAND_ID = "org.projectusus.ui.commands.OpenHotspot";
+    public static final String COMMAND_ID = "org.projectusus.ui.commands.OpenHotspot"; //$NON-NLS-1$
 
     @SuppressWarnings( "unchecked" )
     public Object execute( ExecutionEvent event ) throws ExecutionException {

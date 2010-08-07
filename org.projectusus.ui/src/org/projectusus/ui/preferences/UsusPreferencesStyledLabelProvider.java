@@ -15,7 +15,7 @@ public class UsusPreferencesStyledLabelProvider extends WorkbenchLabelProvider i
     }
 
     private StyledString getStyledText( CockpitExtensionPref metric ) {
-        return new StyledString( metric.getLabel() ).append( " \u2014 " + metric.getClassName(), StyledString.DECORATIONS_STYLER );
+        return new StyledString( metric.getLabel() ).append( " \u2014 " + metric.getClassName(), StyledString.DECORATIONS_STYLER ); //$NON-NLS-1$
     }
 
 }
