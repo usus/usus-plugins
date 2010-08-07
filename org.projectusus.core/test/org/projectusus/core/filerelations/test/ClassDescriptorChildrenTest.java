@@ -2,8 +2,8 @@ package org.projectusus.core.filerelations.test;
 
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.projectusus.core.filerelations.test.IsSetOfMatcher.isEmptySet;
-import static org.projectusus.core.filerelations.test.IsSetOfMatcher.isSetOf;
+import static org.projectusus.core.testutil.IsSetOfMatcher.isEmptySet;
+import static org.projectusus.core.testutil.IsSetOfMatcher.isSetOf;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;

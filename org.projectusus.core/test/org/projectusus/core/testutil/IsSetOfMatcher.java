@@ -1,7 +1,7 @@
-package org.projectusus.core.filerelations.test;
+package org.projectusus.core.testutil;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.projectusus.core.filerelations.model.test.TestServiceManager.asSet;
+import static org.projectusus.core.testutil.TestServiceManager.asSet;
 
 import java.util.Collections;
 import java.util.Set;

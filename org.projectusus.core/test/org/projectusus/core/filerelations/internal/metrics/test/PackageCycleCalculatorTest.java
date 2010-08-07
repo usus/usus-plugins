@@ -1,7 +1,7 @@
 package org.projectusus.core.filerelations.internal.metrics.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.projectusus.core.filerelations.model.test.TestServiceManager.createDescriptor;
+import static org.projectusus.core.testutil.TestServiceManager.createDescriptor;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -9,7 +9,7 @@ import org.eclipse.core.resources.IFile;
 import org.junit.Test;
 import org.projectusus.core.basis.GraphNode;
 
-public class MetricsAccessorPDETest extends PDETestForMetricsComputation {
+public class MetricsAccessorGetAllClassRepresentersPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void emptyProject() throws Exception {

@@ -1,8 +1,5 @@
 package org.projectusus.core.filerelations.internal.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.jgrapht.alg.StrongConnectivityInspector;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Relation;
@@ -30,13 +27,13 @@ public class CrossPackageClassRelations extends Relations<ClassDescriptor> {
         classCycles = new ClassCycles( inspector.stronglyConnectedSets() );
     }
 
-    public Set<ClassDescriptor> getDirectChildrenFrom( ClassDescriptor packagename ) {
-        Set<ClassDescriptor> descriptors = new HashSet<ClassDescriptor>();
-        for( Relation<ClassDescriptor> relation : this.getDirectRelationsFrom( packagename ) ) {
-            descriptors.add( relation.getTarget() );
-        }
-        return descriptors;
-    }
+    // public Set<ClassDescriptor> getDirectChildrenFrom( ClassDescriptor packagename ) {
+    // Set<ClassDescriptor> descriptors = new HashSet<ClassDescriptor>();
+    // for( Relation<ClassDescriptor> relation : this.getDirectRelationsFrom( packagename ) ) {
+    // descriptors.add( relation.getTarget() );
+    // }
+    // return descriptors;
+    // }
 
     public ClassCycles getCrossPackageClassCycles() {
         return classCycles;

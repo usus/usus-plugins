@@ -1,5 +1,6 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -56,7 +57,13 @@ public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     }
 
     public Set<GraphNode> getAllCrossPackageClasses() {
-        return CrossPackageClassRepresenter.transformToRepresenterSet( ClassDescriptor.getAll(), new CrossPackageClassRelations() );
+        Set<ClassDescriptor> crossPackageClasses = new HashSet<ClassDescriptor>();
+        for( ClassDescriptor clazz : ClassDescriptor.getAll() ) {
+            if( clazz.getChildrenInOtherPackages().size() > 0 ) {
+                crossPackageClasses.add( clazz );
+            }
+        }
+        return CrossPackageClassRepresenter.transformToRepresenterSet( crossPackageClasses, new CrossPackageClassRelations() );
     }
 
     public void dropRawData( IProject project ) {

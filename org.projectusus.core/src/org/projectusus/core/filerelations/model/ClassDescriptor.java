@@ -201,8 +201,10 @@ public class ClassDescriptor {
     }
 
     public void addChild( ClassDescriptor target ) {
-        children.add( target );
-        target.parents.add( this );
-        clearOwnAndParentsTransitiveChildrenCache();
+        if( !this.equals( target ) ) {
+            children.add( target );
+            target.parents.add( this );
+            clearOwnAndParentsTransitiveChildrenCache();
+        }
     }
 }

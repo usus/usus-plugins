@@ -2,6 +2,7 @@ package org.projectusus.core.filerelations.model.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
@@ -12,7 +13,7 @@ import org.projectusus.core.filerelations.model.Packagename;
 @SuppressWarnings( "nls" )
 public class ClassDescriptorDirectChildrenTest {
 
-    private IFile file = TestServiceManager.createFileMock();
+    private IFile file = mock( IFile.class );
     private String classNameString = "name";
     private Classname classname1 = new Classname( classNameString + "1" );
     private Classname classname2 = new Classname( classNameString + "2" );

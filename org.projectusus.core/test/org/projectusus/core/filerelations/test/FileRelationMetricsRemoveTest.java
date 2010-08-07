@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.projectusus.core.filerelations.test.IsSetOfMatcher.isEmptySet;
-import static org.projectusus.core.filerelations.test.IsSetOfMatcher.isSetOf;
+import static org.projectusus.core.testutil.IsSetOfMatcher.isEmptySet;
+import static org.projectusus.core.testutil.IsSetOfMatcher.isSetOf;
 
 import java.util.Set;
 

@@ -29,7 +29,7 @@ public class CrossPackageClassRepresenter extends AbstractClassRepresenter {
     }
 
     public Set<? extends GraphNode> getChildren() {
-        return transformToRepresenterSet( relations.getDirectChildrenFrom( clazz ), relations );
+        return transformToRepresenterSet( clazz.getChildrenInOtherPackages(), relations );
     }
 
     public String getNodeName() {

@@ -7,16 +7,13 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.projectusus.core.filerelations.model.test.TestServiceManager.createDescriptor;
+import static org.mockito.Mockito.mock;
+import static org.projectusus.core.testutil.TestServiceManager.createDescriptor;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.filerelations.model.ClassDescriptorKey;
-import org.projectusus.core.filerelations.model.Classname;
-import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.filerelations.model.test.TestServiceManager;
+import org.projectusus.core.testutil.TestServiceManager;
 
 public class ClassDescriptorTest {
 
@@ -24,7 +21,7 @@ public class ClassDescriptorTest {
 
     @Before
     public void setup() {
-        file = TestServiceManager.createFileMock();
+        file = mock( IFile.class );
     }
 
     @Test
@@ -89,6 +86,14 @@ public class ClassDescriptorTest {
         ClassDescriptor second = createDescriptor( Packagename.of( "y", null ) ); //$NON-NLS-1$
         first.addChild( second );
         assertThat( first.getChildrenInOtherPackages(), hasItems( second ) );
+    }
+
+    @Test
+    public void classIsNotAddedToItsChildren() {
+        ClassDescriptor descriptor = ClassDescriptor.of( mock( IFile.class ), new Classname( "classname" ), Packagename.of( "name", null ) ); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals( 0, descriptor.getChildren().size() );
+        descriptor.addChild( descriptor );
+        assertEquals( 0, descriptor.getChildren().size() );
     }
 
 }

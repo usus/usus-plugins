@@ -1,4 +1,4 @@
-package org.projectusus.core.filerelations.model.test;
+package org.projectusus.core.testutil;
 
 import static org.mockito.Mockito.mock;
 
@@ -19,32 +19,12 @@ public class TestServiceManager {
         return new HashSet<T>( Arrays.asList( items ) );
     }
 
-    public static IFile createFileMock() {
-        return mock( IFile.class );
-    }
-
     public static ClassDescriptor createDescriptor( Packagename packagename ) {
-        return ClassDescriptor.of( createFileMock(), createClassname(), packagename );
-    }
-
-    public static ClassDescriptor createDescriptor( IFile file, Classname clazz ) {
-        return createDescriptor( file, clazz, Packagename.of( "packagename1", null ) ); //$NON-NLS-1$
-    }
-
-    public static ClassDescriptor createDescriptor( IFile file, Packagename packagename ) {
-        return ClassDescriptor.of( file, createClassname(), packagename );
-    }
-
-    public static Classname createClassname() {
-        return new Classname( "classname1" ); //$NON-NLS-1$
-    }
-
-    public static ClassDescriptor createDescriptor( IFile file, Classname clazz, Packagename packagename ) {
-        return ClassDescriptor.of( file, clazz, packagename );
+        return ClassDescriptor.of( mock( IFile.class ), new Classname( "classname1" ), packagename ); //$NON-NLS-1$
     }
 
     public static ClassDescriptor createDescriptor( IFile file ) {
-        return createDescriptor( file, createClassname() );
+        return ClassDescriptor.of( file, new Classname( "classname1" ), Packagename.of( "packagename1", null ) ); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public static List<Object[]> asArrays( Object... items ) {
