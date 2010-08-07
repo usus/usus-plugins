@@ -97,4 +97,8 @@ public class PackageRepresenter implements GraphNode {
         return packagename.equals( source ) || packagename.equals( dest );
     }
 
+    public Packagename getRelatedPackage() {
+        return packagename;
+    }
+
 }

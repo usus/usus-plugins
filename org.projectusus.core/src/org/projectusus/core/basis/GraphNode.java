@@ -32,4 +32,6 @@ public interface GraphNode {
     IJavaElement getNodeJavaElement();
 
     boolean isAtEitherEndOf( Packagename source, Packagename dest );
+
+    Packagename getRelatedPackage();
 }

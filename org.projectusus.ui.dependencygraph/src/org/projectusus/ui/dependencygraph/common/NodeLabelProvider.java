@@ -23,6 +23,7 @@ import org.eclipse.zest.core.viewers.IEntityStyleProvider;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.internal.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.util.Defect;
+import org.projectusus.ui.colors.UsusColors;
 
 public class NodeLabelProvider extends LabelProvider implements IEntityStyleProvider, IEntityConnectionStyleProvider {
 
@@ -66,6 +67,14 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
         return JavaUI.getSharedImages().getImage( imageName );
     }
 
+    public Color getBackgroundColour( Object element ) {
+        if( element instanceof GraphNode ) {
+            String color = ((GraphNode)element).getRelatedPackage().getColor();
+            return UsusColors.getSharedColors().getColor( color );
+        }
+        return null;
+    }
+
     // From IEntityStyleProvider
 
     public Color getNodeHighlightColor( Object entity ) {
@@ -86,11 +95,6 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     public int getBorderWidth( Object entity ) {
         // TODO Auto-generated method stub
         return 0;
-    }
-
-    public Color getBackgroundColour( Object entity ) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     public Color getForegroundColour( Object entity ) {

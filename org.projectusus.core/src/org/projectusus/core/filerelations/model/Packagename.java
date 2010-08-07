@@ -10,14 +10,19 @@ import org.eclipse.jdt.core.IJavaElement;
 
 public class Packagename {
 
-    private String name;
-    private Set<ClassDescriptor> classesInPackage = new HashSet<ClassDescriptor>();
-
     private static Map<String, Packagename> allPackages = new HashMap<String, Packagename>();
+    private static final int NUMBER_OF_COLORS = 16;
+    public static final String COLOR_PREFIX = "PACKAGE"; //$NON-NLS-1$
+    private static int colorIndex = 0;
+
+    private String name;
+    private String color;
+    private Set<ClassDescriptor> classesInPackage = new HashSet<ClassDescriptor>();
     private final IJavaElement javaElement;
 
     public static void clear() {
         allPackages = new HashMap<String, Packagename>();
+        colorIndex = 0;
     }
 
     public static Packagename of( String name, IJavaElement javaElement ) {
@@ -36,6 +41,8 @@ public class Packagename {
     private Packagename( String name, IJavaElement javaElement ) {
         this.name = name;
         this.javaElement = javaElement;
+        this.color = COLOR_PREFIX + Integer.toString( colorIndex );
+        colorIndex = (colorIndex + 1) % NUMBER_OF_COLORS;
     }
 
     public void addClass( ClassDescriptor clazz ) {
@@ -74,6 +81,10 @@ public class Packagename {
 
     public IJavaElement getJavaElement() {
         return javaElement;
+    }
+
+    public String getColor() {
+        return color;
     }
 
     public Relation<Packagename> getRelationTo( Packagename target ) {

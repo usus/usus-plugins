@@ -73,4 +73,8 @@ abstract class AbstractClassRepresenter implements GraphNode {
         }
         return false;
     }
+
+    public Packagename getRelatedPackage() {
+        return clazz.getPackagename();
+    }
 }
