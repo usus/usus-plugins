@@ -24,10 +24,6 @@ public class Tasks {
         // TODO PackageView: Packages im Package Graph ausw‰ählen, die enthaltenen Klassen im Class View darstellen
     }
 
-    void andreas_createTrends() {
-        // TODO Wertehistorie: Verbesserte und verschlechterte Werte ausweisen und danach sortieren.
-    }
-
     // ----------------
 
     void nicole_evtl_marc_bugACDAnalysis() {
