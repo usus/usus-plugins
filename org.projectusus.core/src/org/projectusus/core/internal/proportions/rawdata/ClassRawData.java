@@ -97,8 +97,6 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
     public void dropRawData() {
         if( descriptor != null ) {
             descriptor.prepareRemoval();
-        } else {
-            System.out.println( "Could not remove class " + location.getName() + ", descriptor == null" ); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 

@@ -105,7 +105,7 @@ class ChangedResourcesCollector implements IResourceDeltaVisitor {
         if( onlyMarkers ) {
             IMarkerDelta[] markerDeltas = delta.getMarkerDeltas();
             for( IMarkerDelta iMarkerDelta : markerDeltas ) {
-                boolean markerComesFromJdt = "JDT".equals( iMarkerDelta.getAttribute( "sourceId", null ) );
+                boolean markerComesFromJdt = "JDT".equals( iMarkerDelta.getAttribute( "sourceId", null ) ); //$NON-NLS-1$//$NON-NLS-2$
                 if( markerComesFromJdt ) {
                     return true;
                 }
