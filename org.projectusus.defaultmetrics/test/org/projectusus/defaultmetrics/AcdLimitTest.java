@@ -1,4 +1,4 @@
-package org.projectusus.core.basis;
+package org.projectusus.defaultmetrics;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

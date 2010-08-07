@@ -37,6 +37,6 @@ public enum TracingOption {
     private boolean isTracing() {
         String option = PLUGIN_ID + "/" + name(); //$NON-NLS-1$
         String value = getDebugOption( option );
-        return value != null && parseBoolean( value ); //$NON-NLS-1$
+        return value != null && parseBoolean( value );
     }
 }

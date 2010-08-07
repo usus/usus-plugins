@@ -19,6 +19,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
+import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.internal.project.FindUsusProjects;
 
 /**
@@ -27,6 +28,11 @@ import org.projectusus.core.internal.project.FindUsusProjects;
  * @author leiffrenzel
  */
 class WorkspaceCodeProportionComputationTarget implements ICodeProportionComputationTarget {
+
+    public WorkspaceCodeProportionComputationTarget() {
+        super();
+        UsusModelProvider.ususModelForAdapter().aboutToStartFullRecompute();
+    }
 
     public Collection<IFile> getFiles( IProject project ) throws CoreException {
         return collectFiles( project );

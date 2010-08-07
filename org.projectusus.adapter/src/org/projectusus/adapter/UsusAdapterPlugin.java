@@ -9,7 +9,7 @@ import org.projectusus.core.UsusCorePlugin;
 
 public class UsusAdapterPlugin extends Plugin {
 
-    public static final String PLUGIN_ID = "org.projectusus.adapter";
+    public static final String PLUGIN_ID = "org.projectusus.adapter"; //$NON-NLS-1$
 
     private static UsusAdapterPlugin plugin;
     private AutoComputeSetting autoComputer;
@@ -18,13 +18,15 @@ public class UsusAdapterPlugin extends Plugin {
         return plugin;
     }
 
+    @Override
     public void start( BundleContext bundleContext ) throws Exception {
         super.start( bundleContext );
         plugin = this;
         autoComputer = new AutoComputeSetting();
     }
 
-    public void stop( BundleContext bundleContext ) throws Exception {
+    @Override
+    public void stop( @SuppressWarnings( "unused" ) BundleContext bundleContext ) throws Exception {
         autoComputer.dispose();
     }
 

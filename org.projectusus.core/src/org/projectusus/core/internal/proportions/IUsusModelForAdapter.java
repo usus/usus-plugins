@@ -19,4 +19,6 @@ public interface IUsusModelForAdapter {
 
     void updateAfterComputationRun( boolean ok, IProgressMonitor monitor );
 
+    void aboutToStartFullRecompute();
+
 }

@@ -17,8 +17,8 @@ import org.projectusus.core.UsusModelProvider;
 
 public class CodeProportionsComputerJob extends Job {
 
-    public static String codeProportionsComputerJob_computing = "Computing code proportions for Java files";
-    public static String codeProportionsComputerJob_name = "Code proportions computer";
+    public static String codeProportionsComputerJob_computing = "Computing code proportions for Java files"; //$NON-NLS-1$
+    public static String codeProportionsComputerJob_name = "Code proportions computer"; //$NON-NLS-1$
 
     public static final Object FAMILY = new Object();
     private final ICodeProportionComputationTarget target;

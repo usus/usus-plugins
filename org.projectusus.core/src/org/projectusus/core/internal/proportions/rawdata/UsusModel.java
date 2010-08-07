@@ -126,4 +126,8 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
         ClassDescriptorCleanup.clear();
         Packagename.clear();
     }
+
+    public void aboutToStartFullRecompute() {
+        needsFullRecompute = false;
+    }
 }
