@@ -6,6 +6,7 @@ package org.projectusus.adapter;
 
 import static org.eclipse.core.resources.IResourceDelta.ADDED;
 import static org.eclipse.core.resources.IResourceDelta.CHANGED;
+import static org.eclipse.core.resources.IResourceDelta.MARKERS;
 import static org.eclipse.core.resources.IResourceDelta.REMOVED;
 import static org.projectusus.adapter.TracingOption.RESOURCE_CHANGES;
 import static org.projectusus.core.internal.project.UsusProjectSupport.isUsusProject;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarkerDelta;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
@@ -55,7 +57,7 @@ class ChangedResourcesCollector implements IResourceDeltaVisitor {
         IResource resource = delta.getResource();
         if( resource instanceof IProject ) {
             IProject project = (IProject)resource;
-            result = wasClosed( delta, project ) || isDeleted( delta.getKind() );
+            result = wasClosed( delta, project ) || isDeleted( delta );
         }
         return result;
     }
@@ -65,10 +67,10 @@ class ChangedResourcesCollector implements IResourceDeltaVisitor {
     }
 
     private void handleFileDelta( IResourceDelta delta, IFile file ) {
-        if( isInteresting( delta.getKind() ) ) {
+        if( isInteresting( delta ) ) {
             RESOURCE_CHANGES.trace( "Changed file " + file.getFullPath() ); //$NON-NLS-1$
             addToMap( file, changes );
-        } else if( isDeleted( delta.getKind() ) ) {
+        } else if( isDeleted( delta ) ) {
             RESOURCE_CHANGES.trace( "Deleted file " + file.getFullPath() ); //$NON-NLS-1$
             addToMap( file, deletions );
         }
@@ -86,11 +88,30 @@ class ChangedResourcesCollector implements IResourceDeltaVisitor {
         return (delta.getFlags() & IResourceDelta.OPEN) != 0;
     }
 
-    private boolean isDeleted( int kind ) {
+    private boolean isDeleted( IResourceDelta delta ) {
+        int kind = delta.getKind();
         return (kind & REMOVED) != 0;
     }
 
-    private boolean isInteresting( int kind ) {
-        return (kind & ADDED) != 0 || (kind & CHANGED) != 0;
+    private boolean isInteresting( IResourceDelta delta ) {
+        int kind = delta.getKind();
+        boolean changed = (kind & CHANGED) != 0;
+        boolean added = (kind & ADDED) != 0;
+        if( !(added || changed) ) {
+            return false;
+        }
+
+        boolean onlyMarkers = delta.getFlags() == MARKERS;
+        if( onlyMarkers ) {
+            IMarkerDelta[] markerDeltas = delta.getMarkerDeltas();
+            for( IMarkerDelta iMarkerDelta : markerDeltas ) {
+                boolean markerComesFromJdt = "JDT".equals( iMarkerDelta.getAttribute( "sourceId", null ) );
+                if( markerComesFromJdt ) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
     }
 }
