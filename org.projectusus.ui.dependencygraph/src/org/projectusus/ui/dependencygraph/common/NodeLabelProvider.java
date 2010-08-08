@@ -21,6 +21,7 @@ import org.eclipse.zest.core.viewers.EntityConnectionData;
 import org.eclipse.zest.core.viewers.IEntityConnectionStyleProvider;
 import org.eclipse.zest.core.viewers.IEntityStyleProvider;
 import org.projectusus.core.basis.GraphNode;
+import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.util.Defect;
 import org.projectusus.ui.colors.UsusColors;
@@ -69,10 +70,16 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
 
     public Color getBackgroundColour( Object element ) {
         if( element instanceof GraphNode ) {
-            String color = ((GraphNode)element).getRelatedPackage().getColor();
-            return UsusColors.getSharedColors().getColor( color );
+            Packagename packageName = ((GraphNode)element).getRelatedPackage();
+            return UsusColors.getSharedColors().getNodeColorFor( toHue( packageName.hashCode() ) );
         }
         return null;
+    }
+
+    protected int toHue( int value ) {
+        long positive = ((long)value - Integer.MIN_VALUE) / 2;
+        double y = (double)positive / Integer.MAX_VALUE;
+        return (int)Math.round( 360 * y );
     }
 
     // From IEntityStyleProvider
