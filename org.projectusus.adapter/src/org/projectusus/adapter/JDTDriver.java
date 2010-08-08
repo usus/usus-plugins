@@ -12,11 +12,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.projectusus.core.IUsusModelForAdapter;
 import org.projectusus.core.UsusModelProvider;
+import org.projectusus.core.basis.FileSupport;
 import org.projectusus.core.basis.YellowCountCache;
-import org.projectusus.core.internal.proportions.FileSupport;
-import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
-import org.projectusus.core.internal.proportions.rawdata.jdtdriver.JavaFileDriver;
+import org.projectusus.core.proportions.rawdata.jdtdriver.JavaFileDriver;
 
 public class JDTDriver {
 

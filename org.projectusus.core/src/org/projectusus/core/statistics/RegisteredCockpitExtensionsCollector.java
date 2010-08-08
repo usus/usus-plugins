@@ -6,7 +6,6 @@ import static com.google.common.collect.Iterables.getOnlyElement;
 import static com.google.common.collect.Sets.filter;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.eclipse.core.runtime.Platform.getExtensionRegistry;
-import static org.projectusus.core.internal.proportions.rawdata.UsusModel.ususModel;
 import static org.projectusus.core.statistics.CockpitExtensionPref.ON_BY_DEFAULT;
 
 import java.util.HashSet;
@@ -16,7 +15,6 @@ import java.util.TreeSet;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 import org.projectusus.core.UsusCorePlugin;
@@ -126,8 +124,6 @@ public class RegisteredCockpitExtensionsCollector {
             Preferences node = preferences.node( extensionPref.getClassName() );
             node.putBoolean( ENABLED, extensionPref.isOn() );
         }
-        UsusCorePlugin.getDefault().savePreferences();
-        ususModel().updateAfterComputationRun( true, new NullProgressMonitor() );
     }
 
     private static String[] childrenNames( Preferences extensions ) {

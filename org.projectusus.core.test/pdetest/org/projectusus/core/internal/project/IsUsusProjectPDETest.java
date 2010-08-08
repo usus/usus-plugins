@@ -5,7 +5,7 @@
 package org.projectusus.core.internal.project;
 
 import static org.junit.Assert.*;
-import static org.projectusus.core.internal.project.UsusProjectSupport.isUsusProject;
+import static org.projectusus.core.project.UsusProjectSupport.isUsusProject;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;

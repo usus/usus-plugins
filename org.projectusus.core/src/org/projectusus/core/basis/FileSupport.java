@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions;
+package org.projectusus.core.basis;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.JavaCore;

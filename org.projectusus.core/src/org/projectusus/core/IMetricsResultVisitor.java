@@ -1,4 +1,4 @@
-package org.projectusus.core.statistics;
+package org.projectusus.core;
 
 import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.JavaModelPath;

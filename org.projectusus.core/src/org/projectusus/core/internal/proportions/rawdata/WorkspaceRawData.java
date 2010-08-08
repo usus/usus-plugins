@@ -9,9 +9,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 

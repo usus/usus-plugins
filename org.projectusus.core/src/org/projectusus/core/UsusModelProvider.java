@@ -1,7 +1,5 @@
 package org.projectusus.core;
 
-import org.projectusus.core.internal.proportions.IMetricsWriter;
-import org.projectusus.core.internal.proportions.IUsusModelForAdapter;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class UsusModelProvider {

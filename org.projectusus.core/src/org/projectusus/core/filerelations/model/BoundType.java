@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
-import org.projectusus.core.internal.project.IUSUSProject;
+import org.projectusus.core.IUSUSProject;
 
 public class BoundType {
 

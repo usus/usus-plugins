@@ -1,5 +1,6 @@
 package org.projectusus.core.statistics;
 
+import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.CodeProportion;
 
 /**

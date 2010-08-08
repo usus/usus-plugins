@@ -7,7 +7,7 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.IJavaElement;
 import org.projectusus.core.basis.GraphNode;
-import org.projectusus.core.filerelations.internal.model.PackageRelations;
+import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 
 import com.google.common.base.Function;

@@ -12,6 +12,8 @@ public interface IUsusModel {
 
     List<CodeProportion> getCodeProportions();
 
+    void refreshCodeProportions();
+
     void addUsusModelListener( IUsusModelListener listener );
 
     void removeUsusModelListener( IUsusModelListener listener );

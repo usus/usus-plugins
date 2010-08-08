@@ -10,15 +10,15 @@ import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsAccessor;
+import org.projectusus.core.IMetricsResultVisitor;
+import org.projectusus.core.IMetricsWriter;
 import org.projectusus.core.basis.GraphNode;
-import org.projectusus.core.filerelations.internal.model.CrossPackageClassRelations;
-import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
+import org.projectusus.core.filerelations.model.CrossPackageClassRelations;
+import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.internal.proportions.IMetricsWriter;
-import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 public class MetricsAccessor implements IMetricsAccessor, IMetricsWriter {
     public final WorkspaceRawData workspaceRawData;

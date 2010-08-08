@@ -1,13 +1,12 @@
 package org.projectusus.ui.internal;
 
-import static org.projectusus.core.internal.proportions.rawdata.UsusModel.ususModel;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.basis.CodeProportion;
 
 public class AnalysisDisplayModel {
@@ -46,7 +45,7 @@ public class AnalysisDisplayModel {
                 handleUsusModelChanged();
             }
         };
-        ususModel().addUsusModelListener( listener );
+        UsusModelProvider.ususModel().addUsusModelListener( listener );
     }
 
     protected void handleUsusModelChanged() {
@@ -59,7 +58,7 @@ public class AnalysisDisplayModel {
     }
 
     private MetricStatisticsCategory createMetricsCategory() {
-        List<CodeProportion> codeProportions = ususModel().getCodeProportions();
+        List<CodeProportion> codeProportions = UsusModelProvider.ususModel().getCodeProportions();
         List<AnalysisDisplayEntry> result = new ArrayList<AnalysisDisplayEntry>();
         for( CodeProportion codeProportion : codeProportions ) {
             result.add( displayEntryFor( codeProportion ) );

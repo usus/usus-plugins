@@ -16,9 +16,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.basis.YellowCountCache;
 import org.projectusus.core.basis.YellowCountResult;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 /**
  * A simple view that displays the current yellow count to the user.
@@ -46,7 +46,7 @@ public class YellowCountView extends ViewPart {
                 display( YellowCountCache.yellowCountCache().getResult() );
             }
         };
-        UsusModel.ususModel().addUsusModelListener( listener );
+        UsusModelProvider.ususModel().addUsusModelListener( listener );
 
         display( YellowCountCache.yellowCountCache().getResult() );
     }
@@ -60,7 +60,7 @@ public class YellowCountView extends ViewPart {
 
     @Override
     public void dispose() {
-        UsusModel.ususModel().removeUsusModelListener( listener );
+        UsusModelProvider.ususModel().removeUsusModelListener( listener );
         super.dispose();
     }
 

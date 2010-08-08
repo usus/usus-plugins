@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.projectusus.core.basis.GraphNode;
-import org.projectusus.core.filerelations.internal.model.CrossPackageClassRelations;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.CrossPackageClassRelations;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;

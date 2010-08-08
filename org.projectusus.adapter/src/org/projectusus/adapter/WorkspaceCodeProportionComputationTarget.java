@@ -20,7 +20,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.projectusus.core.UsusModelProvider;
-import org.projectusus.core.internal.project.FindUsusProjects;
+import org.projectusus.core.project.FindUsusProjects;
 
 /**
  * convenience implementation of target that runs over the whole workspace.

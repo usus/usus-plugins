@@ -11,7 +11,7 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.JavaCore;
-import org.projectusus.core.internal.project.IUSUSProject;
+import org.projectusus.core.IUSUSProject;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class TestProjectCreator {

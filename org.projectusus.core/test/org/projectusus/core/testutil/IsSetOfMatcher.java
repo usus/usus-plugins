@@ -1,9 +1,10 @@
 package org.projectusus.core.testutil;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.projectusus.core.testutil.TestServiceManager.asSet;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.hamcrest.Description;
@@ -37,6 +38,10 @@ public class IsSetOfMatcher<T> extends TypeSafeMatcher<Set<? extends T>> {
 
     public static <T> IsSetOfMatcher<T> isEmptySet() {
         return new IsSetOfMatcher<T>( Collections.<T> emptySet() );
+    }
+
+    private static <T> Set<T> asSet( T... items ) {
+        return new HashSet<T>( Arrays.asList( items ) );
     }
 
 }

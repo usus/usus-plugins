@@ -1,12 +1,9 @@
-package org.projectusus.core.filerelations.internal.model;
+package org.projectusus.core.filerelations.model;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.jgrapht.alg.StrongConnectivityInspector;
-import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.filerelations.model.Relation;
 
 public class PackageRelations extends Relations<Packagename> {
 

@@ -31,6 +31,10 @@ A copy of the license text is provided with the software, or
 can be found at http://www.eclipse.org/legal/epl-v10.html.
    </license>
 
+   <url>
+      <discovery label="GEF Update Site" url="http://download.eclipse.org/tools/gef/updates/releases/"/>
+   </url>
+
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.core.resources"/>
@@ -42,6 +46,7 @@ can be found at http://www.eclipse.org/legal/epl-v10.html.
       <import plugin="org.eclipse.jdt.ui"/>
       <import plugin="org.eclipse.jface.text"/>
       <import plugin="org.eclipse.swt"/>
+      <import feature="org.eclipse.zest" version="1.0.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
@@ -84,6 +89,13 @@ can be found at http://www.eclipse.org/legal/epl-v10.html.
          download-size="0"
          install-size="0"
          version="0.4.5"
+         unpack="false"/>
+
+   <plugin
+         id="org.projectusus.ui.dependencygraph"
+         download-size="0"
+         install-size="0"
+         version="0.4.4"
          unpack="false"/>
 
 </feature>

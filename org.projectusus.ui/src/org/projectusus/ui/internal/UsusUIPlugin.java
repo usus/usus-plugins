@@ -12,7 +12,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.projectusus.adapter.ForcedRecompute;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
+import org.projectusus.core.UsusModelProvider;
 
 public class UsusUIPlugin extends AbstractUIPlugin {
 
@@ -29,7 +29,7 @@ public class UsusUIPlugin extends AbstractUIPlugin {
     @Override
     public void start( BundleContext context ) throws Exception {
         super.start( context );
-        if( UsusModel.ususModel().needsFullRecompute() ) {
+        if( UsusModelProvider.ususModel().needsFullRecompute() ) {
             new ForcedRecompute().schedule();
         }
         plugin = this;

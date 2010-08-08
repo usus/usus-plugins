@@ -1,6 +1,7 @@
 package org.projectusus.core.statistics;
 
 import org.eclipse.core.resources.IFile;
+import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;

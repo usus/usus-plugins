@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.project;
+package org.projectusus.core;
 
 public interface IUSUSProject {
 

@@ -8,12 +8,10 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.projectusus.core.testutil.TestServiceManager.createDescriptor;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.testutil.TestServiceManager;
 
 public class ClassDescriptorTest {
 
@@ -26,8 +24,8 @@ public class ClassDescriptorTest {
 
     @Test
     public void equalsIsEqual() {
-        ClassDescriptor descriptor1 = TestServiceManager.createDescriptor( file );
-        Object descriptor2 = TestServiceManager.createDescriptor( file );
+        ClassDescriptor descriptor1 = createDescriptor( file );
+        Object descriptor2 = createDescriptor( file );
         assertTrue( descriptor1.equals( descriptor2 ) );
         assertSame( descriptor1, descriptor2 );
     }
@@ -68,13 +66,13 @@ public class ClassDescriptorTest {
 
     @Test
     public void classIsAddedToPackageOnCreation() {
-        ClassDescriptor descriptor = TestServiceManager.createDescriptor( file );
+        ClassDescriptor descriptor = createDescriptor( file );
         assertTrue( descriptor.getPackagename().containsClass( descriptor ) );
     }
 
     @Test
     public void classIsRemovedFromPackageOnDestruction() {
-        ClassDescriptor descriptor = TestServiceManager.createDescriptor( file );
+        ClassDescriptor descriptor = createDescriptor( file );
         Packagename packagename = descriptor.getPackagename();
         descriptor.removeFromPool();
         assertFalse( packagename.containsClass( descriptor ) );
@@ -94,6 +92,14 @@ public class ClassDescriptorTest {
         assertEquals( 0, descriptor.getChildren().size() );
         descriptor.addChild( descriptor );
         assertEquals( 0, descriptor.getChildren().size() );
+    }
+
+    private static ClassDescriptor createDescriptor( IFile file ) {
+        return ClassDescriptor.of( file, new Classname( "classname1" ), Packagename.of( "packagename1", null ) ); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    private static ClassDescriptor createDescriptor( Packagename packagename ) {
+        return ClassDescriptor.of( mock( IFile.class ), new Classname( "classname1" ), packagename ); //$NON-NLS-1$
     }
 
 }

@@ -2,11 +2,11 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.project;
+package org.projectusus.core.project;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.projectusus.core.internal.project.UsusProjectSupport.isUsusProject;
+import static org.projectusus.core.project.UsusProjectSupport.isUsusProject;
 
 import java.util.ArrayList;
 import java.util.List;

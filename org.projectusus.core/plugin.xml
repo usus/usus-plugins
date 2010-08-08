@@ -11,8 +11,8 @@
     <extension point="org.eclipse.core.runtime.adapters">
        <factory
              adaptableType="org.eclipse.core.resources.IProject"
-             class="org.projectusus.core.internal.project.UsusProjectFactory">
-          <adapter type="org.projectusus.core.internal.project.IUSUSProject" />
+             class="org.projectusus.core.project.UsusProjectFactory">
+          <adapter type="org.projectusus.core.IUSUSProject" />
        </factory>
     </extension>
 </plugin>

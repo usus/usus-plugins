@@ -1,11 +1,9 @@
-package org.projectusus.core.filerelations.internal.model;
+package org.projectusus.core.filerelations.model;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.projectusus.core.filerelations.model.Cycle;
-import org.projectusus.core.filerelations.model.Packagename;
 
 public class PackageCycles {
 

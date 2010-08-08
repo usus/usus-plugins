@@ -7,7 +7,7 @@ package org.projectusus.autotestsuite.oldcodefromcoverageincore;
 import static com.mountainminds.eclemma.core.CoverageTools.addJavaCoverageListener;
 import static com.mountainminds.eclemma.core.CoverageTools.getJavaModelCoverage;
 import static com.mountainminds.eclemma.core.CoverageTools.removeJavaCoverageListener;
-import static org.projectusus.core.internal.project.UsusProjectSupport.isUsusProject;
+import static org.projectusus.core.project.UsusProjectSupport.isUsusProject;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IJavaProject;

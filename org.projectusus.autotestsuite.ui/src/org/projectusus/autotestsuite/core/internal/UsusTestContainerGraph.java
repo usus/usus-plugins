@@ -9,7 +9,7 @@ import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
-import org.projectusus.core.internal.project.FindUsusProjects;
+import org.projectusus.core.project.FindUsusProjects;
 
 /**
  * test container graph over all projects selected for use with Usus.

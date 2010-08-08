@@ -28,8 +28,8 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
-import org.projectusus.core.internal.project.FindUsusProjects;
-import org.projectusus.core.internal.project.IUSUSProject;
+import org.projectusus.core.IUSUSProject;
+import org.projectusus.core.project.FindUsusProjects;
 
 public class CoveredProjectsView extends ViewPart {
 

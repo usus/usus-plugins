@@ -10,16 +10,16 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
-import org.projectusus.core.internal.proportions.rawdata.jdtdriver.ASTSupport;
-import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 public class FileRawData extends RawData<Integer, ClassRawData> {
 
@@ -77,11 +77,11 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
     }
 
     private ClassRawData getOrCreateClassRawData( MethodDeclaration node ) {
-        return getOrCreateClassRawData( ASTSupport.findEnclosingClass( node ) );
+        return getOrCreateClassRawData( findEnclosingClass( node ) );
     }
 
     private ClassRawData getOrCreateClassRawData( Initializer node ) {
-        return getOrCreateClassRawData( ASTSupport.findEnclosingClass( node ) );
+        return getOrCreateClassRawData( findEnclosingClass( node ) );
     }
 
     private ClassRawData getClassRawData( IJavaElement element ) {
@@ -139,5 +139,13 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
         if( classRawData == null ) {
             descriptor.removeFromPool();
         }
+    }
+
+    private static AbstractTypeDeclaration findEnclosingClass( ASTNode node ) {
+        ASTNode enclosingClass = node;
+        while( enclosingClass != null && !(enclosingClass instanceof AbstractTypeDeclaration) ) {
+            enclosingClass = enclosingClass.getParent();
+        }
+        return (AbstractTypeDeclaration)enclosingClass;
     }
 }

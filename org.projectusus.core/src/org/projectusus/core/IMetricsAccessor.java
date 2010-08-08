@@ -3,7 +3,6 @@ package org.projectusus.core;
 import java.util.Set;
 
 import org.projectusus.core.basis.GraphNode;
-import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 public interface IMetricsAccessor {
 

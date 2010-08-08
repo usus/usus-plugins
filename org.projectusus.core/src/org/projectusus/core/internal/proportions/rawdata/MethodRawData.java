@@ -4,10 +4,10 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
+import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.IRawData;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.statistics.IMetricsResultVisitor;
 
 public class MethodRawData implements IRawData {
 

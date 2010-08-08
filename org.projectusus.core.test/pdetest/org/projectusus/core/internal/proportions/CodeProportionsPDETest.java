@@ -11,6 +11,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.adapter.CodeProportionsComputerJob;
+import org.projectusus.core.IUsusModelForAdapter;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 

@@ -1,13 +1,15 @@
 package org.projectusus.core.filerelations.internal.metrics.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.projectusus.core.testutil.TestServiceManager.createDescriptor;
+import static org.mockito.Mockito.mock;
 
+import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.filerelations.internal.metrics.PackageCycleCalculator;
-import org.projectusus.core.filerelations.internal.model.PackageRelations;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.Classname;
+import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
@@ -26,7 +28,7 @@ public class PackageCycleCalculatorTest {
     private ClassDescriptor IV_A;
 
     @Before
-    public void cleanup() {
+    public void setup() {
         UsusModel.clear();
         I_A = createDescriptor( I );
         I_B = createDescriptor( I );
@@ -85,4 +87,9 @@ public class PackageCycleCalculatorTest {
         IV_A.addChild( III_A );
         assertEquals( 4, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
     }
+
+    private static ClassDescriptor createDescriptor( Packagename packagename ) {
+        return ClassDescriptor.of( mock( IFile.class ), new Classname( "classname1" ), packagename ); //$NON-NLS-1$
+    }
+
 }

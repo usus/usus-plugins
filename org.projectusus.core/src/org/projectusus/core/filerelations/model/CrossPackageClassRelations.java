@@ -1,8 +1,6 @@
-package org.projectusus.core.filerelations.internal.model;
+package org.projectusus.core.filerelations.model;
 
 import org.jgrapht.alg.StrongConnectivityInspector;
-import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.filerelations.model.Relation;
 
 public class CrossPackageClassRelations extends Relations<ClassDescriptor> {
 

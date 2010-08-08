@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.projectusus.core.UsusCorePlugin;
+import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.statistics.CockpitExtensionPref;
 import org.projectusus.core.statistics.RegisteredCockpitExtensionsCollector;
 
@@ -67,6 +69,8 @@ public class UsusPreferencePage extends PreferencePage implements IWorkbenchPref
     @Override
     public boolean performOk() {
         RegisteredCockpitExtensionsCollector.saveExtensionsStates( extensionsStates );
+        UsusCorePlugin.getDefault().savePreferences();
+        UsusModelProvider.ususModel().refreshCodeProportions();
         return super.performOk();
     }
 

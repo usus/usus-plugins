@@ -2,7 +2,9 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.project;
+package org.projectusus.bugprison.ui.internal;
+
+import org.projectusus.core.IUSUSProject;
 
 public class NullUsusProject implements IUSUSProject {
 
@@ -10,7 +12,7 @@ public class NullUsusProject implements IUSUSProject {
         return false;
     }
 
-    public void setUsusProject( @SuppressWarnings( "unused" ) boolean ususProject ) {
+    public void setUsusProject( boolean ususProject ) {
         // can't make this project an usus project
     }
 

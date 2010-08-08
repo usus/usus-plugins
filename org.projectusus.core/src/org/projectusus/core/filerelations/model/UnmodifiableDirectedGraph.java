@@ -1,4 +1,4 @@
-package org.projectusus.core.filerelations.internal.model;
+package org.projectusus.core.filerelations.model;
 
 import static com.google.common.collect.Sets.union;
 

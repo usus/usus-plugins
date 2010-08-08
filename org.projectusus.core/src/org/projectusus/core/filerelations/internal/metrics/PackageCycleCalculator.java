@@ -1,10 +1,10 @@
 package org.projectusus.core.filerelations.internal.metrics;
 
 import org.jgrapht.alg.CycleDetector;
-import org.projectusus.core.filerelations.internal.model.PackageRelations;
-import org.projectusus.core.filerelations.internal.model.RelationGraph;
+import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.filerelations.model.Relation;
+import org.projectusus.core.filerelations.model.RelationGraph;
 
 public class PackageCycleCalculator {
 

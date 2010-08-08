@@ -1,4 +1,4 @@
-package org.projectusus.core.filerelations.internal.model;
+package org.projectusus.core.filerelations.model;
 
 import static java.util.Collections.singleton;
 
@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jgrapht.EdgeFactory;
-import org.projectusus.core.filerelations.model.Relation;
 
 public class RelationGraph<T> extends UnmodifiableDirectedGraph<T, Relation<T>> {
 

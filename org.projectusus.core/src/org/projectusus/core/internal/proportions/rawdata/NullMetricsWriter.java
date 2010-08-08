@@ -4,8 +4,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.projectusus.core.IMetricsWriter;
 import org.projectusus.core.filerelations.model.BoundType;
-import org.projectusus.core.internal.proportions.IMetricsWriter;
 
 @SuppressWarnings( "unused" )
 public class NullMetricsWriter implements IMetricsWriter {
