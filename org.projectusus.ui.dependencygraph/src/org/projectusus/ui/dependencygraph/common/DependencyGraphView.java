@@ -26,20 +26,18 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
-import org.eclipse.ui.part.IShowInTarget;
-import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.internal.proportions.rawdata.UsusModel;
+import org.projectusus.ui.dependencygraph.filters.HideNodesFilter;
 import org.projectusus.ui.dependencygraph.filters.IFilterLimitProvider;
 import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
 import org.projectusus.ui.dependencygraph.filters.NodeFilter;
-import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
 import org.projectusus.ui.util.EditorOpener;
 
-public abstract class DependencyGraphView extends ViewPart implements IFilterLimitProvider, IShowInTarget {
+public abstract class DependencyGraphView extends ViewPart implements IFilterLimitProvider {
 
     private static final String LAYOUT_LABEL = "Layout:";
     private static final String SCALE_TOOLTIP_TEXT = "Change the number of visible nodes by moving the slider";
@@ -52,6 +50,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     private ViewerFilter customFilter;
     private final WorkbenchContext customFilterContext;
     private DependencyGraphSelectionListener selectionListener;
+    private final HideNodesFilter hideNodesFilter = new HideNodesFilter();
 
     public DependencyGraphView( DependencyGraphModel model ) {
         super();
@@ -170,7 +169,8 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         graphViewer.setConnectionStyle( ZestStyles.CONNECTIONS_DIRECTED );
         graphViewer.setContentProvider( new NodeContentProvider() );
         graphViewer.setLabelProvider( new NodeLabelProvider() );
-        graphViewer.setFilters( new ViewerFilter[] { new LimitNodeFilter( this ) } );
+        LimitNodeFilter limitNodeFilter = new LimitNodeFilter( this );
+        graphViewer.setFilters( new ViewerFilter[] { limitNodeFilter, hideNodesFilter } );
         graphViewer.addDoubleClickListener( new IDoubleClickListener() {
             public void doubleClick( DoubleClickEvent event ) {
                 ISelection selection = graphViewer.getSelection();
@@ -199,10 +199,12 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
 
     public synchronized void clearCustomFilter() {
         if( customFilter != null ) {
-            customFilterContext.deactivate();
             graphViewer.removeFilter( customFilter );
             customFilter = null;
             setContentDescription( "" );
+        }
+        if( customFilterContext.isActivated() ) {
+            customFilterContext.deactivate();
         }
     }
 
@@ -225,6 +227,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         } else {
             graphViewer.refresh();
         }
+        graphViewer.fireSelectionChanged();
     }
 
     private void drawGraphUnconditionally() {
@@ -280,17 +283,24 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         return maxFilterValue;
     }
 
-    public boolean show( ShowInContext context ) {
-        PackagenameNodeFilter filter = PackagenameNodeFilter.from( context.getSelection() );
-        if( filter.isEmpty() ) {
-            return false;
-        }
-        setCustomFilter( filter );
-        return true;
-    }
-
     private void extendSelectionBehavior() {
         selectionListener = new DependencyGraphSelectionListener( graphViewer );
         graphViewer.getGraphControl().addSelectionListener( selectionListener );
+    }
+
+    public void hideSelectedNodes() {
+        Set<GraphNode> selectedNodes = graphViewer.getSelectedNodes();
+        if( !selectedNodes.isEmpty() ) {
+            hideNodesFilter.addNodesToHide( selectedNodes );
+            drawGraphConditionally();
+        }
+        if( customFilterContext.isDeactivated() ) {
+            customFilterContext.activate();
+        }
+    }
+
+    public void resetHiddenNodes() {
+        hideNodesFilter.reset();
+        drawGraphConditionally();
     }
 }

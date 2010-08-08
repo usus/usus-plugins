@@ -1,13 +1,17 @@
 package org.projectusus.ui.dependencygraph.common;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.zest.core.viewers.GraphViewer;
+import org.eclipse.zest.core.widgets.GraphItem;
+import org.projectusus.core.basis.GraphNode;
 
 class DependencyGraphViewer extends GraphViewer {
 
@@ -37,4 +41,15 @@ class DependencyGraphViewer extends GraphViewer {
         }
     }
 
+    public Set<GraphNode> getSelectedNodes() {
+        @SuppressWarnings( "unchecked" )
+        List<GraphItem> selection = getGraphControl().getSelection();
+        Set<GraphNode> result = new HashSet<GraphNode>();
+        for( GraphItem graphItem : selection ) {
+            if( graphItem instanceof org.eclipse.zest.core.widgets.GraphNode ) {
+                result.add( (GraphNode)graphItem.getData() );
+            }
+        }
+        return result;
+    }
 }

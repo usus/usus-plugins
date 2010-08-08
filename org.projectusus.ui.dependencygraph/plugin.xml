@@ -75,70 +75,60 @@
             class="org.projectusus.ui.dependencygraph.handlers.ClearCustomFilter"
             commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter">
          <activeWhen>
-         	<and>
-                <with
-                  	variable="activePartId">
-               		<equals
-                    	value="org.projectusus.ui.dependencygraph.ClassGraphView">
-               		</equals>
-            	</with>
-                <with
-                  	variable="activeContexts">
-                  	<iterate ifEmpty="false" operator="or">
-	               		<equals
-	                    	value="org.projectusus.ui.dependencygraph.ClassGraphView.context.customFilter">
-	               		</equals>
-               		</iterate>
-            	</with>
-            </and>
-         </activeWhen>
-      </handler>
-      <handler
-            class="org.projectusus.ui.dependencygraph.handlers.ClearCustomFilter"
-            commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter">
-         <activeWhen>
-            <and>
-               <with
-                     variable="activePartId">
-                  <equals
-                        value="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView">
-                  </equals>
-               </with>
-               <with
-                     variable="activeContexts">
-                  <iterate
-                        ifEmpty="false"
-                        operator="or">
-                     <equals
-                           value="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView.context.customFilter">
-                     </equals>
-                  </iterate>
-               </with>
-            </and>
-         </activeWhen>
-      </handler>
-      <handler
-            class="org.projectusus.ui.dependencygraph.handlers.ClearCustomFilter"
-            commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter">
-         <activeWhen>
-            <and>
-               <with
-                     variable="activePartId">
-                  <equals
-                        value="org.projectusus.ui.dependencygraph.PackageGraphView">
-                  </equals>
-               </with>
-               <with
-                     variable="activeContexts">
-                  <iterate
-                        ifEmpty="false"
-                        operator="or">
-                     <equals
-                           value="org.projectusus.ui.dependencygraph.PackageGraphView.context.customFilter">
-                     </equals>
-                  </iterate>
-               </with>
-            </and>
+                <or>
+                   <and>
+                      <with
+                            variable="activePartId">
+                         <equals
+                               value="org.projectusus.ui.dependencygraph.ClassGraphView">
+                         </equals>
+                      </with>
+                      <with
+                            variable="activeContexts">
+                         <iterate
+                               ifEmpty="false"
+                               operator="or">
+                            <equals
+                                  value="org.projectusus.ui.dependencygraph.ClassGraphView.context.customFilter">
+                            </equals>
+                         </iterate>
+                      </with>
+                   </and>
+                   <and>
+                      <with
+                            variable="activePartId">
+                         <equals
+                               value="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView">
+                         </equals>
+                      </with>
+                      <with
+                            variable="activeContexts">
+                         <iterate
+                               ifEmpty="false"
+                               operator="or">
+                            <equals
+                                  value="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView.context.customFilter">
+                            </equals>
+                         </iterate>
+                      </with></and>
+                   <and>
+                      <with
+                            variable="activePartId">
+                         <equals
+                               value="org.projectusus.ui.dependencygraph.PackageGraphView">
+                         </equals>
+                      </with>
+                      <with
+                            variable="activeContexts">
+                         <iterate
+                               ifEmpty="false"
+                               operator="or">
+                            <equals
+                                  value="org.projectusus.ui.dependencygraph.PackageGraphView.context.customFilter">
+                            </equals>
+                         </iterate>
+                      </with></and>
+                </or>
          </activeWhen>
       </handler>
       <handler
@@ -181,6 +171,22 @@
             </with>
          </activeWhen>
       </handler>
+      <handler
+            class="org.projectusus.ui.dependencygraph.handlers.HideSelectedNodes"
+            commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <instanceof
+                        value="org.projectusus.core.basis.GraphNode">
+                  </instanceof>
+               </iterate>
+            </with>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -203,6 +209,11 @@
             id="org.projectusus.ui.dependencygraph.command.RefreshGraphView"
             name="Refresh">
       </command>
+      <command
+            description="Hides the selected nodes in the graph"
+            id="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
+            name="Hide Selected Nodes">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -211,6 +222,10 @@
             locationURI="toolbar:org.projectusus.ui.dependencygraph.ClassGraphView">
          <command
                commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter"
+               style="push">
+         </command>
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
                style="push">
          </command>
          <command
@@ -223,6 +238,10 @@
             locationURI="toolbar:org.projectusus.ui.dependencygraph.CrossPackageClassGraphView">
          <command
                commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter"
+               style="push">
+         </command>
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
                style="push">
          </command>
          <command
@@ -258,11 +277,15 @@
                visible="true">
          </separator>
          <command
+               commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView"
+               style="push">
+         </command>
+         <command
                commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter"
                style="push">
          </command>
          <command
-               commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView"
+               commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
                style="push">
          </command>
       </menuContribution>
@@ -276,6 +299,10 @@
       <image
             commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView"
             icon="icons/refresh.gif">
+      </image>
+      <image
+            commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
+            icon="icons/hide-node.gif">
       </image>
    </extension>
    <extension

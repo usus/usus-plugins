@@ -11,6 +11,7 @@ public class ClearCustomFilter extends AbstractHandler {
     public Object execute( ExecutionEvent event ) throws ExecutionException {
         DependencyGraphView view = (DependencyGraphView)HandlerUtil.getActivePart( event );
         view.clearCustomFilter();
+        view.resetHiddenNodes();
         return null;
     }
 }
