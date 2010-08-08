@@ -14,9 +14,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.projectusus.core.IUsusModelForAdapter;
 import org.projectusus.core.UsusModelProvider;
-import org.projectusus.core.basis.FileSupport;
 import org.projectusus.core.basis.YellowCountCache;
 import org.projectusus.core.proportions.rawdata.jdtdriver.JavaFileDriver;
+import org.projectusus.core.util.FileSupport;
 
 public class JDTDriver {
 

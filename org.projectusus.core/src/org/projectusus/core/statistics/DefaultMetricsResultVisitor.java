@@ -53,7 +53,7 @@ public abstract class DefaultMetricsResultVisitor implements IMetricsResultVisit
     }
 
     public void visit() {
-        UsusModelProvider.getMetricsAccessor().acceptAndGuide( this );
+        UsusModelProvider.acceptAndGuide( this );
     }
 
     public String getLabel() {

@@ -4,7 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.bugprison.ui.internal;
 
-import org.projectusus.core.IUSUSProject;
+import org.projectusus.core.project2.IUSUSProject;
 
 public class NullUsusProject implements IUSUSProject {
 

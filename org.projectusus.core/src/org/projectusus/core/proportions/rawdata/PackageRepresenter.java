@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.proportions.rawdata;
 
 import java.util.Collection;
 import java.util.HashSet;

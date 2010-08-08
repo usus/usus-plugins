@@ -26,7 +26,7 @@ import org.eclipse.ui.PlatformUI;
 import org.projectusus.bugprison.core.Bug;
 import org.projectusus.bugprison.core.IBuggyProject;
 import org.projectusus.bugprison.core.NullBuggyProject;
-import org.projectusus.core.IUSUSProject;
+import org.projectusus.core.project2.IUSUSProject;
 import org.projectusus.core.statistics.visitors.MethodCountVisitor;
 import org.projectusus.core.statistics.visitors.MethodVisitor;
 import org.projectusus.ui.internal.UsusUIPlugin;

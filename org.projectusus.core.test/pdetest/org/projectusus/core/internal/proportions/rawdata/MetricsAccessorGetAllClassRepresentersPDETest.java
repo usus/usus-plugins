@@ -7,20 +7,21 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
+import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.basis.GraphNode;
 
 public class MetricsAccessorGetAllClassRepresentersPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void emptyProject() throws Exception {
-        Set<GraphNode> representers = UsusModel.ususModel().getMetricsAccessor().getAllClassRepresenters();
+        Set<GraphNode> representers = UsusModelProvider.getAllClassRepresenters();
         assertEquals( 0, representers.size() );
     }
 
     @Test
     public void oneClassInOneFile() throws Exception {
         createFileAndBuild( "_1" );
-        Set<GraphNode> representers = UsusModel.ususModel().getMetricsAccessor().getAllClassRepresenters();
+        Set<GraphNode> representers = UsusModelProvider.getAllClassRepresenters();
         assertEquals( 1, representers.size() );
         GraphNode node = representers.iterator().next();
         assertEquals( 0, node.getChildren().size() );
@@ -29,7 +30,7 @@ public class MetricsAccessorGetAllClassRepresentersPDETest extends PDETestForMet
     @Test
     public void twoClassesInOneFileKnowEachOther() throws Exception {
         createFileAndBuild( "_twoKnowEachOther" );
-        Set<GraphNode> representers = UsusModel.ususModel().getMetricsAccessor().getAllClassRepresenters();
+        Set<GraphNode> representers = UsusModelProvider.getAllClassRepresenters();
         assertEquals( 2, representers.size() );
         GraphNode node = representers.iterator().next();
         checkName( node, "Acd2", "Acd2Helper" );
@@ -50,7 +51,7 @@ public class MetricsAccessorGetAllClassRepresentersPDETest extends PDETestForMet
         IFile file = createFileAndBuild( "_twoKnowEachOther" );
         updateFileContent( file, loadContent( "MetricsAccessor_oneKnowsTheOther.test" ) );
         buildFullyAndWait();
-        Set<GraphNode> representers = UsusModel.ususModel().getMetricsAccessor().getAllClassRepresenters();
+        Set<GraphNode> representers = UsusModelProvider.getAllClassRepresenters();
         assertEquals( 2, representers.size() );
         GraphNode node = representers.iterator().next();
         checkName( node, "Acd2", "Acd2Helper" );
@@ -65,7 +66,7 @@ public class MetricsAccessorGetAllClassRepresentersPDETest extends PDETestForMet
         createFileAndBuild( "_file1Knows2" );
         IFile file = createFileAndBuild( "_file2Knows1" );
 
-        Set<GraphNode> representers = UsusModel.ususModel().getMetricsAccessor().getAllClassRepresenters();
+        Set<GraphNode> representers = UsusModelProvider.getAllClassRepresenters();
         assertEquals( 2, representers.size() );
         GraphNode node = representers.iterator().next();
         assertEquals( 1, node.getChildren().size() );
@@ -75,7 +76,7 @@ public class MetricsAccessorGetAllClassRepresentersPDETest extends PDETestForMet
         updateFileContent( file, loadContent( "MetricsAccessor_file2Knows1Not.test" ) );
         buildFullyAndWait();
 
-        representers = UsusModel.ususModel().getMetricsAccessor().getAllClassRepresenters();
+        representers = UsusModelProvider.getAllClassRepresenters();
         assertEquals( 2, representers.size() );
         node = representers.iterator().next();
         checkName( node, "MetricsAccessor_file1Knows2", "MetricsAccessor_file2Knows1" );

@@ -16,9 +16,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Test;
-import org.projectusus.core.IUSUSProject;
 import org.projectusus.core.internal.PDETestUsingWSProject;
 import org.projectusus.core.project.FindUsusProjects;
+import org.projectusus.core.project2.IUSUSProject;
 
 public class FindUsusProjectsPDETest extends PDETestUsingWSProject {
 

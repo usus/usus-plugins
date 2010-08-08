@@ -1,7 +1,6 @@
 package org.projectusus.ui.dependencygraph.common;
 
 import static java.util.Arrays.sort;
-import static org.projectusus.core.internal.proportions.rawdata.UsusModel.ususModel;
 
 import java.util.Set;
 
@@ -29,8 +28,8 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.basis.GraphNode;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 import org.projectusus.ui.dependencygraph.filters.HideNodesFilter;
 import org.projectusus.ui.dependencygraph.filters.IFilterLimitProvider;
 import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
@@ -253,7 +252,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
 
     @Override
     public void dispose() {
-        UsusModel.ususModel().removeUsusModelListener( listener );
+        UsusModelProvider.ususModel().removeUsusModelListener( listener );
         graphViewer.getGraphControl().removeSelectionListener( selectionListener );
         super.dispose();
     }
@@ -269,7 +268,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
                 } );
             }
         };
-        ususModel().addUsusModelListener( listener );
+        UsusModelProvider.ususModel().addUsusModelListener( listener );
     }
 
     private void updateSpinnerAndFilter() {

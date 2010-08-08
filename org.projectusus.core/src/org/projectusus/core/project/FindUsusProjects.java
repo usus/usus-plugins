@@ -6,7 +6,7 @@ package org.projectusus.core.project;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.projectusus.core.project.UsusProjectSupport.isUsusProject;
+import static org.projectusus.core.project2.UsusProjectSupport.isUsusProject;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,20 +7,21 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
+import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.basis.GraphNode;
 
 public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsComputation {
 
     @Test
     public void emptyProject() throws Exception {
-        Set<GraphNode> representers = UsusModel.ususModel().getMetricsAccessor().getAllCrossPackageClasses();
+        Set<GraphNode> representers = UsusModelProvider.getAllCrossPackageClasses();
         assertEquals( 0, representers.size() );
     }
 
     @Test
     public void oneClassInOneFile() throws Exception {
         createFileAndBuild( "_1" );
-        Set<GraphNode> representers = UsusModel.ususModel().getMetricsAccessor().getAllCrossPackageClasses();
+        Set<GraphNode> representers = UsusModelProvider.getAllCrossPackageClasses();
         assertEquals( 0, representers.size() );
     }
 
@@ -37,7 +38,7 @@ public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsC
 
         checkTwoNodesWithOneChildEach();
 
-        Set<GraphNode> representers = UsusModel.ususModel().getMetricsAccessor().getAllCrossPackageClasses();
+        Set<GraphNode> representers = UsusModelProvider.getAllCrossPackageClasses();
         assertEquals( 0, representers.size() );
     }
 
@@ -52,12 +53,12 @@ public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsC
 
         checkTwoNodesWithOneChildEach();
 
-        Set<GraphNode> representers = UsusModel.ususModel().getMetricsAccessor().getAllCrossPackageClasses();
+        Set<GraphNode> representers = UsusModelProvider.getAllCrossPackageClasses();
         assertEquals( 2, representers.size() );
     }
 
     private void checkTwoNodesWithOneChildEach() {
-        Set<GraphNode> allRepresenters = UsusModel.ususModel().getMetricsAccessor().getAllClassRepresenters();
+        Set<GraphNode> allRepresenters = UsusModelProvider.getAllClassRepresenters();
         assertEquals( 2, allRepresenters.size() );
         GraphNode node = allRepresenters.iterator().next();
         assertEquals( 1, node.getChildren().size() );
@@ -69,7 +70,7 @@ public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsC
         createFileAndBuild( "_file1Knows2" );
         IFile file = createFileAndBuild( "_file2Knows1" );
 
-        Set<GraphNode> representers = UsusModel.ususModel().getMetricsAccessor().getAllCrossPackageClasses();
+        Set<GraphNode> representers = UsusModelProvider.getAllCrossPackageClasses();
         assertEquals( 2, representers.size() );
         GraphNode node = representers.iterator().next();
         assertEquals( 1, node.getChildren().size() );
@@ -79,7 +80,7 @@ public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsC
         updateFileContent( file, loadContent( "MetricsAccessor_file2Knows1Not.test" ) );
         buildFullyAndWait();
 
-        representers = UsusModel.ususModel().getMetricsAccessor().getAllCrossPackageClasses();
+        representers = UsusModelProvider.getAllCrossPackageClasses();
         assertEquals( 2, representers.size() );
         node = representers.iterator().next();
         checkName( node, "MetricsAccessor_file1Knows2", "MetricsAccessor_file2Knows1" );

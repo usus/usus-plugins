@@ -1,4 +1,4 @@
-package org.projectusus.core.basis;
+package org.projectusus.core.util;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.JavaCore;

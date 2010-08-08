@@ -8,8 +8,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
-import org.projectusus.core.IUSUSProject;
 import org.projectusus.core.UsusCorePlugin;
+import org.projectusus.core.project2.IUSUSProject;
 
 class UsusProject implements IUSUSProject {
 

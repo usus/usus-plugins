@@ -14,7 +14,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SafeRunner;
-import org.projectusus.core.IMetricsAccessor;
+import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.IMetricsWriter;
 import org.projectusus.core.IUsusModel;
 import org.projectusus.core.IUsusModelForAdapter;
@@ -86,8 +86,8 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
         metrics.dropRawData( file );
     }
 
-    public IMetricsAccessor getMetricsAccessor() {
-        return metrics;
+    public void acceptAndGuide( IMetricsResultVisitor visitor ) {
+        metrics.acceptAndGuide( visitor );
     }
 
     public IMetricsWriter getMetricsWriter() {

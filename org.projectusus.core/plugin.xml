@@ -12,7 +12,7 @@
        <factory
              adaptableType="org.eclipse.core.resources.IProject"
              class="org.projectusus.core.project.UsusProjectFactory">
-          <adapter type="org.projectusus.core.IUSUSProject" />
+          <adapter type="org.projectusus.core.project2.IUSUSProject" />
        </factory>
     </extension>
 </plugin>

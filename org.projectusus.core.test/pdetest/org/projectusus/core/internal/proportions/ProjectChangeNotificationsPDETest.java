@@ -16,8 +16,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.After;
 import org.junit.Test;
 import org.projectusus.adapter.ICodeProportionComputationTarget;
-import org.projectusus.core.IUSUSProject;
 import org.projectusus.core.internal.PDETestUsingWSProject;
+import org.projectusus.core.project2.IUSUSProject;
 
 public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
 

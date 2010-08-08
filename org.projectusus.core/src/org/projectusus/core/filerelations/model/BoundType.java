@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
-import org.projectusus.core.IUSUSProject;
+import org.projectusus.core.project2.UsusProjectSupport;
 
 public class BoundType {
 
@@ -67,11 +67,8 @@ public class BoundType {
         if( underlyingResource == null || !underlyingResource.getFileExtension().equals( JAVA ) ) {
             return true;
         }
-        IUSUSProject adapter = (IUSUSProject)underlyingResource.getProject().getAdapter( IUSUSProject.class );
-        if( adapter == null || !adapter.isUsusProject() ) {
-            return true;
-        }
-        return false;
+
+        return !UsusProjectSupport.isUsusProject( underlyingResource.getProject() );
     }
 
     private static IFile determineUnderlyingResource( ITypeBinding binding ) {

@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.filerelations.model.BoundType;
 
 public class ACDCollector extends Collector {
@@ -57,7 +58,7 @@ public class ACDCollector extends Collector {
     public boolean visit( SimpleType node ) {
         BoundType targetType = BoundType.of( node );
         if( currentType != null && targetType != null ) {
-            getMetricsWriter().addClassReference( currentType, targetType );
+            UsusModelProvider.addClassReference( currentType, targetType );
         }
         return true;
     }
@@ -90,7 +91,7 @@ public class ACDCollector extends Collector {
     private void visitMethodWithoutTargetExpression( MethodInvocation node ) {
         BoundType declaringType = BoundType.of( node );
         if( currentType != null && declaringType != null && !currentType.equals( declaringType ) ) {
-            getMetricsWriter().addClassReference( currentType, declaringType );
+            UsusModelProvider.addClassReference( currentType, declaringType );
         }
         // if( declaringType == null ) {
         // System.out.println( "Declaring type of invocation " + node.toString() + " in class " + currentType.getClassname() + " is null" );
@@ -102,7 +103,7 @@ public class ACDCollector extends Collector {
             BoundType targetType = BoundType.of( (SimpleName)targetExpression );
             if( currentType != null && targetType != null ) {
                 // we found a static method invocation
-                getMetricsWriter().addClassReference( currentType, targetType );
+                UsusModelProvider.addClassReference( currentType, targetType );
             }
         }
     }

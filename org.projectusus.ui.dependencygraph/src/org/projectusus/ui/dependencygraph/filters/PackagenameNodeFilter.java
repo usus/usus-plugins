@@ -11,7 +11,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.zest.core.viewers.EntityConnectionData;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.internal.proportions.rawdata.PackageRepresenter;
+import org.projectusus.core.proportions.rawdata.PackageRepresenter;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;

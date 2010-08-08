@@ -6,7 +6,7 @@ package org.projectusus.core.project;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IAdapterFactory;
-import org.projectusus.core.IUSUSProject;
+import org.projectusus.core.project2.IUSUSProject;
 
 public class UsusProjectFactory implements IAdapterFactory {
 

@@ -9,7 +9,7 @@ import static org.eclipse.core.resources.IResourceDelta.CHANGED;
 import static org.eclipse.core.resources.IResourceDelta.MARKERS;
 import static org.eclipse.core.resources.IResourceDelta.REMOVED;
 import static org.projectusus.adapter.TracingOption.RESOURCE_CHANGES;
-import static org.projectusus.core.project.UsusProjectSupport.isUsusProject;
+import static org.projectusus.core.project2.UsusProjectSupport.isUsusProject;
 
 import java.util.ArrayList;
 import java.util.List;

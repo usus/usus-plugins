@@ -21,7 +21,7 @@ import org.eclipse.zest.core.viewers.EntityConnectionData;
 import org.eclipse.zest.core.viewers.IEntityConnectionStyleProvider;
 import org.eclipse.zest.core.viewers.IEntityStyleProvider;
 import org.projectusus.core.basis.GraphNode;
-import org.projectusus.core.internal.proportions.rawdata.ClassRepresenter;
+import org.projectusus.core.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.util.Defect;
 import org.projectusus.ui.colors.UsusColors;
 

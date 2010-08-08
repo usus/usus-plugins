@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.junit.Test;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.internal.proportions.rawdata.ClassRepresenter;
+import org.projectusus.core.proportions.rawdata.ClassRepresenter;
 
 public class ClassRepresenterTest {
 
