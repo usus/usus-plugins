@@ -221,13 +221,17 @@
             allPopups="false"
             locationURI="toolbar:org.projectusus.ui.dependencygraph.ClassGraphView">
          <command
-               commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter"
-               style="push">
-         </command>
-         <command
                commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
                style="push">
          </command>
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter"
+               style="push">
+         </command>
+         <separator
+               name="org.projectusus.ui.dependencygraph.ClassGraphView.toolbar.separator"
+               visible="true">
+         </separator>
          <command
                commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView"
                style="push">
@@ -237,13 +241,17 @@
             allPopups="false"
             locationURI="toolbar:org.projectusus.ui.dependencygraph.CrossPackageClassGraphView">
          <command
-               commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter"
-               style="push">
-         </command>
-         <command
                commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
                style="push">
          </command>
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter"
+               style="push">
+         </command>
+         <separator
+               name="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView.toolbar.separator"
+               visible="true">
+         </separator>
          <command
                commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView"
                style="push">
@@ -273,19 +281,23 @@
             </parameter>
          </command>
          <separator
-               name="org.projectusus.ui.dependencygraph.PackageGraphView.toolbar.separator"
+               name="org.projectusus.ui.dependencygraph.PackageGraphView.toolbar.separator1"
                visible="true">
          </separator>
          <command
-               commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView"
+               commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
                style="push">
          </command>
          <command
                commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter"
                style="push">
          </command>
+         <separator
+               name="org.projectusus.ui.dependencygraph.PackageGraphView.toolbar.separator2"
+               visible="true">
+         </separator>
          <command
-               commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
+               commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView"
                style="push">
          </command>
       </menuContribution>

@@ -191,6 +191,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         graphViewer.addFilter( customFilter );
         setContentDescription( customFilter.getDescription() );
         customFilterContext.activate();
+        drawGraphUnconditionally();
     }
 
     protected String getCustomFilterContextId() {
@@ -203,9 +204,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
             customFilter = null;
             setContentDescription( "" );
         }
-        if( customFilterContext.isActivated() ) {
-            customFilterContext.deactivate();
-        }
+        customFilterContext.deactivate();
     }
 
     private void setLayout( GraphLayouts layout ) {
@@ -294,9 +293,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
             hideNodesFilter.addNodesToHide( selectedNodes );
             drawGraphConditionally();
         }
-        if( customFilterContext.isDeactivated() ) {
-            customFilterContext.activate();
-        }
+        customFilterContext.activate();
     }
 
     public void resetHiddenNodes() {
