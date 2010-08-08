@@ -16,9 +16,9 @@
    version="1.1"
    inkscape:version="0.47 r22583"
    sodipodi:docname="usus-mit-text.svg"
-   inkscape:export-filename="/Users/marc/Desktop/usus-mit-text-400.png"
-   inkscape:export-xdpi="55.810001"
-   inkscape:export-ydpi="55.810001">
+   inkscape:export-filename="/Users/marc/Desktop/usus-mit-text-500.png"
+   inkscape:export-xdpi="69.769997"
+   inkscape:export-ydpi="69.769997">
   <defs
      id="defs4">
     <linearGradient
@@ -55,7 +55,7 @@
        x2="188.85938"
        y2="353.15219"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(4.1755277,0,0,4.1755277,-644.10569,-1239.1923)" />
+       gradientTransform="matrix(2.0053566,0,0,2.0053566,155.32674,-488.96352)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3632"
@@ -99,6 +99,16 @@
            in="SourceGraphic" />
       </feMerge>
     </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3632"
+       id="linearGradient2841"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(2.0053566,0,0,2.0053566,155.32674,-488.96352)"
+       x1="188.85938"
+       y1="317.625"
+       x2="188.85938"
+       y2="353.15219" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -108,8 +118,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.99707538"
-     inkscape:cx="322.5"
-     inkscape:cy="111"
+     inkscape:cx="511.15718"
+     inkscape:cy="90.164353"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -118,7 +128,7 @@
      inkscape:window-height="1032"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -137,24 +147,40 @@
      id="layer1"
      transform="translate(-54.936364,-49.859429)">
     <g
-       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
-       id="text2816"
-       transform="matrix(4.1755277,0,0,4.1755277,-644.10569,-1239.1923)" />
-    <path
-       style="fill:url(#linearGradient3638);fill-opacity:1;stroke:none;filter:url(#filter4312)"
-       d="m 85.045831,87.0597 0,5.871836 c 1.359218,0.108856 3.098994,0.293665 5.21941,0.782911 2.120375,0.435048 3.86015,1.065762 5.21941,1.826794 1.902871,1.087516 3.186011,2.348817 3.784072,3.653586 0.652551,1.250573 1.043837,2.794683 1.043877,4.697473 l 0,68.37426 c -4e-5,4.34952 0.89165,8.63382 2.74019,12.65707 1.84851,3.96896 4.57784,7.47031 8.22057,10.5693 3.69706,3.09904 8.26404,5.513 13.70095,7.30718 5.43683,1.8485 11.56964,2.74019 18.52891,2.74019 4.34944,0 8.97078,-0.65243 13.70095,-1.95728 4.7844,-1.25049 9.27522,-3.32735 13.57046,-6.26329 4.3494,-3.04463 7.90515,-6.88307 10.5693,-11.61319 2.66399,-4.73004 3.91448,-10.28658 3.91456,-16.70211 l 0,-50.3673 c -8e-5,-5.65429 0.46745,-10.43874 1.17437,-14.35338 0.70667,-3.91447 1.9354,-6.448057 3.78407,-7.698627 1.84842,-1.195997 4.24067,-2.142046 7.17669,-2.740191 2.93577,-0.597852 5.13231,-0.859114 6.65475,-0.913396 l 0,-5.871836 -47.23566,0 0,5.871836 c 1.73969,0.108856 4.17544,0.543821 7.43766,1.304852 3.31641,0.761282 5.92612,1.772553 7.82911,3.131646 1.68533,1.196205 3.04455,3.708036 3.91456,7.568146 0.8698,3.80591 1.30477,8.70998 1.30485,14.74483 l 0,47.49663 c -8e-5,3.26217 -0.51117,6.44818 -1.43534,9.65591 -0.92437,3.20776 -2.46844,6.32855 -4.69746,9.26445 -2.33797,3.09903 -5.57834,5.53474 -9.65591,7.43766 -4.02337,1.90291 -9.02532,2.87067 -15.0058,2.87067 -6.36121,0 -11.36316,-0.96776 -15.0058,-2.87067 -3.64278,-1.90292 -6.4917,-4.31687 -8.61203,-7.30718 -2.01168,-2.93589 -3.46878,-6.02403 -4.17553,-9.39493 -0.65251,-3.42523 -0.91344,-6.68736 -0.91339,-9.7864 l 0,-63.93777 c -5e-5,-1.79405 0.31529,-3.435995 0.91339,-4.958435 0.65239,-1.52223 1.93549,-2.609579 3.78408,-3.262131 1.08734,-0.380474 2.67488,-0.869762 4.95843,-1.304852 2.3378,-0.435006 4.34944,-0.598144 5.87184,-0.652426 l 0,-5.871836 -48.279539,0 z m -0.26097,140.5326 0,7.30718 119.393989,0 0,-7.30718 -119.393989,0 z"
-       id="rect2826" />
-    <text
-       xml:space="preserve"
-       style="font-size:80.17943573px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:start;fill:#b3b3b3;fill-opacity:1;stroke:none;font-family:Georgia;-inkscape-font-specification:Georgia"
-       x="231.69576"
-       y="205.33958"
-       id="text2846"
-       sodipodi:linespacing="110%"><tspan
-         sodipodi:role="line"
-         x="231.69576"
-         y="205.33958"
-         id="tspan2850"
-         style="fill:#b3b3b3;fill-opacity:1">Project Usus</tspan></text>
+       id="g2833"
+       transform="matrix(1.3422057,0,0,1.3422057,-231.07806,-75.610553)">
+      <g
+         transform="matrix(4.1755277,0,0,4.1755277,-644.10569,-1239.1923)"
+         id="text2816"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;font-family:Andale Mono;-inkscape-font-specification:Andale Mono" />
+      <path
+         id="rect2826"
+         d="m 505.51214,147.98789 0,2.82003 c 0.65279,0.0523 1.48833,0.14104 2.5067,0.37601 1.01834,0.20894 1.85389,0.51184 2.50669,0.87734 0.91388,0.5223 1.53013,1.12805 1.81736,1.75469 0.31339,0.6006 0.50131,1.34218 0.50133,2.25603 l 0,32.83771 c -2e-5,2.08892 0.42823,4.14651 1.31602,6.07874 0.88777,1.90615 2.19857,3.58772 3.94805,5.07605 1.77556,1.48836 3.96892,2.6477 6.58007,3.50938 2.61112,0.88777 5.55649,1.31602 8.89877,1.31602 2.08889,0 4.30835,-0.31334 6.58008,-0.94002 2.29778,-0.60056 4.45456,-1.598 6.51741,-3.00803 2.08886,-1.46223 3.79656,-3.30569 5.07605,-5.5774 1.27942,-2.27167 1.87999,-4.94028 1.88003,-8.02143 l 0,-24.18961 c -4e-5,-2.71555 0.2245,-5.01335 0.56401,-6.89341 0.33938,-1.87998 0.9295,-3.09678 1.81735,-3.69738 0.88773,-0.57439 2.03664,-1.02875 3.44671,-1.31602 1.40994,-0.28712 2.46486,-0.4126 3.19604,-0.43867 l 0,-2.82003 -22.6856,0 0,2.82003 c 0.83551,0.0523 2.00531,0.26118 3.57204,0.62668 1.59275,0.36561 2.8461,0.85129 3.76004,1.50401 0.8094,0.5745 1.46219,1.78084 1.88002,3.63471 0.41774,1.82785 0.62664,4.1831 0.62668,7.08142 l 0,22.81093 c -4e-5,1.56671 -0.2455,3.09683 -0.68935,4.63739 -0.44394,1.54057 -1.1855,3.03938 -2.25602,4.44938 -1.12284,1.48836 -2.67908,2.65814 -4.63739,3.57205 -1.93228,0.9139 -4.33453,1.37868 -7.20675,1.37868 -3.05506,0 -5.45732,-0.46478 -7.20674,-1.37868 -1.7495,-0.91391 -3.11774,-2.07324 -4.13605,-3.50938 -0.96614,-1.41 -1.66594,-2.89313 -2.00536,-4.51205 -0.31338,-1.64502 -0.4387,-3.2117 -0.43867,-4.70006 l 0,-30.70702 c -3e-5,-0.86162 0.15142,-1.65019 0.43867,-2.38136 0.31332,-0.73107 0.92954,-1.25329 1.81736,-1.56669 0.52221,-0.18272 1.28464,-0.41771 2.38135,-0.62667 1.12276,-0.20892 2.08888,-0.28727 2.82004,-0.31334 l 0,-2.82003 -23.18694,0 z m -0.12533,67.49278 0,3.50938 57.34066,0 0,-3.50938 -57.34066,0 z"
+         style="fill:url(#linearGradient2841);fill-opacity:1;stroke:none" />
+      <text
+         sodipodi:linespacing="110%"
+         id="text2846"
+         y="203.56793"
+         x="678.07947"
+         style="font-size:80.17943573px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:end;fill:#b3b3b3;fill-opacity:1;stroke:none;font-family:Georgia;-inkscape-font-specification:Georgia"
+         xml:space="preserve"><tspan
+           style="font-size:80.17943573px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:end;fill:#b3b3b3;fill-opacity:1;font-family:Georgia;-inkscape-font-specification:Georgia"
+           id="tspan2850"
+           y="203.56793"
+           x="678.07947"
+           sodipodi:role="line">sus</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:80.17943573px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:start;fill:#b3b3b3;fill-opacity:1;stroke:none;font-family:Georgia;-inkscape-font-specification:Georgia"
+         x="232.07945"
+         y="203.56793"
+         id="text2829"
+         sodipodi:linespacing="110%"><tspan
+           sodipodi:role="line"
+           x="232.07945"
+           y="203.56793"
+           id="tspan2831"
+           style="fill:#b3b3b3;fill-opacity:1">Project</tspan></text>
+    </g>
   </g>
 </svg>
