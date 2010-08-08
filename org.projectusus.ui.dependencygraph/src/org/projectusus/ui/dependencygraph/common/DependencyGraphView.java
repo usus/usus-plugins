@@ -52,6 +52,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     private Scale scale;
     private ViewerFilter customFilter;
     private final WorkbenchContext customFilterContext;
+    private DependencyGraphSelectionListener selectionListener;
 
     public DependencyGraphView( DependencyGraphModel model ) {
         super();
@@ -74,6 +75,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         createGraphArea( composite );
         getViewSite().setSelectionProvider( graphViewer );
         refresh();
+        extendSelectionBehavior();
     }
 
     private void initFilterLimit( int maxFilterValue ) {
@@ -251,6 +253,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     @Override
     public void dispose() {
         UsusModel.ususModel().removeUsusModelListener( listener );
+        graphViewer.getGraphControl().removeSelectionListener( selectionListener );
         super.dispose();
     }
 
@@ -287,4 +290,8 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         return true;
     }
 
+    private void extendSelectionBehavior() {
+        selectionListener = new DependencyGraphSelectionListener();
+        graphViewer.getGraphControl().addSelectionListener( selectionListener );
+    }
 }
