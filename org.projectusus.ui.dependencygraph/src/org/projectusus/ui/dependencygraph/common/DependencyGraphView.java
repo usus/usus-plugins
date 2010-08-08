@@ -29,7 +29,6 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.ui.part.IShowInTarget;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.GraphNode;
@@ -46,7 +45,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     private static final String SCALE_TOOLTIP_TEXT = "Change the number of visible nodes by moving the slider";
 
     private final DependencyGraphModel model;
-    private GraphViewer graphViewer;
+    private DependencyGraphViewer graphViewer;
     private int filterLimit = -1;
     private IUsusModelListener listener;
     private Scale scale;
@@ -167,7 +166,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     }
 
     private void createGraphViewer( Composite graphArea ) {
-        graphViewer = new GraphViewer( graphArea, SWT.NONE );
+        graphViewer = new DependencyGraphViewer( graphArea, SWT.NONE );
         graphViewer.setConnectionStyle( ZestStyles.CONNECTIONS_DIRECTED );
         graphViewer.setContentProvider( new NodeContentProvider() );
         graphViewer.setLabelProvider( new NodeLabelProvider() );
@@ -291,7 +290,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     }
 
     private void extendSelectionBehavior() {
-        selectionListener = new DependencyGraphSelectionListener();
+        selectionListener = new DependencyGraphSelectionListener( graphViewer );
         graphViewer.getGraphControl().addSelectionListener( selectionListener );
     }
 }

@@ -10,6 +10,13 @@ import org.eclipse.zest.core.widgets.GraphItem;
 
 class DependencyGraphSelectionListener implements SelectionListener {
 
+    private final DependencyGraphViewer graphViewer;
+
+    public DependencyGraphSelectionListener( DependencyGraphViewer graphViewer ) {
+        super();
+        this.graphViewer = graphViewer;
+    }
+
     public void widgetSelected( SelectionEvent event ) {
         handleOpposingEdge( event );
     }
@@ -25,16 +32,21 @@ class DependencyGraphSelectionListener implements SelectionListener {
                 if( areOpposing( selectedConn, currentConn ) ) {
                     if( adding && !selection.contains( currentConn ) ) {
                         selection.add( currentConn );
-                        graph.setSelection( selection.toArray( new GraphItem[] {} ) );
+                        updateSelectionAndFireEvent( graph, selection );
                     } else if( !adding ) {
                         selection.remove( currentConn );
                         currentConn.unhighlight();
-                        graph.setSelection( selection.toArray( new GraphItem[] {} ) );
+                        updateSelectionAndFireEvent( graph, selection );
                     }
                 }
             }
 
         }
+    }
+
+    private void updateSelectionAndFireEvent( Graph graph, List<GraphItem> selection ) {
+        graph.setSelection( selection.toArray( new GraphItem[] {} ) );
+        graphViewer.fireSelectionChanged();
     }
 
     private boolean areOpposing( GraphConnection conn1, GraphConnection conn2 ) {
