@@ -239,7 +239,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
 
     @Override
     public void setFocus() {
-        // do nothing
+        graphViewer.getControl().setFocus();
     }
 
     public int getFilterLimit() {
