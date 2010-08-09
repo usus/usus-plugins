@@ -13,7 +13,8 @@ import org.eclipse.swt.widgets.Display;
 
 public class UsusColors {
 
-    public static final String RED = "RED"; //$NON-NLS-1$
+    public static final String DARK_RED = "DARK_RED"; //$NON-NLS-1$
+    public static final String DARK_GREY = "DARK_GREY"; //$NON-NLS-1$
     public static final String BLACK = "BLACK"; //$NON-NLS-1$
 
     private static final UsusColors _instance = new UsusColors();
@@ -33,8 +34,9 @@ public class UsusColors {
     }
 
     private void declareColors() {
-        declare( RED, new RGB( 220, 60, 60 ) );
-        declare( BLACK, new RGB( 100, 100, 100 ) );
+        declare( DARK_RED, new RGB( 220, 60, 60 ) );
+        declare( DARK_GREY, new RGB( 100, 100, 100 ) );
+        declare( BLACK, new RGB( 0, 0, 0 ) );
     }
 
     private void declare( String key, RGB rgb ) {
@@ -54,14 +56,22 @@ public class UsusColors {
         return colorRegistry;
     }
 
-    public Color getNodeColorFor( int hue ) {
-        String symbolicName = "NODE_COLOR_HUE_" + hue; //$NON-NLS-1$
+    public Color getNodeColorFor( int someIntValue ) {
+        String symbolicName = "NODE_COLOR_" + someIntValue; //$NON-NLS-1$
         ColorRegistry registry = getColorRegistry();
         if( !registry.hasValueFor( symbolicName ) ) {
-            float saturation = random.nextFloat() / 2;
-            float brightness = 1 - random.nextFloat() / 5;
+            int hue = toHue( someIntValue );
+            float saturation = 0.1f + random.nextFloat() / 1.25f;
+            float brightness = 0.8f + random.nextFloat() / 5;
             registry.put( symbolicName, new RGB( hue, saturation, brightness ) );
         }
         return registry.get( symbolicName );
     }
+
+    int toHue( int value ) {
+        long positive = ((long)value - Integer.MIN_VALUE) / 2;
+        double y = (double)positive / Integer.MAX_VALUE;
+        return (int)Math.round( 360 * y );
+    }
+
 }

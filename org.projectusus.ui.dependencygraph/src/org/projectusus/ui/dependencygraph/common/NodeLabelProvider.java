@@ -6,7 +6,8 @@ import static org.eclipse.jdt.ui.JavaElementLabels.P_COMPRESSED;
 import static org.eclipse.zest.core.widgets.ZestStyles.CONNECTIONS_DOT;
 import static org.eclipse.zest.core.widgets.ZestStyles.CONNECTIONS_SOLID;
 import static org.projectusus.ui.colors.UsusColors.BLACK;
-import static org.projectusus.ui.colors.UsusColors.RED;
+import static org.projectusus.ui.colors.UsusColors.DARK_GREY;
+import static org.projectusus.ui.colors.UsusColors.DARK_RED;
 import static org.projectusus.ui.colors.UsusColors.getSharedColors;
 
 import org.eclipse.draw2d.IFigure;
@@ -68,21 +69,15 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
         return JavaUI.getSharedImages().getImage( imageName );
     }
 
+    // From IEntityStyleProvider
+
     public Color getBackgroundColour( Object element ) {
         if( element instanceof GraphNode ) {
             Packagename packageName = ((GraphNode)element).getRelatedPackage();
-            return UsusColors.getSharedColors().getNodeColorFor( toHue( packageName.hashCode() ) );
+            return UsusColors.getSharedColors().getNodeColorFor( packageName.hashCode() );
         }
         return null;
     }
-
-    protected int toHue( int value ) {
-        long positive = ((long)value - Integer.MIN_VALUE) / 2;
-        double y = (double)positive / Integer.MAX_VALUE;
-        return (int)Math.round( 360 * y );
-    }
-
-    // From IEntityStyleProvider
 
     public Color getNodeHighlightColor( Object entity ) {
         // TODO Auto-generated method stub
@@ -90,8 +85,7 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public Color getBorderColor( Object entity ) {
-        // TODO Auto-generated method stub
-        return null;
+        return getSharedColors().getColor( BLACK );
     }
 
     public Color getBorderHighlightColor( Object entity ) {
@@ -105,8 +99,7 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public Color getForegroundColour( Object entity ) {
-        // TODO Auto-generated method stub
-        return null;
+        return getSharedColors().getColor( BLACK );
     }
 
     public IFigure getTooltip( Object entity ) {
@@ -144,9 +137,9 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
 
     public Color getColor( Object src, Object dest ) {
         if( areClassesInDifferentPackages( src, dest ) ) {
-            return getSharedColors().getColor( RED );
+            return getSharedColors().getColor( DARK_RED );
         }
-        return getSharedColors().getColor( BLACK );
+        return getSharedColors().getColor( DARK_GREY );
     }
 
     public Color getHighlightColor( Object src, Object dest ) {
