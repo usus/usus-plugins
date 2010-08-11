@@ -6,3 +6,118 @@ Usus-Unterstützung -- wie von Ihnen vorgeschlagen -- anhand eines Beispiels
 demonstrieren. Abschließend würden wir auf die Erweiterbarkeit von Usus 
 (an der wir gerade arbeiten) zu sprechen kommen und einen Ausblick auf mögliche 
 zukünftige Features geben.
+
+----------
+
+Usus 1.0 - Einsicht und Handeln
+
+In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein
+Bewusstsein für Codequalität / innere Softwarequalität entwickelt. 
+Doch was bedeutet Codequalität eigentlich?
+Kann man sie messen? Und wenn man sie misst, welche Erkenntnisse gewinnt man daraus? 
+Und wenn man Erkenntnisse gewonnen hat, wie reagiert man darauf und was kann 
+man zur Verbesserung unternehmen?
+
+Usus ist ein Versuch einer Antwort auf diese Fragen.
+
+# Warum Codequalität?
+
+Jedes Stück Code wird nur einmal geschrieben, aber möglicherweise Hunderte von Malen gelesen und
+nachvollzogen. Daher ist es sehr effektiv, den Code so zu gestalten, dass das Lesen und 
+Verstehen einfach wird. Usus prüft verschiedene Aspekte des Codes, die wir für essentiell
+für eine gute Nachvollziehbarkeit des Codes halten.
+
+# Warum soll ich meinen Code überhaupt ändern?
+
+Beim Entwickeln von Software ist die Versuchung groß, sich nicht zu lange mit dem Aufräumen der Codebasis
+aufzuhalten: Aufräumen braucht Zeit, die man besser zum Codieren verwenden kann; das Projekt ist doch 
+bald zu Ende; alle Entwickler kennen den ganzen Code; neue Teammitglieder wird es nicht geben; und außerdem wird die Software sowieso nicht lange leben, keine neuen Features bekommen
+und nicht gewartet werden müssen, denn es hat ja keine Bugs. Unsere Erfahrungen in Legacy-Projekten
+lehren uns, dass diese Annahmen eher ins Reich der Entwicklermärchen gehören. Software-"Zwischenlösungen", 
+die seit 10 Jahren weiterentwickelt werden und inzwischen ihren Funktionsumfang vervielfacht haben,
+scheinen eher an der Tagesordnung zu sein.
+
+# Warum ein Analysewerkzeug?
+
+Die Geschmäcker sind verschieden. Und so gibt es auch viele Meinungen dazu, was lesbaren und
+verständlichen Code ausmacht. Analysewerkzeuge helfen dabei, diese Meinungen zu vereinheitlichen,
+so dass jedes Mitglied eines Teams dieselben Regeln für seinen Code zugrundelegt. Genauso wie
+alle Teammitglieder dieselben Formatierungsregeln benutzen, damit der Code gleich formatiert ist.
+
+# Wo kann ich weiterlesen?
+
+Bob Martin, Clean Code
+Fowler, Refactoring
+Clean Code Developer
+McBreen, Software Craftsmanship
+
+
+# Warum noch ein Analysewerkzeug?
+
+Es gibt viele solche Analysewerkzeuge, und viele davon sind auch in Eclipse integriert, wie zum Beispiel
+Checkstyle[], FindBugs[] oder PMD[]. Warum bauen wir also noch ein weiteres derartiges Werkzeug?
+
+In erster Linie liegt dies daran, dass die existierenden Werkzeuge in der einen oder anderen Hinsicht
+nicht nützlich für uns sind.
+
+## Ungeeignete Default-Einstellungen
+
+In unseren Augen ist z. B. eine voreingestellte Methodenlänge von 150 Zeilen nicht hilfreich, um gut
+lesbaren Code zu erzeugen (uns schwebt eher eine Methodenlänge von 15 Zeilen vor). Das gleiche gilt für
+Einstellungen, die das Fehlen von Javadoc bemängeln (wir würden im Allgemeinen eher das Vorhandensein 
+von Javadoc bemängeln).
+
+-- Welche Tools betrifft das? Checkstyle
+
+## Warnings, so weit das Auge reicht
+
+Einige Tools sind in ihren Standardeinstellungen so scharf gestellt und berücksichtigen so viele
+relativ unwichtige Probleme, dass man förmlich in Warnings ertrinkt, wenn man sie in der Standardeinstellung
+benutzt. Hier ist nicht klar, welche Priorität die einzelnen Warnings haben und wie man ohne große Mühe
+alle Warnings einer Art im gesamten Workspace identifizieren und bearbeiten kann.
+
+## Warnings ohne Hilfestellung
+
+Warnings müssen behoben werden können
+
+-- Welche Tools betrifft das?
+
+
+## Veränderungen sind Geheimsache
+
+Keins der oben genannten Tools bietet einen unmittelbaren Überblick darüber, ob mein aktuelles Tun gerade
+die Codebasis verbessert oder verschlechtert. 
+
+
+# Der Einsatz von Usus
+
+Wir demonstrieren die Verwendung von Usus anhand eines Beispielprojekts, das Sie auf der beigelegten Heft-CD
+finden. Zunächst muss Usus von der Update-Site http://projectusus.org/... installiert werden und der 
+Projektworkspace in Eclipse geöffnet werden. Das Projekt wurde bereits als Usus-Projekt markiert, daher
+berechnet Usus nach dem Wechsel in die "Project Usus" Perspektive sofort die Metrikwerte. Diese 
+werden im Usus Cockpit dargestellt. Das Cockpit ist die zentrale View von Usus; hier finden sich alle
+globalen Informationen. Ein Doppelklick auf eine der Metriken zeigt die Verletzungen der betreffenden Metrik 
+an. Von hier kann man direkt zur betroffenen Klasse oder Methode springen und sich den Code ansehen.
+
+
+
+das Entwickeln mit 
+Usus-Unterstützung -- wie von Ihnen vorgeschlagen -- anhand eines Beispiels 
+demonstrieren
+
+# Erweiterbarkeit
+
+Erweiterbarkeit von Usus 
+(an der wir gerade arbeiten)
+
+# Zukünftige Features
+
+Ausblick auf mögliche 
+zukünftige Features
+
+
+----------------------
+
+Literatur
+
+http://raptureinvenice.com/?p=63
