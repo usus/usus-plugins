@@ -1,4 +1,4 @@
-Abstract
+### Abstract
 
 Zum Inhalt: Beginnen würden wir mit einer Abgrenzung zu anderen Analyse-Werkzeugen 
 wie Checkstyle, FindBugs, PMD etc. Anschließend würden wir das Entwickeln mit 
@@ -9,44 +9,43 @@ zukünftige Features geben.
 
 ----------
 
-Usus 1.0 - Einsicht und Handeln
-===============================
+# Einsicht und Handeln mit Usus
 
-In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein
-Bewusstsein für Codequalität / innere Softwarequalität entwickelt. 
-Doch was bedeutet Codequalität eigentlich?
-Kann man sie messen? Und wenn man sie misst, welche Erkenntnisse gewinnt man daraus? 
-Und wenn man Erkenntnisse gewonnen hat, wie reagiert man darauf und was kann 
-man zur Verbesserung unternehmen?
+In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein Bewusstsein für 
+Codequalität / innere Softwarequalität entwickelt. Doch was bedeutet Codequalität eigentlich? Kann 
+man sie messen? Und wenn man sie misst, welche Erkenntnisse gewinnt man daraus? Und wenn man 
+Erkenntnisse gewonnen hat, wie reagiert man darauf und was kann man zur Verbesserung unternehmen?
 
-Usus ist ein Versuch einer Antwort auf diese Fragen.
+Usus versucht eine Antwort auf diese Fragen zu geben.
 
-# Warum Codequalität?
+## Warum Codequalität?
 
 Jedes Stück Code wird nur einmal geschrieben, aber möglicherweise Hunderte von Malen gelesen und
 nachvollzogen. Daher ist es sehr effektiv, den Code so zu gestalten, dass das Lesen und 
-Verstehen einfach wird. Usus prüft verschiedene Aspekte des Codes, die wir für essentiell
-für eine gute Nachvollziehbarkeit des Codes halten.
+Verstehen einfach wird. Die Änderbarkeit steht als weiterer wichtige Eigenschaft des Codes im 
+direkten Zusammenhang mit der Nachvollziehbarkeit: Man sollte nur Code ändern, den man versteht! 
+Usus prüft verschiedene Aspekte des Codes, die wir für essentiell für eine gute Nachvollziehbarkeit
+und damit eine leichte Änderbarkeit des Codes halten.
 
-# Warum soll ich meinen Code überhaupt ändern?
+### Warum soll ich meinen Code überhaupt ändern?
 
-Beim Entwickeln von Software ist die Versuchung groß, sich nicht zu lange mit dem Aufräumen der Codebasis
-aufzuhalten: Aufräumen braucht Zeit, die man besser zum Codieren verwenden kann; das Projekt ist doch 
-bald zu Ende; alle Entwickler kennen den ganzen Code; neue Teammitglieder wird es nicht geben; 
-und außerdem wird die Software sowieso nicht lange leben, keine neuen Features bekommen
-und nicht gewartet werden müssen, denn es hat ja keine Bugs. Unsere Erfahrungen in Legacy-Projekten
-lehren uns, dass diese Annahmen eher ins Reich der Entwicklermärchen gehören. Software-"Zwischenlösungen", 
-die seit 10 Jahren weiterentwickelt werden und inzwischen ihren Funktionsumfang vervielfacht haben,
-scheinen eher an der Tagesordnung zu sein.
+Beim Entwickeln von Software ist die Versuchung groß, sich nicht zu lange mit dem Aufräumen der 
+Codebasis aufzuhalten: Aufräumen braucht Zeit, die man besser zum Codieren verwenden kann; das 
+Projekt ist doch bald zu Ende; alle Entwickler kennen den ganzen Code; neue Teammitglieder wird es 
+nicht geben; und außerdem wird die Software sowieso nicht lange leben, keine neuen Features 
+bekommen und nicht gewartet werden müssen, denn es hat ja keine Bugs. Unsere Erfahrungen in 
+Legacy-Projekten lehren uns, dass diese Annahmen eher ins Reich der Entwicklermärchen gehören. 
+Software-"Zwischenlösungen", die seit 10 Jahren weiterentwickelt werden und inzwischen ihren
+Funktionsumfang vervielfacht haben, scheinen eher an der Tagesordnung zu sein.
 
-# Warum ein Analysewerkzeug?
+### Warum ein Analysewerkzeug?
 
 Die Geschmäcker sind verschieden. Und so gibt es auch viele Meinungen dazu, was lesbaren und
 verständlichen Code ausmacht. Analysewerkzeuge helfen dabei, diese Meinungen zu vereinheitlichen,
 so dass jedes Mitglied eines Teams dieselben Regeln für seinen Code zugrundelegt. Genauso wie
 alle Teammitglieder dieselben Formatierungsregeln benutzen, damit der Code gleich formatiert ist.
 
-# Wo kann ich weiterlesen?
+### Wo kann ich weiterlesen?
 
 Bob Martin, Clean Code
 Fowler, Refactoring
@@ -54,15 +53,16 @@ Clean Code Developer
 McBreen, Software Craftsmanship
 
 
-# Warum noch ein Analysewerkzeug?
+## Warum noch ein Analysewerkzeug?
 
-Es gibt viele solche Analysewerkzeuge, und viele davon sind auch in Eclipse integriert, wie zum Beispiel
-Checkstyle[], FindBugs[] oder PMD[]. Warum bauen wir also noch ein weiteres derartiges Werkzeug?
+Es gibt viele solche Analysewerkzeuge, und viele davon sind auch in Eclipse integriert, wie zum 
+Beispiel Checkstyle [[1]][Checkstyle], FindBugs [[2]][FindBugs] oder PMD [[3]][PMD]. Warum bauen
+wir also noch ein weiteres derartiges Werkzeug?
 
-In erster Linie liegt dies daran, dass die existierenden Werkzeuge in der einen oder anderen Hinsicht
-nicht nützlich für uns sind.
+In erster Linie liegt dies daran, dass die existierenden Werkzeuge in der einen oder anderen 
+Hinsicht nicht nützlich für uns sind.
 
-## Ungeeignete Default-Einstellungen
+### Ungeeignete Default-Einstellungen
 
 In unseren Augen ist z. B. eine voreingestellte Methodenlänge von 150 Zeilen nicht hilfreich, um gut
 lesbaren Code zu erzeugen (uns schwebt eher eine Methodenlänge von 15 Zeilen vor). Das gleiche gilt für
@@ -71,27 +71,27 @@ von Javadoc bemängeln).
 
 -- Welche Tools betrifft das? Checkstyle
 
-## Warnings, so weit das Auge reicht
+### Warnings, so weit das Auge reicht
 
 Einige Tools sind in ihren Standardeinstellungen so scharf gestellt und berücksichtigen so viele
 relativ unwichtige Probleme, dass man förmlich in Warnings ertrinkt, wenn man sie in der Standardeinstellung
 benutzt. Hier ist nicht klar, welche Priorität die einzelnen Warnings haben und wie man ohne große Mühe
 alle Warnings einer Art im gesamten Workspace identifizieren und bearbeiten kann.
 
-## Warnings ohne Hilfestellung
+### Warnings ohne Hilfestellung
 
-Warnings müssen behoben werden können
+Warnings müssen behoben werden können.
 
 -- Welche Tools betrifft das?
 
 
-## Veränderungen sind Geheimsache
+### Veränderungen sind Geheimsache
 
 Keins der oben genannten Tools bietet einen unmittelbaren Überblick darüber, ob mein aktuelles Tun gerade
 die Codebasis verbessert oder verschlechtert. 
 
 
-# Der Einsatz von Usus
+## Der Einsatz von Usus
 
 Wir demonstrieren die Verwendung von Usus anhand eines Beispielprojekts, das Sie auf der beigelegten Heft-CD
 finden. Zunächst muss Usus von der Update-Site http://projectusus.org/... installiert werden und der 
@@ -101,10 +101,9 @@ werden im Usus Cockpit dargestellt. Das Cockpit ist die zentrale View von Usus; 
 globalen Informationen. Ein Doppelklick auf eine der Metriken zeigt die Verletzungen der betreffenden Metrik 
 an. Von hier kann man direkt zur betroffenen Klasse oder Methode springen und sich den Code ansehen.
 
----
 
 
-## Das Usus-Cockpit
+### Das Usus-Cockpit
 
 Das Usus Cockpit gibt einen Überblick über die berechneten Statistiken und ihre aktuellen
 Werte. Hierbei werden die Gesamtzahl der zugrundeliegenden Elemente (d. h. Klassen, Methoden 
@@ -122,7 +121,7 @@ wird weiter unten beschrieben. Zuerst wollen wir einen Überblick über die in Usu
 Metriken und Statistiken geben.
 
 
-## Metriken und Statistiken
+### Metriken und Statistiken
 
 In Usus unterscheiden wir zwischen der statischen Analyse des vorliegenden Codes durch sogenannte
 Metriken,
@@ -146,7 +145,7 @@ Für jede Metrik geben wir an, zu welcher Kategorie sie gehört.
 Extension Points erlauben die Erweiterbarkeit von Usus durch eigene Metriken und Statistiken.
 Dies wird weiter unten genauer beschrieben.
 
-### Metrik und Statistik zur Methodenlänge
+#### Metrik und Statistik zur Methodenlänge
 
 Diese Metrik ist dateilokal und arbeitet auf Methodenebene.
 
@@ -165,7 +164,7 @@ Methoden geteilt, um das Statistik-Level zu ermitteln.
 
 
 
-## Metrik und Statistik zur zyklomatischen Komplexität
+#### Metrik und Statistik zur zyklomatischen Komplexität
 
 Diese Metrik ist dateilokal und arbeitet auf Methodenebene.
 
@@ -187,7 +186,7 @@ nicht gewertet. Längere Methoden werden gemäß der linearen Funktion
 f(x) = 1/4 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
 Methoden geteilt, um das Statistik-Level zu ermitteln. 
 
-## Metrik und Statistik zur Klassengröße
+#### Metrik und Statistik zur Klassengröße
 
 Diese Metrik ist dateilokal und arbeitet auf Klassenebene.
 
@@ -201,16 +200,16 @@ nicht gewertet. Längere Methoden werden gemäß der linearen Funktion
 f(x) = 1/12 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
 Klassen geteilt, um das Statistik-Level zu ermitteln. 
 
-## Metrik und Statistik zur Average Component Dependency
+#### Metrik und Statistik zur Average Component Dependency
 
 Diese Metrik ist relationszentriert.
 
 
 
-## Metrik und Statistik zu Packagezyklen
+#### Metrik und Statistik zu Packagezyklen
 
 
-## Trends
+### Trends
 
 
 
@@ -235,7 +234,7 @@ das Cockpit folgendermaßen dar:
 
 Betrachten wir die Metriken im Einzelnen.
 
-## Methodenlänge
+### Methodenlänge
 
 Der Ermittlung der Methodenlänge liegt die Gesamtzahl von 13089 Methoden zugrunde. Von diesen
 haben 1700 Methoden mehr als 9 Statements. Dies ergibt einen Durchschnitt von 86,56. 
@@ -254,22 +253,18 @@ das Extrahieren einer Methode mehr Überblick verschaffen:
 
 
 
-## Klassengröße
+### Klassengröße
 
 
 
---------------------
+## Ausblick
 
-das Entwickeln mit 
-Usus-Unterstützung -- wie von Ihnen vorgeschlagen -- anhand eines Beispiels 
-demonstrieren
-
-# Erweiterbarkeit
+### Erweiterbarkeit
 
 Erweiterbarkeit von Usus 
 (an der wir gerade arbeiten)
 
-# Zukünftige Features
+### Zukünftige Features
 
 Ausblick auf mögliche 
 zukünftige Features
@@ -277,9 +272,17 @@ zukünftige Features
 
 ----------------------
 
-Literatur
+## Literatur
 
 http://raptureinvenice.com/?p=63
+
+1. [Checkstyle][]
+2. [FindBugs][]
+3. [PMD][]
+
+[Checkstyle]: http://checkstyle.sourceforge.net/
+[FindBugs]: http://findbugs.sourceforge.net/
+[PMD]: http://pmd.sourceforge.net/
 
 Code Coverage:
 http://angryweasel.com/blog/?p=172
