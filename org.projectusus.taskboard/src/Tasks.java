@@ -19,6 +19,10 @@ public class Tasks {
         // - Position Paper: Usus vs. Checkstyle, PMD, ...
         // Dies fliesst ein in den Eclipse Magazin Artikel 6.10
     }
+    
+    void rightAlignValueColumnInHotspotsView() {
+    	// TODO Spalte rechtsbündig machen
+    }
 
     // ----------------
 
