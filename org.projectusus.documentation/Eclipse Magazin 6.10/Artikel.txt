@@ -70,7 +70,7 @@ Die Überprüfungen aller drei Tools beschränken sich auf die Auswertung von Regel
 Sie machen keine Aussage über die Gesamtstruktur bzw. Architektur des Systems. 
 
 **Veränderungen sind Geheimsache.**
-Keines der oben genannten Erkzeuge bietet einen unmittelbaren Überblick darüber, ob mein aktuelles 
+Keines der oben genannten Werkzeuge bietet einen unmittelbaren Überblick darüber, ob mein aktuelles 
 Tun gerade die Qualität der Codebasis verbessert oder verschlechtert. 
 
 
@@ -236,7 +236,7 @@ das Extrahieren einer Methode mehr Überblick verschaffen:
 
 
 
-### Klassengröße
+### Paketzyklen
 
 
 
