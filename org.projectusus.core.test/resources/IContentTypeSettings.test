@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.core.runtime.content;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.preferences.IScopeContext;
 
 /**
  * Gives access to the user settings for a content type.
@@ -50,7 +48,7 @@ public interface IContentTypeSettings {
 	 * @see #FILE_NAME_SPEC
 	 * @see #FILE_EXTENSION_SPEC	 
 	 */
-	public void addFileSpec(String fileSpec, int type) throws CoreException;
+	public void addFileSpec(String fileSpec, int type) throws Exception;
 
 	/**
 	 * Returns the default charset for the corresponding content type if 
@@ -101,7 +99,7 @@ public interface IContentTypeSettings {
 	 * @see #FILE_NAME_SPEC
 	 * @see #FILE_EXTENSION_SPEC
 	 */
-	public void removeFileSpec(String fileSpec, int type) throws CoreException;
+	public void removeFileSpec(String fileSpec, int type) throws Exception;
 
 	/**
 	 * Sets the default charset for the corresponding content type. If 
@@ -114,5 +112,5 @@ public interface IContentTypeSettings {
 	 * <li> An error occurred persisting this setting.</li>
 	 * </ul>
 	 */
-	public void setDefaultCharset(String userCharset) throws CoreException;
+	public void setDefaultCharset(String userCharset) throws Exception;
 }
