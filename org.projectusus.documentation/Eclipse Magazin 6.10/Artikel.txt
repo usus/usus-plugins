@@ -3,8 +3,9 @@
 In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein Bewusstsein für 
 Codequalität / innere Softwarequalität entwickelt. Doch was bedeutet Codequalität eigentlich? Kann 
 man sie messen? Und wenn man sie misst, welche Erkenntnisse gewinnt man daraus? Und wenn man 
-Erkenntnisse gewonnen hat, wie reagiert man darauf und was kann man zur Verbesserung unternehmen?
+Erkenntnisse gewonnen hat, wie reagiert man darauf und was kann man zur Verbesserung unternehmen? 
 Usus versucht eine Antwort auf diese Fragen zu geben.
+
 
 ## Warum Codequalität?
 
@@ -22,7 +23,7 @@ Projekt ist doch bald zu Ende; alle Entwickler kennen den ganzen Code; neue Team
 nicht geben; und außerdem wird die Software sowieso nicht lange leben, keine neuen Features 
 bekommen und nicht gewartet werden müssen, denn sie hat ja keine Bugs. Unsere Erfahrungen in 
 Legacy-Projekten lehren uns, dass diese Annahmen eher ins Reich der Entwicklermärchen gehören. 
-Software-"Zwischenlösungen", die seit 10 Jahren weiterentwickelt werden und inzwischen ihren
+Software-"Zwischenlösungen", die seit zehn Jahren weiterentwickelt werden und inzwischen ihren
 Funktionsumfang vervielfacht haben, scheinen eher an der Tagesordnung zu sein.
 
 **Warum ein Analysewerkzeug?**
@@ -32,17 +33,16 @@ so dass jedes Mitglied eines Teams dieselben Regeln für seinen Code zugrundelegt
 alle Teammitglieder dieselben Formatierungsregeln benutzen, damit der Code gleich formatiert ist.
 
 **Wo kann ich weiterlesen?**
-
-- Bob Martin, Clean Code
-- Fowler, Refactoring
-- Clean Code Developer
-- McBreen, Software Craftsmanship
+Weitere Informationen zu Refactoring, Clean Code und Software Craftsmanship findet man in den 
+Büchern von Fowler [1], McBreen [2] bw. Martin [3]. Die Clean Code Developer-Initiative [[4]][CCD] 
+bietet einen Ansatz, wie man auch im Entwicklungsalltag die Codequalität nicht aus den Augen 
+verliert.
 
 
 ## Warum noch ein Analysewerkzeug?
 
 Es gibt viele Code-Analysewerkzeuge, und viele davon sind auch in Eclipse integriert, wie zum 
-Beispiel Checkstyle [[1]][Checkstyle], FindBugs [[2]][FindBugs] und PMD [[3]][PMD]. Warum bauen
+Beispiel Checkstyle [[5]][Checkstyle], FindBugs [[6]][FindBugs] und PMD [[7]][PMD]. Warum bauen
 wir also noch ein weiteres derartiges Werkzeug? In erster Linie liegt dies daran, dass die
 existierenden Tools unsere Bedürfnisse in der einen oder anderen Hinsicht nicht erfüllen.
 
@@ -55,9 +55,9 @@ Vorhandensein von Javadoc bemängeln.
 
 **Warnings, so weit das Auge reicht.**
 Einige Tools sind in ihren Standardeinstellungen so scharf gestellt und berücksichtigen so viele
-relativ unwichtige Probleme, dass man förmlich in Warnings ertrinkt. Oft ist nicht klar, welche 
-Priorität einzelne Warnings haben und wie man ohne große Mühe alle Warnings einer Art im gesamten
-Workspace identifizieren und bearbeiten kann.
+relativ unwichtige Probleme, dass man förmlich in Warnings ertrinkt. Mit Ausnahme von FindBugs ist
+auf den ersten Blick ist nicht klar, welche Priorität einzelne Warnings haben und wie man ohne 
+große Mühe alle Warnings einer Art im gesamten Workspace identifizieren und bearbeiten kann.
 
 **Warnings ohne Hilfestellung.**
 Warnings sind nur dann hilfreich, wenn sie behoben werden können. Checkstyle und FindBugs bieten in
@@ -290,10 +290,15 @@ zukünftige Features
 
 http://raptureinvenice.com/?p=63
 
-1. [Checkstyle][]
-2. [FindBugs][]
-3. [PMD][]
+1. Martin Fowler - Refactoring: Improving the Design of Existing Code, Addison-Wesley Longman, 1999
+2. Pete McBreen - Software Craftsmanship: The New Imperative, Addison Wesley, 2001
+3. Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship, Prentice Hall, 2008
+4. [CCD][]
+5. [Checkstyle][]
+6. [FindBugs][]
+7. [PMD][]
 
+[CCD]: http://clean-code-developer.de/
 [Checkstyle]: http://checkstyle.sourceforge.net/
 [FindBugs]: http://findbugs.sourceforge.net/
 [PMD]: http://pmd.sourceforge.net/
