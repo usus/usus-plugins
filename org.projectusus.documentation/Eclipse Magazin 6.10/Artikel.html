@@ -1,22 +1,21 @@
-# Einsicht und Handeln mit Usus
+<h1>Einsicht und Handeln mit Usus</h1>
 
-In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein Bewusstsein für 
+<p>In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein Bewusstsein für 
 Codequalität bzw. innere Softwarequalität entwickelt. Doch was bedeutet Codequalität eigentlich? Kann 
 man sie messen? Und wenn man sie misst, welche Erkenntnisse gewinnt man daraus? Und wenn man 
 Erkenntnisse gewonnen hat, wie reagiert man darauf und was kann man zur Verbesserung unternehmen? 
-Usus versucht eine Antwort auf diese Fragen zu geben.
+Usus versucht eine Antwort auf diese Fragen zu geben.</p>
 
+<h2>Warum Codequalität?</h2>
 
-## Warum Codequalität?
-
-Jedes Stück Code wird nur einmal geschrieben, aber möglicherweise Hunderte von Malen gelesen und
+<p>Jedes Stück Code wird nur einmal geschrieben, aber möglicherweise Hunderte von Malen gelesen und
 nachvollzogen. Daher ist es sehr effektiv, den Code so zu gestalten, dass das Lesen und 
 Verstehen einfach wird. Die Änderbarkeit steht als weitere wichtige Eigenschaft des Codes im 
 direkten Zusammenhang mit der Nachvollziehbarkeit: Man sollte nur Code ändern, den man versteht! 
 Usus prüft verschiedene Aspekte des Codes, die wir für essentiell für eine gute Nachvollziehbarkeit
-und damit eine leichte Änderbarkeit des Codes halten.
+und damit eine leichte Änderbarkeit des Codes halten.</p>
 
-**Warum soll ich meinen Code überhaupt ändern?**
+<p><strong>Warum soll ich meinen Code überhaupt ändern?</strong>
 Beim Entwickeln von Software ist die Versuchung groß, sich nicht zu lange mit dem Aufräumen der 
 Codebasis aufzuhalten: Aufräumen braucht Zeit, die man besser zum Codieren verwenden kann; das 
 Projekt ist doch bald zu Ende; alle Entwickler kennen den ganzen Code; neue Teammitglieder wird es 
@@ -24,89 +23,84 @@ nicht geben; und außerdem wird die Software sowieso nicht lange leben, keine neu
 bekommen und nicht gewartet werden müssen, denn sie hat ja keine Bugs. Unsere Erfahrungen in 
 Legacy-Projekten lehren uns, dass diese Annahmen eher ins Reich der Entwicklermärchen gehören. 
 Software-"Zwischenlösungen", die seit zehn Jahren weiterentwickelt werden und inzwischen ihren
-Funktionsumfang vervielfacht haben, scheinen eher an der Tagesordnung zu sein.
+Funktionsumfang vervielfacht haben, scheinen eher an der Tagesordnung zu sein.</p>
 
-**Warum ein Analysewerkzeug?**
+<p><strong>Warum ein Analysewerkzeug?</strong>
 Die Geschmäcker sind verschieden. Und so gibt es auch viele Meinungen dazu, was lesbaren und
 verständlichen Code ausmacht. Analysewerkzeuge helfen dabei, diese Meinungen zu vereinheitlichen,
 so dass jedes Mitglied eines Teams dieselben Regeln für seinen Code zugrundelegt. Genauso wie
-alle Teammitglieder dieselben Formatierungsregeln benutzen, damit der Code gleich formatiert ist.
+alle Teammitglieder dieselben Formatierungsregeln benutzen, damit der Code gleich formatiert ist.</p>
 
-**Wo kann ich weiterlesen?**
+<p><strong>Wo kann ich weiterlesen?</strong>
 Weitere Informationen zu Refactoring, Clean Code und Software Craftsmanship findet man in den 
-Büchern von Fowler [1], McBreen [2] bw. Martin [3]. Die Clean Code Developer-Initiative [[4]][CCD] 
+Büchern von Fowler [1], McBreen [2] bw. Martin [3]. Die Clean Code Developer-Initiative <a href="http://clean-code-developer.de/">[4]</a> 
 bietet einen Ansatz, wie man auch im Entwicklungsalltag die Codequalität nicht aus den Augen 
-verliert.
+verliert.</p>
 
+<h2>Warum noch ein Analysewerkzeug?</h2>
 
-## Warum noch ein Analysewerkzeug?
-
-Es gibt viele Code-Analysewerkzeuge, und viele davon sind auch in Eclipse integriert, wie zum 
-Beispiel Checkstyle [[5]][Checkstyle], FindBugs [[6]][FindBugs] und PMD [[7]][PMD]. Warum bauen
+<p>Es gibt viele Code-Analysewerkzeuge, und viele davon sind auch in Eclipse integriert, wie zum 
+Beispiel Checkstyle <a href="http://checkstyle.sourceforge.net/">[5]</a>, FindBugs <a href="http://findbugs.sourceforge.net/">[6]</a> und PMD <a href="http://pmd.sourceforge.net/">[7]</a>. Warum bauen
 wir also noch ein weiteres derartiges Werkzeug? In erster Linie liegt dies daran, dass die
-existierenden Tools unsere Bedürfnisse in der einen oder anderen Hinsicht nicht erfüllen.
+existierenden Tools unsere Bedürfnisse in der einen oder anderen Hinsicht nicht erfüllen.</p>
 
-**Ungeeignete Standardeinstellungen.**
+<p><strong>Ungeeignete Standardeinstellungen.</strong>
 Vor allem die Grundeinstellungen von Checkstyle sind in unseren Augen nicht hilfreich um gut
 lesbaren Code zu erzeugen. Beispielsweise ist die Maximallänge von Methoden auf 150 
 Zeilen voreingestellt; uns schwebt dagegen eher eine Methodenlänge von 15 Zeilen vor. Das gleiche 
 gilt für Einstellungen, die das Fehlen von Javadoc bemängeln; wir würden im Normalfall eher das
-Vorhandensein von Javadoc bemängeln.
+Vorhandensein von Javadoc bemängeln.</p>
 
-**Warnings, so weit das Auge reicht.**
+<p><strong>Warnings, so weit das Auge reicht.</strong>
 Einige Tools sind in ihren Standardeinstellungen so scharf gestellt und berücksichtigen so viele
 relativ unwichtige Probleme, dass man förmlich in Warnings ertrinkt. Mit Ausnahme von FindBugs ist
 auf den ersten Blick nicht klar, welche Priorität einzelne Warnings haben und wie man ohne 
-große Mühe alle Warnings einer Art im gesamten Workspace identifizieren und bearbeiten kann.
+große Mühe alle Warnings einer Art im gesamten Workspace identifizieren und bearbeiten kann.</p>
 
-**Warnings ohne Hilfestellung.**
+<p><strong>Warnings ohne Hilfestellung.</strong>
 Warnings sind nur dann hilfreich, wenn sie behoben werden können. Checkstyle und FindBugs bieten in
-einigen Fällen zwar die Möglichkeit eine Warning per *Quick Fix* zu beheben, allerdings fällt es bei 
+einigen Fällen zwar die Möglichkeit eine Warning per <em>Quick Fix</em> zu beheben, allerdings fällt es bei 
 vielen der standardmäßig eingestellten Überprüfungen auf den ersten Blick schwer, ihren Hintergrund 
-zu erfassen und ihre Relevanz im Verhältnis zu den anderen Warnungen zu beurteilen.
+zu erfassen und ihre Relevanz im Verhältnis zu den anderen Warnungen zu beurteilen.</p>
 
-**Ausschließlich Datei-lokale Checks.**
+<p><strong>Ausschließlich Datei-lokale Checks.</strong>
 Die Überprüfungen aller drei Tools beschränken sich auf die Auswertung von Regeln auf Dateiebene.
-Sie machen keine Aussage über die Gesamtstruktur bzw. Architektur des Systems. 
+Sie machen keine Aussage über die Gesamtstruktur bzw. Architektur des Systems. </p>
 
-**Veränderungen sind Geheimsache.**
+<p><strong>Veränderungen sind Geheimsache.</strong>
 Keines der oben genannten Werkzeuge bietet einen unmittelbaren Überblick darüber, ob mein aktuelles 
-Tun gerade die Qualität der Codebasis verbessert oder verschlechtert. 
+Tun gerade die Qualität der Codebasis verbessert oder verschlechtert. </p>
 
+<h2>Der Einsatz von Usus</h2>
 
-## Der Einsatz von Usus
-
-Wir demonstrieren die Verwendung von Usus anhand eines Beispielprojekts, das Sie auf der beigelegten Heft-CD
+<p>Wir demonstrieren die Verwendung von Usus anhand eines Beispielprojekts, das Sie auf der beigelegten Heft-CD
 finden. Zunächst muss Usus von der Update-Site http://projectusus.org/... installiert werden und der 
 Projektworkspace in Eclipse geöffnet werden. Das Projekt wurde bereits als Usus-Projekt markiert, daher
 berechnet Usus nach dem Wechsel in die "Project Usus" Perspektive sofort die Metrikwerte. Diese 
 werden im Usus Cockpit dargestellt. Das Cockpit ist die zentrale View von Usus; hier finden sich alle
 globalen Informationen. Ein Doppelklick auf eine der Metriken zeigt die Verletzungen der betreffenden Metrik 
-an. Von hier kann man direkt zur betroffenen Klasse oder Methode springen und sich den Code ansehen.
+an. Von hier kann man direkt zur betroffenen Klasse oder Methode springen und sich den Code ansehen.</p>
 
+<h3>Das Usus-Cockpit</h3>
 
-
-### Das Usus-Cockpit
-
-Das Usus Cockpit (siehe Abb. 2) gibt einen Überblick über die berechneten Statistiken und ihre aktuellen
+<p>Das Usus Cockpit (siehe Abb. 2) gibt einen Überblick über die berechneten Statistiken und ihre aktuellen
 Werte. Hierbei werden die Gesamtzahl der zugrundeliegenden Elemente (d. h. Klassen, Methoden 
 oder Packages),
 die Anzahl derjenigen Elemente, die eine Bewertung größer als 0 erhalten haben, sowie
-das Gesamtlevel der Statistik angezeigt.
+das Gesamtlevel der Statistik angezeigt.</p>
 
-Das Motto von Usus lautet "Einsicht und Handeln". Das Cockpit erlaubt zwar Einsicht in den
+<p>Das Motto von Usus lautet "Einsicht und Handeln". Das Cockpit erlaubt zwar Einsicht in den
 aktuellen Zustand des Codes, aber zum Handeln genügt es nicht. Deshalb kann man auf jede
 Statistik im Cockpit doppelklicken, um zum Hotspots View zu gelangen. Dort werden die Elemente
 mit einer Bewertung größer als 0 aufgeführt. Bei dateilokalen Statistiken gelangt man von dort
 durch einen Doppelklick in das entsprechende Element in einem Java Editor.
 Bei relationenzentrierten Statistiken wird ein Graph angezeigt. Die Arbeit mit diesen Graphen
 wird weiter unten beschrieben. Zuerst wollen wir einen Überblick über die in Usus implementierten
-Metriken und Statistiken geben.
+Metriken und Statistiken geben.</p>
 
+<h3>Metriken und Statistiken</h3>
 
-### Metriken und Statistiken
-
-In Usus unterscheiden wir zwischen der statischen Analyse des vorliegenden Codes durch sogenannte
+<p>In Usus unterscheiden wir zwischen der statischen Analyse des vorliegenden Codes durch sogenannte
 Metriken,
 in der wir verschiedene den Code beschreibende Werte extrahieren,
 und zwischen der Evaluierung dieser Werte durch Statistiken, die zu statistischen 
@@ -115,43 +109,41 @@ des betrachteten Codes führt. Diese beiden Schritte sind voneinander getrennt.
 Insbesondere ist es möglich, mehrere Statistiken zu implementieren, die auf denselben
 Metrikwerten operieren. So kann Usus an verschiedene Einsatzsituationen angepasst werden,
 z. B. durch das Zuschneiden auf unterschiedliche Qualitätsniveaus des zu untersuchenden Codes
-oder indem eine Statistik die Werte mehrerer Metriken gemeinsam betrachtet.
+oder indem eine Statistik die Werte mehrerer Metriken gemeinsam betrachtet.</p>
 
-Im Folgenden gilt alles, was sich auf Methoden bezieht, genauso auch für Initializer. Wir
-verzichten auf die Doppelnennung zugunsten der Lesbarkeit des Textes.
+<p>Im Folgenden gilt alles, was sich auf Methoden bezieht, genauso auch für Initializer. Wir
+verzichten auf die Doppelnennung zugunsten der Lesbarkeit des Textes.</p>
 
-Die Usus-Metriken analysieren entweder den Inhalt eines einzelnen Source-Files, ohne sich
+<p>Die Usus-Metriken analysieren entweder den Inhalt eines einzelnen Source-Files, ohne sich
 auf andere Files zu beziehen, oder sie analysieren die Relationen zwischen mehreren
 Source-Files. Daher unterscheiden wir zwischen dateilokalen und relationenzentrierten Metriken.
-Für jede Metrik geben wir an, zu welcher Kategorie sie gehört.
+Für jede Metrik geben wir an, zu welcher Kategorie sie gehört.</p>
 
-Extension Points erlauben die Erweiterbarkeit von Usus durch eigene Metriken und Statistiken.
-Dies wird weiter unten genauer beschrieben.
+<p>Extension Points erlauben die Erweiterbarkeit von Usus durch eigene Metriken und Statistiken.
+Dies wird weiter unten genauer beschrieben.</p>
 
-#### Metrik und Statistik zur Methodenlänge
+<h4>Metrik und Statistik zur Methodenlänge</h4>
 
-Diese Metrik ist dateilokal und arbeitet auf Methodenebene.
+<p>Diese Metrik ist dateilokal und arbeitet auf Methodenebene.</p>
 
-Die Metrik bestimmt die Anzahl der Statements in jedem Methodenrumpf. Dieser Wert unterscheidet
+<p>Die Metrik bestimmt die Anzahl der Statements in jedem Methodenrumpf. Dieser Wert unterscheidet
 sich von der Anzahl der Codezeilen folgendermaßen:
 - schließende Klammern, die sich auf einer eigenen Zeile befinden, werden nicht gezählt
 - Kommentare werden nicht gezählt
 - Statements, die mehr als eine Zeile beanspruchen, werden als 1 gezählt (die Auswirkungen sind
 besonders groß beim Anlegen anonymer Klassen)
-- der Methodenheader wird nicht gezählt
+- der Methodenheader wird nicht gezählt</p>
 
-Die zugehörige Statistik arbeitet linear. Methoden mit einer Länge von 9 oder weniger werden
+<p>Die zugehörige Statistik arbeitet linear. Methoden mit einer Länge von 9 oder weniger werden
 nicht gewertet. Längere Methoden werden gemäß der linearen Funktion 
 f(x) = 1/9 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
-Methoden geteilt, um das Statistik-Level zu ermitteln.
+Methoden geteilt, um das Statistik-Level zu ermitteln.</p>
 
+<h4>Metrik und Statistik zur zyklomatischen Komplexität</h4>
 
+<p>Diese Metrik ist dateilokal und arbeitet auf Methodenebene.</p>
 
-#### Metrik und Statistik zur zyklomatischen Komplexität
-
-Diese Metrik ist dateilokal und arbeitet auf Methodenebene.
-
-Sie bestimmt die Anzahl der möglichen Verzweigungen im Ausführungspfad durch einen Methodenrumpf.
+<p>Sie bestimmt die Anzahl der möglichen Verzweigungen im Ausführungspfad durch einen Methodenrumpf.
 Ein leerer Methodenrumpf hat hierbei eine zyklomatische Komplexität von 1. Jedes Vorkommen eines
 der folgenden Elemente erhöht diesen Wert um 1:
 - while
@@ -161,52 +153,50 @@ der folgenden Elemente erhöht diesen Wert um 1:
 - ein case eines switch Statements
 - catch clause
 - conditional operator (aka. ? : operator)
-- conditional boolean operators (&& and ||)
+- conditional boolean operators (&amp;&amp; and ||)</p>
 
-Die zugehörige Statistik arbeitet linear. Methoden mit einer zyklomatischen Komplexität 
+<p>Die zugehörige Statistik arbeitet linear. Methoden mit einer zyklomatischen Komplexität 
 von 4 oder weniger werden
 nicht gewertet. Längere Methoden werden gemäß der linearen Funktion 
 f(x) = 1/4 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
-Methoden geteilt, um das Statistik-Level zu ermitteln. 
+Methoden geteilt, um das Statistik-Level zu ermitteln. </p>
 
-#### Metrik und Statistik zur Klassengröße
+<h4>Metrik und Statistik zur Klassengröße</h4>
 
-Diese Metrik ist dateilokal und arbeitet auf Klassenebene.
+<p>Diese Metrik ist dateilokal und arbeitet auf Klassenebene.</p>
 
-Sie bestimmt die Anzahl von Methoden und Initializern in einer Klasse.
+<p>Sie bestimmt die Anzahl von Methoden und Initializern in einer Klasse.
 Die Methodensichtbarkeit wird hierbei nicht berücksichtigt. Es ist irrelevant,
-ob die Methoden statisch sind oder nicht. 
+ob die Methoden statisch sind oder nicht. </p>
 
-Die zugehörige Statistik arbeitet linear. Klassen mit einer Methodenanzahl 
+<p>Die zugehörige Statistik arbeitet linear. Klassen mit einer Methodenanzahl 
 von 12 oder weniger werden
 nicht gewertet. Längere Methoden werden gemäß der linearen Funktion 
 f(x) = 1/12 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
-Klassen geteilt, um das Statistik-Level zu ermitteln. 
+Klassen geteilt, um das Statistik-Level zu ermitteln. </p>
 
-#### Metrik und Statistik zur Average Component Dependency
+<h4>Metrik und Statistik zur Average Component Dependency</h4>
 
-Diese Metrik ist relationszentriert.
+<p>Diese Metrik ist relationszentriert.</p>
 
+<h4>Metrik und Statistik zu Paketzyklen</h4>
 
-
-#### Metrik und Statistik zu Paketzyklen
-
-Diese Metrik ist relationszentriert. Sie betrachtet hierbei nicht nur Klassenzyklen, sondern 
+<p>Diese Metrik ist relationszentriert. Sie betrachtet hierbei nicht nur Klassenzyklen, sondern 
 auch solche Beziehungen, die zwar auf der Klassenebene nichts miteinander zu tun haben,
 die aber die beteiligten Pakete zyklisch miteinander in Beziehung setzen. 
-Ein Beispiel für eine solche Beziehung findet sich in Abb. 2.
+Ein Beispiel für eine solche Beziehung findet sich in Abb. 2.</p>
 
-![](Screenshots/Paketzyklus.png)  
-*Abb. 1: Paketzyklus*
+<p><img src="Screenshots/Paketzyklus.png" alt="" title="" /> <br />
+<em>Abb. 1: Paketzyklus</em></p>
 
-Hier sind vier Klassen dargestellt, wobei die gleichfarbigen jeweils in demselben
+<p>Hier sind vier Klassen dargestellt, wobei die gleichfarbigen jeweils in demselben
 Paket liegen. Die Beziehungen zwischen den Klassen bilden keinen Zyklus,
 auf Paketebene gibt es jedoch eine zyklische Abhängigkeit.
 Eine solche Abhängigkeit entsteht, wenn manche Klassen nicht in
 den richtigen Paketen liegen, und deutet auf Probleme im Design und in 
-der Strukturierung des Projekts hin.
+der Strukturierung des Projekts hin.</p>
 
-Eine Java-Besonderheit gilt es zu beachten: Pakete korrespondieren nicht mit
+<p>Eine Java-Besonderheit gilt es zu beachten: Pakete korrespondieren nicht mit
 einem Verzeichnis im Dateisystem, sondern ein Paket kann aus Klassen in mehreren
 Verzeichnissen bestehen. Betrachtet man eins dieser Verzeichnisse für sich genommen,
 liegt kein Paketzyklus vor, aber beim Betrachten mehrerer Verzeichnisse entstehen
@@ -214,128 +204,119 @@ Zyklen. Dies passiert häufig, wenn Testcode in dieselbe Paketstruktur
 gegliedert wird wie der zugehörige Produktivcode oder wenn mehrere Projekte
 gleichnamige Pakete enthalten.
 Um derartige Zyklen zu vermeiden, hat sich das Umbenennen der Pakete als hilfreich
-erwiesen.
+erwiesen.</p>
 
+<h3>Trends</h3>
 
-### Trends
+<h2>Usus im praktischen Einsatz</h2>
 
-
-
-## Usus im praktischen Einsatz
-
-In diesem Abschnitt beschreiben wir, wie man Usus praktisch einsetzen kann, um Schwachstellen im
+<p>In diesem Abschnitt beschreiben wir, wie man Usus praktisch einsetzen kann, um Schwachstellen im
 Code leicht zu identifizieren und geeignet zu verbessern.
 Um ein Projekt zur Verfügung zu haben, das eine interessante Größe und eine realistische Struktur 
 besitzt, haben wir einen Teil der Eclipse-Sourcen gewählt, und zwar das
 platform-core Projekt. Dieser Code liegt als Eclipse-Workspace auf der beigefügten Heft-CD, kann
-aber natürlich auch direkt aus dem CVS ausgecheckt werden.
+aber natürlich auch direkt aus dem CVS ausgecheckt werden.</p>
 
-Damit Usus zum Einsatz kommen kann, müssen die zu untersuchenden Projekte festgelegt werden.
+<p>Damit Usus zum Einsatz kommen kann, müssen die zu untersuchenden Projekte festgelegt werden.
 Dazu öffnet man die Usus-Perspektive und dort die View "Projects covered by Usus". Hier
 können Projekte zur Usus-Analyse hinzugefügt und wieder entfernt werden. Nach dem Zufügen eines 
 Projekts muss die Neuberechnung durch Drücken des Refresh-Buttons im Usus Cockpit angestoßen
 werden. Diese Einstellungen werden in den Workspace Settings gespeichert, daher sind in unserem
 Beispiel-Workspace schon alle relevanten Projekte aktiviert. Nach kurzer Rechenzeit stellt sich
-das Cockpit folgendermaßen dar:
+das Cockpit folgendermaßen dar:</p>
 
-![](Screenshots/Cockpit.png)  
-*Abb. 2: Das Usus-Cockpit*
+<p><img src="Screenshots/Cockpit.png" alt="" title="" /> <br />
+<em>Abb. 2: Das Usus-Cockpit</em></p>
 
-Betrachten wir die Metriken im Einzelnen.
+<p>Betrachten wir die Metriken im Einzelnen.</p>
 
-### Methodenlänge
+<h3>Methodenlänge</h3>
 
-Der Ermittlung der Methodenlänge liegt die Gesamtzahl von 13089 Methoden zugrunde. Von diesen
+<p>Der Ermittlung der Methodenlänge liegt die Gesamtzahl von 13089 Methoden zugrunde. Von diesen
 haben 1700 Methoden mehr als 9 Statements. Dies ergibt einen Durchschnitt von 86,56. 
 Ein Doppelklick auf
 die Cockpitzeile öffnet den Hotspots View und zeigt diese Methoden an: Die Methode 
-*FrameworkCommandProvider._bundle()* ist
+<em>FrameworkCommandProvider._bundle()</em> ist
 mit 164 Statements mit Abstand am größten. Hier können wir hoffentlich einiges zur
-Verbesserung der Codequalität beitragen -- also los!
+Verbesserung der Codequalität beitragen -- also los!</p>
 
-Ein Doppelklick auf diesen Hotspot öffnet einen Java Editor mit der Methode.
+<p>Ein Doppelklick auf diesen Hotspot öffnet einen Java Editor mit der Methode.
 Die Methode erzeugt detaillierte Informationen zu einem Bundle und übergibt diese an
-einen *CommandInterpreter*.
+einen <em>CommandInterpreter</em>.
 Nach kurzem Studium des Codes erkennt man mehrere duplizierte Codeblöcke, die jeweils
-dieselbe Information an den *CommandInterpreter* weitergeben. Hier lässt sich durch
+dieselbe Information an den <em>CommandInterpreter</em> weitergeben. Hier lässt sich durch
 das Extrahieren von Methoden mehr Struktur hineinbringen, die Lesbarkeit und Übersichtlichkeit
-erhöhen und -- quasi als Nebeneffekt -- die Länge der Methode verkürzen.
+erhöhen und -- quasi als Nebeneffekt -- die Länge der Methode verkürzen.</p>
 
-Nach diesem Editiervorgang sollte der betreffende Hotspot mit einem grünen Pluszeichen
+<p>Nach diesem Editiervorgang sollte der betreffende Hotspot mit einem grünen Pluszeichen
 markiert worden sein, um eine Verbesserung anzuzeigen. Trotzdem kann es sein, dass
 sich der Gesamttrend der Methodenlängen-Metrik verschlechtert hat. Dies passiert, wenn man
 neue Hotspots zugefügt hat, z. B. durch das Extrahieren zu langer Methoden, denn der Gesamttrend
-wirkt als Frühwarnsystem und verschlechtert sich, sobald sich auch nur ein Hotspot verschlechtert hat.
+wirkt als Frühwarnsystem und verschlechtert sich, sobald sich auch nur ein Hotspot verschlechtert hat.</p>
 
-Um die Klassengröße und die zyklomatische Komplexität zu verbessern, geht man analog vor.
+<p>Um die Klassengröße und die zyklomatische Komplexität zu verbessern, geht man analog vor.</p>
 
-### Paketzyklen
+<h3>Paketzyklen</h3>
 
-Von den 112 analysierten Paketen befinden sich 74 in einem Paketzyklus, was zu einem sehr niedrigen Level
+<p>Von den 112 analysierten Paketen befinden sich 74 in einem Paketzyklus, was zu einem sehr niedrigen Level
 von 33,93 führt. Durch Doppelklicken auf die Cockpitzeile kann man die betroffenen Pakete in einer Liste
 sehen, wobei die Größe des enthaltenden Zyklus angegeben ist. Der größte Zyklus enthält 29 Pakete,
 es gibt weitere Zyklen mit 15, 13 und 5 sowie zweimal 3 und dreimal 2 Paketen.
 Klickt man auf ein solches Paket, öffnet sich der Package View mit dem jeweiligen Zyklus.
-Betrachten wir zum Beispiel den Zyklus mit 5 Paketen: 
+Betrachten wir zum Beispiel den Zyklus mit 5 Paketen: </p>
 
-![](Screenshots/Zyklus5Pakete.png)  
-*Abb. 3: Zyklus mit 5 Paketen*
+<p><img src="Screenshots/Zyklus5Pakete.png" alt="" title="" /> <br />
+<em>Abb. 3: Zyklus mit 5 Paketen</em></p>
 
-Fast alle der Kanten zwischen den Paketen sind bidirektional. Um herauszufinden, welche Klassen für
+<p>Fast alle der Kanten zwischen den Paketen sind bidirektional. Um herauszufinden, welche Klassen für
 diese Beziehungen verantwortlich sind, kann man eine oder mehrere Pakete und/oder Beziehungen auswählen
 und alle damit zusammenhängenden Klassen durch Klicken auf das Klassensymbol im Dialogheader im Class Graph anzeigen lassen.
-Wählen wir beispielsweise die Kante zwischen *org.eclipse.core.filesystem* und *org.eclipse.core.internal.filesystem* aus,
-ergibt sich das folgende Bild:
+Wählen wir beispielsweise die Kante zwischen <em>org.eclipse.core.filesystem</em> und <em>org.eclipse.core.internal.filesystem</em> aus,
+ergibt sich das folgende Bild:</p>
 
-![](Screenshots/KlassenAusFilesystem.png)  
-*Abb. 4: Klassen aus org.eclipse.core.filesystem und org.eclipse.core.internal.filesystem*
+<p><img src="Screenshots/KlassenAusFilesystem.png" alt="" title="" /> <br />
+<em>Abb. 4: Klassen aus org.eclipse.core.filesystem und org.eclipse.core.internal.filesystem</em></p>
 
-Hierbei stellen die roten Kanten paketübergreifende Klassenbeziehungen dar, während
+<p>Hierbei stellen die roten Kanten paketübergreifende Klassenbeziehungen dar, während
 Beziehungen innerhalb eines Pakets schwarz dargestellt sind.
-In unserem Beispiel referenziert die öffentliche Klasse *EFS* interne Klassen, 
+In unserem Beispiel referenziert die öffentliche Klasse <em>EFS</em> interne Klassen, 
 und interne Klassen nehmen Bezug auf öffentliche Interfaces in
-demselben Paket wie die Klasse *EFS*. Dieser Zyklus lässt sich dadurch auflösen, dass
- die Klasse *EFS* in ein anderes Paket verlagert wird.
+demselben Paket wie die Klasse <em>EFS</em>. Dieser Zyklus lässt sich dadurch auflösen, dass
+ die Klasse <em>EFS</em> in ein anderes Paket verlagert wird.
 Betrachtet man größere Paketzyklen, beispielsweise den größten mit 29 Paketen,
 ist es schwer, auf einen Blick die relevanten Zusammenhänge zu erfassen.
 Daher ist es möglich, einzelne Pakete aus dem View herauszufiltern, indem man
 sie markiert und durch Klick auf das schwarze Kreuz entfernt. So lassen sich beliebig
 viele Pakete in einem oder mehreren Schritten entfernen. Zum Aufheben dieses 
-Filters klickt man auf den Radiergummi.
+Filters klickt man auf den Radiergummi.</p>
 
+<h2>Ausblick</h2>
 
+<h3>Erweiterbarkeit</h3>
 
-## Ausblick
+<p>Erweiterbarkeit von Usus 
+(an der wir gerade arbeiten)</p>
 
-### Erweiterbarkeit
+<h3>Zukünftige Features</h3>
 
-Erweiterbarkeit von Usus 
-(an der wir gerade arbeiten)
+<p>Ausblick auf mögliche 
+zukünftige Features</p>
 
-### Zukünftige Features
+<hr />
 
-Ausblick auf mögliche 
-zukünftige Features
+<h2>Literatur</h2>
 
+<p>http://raptureinvenice.com/?p=63</p>
 
-----------------------
+<ol>
+<li>Martin Fowler - Refactoring: Improving the Design of Existing Code, Addison-Wesley Longman, 1999</li>
+<li>Pete McBreen - Software Craftsmanship: The New Imperative, Addison Wesley, 2001</li>
+<li>Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship, Prentice Hall, 2008</li>
+<li><a href="http://clean-code-developer.de/">CCD</a></li>
+<li><a href="http://checkstyle.sourceforge.net/">Checkstyle</a></li>
+<li><a href="http://findbugs.sourceforge.net/">FindBugs</a></li>
+<li><a href="http://pmd.sourceforge.net/">PMD</a></li>
+</ol>
 
-## Literatur
-
-http://raptureinvenice.com/?p=63
-
-1. Martin Fowler - Refactoring: Improving the Design of Existing Code, Addison-Wesley Longman, 1999
-2. Pete McBreen - Software Craftsmanship: The New Imperative, Addison Wesley, 2001
-3. Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship, Prentice Hall, 2008
-4. [CCD][]
-5. [Checkstyle][]
-6. [FindBugs][]
-7. [PMD][]
-
-[CCD]: http://clean-code-developer.de/
-[Checkstyle]: http://checkstyle.sourceforge.net/
-[FindBugs]: http://findbugs.sourceforge.net/
-[PMD]: http://pmd.sourceforge.net/
-
-Code Coverage:
-http://angryweasel.com/blog/?p=172
+<p>Code Coverage:
+http://angryweasel.com/blog/?p=172</p>
