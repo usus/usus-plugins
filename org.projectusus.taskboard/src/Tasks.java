@@ -2,6 +2,26 @@ public class Tasks {
 
     // Tasks for USUS 1.0
 
+    void statusHeaderzeileImHotspotsView() {
+        // TODO im Hotspots View soll die dargestellte Metrik angezeigt werden
+        // Titel der Metrik in einer Statuszeile wie in den Graphen angezeigt werden
+    }
+
+    void statusHeaderzeileInDenGraphenVerbessern() {
+        // TODO die Statuszeile wird leicht zu lang. Wie damit umgehen?
+        // Tooltip? Zusammenfassung?
+    }
+
+    void usabilityFuerDieGraphenPolieren() {
+        // TODO - öffnet man einen Class Graph aus dem Package Graphen, sind nur zyklische aktiv
+        // TODO - die beiden Class Graph Fenster unifizieren? Mit Filter auf externe Kanten
+    }
+
+    void codeWeiterOrganisieren() {
+        // TODO Package Zyklen raus
+        // TODO Warnings wegen internal packages entfernen
+    }
+
     void checkContextMenuInCockpit() {
         // TODO soll das so bleiben?
     }

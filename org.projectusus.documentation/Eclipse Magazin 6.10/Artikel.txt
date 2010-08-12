@@ -10,6 +10,7 @@ zukünftige Features geben.
 ----------
 
 Usus 1.0 - Einsicht und Handeln
+===============================
 
 In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein
 Bewusstsein für Codequalität / innere Softwarequalität entwickelt. 
@@ -31,7 +32,8 @@ für eine gute Nachvollziehbarkeit des Codes halten.
 
 Beim Entwickeln von Software ist die Versuchung groß, sich nicht zu lange mit dem Aufräumen der Codebasis
 aufzuhalten: Aufräumen braucht Zeit, die man besser zum Codieren verwenden kann; das Projekt ist doch 
-bald zu Ende; alle Entwickler kennen den ganzen Code; neue Teammitglieder wird es nicht geben; und außerdem wird die Software sowieso nicht lange leben, keine neuen Features bekommen
+bald zu Ende; alle Entwickler kennen den ganzen Code; neue Teammitglieder wird es nicht geben; 
+und außerdem wird die Software sowieso nicht lange leben, keine neuen Features bekommen
 und nicht gewartet werden müssen, denn es hat ja keine Bugs. Unsere Erfahrungen in Legacy-Projekten
 lehren uns, dass diese Annahmen eher ins Reich der Entwicklermärchen gehören. Software-"Zwischenlösungen", 
 die seit 10 Jahren weiterentwickelt werden und inzwischen ihren Funktionsumfang vervielfacht haben,
@@ -99,7 +101,164 @@ werden im Usus Cockpit dargestellt. Das Cockpit ist die zentrale View von Usus; 
 globalen Informationen. Ein Doppelklick auf eine der Metriken zeigt die Verletzungen der betreffenden Metrik 
 an. Von hier kann man direkt zur betroffenen Klasse oder Methode springen und sich den Code ansehen.
 
+---
 
+
+## Das Usus-Cockpit
+
+Das Usus Cockpit gibt einen Überblick über die berechneten Statistiken und ihre aktuellen
+Werte. Hierbei werden die Gesamtzahl der zugrundeliegenden Elemente (d. h. Klassen, Methoden 
+oder Packages),
+die Anzahl derjenigen Elemente, die eine Bewertung größer als 0 erhalten haben, sowie
+das Gesamtlevel der Statistik angezeigt.
+
+Das Motto von Usus lautet "Einsicht und Handeln". Das Cockpit erlaubt zwar Einsicht in den
+aktuellen Zustand des Codes, aber zum Handeln genügt es nicht. Deshalb kann man auf jede
+Statistik im Cockpit doppelklicken, um zum Hotspots View zu gelangen. Dort werden die Elemente
+mit einer Bewertung größer als 0 aufgeführt. Bei dateilokalen Statistiken gelangt man von dort
+durch einen Doppelklick in das entsprechende Element in einem Java Editor.
+Bei relationenzentrierten Statistiken wird ein Graph angezeigt. Die Arbeit mit diesen Graphen
+wird weiter unten beschrieben. Zuerst wollen wir einen Überblick über die in Usus implementierten
+Metriken und Statistiken geben.
+
+
+## Metriken und Statistiken
+
+In Usus unterscheiden wir zwischen der statischen Analyse des vorliegenden Codes durch sogenannte
+Metriken,
+in der wir verschiedene den Code beschreibende Werte extrahieren,
+und zwischen der Evaluierung dieser Werte durch Statistiken, die zu statistischen 
+Informationen bezüglich
+des betrachteten Codes führt. Diese beiden Schritte sind voneinander getrennt.
+Insbesondere ist es möglich, mehrere Statistiken zu implementieren, die auf denselben
+Metrikwerten operieren. So kann Usus an verschiedene Einsatzsituationen angepasst werden,
+z. B. durch das Zuschneiden auf unterschiedliche Qualitätsniveaus des zu untersuchenden Codes
+oder indem eine Statistik die Werte mehrerer Metriken gemeinsam betrachtet.
+
+Im Folgenden gilt alles, was sich auf Methoden bezieht, genauso auch für Initializer. Wir
+verzichten auf die Doppelnennung zugunsten der Lesbarkeit des Textes.
+
+Die Usus-Metriken analysieren entweder den Inhalt eines einzelnen Source-Files, ohne sich
+auf andere Files zu beziehen, oder sie analysieren die Relationen zwischen mehreren
+Source-Files. Daher unterscheiden wir zwischen dateilokalen und relationenzentrierten Metriken.
+Für jede Metrik geben wir an, zu welcher Kategorie sie gehört.
+
+Extension Points erlauben die Erweiterbarkeit von Usus durch eigene Metriken und Statistiken.
+Dies wird weiter unten genauer beschrieben.
+
+### Metrik und Statistik zur Methodenlänge
+
+Diese Metrik ist dateilokal und arbeitet auf Methodenebene.
+
+Die Metrik bestimmt die Anzahl der Statements in jedem Methodenrumpf. Dieser Wert unterscheidet
+sich von der Anzahl der Codezeilen folgendermaßen:
+- schließende Klammern, die sich auf einer eigenen Zeile befinden, werden nicht gezählt
+- Kommentare werden nicht gezählt
+- Statements, die mehr als eine Zeile beanspruchen, werden als 1 gezählt (die Auswirkungen sind
+besonders groß beim Anlegen anonymer Klassen)
+- der Methodenheader wird nicht gezählt
+
+Die zugehörige Statistik arbeitet linear. Methoden mit einer Länge von 9 oder weniger werden
+nicht gewertet. Längere Methoden werden gemäß der linearen Funktion 
+f(x) = (x-9)/9 = 1/9 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
+Methoden geteilt, um das Statistik-Level zu ermitteln.
+
+
+
+## Metrik und Statistik zur zyklomatischen Komplexität
+
+Diese Metrik ist dateilokal und arbeitet auf Methodenebene.
+
+Sie bestimmt die Anzahl der möglichen Verzweigungen im Ausführungspfad durch einen Methodenrumpf.
+Ein leerer Methodenrumpf hat hierbei eine zyklomatische Komplexität von 1. Jedes Vorkommen eines
+der folgenden Elemente erhöht diesen Wert um 1:
+- while
+- do-while
+- for
+- if
+- ein case eines switch Statements
+- catch clause
+- conditional operator (aka. ? : operator)
+- conditional boolean operators (&& and ||)
+
+Die zugehörige Statistik arbeitet linear. Methoden mit einer zyklomatischen Komplexität 
+von 4 oder weniger werden
+nicht gewertet. Längere Methoden werden gemäß der linearen Funktion 
+f(x) = 1/4 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
+Methoden geteilt, um das Statistik-Level zu ermitteln. 
+
+## Metrik und Statistik zur Klassengröße
+
+Diese Metrik ist dateilokal und arbeitet auf Klassenebene.
+
+Sie bestimmt die Anzahl von Methoden und Initializern in einer Klasse.
+Die Methodensichtbarkeit wird hierbei nicht berücksichtigt. Es ist irrelevant,
+ob die Methoden statisch sind oder nicht. 
+
+Die zugehörige Statistik arbeitet linear. Klassen mit einer Methodenanzahl 
+von 12 oder weniger werden
+nicht gewertet. Längere Methoden werden gemäß der linearen Funktion 
+f(x) = 1/12 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
+Klassen geteilt, um das Statistik-Level zu ermitteln. 
+
+## Metrik und Statistik zur Average Component Dependency
+
+Diese Metrik ist relationszentriert.
+
+
+
+## Metrik und Statistik zu Packagezyklen
+
+
+## Trends
+
+
+
+## Usus im praktischen Einsatz
+
+In diesem Abschnitt beschreiben wir, wie man Usus praktisch einsetzen kann, um Schwachstellen im
+Code leicht zu identifizieren und geeignet zu verbessern.
+Um ein Projekt zur Verfügung zu haben, das eine interessante Größe und eine realistische Struktur 
+besitzt, haben wir einen Teil der Eclipse-Sourcen gewählt, und zwar das
+platform-core Projekt. Dieser Code liegt als Eclipse-Workspace auf der beigefügten Heft-CD, kann
+aber natürlich auch direkt aus dem CVS ausgecheckt werden.
+
+Damit Usus zum Einsatz kommen kann, müssen die zu untersuchenden Projekte festgelegt werden.
+Dazu öffnet man die Usus-Perspektive und dort die View "Projects covered by Usus". Hier
+können Projekte zur Usus-Analyse hinzugefügt und wieder entfernt werden. Nach dem Zufügen eines 
+Projekts muss die Neuberechnung durch Drücken des Refresh-Buttons im Usus Cockpit angestoßen
+werden. Diese Einstellungen werden in den Workspace Settings gespeichert, daher sind in unserem
+Beispiel-Workspace schon alle relevanten Projekte aktiviert. Nach kurzer Rechenzeit stellt sich
+das Cockpit folgendermaßen dar:
+
+<Screenshot Usus Cockpit mit Eclipse Projekt>
+
+Betrachten wir die Metriken im Einzelnen.
+
+## Methodenlänge
+
+Der Ermittlung der Methodenlänge liegt die Gesamtzahl von 13089 Methoden zugrunde. Von diesen
+haben 1700 Methoden mehr als 9 Statements. Dies ergibt einen Durchschnitt von 86,56. 
+Ein Doppelklick auf
+die Cockpitzeile öffnet den Hotspots View und zeigt diese Methoden an: Die Methode 
+FrameworkCommandProvider._bundle() ist
+mit 164 Statements mit Abstand am größten. Hier können wir hoffentlich einiges zur
+Verbesserung der Codequalität beitragen -- also los!
+
+Ein Doppelklick auf diesen Hotspot öffnet einen Java Editor mit der Methode.
+Die Methode erzeugt detaillierte Informationen zu einem Bundle und übergibt diese an
+einen CommandInterpreter.
+Nach kurzem Studium des Codes erkennt man mehrere duplizierte Codeblöcke, die jeweils
+dieselbe Information an den CommandInterpreter weitergeben. Hier lässt sich durch
+das Extrahieren einer Methode mehr Überblick verschaffen:
+
+
+
+## Klassengröße
+
+
+
+--------------------
 
 das Entwickeln mit 
 Usus-Unterstützung -- wie von Ihnen vorgeschlagen -- anhand eines Beispiels 
@@ -121,3 +280,6 @@ zukünftige Features
 Literatur
 
 http://raptureinvenice.com/?p=63
+
+Code Coverage:
+http://angryweasel.com/blog/?p=172
