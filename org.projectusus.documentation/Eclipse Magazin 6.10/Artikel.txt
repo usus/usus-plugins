@@ -103,6 +103,8 @@ Bei relationenzentrierten Statistiken wird ein Graph angezeigt. Die Arbeit mit d
 wird weiter unten beschrieben. Zuerst wollen wir einen Überblick über die in Usus implementierten
 Metriken und Statistiken geben.
 
+(Verweis auf Cockpit.png)
+
 
 ### Metriken und Statistiken
 
@@ -142,7 +144,7 @@ besonders groß beim Anlegen anonymer Klassen)
 
 Die zugehörige Statistik arbeitet linear. Methoden mit einer Länge von 9 oder weniger werden
 nicht gewertet. Längere Methoden werden gemäß der linearen Funktion 
-f(x) = (x-9)/9 = 1/9 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
+f(x) = 1/9 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
 Methoden geteilt, um das Statistik-Level zu ermitteln.
 
 
@@ -189,7 +191,28 @@ Diese Metrik ist relationszentriert.
 
 
 
-#### Metrik und Statistik zu Packagezyklen
+#### Metrik und Statistik zu Paketzyklen
+
+Diese Metrik ist relationszentriert. Sie betrachtet hierbei nicht nur Klassenzyklen, sondern 
+auch solche Beziehungen, die zwar auf der Klassenebene nichts miteinander zu tun haben,
+die aber die beteiligten Pakete zyklisch miteinander in Beziehung setzen. 
+Ein Beispiel für eine solche Beziehung findet sich in <Paketzyklus.png>:
+Hier sind vier Klassen dargestellt, wobei die gleichfarbigen jeweils in demselben
+Paket liegen. Die Beziehungen zwischen den Klassen bilden keinen Zyklus,
+auf Paketebene gibt es jedoch eine zyklische Abhängigkeit.
+Eine solche Abhängigkeit entsteht, wenn manche Klassen nicht in
+den richtigen Paketen liegen, und deutet auf Probleme im Design und in 
+der Strukturierung des Projekts hin.
+
+Eine Java-Besonderheit gilt es zu beachten: Pakete korrespondieren nicht mit
+einem Verzeichnis im Dateisystem, sondern ein Paket kann aus Klassen in mehreren
+Verzeichnissen bestehen. Betrachtet man eins dieser Verzeichnisse für sich genommen,
+liegt kein Paketzyklus vor, aber beim Betrachten mehrerer Verzeichnisse entstehen
+Zyklen. Dies passiert häufig, wenn Testcode in dieselbe Paketstruktur
+gegliedert wird wie der zugehörige Produktivcode oder wenn mehrere Projekte
+gleichnamige Pakete enthalten.
+Um derartige Zyklen zu vermeiden, hat sich das Umbenennen der Pakete als hilfreich
+erwiesen.
 
 
 ### Trends
@@ -213,7 +236,7 @@ werden. Diese Einstellungen werden in den Workspace Settings gespeichert, daher 
 Beispiel-Workspace schon alle relevanten Projekte aktiviert. Nach kurzer Rechenzeit stellt sich
 das Cockpit folgendermaßen dar:
 
-<Screenshot Usus Cockpit mit Eclipse Projekt>
+<Cockpit.png>
 
 Betrachten wir die Metriken im Einzelnen.
 
@@ -232,13 +255,21 @@ Die Methode erzeugt detaillierte Informationen zu einem Bundle und übergibt dies
 einen CommandInterpreter.
 Nach kurzem Studium des Codes erkennt man mehrere duplizierte Codeblöcke, die jeweils
 dieselbe Information an den CommandInterpreter weitergeben. Hier lässt sich durch
-das Extrahieren einer Methode mehr Überblick verschaffen:
+das Extrahieren von Methoden mehr Struktur hineinbringen, die Lesbarkeit und Übersichtlichkeit
+erhöhen und -- quasi als Nebeneffekt -- die Länge der Methode verkürzen.
 
+Nach diesem Editiervorgang sollte der betreffende Hotspot mit einem grünen Pluszeichen
+markiert worden sein, um eine Verbesserung anzuzeigen. Trotzdem kann es sein, dass
+sich der Gesamttrend der Methodenlängen-Metrik verschlechtert hat. Dies passiert, wenn man
+neue Hotspots zugefügt hat, z. B. durch das Extrahieren zu langer Methoden, denn der Gesamttrend
+wirkt als Frühwarnsystem und verschlechtert sich, sobald sich auch nur ein Hotspot verschlechtert hat.
 
+Um die Klassengröße und die zyklomatische Komplexität zu verbessern, geht man analog vor.
 
 ### Paketzyklen
 
-
+Von den 112 analysierten Paketen befinden sich 74 in einem Paketzyklus. Um diese Zyklen analysieren zu
+können, 
 
 ## Ausblick
 
