@@ -1,21 +1,9 @@
-### Abstract
-
-Zum Inhalt: Beginnen würden wir mit einer Abgrenzung zu anderen Analyse-Werkzeugen 
-wie Checkstyle, FindBugs, PMD etc. Anschließend würden wir das Entwickeln mit 
-Usus-Unterstützung -- wie von Ihnen vorgeschlagen -- anhand eines Beispiels 
-demonstrieren. Abschließend würden wir auf die Erweiterbarkeit von Usus 
-(an der wir gerade arbeiten) zu sprechen kommen und einen Ausblick auf mögliche 
-zukünftige Features geben.
-
-----------
-
 # Einsicht und Handeln mit Usus
 
 In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein Bewusstsein für 
 Codequalität / innere Softwarequalität entwickelt. Doch was bedeutet Codequalität eigentlich? Kann 
 man sie messen? Und wenn man sie misst, welche Erkenntnisse gewinnt man daraus? Und wenn man 
 Erkenntnisse gewonnen hat, wie reagiert man darauf und was kann man zur Verbesserung unternehmen?
-
 Usus versucht eine Antwort auf diese Fragen zu geben.
 
 ## Warum Codequalität?
@@ -27,68 +15,63 @@ direkten Zusammenhang mit der Nachvollziehbarkeit: Man sollte nur Code ändern, d
 Usus prüft verschiedene Aspekte des Codes, die wir für essentiell für eine gute Nachvollziehbarkeit
 und damit eine leichte Änderbarkeit des Codes halten.
 
-### Warum soll ich meinen Code überhaupt ändern?
-
+**Warum soll ich meinen Code überhaupt ändern?**
 Beim Entwickeln von Software ist die Versuchung groß, sich nicht zu lange mit dem Aufräumen der 
 Codebasis aufzuhalten: Aufräumen braucht Zeit, die man besser zum Codieren verwenden kann; das 
 Projekt ist doch bald zu Ende; alle Entwickler kennen den ganzen Code; neue Teammitglieder wird es 
 nicht geben; und außerdem wird die Software sowieso nicht lange leben, keine neuen Features 
-bekommen und nicht gewartet werden müssen, denn es hat ja keine Bugs. Unsere Erfahrungen in 
+bekommen und nicht gewartet werden müssen, denn sie hat ja keine Bugs. Unsere Erfahrungen in 
 Legacy-Projekten lehren uns, dass diese Annahmen eher ins Reich der Entwicklermärchen gehören. 
 Software-"Zwischenlösungen", die seit 10 Jahren weiterentwickelt werden und inzwischen ihren
 Funktionsumfang vervielfacht haben, scheinen eher an der Tagesordnung zu sein.
 
-### Warum ein Analysewerkzeug?
-
+**Warum ein Analysewerkzeug?**
 Die Geschmäcker sind verschieden. Und so gibt es auch viele Meinungen dazu, was lesbaren und
 verständlichen Code ausmacht. Analysewerkzeuge helfen dabei, diese Meinungen zu vereinheitlichen,
 so dass jedes Mitglied eines Teams dieselben Regeln für seinen Code zugrundelegt. Genauso wie
 alle Teammitglieder dieselben Formatierungsregeln benutzen, damit der Code gleich formatiert ist.
 
-### Wo kann ich weiterlesen?
+**Wo kann ich weiterlesen?**
 
-Bob Martin, Clean Code
-Fowler, Refactoring
-Clean Code Developer
-McBreen, Software Craftsmanship
+- Bob Martin, Clean Code
+- Fowler, Refactoring
+- Clean Code Developer
+- McBreen, Software Craftsmanship
 
 
 ## Warum noch ein Analysewerkzeug?
 
-Es gibt viele solche Analysewerkzeuge, und viele davon sind auch in Eclipse integriert, wie zum 
-Beispiel Checkstyle [[1]][Checkstyle], FindBugs [[2]][FindBugs] oder PMD [[3]][PMD]. Warum bauen
-wir also noch ein weiteres derartiges Werkzeug?
+Es gibt viele Code-Analysewerkzeuge, und viele davon sind auch in Eclipse integriert, wie zum 
+Beispiel Checkstyle [[1]][Checkstyle], FindBugs [[2]][FindBugs] und PMD [[3]][PMD]. Warum bauen
+wir also noch ein weiteres derartiges Werkzeug? In erster Linie liegt dies daran, dass die
+existierenden Tools unsere Bedürfnisse in der einen oder anderen Hinsicht nicht erfüllen.
 
-In erster Linie liegt dies daran, dass die existierenden Werkzeuge in der einen oder anderen 
-Hinsicht nicht nützlich für uns sind.
+**Ungeeignete Standardeinstellungen.**
+Vor allem die Grundeinstellungen von Checkstyle sind in unseren Augen nicht hilfreich um gut
+lesbaren Code zu erzeugen. Beispielsweise ist die Maximallänge von Methoden auf 150 
+Zeilen voreingestellt; uns schwebt dagegen eher eine Methodenlänge von 15 Zeilen vor. Das gleiche 
+gilt für Einstellungen, die das Fehlen von Javadoc bemängeln; wir würden im Normalfall eher das
+Vorhandensein von Javadoc bemängeln.
 
-### Ungeeignete Default-Einstellungen
-
-In unseren Augen ist z. B. eine voreingestellte Methodenlänge von 150 Zeilen nicht hilfreich, um gut
-lesbaren Code zu erzeugen (uns schwebt eher eine Methodenlänge von 15 Zeilen vor). Das gleiche gilt für
-Einstellungen, die das Fehlen von Javadoc bemängeln (wir würden im Allgemeinen eher das Vorhandensein 
-von Javadoc bemängeln).
-
--- Welche Tools betrifft das? Checkstyle
-
-### Warnings, so weit das Auge reicht
-
+**Warnings, so weit das Auge reicht.**
 Einige Tools sind in ihren Standardeinstellungen so scharf gestellt und berücksichtigen so viele
-relativ unwichtige Probleme, dass man förmlich in Warnings ertrinkt, wenn man sie in der Standardeinstellung
-benutzt. Hier ist nicht klar, welche Priorität die einzelnen Warnings haben und wie man ohne große Mühe
-alle Warnings einer Art im gesamten Workspace identifizieren und bearbeiten kann.
+relativ unwichtige Probleme, dass man förmlich in Warnings ertrinkt. Oft ist nicht klar, welche 
+Priorität einzelne Warnings haben und wie man ohne große Mühe alle Warnings einer Art im gesamten
+Workspace identifizieren und bearbeiten kann.
 
-### Warnings ohne Hilfestellung
+**Warnings ohne Hilfestellung.**
+Warnings sind nur dann hilfreich, wenn sie behoben werden können. Checkstyle und FindBugs bieten in
+einigen Fällen zwar die Möglichkeit eine Warning per *Quick Fix* zu beheben, allerdings fällt es bei 
+vielen der standardmäßig eingestellten Überprüfungen auf den ersten Blick schwer, ihren Hintergrund 
+zu erfassen und ihre Relevanz im Verhältnis zu den anderen Warnungen zu beurteilen.
 
-Warnings müssen behoben werden können.
+**Ausschließlich Datei-lokale Checks.**
+Die Überprüfungen aller drei Tools beschränken sich auf die Auswertung von Regeln auf Dateiebene.
+Sie machen keine Aussage über die Gesamtstruktur bzw. Architektur des Systems. 
 
--- Welche Tools betrifft das?
-
-
-### Veränderungen sind Geheimsache
-
-Keins der oben genannten Tools bietet einen unmittelbaren Überblick darüber, ob mein aktuelles Tun gerade
-die Codebasis verbessert oder verschlechtert. 
+**Veränderungen sind Geheimsache.**
+Keines der oben genannten Erkzeuge bietet einen unmittelbaren Überblick darüber, ob mein aktuelles 
+Tun gerade die Qualität der Codebasis verbessert oder verschlechtert. 
 
 
 ## Der Einsatz von Usus
