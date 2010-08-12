@@ -1,7 +1,7 @@
 # Einsicht und Handeln mit Usus
 
 In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein Bewusstsein für 
-Codequalität / innere Softwarequalität entwickelt. Doch was bedeutet Codequalität eigentlich? Kann 
+Codequalität bzw. innere Softwarequalität entwickelt. Doch was bedeutet Codequalität eigentlich? Kann 
 man sie messen? Und wenn man sie misst, welche Erkenntnisse gewinnt man daraus? Und wenn man 
 Erkenntnisse gewonnen hat, wie reagiert man darauf und was kann man zur Verbesserung unternehmen? 
 Usus versucht eine Antwort auf diese Fragen zu geben.
@@ -11,7 +11,7 @@ Usus versucht eine Antwort auf diese Fragen zu geben.
 
 Jedes Stück Code wird nur einmal geschrieben, aber möglicherweise Hunderte von Malen gelesen und
 nachvollzogen. Daher ist es sehr effektiv, den Code so zu gestalten, dass das Lesen und 
-Verstehen einfach wird. Die Änderbarkeit steht als weiterer wichtige Eigenschaft des Codes im 
+Verstehen einfach wird. Die Änderbarkeit steht als weitere wichtige Eigenschaft des Codes im 
 direkten Zusammenhang mit der Nachvollziehbarkeit: Man sollte nur Code ändern, den man versteht! 
 Usus prüft verschiedene Aspekte des Codes, die wir für essentiell für eine gute Nachvollziehbarkeit
 und damit eine leichte Änderbarkeit des Codes halten.
@@ -56,7 +56,7 @@ Vorhandensein von Javadoc bemängeln.
 **Warnings, so weit das Auge reicht.**
 Einige Tools sind in ihren Standardeinstellungen so scharf gestellt und berücksichtigen so viele
 relativ unwichtige Probleme, dass man förmlich in Warnings ertrinkt. Mit Ausnahme von FindBugs ist
-auf den ersten Blick ist nicht klar, welche Priorität einzelne Warnings haben und wie man ohne 
+auf den ersten Blick nicht klar, welche Priorität einzelne Warnings haben und wie man ohne 
 große Mühe alle Warnings einer Art im gesamten Workspace identifizieren und bearbeiten kann.
 
 **Warnings ohne Hilfestellung.**
@@ -268,8 +268,31 @@ Um die Klassengröße und die zyklomatische Komplexität zu verbessern, geht man an
 
 ### Paketzyklen
 
-Von den 112 analysierten Paketen befinden sich 74 in einem Paketzyklus. Um diese Zyklen analysieren zu
-können, 
+Von den 112 analysierten Paketen befinden sich 74 in einem Paketzyklus, was zu einem sehr niedrigen Level
+von 33,93 führt. Durch Doppelklicken auf die Cockpitzeile kann man die betroffenen Pakete in einer Liste
+sehen, wobei die Größe des enthaltenden Zyklus angegeben ist. Der größte Zyklus enthält 29 Pakete,
+es gibt weitere Zyklen mit 15, 13 und 5 sowie zweimal 3 und dreimal 2 Paketen.
+Klickt man auf ein solches Paket, öffnet sich der Package View mit dem jeweiligen Zyklus.
+Betrachten wir zum Beispiel den Zyklus mit 5 Paketen: <Zyklus5Pakete.png>
+Fast alle der Kanten zwischen den Paketen sind bidirektional. Um herauszufinden, welche Klassen für
+diese Beziehungen verantwortlich sind, kann man eine oder mehrere Pakete und/oder Beziehungen auswählen
+und alle damit zusammenhängenden Klassen durch Klicken auf das Klassensymbol im Dialogheader im Class Graph anzeigen lassen.
+Wählen wir beispielsweise die Kante zwischen org.eclipse.core.filesystem und org.eclipse.core.internal.filesystem aus,
+ergibt sich das folgende Bild: <KlassenAusFilesystem.png>
+Hierbei stellen die roten Kanten paketübergreifende Klassenbeziehungen dar, während
+Beziehungen innerhalb eines Pakets schwarz dargestellt sind.
+In unserem Beispiel referenziert die öffentliche Klasse EFS interne Klassen, 
+und interne Klassen nehmen Bezug auf öffentliche Interfaces in
+demselben Paket wie die Klasse EFS. Dieser Zyklus lässt sich dadurch auflösen, dass
+ die Klasse EFS in ein anderes Paket verlagert wird.
+Betrachtet man größere Paketzyklen, beispielsweise den größten mit 29 Paketen,
+ist es schwer, auf einen Blick die relevanten Zusammenhänge zu erfassen.
+Daher ist es möglich, einzelne Pakete aus dem View herauszufiltern, indem man
+sie markiert und durch Klick auf das schwarze Kreuz entfernt. So lassen sich beliebig
+viele Pakete in einem oder mehreren Schritten entfernen. Zum Aufheben dieses 
+Filters klickt man auf den Radiergummi.
+
+
 
 ## Ausblick
 
