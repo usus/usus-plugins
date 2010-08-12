@@ -13,12 +13,16 @@ import org.projectusus.core.statistics.DefaultCockpitExtension;
 public class LinearClassSizeStatistic extends DefaultCockpitExtension {
 
     private static int KG_LIMIT = 12;
-    private static String isisMetrics_kg = "Class size (linear)"; //$NON-NLS-1$
+    private static String label = "Class size (linear: 0: <= %d | 1: %d)"; //$NON-NLS-1$
 
     private double linearViolations = 0.0;
 
+    private static String metricsLabel() {
+        return String.format( label, new Integer( KG_LIMIT ), new Integer( 2 * KG_LIMIT ) );
+    }
+
     public LinearClassSizeStatistic() {
-        super( isisMetrics_kg, codeProportionUnit_CLASS_label, KG_LIMIT );
+        super( metricsLabel(), codeProportionUnit_CLASS_label, KG_LIMIT );
     }
 
     @Override

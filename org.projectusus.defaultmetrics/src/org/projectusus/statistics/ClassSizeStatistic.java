@@ -7,10 +7,14 @@ import org.projectusus.core.statistics.DefaultCockpitExtension;
 public class ClassSizeStatistic extends DefaultCockpitExtension {
 
     private static int KG_LIMIT = 20;
-    private static String isisMetrics_kg = "Class size"; //$NON-NLS-1$
+    private static String label = "Class size (0: <= %d)"; //$NON-NLS-1$
+
+    private static String metricsLabel() {
+        return String.format( label, new Integer( KG_LIMIT ) );
+    }
 
     public ClassSizeStatistic() {
-        super( isisMetrics_kg, codeProportionUnit_CLASS_label, KG_LIMIT );
+        super( metricsLabel(), codeProportionUnit_CLASS_label, KG_LIMIT );
     }
 
     @Override

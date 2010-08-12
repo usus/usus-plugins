@@ -7,12 +7,16 @@ import org.projectusus.core.statistics.DefaultCockpitExtension;
 public class LinearMethodLengthStatistic extends DefaultCockpitExtension {
 
     private static int ML_LIMIT = 9;
-    private static String isisMetrics_ml = "Method length (linear)"; //$NON-NLS-1$
+    private static String label = "Method length (linear: 0: <= %d | 1: %d)"; //$NON-NLS-1$
 
     private double linearViolations = 0.0;
 
+    private static String metricsLabel() {
+        return String.format( label, new Integer( ML_LIMIT ), new Integer( 2 * ML_LIMIT ) );
+    }
+
     public LinearMethodLengthStatistic() {
-        super( isisMetrics_ml, codeProportionUnit_METHOD_label, ML_LIMIT );
+        super( metricsLabel(), codeProportionUnit_METHOD_label, ML_LIMIT );
     }
 
     @Override

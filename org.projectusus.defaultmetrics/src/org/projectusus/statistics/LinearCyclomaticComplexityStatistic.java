@@ -7,12 +7,16 @@ import org.projectusus.core.statistics.DefaultCockpitExtension;
 public class LinearCyclomaticComplexityStatistic extends DefaultCockpitExtension {
 
     private static int CC_LIMIT = 4;
-    private static String isisMetrics_cc = "Cyclomatic complexity (linear)"; //$NON-NLS-1$
+    private static String label = "Cyclomatic complexity (linear: 0: <= %d | 1: %d)"; //$NON-NLS-1$
 
     private double linearViolations = 0.0;
 
+    private static String metricsLabel() {
+        return String.format( label, new Integer( CC_LIMIT ), new Integer( 2 * CC_LIMIT ) );
+    }
+
     public LinearCyclomaticComplexityStatistic() {
-        super( isisMetrics_cc, codeProportionUnit_METHOD_label, CC_LIMIT );
+        super( metricsLabel(), codeProportionUnit_METHOD_label, CC_LIMIT );
     }
 
     @Override

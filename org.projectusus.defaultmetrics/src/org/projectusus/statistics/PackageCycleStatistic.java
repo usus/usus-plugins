@@ -16,10 +16,10 @@ import org.projectusus.core.statistics.visitors.PackageCountVisitor;
 
 public class PackageCycleStatistic extends DefaultCockpitExtension {
 
-    private static String isisMetrics_pc = "Packages with cyclic dependencies"; //$NON-NLS-1$
+    private static String label = "Packages with cyclic dependencies"; //$NON-NLS-1$
 
     public PackageCycleStatistic() {
-        super( isisMetrics_pc, "", 0 ); //$NON-NLS-1$
+        super( label, "", 0 ); //$NON-NLS-1$
     }
 
     @Override
