@@ -1,8 +1,8 @@
 <h1>Einsicht und Handeln mit Usus</h1>
 
 <p>In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein Bewusstsein für 
-Codequalität bzw. innere Softwarequalität entwickelt. Doch was bedeutet Codequalität eigentlich? Kann 
-man sie messen? Und wenn man sie misst, welche Erkenntnisse gewinnt man daraus? Und wenn man 
+Codequalität bzw. innere Softwarequalität entwickelt. Doch was bedeutet Codequalität eigentlich? 
+Kann man sie messen? Und falls ja, welche Erkenntnisse gewinnt man daraus? Und wenn man 
 Erkenntnisse gewonnen hat, wie reagiert man darauf und was kann man zur Verbesserung unternehmen? 
 Usus versucht eine Antwort auf diese Fragen zu geben.</p>
 
@@ -12,17 +12,17 @@ Usus versucht eine Antwort auf diese Fragen zu geben.</p>
 nachvollzogen. Daher ist es sehr effektiv, den Code so zu gestalten, dass das Lesen und 
 Verstehen einfach wird. Die Änderbarkeit steht als weitere wichtige Eigenschaft des Codes im 
 direkten Zusammenhang mit der Nachvollziehbarkeit: Man sollte nur Code ändern, den man versteht! 
-Usus prüft verschiedene Aspekte des Codes, die wir für essentiell für eine gute Nachvollziehbarkeit
-und damit eine leichte Änderbarkeit des Codes halten.</p>
+Usus prüft verschiedene Aspekte des Codes, die in unseren Augen essentiell für eine gute 
+Nachvollziehbarkeit und damit eine leichte Änderbarkeit des Codes sind.</p>
 
 <p><strong>Warum soll ich meinen Code überhaupt ändern?</strong>
-Beim Entwickeln von Software ist die Versuchung groß, sich nicht zu lange mit dem Aufräumen der 
+Beim Entwickeln von Software ist die Versuchung groß, sich nicht allzu lange mit dem Aufräumen der 
 Codebasis aufzuhalten: Aufräumen braucht Zeit, die man besser zum Codieren verwenden kann; das 
-Projekt ist doch bald zu Ende; alle Entwickler kennen den ganzen Code; neue Teammitglieder wird es 
-nicht geben; und außerdem wird die Software sowieso nicht lange leben, keine neuen Features 
+Projekt ist doch bald zu Ende; alle Entwickler kennen ohnehin den ganzen Code; neue Teammitglieder 
+wird es nicht geben; und außerdem wird die Software sowieso nicht lange leben, keine neuen Features 
 bekommen und nicht gewartet werden müssen, denn sie hat ja keine Bugs. Unsere Erfahrungen in 
-Legacy-Projekten lehren uns, dass diese Annahmen eher ins Reich der Entwicklermärchen gehören. 
-Software-"Zwischenlösungen", die seit zehn Jahren weiterentwickelt werden und inzwischen ihren
+Legacy-Projekten lehren uns, dass diese Annahmen ins Reich der Entwicklermärchen gehören. 
+Software-"Zwischenlösungen", die seit vielen Jahren weiterentwickelt werden und inzwischen ihren
 Funktionsumfang vervielfacht haben, scheinen eher an der Tagesordnung zu sein.</p>
 
 <p><strong>Warum ein Analysewerkzeug?</strong>
@@ -33,22 +33,22 @@ alle Teammitglieder dieselben Formatierungsregeln benutzen, damit der Code gleic
 
 <p><strong>Wo kann ich weiterlesen?</strong>
 Weitere Informationen zu Refactoring, Clean Code und Software Craftsmanship findet man in den 
-Büchern von Fowler [1], McBreen [2] bw. Martin [3]. Die Clean Code Developer-Initiative <a href="http://clean-code-developer.de/">[4]</a> 
+Büchern von Fowler [1], McBreen [2] bzw. Martin [3]. Die Clean Code Developer-Initiative <a href="http://clean-code-developer.de/">[4]</a> 
 bietet einen Ansatz, wie man auch im Entwicklungsalltag die Codequalität nicht aus den Augen 
 verliert.</p>
 
 <h2>Warum noch ein Analysewerkzeug?</h2>
 
-<p>Es gibt viele Code-Analysewerkzeuge, und viele davon sind auch in Eclipse integriert, wie zum 
-Beispiel Checkstyle <a href="http://checkstyle.sourceforge.net/">[5]</a>, FindBugs <a href="http://findbugs.sourceforge.net/">[6]</a> und PMD <a href="http://pmd.sourceforge.net/">[7]</a>. Warum bauen
-wir also noch ein weiteres derartiges Werkzeug? In erster Linie liegt dies daran, dass die
-existierenden Tools unsere Bedürfnisse in der einen oder anderen Hinsicht nicht erfüllen.</p>
+<p>Es gibt viele Code-Analysewerkzeuge, die sich in Eclipse integrieren lassen, wie zum Beispiel 
+Checkstyle <a href="http://checkstyle.sourceforge.net/">[5]</a>, FindBugs <a href="http://findbugs.sourceforge.net/">[6]</a> und PMD <a href="http://pmd.sourceforge.net/">[7]</a>. Warum bauen wir also 
+noch ein weiteres derartiges Werkzeug? In erster Linie liegt dies daran, dass die existierenden 
+Tools unsere Bedürfnisse in der einen oder anderen Hinsicht nicht erfüllen.</p>
 
 <p><strong>Ungeeignete Standardeinstellungen.</strong>
-Vor allem die Grundeinstellungen von Checkstyle sind in unseren Augen nicht hilfreich um gut
-lesbaren Code zu erzeugen. Beispielsweise ist die Maximallänge von Methoden auf 150 
-Zeilen voreingestellt; uns schwebt dagegen eher eine Methodenlänge von 15 Zeilen vor. Das gleiche 
-gilt für Einstellungen, die das Fehlen von Javadoc bemängeln; wir würden im Normalfall eher das
+Vor allem die Grundeinstellungen von Checkstyle sind in unseren Augen nicht hilfreich, um gut
+lesbaren Code zu erzeugen. Beispielsweise ist die Maximallänge von Methoden auf 150 Zeilen 
+voreingestellt; uns schwebt dagegen eine Methodenlänge von 15 Zeilen vor. Das gleiche gilt für 
+Einstellungen, die das Fehlen von Javadoc bemängeln; wir würden im Normalfall eher das 
 Vorhandensein von Javadoc bemängeln.</p>
 
 <p><strong>Warnings, so weit das Auge reicht.</strong>
@@ -63,49 +63,20 @@ einigen Fällen zwar die Möglichkeit eine Warning per <em>Quick Fix</em> zu beheb
 vielen der standardmäßig eingestellten Überprüfungen auf den ersten Blick schwer, ihren Hintergrund 
 zu erfassen und ihre Relevanz im Verhältnis zu den anderen Warnungen zu beurteilen.</p>
 
-<p><strong>Ausschließlich Datei-lokale Checks.</strong>
+<p><strong>Ausschließlich dateilokale Checks.</strong>
 Die Überprüfungen aller drei Tools beschränken sich auf die Auswertung von Regeln auf Dateiebene.
 Sie machen keine Aussage über die Gesamtstruktur bzw. Architektur des Systems. </p>
 
 <p><strong>Veränderungen sind Geheimsache.</strong>
 Keines der oben genannten Werkzeuge bietet einen unmittelbaren Überblick darüber, ob mein aktuelles 
-Tun gerade die Qualität der Codebasis verbessert oder verschlechtert. </p>
+Tun gerade die Qualität der Codebasis verbessert oder verschlechtert.</p>
 
-<h2>Der Einsatz von Usus</h2>
-
-<p>Wir demonstrieren die Verwendung von Usus anhand eines Beispielprojekts, das Sie auf der beigelegten Heft-CD
-finden. Zunächst muss Usus von der Update-Site http://projectusus.org/... installiert werden und der 
-Projektworkspace in Eclipse geöffnet werden. Das Projekt wurde bereits als Usus-Projekt markiert, daher
-berechnet Usus nach dem Wechsel in die "Project Usus" Perspektive sofort die Metrikwerte. Diese 
-werden im Usus Cockpit dargestellt. Das Cockpit ist die zentrale View von Usus; hier finden sich alle
-globalen Informationen. Ein Doppelklick auf eine der Metriken zeigt die Verletzungen der betreffenden Metrik 
-an. Von hier kann man direkt zur betroffenen Klasse oder Methode springen und sich den Code ansehen.</p>
-
-<h3>Das Usus-Cockpit</h3>
-
-<p>Das Usus Cockpit (siehe Abb. 2) gibt einen Überblick über die berechneten Statistiken und ihre aktuellen
-Werte. Hierbei werden die Gesamtzahl der zugrundeliegenden Elemente (d. h. Klassen, Methoden 
-oder Packages),
-die Anzahl derjenigen Elemente, die eine Bewertung größer als 0 erhalten haben, sowie
-das Gesamtlevel der Statistik angezeigt.</p>
-
-<p>Das Motto von Usus lautet "Einsicht und Handeln". Das Cockpit erlaubt zwar Einsicht in den
-aktuellen Zustand des Codes, aber zum Handeln genügt es nicht. Deshalb kann man auf jede
-Statistik im Cockpit doppelklicken, um zum Hotspots View zu gelangen. Dort werden die Elemente
-mit einer Bewertung größer als 0 aufgeführt. Bei dateilokalen Statistiken gelangt man von dort
-durch einen Doppelklick in das entsprechende Element in einem Java Editor.
-Bei relationenzentrierten Statistiken wird ein Graph angezeigt. Die Arbeit mit diesen Graphen
-wird weiter unten beschrieben. Zuerst wollen wir einen Überblick über die in Usus implementierten
-Metriken und Statistiken geben.</p>
-
-<h3>Metriken und Statistiken</h3>
+<h2>Metriken und Statistiken</h2>
 
 <p>In Usus unterscheiden wir zwischen der statischen Analyse des vorliegenden Codes durch sogenannte
-Metriken,
-in der wir verschiedene den Code beschreibende Werte extrahieren,
-und zwischen der Evaluierung dieser Werte durch Statistiken, die zu statistischen 
-Informationen bezüglich
-des betrachteten Codes führt. Diese beiden Schritte sind voneinander getrennt.
+Metriken, in der wir verschiedene den Code beschreibende Werte extrahieren, und zwischen der 
+Evaluierung dieser Werte durch Statistiken, die zu statistischen Informationen bezüglich des 
+betrachteten Codes führt. Diese beiden Schritte sind voneinander getrennt.
 Insbesondere ist es möglich, mehrere Statistiken zu implementieren, die auf denselben
 Metrikwerten operieren. So kann Usus an verschiedene Einsatzsituationen angepasst werden,
 z. B. durch das Zuschneiden auf unterschiedliche Qualitätsniveaus des zu untersuchenden Codes
@@ -119,10 +90,7 @@ auf andere Files zu beziehen, oder sie analysieren die Relationen zwischen mehre
 Source-Files. Daher unterscheiden wir zwischen dateilokalen und relationenzentrierten Metriken.
 Für jede Metrik geben wir an, zu welcher Kategorie sie gehört.</p>
 
-<p>Extension Points erlauben die Erweiterbarkeit von Usus durch eigene Metriken und Statistiken.
-Dies wird weiter unten genauer beschrieben.</p>
-
-<h4>Metrik und Statistik zur Methodenlänge</h4>
+<h3>Methodenlänge</h3>
 
 <p>Diese Metrik ist dateilokal und arbeitet auf Methodenebene.</p>
 
@@ -139,7 +107,7 @@ nicht gewertet. Längere Methoden werden gemäß der linearen Funktion
 f(x) = 1/9 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
 Methoden geteilt, um das Statistik-Level zu ermitteln.</p>
 
-<h4>Metrik und Statistik zur zyklomatischen Komplexität</h4>
+<h3>Zyklomatische Komplexität</h3>
 
 <p>Diese Metrik ist dateilokal und arbeitet auf Methodenebene.</p>
 
@@ -161,7 +129,7 @@ nicht gewertet. Längere Methoden werden gemäß der linearen Funktion
 f(x) = 1/4 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
 Methoden geteilt, um das Statistik-Level zu ermitteln. </p>
 
-<h4>Metrik und Statistik zur Klassengröße</h4>
+<h3>Klassengröße</h3>
 
 <p>Diese Metrik ist dateilokal und arbeitet auf Klassenebene.</p>
 
@@ -175,24 +143,24 @@ nicht gewertet. Längere Methoden werden gemäß der linearen Funktion
 f(x) = 1/12 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
 Klassen geteilt, um das Statistik-Level zu ermitteln. </p>
 
-<h4>Metrik und Statistik zur Average Component Dependency</h4>
+<h3>Average Component Dependency</h3>
 
 <p>Diese Metrik ist relationszentriert.</p>
 
-<h4>Metrik und Statistik zu Paketzyklen</h4>
+<h3>Paketzyklen</h3>
 
-<p>Diese Metrik ist relationszentriert. Sie betrachtet hierbei nicht nur Klassenzyklen, sondern 
-auch solche Beziehungen, die zwar auf der Klassenebene nichts miteinander zu tun haben,
-die aber die beteiligten Pakete zyklisch miteinander in Beziehung setzen. 
-Ein Beispiel für eine solche Beziehung findet sich in Abb. 2.</p>
+<p>Diese Metrik ist relationszentriert. Betrachtet werden die Abhängigkeiten zwischen Java-Paketen. 
+Dabei fallen nicht nur Klassenzyklen ins Gewicht, sondern auch Beziehungen, die zwar auf der 
+Klassenebene nichts miteinander zu tun haben, die aber die beteiligten Pakete zyklisch miteinander 
+in Beziehung setzen. Ein Beispiel für eine solche Beziehung findet sich in Abb. 1.</p>
 
 <p><img src="Screenshots/Paketzyklus.png" alt="" title="" /> <br />
 <em>Abb. 1: Paketzyklus</em></p>
 
-<p>Hier sind vier Klassen dargestellt, wobei die gleichfarbigen jeweils in demselben
+<p>Hier sind vier Klassen dargestellt, wobei die gleichfarbigen jeweils im selben
 Paket liegen. Die Beziehungen zwischen den Klassen bilden keinen Zyklus,
 auf Paketebene gibt es jedoch eine zyklische Abhängigkeit.
-Eine solche Abhängigkeit entsteht, wenn manche Klassen nicht in
+Eine solche Abhängigkeit entsteht, wenn Klassen nicht in
 den richtigen Paketen liegen, und deutet auf Probleme im Design und in 
 der Strukturierung des Projekts hin.</p>
 
@@ -206,96 +174,110 @@ gleichnamige Pakete enthalten.
 Um derartige Zyklen zu vermeiden, hat sich das Umbenennen der Pakete als hilfreich
 erwiesen.</p>
 
-<h3>Trends</h3>
-
 <h2>Usus im praktischen Einsatz</h2>
 
-<p>In diesem Abschnitt beschreiben wir, wie man Usus praktisch einsetzen kann, um Schwachstellen im
-Code leicht zu identifizieren und geeignet zu verbessern.
-Um ein Projekt zur Verfügung zu haben, das eine interessante Größe und eine realistische Struktur 
-besitzt, haben wir einen Teil der Eclipse-Sourcen gewählt, und zwar das
-platform-core Projekt. Dieser Code liegt als Eclipse-Workspace auf der beigefügten Heft-CD, kann
-aber natürlich auch direkt aus dem CVS ausgecheckt werden.</p>
+<p>Wir möchten die Arbeit mit Usus nun anhand eines Beispielprojekts demonstrieren. Um ein Projekt zur 
+Verfügung zu haben, das eine interessante Größe und eine realistische Struktur besitzt, haben wir 
+einen Teil der Eclipse-Sourcen gewählt, und zwar das Platform/Core-Projekt. Dieser Code liegt als 
+Workspace auf der beiliegenden Heft-CD, kann aber natürlich auch direkt aus dem CVS ausgecheckt 
+werden. Da es sich bei dem Beispielprojekten selbst um Eclipse-Plugins handelt, benötigt man zum 
+Öffnen des Workspaces eine Eclipse-Version mit installiertem Plug-in Development Environment (PDE).
+Dazu eignet sich zum Beispiel das Eclipse Classic-Paket <a href="http://www.eclipse.org/downloads/">[8]</a>.</p>
 
-<p>Damit Usus zum Einsatz kommen kann, müssen die zu untersuchenden Projekte festgelegt werden.
-Dazu öffnet man die Usus-Perspektive und dort die View "Projects covered by Usus". Hier
-können Projekte zur Usus-Analyse hinzugefügt und wieder entfernt werden. Nach dem Zufügen eines 
-Projekts muss die Neuberechnung durch Drücken des Refresh-Buttons im Usus Cockpit angestoßen
-werden. Diese Einstellungen werden in den Workspace Settings gespeichert, daher sind in unserem
-Beispiel-Workspace schon alle relevanten Projekte aktiviert. Nach kurzer Rechenzeit stellt sich
-das Cockpit folgendermaßen dar:</p>
+<p>Zunächst muss Usus von der Update Site <a href="http://projectusus.googlecode.com/svn/updates/">http://projectusus.googlecode.com/svn/updates/</a> installiert 
+und der Workspace in Eclipse geöffnet werden. Damit Usus zum Einsatz kommen kann, müssen die zu 
+untersuchenden Projekte festgelegt werden. Dazu öffnet man die Usus-Perspektive und dort die View 
+<em>Projects covered by Usus</em>. Hier können Projekte zur Usus-Analyse hinzugefügt und wieder entfernt 
+werden. Nach dem Zufügen eines Projekts muss die Neuberechnung durch Drücken des Refresh-Buttons im 
+Usus Cockpit angestoßen werden. Diese Einstellungen werden in den Workspace Settings gespeichert, 
+daher sind in unserem Beispiel-Workspace schon alle relevanten Projekte aktiviert.</p>
 
 <p><img src="Screenshots/Cockpit.png" alt="" title="" /> <br />
 <em>Abb. 2: Das Usus-Cockpit</em></p>
 
-<p>Betrachten wir die Metriken im Einzelnen.</p>
+<p><strong>Cockpit.</strong>
+Das Cockpit (siehe Abb. 2) ist die zentrale View von Usus. Hier erhält man einen Überblick über die 
+berechneten Statistiken und ihre aktuellen Werte. Neben der 
+Gesamtzahl der zugrundeliegenden Elemente (<em>Total</em>) wird die Anzahl derjenigen 
+Elemente mit einer Bewertung größer als 0 (<em>Violations</em>), sowie das Gesamtlevel der Statistik 
+(<em>Level</em>) angezeigt. In der <em>Trend</em>-Spalte wird die Veränderung seit dem letzten <em>Snapshot</em> 
+angezeigt. Die Erstellung eines Snapshots (über den entsprechenden Button im Toolbar) stellt in Usus
+den Ausgangspunkt für Veränderungen im Code dar. Beispielsweise ist es ratsam einen Snapshot vor
+einem größeren Refactoring oder vor Beginn eines Implementierungstasks anzulegen.</p>
+
+<p><strong>Hotspots.</strong>
+Das Motto von Usus lautet "Einsicht und Handeln". Das Cockpit erlaubt zwar Einsicht in den
+aktuellen Zustand des Codes, aber zum Handeln genügt es nicht. Deshalb gelangt von jeder Statistik 
+durch einen Doppelklick zum <em>Hotspots View</em>. Dort werden die Elemente mit einer Bewertung größer als 
+0 aufgeführt. Bei dateilokalen Statistiken gelangt man von dort per Doppelklick zum entsprechenden 
+Element im <em>Java Editor</em>. Bei den Paketzyklen öffnet sich die <em>Package Graph View</em>. Wie im Cockpit,
+kann man auch hier den Trend seit dem letzten Snapshot im Auge behalten.</p>
+
+<p>Anhand der Methodenlänge und der Paketzyklen zeigen wir im Folgenden, wie Usus einen zu
+Schwachstellen im Code führt und wie man diese beheben kann. Um die anderen Metriken bzw. 
+Statistiken zu verbessern, geht man analog vor.</p>
 
 <h3>Methodenlänge</h3>
 
-<p>Der Ermittlung der Methodenlänge liegt die Gesamtzahl von 13089 Methoden zugrunde. Von diesen
-haben 1700 Methoden mehr als 9 Statements. Dies ergibt einen Durchschnitt von 86,56. 
-Ein Doppelklick auf
+<p>Der Ermittlung der Methodenlänge liegt die Gesamtzahl von 13089 Methoden zugrunde. Von diesen haben 
+1700 Methoden mehr als 9 Statements. Dies ergibt einen Durchschnitt von 86,56. Ein Doppelklick auf
 die Cockpitzeile öffnet den Hotspots View und zeigt diese Methoden an: Die Methode 
-<em>FrameworkCommandProvider._bundle()</em> ist
-mit 164 Statements mit Abstand am größten. Hier können wir hoffentlich einiges zur
-Verbesserung der Codequalität beitragen -- also los!</p>
+<em>FrameworkCommandProvider._bundle()</em> ist mit 164 Statements mit Abstand am größten. Hier können wir 
+hoffentlich einiges zur Verbesserung der Codequalität beitragen -- also los!</p>
 
-<p>Ein Doppelklick auf diesen Hotspot öffnet einen Java Editor mit der Methode.
-Die Methode erzeugt detaillierte Informationen zu einem Bundle und übergibt diese an
-einen <em>CommandInterpreter</em>.
-Nach kurzem Studium des Codes erkennt man mehrere duplizierte Codeblöcke, die jeweils
-dieselbe Information an den <em>CommandInterpreter</em> weitergeben. Hier lässt sich durch
-das Extrahieren von Methoden mehr Struktur hineinbringen, die Lesbarkeit und Übersichtlichkeit
-erhöhen und -- quasi als Nebeneffekt -- die Länge der Methode verkürzen.</p>
+<p>Per Doppelklick auf diesen Hotspot gelangen wir zur Methode im Java Editor. Die Methode erzeugt 
+detaillierte Informationen zu einem Bundle und übergibt diese an einen <em>CommandInterpreter</em>. Nach 
+kurzem Studium des Codes erkennt man mehrere duplizierte Codeblöcke, die jeweils dieselbe 
+Information an den <em>CommandInterpreter</em> weitergeben. Hier lässt sich durch das Extrahieren von 
+Methoden mehr Struktur hineinbringen, die Lesbarkeit und Übersichtlichkeit erhöhen und -- quasi als 
+Nebeneffekt -- die Länge der Methode verkürzen.</p>
 
-<p>Nach diesem Editiervorgang sollte der betreffende Hotspot mit einem grünen Pluszeichen
-markiert worden sein, um eine Verbesserung anzuzeigen. Trotzdem kann es sein, dass
-sich der Gesamttrend der Methodenlängen-Metrik verschlechtert hat. Dies passiert, wenn man
-neue Hotspots zugefügt hat, z. B. durch das Extrahieren zu langer Methoden, denn der Gesamttrend
-wirkt als Frühwarnsystem und verschlechtert sich, sobald sich auch nur ein Hotspot verschlechtert hat.</p>
-
-<p>Um die Klassengröße und die zyklomatische Komplexität zu verbessern, geht man analog vor.</p>
+<p>Nach diesem Editiervorgang sollte der betreffende Hotspot mit einem grünen Pluszeichen markiert 
+worden sein, um eine Verbesserung anzuzeigen. Trotzdem kann es sein, dass sich der Gesamttrend der 
+Methodenlängen-Metrik verschlechtert hat. Dies passiert, wenn man neue Hotspots zugefügt hat, z. B. 
+durch das Extrahieren zu langer Methoden, denn der Gesamttrend wirkt als Frühwarnsystem und 
+verschlechtert sich, sobald sich auch nur ein Hotspot verschlechtert hat.</p>
 
 <h3>Paketzyklen</h3>
 
-<p>Von den 112 analysierten Paketen befinden sich 74 in einem Paketzyklus, was zu einem sehr niedrigen Level
-von 33,93 führt. Durch Doppelklicken auf die Cockpitzeile kann man die betroffenen Pakete in einer Liste
-sehen, wobei die Größe des enthaltenden Zyklus angegeben ist. Der größte Zyklus enthält 29 Pakete,
-es gibt weitere Zyklen mit 15, 13 und 5 sowie zweimal 3 und dreimal 2 Paketen.
-Klickt man auf ein solches Paket, öffnet sich der Package View mit dem jeweiligen Zyklus.
-Betrachten wir zum Beispiel den Zyklus mit 5 Paketen: </p>
+<p>Von den 112 analysierten Paketen befinden sich 74 in einem Paketzyklus, was zu einem sehr niedrigen 
+Level von 33,93 führt. Durch Doppelklicken auf die Cockpitzeile kann man die betroffenen Pakete in 
+einer Liste sehen, wobei die Größe des Zyklus, der das Paket enthält, angegeben ist. Der größte 
+Zyklus enthält 29 Pakete, es gibt weitere Zyklen mit 15, 13 und 5 sowie zweimal 3 und dreimal 2 
+Paketen. Klickt man doppelt auf ein solches Paket, öffnet sich die <em>Package Graph View</em> mit dem 
+zugehörigen Zyklus.</p>
 
 <p><img src="Screenshots/Zyklus5Pakete.png" alt="" title="" /> <br />
 <em>Abb. 3: Zyklus mit 5 Paketen</em></p>
 
-<p>Fast alle der Kanten zwischen den Paketen sind bidirektional. Um herauszufinden, welche Klassen für
-diese Beziehungen verantwortlich sind, kann man eine oder mehrere Pakete und/oder Beziehungen auswählen
-und alle damit zusammenhängenden Klassen durch Klicken auf das Klassensymbol im Dialogheader im Class Graph anzeigen lassen.
-Wählen wir beispielsweise die Kante zwischen <em>org.eclipse.core.filesystem</em> und <em>org.eclipse.core.internal.filesystem</em> aus,
-ergibt sich das folgende Bild:</p>
+<p>Betrachten wir zum Beispiel den Zyklus mit 5 Paketen (siehe Abb. 3): Fast alle der Kanten zwischen 
+den Paketen sind bidirektional. Um herauszufinden, welche Klassen für diese Beziehungen 
+verantwortlich sind, kann man Pakete und/oder Beziehungen auswählen und alle damit 
+zusammenhängenden Klassen durch Klicken auf das Klassensymbol im Toolbar im <em>Class Graph</em> anzeigen 
+lassen.</p>
 
 <p><img src="Screenshots/KlassenAusFilesystem.png" alt="" title="" /> <br />
 <em>Abb. 4: Klassen aus org.eclipse.core.filesystem und org.eclipse.core.internal.filesystem</em></p>
 
-<p>Hierbei stellen die roten Kanten paketübergreifende Klassenbeziehungen dar, während
-Beziehungen innerhalb eines Pakets schwarz dargestellt sind.
-In unserem Beispiel referenziert die öffentliche Klasse <em>EFS</em> interne Klassen, 
-und interne Klassen nehmen Bezug auf öffentliche Interfaces in
-demselben Paket wie die Klasse <em>EFS</em>. Dieser Zyklus lässt sich dadurch auflösen, dass
- die Klasse <em>EFS</em> in ein anderes Paket verlagert wird.
-Betrachtet man größere Paketzyklen, beispielsweise den größten mit 29 Paketen,
-ist es schwer, auf einen Blick die relevanten Zusammenhänge zu erfassen.
-Daher ist es möglich, einzelne Pakete aus dem View herauszufiltern, indem man
-sie markiert und durch Klick auf das schwarze Kreuz entfernt. So lassen sich beliebig
-viele Pakete in einem oder mehreren Schritten entfernen. Zum Aufheben dieses 
-Filters klickt man auf den Radiergummi.</p>
+<p>Wählen wir beispielsweise die Kante zwischen <em>org.eclipse.core.filesystem</em> und 
+<em>org.eclipse.core.internal.filesystem</em> aus, ergibt sich das Bild in Abb. 4. Hierbei stellen die 
+roten Kanten paketübergreifende Klassenbeziehungen dar, während Beziehungen innerhalb eines Pakets 
+schwarz dargestellt sind. In unserem Beispiel referenziert die öffentliche Klasse <em>EFS</em> interne 
+Klassen, und interne Klassen nehmen Bezug auf öffentliche Interfaces im selben Paket wie die 
+Klasse <em>EFS</em>. Dieser Zyklus lässt sich dadurch auflösen, dass die Klasse <em>EFS</em> in ein anderes Paket 
+verlagert wird.</p>
+
+<p>Betrachtet man größere Paketzyklen, beispielsweise den größten mit 29 Paketen, ist es schwer, auf 
+einen Blick die relevanten Zusammenhänge zu erfassen. Daher ist es möglich, einzelne Pakete aus der 
+View herauszufiltern, indem man sie markiert und durch Klick auf das graue Kreuz im Toolbar 
+ausblendet. So  lassen sich beliebig viele Pakete in einem oder mehreren Schritten aus der Ansicht 
+entfernen. Zum Aufheben des Filters klickt man auf den Radiergummi.</p>
 
 <h2>Ausblick</h2>
 
 <h3>Erweiterbarkeit</h3>
 
-<p>Erweiterbarkeit von Usus 
-(an der wir gerade arbeiten)</p>
+<p>Extension Points erlauben die Erweiterbarkeit von Usus durch eigene Metriken und Statistiken.</p>
 
 <h3>Zukünftige Features</h3>
 
@@ -316,6 +298,7 @@ zukünftige Features</p>
 <li><a href="http://checkstyle.sourceforge.net/">Checkstyle</a></li>
 <li><a href="http://findbugs.sourceforge.net/">FindBugs</a></li>
 <li><a href="http://pmd.sourceforge.net/">PMD</a></li>
+<li><a href="http://www.eclipse.org/downloads/">EclipseDownloads</a></li>
 </ol>
 
 <p>Code Coverage:
