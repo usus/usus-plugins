@@ -18,6 +18,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -299,4 +300,10 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         hideNodesFilter.reset();
         drawGraphConditionally();
     }
+
+    public Image takeScreenshot() {
+        return graphViewer.takeScreenshot();
+    }
+
+    public abstract String getFilenameForScreenshot();
 }

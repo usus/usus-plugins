@@ -28,4 +28,8 @@ public class ClassGraphView extends DependencyGraphView {
         return maxFilterValue + 1;
     }
 
+    @Override
+    public String getFilenameForScreenshot() {
+        return "usus-class-graph";
+    }
 }

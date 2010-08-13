@@ -22,4 +22,9 @@ public class PackageGraphView extends DependencyGraphView {
     protected String getScaleRightLabelText() {
         return ONLY_IN_CYCLES;
     }
+
+    @Override
+    public String getFilenameForScreenshot() {
+        return "usus-package-graph";
+    }
 }

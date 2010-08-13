@@ -187,6 +187,18 @@
             </with>
          </activeWhen>
       </handler>
+      <handler
+            class="org.projectusus.ui.dependencygraph.handlers.SaveScreenshot"
+            commandId="org.projectusus.ui.dependencygraph.command.SaveScreenshot">
+         <activeWhen>
+            <with
+                  variable="activePart">
+               <instanceof
+                     value="org.projectusus.ui.dependencygraph.common.DependencyGraphView">
+               </instanceof>
+            </with>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -214,6 +226,11 @@
             id="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
             name="Hide Selected Nodes">
       </command>
+      <command
+            description="Save a screenshot of the current graph"
+            id="org.projectusus.ui.dependencygraph.command.SaveScreenshot"
+            name="Save Screenshot">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -236,6 +253,10 @@
                commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView"
                style="push">
          </command>
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.SaveScreenshot"
+               style="push">
+         </command>
       </menuContribution>
       <menuContribution
             allPopups="false"
@@ -254,6 +275,10 @@
          </separator>
          <command
                commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView"
+               style="push">
+         </command>
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.SaveScreenshot"
                style="push">
          </command>
       </menuContribution>
@@ -300,6 +325,10 @@
                commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView"
                style="push">
          </command>
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.SaveScreenshot"
+               style="push">
+         </command>
       </menuContribution>
    </extension>
    <extension
@@ -315,6 +344,10 @@
       <image
             commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
             icon="icons/hide-node.gif">
+      </image>
+      <image
+            commandId="org.projectusus.ui.dependencygraph.command.SaveScreenshot"
+            icon="icons/save-screenshot.gif">
       </image>
    </extension>
    <extension

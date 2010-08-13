@@ -20,4 +20,9 @@ public class CrossPackageClassGraphView extends DependencyGraphView {
     protected String getScaleRightLabelText() {
         return ONLY_IN_CYCLES;
     }
+
+    @Override
+    public String getFilenameForScreenshot() {
+        return "usus-cross-package-class-graph";
+    }
 }
