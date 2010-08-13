@@ -95,7 +95,7 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
 
     public int getBorderWidth( Object entity ) {
         // TODO Auto-generated method stub
-        return 1;
+        return 0;
     }
 
     public Color getForegroundColour( Object entity ) {
