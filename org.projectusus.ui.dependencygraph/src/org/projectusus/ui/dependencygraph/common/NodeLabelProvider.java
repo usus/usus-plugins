@@ -95,11 +95,21 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
 
     public int getBorderWidth( Object entity ) {
         // TODO Auto-generated method stub
-        return 0;
+        return 1;
     }
 
     public Color getForegroundColour( Object entity ) {
+        if( isVeryDark( entity ) ) {
+            return getSharedColors().getColor( UsusColors.WHITE );
+        }
         return getSharedColors().getColor( BLACK );
+    }
+
+    private boolean isVeryDark( Object entity ) {
+        float[] hsb = getBackgroundColour( entity ).getRGB().getHSB();
+        float saturation = hsb[1];
+        float brightness = hsb[2];
+        return (saturation > 0.5 && brightness > 0.9);
     }
 
     public IFigure getTooltip( Object entity ) {
