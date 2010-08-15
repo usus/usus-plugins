@@ -80,7 +80,6 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public Color getNodeHighlightColor( Object entity ) {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -89,12 +88,10 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public Color getBorderHighlightColor( Object entity ) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public int getBorderWidth( Object entity ) {
-        // TODO Auto-generated method stub
         return 0;
     }
 
@@ -109,7 +106,7 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
         float[] hsb = getBackgroundColour( entity ).getRGB().getHSB();
         float saturation = hsb[1];
         float brightness = hsb[2];
-        return (saturation > 0.5 && brightness > 0.9);
+        return (saturation > 0.6 || brightness < 0.85);
     }
 
     public IFigure getTooltip( Object entity ) {
@@ -123,7 +120,6 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public boolean fisheyeNode( Object entity ) {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -153,7 +149,6 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public Color getHighlightColor( Object src, Object dest ) {
-        // TODO Auto-generated method stub
         return null;
     }
 
