@@ -26,6 +26,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
+import org.eclipse.ui.part.IShowInTarget;
+import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.projectusus.core.IUsusModelListener;
@@ -35,9 +37,10 @@ import org.projectusus.ui.dependencygraph.filters.HideNodesFilter;
 import org.projectusus.ui.dependencygraph.filters.IFilterLimitProvider;
 import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
 import org.projectusus.ui.dependencygraph.filters.NodeFilter;
+import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
 import org.projectusus.ui.util.EditorOpener;
 
-public abstract class DependencyGraphView extends ViewPart implements IFilterLimitProvider {
+public abstract class DependencyGraphView extends ViewPart implements IFilterLimitProvider, IShowInTarget {
 
     private static final String LAYOUT_LABEL = "Layout:";
     private static final String SCALE_TOOLTIP_TEXT = "Change the number of visible nodes by moving the slider";
@@ -285,6 +288,15 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     private void extendSelectionBehavior() {
         selectionListener = new DependencyGraphSelectionListener( graphViewer );
         graphViewer.getGraphControl().addSelectionListener( selectionListener );
+    }
+
+    public boolean show( ShowInContext context ) {
+        PackagenameNodeFilter filter = PackagenameNodeFilter.from( context.getSelection() );
+        if( filter.isEmpty() ) {
+            return false;
+        }
+        setCustomFilter( filter );
+        return true;
     }
 
     public void hideSelectedNodes() {
