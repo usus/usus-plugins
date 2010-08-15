@@ -76,86 +76,59 @@ Tun gerade die Qualität der Codebasis verbessert oder verschlechtert.
 
 ## Metriken und Statistiken
 
-In Usus unterscheiden wir zwischen der statischen Analyse des vorliegenden Codes durch sogenannte
-Metriken, in der wir verschiedene den Code beschreibende Werte extrahieren, und zwischen der 
-Evaluierung dieser Werte durch Statistiken, die zu statistischen Informationen bezüglich des 
-betrachteten Codes führt. Diese beiden Schritte sind voneinander getrennt.
+In Usus unterscheiden wir zwischen _Metriken_ und _Statistiken_. Metriken führen eine
+statische Analyse des vorliegenden Codes durch und extrahieren verschiedene den Code beschreibende Werte,
+während Statistiken die Resultate der Metriken zusammenfassen und bewerten. 
+Diese beiden Schritte sind voneinander getrennt.
 Insbesondere ist es möglich, mehrere Statistiken zu implementieren, die auf denselben
 Metrikwerten operieren. So kann Usus an verschiedene Einsatzsituationen angepasst werden,
 z. B. durch das Zuschneiden auf unterschiedliche Qualitätsniveaus des zu untersuchenden Codes
 oder indem eine Statistik die Werte mehrerer Metriken gemeinsam betrachtet.
 
-Im Folgenden gilt alles, was sich auf Methoden bezieht, genauso auch für Initializer. Wir
+Im Folgenden gilt alles, was sich auf Methoden bezieht, genauso auch für Konstruktoren und Initializer. Wir
 verzichten auf die Doppelnennung zugunsten der Lesbarkeit des Textes.
 
-Die Usus-Metriken analysieren entweder den Inhalt eines einzelnen Source-Files, ohne sich
-auf andere Files zu beziehen, oder sie analysieren die Relationen zwischen mehreren
+Die Usus-Metriken analysieren entweder den Inhalt eines einzelnen Source-Files oder die Relationen zwischen mehreren
 Source-Files. Daher unterscheiden wir zwischen dateilokalen und relationenzentrierten Metriken.
 Für jede Metrik geben wir an, zu welcher Kategorie sie gehört.
 
-### Methodenlänge
-
+**Methodenlänge:** 
 Diese Metrik ist dateilokal und arbeitet auf Methodenebene.
-
-Die Metrik bestimmt die Anzahl der Statements in jedem Methodenrumpf. Dieser Wert unterscheidet
-sich von der Anzahl der Codezeilen folgendermaßen:
-- schließende Klammern, die sich auf einer eigenen Zeile befinden, werden nicht gezählt
-- Kommentare werden nicht gezählt
-- Statements, die mehr als eine Zeile beanspruchen, werden als 1 gezählt (die Auswirkungen sind
-besonders groß beim Anlegen anonymer Klassen)
-- der Methodenheader wird nicht gezählt
+Sie bestimmt die Anzahl der Statements in jedem Methodenrumpf. Dieser Wert 
+ist sehr ähnlich zur Anzahl der Codezeilen, ignoriert aber beispielsweise Leerzeilen, Kommentare und einzelne
+Klammern.
 
 Die zugehörige Statistik arbeitet linear. Methoden mit einer Länge von 9 oder weniger werden
 nicht gewertet. Längere Methoden werden gemäß der linearen Funktion 
-f(x) = 1/9 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
+f(x) = 1/9 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl aller 
 Methoden geteilt, um das Statistik-Level zu ermitteln.
 
 
-
-### Zyklomatische Komplexität
+**Zyklomatische Komplexität:**
 
 Diese Metrik ist dateilokal und arbeitet auf Methodenebene.
-
 Sie bestimmt die Anzahl der möglichen Verzweigungen im Ausführungspfad durch einen Methodenrumpf.
 Ein leerer Methodenrumpf hat hierbei eine zyklomatische Komplexität von 1. Jedes Vorkommen eines
-der folgenden Elemente erhöht diesen Wert um 1:
-- while
-- do-while
-- for
-- if
-- ein case eines switch Statements
-- catch clause
-- conditional operator (aka. ? : operator)
-- conditional boolean operators (&& and ||)
+verzweigenden Sprachelements, z. B. _if_, _while_, _catch_ oder die Operatoren && und ||, erhöht diesen Wert um 1.
 
-Die zugehörige Statistik arbeitet linear. Methoden mit einer zyklomatischen Komplexität 
-von 4 oder weniger werden
-nicht gewertet. Längere Methoden werden gemäß der linearen Funktion 
-f(x) = 1/4 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
-Methoden geteilt, um das Statistik-Level zu ermitteln. 
+Die zugehörige Statistik wertet Methoden mit einer zyklomatischen Komplexität 
+von 5 oder mehr mit f(x) = 1/4 x - 1.  
 
-### Klassengröße
-
+**Klassengröße:**
 Diese Metrik ist dateilokal und arbeitet auf Klassenebene.
-
 Sie bestimmt die Anzahl von Methoden und Initializern in einer Klasse.
 Die Methodensichtbarkeit wird hierbei nicht berücksichtigt. Es ist irrelevant,
 ob die Methoden statisch sind oder nicht. 
 
-Die zugehörige Statistik arbeitet linear. Klassen mit einer Methodenanzahl 
-von 12 oder weniger werden
-nicht gewertet. Längere Methoden werden gemäß der linearen Funktion 
-f(x) = 1/12 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl der 
-Klassen geteilt, um das Statistik-Level zu ermitteln. 
+Die zugehörige Statistik wertet Klassen mit einer Methodenanzahl 
+von 13 oder mehr mit f(x) = 1/12 x - 1. 
 
-### Average Component Dependency
-
-Diese Metrik ist relationszentriert.
+**Average Component Dependency:**
+Diese Metrik ist relationszentriert. Sie beschreibt, wie viele 
 
 
 
-### Paketzyklen
-
+**Paketzyklen:**
 Diese Metrik ist relationszentriert. Betrachtet werden die Abhängigkeiten zwischen Java-Paketen. 
 Dabei fallen nicht nur Klassenzyklen ins Gewicht, sondern auch Beziehungen, die zwar auf der 
 Klassenebene nichts miteinander zu tun haben, die aber die beteiligten Pakete zyklisch miteinander 
