@@ -64,4 +64,8 @@ public class DefaultHotspotsPage extends Page implements IHotspotsPage {
         return selectionProvider;
     }
 
+    public String getDescription() {
+        return ""; //$NON-NLS-1$
+    }
+
 }

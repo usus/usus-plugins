@@ -12,7 +12,7 @@ public class MudholeStatistic extends DefaultCockpitExtension {
     // private CyclomaticComplexityStatistic ccStatistic = new CyclomaticComplexityStatistic();
 
     public MudholeStatistic() {
-        super( "Mudholes", codeProportionUnit_CLASS_label, KG_LIMIT ); //$NON-NLS-1$
+        super( "Mudholes", "Mudholes", codeProportionUnit_CLASS_label, KG_LIMIT ); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Override

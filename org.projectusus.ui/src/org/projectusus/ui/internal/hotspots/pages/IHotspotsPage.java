@@ -21,4 +21,6 @@ public interface IHotspotsPage extends IPageBookViewPage {
     void resetSort();
 
     ISelectionProvider getSelectionProvider();
+
+    String getDescription();
 }

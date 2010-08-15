@@ -75,6 +75,7 @@ public class HotSpotsView extends ViewPart {
         if( pageControl != null && !pageControl.isDisposed() ) {
             // Verify that the page control is not disposed
             // If we are closing, it may have already been disposed
+            setContentDescription( page.getDescription() );
             selectionProvider.switchTo( page.getSelectionProvider() );
             book.showPage( pageControl );
         }

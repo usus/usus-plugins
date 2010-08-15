@@ -128,4 +128,8 @@ public class HotspotsPage extends Page implements IHotspotsPage {
     public ISelectionProvider getSelectionProvider() {
         return viewer;
     }
+
+    public String getDescription() {
+        return entry.getDescription();
+    }
 }

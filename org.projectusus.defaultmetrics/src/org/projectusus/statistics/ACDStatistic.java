@@ -8,14 +8,15 @@ import org.projectusus.core.statistics.visitors.ClassCountVisitor;
 
 public class ACDStatistic extends DefaultCockpitExtension {
 
-    private static final String label = "Average component dependency (0: <= %d)"; //$NON-NLS-1$
+    private static final String label = "Average component dependency"; //$NON-NLS-1$
+    private static final String description = label + " [0: <= %d]"; //$NON-NLS-1$
 
-    private static String metricsLabel() {
-        return String.format( label, new Integer( calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) ) );
+    private static String metricsDescription() {
+        return String.format( description, new Integer( calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) ) );
     }
 
     public ACDStatistic() {
-        super( metricsLabel(), codeProportionUnit_CLASS_label, calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) );
+        super( label, metricsDescription(), codeProportionUnit_CLASS_label, calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) );
     }
 
     @Override
@@ -41,6 +42,6 @@ public class ACDStatistic extends DefaultCockpitExtension {
     @Override
     public CodeProportion getCodeProportion() {
         double levelValue = 100.0 - 100.0 * getRelativeACD();
-        return new CodeProportion( getLabel(), getViolations(), getBasisStatistic(), levelValue, getHotspots() );
+        return new CodeProportion( getLabel(), getDescription(), getViolations(), getBasisStatistic(), levelValue, getHotspots() );
     }
 }

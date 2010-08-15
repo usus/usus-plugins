@@ -30,18 +30,20 @@ import org.projectusus.core.basis.SourceCodeLocation;
  */
 public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisitor implements ICockpitExtension {
 
+    private final String label;
+    private final String description;
+    private final String unit;
+    private final int violationLimit;
     private int basis;
     private int violations;
     private int violationSum;
-    private int violationLimit;
     private IFile currentFile;
     private List<Hotspot> hotspots;
-    private String label;
-    private String unit;
 
-    public DefaultCockpitExtension( String label, String unit, int violationLimit ) {
+    public DefaultCockpitExtension( String label, String description, String unit, int violationLimit ) {
         super();
         this.label = label;
+        this.description = description;
         this.unit = unit;
         this.violationLimit = violationLimit;
         reset();
@@ -77,6 +79,10 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
         return label;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public int getViolations() {
         return violations;
     }
@@ -98,7 +104,7 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
     }
 
     public CodeProportion getCodeProportion() {
-        return new CodeProportion( getLabel(), getViolations(), getBasisStatistic(), getLevel(), getHotspots() );
+        return new CodeProportion( getLabel(), getDescription(), getViolations(), getBasisStatistic(), getLevel(), getHotspots() );
     }
 
     public static double calculateLevel( double numberOfViolations, double numberOfBaseElems ) {

@@ -12,23 +12,25 @@ import org.eclipse.core.runtime.PlatformObject;
 
 public class CodeProportion extends PlatformObject {
 
+    private final String label;
+    private final String description;
     private final int violations;
     private final CodeStatistic basis;
     private final double level;
     private final List<Hotspot> hotspots;
     private final boolean hasHotspots;
-    private final String label;
 
-    public CodeProportion( String label, int violations, CodeStatistic basis, double levelValue ) {
-        this( label, violations, basis, levelValue, new ArrayList<Hotspot>(), false );
+    public CodeProportion( String label, String description, int violations, CodeStatistic basis, double levelValue ) {
+        this( label, description, violations, basis, levelValue, new ArrayList<Hotspot>( 0 ), false );
     }
 
-    public CodeProportion( String label, int violations, CodeStatistic basis, double levelValue, List<Hotspot> hotspots ) {
-        this( label, violations, basis, levelValue, hotspots, true );
+    public CodeProportion( String label, String description, int violations, CodeStatistic basis, double levelValue, List<Hotspot> hotspots ) {
+        this( label, description, violations, basis, levelValue, hotspots, true );
     }
 
-    private CodeProportion( String label, int violations, CodeStatistic basis, double levelValue, List<Hotspot> hotspots, boolean hasHotspots ) {
+    private CodeProportion( String label, String description, int violations, CodeStatistic basis, double levelValue, List<Hotspot> hotspots, boolean hasHotspots ) {
         this.label = label;
+        this.description = description;
         this.violations = violations;
         this.basis = basis;
         this.hasHotspots = hasHotspots;
@@ -55,6 +57,10 @@ public class CodeProportion extends PlatformObject {
 
     public String getMetricLabel() {
         return label;
+    }
+
+    public String getMetricDescription() {
+        return description;
     }
 
     public List<Hotspot> getHotspots() {

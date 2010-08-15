@@ -30,6 +30,10 @@ public class AnalysisDisplayEntry {
         return current.getMetricLabel();
     }
 
+    public String getDescription() {
+        return current.getMetricDescription();
+    }
+
     public double getLevel() {
         return current.getLevel();
     }
