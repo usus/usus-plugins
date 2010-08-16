@@ -2,11 +2,6 @@ public class Tasks {
 
     // Tasks for USUS 1.0
 
-    void statusHeaderzeileImHotspotsView() {
-        // TODO im Hotspots View soll die dargestellte Metrik angezeigt werden
-        // Titel der Metrik in einer Statuszeile wie in den Graphen angezeigt werden
-    }
-
     void statusHeaderzeileInDenGraphenVerbessern() {
         // TODO die Statuszeile wird leicht zu lang. Wie damit umgehen?
         // Tooltip? Zusammenfassung?
@@ -68,10 +63,6 @@ public class Tasks {
 
     void createMudHoleHotspots() {
         // TODO Aggregierte Hotspots = "Schlammlšöcher"
-    }
-
-    void pimpDependencyGraphForRemoving() {
-        // TODO DependencyGraph: Man kann ausgewäŠhlte Knoten aus den Graphen entfernen
     }
 
     void makeJobCancellable() {
