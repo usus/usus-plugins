@@ -1,1 +1,0 @@
-perl Markdown.pl Artikel.txt > Artikel.html

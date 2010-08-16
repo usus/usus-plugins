@@ -258,21 +258,26 @@ entfernen. Zum Aufheben des Filters klickt man auf den Radiergummi.
 
 ## Ausblick
 
-### Erweiterbarkeit
+Bislang haben wir uns darauf konzentriert, den Rechenkern von Usus rund zu machen.
+Diese Arbeiten stehen nun kurz vor dem Abschluss. 
+Es ist jetzt möglich, Usus mit eigenen (dateilokalen) Statistiken zu erweitern; dazu 
+muss lediglich ein Extension Point benutzt werden. Als nächster Schritt steht die Erweiterbarkeit 
+durch eigene Metriken an.
 
-Extension Points erlauben die Erweiterbarkeit von Usus durch eigene Metriken und Statistiken.
+Darüberhinaus sind weitere Entwicklungen geplant. Interessant wären beispielsweise 
+"Schlammloch"-Hotspots, also solche Stellen im Code, die nach Aggregation mehrerer Einzelmetriken 
+einen besonders großen Bedarf für ein Refactoring aufweisen. Ein Schlammloch ist also ein Ort an 
+dem es sich besonders lohnt aufzuräumen!
+Außerdem möchten wir mit Usus gezielt nach Code Smells wie z. B. Feature Envy oder Data Classes 
+suchen und an den zugehörigen Hotspots am besten gleich das passende Refactoring anbieten.
 
-### Zukünftige Features
-
-Ausblick auf mögliche 
-zukünftige Features
+Es bleibt spannend!
+Doch wir können beim Entwickeln von Usus auf Usus vertrauen, viel kann also nicht schief gehen.
 
 
 ----------------------
 
 ## Literatur
-
-http://raptureinvenice.com/?p=63
 
 1. Martin Fowler - Refactoring: Improving the Design of Existing Code, Addison-Wesley Longman, 1999
 2. Pete McBreen - Software Craftsmanship: The New Imperative, Addison Wesley, 2001
@@ -289,5 +294,5 @@ http://raptureinvenice.com/?p=63
 [PMD]: http://pmd.sourceforge.net/
 [EclipseDownloads]: http://www.eclipse.org/downloads/
 
-Code Coverage:
-http://angryweasel.com/blog/?p=172
+http://raptureinvenice.com/?p=63  
+Code Coverage: http://angryweasel.com/blog/?p=172
