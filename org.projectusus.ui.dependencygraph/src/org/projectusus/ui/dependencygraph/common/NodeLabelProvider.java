@@ -29,6 +29,9 @@ import org.projectusus.ui.colors.UsusColors;
 
 public class NodeLabelProvider extends LabelProvider implements IEntityStyleProvider, IEntityConnectionStyleProvider {
 
+    private static final double DEFAULT_ZOOM = 1d;
+    private double zoom = DEFAULT_ZOOM;
+
     @Override
     public String getText( Object element ) {
         if( element instanceof GraphNode ) {
@@ -154,9 +157,21 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
 
     public int getLineWidth( Object src, Object dest ) {
         if( areClassesInDifferentPackages( src, dest ) ) {
-            return 2;
+            return zoomed( 2 );
         }
-        return 1;
+        return zoomed( 1 );
+    }
+
+    private int zoomed( int width ) {
+        return (int)Math.round( zoom * width );
+    }
+
+    public void setZoom( double zoom ) {
+        this.zoom = zoom;
+    }
+
+    public void resetZoom() {
+        setZoom( DEFAULT_ZOOM );
     }
 
 }

@@ -1,5 +1,7 @@
 package org.projectusus.ui.dependencygraph.common;
 
+import static org.projectusus.ui.dependencygraph.common.GraphLayouts.getDefault;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,9 +11,13 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.SWTGraphics;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -19,14 +25,36 @@ import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.viewers.internal.ZoomManager;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphItem;
+import org.eclipse.zest.core.widgets.ZestStyles;
 import org.projectusus.core.basis.GraphNode;
+import org.projectusus.ui.util.EditorOpener;
 
 public class DependencyGraphViewer extends GraphViewer {
 
     private final List<ISelectionChangedListener> duplicatedSelectionChangedListeners = new ArrayList<ISelectionChangedListener>();
+    private final NodeLabelProvider labelProvider = new NodeLabelProvider();
 
-    public DependencyGraphViewer( Composite composite, int style ) {
-        super( composite, style );
+    public DependencyGraphViewer( Composite composite ) {
+        super( composite, SWT.NONE );
+        setConnectionStyle( ZestStyles.CONNECTIONS_DIRECTED );
+        setContentProvider( new NodeContentProvider() );
+        setLabelProvider( labelProvider );
+        addDoubleClickListener( new IDoubleClickListener() {
+            public void doubleClick( DoubleClickEvent event ) {
+                ISelection selection = getSelection();
+                Object selected = ((IStructuredSelection)selection).getFirstElement();
+                if( selected instanceof GraphNode ) {
+                    GraphNode graphNode = (GraphNode)selected;
+                    EditorOpener opener = new EditorOpener();
+                    opener.openEditor( graphNode.getFile() );
+                }
+            }
+        } );
+        setLayout( getDefault() );
+    }
+
+    public void setLayout( GraphLayouts layout ) {
+        setLayoutAlgorithm( layout.createAlgorithm(), false );
     }
 
     @Override
@@ -62,11 +90,26 @@ public class DependencyGraphViewer extends GraphViewer {
     }
 
     public Image takeScreenshot() {
-        ZoomManager zoomManager = getZoomManager();
-        zoomManager.setZoom( zoomManager.getMaxZoom() );
+        zoomIn();
         Image image = captureScreenshot();
-        zoomManager.setZoomAsText( "100%" );
+        zoomOut();
         return image;
+    }
+
+    @SuppressWarnings( "restriction" )
+    private void zoomOut() {
+        labelProvider.resetZoom();
+        getZoomManager().setZoomAsText( "100%" );
+        refresh();
+    }
+
+    @SuppressWarnings( "restriction" )
+    private void zoomIn() {
+        ZoomManager zoomManager = getZoomManager();
+        double factor = zoomManager.getMaxZoom();
+        labelProvider.setZoom( factor );
+        zoomManager.setZoom( factor );
+        refresh();
     }
 
     private Image captureScreenshot() {

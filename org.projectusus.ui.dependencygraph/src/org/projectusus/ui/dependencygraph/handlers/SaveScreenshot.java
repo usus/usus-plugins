@@ -26,13 +26,13 @@ public class SaveScreenshot extends AbstractHandler {
         saveImage( shell, image, view.getFilenameForScreenshot() );
     }
 
-    private void saveImage( Shell shell, final Image image, String filename ) {
+    private void saveImage( Shell shell, final Image image, String prefix ) {
         FileDialog dialog = new FileDialog( shell, SWT.SAVE );
         dialog.setFilterNames( new String[] { "Image Files", "All Files (*.*)" } );
         dialog.setFilterExtensions( new String[] { "*.png", "*.*" } ); // Windows wild cards
-        dialog.setFileName( filename + ".png" );
+        dialog.setFileName( prefix + ".png" );
         String fileName = dialog.open();
-        if( filename != null ) {
+        if( fileName != null ) {
             ImageLoader loader = new ImageLoader();
             loader.data = new ImageData[] { image.getImageData() };
             loader.save( fileName, SWT.IMAGE_PNG );

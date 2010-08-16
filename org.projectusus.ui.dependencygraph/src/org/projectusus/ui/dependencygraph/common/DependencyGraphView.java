@@ -6,9 +6,6 @@ import java.util.Set;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -29,7 +26,6 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.ui.part.IShowInTarget;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.zest.core.widgets.ZestStyles;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.basis.GraphNode;
@@ -38,7 +34,6 @@ import org.projectusus.ui.dependencygraph.filters.IFilterLimitProvider;
 import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
 import org.projectusus.ui.dependencygraph.filters.NodeFilter;
 import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
-import org.projectusus.ui.util.EditorOpener;
 
 public abstract class DependencyGraphView extends ViewPart implements IFilterLimitProvider, IShowInTarget {
 
@@ -115,7 +110,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         IStructuredSelection selection = (IStructuredSelection)event.getSelection();
-                        setLayout( (GraphLayouts)selection.getFirstElement() );
+                        graphViewer.setLayout( (GraphLayouts)selection.getFirstElement() );
                         drawGraphUnconditionally();
                     }
                 } );
@@ -168,24 +163,8 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     }
 
     private void createGraphViewer( Composite graphArea ) {
-        graphViewer = new DependencyGraphViewer( graphArea, SWT.NONE );
-        graphViewer.setConnectionStyle( ZestStyles.CONNECTIONS_DIRECTED );
-        graphViewer.setContentProvider( new NodeContentProvider() );
-        graphViewer.setLabelProvider( new NodeLabelProvider() );
-        LimitNodeFilter limitNodeFilter = new LimitNodeFilter( this );
-        graphViewer.setFilters( new ViewerFilter[] { limitNodeFilter, hideNodesFilter } );
-        graphViewer.addDoubleClickListener( new IDoubleClickListener() {
-            public void doubleClick( DoubleClickEvent event ) {
-                ISelection selection = graphViewer.getSelection();
-                Object selected = ((IStructuredSelection)selection).getFirstElement();
-                if( selected instanceof GraphNode ) {
-                    GraphNode graphNode = (GraphNode)selected;
-                    EditorOpener opener = new EditorOpener();
-                    opener.openEditor( graphNode.getFile() );
-                }
-            }
-        } );
-        setLayout( GraphLayouts.getDefault() );
+        graphViewer = new DependencyGraphViewer( graphArea );
+        graphViewer.setFilters( new ViewerFilter[] { new LimitNodeFilter( this ), hideNodesFilter } );
     }
 
     public synchronized void setCustomFilter( NodeFilter customFilter ) {
@@ -208,10 +187,6 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
             setContentDescription( "" );
         }
         customFilterContext.deactivate();
-    }
-
-    private void setLayout( GraphLayouts layout ) {
-        graphViewer.setLayoutAlgorithm( layout.createAlgorithm(), false );
     }
 
     public void refresh() {
