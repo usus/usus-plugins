@@ -16,15 +16,14 @@ import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.internal.proportions.rawdata.ClassRawData;
 
 public class ClassRawDataTest {
 
-    private final String CLASSNAME = "ClassName"; //$NON-NLS-1$
-    private final String PACKAGENAME = "PackageName"; //$NON-NLS-1$
-    private final String METHODNAME1 = "methodname1"; //$NON-NLS-1$
-    private final int SOURCEPOSITION = 77;
-    private final int LINENUMBER = 12;
+    private static final String CLASSNAME = "ClassName"; //$NON-NLS-1$
+    private static final String PACKAGENAME = "PackageName"; //$NON-NLS-1$
+    private static final String METHODNAME1 = "methodname1"; //$NON-NLS-1$
+    private static final int SOURCEPOSITION = 77;
+    private static final int LINENUMBER = 12;
 
     private ClassRawData classRawData;
     private MethodDeclaration method1;
