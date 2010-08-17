@@ -1,6 +1,6 @@
 <h1>Einsicht und Handeln mit Usus</h1>
 
-<h2>Einfache Handhabung und sofortiges Feedback</h2>
+<h4>Einfache Handhabung und sofortiges Feedback</h4>
 
 <p>In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein Bewusstsein für 
 Codequalität bzw. innere Softwarequalität entwickelt. Doch was bedeutet Codequalität eigentlich? 
@@ -45,31 +45,27 @@ Checkstyle <a href="http://checkstyle.sourceforge.net/">[4]</a>, FindBugs <a hre
 noch ein weiteres derartiges Werkzeug? 
 Bei der Entwicklung waren folgende Aspekte ausschlaggebend:</p>
 
-<ul>
-<li>Einfache Benutzbarkeit</li>
-<li>Integration in die IDE</li>
-<li>Ganzheitliche Betrachtung der Codebasis</li>
-<li>Unmittelbares Feedback</li>
-</ul>
-
-<p>Es genügt, Usus zu installieren, in die <em>Project Usus</em> Perspektive zu wechseln, die gewünschten
+<p><strong>Einfache Benutzbarkeit.</strong>
+Es genügt, Usus zu installieren, in die <em>Project Usus</em> Perspektive zu wechseln, die gewünschten
 Projekte auszuwählen und die initiale Berechnung anzustoßen. Alles weitere geschieht automatisch.
 Es ist nicht erforderlich, umfangreiche Konfigurationen vorzunehmen oder Detailwissen
-über die einzusetzenden Metriken zu haben. 
+über die einzusetzenden Metriken zu haben. </p>
+
+<p><strong>Unmittelbares Feedback.</strong>
 Abgesehen vom ersten Berechnungslauf, der bei großen Projekten ein paar Minuten in Anspruch
 nehmen kann, werden Änderungen im Code innerhalb von Sekunden analysiert und sofort in sämtliche
-Views übernommen: Das Cockpit ändert seine Werte und den Trend, die Hotspots-Listen werden aktualisiert,
-und die Graphen passen sich an die neuen Gegebenheiten an. 
+Views übernommen: Das Cockpit ändert seine Werte und den Trend, die Hotspots-Listen werden
+aktualisiert, und die Graphen passen sich an die neuen Gegebenheiten an.</p>
+
+<p><strong>Ganzheitliche Betrachtung der Codebasis.</strong>
 Das Cockpit liefert einen komprimierten Überblick über alle Aspekte des gesamten Codes.
 Möchte man z. B. einen Paketzyklus entfernen, ändert man den Code in den beteiligten Klassen und
-sieht sofort die Auswirkungen dieser Änderung in den Usus-Views. Da im Usus-Trend Verschlechterungen immer
-Verbesserungen überdecken, greift dieses Feedback als Frühwarnsystem insbesondere dann, wenn eine
-beabsichtigte Verbesserung als Seiteneffekt an anderer Stelle etwas verschlechtert.
+sieht sofort die Auswirkungen dieser Änderung in den Usus-Views. Da im Usus-Trend Verschlechterungen
+immer Verbesserungen überdecken, greift dieses Feedback als Frühwarnsystem insbesondere dann, wenn 
+eine beabsichtigte Verbesserung als Seiteneffekt an anderer Stelle etwas verschlechtert.
 So behält man immer das große Ganze im Blick und verliert sich nicht in Details.</p>
 
-<h2>Usus</h2>
-
-<p>Dieser Abschnitt stellt die wichtigsten Bestandteile von Usus vor.</p>
+<h2>Die Bestandteile von Usus</h2>
 
 <p><strong>Cockpit.</strong>
 Das Cockpit (Abb. 2) ist der zentrale View von Usus. Es gibt einen Überblick über die 
@@ -102,17 +98,15 @@ verschlechtert sich, sobald sich auch nur ein Hotspot verschlechtert hat.</p>
 
 <p><strong>Metriken und Statistiken.</strong>
 In Usus unterscheiden wir zwischen <em>Metriken</em> und <em>Statistiken</em>. Metriken führen eine
-statische Analyse des vorliegenden Codes durch und extrahieren den Code beschreibende <em>Werte</em>,
+statische Analyse des vorliegenden Codes durch und extrahieren den Code beschreibende <em>Messergebnisse</em>,
 während Statistiken in einem separaten Schritt die Resultate der Metriken zusammenfassen 
 und eine <em>Bewertung</em> ermitteln. 
-Die meisten Statistiken arbeiten linear. 
-Werte unterhalb eines festgelegten Limits werden mit 0 bewertet, die Bewertung darüberliegender Werte
+Die meisten Statistiken arbeiten linear, d. h. 
+Messergebnisse unterhalb eines festgelegten Limits werden mit 0 bewertet, die Bewertung darüberliegender Messungen
 wird durch eine lineare Funktion berechnet. <br />
-So bekommen Elemente mit sehr schlechten Werten eine schlechtere Bewertung als solche, die nur knapp über dem
+So bekommen Elemente mit sehr schlechten Messergebnissen eine schlechtere Bewertung als solche, die nur knapp über dem
 Limit liegen. 
-Im Hotspot-View werden alle Elemente angezeigt, die eine Bewertung größer 0 haben. 
-Zu jedem Element wird der Wert angezeigt. 
-Zur Ermittlung des <em>Levels</em> wird 100 * die Summe aller Bewertungen durch die Gesamtzahl aller 
+Zur Ermittlung des <em>Levels</em> einer Statistik wird 100 * die Summe aller Bewertungen durch die Gesamtzahl aller 
 Elemente dividiert, und das Resultat wird von 100 subtrahiert.</p>
 
 <h2>hm hm</h2>
@@ -150,7 +144,9 @@ wenn ihr CCD einen von der Projektgröße abhängigen Wert überschreitet. Für klein
 ist ein CCD von 15 % noch akzeptabel, während Klassen in großen Projekten einen Wert von 5 % nicht 
 überschreiten sollten.</p>
 
-<h2>Wie ist das denn jetzt in echt? ACD? CCD?</h2>
+<h2>Wie ist das denn jetzt in echt? ACD? CCD? -- Nicole</h2>
+
+<h3>Wie meinen? -- Marc</h3>
 
 <p><strong>Paketzyklen (R):</strong>
 Die zugrundeliegende Metrik analysiert die Beziehungen zwischen Klassen.
@@ -179,9 +175,8 @@ zum Beispiel das Eclipse Classic-Paket, und natürlich Usus [7].</p>
 <p>Anhand der Methodenlänge und der Paketzyklen zeigen wir im Folgenden beispielhaft, wie Usus 
 Schwachstellen im Code aufzeigt und wie man diese beheben kann.</p>
 
-<h3>Methodenlänge</h3>
-
-<p>Der Ermittlung der Methodenlänge liegt die Gesamtzahl von 13089 Methoden zugrunde. Von diesen haben 
+<p><strong>Methodenlänge.</strong>
+Der Ermittlung der Methodenlänge liegt die Gesamtzahl von 13089 Methoden zugrunde. Von diesen haben 
 1700 Methoden mehr als 9 Statements, mit einem Level von 86,56. Ein Doppelklick auf
 die Statistik öffnet den Hotspots View und zeigt die Methoden an. Die Methode 
 <em>FrameworkCommandProvider._bundle()</em> ist mit 164 Statements mit Abstand am größten. 
@@ -191,9 +186,8 @@ Methoden lässt sich mehr Struktur in den Code hineinbringen, Redundanz vermeiden
 die Übersichtlichkeit erhöhen und -- quasi als 
 Nebeneffekt -- die Methode kürzen.</p>
 
-<h3>Paketzyklen</h3>
-
-<p>Von den 112 analysierten Paketen befinden sich 74 in Paketzyklen, was zu einem sehr niedrigen 
+<p><strong>Paketzyklen.</strong>
+Von den 112 analysierten Paketen befinden sich 74 in Paketzyklen, was zu einem sehr niedrigen 
 Level von 33,93 führt. Durch Doppelklicken auf die Statistik kann man die betroffenen Pakete in 
 einer Liste sehen, wobei die Größe des zugehörigen Zyklus angegeben ist. Der größte 
 Zyklus enthält 29 Pakete, es gibt weitere Zyklen mit 15, 13 und 5 sowie zweimal 3 und dreimal 2 
@@ -255,5 +249,5 @@ Doch wir können beim Entwickeln von Usus auf Usus vertrauen, viel kann also nich
 <li><a href="http://checkstyle.sourceforge.net/">Checkstyle</a></li>
 <li><a href="http://findbugs.sourceforge.net/">FindBugs</a></li>
 <li><a href="http://pmd.sourceforge.net/">PMD</a></li>
-<li><a href="http://projectusus.org/">Usus</a></li>
+<li><a href="http://projectusus.org/">UsusUpdateSite</a></li>
 </ol>
