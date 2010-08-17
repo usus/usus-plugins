@@ -22,3 +22,51 @@ daher sind in unserem Beispiel-Workspace schon alle relevanten Projekte aktivier
 
 Zunächst muss Usus von der Update Site <http://projectusus.googlecode.com/svn/updates/> installiert 
 und der Workspace in Eclipse geöffnet werden. 
+
+
+--------------------------------
+
+In erster Linie liegt dies daran, dass die existierenden 
+Tools unsere Bedürfnisse in der einen oder anderen Hinsicht nicht erfüllen.
+
+**Ungeeignete Standardeinstellungen.**
+Vor allem die Grundeinstellungen von Checkstyle sind in unseren Augen nicht hilfreich, um gut
+lesbaren Code zu erzeugen. Beispielsweise ist die Maximallänge von Methoden auf 150 Zeilen 
+voreingestellt; uns schwebt dagegen eine Methodenlänge von 15 Zeilen vor. Das gleiche gilt für 
+Einstellungen, die das Fehlen von Javadoc bemängeln; wir würden im Normalfall eher das 
+Vorhandensein von Javadoc bemängeln.
+
+**Warnings, so weit das Auge reicht.**
+Einige Tools sind in ihren Standardeinstellungen so scharf gestellt und berücksichtigen so viele
+relativ unwichtige Probleme, dass man förmlich in Warnings ertrinkt. Mit Ausnahme von FindBugs ist
+auf den ersten Blick nicht klar, welche Priorität einzelne Warnings haben und wie man ohne 
+große Mühe alle Warnings einer Art im gesamten Workspace identifizieren und bearbeiten kann.
+
+**Warnings ohne Hilfestellung.**
+Warnings sind nur dann hilfreich, wenn sie behoben werden können. Checkstyle und FindBugs bieten in
+einigen Fällen zwar die Möglichkeit eine Warning per *Quick Fix* zu beheben, allerdings fällt es bei 
+vielen der standardmäßig eingestellten Überprüfungen auf den ersten Blick schwer, ihren Hintergrund 
+zu erfassen und ihre Relevanz im Verhältnis zu den anderen Warnungen zu beurteilen.
+
+**Ausschließlich dateilokale Checks.**
+Die Überprüfungen aller drei Tools beschränken sich auf die Auswertung von Regeln auf Dateiebene.
+Sie machen keine Aussage über die Gesamtstruktur bzw. Architektur des Systems. 
+
+**Veränderungen sind Geheimsache.**
+Keines der oben genannten Werkzeuge bietet einen unmittelbaren Überblick darüber, ob mein aktuelles 
+Tun gerade die Qualität der Codebasis verbessert oder verschlechtert.
+
+------------------------------
+
+Insbesondere ist es möglich, mehrere Statistiken zu implementieren, die auf denselben
+Metrikwerten operieren. So kann Usus an verschiedene Einsatzsituationen angepasst werden,
+z. B. durch das Zuschneiden auf unterschiedliche Qualitätsniveaus des zu untersuchenden Codes
+oder indem eine Statistik die Werte mehrerer Metriken gemeinsam betrachtet.
+
+Hier können wir 
+hoffentlich einiges zur Verbesserung der Codequalität beitragen -- also los!
+
+Die Methode erzeugt 
+detaillierte Informationen zu einem Bundle und übergibt diese an einen *CommandInterpreter*. Nach 
+kurzem Studium des Codes erkennt man mehrere duplizierte Codeblöcke, die jeweils dieselbe 
+Information an den *CommandInterpreter* weitergeben.
