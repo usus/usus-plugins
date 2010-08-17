@@ -8,7 +8,7 @@ public class LinearCyclomaticComplexityStatistic extends DefaultCockpitExtension
 
     private static int CC_LIMIT = 4;
     
-    private static final String label = "Cyclomatic complexity (linear)"; //$NON-NLS-1$
+    private static final String label = "Cyclomatic complexity"; //$NON-NLS-1$
     private static final String description = label + " [0: <= %d | 1: %d]"; //$NON-NLS-1$
 
     private double linearViolations = 0.0;

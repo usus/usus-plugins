@@ -8,7 +8,7 @@ public class LinearMethodLengthStatistic extends DefaultCockpitExtension {
 
     private static int ML_LIMIT = 9;
     
-    private static final String label = "Method length (linear)"; //$NON-NLS-1$
+    private static final String label = "Method length"; //$NON-NLS-1$
     private static final String description = label + " [0: <= %d | 1: %d]"; //$NON-NLS-1$
 
     private double linearViolations = 0.0;

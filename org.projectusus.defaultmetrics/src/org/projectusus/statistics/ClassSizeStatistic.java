@@ -8,7 +8,7 @@ public class ClassSizeStatistic extends DefaultCockpitExtension {
 
     private static int KG_LIMIT = 20;
     
-    private static final String label = "Class size"; //$NON-NLS-1$
+    private static final String label = "Class size (constant limit)"; //$NON-NLS-1$
     private static final String description = label + " [0: <= %d]"; //$NON-NLS-1$
 
     private static String metricsDescription() {

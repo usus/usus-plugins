@@ -8,7 +8,7 @@ public class MethodLengthStatistic extends DefaultCockpitExtension {
 
     private static int ML_LIMIT = 15;
     
-    private static final String label = "Method length"; //$NON-NLS-1$
+    private static final String label = "Method length (constant limit)"; //$NON-NLS-1$
     private static final String description = label + " [0: <= %d]"; //$NON-NLS-1$
 
     private static String metricsDescription() {

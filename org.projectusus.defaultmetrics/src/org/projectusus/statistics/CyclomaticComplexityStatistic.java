@@ -8,7 +8,7 @@ public class CyclomaticComplexityStatistic extends DefaultCockpitExtension {
 
     private static int CC_LIMIT = 5;
 
-    private static final String label = "Cyclomatic complexity"; //$NON-NLS-1$
+    private static final String label = "Cyclomatic complexity (constant limit)"; //$NON-NLS-1$
     private static final String description = label + " [0: <= %d]"; //$NON-NLS-1$
 
     private static String metricsDescription() {

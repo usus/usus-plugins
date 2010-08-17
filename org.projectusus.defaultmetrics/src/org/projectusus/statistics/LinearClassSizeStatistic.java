@@ -14,7 +14,7 @@ public class LinearClassSizeStatistic extends DefaultCockpitExtension {
 
     private static int KG_LIMIT = 12;
     
-    private static final String label = "Class size (linear)"; //$NON-NLS-1$
+    private static final String label = "Class size"; //$NON-NLS-1$
     private static final String description = label + " [0: <= %d | 1: %d]"; //$NON-NLS-1$
 
     private double linearViolations = 0.0;
