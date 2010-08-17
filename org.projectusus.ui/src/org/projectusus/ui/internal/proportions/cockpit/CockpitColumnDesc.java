@@ -27,7 +27,7 @@ enum CockpitColumnDesc implements IColumnDesc<AnalysisDisplayEntry> {
             return formatter.format( element.getLevel() );
         }
     },
-    @UsusTreeColumn( header = "Violations", align = RIGHT, weight = 14, numeric = true )
+    @UsusTreeColumn( header = "Hotspots", align = RIGHT, weight = 14, numeric = true )
     Violations( false ) {
         public String getLabel( AnalysisDisplayEntry element ) {
             return String.valueOf( element.getViolations() );
