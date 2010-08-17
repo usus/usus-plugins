@@ -38,8 +38,6 @@ Büchern von Fowler [1] bzw. Martin [2]. Die Clean Code Developer-Initiative <a h
 bietet einen Ansatz, wie man auch im Entwicklungsalltag die Codequalität nicht aus den Augen 
 verliert.</p>
 
-<h2>Warum noch ein Analysewerkzeug?</h2>
-
 <h2>Warum Usus?</h2>
 
 <p>Es gibt viele Code-Analysewerkzeuge, die sich in Eclipse integrieren lassen, wie zum Beispiel 
@@ -74,13 +72,13 @@ So behält man immer das große Ganze im Blick und verliert sich nicht in Details.
 <p>Dieser Abschnitt stellt die wichtigsten Bestandteile von Usus vor.</p>
 
 <p><strong>Cockpit.</strong>
-Das Cockpit (Abb. 2) ist der zentrale View von Usus. Hier erhält man einen Überblick über die 
+Das Cockpit (Abb. 2) ist der zentrale View von Usus. Es gibt einen Überblick über die 
 berechneten Statistiken und ihre aktuellen Werte. Neben der 
 Gesamtzahl der zugrundeliegenden Elemente (<em>Total</em>) wird die Anzahl derjenigen 
-Elemente mit einer Bewertung größer als 0 (<em>Hotspots</em>), sowie die Gesamtbewertung der Statistik 
+Elemente mit einer Bewertung größer als 0 (<em>Hotspots</em>) sowie die Gesamtbewertung der Statistik 
 (<em>Level</em>) angezeigt. In der <em>Trend</em>-Spalte wird die Veränderung seit dem letzten <em>Snapshot</em> 
 angezeigt. Snapshots (über den entsprechenden Toolbar-Button) ermöglichen es, Veränderungen im Code 
-sichtbar zu machen. Beispielsweise ist es ratsam einen Snapshot vor
+sichtbar zu machen. Beispielsweise ist es ratsam, einen Snapshot vor
 einem größeren Refactoring oder vor Beginn eines Implementierungstasks anzulegen.</p>
 
 <p><img src="Screenshots/Cockpit.png" alt="" title="" /> <br />
@@ -90,39 +88,37 @@ einem größeren Refactoring oder vor Beginn eines Implementierungstasks anzulegen
 Das Motto von Usus lautet "Einsicht und Handeln". Das Cockpit erlaubt zwar Einsicht in den
 aktuellen Zustand des Codes, aber zum Handeln genügt dies nicht. Deshalb gelangt man von jeder Statistik 
 durch einen Doppelklick zum <em>Hotspots View</em>, der die Elemente mit einer Bewertung größer als 
-0 anzeigt. Bei dateilokalen Statistiken gelangt man von dort per Doppelklick zum entsprechenden 
-Element im <em>Java Editor</em>, bei Paketzyklen öffnet sich der <em>Package Graph View</em>. Wie im Cockpit
+0 anzeigt. Von dort gelangt man per Doppelklick entweder zum entsprechenden 
+Element im <em>Java Editor</em> oder (bei Paketzyklen) zum <em>Package Graph View</em>. Wie im Cockpit
 kann man auch hier den Trend seit dem letzten Snapshot im Auge behalten.</p>
 
-<p><strong>Trend.</strong>
-Nach diesem Editiervorgang wird der betreffende Hotspot mit einem grünen Pluszeichen markiert, 
-um seine Verbesserung anzuzeigen. Trotzdem kann es sein, dass sich der Gesamttrend der 
-Methodenlängen-Statistik verschlechtert hat, zu erkennen an einem roten Minuszeichen im Cockpit. 
-Dies passiert, wenn neue Hotspots entstanden sind, z. B. 
-beim Extrahieren zu langer Methoden, denn der Gesamttrend wirkt als Frühwarnsystem und 
-verschlechtert sich, sobald sich auch nur ein Hotspot verschlechtert hat. Oder wenn sich
-die Klassengröße durch das Extrahieren von Methoden verschlechtert hat.</p>
-
-<h2>ww</h2>
+<p><strong>Trends.</strong>
+Usus zeigt Veränderungen sowohl im Cockpit als auch in den Hotspots durch ein grünes Plus- bzw. ein
+rotes Minuszeichen an. Interessant hieran ist, dass sich bei der Verbesserung eines Hotspots an
+anderen Stellen Verschlechterungen ergeben können, z. B. beim Extrahieren von Methoden. Die
+extrahierten Methoden können zu lang sein, oder andere Werte können sich verschlechtern, etwa
+die Klassengröße. Der Gesamttrend wirkt als Frühwarnsystem und 
+verschlechtert sich, sobald sich auch nur ein Hotspot verschlechtert hat.</p>
 
 <p><strong>Metriken und Statistiken.</strong>
 In Usus unterscheiden wir zwischen <em>Metriken</em> und <em>Statistiken</em>. Metriken führen eine
-statische Analyse des vorliegenden Codes durch und extrahieren verschiedene den Code beschreibende <em>Werte</em>,
+statische Analyse des vorliegenden Codes durch und extrahieren den Code beschreibende <em>Werte</em>,
 während Statistiken in einem separaten Schritt die Resultate der Metriken zusammenfassen 
 und eine <em>Bewertung</em> ermitteln. 
 Die meisten Statistiken arbeiten linear. 
+Werte unterhalb eines festgelegten Limits werden mit 0 bewertet, die Bewertung darüberliegender Werte
+wird durch eine lineare Funktion berechnet. <br />
 So bekommen Elemente mit sehr schlechten Werten eine schlechtere Bewertung als solche, die nur knapp über dem
 Limit liegen. 
-In den Hotspot-Views werden alle Elemente angezeigt, die eine negative Bewertung haben. 
+Im Hotspot-View werden alle Elemente angezeigt, die eine Bewertung größer 0 haben. 
 Zu jedem Element wird der Wert angezeigt. 
-Das <em>Level</em> errechnet sich aus 100 - 
-Zur Ermittlung des <em>Levels</em> wird der prozentuale Anteil aller Bewertungen an der Gesamtzahl aller 
-Elemente ermittelt, und das Resultat wird von 100 subtrahiert.</p>
+Zur Ermittlung des <em>Levels</em> wird 100 * die Summe aller Bewertungen durch die Gesamtzahl aller 
+Elemente dividiert, und das Resultat wird von 100 subtrahiert.</p>
 
-<h2>Das ist ziemlich kaputt, oder?</h2>
+<h2>hm hm</h2>
 
-<p>Die Usus-Metriken analysieren entweder den Inhalt einer einzelnen Datei oder die Relationen zwischen mehreren
-Dateien. Daher unterscheiden wir zwischen dateilokalen (D) und relationenzentrierten (R) Metriken.
+<p>Die Usus-Metriken analysieren entweder den Inhalt einer einzelnen Datei oder die Relationen zwischen 
+Dateien. Daher unterscheiden wir dateilokale (D) und relationenzentrierte (R) Metriken.
 Für jede Metrik geben wir an, zu welcher Kategorie sie gehört.</p>
 
 <p><strong>Methodenlänge (D):</strong> 
@@ -146,7 +142,7 @@ Die zugehörige Statistik wertet Klassen mit einer Methodenanzahl
 von 13 oder mehr mit f(x) = 1/12 x - 1. </p>
 
 <p><strong>Average Component Dependency (R):</strong>
-Die hier zugrundeliegende Metrik heißt <em>Cumulative Component Dependency</em> (CCD). Sie ermittelt 
+Die zugrundeliegende Metrik heißt <em>Cumulative Component Dependency</em> (CCD). Sie ermittelt 
 für jede Klasse, wie viele andere Klassen sie kennt.
 Die zugehörige Statistik verwendet den durchschnittlichen CCD aller Klassen in Prozent, also die
 <em>Average Component Dependency</em> (ACD), zur Bestimmung des Levels. Eine Klasse wird als Hotspot betrachtet,
@@ -159,7 +155,7 @@ ist ein CCD von 15 % noch akzeptabel, während Klassen in großen Projekten einen 
 <p><strong>Paketzyklen (R):</strong>
 Die zugrundeliegende Metrik analysiert die Beziehungen zwischen Klassen.
 In der Paketzyklen-Statistik werden diese Klassenbeziehungen auf die beteiligten Pakete reduziert
-und auf Zyklen untersucht. In Abb. 1
+und das Resultat auf Zyklen untersucht. In Abb. 1
 sind beispielhaft vier Klassen dargestellt, wobei die gleichfarbigen jeweils im selben
 Paket liegen. Die Beziehungen zwischen den Klassen bilden keinen Zyklus,
 auf Paketebene gibt es jedoch eine zyklische Abhängigkeit.
@@ -178,27 +174,26 @@ einen Teil der Eclipse-Sourcen gewählt, und zwar das Platform/Core-Projekt. Dies
 Workspace auf der beiliegenden Heft-CD. Da es sich bei den Beispielprojekten selbst um Eclipse-Plugins 
 handelt, benötigt man zum 
 Öffnen des Workspaces eine geeignete Eclipse-Version, 
-zum Beispiel das Eclipse Classic-Paket, mit installiertem Usus [7].</p>
+zum Beispiel das Eclipse Classic-Paket, und natürlich Usus [7].</p>
 
-<p>Anhand der Methodenlänge und der Paketzyklen zeigen wir im Folgenden, wie Usus 
-Schwachstellen im Code aufzeigt und wie man diese beheben kann. Um die anderen Metriken bzw. 
-Statistiken zu verbessern, geht man analog vor.</p>
+<p>Anhand der Methodenlänge und der Paketzyklen zeigen wir im Folgenden beispielhaft, wie Usus 
+Schwachstellen im Code aufzeigt und wie man diese beheben kann.</p>
 
 <h3>Methodenlänge</h3>
 
 <p>Der Ermittlung der Methodenlänge liegt die Gesamtzahl von 13089 Methoden zugrunde. Von diesen haben 
 1700 Methoden mehr als 9 Statements, mit einem Level von 86,56. Ein Doppelklick auf
-die Cockpitzeile öffnet den Hotspots View und zeigt diese Methoden an: Die Methode 
+die Statistik öffnet den Hotspots View und zeigt die Methoden an. Die Methode 
 <em>FrameworkCommandProvider._bundle()</em> ist mit 164 Statements mit Abstand am größten. 
 Per Doppelklick auf diesen Hotspot gelangen wir zur Methode im Java Editor. 
 Durch das Extrahieren von 
-Methoden lässt sich mehr Struktur hineinbringen, Redundanz vermeiden, 
+Methoden lässt sich mehr Struktur in den Code hineinbringen, Redundanz vermeiden, 
 die Übersichtlichkeit erhöhen und -- quasi als 
 Nebeneffekt -- die Methode kürzen.</p>
 
 <h3>Paketzyklen</h3>
 
-<p>Von den 112 analysierten Paketen befinden sich 74 in einem Paketzyklus, was zu einem sehr niedrigen 
+<p>Von den 112 analysierten Paketen befinden sich 74 in Paketzyklen, was zu einem sehr niedrigen 
 Level von 33,93 führt. Durch Doppelklicken auf die Statistik kann man die betroffenen Pakete in 
 einer Liste sehen, wobei die Größe des zugehörigen Zyklus angegeben ist. Der größte 
 Zyklus enthält 29 Pakete, es gibt weitere Zyklen mit 15, 13 und 5 sowie zweimal 3 und dreimal 2 
@@ -208,8 +203,8 @@ zugehörigen Zyklus.</p>
 <p><img src="Screenshots/Zyklus5Pakete.png" alt="" title="" /> <br />
 <em>Abb. 3: Paketzyklus mit 5 Paketen</em></p>
 
-<p>Betrachten wir zum Beispiel den Zyklus mit 5 Paketen (Abb. 3): Fast alle der Kanten zwischen 
-den Paketen sind bidirektional. Um herauszufinden, welche Klassen für diese Beziehungen 
+<p>In dem Zyklus mit 5 Paketen (Abb. 3) sind fast alle der Kanten zwischen 
+den Paketen bidirektional. Um herauszufinden, welche Klassen für diese Beziehungen 
 verantwortlich sind, kann man Pakete und/oder Beziehungen auswählen und alle damit 
 zusammenhängenden Klassen durch Klicken auf das Klassensymbol im Toolbar im <em>Class Graph</em> anzeigen 
 lassen.</p>
@@ -217,19 +212,19 @@ lassen.</p>
 <p><img src="Screenshots/KlassenAusFilesystem.png" alt="" title="" /> <br />
 <em>Abb. 4: Klassen aus org.eclipse.core.filesystem und org.eclipse.core.internal.filesystem</em></p>
 
-<p>Wählen wir beispielsweise die Kante zwischen <em>org.eclipse.core.filesystem</em> und 
+<p>Wählen wir die Kante zwischen <em>org.eclipse.core.filesystem</em> und 
 <em>org.eclipse.core.internal.filesystem</em> aus, ergibt sich das Bild in Abb. 4. Hierbei stellen die 
 roten Kanten paketübergreifende Klassenbeziehungen dar, während Beziehungen innerhalb eines Pakets 
 schwarz dargestellt sind. In unserem Beispiel referenziert die öffentliche Klasse <em>EFS</em> interne 
 Klassen, die wiederum Bezug auf öffentliche Interfaces im Paket der 
 Klasse <em>EFS</em> nehmen. Dieser Zyklus lässt sich durch Verschieben der Klasse <em>EFS</em> in ein anderes Paket 
-auflösen.</p>
+auflösen. Danach wird der Graph sofort aktualisiert.</p>
 
-<p>Betrachtet man größere Paketzyklen, beispielsweise den größten mit 29 Paketen, ist es schwer, auf 
+<p>Betrachtet man große Paketzyklen, ist es schwer, auf 
 einen Blick die relevanten Zusammenhänge zu erfassen. Daher kann man einzelne Pakete aus dem 
 View herausfiltern, indem man sie markiert und durch Klick auf das graue Kreuz im Toolbar 
 ausblendet. So  lassen sich beliebig viele Pakete in einem oder mehreren Schritten aus der Ansicht 
-entfernen. Zum Aufheben des Filters klickt man auf den Radiergummi.</p>
+entfernen. Zum Entfernen des Filters klickt man auf den Radiergummi.</p>
 
 <h2>Ausblick</h2>
 
@@ -239,7 +234,7 @@ Es ist jetzt möglich, Usus mit eigenen (dateilokalen) Statistiken zu erweitern; 
 muss lediglich ein Extension Point benutzt werden. Als nächster Schritt steht die Erweiterbarkeit 
 durch eigene Metriken an.</p>
 
-<p>Darüberhinaus sind weitere Entwicklungen geplant. Interessant wären beispielsweise 
+<p>Darüberhinaus sind weitere Entwicklungen geplant. Interessant sind beispielsweise 
 "Schlammloch"-Hotspots, also solche Stellen im Code, die nach Aggregation mehrerer Einzelmetriken 
 einen besonders großen Bedarf für ein Refactoring aufweisen. Ein Schlammloch ist also ein Ort an 
 dem es sich besonders lohnt aufzuräumen!
@@ -247,7 +242,7 @@ Außerdem möchten wir mit Usus gezielt nach Code Smells wie z. B. Feature Envy od
 suchen und an den zugehörigen Hotspots am besten gleich das passende Refactoring anbieten.</p>
 
 <p>Es bleibt spannend!
-Doch wir können beim Entwickeln von Usus auf Usus vertrauen, viel kann also nicht schief gehen.</p>
+Doch wir können beim Entwickeln von Usus auf Usus vertrauen, viel kann also nicht schiefgehen.</p>
 
 <hr />
 
