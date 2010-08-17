@@ -85,74 +85,65 @@ Metrikwerten operieren. So kann Usus an verschiedene Einsatzsituationen angepass
 z. B. durch das Zuschneiden auf unterschiedliche Qualitätsniveaus des zu untersuchenden Codes
 oder indem eine Statistik die Werte mehrerer Metriken gemeinsam betrachtet.
 
-Im Folgenden gilt alles, was sich auf Methoden bezieht, genauso auch für Konstruktoren und Initializer. Wir
-verzichten auf die Doppelnennung zugunsten der Lesbarkeit des Textes.
-
 Die Usus-Metriken analysieren entweder den Inhalt eines einzelnen Source-Files oder die Relationen zwischen mehreren
-Source-Files. Daher unterscheiden wir zwischen dateilokalen und relationenzentrierten Metriken.
+Source-Files. Daher unterscheiden wir zwischen dateilokalen (D) und relationenzentrierten (R) Metriken.
 Für jede Metrik geben wir an, zu welcher Kategorie sie gehört.
 
-**Methodenlänge:** 
-Diese Metrik ist dateilokal und arbeitet auf Methodenebene.
-Sie bestimmt die Anzahl der Statements in jedem Methodenrumpf. Dieser Wert 
-ist sehr ähnlich zur Anzahl der Codezeilen, ignoriert aber beispielsweise Leerzeilen, Kommentare und einzelne
-Klammern.
+**Methodenlänge (D):** 
+Diese Metrik bestimmt die Anzahl der Statements in jedem Methodenrumpf. Dieser Wert 
+ist sehr ähnlich zur Anzahl der Codezeilen, ignoriert aber beispielsweise 
+Leerzeilen, Kommentare und einzelne Klammern.
 
-Die zugehörige Statistik arbeitet linear. Methoden mit einer Länge von 9 oder weniger werden
-nicht gewertet. Längere Methoden werden gemäß der linearen Funktion 
-f(x) = 1/9 x - 1 bewertet. Die Summe aller Bewertungen wird durch die Gesamtzahl aller 
+Die zugehörige Statistik arbeitet linear. 
+Methoden mit einer Länge von 9 oder weniger werden
+mit 0 bewertet. Längere Methoden werden gemäß der Funktion 
+f(x) = 1/9 x - 1 bewertet. 
+So bekommen sehr lange Methoden eine höhere Bewertung als solche, die nur knapp über dem
+Limit liegen.
+Wir unterscheiden zwischen dem Wert, der einer Methode durch die Metrik zugeordnet wird, und der
+Bewertung, die die Statistik aus diesem Wert aufgrund bestimmter Kriterien ermittelt. In den
+Hotspots werden die Werte angezeigt. 
+Die Summe aller Bewertungen wird durch die Gesamtzahl aller 
 Methoden geteilt, um das Statistik-Level zu ermitteln.
 
 
-**Zyklomatische Komplexität:**
-
-Diese Metrik ist dateilokal und arbeitet auf Methodenebene.
-Sie bestimmt die Anzahl der möglichen Verzweigungen im Ausführungspfad durch einen Methodenrumpf.
+**Zyklomatische Komplexität (D):**
+Diese Metrik bestimmt die Anzahl der möglichen Verzweigungen im Ausführungspfad durch einen Methodenrumpf.
 Ein leerer Methodenrumpf hat hierbei eine zyklomatische Komplexität von 1. Jedes Vorkommen eines
 verzweigenden Sprachelements, z. B. _if_, _while_, _catch_ oder die Operatoren && und ||, erhöht diesen Wert um 1.
-
 Die zugehörige Statistik wertet Methoden mit einer zyklomatischen Komplexität 
 von 5 oder mehr mit f(x) = 1/4 x - 1.  
 
-**Klassengröße:**
-Diese Metrik ist dateilokal und arbeitet auf Klassenebene.
-Sie bestimmt die Anzahl von Methoden und Initializern in einer Klasse.
-Die Methodensichtbarkeit wird hierbei nicht berücksichtigt. Es ist irrelevant,
-ob die Methoden statisch sind oder nicht. 
-
+**Klassengröße (D):**
+Diese Metrik bestimmt die Anzahl von statischen und nichtstatischen Methoden und Initializern in einer Klasse.
+Die Methodensichtbarkeit wird hierbei nicht berücksichtigt. 
 Die zugehörige Statistik wertet Klassen mit einer Methodenanzahl 
 von 13 oder mehr mit f(x) = 1/12 x - 1. 
 
-**Average Component Dependency:**
-Diese Metrik ist relationszentriert. Sie beschreibt, wie viele 
+**Average Component Dependency (R):**
+Die hier zugrundeliegende Metrik heißt _Cumulative Component Dependency_ (CCD). Sie ermittelt 
+für jede Klasse, wie viele andere Klassen sie kennt.
+Die zugehörige Statistik (ACD) gibt den durchschnittlichen CCD aller Klassen in Prozent an. 
+Ihr Grenzwert hängt von der Projektgröße ab: Für kleine Projekte
+ist ein ACD von 15 % noch ok, während große Projekte einen Wert von 5 % nicht überschreiten sollten.
+Als Statistiklevel wird 100 - ACD verwendet, damit alle Levelangaben dieselbe Tendenz haben. 
+In den Hotspots wird für jede Klasse ihr CCD angegeben.
 
 
-
-**Paketzyklen:**
-Diese Metrik ist relationszentriert. Betrachtet werden die Abhängigkeiten zwischen Java-Paketen. 
-Dabei fallen nicht nur Klassenzyklen ins Gewicht, sondern auch Beziehungen, die zwar auf der 
-Klassenebene nichts miteinander zu tun haben, die aber die beteiligten Pakete zyklisch miteinander 
-in Beziehung setzen. Ein Beispiel für eine solche Beziehung findet sich in Abb. 1.
-
-![](Screenshots/Paketzyklus.png)  
-*Abb. 1: Paketzyklus*
-
-Hier sind vier Klassen dargestellt, wobei die gleichfarbigen jeweils im selben
+**Paketzyklen (R):**
+Die zugrundeliegende Metrik analysiert die Beziehungen zwischen Klassen.
+In der Paketzyklen-Statistik werden diese Klassenbeziehungen auf die beteiligten Pakete reduziert
+und auf Zyklen untersucht. In Abb. 1
+sind beispielhaft vier Klassen dargestellt, wobei die gleichfarbigen jeweils im selben
 Paket liegen. Die Beziehungen zwischen den Klassen bilden keinen Zyklus,
 auf Paketebene gibt es jedoch eine zyklische Abhängigkeit.
 Eine solche Abhängigkeit entsteht, wenn Klassen nicht in
 den richtigen Paketen liegen, und deutet auf Probleme im Design und in 
 der Strukturierung des Projekts hin.
 
-Eine Java-Besonderheit gilt es zu beachten: Pakete korrespondieren nicht mit
-einem Verzeichnis im Dateisystem, sondern ein Paket kann aus Klassen in mehreren
-Verzeichnissen bestehen. Betrachtet man eins dieser Verzeichnisse für sich genommen,
-liegt kein Paketzyklus vor, aber beim Betrachten mehrerer Verzeichnisse entstehen
-Zyklen. Dies passiert häufig, wenn Testcode in dieselbe Paketstruktur
-gegliedert wird wie der zugehörige Produktivcode oder wenn mehrere Projekte
-gleichnamige Pakete enthalten.
-Um derartige Zyklen zu vermeiden, hat sich das Umbenennen der Pakete als hilfreich
-erwiesen.
+
+![](Screenshots/Paketzyklus.png)  
+*Abb. 1: Paketzyklus*
 
 
 ## Usus im praktischen Einsatz

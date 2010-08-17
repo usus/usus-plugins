@@ -1,0 +1,14 @@
+Paketzyklen
+
+Eine Java-Besonderheit gilt es zu beachten: Pakete korrespondieren nicht mit
+einem Verzeichnis im Dateisystem, sondern ein Paket kann aus Klassen in mehreren
+Verzeichnissen bestehen. Betrachtet man eins dieser Verzeichnisse für sich genommen,
+liegt kein Paketzyklus vor, aber beim Betrachten mehrerer Verzeichnisse entstehen
+Zyklen. Dies passiert häufig, wenn Testcode in dieselbe Paketstruktur
+gegliedert wird wie der zugehörige Produktivcode oder wenn mehrere Projekte
+gleichnamige Pakete enthalten.
+Um derartige Zyklen zu vermeiden, hat sich das Umbenennen der Pakete als hilfreich
+erwiesen.
+
+Im Folgenden gilt alles, was sich auf Methoden bezieht, genauso auch für Konstruktoren und Initializer. Wir
+verzichten auf die Doppelnennung zugunsten der Lesbarkeit des Textes.
