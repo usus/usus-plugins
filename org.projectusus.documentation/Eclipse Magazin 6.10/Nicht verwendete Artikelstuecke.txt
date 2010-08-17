@@ -12,3 +12,13 @@ erwiesen.
 
 Im Folgenden gilt alles, was sich auf Methoden bezieht, genauso auch für Konstruktoren und Initializer. Wir
 verzichten auf die Doppelnennung zugunsten der Lesbarkeit des Textes.
+
+Damit Usus zum Einsatz kommen kann, müssen die zu 
+untersuchenden Projekte festgelegt werden. Dazu öffnet man die Usus-Perspektive und dort die View 
+*Projects covered by Usus*. Hier können Projekte zur Usus-Analyse hinzugefügt und wieder entfernt 
+werden. Nach dem Zufügen eines Projekts muss die Neuberechnung durch Drücken des Refresh-Buttons im 
+Usus Cockpit angestoßen werden. Diese Einstellungen werden in den Workspace Settings gespeichert, 
+daher sind in unserem Beispiel-Workspace schon alle relevanten Projekte aktiviert.
+
+Zunächst muss Usus von der Update Site <http://projectusus.googlecode.com/svn/updates/> installiert 
+und der Workspace in Eclipse geöffnet werden. 

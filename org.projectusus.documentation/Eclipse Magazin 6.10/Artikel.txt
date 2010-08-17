@@ -27,14 +27,15 @@ Software-"Zwischenlösungen", die seit vielen Jahren weiterentwickelt werden und 
 Funktionsumfang vervielfacht haben, scheinen eher an der Tagesordnung zu sein.
 
 **Warum ein Analysewerkzeug?**
-Die Geschmäcker sind verschieden. Und so gibt es auch viele Meinungen dazu, was lesbaren und
-verständlichen Code ausmacht. Analysewerkzeuge helfen dabei, diese Meinungen zu vereinheitlichen,
-so dass jedes Mitglied eines Teams dieselben Regeln für seinen Code zugrundelegt. Genauso wie
-alle Teammitglieder dieselben Formatierungsregeln benutzen, damit der Code gleich formatiert ist.
+Analysewerkzeuge unterstützen den Entwickler dabei, Fehler und negative Entwicklungen frühzeitig zu erkennen.
+So kann man daraus lernen und derartige Probleme im weiteren Verlauf des Projekts vermeiden.
+Des Weiteren helfen Analysewerkzeuge dabei, die vielfältigen Meinungen dazu, was lesbaren und
+verständlichen Code ausmacht, zu vereinheitlichen. So legt jedes Mitglied eines Teams dieselben
+Regeln für seinen Code zugrunde, genauso wie dies bei Formatierungsregeln geschieht.
 
 **Wo kann ich weiterlesen?**
-Weitere Informationen zu Refactoring, Clean Code und Software Craftsmanship findet man in den 
-Büchern von Fowler [1], McBreen [2] bzw. Martin [3]. Die Clean Code Developer-Initiative [[4]][CCD] 
+Weitere Informationen zu Refactoring und Clean Code findet man in den 
+Büchern von Fowler [1] bzw. Martin [2]. Die Clean Code Developer-Initiative [[3]][CCD] 
 bietet einen Ansatz, wie man auch im Entwicklungsalltag die Codequalität nicht aus den Augen 
 verliert.
 
@@ -42,7 +43,7 @@ verliert.
 ## Warum noch ein Analysewerkzeug?
 
 Es gibt viele Code-Analysewerkzeuge, die sich in Eclipse integrieren lassen, wie zum Beispiel 
-Checkstyle [[5]][Checkstyle], FindBugs [[6]][FindBugs] und PMD [[7]][PMD]. Warum bauen wir also 
+Checkstyle [[4]][Checkstyle], FindBugs [[5]][FindBugs] und PMD [[6]][PMD]. Warum bauen wir also 
 noch ein weiteres derartiges Werkzeug? In erster Linie liegt dies daran, dass die existierenden 
 Tools unsere Bedürfnisse in der einen oder anderen Hinsicht nicht erfüllen.
 
@@ -148,51 +149,43 @@ der Strukturierung des Projekts hin.
 
 ## Usus im praktischen Einsatz
 
-Wir möchten die Arbeit mit Usus nun anhand eines Beispielprojekts demonstrieren. Um ein Projekt zur 
+Wir möchten die Arbeit mit Usus anhand eines Beispielprojekts demonstrieren. Um ein Projekt zur 
 Verfügung zu haben, das eine interessante Größe und eine realistische Struktur besitzt, haben wir 
 einen Teil der Eclipse-Sourcen gewählt, und zwar das Platform/Core-Projekt. Dieser Code liegt als 
-Workspace auf der beiliegenden Heft-CD, kann aber natürlich auch direkt aus dem CVS ausgecheckt 
-werden. Da es sich bei dem Beispielprojekten selbst um Eclipse-Plugins handelt, benötigt man zum 
-Öffnen des Workspaces eine Eclipse-Version mit installiertem Plug-in Development Environment (PDE).
-Dazu eignet sich zum Beispiel das Eclipse Classic-Paket [[8]][EclipseDownloads].
-
-Zunächst muss Usus von der Update Site <http://projectusus.googlecode.com/svn/updates/> installiert 
-und der Workspace in Eclipse geöffnet werden. Damit Usus zum Einsatz kommen kann, müssen die zu 
-untersuchenden Projekte festgelegt werden. Dazu öffnet man die Usus-Perspektive und dort die View 
-*Projects covered by Usus*. Hier können Projekte zur Usus-Analyse hinzugefügt und wieder entfernt 
-werden. Nach dem Zufügen eines Projekts muss die Neuberechnung durch Drücken des Refresh-Buttons im 
-Usus Cockpit angestoßen werden. Diese Einstellungen werden in den Workspace Settings gespeichert, 
-daher sind in unserem Beispiel-Workspace schon alle relevanten Projekte aktiviert.
+Workspace auf der beiliegenden Heft-CD. Da es sich bei den Beispielprojekten selbst um Eclipse-Plugins 
+handelt, benötigt man zum 
+Öffnen des Workspaces eine geeignete Eclipse-Version, 
+zum Beispiel das Eclipse Classic-Paket, mit installiertem Usus [7].
 
 ![](Screenshots/Cockpit.png)  
 *Abb. 2: Das Usus-Cockpit*
 
 **Cockpit.**
-Das Cockpit (siehe Abb. 2) ist die zentrale View von Usus. Hier erhält man einen Überblick über die 
+Das Cockpit (Abb. 2) ist der zentrale View von Usus. Hier erhält man einen Überblick über die 
 berechneten Statistiken und ihre aktuellen Werte. Neben der 
 Gesamtzahl der zugrundeliegenden Elemente (*Total*) wird die Anzahl derjenigen 
-Elemente mit einer Bewertung größer als 0 (*Violations*), sowie das Gesamtlevel der Statistik 
+Elemente mit einer Bewertung größer als 0 (*Hotspots*), sowie die Gesamtbewertung der Statistik 
 (*Level*) angezeigt. In der *Trend*-Spalte wird die Veränderung seit dem letzten *Snapshot* 
-angezeigt. Die Erstellung eines Snapshots (über den entsprechenden Button im Toolbar) stellt in Usus
-den Ausgangspunkt für Veränderungen im Code dar. Beispielsweise ist es ratsam einen Snapshot vor
+angezeigt. Snapshots (über den entsprechenden Toolbar-Button) ermöglichen es, Veränderungen im Code 
+sichtbar zu machen. Beispielsweise ist es ratsam einen Snapshot vor
 einem größeren Refactoring oder vor Beginn eines Implementierungstasks anzulegen.
 
 **Hotspots.**
 Das Motto von Usus lautet "Einsicht und Handeln". Das Cockpit erlaubt zwar Einsicht in den
-aktuellen Zustand des Codes, aber zum Handeln genügt es nicht. Deshalb gelangt von jeder Statistik 
-durch einen Doppelklick zum *Hotspots View*. Dort werden die Elemente mit einer Bewertung größer als 
-0 aufgeführt. Bei dateilokalen Statistiken gelangt man von dort per Doppelklick zum entsprechenden 
-Element im *Java Editor*. Bei den Paketzyklen öffnet sich die *Package Graph View*. Wie im Cockpit,
+aktuellen Zustand des Codes, aber zum Handeln genügt es nicht. Deshalb gelangt man von jeder Statistik 
+durch einen Doppelklick zum *Hotspots View*, der die Elemente mit einer Bewertung größer als 
+0 anzeigt. Bei dateilokalen Statistiken gelangt man von dort per Doppelklick zum entsprechenden 
+Element im *Java Editor*, bei Paketzyklen öffnet sich der *Package Graph View*. Wie im Cockpit
 kann man auch hier den Trend seit dem letzten Snapshot im Auge behalten.
 
-Anhand der Methodenlänge und der Paketzyklen zeigen wir im Folgenden, wie Usus einen zu
-Schwachstellen im Code führt und wie man diese beheben kann. Um die anderen Metriken bzw. 
+Anhand der Methodenlänge und der Paketzyklen zeigen wir im Folgenden, wie Usus 
+Schwachstellen im Code aufzeigt und wie man diese beheben kann. Um die anderen Metriken bzw. 
 Statistiken zu verbessern, geht man analog vor.
 
 ### Methodenlänge
 
 Der Ermittlung der Methodenlänge liegt die Gesamtzahl von 13089 Methoden zugrunde. Von diesen haben 
-1700 Methoden mehr als 9 Statements. Dies ergibt einen Durchschnitt von 86,56. Ein Doppelklick auf
+1700 Methoden mehr als 9 Statements. Dies ergibt ein Level von 86,56. Ein Doppelklick auf
 die Cockpitzeile öffnet den Hotspots View und zeigt diese Methoden an: Die Methode 
 *FrameworkCommandProvider._bundle()* ist mit 164 Statements mit Abstand am größten. Hier können wir 
 hoffentlich einiges zur Verbesserung der Codequalität beitragen -- also los!
@@ -202,28 +195,29 @@ detaillierte Informationen zu einem Bundle und übergibt diese an einen *CommandI
 kurzem Studium des Codes erkennt man mehrere duplizierte Codeblöcke, die jeweils dieselbe 
 Information an den *CommandInterpreter* weitergeben. Hier lässt sich durch das Extrahieren von 
 Methoden mehr Struktur hineinbringen, die Lesbarkeit und Übersichtlichkeit erhöhen und -- quasi als 
-Nebeneffekt -- die Länge der Methode verkürzen.
+Nebeneffekt -- die Methode kürzen.
 
 Nach diesem Editiervorgang sollte der betreffende Hotspot mit einem grünen Pluszeichen markiert 
 worden sein, um eine Verbesserung anzuzeigen. Trotzdem kann es sein, dass sich der Gesamttrend der 
-Methodenlängen-Metrik verschlechtert hat. Dies passiert, wenn man neue Hotspots zugefügt hat, z. B. 
-durch das Extrahieren zu langer Methoden, denn der Gesamttrend wirkt als Frühwarnsystem und 
+Methodenlängen-Statistik verschlechtert hat, zu erkennen an einem roten Minuszeichen im Cockpit. 
+Dies passiert, wenn neue Hotspots entstanden sind, z. B. 
+beim Extrahieren zu langer Methoden, denn der Gesamttrend wirkt als Frühwarnsystem und 
 verschlechtert sich, sobald sich auch nur ein Hotspot verschlechtert hat.
 
 
 ### Paketzyklen
 
 Von den 112 analysierten Paketen befinden sich 74 in einem Paketzyklus, was zu einem sehr niedrigen 
-Level von 33,93 führt. Durch Doppelklicken auf die Cockpitzeile kann man die betroffenen Pakete in 
+Level von 33,93 führt. Durch Doppelklicken auf die Statistik kann man die betroffenen Pakete in 
 einer Liste sehen, wobei die Größe des Zyklus, der das Paket enthält, angegeben ist. Der größte 
 Zyklus enthält 29 Pakete, es gibt weitere Zyklen mit 15, 13 und 5 sowie zweimal 3 und dreimal 2 
-Paketen. Klickt man doppelt auf ein solches Paket, öffnet sich die *Package Graph View* mit dem 
+Paketen. Klickt man doppelt auf ein solches Paket, öffnet sich der *Package Graph View* mit dem 
 zugehörigen Zyklus.
 
 ![](Screenshots/Zyklus5Pakete.png)  
-*Abb. 3: Zyklus mit 5 Paketen*
+*Abb. 3: Paketzyklus mit 5 Paketen*
 
-Betrachten wir zum Beispiel den Zyklus mit 5 Paketen (siehe Abb. 3): Fast alle der Kanten zwischen 
+Betrachten wir zum Beispiel den Zyklus mit 5 Paketen (Abb. 3): Fast alle der Kanten zwischen 
 den Paketen sind bidirektional. Um herauszufinden, welche Klassen für diese Beziehungen 
 verantwortlich sind, kann man Pakete und/oder Beziehungen auswählen und alle damit 
 zusammenhängenden Klassen durch Klicken auf das Klassensymbol im Toolbar im *Class Graph* anzeigen 
@@ -236,13 +230,13 @@ Wählen wir beispielsweise die Kante zwischen *org.eclipse.core.filesystem* und
 *org.eclipse.core.internal.filesystem* aus, ergibt sich das Bild in Abb. 4. Hierbei stellen die 
 roten Kanten paketübergreifende Klassenbeziehungen dar, während Beziehungen innerhalb eines Pakets 
 schwarz dargestellt sind. In unserem Beispiel referenziert die öffentliche Klasse *EFS* interne 
-Klassen, und interne Klassen nehmen Bezug auf öffentliche Interfaces im selben Paket wie die 
-Klasse *EFS*. Dieser Zyklus lässt sich dadurch auflösen, dass die Klasse *EFS* in ein anderes Paket 
-verlagert wird.
+Klassen, die wiederum Bezug auf öffentliche Interfaces im Paket der 
+Klasse *EFS* nehmen. Dieser Zyklus lässt sich durch Verschieben der Klasse *EFS* in ein anderes Paket 
+auflösen.
 
 Betrachtet man größere Paketzyklen, beispielsweise den größten mit 29 Paketen, ist es schwer, auf 
-einen Blick die relevanten Zusammenhänge zu erfassen. Daher ist es möglich, einzelne Pakete aus der 
-View herauszufiltern, indem man sie markiert und durch Klick auf das graue Kreuz im Toolbar 
+einen Blick die relevanten Zusammenhänge zu erfassen. Daher kann man einzelne Pakete aus dem 
+View herausfiltern, indem man sie markiert und durch Klick auf das graue Kreuz im Toolbar 
 ausblendet. So  lassen sich beliebig viele Pakete in einem oder mehreren Schritten aus der Ansicht 
 entfernen. Zum Aufheben des Filters klickt man auf den Radiergummi.
 
@@ -271,19 +265,15 @@ Doch wir können beim Entwickeln von Usus auf Usus vertrauen, viel kann also nich
 ## Literatur
 
 1. Martin Fowler - Refactoring: Improving the Design of Existing Code, Addison-Wesley Longman, 1999
-2. Pete McBreen - Software Craftsmanship: The New Imperative, Addison Wesley, 2001
-3. Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship, Prentice Hall, 2008
-4. [CCD][]
-5. [Checkstyle][]
-6. [FindBugs][]
-7. [PMD][]
-8. [EclipseDownloads][]
+2. Robert C. Martin - Clean Code: A Handbook of Agile Software Craftsmanship, Prentice Hall, 2008
+3. [CCD][]
+4. [Checkstyle][]
+5. [FindBugs][]
+6. [PMD][]
+7. [Usus][]
 
 [CCD]: http://clean-code-developer.de/
 [Checkstyle]: http://checkstyle.sourceforge.net/
 [FindBugs]: http://findbugs.sourceforge.net/
 [PMD]: http://pmd.sourceforge.net/
-[EclipseDownloads]: http://www.eclipse.org/downloads/
-
-http://raptureinvenice.com/?p=63  
-Code Coverage: http://angryweasel.com/blog/?p=172
+[Usus]: http://projectusus.org/
