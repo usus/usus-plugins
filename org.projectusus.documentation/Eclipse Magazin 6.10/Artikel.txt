@@ -103,21 +103,23 @@ die Klassengröße. Der Gesamttrend wirkt als Frühwarnsystem und
 verschlechtert sich, sobald sich auch nur ein Hotspot verschlechtert hat.
 
 **Metriken und Statistiken.**
-In Usus unterscheiden wir zwischen _Metriken_ und _Statistiken_. Metriken führen eine
-statische Analyse des vorliegenden Codes durch und extrahieren den Code beschreibende _Messergebnisse_,
-während Statistiken in einem separaten Schritt die Resultate der Metriken zusammenfassen 
-und eine _Bewertung_ ermitteln. 
-Die meisten Statistiken arbeiten linear, d. h. 
-Messergebnisse unterhalb eines festgelegten Limits werden mit 0 bewertet, die Bewertung darüberliegender Messungen
-wird durch eine lineare Funktion berechnet.   
-So bekommen Elemente mit sehr schlechten Messergebnissen eine schlechtere Bewertung als solche, die nur knapp über dem
-Limit liegen. 
-Zur Ermittlung des _Levels_ einer Statistik wird 100 * die Summe aller Bewertungen durch die Gesamtzahl aller 
-Elemente dividiert, und das Resultat wird von 100 subtrahiert.
+In Usus unterscheiden wir zwischen _Metriken_ und _Statistiken_. Eine Metrik führt eine statische 
+Analyse des vorliegenden Codes durch und extrahiert den Code beschreibende _Messergebnisse_. 
+Statistiken fassen in einem separaten Schritt die Resultate der Metriken zusammenfassen und ordnen 
+jedem Messergebnis *x* eine _Bewertung_ *f(x)* zu. Dabei gilt: Je höher das Ergebnis der 
+Bewertungsfunktion *f(x)*, umso schlechter ist die Bewertung einer Messung *x*.  
+Die meisten Statistiken arbeiten linear, d. h. Messergebnisse unterhalb eines festgelegten _Limits_ 
+_L_ werden mit 0 bewertet, die Bewertung darüberliegender Messungen wird durch eine linear 
+steigende Funktion berechnet. So bekommen Elemente mit sehr schlechten Messergebnissen eine 
+schlechtere Bewertung als solche, die nur knapp über dem Limit liegen.
+
+Zur Ermittlung des _Levels_ einer Statistik wird 100 * die Summe aller Bewertungen durch 
+die Gesamtzahl aller Elemente dividiert, und das Resultat wird von 100 subtrahiert.
 ## hm hm
 
-Tabelle 1 gibt eine Übersicht über die Usus-Metriken und -Statistiken. Details über die Berechnung
-einzelner Metriken kann man jederzeit über Tooltips und die dynamische Hilfe in Eclipse nachlesen.
+Tabelle 1 gibt eine Übersicht über die Usus-Metriken und -Statistiken. Eine detaillierte 
+Beschreibung der Berechnungen kann man jederzeit über Tooltips und die dynamische Hilfe in Eclipse 
+nachlesen.
 
 
 *Tabelle 1: Metriken und Statistiken*
