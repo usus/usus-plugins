@@ -56,7 +56,63 @@ Sie machen keine Aussage über die Gesamtstruktur bzw. Architektur des Systems.
 Keines der oben genannten Werkzeuge bietet einen unmittelbaren Überblick darüber, ob mein aktuelles 
 Tun gerade die Qualität der Codebasis verbessert oder verschlechtert.
 
+
 ------------------------------
+ 
+
+Die Usus-Metriken analysieren entweder den Inhalt einer einzelnen Datei oder die Relationen zwischen 
+Dateien. Daher unterscheiden wir dateilokale (D) und relationenzentrierte (R) Metriken.
+Für jede Metrik geben wir an, zu welcher Kategorie sie gehört.
+
+**Methodenlänge (D):** 
+Diese Metrik bestimmt die Anzahl der Statements in jedem Methodenrumpf. Dieser Wert 
+ist sehr ähnlich zur Anzahl der Codezeilen, ignoriert aber beispielsweise 
+Leerzeilen, Kommentare und einzelne Klammern.
+Die zugehörige Statistik bewertet Methoden mit einer Länge von 10 oder mehr mit
+f(x) = 1/9 x - 1. 
+
+**Zyklomatische Komplexität (D):**
+Diese Metrik bestimmt die Anzahl der möglichen Verzweigungen im Ausführungspfad durch einen Methodenrumpf.
+Ein leerer Methodenrumpf hat hierbei eine zyklomatische Komplexität von 1. Jedes Vorkommen eines
+verzweigenden Sprachelements, z. B. _if_, _while_, _catch_ oder die Operatoren && und ||, erhöht diesen Wert um 1.
+Die zugehörige Statistik bewertet Methoden mit einer zyklomatischen Komplexität 
+von 5 oder mehr mit f(x) = 1/4 x - 1.  
+
+**Klassengröße (D):**
+Diese Metrik bestimmt die Anzahl von statischen und nichtstatischen Methoden und Initializern in einer Klasse.
+Die Methodensichtbarkeit wird hierbei nicht berücksichtigt. 
+Die zugehörige Statistik wertet Klassen mit einer Methodenanzahl 
+von 13 oder mehr mit f(x) = 1/12 x - 1. 
+
+**Average Component Dependency (R):**
+Die zugrundeliegende Metrik heißt _Cumulative Component Dependency_ (CCD). Sie ermittelt 
+für jede Klasse, wie viele andere Klassen sie kennt.
+Die zugehörige Statistik verwendet den durchschnittlichen CCD aller Klassen in Prozent, also die
+_Average Component Dependency_ (ACD), zur Bestimmung des Levels. Eine Klasse wird als Hotspot betrachtet,
+wenn ihr CCD einen von der Projektgröße abhängigen Wert überschreitet. Für kleine Projekte
+ist ein CCD von 15 % noch akzeptabel, während Klassen in großen Projekten einen Wert von 5 % nicht 
+überschreiten sollten.
+## Wie ist das denn jetzt in echt? ACD? CCD? -- Nicole
+### Wie meinen? -- Marc
+
+**Paketzyklen (R):**
+Die zugrundeliegende Metrik analysiert die Beziehungen zwischen Klassen.
+In der Paketzyklen-Statistik werden diese Klassenbeziehungen auf die beteiligten Pakete reduziert
+und das Resultat auf Zyklen untersucht. In Abb. 1
+sind beispielhaft vier Klassen dargestellt, wobei die gleichfarbigen jeweils im selben
+Paket liegen. Die Beziehungen zwischen den Klassen bilden keinen Zyklus,
+auf Paketebene gibt es jedoch eine zyklische Abhängigkeit.
+Eine solche Abhängigkeit entsteht, wenn Klassen nicht in
+den richtigen Paketen liegen, und deutet auf Probleme im Design und in 
+der Strukturierung des Projekts hin.
+
+
+![](Screenshots/Paketzyklus.png)  
+*Abb. 1: Paketzyklus*
+
+
+------------------------------
+
 
 Insbesondere ist es möglich, mehrere Statistiken zu implementieren, die auf denselben
 Metrikwerten operieren. So kann Usus an verschiedene Einsatzsituationen angepasst werden,

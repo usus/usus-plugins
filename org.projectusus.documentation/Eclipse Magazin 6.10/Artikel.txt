@@ -74,7 +74,7 @@ So behält man immer das große Ganze im Blick und verliert sich nicht in Details.
 ## Die Bestandteile von Usus
 
 **Cockpit.**
-Das Cockpit (Abb. 2) ist der zentrale View von Usus. Es gibt einen Überblick über die 
+Das Cockpit (Abb. 1) ist der zentrale View von Usus. Es gibt einen Überblick über die 
 berechneten Statistiken und ihre aktuellen Werte. Neben der 
 Gesamtzahl der zugrundeliegenden Elemente (*Total*) wird die Anzahl derjenigen 
 Elemente mit einer Bewertung größer als 0 (*Hotspots*) sowie die Gesamtbewertung der Statistik 
@@ -84,7 +84,7 @@ sichtbar zu machen. Beispielsweise ist es ratsam, einen Snapshot vor
 einem größeren Refactoring oder vor Beginn eines Implementierungstasks anzulegen.
 
 ![](Screenshots/Cockpit.png)  
-*Abb. 2: Das Usus-Cockpit*
+*Abb. 1: Das Usus-Cockpit*
 
 **Hotspots.**
 Das Motto von Usus lautet "Einsicht und Handeln". Das Cockpit erlaubt zwar Einsicht in den
@@ -116,55 +116,61 @@ Zur Ermittlung des _Levels_ einer Statistik wird 100 * die Summe aller Bewertung
 Elemente dividiert, und das Resultat wird von 100 subtrahiert.
 ## hm hm
 
-Die Usus-Metriken analysieren entweder den Inhalt einer einzelnen Datei oder die Relationen zwischen 
-Dateien. Daher unterscheiden wir dateilokale (D) und relationenzentrierte (R) Metriken.
-Für jede Metrik geben wir an, zu welcher Kategorie sie gehört.
-
-**Methodenlänge (D):** 
-Diese Metrik bestimmt die Anzahl der Statements in jedem Methodenrumpf. Dieser Wert 
-ist sehr ähnlich zur Anzahl der Codezeilen, ignoriert aber beispielsweise 
-Leerzeilen, Kommentare und einzelne Klammern.
-Die zugehörige Statistik bewertet Methoden mit einer Länge von 10 oder mehr mit
-f(x) = 1/9 x - 1. 
-
-**Zyklomatische Komplexität (D):**
-Diese Metrik bestimmt die Anzahl der möglichen Verzweigungen im Ausführungspfad durch einen Methodenrumpf.
-Ein leerer Methodenrumpf hat hierbei eine zyklomatische Komplexität von 1. Jedes Vorkommen eines
-verzweigenden Sprachelements, z. B. _if_, _while_, _catch_ oder die Operatoren && und ||, erhöht diesen Wert um 1.
-Die zugehörige Statistik bewertet Methoden mit einer zyklomatischen Komplexität 
-von 5 oder mehr mit f(x) = 1/4 x - 1.  
-
-**Klassengröße (D):**
-Diese Metrik bestimmt die Anzahl von statischen und nichtstatischen Methoden und Initializern in einer Klasse.
-Die Methodensichtbarkeit wird hierbei nicht berücksichtigt. 
-Die zugehörige Statistik wertet Klassen mit einer Methodenanzahl 
-von 13 oder mehr mit f(x) = 1/12 x - 1. 
-
-**Average Component Dependency (R):**
-Die zugrundeliegende Metrik heißt _Cumulative Component Dependency_ (CCD). Sie ermittelt 
-für jede Klasse, wie viele andere Klassen sie kennt.
-Die zugehörige Statistik verwendet den durchschnittlichen CCD aller Klassen in Prozent, also die
-_Average Component Dependency_ (ACD), zur Bestimmung des Levels. Eine Klasse wird als Hotspot betrachtet,
-wenn ihr CCD einen von der Projektgröße abhängigen Wert überschreitet. Für kleine Projekte
-ist ein CCD von 15 % noch akzeptabel, während Klassen in großen Projekten einen Wert von 5 % nicht 
-überschreiten sollten.
-## Wie ist das denn jetzt in echt? ACD? CCD? -- Nicole
-### Wie meinen? -- Marc
-
-**Paketzyklen (R):**
-Die zugrundeliegende Metrik analysiert die Beziehungen zwischen Klassen.
-In der Paketzyklen-Statistik werden diese Klassenbeziehungen auf die beteiligten Pakete reduziert
-und das Resultat auf Zyklen untersucht. In Abb. 1
-sind beispielhaft vier Klassen dargestellt, wobei die gleichfarbigen jeweils im selben
-Paket liegen. Die Beziehungen zwischen den Klassen bilden keinen Zyklus,
-auf Paketebene gibt es jedoch eine zyklische Abhängigkeit.
-Eine solche Abhängigkeit entsteht, wenn Klassen nicht in
-den richtigen Paketen liegen, und deutet auf Probleme im Design und in 
-der Strukturierung des Projekts hin.
+Tabelle 1 gibt eine Übersicht über die Usus-Metriken und -Statistiken. Details über die Berechnung
+einzelner Metriken kann man jederzeit über Tooltips und die dynamische Hilfe in Eclipse nachlesen.
 
 
-![](Screenshots/Paketzyklus.png)  
-*Abb. 1: Paketzyklus*
+*Tabelle 1: Metriken und Statistiken*
+<table>
+  <tr>
+    <th>Statistik</th>
+    <th>Art</th>
+    <th>Ebene</th>
+    <th>Messergebnis <em>x</em></th>
+	<th>Limit <em>L</em></th>
+	<th>Bewertung <em>f(x)</em> für <em>x&nbsp;&gt;&nbsp;L</em></th>
+  </tr>
+  <tr>
+    <td>Methodenlänge</td>
+    <td>dateilokal</td>
+    <td>Methoden</td>
+    <td>Anzahl Statements</td>
+    <td>9</td>
+    <td>1/<em>L</em>&nbsp;<em>x</em> - 1</td>
+  </tr>
+  <tr>
+    <td>Zyklomatische Komplexität</td>
+    <td>dateilokal</td>
+    <td>Methoden</td>
+    <td>Anzahl Verzweigungen</td>
+    <td>4</td>
+    <td>1/<em>L</em>&nbsp;<em>x</em> - 1</td>
+  </tr>
+  <tr>
+    <td>Klassengröße</td>
+    <td>dateilokal</td>
+    <td>Klassen</td>
+    <td>Anzahl Methoden</td>
+    <td>12</td>
+    <td>1/<em>L</em>&nbsp;<em>x</em> - 1</td>
+  </tr>
+  <tr>
+    <td>Average Component Dependency</td>
+    <td>relationenzentriert</td>
+    <td>Klassen</td>
+    <td>Anzahl bekannter Klassen (reflexiv, transitiv)</td>
+    <td>1,5&nbsp;/&nbsp;2<sup>log<sub>5</sub>(#Klassen)</sup></td>
+    <td><em>x</em>&nbsp;/&nbsp;#Klassen</td>
+  </tr>
+  <tr>
+    <td>Paketzyklen</td>
+    <td>relationenzentriert</td>
+    <td>Pakete</td>
+    <td>Anzahl Pakete im gleichen Zyklus (reflexiv)</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+</table>
 
 
 ## Usus im praktischen Einsatz
@@ -202,19 +208,19 @@ Paketen. Klickt man doppelt auf ein solches Paket, öffnet sich der *Package Grap
 zugehörigen Zyklus.
 
 ![](Screenshots/Zyklus5Pakete.png)  
-*Abb. 3: Paketzyklus mit 5 Paketen*
+*Abb. 2: Paketzyklus mit 5 Paketen*
 
-In dem Zyklus mit 5 Paketen (Abb. 3) sind fast alle der Kanten zwischen 
+In dem Zyklus mit 5 Paketen (Abb. 2) sind fast alle der Kanten zwischen 
 den Paketen bidirektional. Um herauszufinden, welche Klassen für diese Beziehungen 
 verantwortlich sind, kann man Pakete und/oder Beziehungen auswählen und alle damit 
 zusammenhängenden Klassen durch Klicken auf das Klassensymbol im Toolbar im *Class Graph* anzeigen 
 lassen.
 
 ![](Screenshots/KlassenAusFilesystem.png)  
-*Abb. 4: Klassen aus org.eclipse.core.filesystem und org.eclipse.core.internal.filesystem*
+*Abb. 3: Klassen aus org.eclipse.core.filesystem und org.eclipse.core.internal.filesystem*
 
 Wählen wir die Kante zwischen *org.eclipse.core.filesystem* und 
-*org.eclipse.core.internal.filesystem* aus, ergibt sich das Bild in Abb. 4. Hierbei stellen die 
+*org.eclipse.core.internal.filesystem* aus, ergibt sich das Bild in Abb. 3. Hierbei stellen die 
 roten Kanten paketübergreifende Klassenbeziehungen dar, während Beziehungen innerhalb eines Pakets 
 schwarz dargestellt sind. In unserem Beispiel referenziert die öffentliche Klasse *EFS* interne 
 Klassen, die wiederum Bezug auf öffentliche Interfaces im Paket der 
