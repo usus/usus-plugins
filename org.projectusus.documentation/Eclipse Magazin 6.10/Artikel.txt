@@ -4,8 +4,8 @@
 
 In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein Bewusstsein für 
 Codequalität bzw. innere Softwarequalität entwickelt. Doch was bedeutet Codequalität eigentlich? 
-Kann man sie messen? Und falls ja, welche Erkenntnisse gewinnt man daraus? Und wenn man 
-Erkenntnisse gewonnen hat, wie reagiert man darauf und was kann man zur Verbesserung unternehmen? 
+Kann man sie messen? Und falls ja, welche Erkenntnisse gewinnt man daraus und wie kann man diese 
+zur Verbesserung der Qualität nutzen? 
 Usus versucht eine Antwort auf diese Fragen zu geben.
 
 
@@ -21,10 +21,8 @@ Nachvollziehbarkeit und damit eine leichte Änderbarkeit des Codes sind.
 
 **Warum soll ich meinen Code überhaupt ändern?**
 Beim Entwickeln von Software ist die Versuchung groß, sich nicht allzu lange mit dem Aufräumen der 
-Codebasis aufzuhalten. Ausreden dafür lassen sich genug finden. 
-Unsere Erfahrungen aus
-Legacy-Projekten lehren uns, dass solche Versäumnisse früher oder später zu unwartbarem Code
-führen.
+Codebasis aufzuhalten. Unsere Erfahrungen aus Legacy-Projekten lehren uns jedoch, dass solche 
+Versäumnisse früher oder später zu unwartbarem Code führen.
 
 **Warum ein Analysewerkzeug?**
 Analysewerkzeuge unterstützen den Entwickler dabei, Fehler und negative Entwicklungen frühzeitig zu erkennen.
@@ -57,6 +55,13 @@ Abgesehen vom ersten Berechnungslauf, der bei großen Projekten ein paar Minuten 
 nehmen kann, werden Änderungen im Code innerhalb von Sekunden analysiert und sofort in sämtliche
 Views übernommen: Das Cockpit ändert seine Werte und den Trend, die Hotspots-Listen werden
 aktualisiert, und die Graphen passen sich an die neuen Gegebenheiten an.
+
+**Integration in die IDE.**
+Bei Verwendung eines externen Werkzeugs zur statischen Analyse wie z. B. Sonar [[7]][Sonar] muss 
+man die gewonnenen Erkenntnisse stets in die Entwicklungsumgebung übertragen. Zur Überprüfung, ob 
+eine Änderung im Code den gewünschten Effekt auf die Codequalität gehabt hat, muss man erneut in 
+das externe Werkzeug wechseln. Mit Usus entfällt dieser Kontextwechsel zwischen externem Werkzeug 
+und der IDE.
  
 **Ganzheitliche Betrachtung der Codebasis.**
 Das Cockpit liefert einen komprimierten Überblick über alle Aspekte des gesamten Codes.
@@ -170,7 +175,7 @@ einen Teil der Eclipse-Sourcen gewählt, und zwar das Platform/Core-Projekt. Dies
 Workspace auf der beiliegenden Heft-CD. Da es sich bei den Beispielprojekten selbst um Eclipse-Plugins 
 handelt, benötigt man zum 
 Öffnen des Workspaces eine geeignete Eclipse-Version, 
-zum Beispiel das Eclipse Classic-Paket, und natürlich Usus [7].
+zum Beispiel das Eclipse Classic-Paket, und natürlich Usus [8].
 
 
 Anhand der Methodenlänge und der Paketzyklen zeigen wir im Folgenden beispielhaft, wie Usus 
@@ -252,10 +257,12 @@ Doch wir können beim Entwickeln von Usus auf Usus vertrauen, viel kann also nich
 4. [Checkstyle][]
 5. [FindBugs][]
 6. [PMD][]
-7. [UsusUpdateSite][]
+7. [Sonar][]
+8. [UsusUpdateSite][]
 
 [CCD]: http://clean-code-developer.de/
 [Checkstyle]: http://checkstyle.sourceforge.net/
 [FindBugs]: http://findbugs.sourceforge.net/
 [PMD]: http://pmd.sourceforge.net/
+[Sonar]: http://www.sonarsource.org/
 [UsusUpdateSite]: http://projectusus.org/
