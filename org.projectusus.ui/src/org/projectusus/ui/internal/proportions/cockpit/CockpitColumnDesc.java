@@ -15,25 +15,25 @@ import org.projectusus.ui.viewer.UsusTreeColumn;
 
 enum CockpitColumnDesc implements IColumnDesc<AnalysisDisplayEntry> {
 
-    @UsusTreeColumn( header = "Indicator", weight = 50 )
+    @UsusTreeColumn( header = "Indicator", weight = 51 )
     Indicator( true ) {
         public String getLabel( AnalysisDisplayEntry element ) {
             return element.getLabel();
         }
     },
-    @UsusTreeColumn( header = "Level", align = RIGHT, weight = 8, numeric = true )
-    Level( false ) {
+    @UsusTreeColumn( header = "Avg. Rating", align = RIGHT, weight = 14, numeric = true )
+    Average( false ) {
         public String getLabel( AnalysisDisplayEntry element ) {
-            return formatter.format( element.getLevel() );
+            return formatter.format( element.getAverage() );
         }
     },
-    @UsusTreeColumn( header = "Hotspots", align = RIGHT, weight = 14, numeric = true )
+    @UsusTreeColumn( header = "Hotspots", align = RIGHT, weight = 11, numeric = true )
     Violations( false ) {
         public String getLabel( AnalysisDisplayEntry element ) {
             return String.valueOf( element.getViolations() );
         }
     },
-    @UsusTreeColumn( header = "Total", align = RIGHT, weight = 20 )
+    @UsusTreeColumn( header = "Total", align = RIGHT, weight = 17 )
     Total( false ) {
         public String getLabel( AnalysisDisplayEntry element ) {
             return element.getBasis();
@@ -47,7 +47,7 @@ enum CockpitColumnDesc implements IColumnDesc<AnalysisDisplayEntry> {
     };
 
     private final boolean hasImage;
-    private final static DecimalFormat formatter = new DecimalFormat( "#.##" ); //$NON-NLS-1$
+    private final static DecimalFormat formatter = new DecimalFormat( "0.00" ); //$NON-NLS-1$
 
     CockpitColumnDesc( boolean hasImage ) {
         this.hasImage = hasImage;

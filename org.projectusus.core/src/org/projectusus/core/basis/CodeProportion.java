@@ -16,30 +16,30 @@ public class CodeProportion extends PlatformObject {
     private final String description;
     private final int violations;
     private final CodeStatistic basis;
-    private final double level;
+    private final double average;
     private final List<Hotspot> hotspots;
     private final boolean hasHotspots;
 
-    public CodeProportion( String label, String description, int violations, CodeStatistic basis, double levelValue ) {
-        this( label, description, violations, basis, levelValue, new ArrayList<Hotspot>( 0 ), false );
+    public CodeProportion( String label, String description, int violations, CodeStatistic basis, double average ) {
+        this( label, description, violations, basis, average, new ArrayList<Hotspot>( 0 ), false );
     }
 
-    public CodeProportion( String label, String description, int violations, CodeStatistic basis, double levelValue, List<Hotspot> hotspots ) {
-        this( label, description, violations, basis, levelValue, hotspots, true );
+    public CodeProportion( String label, String description, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots ) {
+        this( label, description, violations, basis, average, hotspots, true );
     }
 
-    private CodeProportion( String label, String description, int violations, CodeStatistic basis, double levelValue, List<Hotspot> hotspots, boolean hasHotspots ) {
+    private CodeProportion( String label, String description, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots, boolean hasHotspots ) {
         this.label = label;
         this.description = description;
         this.violations = violations;
         this.basis = basis;
         this.hasHotspots = hasHotspots;
         this.hotspots = sort( hotspots );
-        this.level = levelValue;
+        this.average = average;
     }
 
-    public double getLevel() {
-        return level;
+    public double getAverage() {
+        return average;
     }
 
     public int getViolations() {

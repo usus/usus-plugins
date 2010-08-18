@@ -41,7 +41,6 @@ public class ACDStatistic extends DefaultCockpitExtension {
 
     @Override
     public CodeProportion getCodeProportion() {
-        double levelValue = 100.0 - 100.0 * getRelativeACD();
-        return new CodeProportion( getLabel(), getDescription(), getViolations(), getBasisStatistic(), levelValue, getHotspots() );
+        return new CodeProportion( getLabel(), getDescription(), getViolations(), getBasisStatistic(), getRelativeACD(), getHotspots() );
     }
 }

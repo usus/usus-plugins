@@ -27,7 +27,7 @@ public class PackageCycleStatistic extends DefaultCockpitExtension {
         CodeStatistic basisStatistic = getBasisStatistic();
         PackageCycles packageCycles = new PackageRelations().getPackageCycles();
         int violations = packageCycles.numberOfPackagesInAnyCycles();
-        double level = calculateLevel( violations, basisStatistic.getValue() );
+        double level = calculateAverage( violations, basisStatistic.getValue() );
         return new CodeProportion( getLabel(), getDescription(), violations, basisStatistic, level, createHotspots( packageCycles ) );
     }
 
@@ -49,7 +49,7 @@ public class PackageCycleStatistic extends DefaultCockpitExtension {
 
     @Override
     public int getBasis() {
-        return new PackageCountVisitor().visitAndReturn().getCodeStatistic().getValue();
+        return getBasisStatistic().getValue();
     }
 
     @Override

@@ -32,8 +32,8 @@ public class LinearCyclomaticComplexityStatistic extends DefaultCockpitExtension
     }
 
     @Override
-    public double getLevel() {
-        return calculateLevel( linearViolations, getBasis() );
+    public double getAverage() {
+        return calculateAverage( linearViolations, getBasis() );
     }
 
 }

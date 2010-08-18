@@ -34,8 +34,8 @@ public class AnalysisDisplayEntry {
         return current.getMetricDescription();
     }
 
-    public double getLevel() {
-        return current.getLevel();
+    public double getAverage() {
+        return current.getAverage();
     }
 
     public int getViolations() {
@@ -91,9 +91,9 @@ public class AnalysisDisplayEntry {
      */
     int getTrend() {
         if( hasHotspots() ) {
-            return -(getHotspots().size() - history.getHotspots().size());
+            return history.getHotspots().size() - getHotspots().size();
         }
-        return (int)-(getLevel() - history.getLevel());
+        return (int)(history.getAverage() - getAverage());
     }
 
     /**
