@@ -1,6 +1,6 @@
 # Einsicht und Handeln mit Usus
 
-#### Einfache Handhabung und unmittelbares Feedback
+**Integrierte Codeanalyse: Einfache Handhabung und unmittelbares Feedback**
 
 In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein Bewusstsein für 
 Codequalität bzw. innere Softwarequalität entwickelt. Doch was bedeutet Codequalität eigentlich? 
@@ -78,8 +78,8 @@ berechneten Statistiken und ihre aktuellen Werte. Neben der
 Gesamtzahl der zugrundeliegenden Elemente (*Total*) wird die Anzahl derjenigen 
 Elemente mit einer Bewertung größer als 0 (*Hotspots*) sowie die durchschnittliche 
 Bewertung der Statistik in Prozent
-(*Avg. Rating*) angezeigt. In der *Trend*-Spalte wird die Veränderung seit dem letzten *Snapshot* 
-angezeigt. Snapshots lassen sich über den Toolbar-Button mit Kamerasymbol erstellen und 
+(*Avg. Rating*) angezeigt. In der *Trend*-Spalte ist die Veränderung seit dem letzten *Snapshot* 
+dargestellt. Snapshots lassen sich über den Toolbar-Button mit Kamerasymbol erstellen und 
 ermöglichen es, Veränderungen im Code 
 sichtbar zu machen. Beispielsweise ist es ratsam, einen Snapshot vor
 einem größeren Refactoring oder vor Beginn eines Implementierungstasks anzulegen.
@@ -115,7 +115,6 @@ Die meisten Statistiken arbeiten linear, d. h. Messergebnisse unterhalb eines fe
 _L_ werden mit 0 bewertet, die Bewertung darüberliegender Ergebnisse wird durch eine linear 
 steigende Funktion berechnet. So bekommen Elemente mit sehr schlechten Messergebnissen eine 
 schlechtere Bewertung als solche, die nur knapp über dem Limit liegen.
-
 Zur Ermittlung der _prozentualen Durchschnittsbewertung_ einer Statistik wird die Summe aller Bewertungen durch 
 die Gesamtzahl aller Elemente dividiert und als Prozentzahl dargestellt, d. h. mit 100 multipliziert.
 
@@ -125,7 +124,7 @@ nachlesen.
 
 
 *Tabelle 1: Metriken und Statistiken*
-<table>
+<table border="1" cellspacing="0" cellpadding="0">
   <tr>
     <th>Statistik</th>
     <th>Art</th>
@@ -209,7 +208,7 @@ Zyklus enthält 29 Pakete, es gibt weitere Zyklen mit 15, 13 und 5 sowie zweimal 
 Paketen. Klickt man doppelt auf ein solches Paket, öffnet sich der *Package Graph View* mit dem 
 zugehörigen Zyklus.
 
-![](Screenshots/Zyklus5Pakete.png)  
+<img src="Screenshots/Zyklus5Pakete.png" width="100%"/>  
 *Abb. 2: Paketzyklus mit 5 Paketen*
 
 In dem Zyklus mit 5 Paketen (Abb. 2) sind fast alle der Kanten zwischen 
@@ -218,7 +217,7 @@ verantwortlich sind, kann man Pakete und/oder Beziehungen auswählen und alle dam
 zusammenhängenden Klassen durch Klicken auf das Klassensymbol im Toolbar im *Class Graph* anzeigen 
 lassen.
 
-![](Screenshots/KlassenAusFilesystem.png)  
+<img src="Screenshots/KlassenAusFilesystem.png" width="100%"/>  
 *Abb. 3: Klassen aus org.eclipse.core.filesystem und org.eclipse.core.internal.filesystem*
 
 Wählen wir die Kante zwischen *org.eclipse.core.filesystem* und 

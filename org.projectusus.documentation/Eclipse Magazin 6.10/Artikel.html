@@ -1,6 +1,6 @@
 <h1>Einsicht und Handeln mit Usus</h1>
 
-<h4>Einfache Handhabung und unmittelbares Feedback</h4>
+<p><strong>Integrierte Codeanalyse: Einfache Handhabung und unmittelbares Feedback</strong></p>
 
 <p>In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein Bewusstsein für 
 Codequalität bzw. innere Softwarequalität entwickelt. Doch was bedeutet Codequalität eigentlich? 
@@ -77,8 +77,8 @@ berechneten Statistiken und ihre aktuellen Werte. Neben der
 Gesamtzahl der zugrundeliegenden Elemente (<em>Total</em>) wird die Anzahl derjenigen 
 Elemente mit einer Bewertung größer als 0 (<em>Hotspots</em>) sowie die durchschnittliche 
 Bewertung der Statistik in Prozent
-(<em>Avg. Rating</em>) angezeigt. In der <em>Trend</em>-Spalte wird die Veränderung seit dem letzten <em>Snapshot</em> 
-angezeigt. Snapshots lassen sich über den Toolbar-Button mit Kamerasymbol erstellen und 
+(<em>Avg. Rating</em>) angezeigt. In der <em>Trend</em>-Spalte ist die Veränderung seit dem letzten <em>Snapshot</em> 
+dargestellt. Snapshots lassen sich über den Toolbar-Button mit Kamerasymbol erstellen und 
 ermöglichen es, Veränderungen im Code 
 sichtbar zu machen. Beispielsweise ist es ratsam, einen Snapshot vor
 einem größeren Refactoring oder vor Beginn eines Implementierungstasks anzulegen.</p>
@@ -113,9 +113,8 @@ Bewertungsfunktion <em>f(x)</em>, umso schlechter ist die Bewertung von <em>x</e
 Die meisten Statistiken arbeiten linear, d. h. Messergebnisse unterhalb eines festgelegten <em>Limits</em> 
 <em>L</em> werden mit 0 bewertet, die Bewertung darüberliegender Ergebnisse wird durch eine linear 
 steigende Funktion berechnet. So bekommen Elemente mit sehr schlechten Messergebnissen eine 
-schlechtere Bewertung als solche, die nur knapp über dem Limit liegen.</p>
-
-<p>Zur Ermittlung der <em>prozentualen Durchschnittsbewertung</em> einer Statistik wird die Summe aller Bewertungen durch 
+schlechtere Bewertung als solche, die nur knapp über dem Limit liegen.
+Zur Ermittlung der <em>prozentualen Durchschnittsbewertung</em> einer Statistik wird die Summe aller Bewertungen durch 
 die Gesamtzahl aller Elemente dividiert und als Prozentzahl dargestellt, d. h. mit 100 multipliziert.</p>
 
 <p>Tabelle 1 gibt eine Übersicht über die Usus-Metriken und -Statistiken. Eine detaillierte 
@@ -124,7 +123,7 @@ nachlesen.</p>
 
 <p><em>Tabelle 1: Metriken und Statistiken</em></p>
 
-<table>
+<table border="1" cellspacing="0" cellpadding="0">
   <tr>
     <th>Statistik</th>
     <th>Art</th>
@@ -205,7 +204,7 @@ Zyklus enthält 29 Pakete, es gibt weitere Zyklen mit 15, 13 und 5 sowie zweimal 
 Paketen. Klickt man doppelt auf ein solches Paket, öffnet sich der <em>Package Graph View</em> mit dem 
 zugehörigen Zyklus.</p>
 
-<p><img src="Screenshots/Zyklus5Pakete.png" alt="" title="" /> <br />
+<p><img src="Screenshots/Zyklus5Pakete.png" width="100%"/> <br />
 <em>Abb. 2: Paketzyklus mit 5 Paketen</em></p>
 
 <p>In dem Zyklus mit 5 Paketen (Abb. 2) sind fast alle der Kanten zwischen 
@@ -214,7 +213,7 @@ verantwortlich sind, kann man Pakete und/oder Beziehungen auswählen und alle dam
 zusammenhängenden Klassen durch Klicken auf das Klassensymbol im Toolbar im <em>Class Graph</em> anzeigen 
 lassen.</p>
 
-<p><img src="Screenshots/KlassenAusFilesystem.png" alt="" title="" /> <br />
+<p><img src="Screenshots/KlassenAusFilesystem.png" width="100%"/> <br />
 <em>Abb. 3: Klassen aus org.eclipse.core.filesystem und org.eclipse.core.internal.filesystem</em></p>
 
 <p>Wählen wir die Kante zwischen <em>org.eclipse.core.filesystem</em> und 
