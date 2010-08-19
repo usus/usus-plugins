@@ -122,9 +122,8 @@ Tabelle 1 gibt eine Übersicht über die Usus-Metriken und -Statistiken. Eine deta
 Beschreibung kann man jederzeit über Tooltips und die dynamische Hilfe in Eclipse 
 nachlesen.
 
-
 *Tabelle 1: Metriken und Statistiken*
-<table border="1" cellspacing="0" cellpadding="0">
+<table border="1" cellspacing="0" cellpadding="2">
   <tr>
     <th>Statistik</th>
     <th>Art</th>
