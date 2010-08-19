@@ -1,6 +1,6 @@
 # Einsicht und Handeln mit Usus
 
-#### Einfache Handhabung und sofortiges Feedback
+#### Einfache Handhabung und unmittelbares Feedback
 
 In den letzten Jahren hat sich in der Entwicklergemeinde mehr und mehr ein Bewusstsein für 
 Codequalität bzw. innere Softwarequalität entwickelt. Doch was bedeutet Codequalität eigentlich? 
@@ -12,20 +12,21 @@ Usus versucht eine Antwort auf diese Fragen zu geben.
 ## Warum Codequalität?
 
 Jedes Stück Code wird nur einmal geschrieben, aber möglicherweise Hunderte von Malen gelesen und
-nachvollzogen. Daher ist es sehr effektiv, den Code so zu gestalten, dass das Lesen und 
-Verstehen einfach wird. Dies führt zu weniger Fehlern. 
-Die Änderbarkeit steht als weitere wichtige Eigenschaft des Codes im 
-direkten Zusammenhang mit der Nachvollziehbarkeit: Man sollte nur Code ändern, den man versteht! 
+nachvollzogen. Daher ist es sehr effektiv, den Code so zu gestalten, dass das 
+Verstehen einfach wird. Denn im direkten Zusammenhang mit der
+Nachvollziehbarkeit steht die Änderbarkeit: Man sollte nur Code ändern, den man versteht! 
+Nur so lassen sich Fehler vermeiden. 
 Usus prüft verschiedene Aspekte des Codes, die in unseren Augen essentiell für eine gute 
-Nachvollziehbarkeit und damit eine leichte Änderbarkeit des Codes sind.
+Nachvollziehbarkeit und damit eine problemlose Änderbarkeit des Codes sind.
 
 **Warum soll ich meinen Code überhaupt ändern?**
 Beim Entwickeln von Software ist die Versuchung groß, sich nicht allzu lange mit dem Aufräumen der 
 Codebasis aufzuhalten. Unsere Erfahrungen aus Legacy-Projekten lehren uns jedoch, dass solche 
-Versäumnisse früher oder später zu unwartbarem Code führen.
+Versäumnisse früher oder später zu schwer wartbarem Code führen.
 
 **Warum ein Analysewerkzeug?**
-Analysewerkzeuge unterstützen den Entwickler dabei, Fehler und negative Entwicklungen frühzeitig zu erkennen.
+Analysewerkzeuge unterstützen den Entwickler dabei, Fehler und negative Entwicklungen frühzeitig zu erkennen
+und zu beheben.
 So kann man daraus lernen und derartige Probleme im weiteren Verlauf des Projekts vermeiden.
 Des Weiteren geben Analysewerkzeuge Kriterien dafür vor, was lesbaren und
 verständlichen Code ausmacht. So gelten für alle Teammitglieder dieselben
@@ -39,13 +40,13 @@ verliert.
 
 ## Warum Usus?
 
-Es gibt viele Code-Analysewerkzeuge, die sich in Eclipse integrieren lassen, wie zum Beispiel 
+Es gibt viele Code-Analysewerkzeuge für Java, die sich in Eclipse integrieren lassen, wie zum Beispiel 
 Checkstyle [[4]][Checkstyle], FindBugs [[5]][FindBugs] und PMD [[6]][PMD]. Warum bauen wir also 
 noch ein weiteres derartiges Werkzeug? 
 Bei der Entwicklung waren folgende Aspekte ausschlaggebend:
 
 **Einfache Benutzbarkeit.**
-Es genügt, Usus zu installieren, in die _Project Usus_ Perspektive zu wechseln, die gewünschten
+Es genügt, Usus zu installieren, in die _Project Usus_-Perspektive zu wechseln, die gewünschten
 Projekte auszuwählen und die initiale Berechnung anzustoßen. Alles weitere geschieht automatisch.
 Es ist nicht erforderlich, umfangreiche Konfigurationen vorzunehmen oder Detailwissen
 über die einzusetzenden Metriken zu haben. 
@@ -53,22 +54,20 @@ Es ist nicht erforderlich, umfangreiche Konfigurationen vorzunehmen oder Detailw
 **Unmittelbares Feedback.**
 Abgesehen vom ersten Berechnungslauf, der bei großen Projekten ein paar Minuten in Anspruch
 nehmen kann, werden Änderungen im Code innerhalb von Sekunden analysiert und sofort in sämtliche
-Views übernommen: Das Cockpit ändert seine Werte und den Trend, die Hotspots-Listen werden
+Views übernommen: Das Cockpit ändert seine Werte und den Trend, die Hotspot-Listen werden
 aktualisiert, und die Graphen passen sich an die neuen Gegebenheiten an.
 
 **Integration in die IDE.**
 Bei Verwendung eines externen Werkzeugs zur statischen Analyse wie z. B. Sonar [[7]][Sonar] muss 
 man die gewonnenen Erkenntnisse stets in die Entwicklungsumgebung übertragen. Zur Überprüfung, ob 
-eine Änderung im Code den gewünschten Effekt auf die Codequalität gehabt hat, muss man erneut in 
-das externe Werkzeug wechseln. Mit Usus entfällt dieser Kontextwechsel zwischen externem Werkzeug 
-und der IDE.
+eine Änderung im Code den gewünschten Effekt auf die Codequalität gehabt hat, 
+ist ein erneuter Aufruf des externen Werkzeugs erforderlich. Mit Usus entfällt dieser Wechsel 
+zwischen zwei Umgebungen.
  
 **Ganzheitliche Betrachtung der Codebasis.**
 Das Cockpit liefert einen komprimierten Überblick über alle Aspekte des gesamten Codes.
 Möchte man z. B. einen Paketzyklus entfernen, ändert man den Code in den beteiligten Klassen und
-sieht sofort die Auswirkungen dieser Änderung in den Usus-Views. Da im Usus-Trend Verschlechterungen
-immer Verbesserungen überdecken, greift dieses Feedback als Frühwarnsystem insbesondere dann, wenn 
-eine beabsichtigte Verbesserung als Seiteneffekt an anderer Stelle etwas verschlechtert.
+sieht sofort die Auswirkungen dieser Änderung in den Usus-Views. 
 So behält man immer das große Ganze im Blick und verliert sich nicht in Details.
 
 ## Die Bestandteile von Usus
@@ -77,9 +76,11 @@ So behält man immer das große Ganze im Blick und verliert sich nicht in Details.
 Das Cockpit (Abb. 1) ist der zentrale View von Usus. Es gibt einen Überblick über die 
 berechneten Statistiken und ihre aktuellen Werte. Neben der 
 Gesamtzahl der zugrundeliegenden Elemente (*Total*) wird die Anzahl derjenigen 
-Elemente mit einer Bewertung größer als 0 (*Hotspots*) sowie die Gesamtbewertung der Statistik 
-(*Level*) angezeigt. In der *Trend*-Spalte wird die Veränderung seit dem letzten *Snapshot* 
-angezeigt. Snapshots (über den entsprechenden Toolbar-Button) ermöglichen es, Veränderungen im Code 
+Elemente mit einer Bewertung größer als 0 (*Hotspots*) sowie die durchschnittliche 
+Bewertung der Statistik in Prozent
+(*Avg. Rating*) angezeigt. In der *Trend*-Spalte wird die Veränderung seit dem letzten *Snapshot* 
+angezeigt. Snapshots lassen sich über den Toolbar-Button mit Kamerasymbol erstellen und 
+ermöglichen es, Veränderungen im Code 
 sichtbar zu machen. Beispielsweise ist es ratsam, einen Snapshot vor
 einem größeren Refactoring oder vor Beginn eines Implementierungstasks anzulegen.
 
@@ -89,36 +90,37 @@ einem größeren Refactoring oder vor Beginn eines Implementierungstasks anzulegen
 **Hotspots.**
 Das Motto von Usus lautet "Einsicht und Handeln". Das Cockpit erlaubt zwar Einsicht in den
 aktuellen Zustand des Codes, aber zum Handeln genügt dies nicht. Deshalb gelangt man von jeder Statistik 
-durch einen Doppelklick zum *Hotspots View*, der die Elemente mit einer Bewertung größer als 
-0 anzeigt. Von dort gelangt man per Doppelklick entweder zum entsprechenden 
-Element im *Java Editor* oder (bei Paketzyklen) zum *Package Graph View*. Wie im Cockpit
+durch einen Doppelklick zum *Hotspots View*. Dort öffnet sich durch Doppelklicken auf einen Hotspot
+entweder das entsprechende 
+Element im *Java Editor* oder (bei Paketzyklen) der *Package Graph View*. Wie im Cockpit
 kann man auch hier den Trend seit dem letzten Snapshot im Auge behalten.
 
 **Trends.**
 Usus zeigt Veränderungen sowohl im Cockpit als auch in den Hotspots durch ein grünes Plus- bzw. ein
 rotes Minuszeichen an. Interessant hieran ist, dass sich bei der Verbesserung eines Hotspots an
 anderen Stellen Verschlechterungen ergeben können, z. B. beim Extrahieren von Methoden. Die
-extrahierten Methoden können zu lang sein, oder andere Werte können sich verschlechtern, etwa
-die Klassengröße. Der Gesamttrend wirkt als Frühwarnsystem und 
-verschlechtert sich, sobald sich auch nur ein Hotspot verschlechtert hat.
+extrahierten Methoden können zu lang sein, oder andere Statistiken können sich verschlechtern, etwa
+die Klassengröße. 
+Da die Cockpit-Trends ein rotes Minus anzeigen, sobald sich auch nur ein Hotspot verschlechtert hat,
+fungiert dieses Feedback als Frühwarnsystem insbesondere dann, wenn sich
+eine beabsichtigte Verbesserung als Seiteneffekt an anderer Stelle nachteilig auswirkt.
 
 **Metriken und Statistiken.**
 In Usus unterscheiden wir zwischen _Metriken_ und _Statistiken_. Eine Metrik führt eine statische 
 Analyse des vorliegenden Codes durch und extrahiert den Code beschreibende _Messergebnisse_. 
-Statistiken fassen in einem separaten Schritt die Resultate der Metriken zusammenfassen und ordnen 
+Statistiken fassen in einem separaten Schritt die Resultate der Metriken zusammen und ordnen 
 jedem Messergebnis *x* eine _Bewertung_ *f(x)* zu. Dabei gilt: Je höher das Ergebnis der 
-Bewertungsfunktion *f(x)*, umso schlechter ist die Bewertung einer Messung *x*.  
+Bewertungsfunktion *f(x)*, umso schlechter ist die Bewertung von *x*.  
 Die meisten Statistiken arbeiten linear, d. h. Messergebnisse unterhalb eines festgelegten _Limits_ 
-_L_ werden mit 0 bewertet, die Bewertung darüberliegender Messungen wird durch eine linear 
+_L_ werden mit 0 bewertet, die Bewertung darüberliegender Ergebnisse wird durch eine linear 
 steigende Funktion berechnet. So bekommen Elemente mit sehr schlechten Messergebnissen eine 
 schlechtere Bewertung als solche, die nur knapp über dem Limit liegen.
 
-Zur Ermittlung des _Levels_ einer Statistik wird 100 * die Summe aller Bewertungen durch 
-die Gesamtzahl aller Elemente dividiert, und das Resultat wird von 100 subtrahiert.
-## hm hm
+Zur Ermittlung der _prozentualen Durchschnittsbewertung_ einer Statistik wird die Summe aller Bewertungen durch 
+die Gesamtzahl aller Elemente dividiert und als Prozentzahl dargestellt, d. h. mit 100 multipliziert.
 
 Tabelle 1 gibt eine Übersicht über die Usus-Metriken und -Statistiken. Eine detaillierte 
-Beschreibung der Berechnungen kann man jederzeit über Tooltips und die dynamische Hilfe in Eclipse 
+Beschreibung kann man jederzeit über Tooltips und die dynamische Hilfe in Eclipse 
 nachlesen.
 
 
@@ -158,7 +160,7 @@ nachlesen.
   </tr>
   <tr>
     <td>Average Component Dependency</td>
-    <td>relationenzentriert</td>
+    <td>dateiübergreifend</td>
     <td>Klassen</td>
     <td>Anzahl bekannter Klassen (reflexiv, transitiv)</td>
     <td>1,5&nbsp;/&nbsp;2<sup>log<sub>5</sub>(#Klassen)</sup></td>
@@ -166,7 +168,7 @@ nachlesen.
   </tr>
   <tr>
     <td>Paketzyklen</td>
-    <td>relationenzentriert</td>
+    <td>dateiübergreifend</td>
     <td>Pakete</td>
     <td>Anzahl Pakete im gleichen Zyklus (reflexiv)</td>
     <td>1</td>
@@ -191,19 +193,17 @@ Schwachstellen im Code aufzeigt und wie man diese beheben kann.
 
 **Methodenlänge.**
 Der Ermittlung der Methodenlänge liegt die Gesamtzahl von 13089 Methoden zugrunde. Von diesen haben 
-1700 Methoden mehr als 9 Statements, mit einem Level von 86,56. Ein Doppelklick auf
+1700 Methoden mehr als 9 Statements, mit einer durchschnittlichen Bewertung von 13,4. Ein Doppelklick auf
 die Statistik öffnet den Hotspots View und zeigt die Methoden an. Die Methode 
 *FrameworkCommandProvider._bundle()* ist mit 164 Statements mit Abstand am größten. 
-Per Doppelklick auf diesen Hotspot gelangen wir zur Methode im Java Editor. 
-Durch das Extrahieren von 
-Methoden lässt sich mehr Struktur in den Code hineinbringen, Redundanz vermeiden, 
-die Übersichtlichkeit erhöhen und -- quasi als 
-Nebeneffekt -- die Methode kürzen.
+Per Doppelklick auf diesen Hotspot gelangt man zur Methode im Java Editor. 
+Hier lässt sich durch das Extrahieren von Methoden mehr Struktur in den Code hineinbringen, Redundanz vermeiden, 
+die Übersichtlichkeit erhöhen und -- quasi als Nebeneffekt -- die Methode kürzen.
 
 
 **Paketzyklen.**
-Von den 112 analysierten Paketen befinden sich 74 in Paketzyklen, was zu einem sehr niedrigen 
-Level von 33,93 führt. Durch Doppelklicken auf die Statistik kann man die betroffenen Pakete in 
+Von den 112 analysierten Paketen befinden sich 74 in Paketzyklen, was zu einer sehr hohen 
+Durchschnittsbewertung von 66,1 führt. Durch Doppelklicken auf die Statistik kann man die betroffenen Pakete in 
 einer Liste sehen, wobei die Größe des zugehörigen Zyklus angegeben ist. Der größte 
 Zyklus enthält 29 Pakete, es gibt weitere Zyklen mit 15, 13 und 5 sowie zweimal 3 und dreimal 2 
 Paketen. Klickt man doppelt auf ein solches Paket, öffnet sich der *Package Graph View* mit dem 
@@ -227,7 +227,7 @@ roten Kanten paketübergreifende Klassenbeziehungen dar, während Beziehungen inne
 schwarz dargestellt sind. In unserem Beispiel referenziert die öffentliche Klasse *EFS* interne 
 Klassen, die wiederum Bezug auf öffentliche Interfaces im Paket der 
 Klasse *EFS* nehmen. Dieser Zyklus lässt sich durch Verschieben der Klasse *EFS* in ein anderes Paket 
-auflösen. Danach wird der Graph sofort aktualisiert.
+auflösen. Der Graph wird sofort automatisch aktualisiert.
 
 Betrachtet man große Paketzyklen, ist es schwer, auf 
 einen Blick die relevanten Zusammenhänge zu erfassen. Daher kann man einzelne Pakete aus dem 
@@ -238,15 +238,13 @@ entfernen. Zum Entfernen des Filters klickt man auf den Radiergummi.
 
 ## Ausblick
 
-Bislang haben wir uns darauf konzentriert, den Rechenkern von Usus rund zu machen.
-Diese Arbeiten stehen nun kurz vor dem Abschluss. 
-Es ist jetzt möglich, Usus mit eigenen (dateilokalen) Statistiken zu erweitern; dazu 
-muss lediglich ein Extension Point benutzt werden. Als nächster Schritt steht die Erweiterbarkeit 
-durch eigene Metriken an.
+Der Rechenkern von Usus ist fertiggestellt und arbeitet stabil, die Graphen bieten viel Komfort
+beim Bearbeiten von Code. Usus ist durch eigene Metriken und Statistiken flexibel erweiterbar,
+wofür Extension Points zur Benutzung bereitstehen.
 
-Darüberhinaus sind weitere Entwicklungen geplant. Interessant sind beispielsweise 
+Für die Zukunft sind weitere Entwicklungen geplant. Interessant sind beispielsweise 
 "Schlammloch"-Hotspots, also solche Stellen im Code, die nach Aggregation mehrerer Einzelmetriken 
-einen besonders großen Bedarf für ein Refactoring aufweisen. Ein Schlammloch ist also ein Ort an 
+einen besonders großen Bedarf für ein Refactoring aufweisen. Ein Schlammloch ist also ein Ort, an 
 dem es sich besonders lohnt aufzuräumen!
 Außerdem möchten wir mit Usus gezielt nach Code Smells wie z. B. Feature Envy oder Data Classes 
 suchen und an den zugehörigen Hotspots am besten gleich das passende Refactoring anbieten.
