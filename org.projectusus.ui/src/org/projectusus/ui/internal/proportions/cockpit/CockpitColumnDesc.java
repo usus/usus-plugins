@@ -47,7 +47,7 @@ enum CockpitColumnDesc implements IColumnDesc<AnalysisDisplayEntry> {
     };
 
     private final boolean hasImage;
-    private final static DecimalFormat formatter = new DecimalFormat( "#.0" ); //$NON-NLS-1$
+    private final static DecimalFormat formatter = new DecimalFormat( "0.0" ); //$NON-NLS-1$
 
     CockpitColumnDesc( boolean hasImage ) {
         this.hasImage = hasImage;
