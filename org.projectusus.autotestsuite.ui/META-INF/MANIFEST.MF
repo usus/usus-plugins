@@ -7,7 +7,6 @@ Bundle-Activator: org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin
 Bundle-Vendor: projectusus.org
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
- org.eclipse.debug.ui,
  org.eclipse.jdt.core,
  org.eclipse.jdt.launching,
  org.eclipse.jdt.junit,
@@ -15,7 +14,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jdt.debug.ui,
  org.projectusus.ui,
  org.projectusus.core,
- com.mountainminds.eclemma.core;bundle-version="1.4.3"
+ com.mountainminds.eclemma.core;bundle-version="1.4.3",
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.projectusus.autotestsuite.core.internal;x-internal:=true,
