@@ -94,4 +94,51 @@
             type="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfiguration">
       </launchConfigurationTabGroup>
    </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            class="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchShortcut"
+            icon="icons/obj16/launch.gif"
+            id="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfiguration.shortcut"
+            label="Extended JUnit Test"
+            modes="run, debug">
+         <contextualLaunch>
+            <enablement>
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.jdt.core.IJavaProject">
+                        <test
+                              property="org.eclipse.jdt.core.isInJavaProject">
+                        </test>
+                        <test
+                              property="org.eclipse.jdt.core.hasTypeOnClasspath"
+                              value="junit.framework.Test">
+                        </test>
+                        <test
+                              forcePluginActivation="true"
+                              property="org.eclipse.jdt.junit.canLaunchAsJUnit">
+                        </test>
+                     </adapt>
+                  </iterate>
+               </with>
+            </enablement>
+         </contextualLaunch>
+         <configurationType
+               id="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfiguration">
+         </configurationType>
+         <description
+               description="Runs all unit tests in the selected project and all required projects"
+               mode="run">
+         </description>
+         <description
+               description="Debugs all unit tests in the selected project and all required projects"
+               mode="debug">
+         </description>
+      </shortcut>
+   </extension>
 </plugin>
