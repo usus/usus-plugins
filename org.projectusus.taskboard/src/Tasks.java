@@ -38,6 +38,10 @@ public class Tasks {
     void rightAlignValueColumnInHotspotsView() {
     	// TODO Spalte rechtsbündig machen
     }
+    
+    void removeUseLessTreeNodeInCockpit() {
+    	// TODO Momentan gibt es nur eine Art von Eintrag im Cockpit -> Unnötiger Wurzelknoten
+    }
 
     // ----------------
 
