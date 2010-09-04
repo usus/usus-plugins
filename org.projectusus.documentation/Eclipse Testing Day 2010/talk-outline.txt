@@ -1,0 +1,22 @@
+
+Overall time: 60' (45' speaking time, 15' Q&A)
+
+- Dialogue:     complications in organizing test cases  15'
+  - single test case
+  - multiple test cases                -> explicit AllTests
+  - must be maintained, error-prone    -> Run As on src/
+  - multiple projects                  -> ClasspathSuite
+  - slowness on large WS, static inits -> ? 
+- Presentation: background                              10'
+- Presentation: solution to the problem (in Usus)       10'
+  - demo of suite
+  - explain how it works
+  - (say something about coverage -> need to make this
+    work first)
+
+Options for more material:
+- explain about categories (no longer need name filters with
+  pattern matching to exclude long-running test cases or test
+  cases which require external system setup)
+  -> need to work this into the auto test suite
+- Running all tests as PDE tests?

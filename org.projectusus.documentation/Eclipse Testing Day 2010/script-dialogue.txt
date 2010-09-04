@@ -1,0 +1,80 @@
+(TODO Headlines as animated slides:)
+Once upon a time... in an IT office somewhere...
+
+Leif typing, enter Marc.
+Leif: Hi Marc.
+Marc: Hi Leif.
+Leif: (mishears as 'High Life?') No, just project work.
+Marc: What are you working on?
+Leif: Yeah, we're building this new application, you know ... we've just started. And this 
+      time, we'll do it right, test cases and so on. See, I've started with the central model 
+      classes here, and I've already written one unit test.
+Marc: Good.
+Leif: Let's see ...
+Both: GREEN!
+Leif: Ok, watch it! Now I'll do another one.
+      (Writes unit test, runs it.)
+Both: GREEN!
+Leif: Cool. Now I've got two. ... Wait. Suppose I have many of them. Say, a hundred. Is there
+      a way to run them all at once?
+Marc: Yes. There are suites.
+      (Explains test suites - explicit AllTests)
+
+A couple of hours later... at the coffee machine...
+
+Marc: So, how many test cases do you have now?
+Leif: Sixteen.
+Marc: Wow.
+Leif: And they're all in the test suite. And I run the suite all the time. ... Wait. I just
+      _did_ run the test suite. It was green.
+Marc: Ok. But that's good, isn't it?
+Leif: Yeah, but thinking of it, it shouldn't. I've just changed the code (I did a new unit test
+      of course). But I think one of the older test cases should be red now.  
+      (Silence.)
+Leif: Damn!
+Marc: You forgot to add it to the test suite.
+Leif: Yupp.
+Marc: Happens easily.
+Leif: Hm. But that's bad.
+Marc: You can avoid that problem in Eclipse.
+      (Explain right-click/Run As on project or source folder)
+Leif: Cool. Let's go over to my computer and try it out.
+      (Run the suite ... red.)
+      See? I've got to rewrite that test case. ... Now.
+Both: GREEN!
+Leif: Cool. Then I can throw away the explicit AllTests suite.
+
+The next day... early in the morning... (quite untypical for software developers...)
+Leif: Morning.
+Marc: Morning.
+Leif: Look here, great progress. We got the server-side bundles up and running, and now
+      I'm going to start with the RCP client.
+Marc: Already something to see?
+Leif: A little. I also have some test cases. Btw, perhaps you can help me with this. I
+      have a couple of projects now (of course, the code is in different bundles :-).
+      But Eclipse won't let me run all the test cases. If I right-click a single project,
+      it works and collects them all. But when I select multiple projects, it's always
+      grayed-out. How can I do this?
+Marc: You can't.
+Leif: Shit.
+Marc: There's good reasons for it, of course.
+Leif: Ok. Let's do the theory later. What am I going to do now?
+Marc: Hm. You could try the ClasspathSuite.
+      (Explains.)
+Leif: Interesting. Let's try it out.
+      (They run it.)
+Both: GREEN!
+
+A couple of days later... It's a rainy day, wind's howling...
+Leif: Aaargh!
+Marc: What's wrong?
+Leif: Waiting, waiting, waiting. Takes ages! ... Ages! And then... ha! That NPE again! Argh!
+Marc: And what takes it so long?
+Leif: (Calmer.) Don't know. It all went so well for a while. But then we got more and more
+      code...
+Marc: ... and more and more test cases...
+Leif: ... and more and more test cases, and it all got slower and slower. Argh!
+
+TODO
+Possibly switch over from dialogue to background explanation talk here? Or should we play out
+the explanation for why it is slow in the dialogue?
