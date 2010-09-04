@@ -1,0 +1,27 @@
+One suite that suits them all
+
+In software projects with sizeable code bases maintaining the suite of all unit
+tests regularly becomes an issue: developers want to be able to execute the
+entire collection of tests with a single command, but an AllTests suite that
+lists the test cases explicitly must be kept manually, which is inefficient
+and error-prone.
+
+The well-known ClassPathSuite[1] solves this problem elegantly, but it has its 
+weaknesses, too: it becomes slow on large workspaces, and also executes static
+code blocks in all classes when loading and analyzing them, which can cause
+unexpected effects and in some cases make the tests fail.
+
+The Eclipse IDE allows to run all tests in a single Java project or source 
+folder directly from the context menu, but doesn't extend this functionality
+to the entire workspace. (For good reasons, as we will explain in the talk.)
+There are approaches to mitigate this issue (e.g. [2]), but they have their
+own shortcomings. Still, they clearly show the need for a solution in this 
+area.
+
+After discussing the current status of test suite management in Eclipse, we
+introduce a new approach to address these issues; we'll also demonstrate a
+prototypical implementation which we are currently developing at Project Usus[3].
+
+[1] http://johanneslink.net/projects/cpsuite.jsp
+[2] http://marketplace.eclipse.org/content/run-all-tests
+[3] http://projectusus.org
