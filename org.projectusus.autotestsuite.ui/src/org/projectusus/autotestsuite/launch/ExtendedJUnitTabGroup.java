@@ -19,8 +19,7 @@ public class ExtendedJUnitTabGroup extends JUnitTabGroup {
      */
     @Override
     public void createTabs( ILaunchConfigurationDialog dialog, String mode ) {
-        ILaunchConfigurationTab[] tabs = new ILaunchConfigurationTab[] { new ExtendedJUnitLaunchConfigurationTab(), new JavaArgumentsTab(), new JavaClasspathTab(),
-                new JavaJRETab(), new SourceLookupTab(), new EnvironmentTab(), new CommonTab() };
-        setTabs( tabs );
+        setTabs( new ILaunchConfigurationTab[] { new ExtendedJUnitLaunchConfigurationTab(), new JavaArgumentsTab(), new JavaClasspathTab(), new JavaJRETab(),
+                new SourceLookupTab(), new EnvironmentTab(), new CommonTab() } );
     }
 }

@@ -13,7 +13,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.osgi.framework.Bundle;
 import org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin;
-import org.projectusus.ui.internal.UsusUIPlugin;
 
 public class AutoTestSuiteUIImages implements ISharedAutoTestSuiteImages {
 
@@ -60,7 +59,7 @@ public class AutoTestSuiteUIImages implements ISharedAutoTestSuiteImages {
         try {
             desc = ImageDescriptor.createFromURL( makeIconFileURL( path ) );
         } catch( MalformedURLException malfux ) {
-            UsusUIPlugin.getDefault().log( malfux );
+            // TODO log
         }
         imageRegistry.put( key, desc );
     }

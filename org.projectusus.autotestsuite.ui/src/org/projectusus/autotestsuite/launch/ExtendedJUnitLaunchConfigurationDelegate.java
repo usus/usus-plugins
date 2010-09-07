@@ -1,7 +1,10 @@
 package org.projectusus.autotestsuite.launch;
 
-import static org.eclipse.jdt.internal.junit.launcher.TestKindRegistry.JUNIT3_TEST_KIND_ID;
+import static com.google.common.collect.Iterables.toArray;
+import static java.util.Arrays.asList;
+import static org.eclipse.jdt.internal.junit.launcher.TestKindRegistry.JUNIT4_TEST_KIND_ID;
 import static org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME;
+import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.ATTR_CHECKED_PROJECTS;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -26,6 +29,10 @@ import org.eclipse.jdt.internal.junit.launcher.TestKindRegistry;
 import org.eclipse.jdt.junit.launcher.JUnitLaunchConfigurationDelegate;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Collections2;
+
 @SuppressWarnings( "restriction" )
 public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigurationDelegate {
 
@@ -34,7 +41,7 @@ public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigu
         if( shouldRunSingleTest( config ) ) {
             return super.evaluateTests( config, monitor );
         }
-        List<IJavaProject> projects = collectProjects( config );
+        Collection<IJavaProject> projects = collectProjects( config );
         Set<IMember> result = collectTests( config, monitor, projects );
         checkResult( config, result );
         return result.toArray( new IMember[result.size()] );
@@ -44,14 +51,7 @@ public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigu
         return config.getAttribute( ATTR_MAIN_TYPE_NAME, "" ).length() > 0;
     }
 
-    protected List<IJavaProject> collectProjects( ILaunchConfiguration configuration ) throws CoreException, JavaModelException {
-        IJavaProject project = getJavaProject( configuration );
-        List<IJavaProject> projects = new LinkedList<IJavaProject>( findRequiredProjects( project ) );
-        projects.add( 0, project );
-        return projects;
-    }
-
-    protected Set<IMember> collectTests( ILaunchConfiguration configuration, IProgressMonitor monitor, List<IJavaProject> projects ) throws CoreException {
+    protected Set<IMember> collectTests( ILaunchConfiguration configuration, IProgressMonitor monitor, Collection<IJavaProject> projects ) throws CoreException {
         Set<IMember> result = new HashSet<IMember>();
         ITestKind testKind = findTestKind( configuration );
         monitor.beginTask( "Looking for tests", projects.size() );
@@ -63,7 +63,28 @@ public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigu
         return result;
     }
 
-    protected Set<IJavaProject> findRequiredProjects( IJavaProject project ) throws JavaModelException {
+    protected Collection<IJavaProject> collectProjects( ILaunchConfiguration configuration ) throws CoreException, JavaModelException {
+        IJavaProject project = getJavaProject( configuration );
+        List<IJavaProject> projects = new LinkedList<IJavaProject>( findRequiredProjects( project ) );
+        projects.add( 0, project );
+        return filterProjects( projects, configuration );
+    }
+
+    private Collection<IJavaProject> filterProjects( List<IJavaProject> projects, ILaunchConfiguration configuration ) {
+        try {
+            Iterable<String> parts = Splitter.on( '/' ).split( configuration.getAttribute( ATTR_CHECKED_PROJECTS, "" ) );
+            final Set<String> names = new HashSet<String>( asList( toArray( parts, String.class ) ) );
+            return Collections2.filter( projects, new Predicate<IJavaProject>() {
+                public boolean apply( IJavaProject project ) {
+                    return names.contains( project.getElementName() );
+                }
+            } );
+        } catch( CoreException e ) {
+            return projects;
+        }
+    }
+
+    public static Set<IJavaProject> findRequiredProjects( IJavaProject project ) throws JavaModelException {
         Set<IJavaProject> projects = new LinkedHashSet<IJavaProject>();
         IJavaModel model = project.getJavaModel();
         for( String name : project.getRequiredProjectNames() ) {
@@ -78,7 +99,7 @@ public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigu
     private ITestKind findTestKind( ILaunchConfiguration configuration ) {
         ITestKind testKind = JUnitLaunchConfigurationConstants.getTestRunnerKind( configuration );
         if( testKind.isNull() ) {
-            testKind = TestKindRegistry.getDefault().getKind( JUNIT3_TEST_KIND_ID ); // backward compatible for launch configurations with no runner
+            testKind = TestKindRegistry.getDefault().getKind( JUNIT4_TEST_KIND_ID ); // backward compatible for launch configurations with no runner
         }
         return testKind;
     }

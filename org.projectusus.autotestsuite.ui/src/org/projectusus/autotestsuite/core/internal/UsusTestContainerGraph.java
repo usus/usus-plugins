@@ -6,10 +6,10 @@ package org.projectusus.autotestsuite.core.internal;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
-import org.projectusus.core.project.FindUsusProjects;
 
 /**
  * test container graph over all projects selected for use with Usus.
@@ -23,7 +23,8 @@ public class UsusTestContainerGraph extends TestContainerGraph {
     }
 
     private static IProject[] findUsusProjects() {
-        List<IProject> result = new FindUsusProjects( getWSProjects() ).compute();
+        List<IProject> result = new ArrayList<IProject>();
+        // TODO new FindUsusProjects( getWSProjects() ).compute();
         return result.toArray( new IProject[result.size()] );
     }
 

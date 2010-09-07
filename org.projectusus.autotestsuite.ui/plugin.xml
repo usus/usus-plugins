@@ -141,4 +141,18 @@
          </description>
       </shortcut>
    </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="org.projectusus.autotestsuite.ui.objectContribution1"
+            objectClass="org.eclipse.jdt.core.IJavaProject">
+         <action
+               class="org.projectusus.autotestsuite.ui.RunTestsInSelectedProjects"
+               enablesFor="+"
+               id="org.projectusus.autotestsuite.ui.RunTestsInSelectedProjects"
+               label="Run Tests In Selected Projects">
+         </action>
+      </objectContribution>
+   </extension>
 </plugin>

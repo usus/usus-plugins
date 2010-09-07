@@ -1,8 +1,16 @@
 package org.projectusus.autotestsuite.launch;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+import static org.eclipse.jface.viewers.CheckboxTableViewer.newCheckList;
+import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationDelegate.findRequiredProjects;
+import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.loadCheckedProjects;
+import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.saveCheckedProjects;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -28,7 +36,10 @@ import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jdt.ui.JavaElementLabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
+import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -55,19 +66,26 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+
 public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
 
     private Text projectText;
     private Button projectButton;
     private Button keepRunning;
     private ComboViewer testLoader;
+    private CheckboxTableViewer checkedProjectsViewer;
 
     public void createControl( Composite parent ) {
         Composite composite = new Composite( parent, SWT.NONE );
         composite.setLayout( new GridLayout( 3, false ) );
         setControl( composite );
 
-        createSingleTestSection( composite );
+        createRootProjectSection( composite );
+        createSpacer( composite );
+
+        createCheckedProjectsSection( composite );
         createSpacer( composite );
 
         createTestLoaderGroup( composite );
@@ -77,8 +95,30 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         Dialog.applyDialogFont( composite );
     }
 
+    private void createCheckedProjectsSection( Composite composite ) {
+        Label label = createLabel( composite, "&Selected Projects:" );
+        GridData data = (GridData)label.getLayoutData();
+        data.verticalAlignment = SWT.TOP;
+        label.setLayoutData( data );
+
+        checkedProjectsViewer = newCheckList( composite, SWT.BORDER );
+        checkedProjectsViewer.setContentProvider( new ArrayContentProvider() );
+        checkedProjectsViewer.setLabelProvider( new JavaElementLabelProvider( JavaElementLabelProvider.SHOW_DEFAULT ) );
+        checkedProjectsViewer.setInput( collectProjects() );
+        checkedProjectsViewer.addCheckStateListener( new ICheckStateListener() {
+            public void checkStateChanged( CheckStateChangedEvent event ) {
+                updateLaunchConfigurationDialog();
+            }
+        } );
+
+        data = new GridData();
+        data.heightHint = 100;
+        data.widthHint = 300;
+        checkedProjectsViewer.getControl().setLayoutData( data );
+    }
+
     @SuppressWarnings( "restriction" )
-    private void createSingleTestSection( Composite composite ) {
+    private void createRootProjectSection( Composite composite ) {
         createLabel( composite, "Root &Project:" );
 
         projectText = new Text( composite, SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY );
@@ -86,6 +126,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         projectText.addModifyListener( new ModifyListener() {
             public void modifyText( ModifyEvent evt ) {
                 updateLaunchConfigurationDialog();
+                updateCheckedProjects();
             }
         } );
 
@@ -100,10 +141,27 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         setButtonGridData( projectButton );
     }
 
+    private void updateCheckedProjects() {
+        Object[] checkedProjects = checkedProjectsViewer.getCheckedElements();
+        String projectName = projectText.getText();
+        IJavaProject root = ExtendedJUnitLaunchConfigurationConstants.toProject( projectName );
+
+        Set<IJavaProject> projects = new LinkedHashSet<IJavaProject>();
+        if( root != null ) {
+            projects.add( root );
+            try {
+                projects.addAll( findRequiredProjects( root ) );
+            } catch( JavaModelException exception ) {
+                // ignore for now
+            }
+        }
+        checkedProjectsViewer.setInput( projects );
+        checkedProjectsViewer.setCheckedElements( checkedProjects );
+    }
+
     private void setButtonGridData( Button button ) {
         GridData gridData = new GridData();
         button.setLayoutData( gridData );
-        // LayoutUtil.setButtonDimensionHint( button );
     }
 
     private void handleProjectButtonSelected() {
@@ -117,12 +175,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
     }
 
     private IJavaProject chooseJavaProject() {
-        IJavaProject[] projects;
-        try {
-            projects = JavaCore.create( getWorkspace().getRoot() ).getJavaProjects();
-        } catch( JavaModelException e ) {
-            projects = new IJavaProject[0];
-        }
+        IJavaProject[] projects = collectProjects();
 
         ILabelProvider labelProvider = new JavaElementLabelProvider( JavaElementLabelProvider.SHOW_DEFAULT );
         ElementListSelectionDialog dialog = new ElementListSelectionDialog( getShell(), labelProvider );
@@ -138,6 +191,16 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
             return (IJavaProject)dialog.getFirstResult();
         }
         return null;
+    }
+
+    private IJavaProject[] collectProjects() {
+        IJavaProject[] projects;
+        try {
+            projects = JavaCore.create( getWorkspace().getRoot() ).getJavaProjects();
+        } catch( JavaModelException e ) {
+            projects = new IJavaProject[0];
+        }
+        return projects;
     }
 
     private IJavaProject getJavaProject() {
@@ -210,6 +273,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         IJavaElement javaElement = getContext();
         if( javaElement != null ) {
             initializeJavaProject( javaElement, config );
+            // TODO initialize default projects
         } else {
             // We set empty attributes for project & main type so that when one config is
             // compared to another, the existence of empty attributes doesn't cause an
@@ -287,15 +351,18 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
     }
 
     public void initializeFrom( ILaunchConfiguration config ) {
-        updateProjectFromConfig( config );
-        String containerHandle = ""; //$NON-NLS-1$
-        try {
-            containerHandle = config.getAttribute( JUnitLaunchConfigurationConstants.ATTR_TEST_CONTAINER, "" ); //$NON-NLS-1$
-        } catch( CoreException ce ) {
-        }
-
+        updateProjectFrom( config );
+        updateCheckedProjectsFrom( config );
         updateKeepRunning( config );
         updateTestLoaderFromConfig( config );
+    }
+
+    private void updateCheckedProjectsFrom( ILaunchConfiguration config ) {
+        try {
+            checkedProjectsViewer.setCheckedElements( loadCheckedProjects( config ) );
+        } catch( CoreException exception ) {
+            // ignore for now
+        }
     }
 
     private void updateTestLoaderFromConfig( ILaunchConfiguration config ) {
@@ -314,7 +381,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         keepRunning.setSelection( running );
     }
 
-    private void updateProjectFromConfig( ILaunchConfiguration config ) {
+    private void updateProjectFrom( ILaunchConfiguration config ) {
         String projectName = ""; //$NON-NLS-1$
         try {
             projectName = config.getAttribute( IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, "" ); //$NON-NLS-1$
@@ -329,6 +396,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         config.setAttribute( IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, "" ); //$NON-NLS-1$
         config.setAttribute( JUnitLaunchConfigurationConstants.ATTR_TEST_METHOD_NAME, "" ); //$NON-NLS-1$
         config.setAttribute( JUnitLaunchConfigurationConstants.ATTR_KEEPRUNNING, keepRunning.getSelection() );
+        applyCheckedProjects( config );
         try {
             mapResources( config );
         } catch( CoreException e ) {
@@ -339,6 +407,15 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
             TestKind testKind = (TestKind)testKindSelection.getFirstElement();
             config.setAttribute( JUnitLaunchConfigurationConstants.ATTR_TEST_RUNNER_KIND, testKind.getId() );
         }
+    }
+
+    private void applyCheckedProjects( ILaunchConfigurationWorkingCopy config ) {
+        List<IJavaProject> checkedProjects = Lists.transform( Arrays.asList( checkedProjectsViewer.getCheckedElements() ), new Function<Object, IJavaProject>() {
+            public IJavaProject apply( Object object ) {
+                return (IJavaProject)object;
+            }
+        } );
+        saveCheckedProjects( config, checkedProjects );
     }
 
     private void mapResources( ILaunchConfigurationWorkingCopy config ) throws CoreException {
@@ -371,12 +448,13 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         } );
     }
 
-    protected void createLabel( Composite comp, String text ) {
+    protected Label createLabel( Composite comp, String text ) {
         Label label = new Label( comp, SWT.NONE );
         label.setText( text );
         GridData data = new GridData();
         data.horizontalIndent = 0;
         label.setLayoutData( data );
+        return label;
     }
 
 }
