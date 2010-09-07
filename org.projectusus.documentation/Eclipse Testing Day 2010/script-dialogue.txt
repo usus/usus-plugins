@@ -1,5 +1,4 @@
-(TODO Headlines as animated slides:)
-Once upon a time... in an IT office somewhere...
+[Once upon a time... in an IT office somewhere...]
 
 Leif typing, enter Marc.
 Leif: Hi Marc.
@@ -20,7 +19,7 @@ Leif: Cool. Now I've got two. ... Wait. Suppose I have many of them. Say, a hund
 Marc: Yes. There are suites.
       (Explains test suites - explicit AllTests)
 
-A couple of hours later... at the coffee machine...
+[A couple of hours later... at the coffee machine...]
 
 Marc: So, how many test cases do you have now?
 Leif: Sixteen.
@@ -44,7 +43,7 @@ Leif: Cool. Let's go over to my computer and try it out.
 Both: GREEN!
 Leif: Cool. Then I can throw away the explicit AllTests suite.
 
-The next day... early in the morning... (quite untypical for software developers...)
+[The next day... early in the morning... (quite untypical for software developers...)]
 Leif: Morning.
 Marc: Morning.
 Leif: Look here, great progress. We got the server-side bundles up and running, and now
@@ -65,16 +64,15 @@ Leif: Interesting. Let's try it out.
       (They run it.)
 Both: GREEN!
 
-A couple of days later... It's a rainy day, wind's howling...
+[Some days later... It's a rainy day, wind's howling...]
 Leif: Aaargh!
 Marc: What's wrong?
-Leif: Waiting, waiting, waiting. Takes ages! ... Ages! And then... ha! That NPE again! Argh!
+Leif: Waiting, waiting, waiting. The test suite takes ages! ... Ages! And then... ha! I 
+      get those mysterious NPE again, in static code blocks! Argh!
 Marc: And what takes it so long?
 Leif: (Calmer.) Don't know. It all went so well for a while. But then we got more and more
       code...
 Marc: ... and more and more test cases...
 Leif: ... and more and more test cases, and it all got slower and slower. Argh!
 
-TODO
-Possibly switch over from dialogue to background explanation talk here? Or should we play out
-the explanation for why it is slow in the dialogue?
+[... we now interrupt our regular program for some explanations.]
