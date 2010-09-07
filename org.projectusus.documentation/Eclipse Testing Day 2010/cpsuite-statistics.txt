@@ -1,0 +1,9 @@
+Example customer project
+
+No. of files looked at by CPSuite : 9313
+No. of classes loaded by CPSuite: 4716
+Test classes found: 533
+Time for finding test cases:43.637ms (CPSuite)
+
+Time for entire JUnit run: 142.369ms
+No. of executed test cases: 2552
