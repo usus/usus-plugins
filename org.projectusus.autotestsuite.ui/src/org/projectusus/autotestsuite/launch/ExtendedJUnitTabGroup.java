@@ -12,11 +12,7 @@ import org.eclipse.jdt.internal.junit.launcher.JUnitTabGroup;
 
 @SuppressWarnings( "restriction" )
 public class ExtendedJUnitTabGroup extends JUnitTabGroup {
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#createTabs(org.eclipse.debug.ui.ILaunchConfigurationDialog, java.lang.String)
-     */
+
     @Override
     public void createTabs( ILaunchConfigurationDialog dialog, String mode ) {
         setTabs( new ILaunchConfigurationTab[] { new ExtendedJUnitLaunchConfigurationTab(), new JavaArgumentsTab(), new JavaClasspathTab(), new JavaJRETab(),

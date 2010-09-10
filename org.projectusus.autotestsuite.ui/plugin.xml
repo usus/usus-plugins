@@ -150,6 +150,7 @@
          <action
                class="org.projectusus.autotestsuite.ui.RunTestsInSelectedProjects"
                enablesFor="+"
+               icon="icons/obj16/launch.gif"
                id="org.projectusus.autotestsuite.ui.RunTestsInSelectedProjects"
                label="Run Tests In Selected Projects">
          </action>

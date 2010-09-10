@@ -1,6 +1,9 @@
 package org.projectusus.autotestsuite.launch;
 
 import static org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME;
+import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.getLaunchConfigType;
+import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.getLaunchManager;
+import static org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin.log;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -30,7 +33,7 @@ public class ExtendedJUnitLaunchShortcut implements ILaunchShortcut {
         IJavaProject project = element.getJavaProject();
         ILaunchConfiguration config = findExistingConfig( project );
         if( config == null ) {
-            config = creator.createAndSaveNewConfig( project, config );
+            config = creator.createAndSaveNewConfig( project );
         }
         if( config != null ) {
             DebugUITools.launch( config, mode );
@@ -38,9 +41,10 @@ public class ExtendedJUnitLaunchShortcut implements ILaunchShortcut {
     }
 
     private ILaunchConfiguration findExistingConfig( IJavaProject project ) {
+        // TODO wollen wir das? und wenn ja, wie...
+
         try {
-            ILaunchConfiguration[] configs = ExtendedJUnitLaunchConfigurationConstants.getLaunchManager().getLaunchConfigurations(
-                    ExtendedJUnitLaunchConfigurationConstants.getLaunchConfigType() );
+            ILaunchConfiguration[] configs = getLaunchManager().getLaunchConfigurations( getLaunchConfigType() );
             String projectName = project.getElementName();
             for( ILaunchConfiguration currentConfig : configs ) {
                 if( currentConfig.getAttribute( ATTR_PROJECT_NAME, "" ).equals( projectName ) ) {
@@ -48,7 +52,7 @@ public class ExtendedJUnitLaunchShortcut implements ILaunchShortcut {
                 }
             }
         } catch( CoreException exception ) {
-            // ignore
+            log( exception );
         }
         return null;
     }

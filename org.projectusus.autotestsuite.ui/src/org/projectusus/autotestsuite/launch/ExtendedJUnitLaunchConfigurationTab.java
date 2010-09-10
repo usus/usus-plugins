@@ -1,13 +1,16 @@
 package org.projectusus.autotestsuite.launch;
 
+import static com.google.common.collect.Lists.transform;
+import static java.util.Arrays.asList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.eclipse.jface.viewers.CheckboxTableViewer.newCheckList;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationDelegate.findRequiredProjects;
 import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.loadCheckedProjects;
 import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.saveCheckedProjects;
+import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.toProject;
+import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationDelegate.findRequiredProjects;
+import static org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin.log;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,11 +29,8 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.junit.launcher.ITestKind;
 import org.eclipse.jdt.internal.junit.launcher.JUnitLaunchConfigurationConstants;
-import org.eclipse.jdt.internal.junit.launcher.JUnitMigrationDelegate;
 import org.eclipse.jdt.internal.junit.launcher.TestKind;
 import org.eclipse.jdt.internal.junit.launcher.TestKindRegistry;
-import org.eclipse.jdt.internal.junit.ui.JUnitMessages;
-import org.eclipse.jdt.internal.junit.ui.JUnitPlugin;
 import org.eclipse.jdt.internal.junit.util.TestSearchEngine;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jdt.ui.JavaElementLabelProvider;
@@ -53,6 +53,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -65,14 +66,14 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
+import org.projectusus.autotestsuite.ui.internal.util.AutoTestSuiteUIImages;
+import org.projectusus.autotestsuite.ui.internal.util.ISharedAutoTestSuiteImages;
 
 import com.google.common.base.Function;
-import com.google.common.collect.Lists;
 
 public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
 
     private Text projectText;
-    private Button projectButton;
     private Button keepRunning;
     private ComboViewer testLoader;
     private CheckboxTableViewer checkedProjectsViewer;
@@ -95,6 +96,11 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         Dialog.applyDialogFont( composite );
     }
 
+    @Override
+    public Image getImage() {
+        return AutoTestSuiteUIImages.getSharedImages().getImage( ISharedAutoTestSuiteImages.OBJ_TAB );
+    }
+
     private void createCheckedProjectsSection( Composite composite ) {
         Label label = createLabel( composite, "&Selected Projects:" );
         GridData data = (GridData)label.getLayoutData();
@@ -111,13 +117,44 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
             }
         } );
 
-        data = new GridData();
-        data.heightHint = 100;
-        data.widthHint = 300;
+        data = new GridData( GridData.FILL_BOTH );
         checkedProjectsViewer.getControl().setLayoutData( data );
+
+        Composite buttonPanel = new Composite( composite, SWT.NONE );
+        GridLayout layout = new GridLayout( 1, false );
+        layout.marginHeight = 0;
+        layout.marginWidth = 0;
+        layout.horizontalSpacing = 0;
+        layout.verticalSpacing = 0;
+        buttonPanel.setLayout( layout );
+        data = new GridData();
+        data.verticalAlignment = SWT.TOP;
+        buttonPanel.setLayoutData( data );
+
+        Button selectAllButton = new Button( buttonPanel, SWT.PUSH );
+        selectAllButton.setText( "Select All" );
+        selectAllButton.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent evt ) {
+                checkedProjectsViewer.setAllChecked( true );
+                updateLaunchConfigurationDialog();
+            }
+        } );
+        setButtonGridData( selectAllButton );
+
+        Button deselectAllButton = new Button( buttonPanel, SWT.PUSH );
+        deselectAllButton.setText( "Deselect All" );
+        deselectAllButton.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent evt ) {
+                checkedProjectsViewer.setAllChecked( false );
+                updateLaunchConfigurationDialog();
+            }
+        } );
+        setButtonGridData( deselectAllButton );
+
     }
 
-    @SuppressWarnings( "restriction" )
     private void createRootProjectSection( Composite composite ) {
         createLabel( composite, "Root &Project:" );
 
@@ -130,8 +167,8 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
             }
         } );
 
-        projectButton = new Button( composite, SWT.PUSH );
-        projectButton.setText( JUnitMessages.JUnitLaunchConfigurationTab_label_browse );
+        Button projectButton = new Button( composite, SWT.PUSH );
+        projectButton.setText( "&Browse..." );
         projectButton.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent evt ) {
@@ -142,7 +179,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
     }
 
     private void updateCheckedProjects() {
-        Object[] checkedProjects = checkedProjectsViewer.getCheckedElements();
+        Object[] checked = checkedProjectsViewer.getCheckedElements();
         String projectName = projectText.getText();
         IJavaProject root = ExtendedJUnitLaunchConfigurationConstants.toProject( projectName );
 
@@ -152,15 +189,16 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
             try {
                 projects.addAll( findRequiredProjects( root ) );
             } catch( JavaModelException exception ) {
-                // ignore for now
+                log( exception );
             }
         }
         checkedProjectsViewer.setInput( projects );
-        checkedProjectsViewer.setCheckedElements( checkedProjects );
+        checkedProjectsViewer.setCheckedElements( checked );
     }
 
     private void setButtonGridData( Button button ) {
         GridData gridData = new GridData();
+        gridData.horizontalAlignment = GridData.FILL;
         button.setLayoutData( gridData );
     }
 
@@ -183,7 +221,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         dialog.setMessage( "Choose a Root Project:" );
         dialog.setElements( projects );
 
-        IJavaProject javaProject = getJavaProject();
+        IJavaProject javaProject = toProject( projectText.getText().trim() );
         if( javaProject != null ) {
             dialog.setInitialSelections( new Object[] { javaProject } );
         }
@@ -203,18 +241,11 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         return projects;
     }
 
-    private IJavaProject getJavaProject() {
-        String projectName = projectText.getText().trim();
-        if( projectName.length() < 1 ) {
-            return null;
-        }
-        return JavaCore.create( getWorkspace().getRoot() ).getJavaProject( projectName );
-    }
-
     private void createSpacer( Composite composite ) {
         Label label = new Label( composite, SWT.NONE );
         GridData data = new GridData();
         data.horizontalSpan = 3;
+        data.heightHint = 1;
         label.setLayoutData( data );
     }
 
@@ -226,7 +257,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
                 updateLaunchConfigurationDialog();
             }
         } );
-        keepRunning.setText( JUnitMessages.JUnitLaunchConfigurationTab_label_keeprunning );
+        keepRunning.setText( "&Keep JUnit running after a test run when debugging" );
         GridData data = new GridData();
         data.horizontalAlignment = GridData.FILL;
         data.horizontalSpan = 2;
@@ -273,7 +304,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         IJavaElement javaElement = getContext();
         if( javaElement != null ) {
             initializeJavaProject( javaElement, config );
-            // TODO initialize default projects
+            // TODO initialize checked projects
         } else {
             // We set empty attributes for project & main type so that when one config is
             // compared to another, the existence of empty attributes doesn't cause an
@@ -314,7 +345,6 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
     }
 
     private void initializeTestType( IJavaElement javaElement, ILaunchConfigurationWorkingCopy config ) {
-        String name = ""; //$NON-NLS-1$
         String testKindId = null;
         try {
             // we only do a search for compilation units or class files or
@@ -327,18 +357,16 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
                 if( (types == null) || (types.length < 1) ) {
                     return;
                 }
-                // Simply grab the first main type found in the searched element
-                name = types[0].getFullyQualifiedName( '.' );
 
             }
         } catch( InterruptedException ie ) {
 
         } catch( InvocationTargetException ite ) {
         }
-        config.setAttribute( IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, name );
-        if( testKindId != null )
+        config.setAttribute( IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, "" );
+        if( testKindId != null ) {
             config.setAttribute( JUnitLaunchConfigurationConstants.ATTR_TEST_RUNNER_KIND, testKindId );
-        initializeName( config, name );
+        }
     }
 
     private void initializeJavaProject( IJavaElement javaElement, ILaunchConfigurationWorkingCopy config ) {
@@ -367,8 +395,9 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
 
     private void updateTestLoaderFromConfig( ILaunchConfiguration config ) {
         ITestKind testKind = JUnitLaunchConfigurationConstants.getTestRunnerKind( config );
-        if( testKind.isNull() )
-            testKind = TestKindRegistry.getDefault().getKind( TestKindRegistry.JUNIT3_TEST_KIND_ID );
+        if( testKind.isNull() ) {
+            testKind = TestKindRegistry.getDefault().getKind( TestKindRegistry.JUNIT4_TEST_KIND_ID );
+        }
         testLoader.setSelection( new StructuredSelection( testKind ) );
     }
 
@@ -376,7 +405,8 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         boolean running = false;
         try {
             running = config.getAttribute( JUnitLaunchConfigurationConstants.ATTR_KEEPRUNNING, false );
-        } catch( CoreException ce ) {
+        } catch( CoreException exception ) {
+            log( exception );
         }
         keepRunning.setSelection( running );
     }
@@ -385,7 +415,8 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         String projectName = ""; //$NON-NLS-1$
         try {
             projectName = config.getAttribute( IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, "" ); //$NON-NLS-1$
-        } catch( CoreException ce ) {
+        } catch( CoreException exception ) {
+            log( exception );
         }
         projectText.setText( projectName );
     }
@@ -397,11 +428,6 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         config.setAttribute( JUnitLaunchConfigurationConstants.ATTR_TEST_METHOD_NAME, "" ); //$NON-NLS-1$
         config.setAttribute( JUnitLaunchConfigurationConstants.ATTR_KEEPRUNNING, keepRunning.getSelection() );
         applyCheckedProjects( config );
-        try {
-            mapResources( config );
-        } catch( CoreException e ) {
-            JUnitPlugin.log( e.getStatus() );
-        }
         IStructuredSelection testKindSelection = (IStructuredSelection)testLoader.getSelection();
         if( !testKindSelection.isEmpty() ) {
             TestKind testKind = (TestKind)testKindSelection.getFirstElement();
@@ -410,7 +436,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
     }
 
     private void applyCheckedProjects( ILaunchConfigurationWorkingCopy config ) {
-        List<IJavaProject> checkedProjects = Lists.transform( Arrays.asList( checkedProjectsViewer.getCheckedElements() ), new Function<Object, IJavaProject>() {
+        List<IJavaProject> checkedProjects = transform( asList( checkedProjectsViewer.getCheckedElements() ), new Function<Object, IJavaProject>() {
             public IJavaProject apply( Object object ) {
                 return (IJavaProject)object;
             }
@@ -418,20 +444,17 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         saveCheckedProjects( config, checkedProjects );
     }
 
-    private void mapResources( ILaunchConfigurationWorkingCopy config ) throws CoreException {
-        JUnitMigrationDelegate.mapResources( config );
-    }
-
     public String getName() {
         return "Root Test Project";
     }
 
-    @SuppressWarnings( "restriction" )
     private void createTestLoaderGroup( Composite composite ) {
-        createLabel( composite, JUnitMessages.JUnitLaunchConfigurationTab_Test_Loader );
+        createLabel( composite, "&Test runner:" );
 
         testLoader = new ComboViewer( composite, SWT.DROP_DOWN | SWT.READ_ONLY );
-        testLoader.getCombo().setLayoutData( new GridData( GridData.FILL_HORIZONTAL ) );
+        GridData data = new GridData();
+        data.horizontalSpan = 2;
+        testLoader.getCombo().setLayoutData( data );
 
         testLoader.setContentProvider( new ArrayContentProvider() );
         testLoader.setLabelProvider( new LabelProvider() {

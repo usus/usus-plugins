@@ -1,11 +1,12 @@
 package org.projectusus.autotestsuite.launch;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Iterables.toArray;
 import static com.google.common.collect.Iterables.transform;
+import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 
 import java.util.Collection;
 
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -37,20 +38,17 @@ public class ExtendedJUnitLaunchConfigurationConstants {
     }
 
     public static IJavaProject[] loadCheckedProjects( ILaunchConfiguration config ) throws CoreException {
-        IJavaProject[] checkedProjects;
         String value = config.getAttribute( ATTR_CHECKED_PROJECTS, "" );
-        if( "".equals( value ) ) {
-            checkedProjects = new IJavaProject[0];
-        } else {
-            Iterable<String> split = Splitter.on( CHECKED_PROJECTS_SEPARATOR ).split( value );
-            Iterable<IJavaProject> projects = transform( split, new Function<String, IJavaProject>() {
-                public IJavaProject apply( String name ) {
-                    return toProject( name );
-                }
-            } );
-            checkedProjects = toArray( projects, IJavaProject.class );
+        if( isNullOrEmpty( value ) ) {
+            return new IJavaProject[0];
         }
-        return checkedProjects;
+        Iterable<String> split = Splitter.on( CHECKED_PROJECTS_SEPARATOR ).split( value );
+        Iterable<IJavaProject> projects = transform( split, new Function<String, IJavaProject>() {
+            public IJavaProject apply( String name ) {
+                return toProject( name );
+            }
+        } );
+        return toArray( projects, IJavaProject.class );
     }
 
     public static void saveCheckedProjects( ILaunchConfigurationWorkingCopy config, Collection<IJavaProject> checkedProjects ) {
@@ -63,10 +61,9 @@ public class ExtendedJUnitLaunchConfigurationConstants {
     }
 
     public static IJavaProject toProject( String projectName ) {
-        if( projectName == null || "".equals( projectName ) ) {
+        if( isNullOrEmpty( projectName ) ) {
             return null;
         }
-        return JavaCore.create( ResourcesPlugin.getWorkspace().getRoot().getProject( projectName ) );
+        return JavaCore.create( getWorkspace().getRoot() ).getJavaProject( projectName );
     }
-
 }

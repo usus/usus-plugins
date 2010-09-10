@@ -10,12 +10,11 @@ import static org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants.ATTR_P
 import static org.eclipse.jdt.ui.JavaElementLabels.ALL_FULLY_QUALIFIED;
 import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.getLaunchConfigType;
 import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.saveCheckedProjects;
+import static org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin.log;
 
 import java.util.Collection;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.jdt.core.IJavaProject;
@@ -23,15 +22,14 @@ import org.eclipse.jdt.internal.junit.launcher.AssertionVMArg;
 import org.eclipse.jdt.internal.junit.launcher.JUnitMigrationDelegate;
 import org.eclipse.jdt.internal.junit.launcher.TestKindRegistry;
 import org.eclipse.jdt.ui.JavaElementLabels;
-import org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin;
 
 public class ExtendedJUnitLaunchConfigurationCreator {
 
-    public ILaunchConfiguration createAndSaveNewConfig( IJavaProject project, ILaunchConfiguration config ) {
+    public ILaunchConfiguration createAndSaveNewConfig( IJavaProject project ) {
         try {
             return createNewConfig( project ).doSave();
-        } catch( CoreException e ) {
-            AutoTestSuitePlugin.getDefault().getLog().log( new Status( IStatus.ERROR, null, "Could not create config", e ) );
+        } catch( CoreException exception ) {
+            log( exception, "Could not create config" );
             return null;
         }
     }
