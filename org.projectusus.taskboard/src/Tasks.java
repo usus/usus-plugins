@@ -1,4 +1,15 @@
 public class Tasks {
+	
+	// Tasks to complete before Eclipse Magazin 6.10 comes out
+	
+	void tooltipsForStatistics() {
+		// TODO Tooltips für Statistiken im Cockpit
+	}
+	
+	void dynamicHelpForStatistics() {
+		// TODO Dynamische Hilfe des Cockpits und des Hotspot Views sollten Infos zur Berechnung
+		//      der Metriken und Statistiken zur Verfügung stellen
+	}
 
     // Tasks for USUS 1.0
 
