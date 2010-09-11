@@ -33,7 +33,7 @@ public class AutoTestSuitePlugin extends AbstractUIPlugin {
         log( new Status( IStatus.ERROR, null, message, throwable ) );
     }
 
-    public static void log( Status status ) {
+    public static void log( IStatus status ) {
         getDefault().getLog().log( status );
     }
 
