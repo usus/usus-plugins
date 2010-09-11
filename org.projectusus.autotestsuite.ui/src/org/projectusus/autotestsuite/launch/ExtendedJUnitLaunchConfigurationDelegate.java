@@ -4,6 +4,7 @@ import static java.util.Arrays.asList;
 import static org.eclipse.jdt.internal.junit.launcher.TestKindRegistry.JUNIT4_TEST_KIND_ID;
 import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.loadCheckedProjects;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -19,8 +20,6 @@ import org.eclipse.jdt.core.IJavaModel;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMember;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.internal.junit.JUnitMessages;
-import org.eclipse.jdt.internal.junit.Messages;
 import org.eclipse.jdt.internal.junit.launcher.ITestKind;
 import org.eclipse.jdt.internal.junit.launcher.JUnitLaunchConfigurationConstants;
 import org.eclipse.jdt.internal.junit.launcher.TestKindRegistry;
@@ -88,8 +87,9 @@ public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigu
 
     private void checkResult( ILaunchConfiguration config, Collection<IMember> result ) throws CoreException {
         if( result.isEmpty() ) {
-            abort( Messages.format( JUnitMessages.JUnitLaunchConfigurationDelegate_error_notests_kind, findTestKind( config ).getDisplayName() ), null,
-                    IJavaLaunchConfigurationConstants.ERR_UNSPECIFIED_MAIN_TYPE );
+            String pattern = "No tests found with test runner ''{0}''.";
+            String message = MessageFormat.format( pattern, findTestKind( config ).getDisplayName() );
+            abort( message, null, IJavaLaunchConfigurationConstants.ERR_UNSPECIFIED_MAIN_TYPE );
         }
     }
 }
