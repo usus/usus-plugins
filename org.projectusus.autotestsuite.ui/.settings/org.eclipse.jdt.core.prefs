@@ -1,11 +1,11 @@
-#Sat Feb 20 17:23:47 CET 2010
+#Sat Sep 11 11:22:25 CEST 2010
 eclipse.preferences.version=1
 org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5
 org.eclipse.jdt.core.compiler.compliance=1.5
 org.eclipse.jdt.core.compiler.problem.annotationSuperInterface=warning
 org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
-org.eclipse.jdt.core.compiler.problem.autoboxing=error
+org.eclipse.jdt.core.compiler.problem.autoboxing=ignore
 org.eclipse.jdt.core.compiler.problem.comparingIdentical=warning
 org.eclipse.jdt.core.compiler.problem.deadCode=warning
 org.eclipse.jdt.core.compiler.problem.deprecation=warning

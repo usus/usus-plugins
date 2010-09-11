@@ -7,7 +7,6 @@ import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurat
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -16,15 +15,16 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.debug.core.ILaunchConfiguration;
-import org.eclipse.jdt.core.IJavaModel;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMember;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.junit.launcher.ITestKind;
 import org.eclipse.jdt.internal.junit.launcher.JUnitLaunchConfigurationConstants;
 import org.eclipse.jdt.internal.junit.launcher.TestKindRegistry;
 import org.eclipse.jdt.junit.launcher.JUnitLaunchConfigurationDelegate;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
+import org.projectusus.autotestsuite.core.internal.AllJavaProjectsInWorkspace;
+import org.projectusus.autotestsuite.core.internal.IAllJavaProjects;
+import org.projectusus.autotestsuite.core.internal.RequiredJavaProjects;
 import org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin;
 
 public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigurationDelegate {
@@ -49,12 +49,16 @@ public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigu
         return result;
     }
 
-    protected Collection<IJavaProject> collectProjects( ILaunchConfiguration configuration ) throws CoreException, JavaModelException {
+    protected Collection<IJavaProject> collectProjects( ILaunchConfiguration configuration ) throws CoreException {
         IJavaProject project = getJavaProject( configuration );
-        List<IJavaProject> projects = new LinkedList<IJavaProject>( findRequiredProjects( project ) );
-        projects.add( 0, project );
+        List<IJavaProject> projects = new LinkedList<IJavaProject>( findRequired( project ) );
         removeUncheckedProjects( projects, configuration );
         return projects;
+    }
+
+    private Collection<IJavaProject> findRequired( IJavaProject project ) {
+        IAllJavaProjects allProjects = new AllJavaProjectsInWorkspace();
+        return new RequiredJavaProjects( allProjects ).findFor( project );
     }
 
     private void removeUncheckedProjects( List<IJavaProject> projects, ILaunchConfiguration configuration ) {
@@ -63,18 +67,6 @@ public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigu
         } catch( CoreException exception ) {
             AutoTestSuitePlugin.log( exception, "Could not load checked projects" );
         }
-    }
-
-    public static Set<IJavaProject> findRequiredProjects( IJavaProject project ) throws JavaModelException {
-        Set<IJavaProject> projects = new LinkedHashSet<IJavaProject>();
-        IJavaModel model = project.getJavaModel();
-        for( String name : project.getRequiredProjectNames() ) {
-            IJavaProject required = model.getJavaProject( name );
-            projects.add( required );
-            // this works since there cannot be cycles in project dependencies
-            projects.addAll( findRequiredProjects( required ) );
-        }
-        return projects;
     }
 
     private ITestKind findTestKind( ILaunchConfiguration configuration ) {

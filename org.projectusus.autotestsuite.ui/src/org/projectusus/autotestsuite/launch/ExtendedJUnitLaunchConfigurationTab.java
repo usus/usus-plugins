@@ -7,7 +7,6 @@ import static org.eclipse.jface.viewers.CheckboxTableViewer.newCheckList;
 import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.loadCheckedProjects;
 import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.saveCheckedProjects;
 import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.toProject;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationDelegate.findRequiredProjects;
 import static org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin.log;
 
 import java.lang.reflect.InvocationTargetException;
@@ -66,6 +65,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
+import org.projectusus.autotestsuite.core.internal.AllJavaProjectsInWorkspace;
+import org.projectusus.autotestsuite.core.internal.IAllJavaProjects;
+import org.projectusus.autotestsuite.core.internal.RequiredJavaProjects;
 import org.projectusus.autotestsuite.ui.internal.util.AutoTestSuiteUIImages;
 import org.projectusus.autotestsuite.ui.internal.util.ISharedAutoTestSuiteImages;
 
@@ -185,12 +187,8 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
 
         Set<IJavaProject> projects = new LinkedHashSet<IJavaProject>();
         if( root != null ) {
-            projects.add( root );
-            try {
-                projects.addAll( findRequiredProjects( root ) );
-            } catch( JavaModelException exception ) {
-                log( exception );
-            }
+            IAllJavaProjects allProjects = new AllJavaProjectsInWorkspace();
+            projects.addAll( new RequiredJavaProjects( allProjects ).findFor( root ) );
         }
         checkedProjectsViewer.setInput( projects );
         checkedProjectsViewer.setCheckedElements( checked );
