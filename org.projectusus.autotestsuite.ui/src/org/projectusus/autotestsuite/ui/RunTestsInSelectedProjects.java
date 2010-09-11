@@ -1,6 +1,5 @@
 package org.projectusus.autotestsuite.ui;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,8 +14,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 import org.projectusus.autotestsuite.core.internal.AllJavaProjectsInWorkspace;
-import org.projectusus.autotestsuite.core.internal.IAllJavaProjects;
-import org.projectusus.autotestsuite.core.internal.RequiredJavaProjects;
+import org.projectusus.autotestsuite.core.internal.CommonDependencyRoot;
 import org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationCreator;
 
 public class RunTestsInSelectedProjects implements IObjectActionDelegate {
@@ -24,7 +22,7 @@ public class RunTestsInSelectedProjects implements IObjectActionDelegate {
     private Set<IJavaProject> projects = new HashSet<IJavaProject>();
 
     public void run( IAction action ) {
-        IJavaProject root = findCommonRoot();
+        IJavaProject root = commonDependencyRoot().findFor( projects );
         try {
             ILaunchConfiguration config = new ExtendedJUnitLaunchConfigurationCreator().createNewConfig( root, projects );
             DebugUITools.launch( config, "run" );
@@ -48,26 +46,14 @@ public class RunTestsInSelectedProjects implements IObjectActionDelegate {
                 }
             }
         }
-        action.setEnabled( haveCommonRoot() );
-    }
-
-    private boolean haveCommonRoot() {
-        return findCommonRoot() != null;
-    }
-
-    // TODO lf extract and test
-    private IJavaProject findCommonRoot() {
-        for( IJavaProject project : new AllJavaProjectsInWorkspace().find() ) {
-            IAllJavaProjects allProjects = new AllJavaProjectsInWorkspace();
-            Collection<IJavaProject> requiredProjects = new RequiredJavaProjects( allProjects ).findFor( project );
-            if( requiredProjects.containsAll( projects ) ) {
-                return project;
-            }
-        }
-        return null;
+        action.setEnabled( commonDependencyRoot().existsFor( projects ) );
     }
 
     public void setActivePart( IAction action, IWorkbenchPart targetPart ) {
         // unused
+    }
+
+    private CommonDependencyRoot commonDependencyRoot() {
+        return new CommonDependencyRoot( new AllJavaProjectsInWorkspace() );
     }
 }
