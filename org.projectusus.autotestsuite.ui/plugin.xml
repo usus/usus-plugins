@@ -1,72 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <!-- TODO lf doesn't do anything useful yet -->
-   <!--extension point="org.eclipse.debug.core.launchConfigurationTypes">
-      <launchConfigurationType
-            id="org.projectusus.autotestsuite.ui.autoTestSuite"
-            name="Automatic Test Suite"
-            delegateDescription="Collects all unit tests and runs them all at once"
-            delegate="org.projectusus.autotestsuite.ui.internal.launcher.AutoTestSuiteLaunchConfigurationDelegate"
-            delegateName="Automatic Test Suite"
-            modes="run, debug"
-            sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
-            sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer" />
-   </extension-->
-   <!--extension
-         point="org.eclipse.debug.core.launchConfigurationComparators">
-      <launchConfigurationComparator
-            attribute="org.eclipse.jdt.junit.CONTAINER"
-            class="org.eclipse.jdt.internal.junit.launcher.ContainerComparator"
-            id="org.eclipse.jdt.junit.containerComparator">
-      </launchConfigurationComparator>
-   </extension-->
-   <!-- TODO lf doesn't do anything useful yet -->
-   <!--extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
-      <launchConfigurationTypeImage
-            icon="/icons/obj16/launch.gif"
-            configTypeID="org.projectusus.autotestsuite.ui.autoTestSuite"
-            id="org.projectusus.autotestsuite.ui.autoTestSuite.launchimage" />
-   </extension-->
-   <!-- TODO lf what about coverage mode? -->
-   <!-- TODO lf doesn't do anything useful yet -->
-   <!--extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
-      <launchConfigurationTabGroup
-            type="org.projectusus.autotestsuite.ui.autoTestSuite"
-            class="org.projectusus.autotestsuite.ui.internal.tabgroup.AutoTestSuiteTabGroup"
-            id="org.projectusus.autotestsuite.ui.internal.tabgroup.AutoTestSuiteTabGroup">
-         <launchMode
-               perspective="org.eclipse.debug.ui.DebugPerspective"
-               description="Run automatic test suite in Debugger"
-               mode="debug" />
-         <launchMode
-               description="Run automatic test suite"
-               mode="run" />
-      </launchConfigurationTabGroup>
-   </extension-->
    
-   <!-- test case collection visualization -->
-   <extension point="org.eclipse.ui.views">
-      <view category="org.projectusus.ui.viewCategory"
-            class="org.projectusus.autotestsuite.ui.internal.view.TestCaseAnalysisView"
-            icon="icons/obj16/launch.gif"
-            id="org.projectusus.autotestsuite.ui.internal.view.TestCaseAnalysisView"
-            name="Test Case Analysis"/>
-   </extension>
-   <extension point="org.eclipse.ui.viewActions">
-      <viewContribution
-            id="org.projectusus.autotestsuite.ui.internal.view.TestCaseAnalysisView.action"
-            targetID="org.projectusus.autotestsuite.ui.internal.view.TestCaseAnalysisView">
-         <action
-               class="org.projectusus.autotestsuite.ui.internal.view.action.Refresh"
-               icon="icons/elcl16/refresh.gif"
-               id="org.projectusus.autotestsuite.ui.internal.view.action.Refresh"
-               label="Refresh"
-               menubarPath="additions"
-               style="push"
-               toolbarPath="additions"/>
-      </viewContribution>
-   </extension>
    <extension
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
@@ -104,11 +39,8 @@
             modes="run, debug">
          <contextualLaunch>
             <enablement>
-               <with
-                     variable="selection">
-                  <count
-                        value="1">
-                  </count>
+               <with variable="selection">
+                  <count value="1" />
                   <iterate>
                      <adapt
                            type="org.eclipse.jdt.core.IJavaProject">

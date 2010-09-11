@@ -40,8 +40,12 @@ public class ExtendedJUnitLaunchConfigurationCreator {
 
     public ILaunchConfigurationWorkingCopy createNewConfig( IJavaProject root, Collection<IJavaProject> projects ) throws CoreException {
         String name = JavaElementLabels.getTextLabel( root, ALL_FULLY_QUALIFIED );
+        // TODO lf Eclipse 3.6
+        // ILaunchConfigurationWorkingCopy config = getLaunchConfigType().newInstance( null,
+        // ExtendedJUnitLaunchConfigurationConstants.getLaunchManager().generateLaunchConfigurationName( name ) );
+        // TODO lf Eclipse 3.5
         ILaunchConfigurationWorkingCopy config = getLaunchConfigType().newInstance( null,
-                ExtendedJUnitLaunchConfigurationConstants.getLaunchManager().generateLaunchConfigurationName( name ) );
+                ExtendedJUnitLaunchConfigurationConstants.getLaunchManager().generateUniqueLaunchConfigurationNameFrom( name ) );
         return fillAttributes( root, config, projects );
     }
 
