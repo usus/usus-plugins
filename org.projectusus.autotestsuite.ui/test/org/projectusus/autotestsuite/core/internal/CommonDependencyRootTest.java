@@ -94,10 +94,9 @@ public class CommonDependencyRootTest extends TestsWithProjectDependencies {
         IJavaProject dependencyBottom = addProject( "p4" );
         addDependency( dependencyRight, dependencyBottom );
 
-        // TODO why does this not compile?
+        // TODO lf why does this not compile?
         // IJavaProject result = finder.findFor( asList( dependencyLeft, dependencyBottom ) );
-        // Iterable<IJavaProject> possibleRoots = asList( uberRoot, project );
-        // assertThat( result, is( CoreMatchers.anyOf( possibleRoots ) ) );
+        // assertThat( result, either( is( uberRoot ) ).or( is( project ) ) );
     }
 
     @Test
