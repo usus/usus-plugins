@@ -59,7 +59,7 @@ public class AutoTestSuiteUIImages implements ISharedAutoTestSuiteImages {
         try {
             desc = ImageDescriptor.createFromURL( makeIconFileURL( path ) );
         } catch( MalformedURLException malfux ) {
-            // TODO log
+            AutoTestSuitePlugin.log( malfux );
         }
         imageRegistry.put( key, desc );
     }
