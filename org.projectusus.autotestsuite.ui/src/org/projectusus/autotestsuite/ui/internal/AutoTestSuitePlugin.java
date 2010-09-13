@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.autotestsuite.ui.internal;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -29,12 +30,19 @@ public class AutoTestSuitePlugin extends AbstractUIPlugin {
         log( throwable, null );
     }
 
+    public static void logStatusOf( CoreException exception ) {
+        log( exception.getStatus() );
+    }
+
     public static void log( Throwable throwable, String message ) {
-        log( new Status( IStatus.ERROR, null, message, throwable ) );
+        log( new Status( IStatus.ERROR, getPluginId(), message, throwable ) );
     }
 
     public static void log( IStatus status ) {
-        getDefault().getLog().log( status );
+        AutoTestSuitePlugin plugin = getDefault();
+        if( plugin != null ) {
+            plugin.getLog().log( status );
+        }
     }
 
     public static AutoTestSuitePlugin getDefault() {

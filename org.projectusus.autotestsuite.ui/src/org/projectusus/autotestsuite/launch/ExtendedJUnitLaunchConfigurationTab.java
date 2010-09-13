@@ -2,36 +2,25 @@ package org.projectusus.autotestsuite.launch;
 
 import static com.google.common.collect.Lists.transform;
 import static java.util.Arrays.asList;
-import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+import static org.eclipse.jdt.internal.junit.launcher.TestKindRegistry.getContainerTestKind;
 import static org.eclipse.jface.viewers.CheckboxTableViewer.newCheckList;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.loadCheckedProjects;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.saveCheckedProjects;
 import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.toProject;
-import static org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin.log;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.ISourceReference;
-import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.internal.junit.launcher.ITestKind;
-import org.eclipse.jdt.internal.junit.launcher.JUnitLaunchConfigurationConstants;
 import org.eclipse.jdt.internal.junit.launcher.TestKind;
 import org.eclipse.jdt.internal.junit.launcher.TestKindRegistry;
-import org.eclipse.jdt.internal.junit.util.TestSearchEngine;
-import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jdt.ui.JavaElementLabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -80,6 +69,15 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
     private ComboViewer testLoader;
     private CheckboxTableViewer checkedProjectsViewer;
 
+    public String getName() {
+        return "Test Projects";
+    }
+
+    @Override
+    public Image getImage() {
+        return AutoTestSuiteUIImages.getSharedImages().getImage( ISharedAutoTestSuiteImages.OBJ_TAB );
+    }
+
     public void createControl( Composite parent ) {
         Composite composite = new Composite( parent, SWT.NONE );
         composite.setLayout( new GridLayout( 3, false ) );
@@ -94,13 +92,8 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         createTestLoaderGroup( composite );
         createSpacer( composite );
 
-        createKeepAliveGroup( composite );
+        createKeepRunningGroup( composite );
         Dialog.applyDialogFont( composite );
-    }
-
-    @Override
-    public Image getImage() {
-        return AutoTestSuiteUIImages.getSharedImages().getImage( ISharedAutoTestSuiteImages.OBJ_TAB );
     }
 
     private void createCheckedProjectsSection( Composite composite ) {
@@ -112,7 +105,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         checkedProjectsViewer = newCheckList( composite, SWT.BORDER );
         checkedProjectsViewer.setContentProvider( new ArrayContentProvider() );
         checkedProjectsViewer.setLabelProvider( new JavaElementLabelProvider( JavaElementLabelProvider.SHOW_DEFAULT ) );
-        checkedProjectsViewer.setInput( collectProjects() );
+        checkedProjectsViewer.setInput( new AllJavaProjectsInWorkspace().find() );
         checkedProjectsViewer.addCheckStateListener( new ICheckStateListener() {
             public void checkStateChanged( CheckStateChangedEvent event ) {
                 updateLaunchConfigurationDialog();
@@ -182,8 +175,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
 
     private void updateCheckedProjects() {
         Object[] checked = checkedProjectsViewer.getCheckedElements();
-        String projectName = projectText.getText();
-        IJavaProject root = ExtendedJUnitLaunchConfigurationConstants.toProject( projectName );
+        IJavaProject root = getRootProject();
 
         Set<IJavaProject> projects = new LinkedHashSet<IJavaProject>();
         if( root != null ) {
@@ -192,6 +184,10 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         }
         checkedProjectsViewer.setInput( projects );
         checkedProjectsViewer.setCheckedElements( checked );
+    }
+
+    private IJavaProject getRootProject() {
+        return toProject( projectText.getText().trim() );
     }
 
     private void setButtonGridData( Button button ) {
@@ -205,21 +201,17 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         if( project == null ) {
             return;
         }
-
-        String projectName = project.getElementName();
-        projectText.setText( projectName );
+        projectText.setText( project.getElementName() );
     }
 
     private IJavaProject chooseJavaProject() {
-        IJavaProject[] projects = collectProjects();
-
         ILabelProvider labelProvider = new JavaElementLabelProvider( JavaElementLabelProvider.SHOW_DEFAULT );
         ElementListSelectionDialog dialog = new ElementListSelectionDialog( getShell(), labelProvider );
         dialog.setTitle( "Root Project Selection" );
         dialog.setMessage( "Choose a Root Project:" );
-        dialog.setElements( projects );
+        dialog.setElements( new AllJavaProjectsInWorkspace().find() );
 
-        IJavaProject javaProject = toProject( projectText.getText().trim() );
+        IJavaProject javaProject = getRootProject();
         if( javaProject != null ) {
             dialog.setInitialSelections( new Object[] { javaProject } );
         }
@@ -227,16 +219,6 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
             return (IJavaProject)dialog.getFirstResult();
         }
         return null;
-    }
-
-    private IJavaProject[] collectProjects() {
-        IJavaProject[] projects;
-        try {
-            projects = JavaCore.create( getWorkspace().getRoot() ).getJavaProjects();
-        } catch( JavaModelException e ) {
-            projects = new IJavaProject[0];
-        }
-        return projects;
     }
 
     private void createSpacer( Composite composite ) {
@@ -247,7 +229,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         label.setLayoutData( data );
     }
 
-    private void createKeepAliveGroup( Composite composite ) {
+    private void createKeepRunningGroup( Composite composite ) {
         keepRunning = new Button( composite, SWT.CHECK );
         keepRunning.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -260,6 +242,38 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         data.horizontalAlignment = GridData.FILL;
         data.horizontalSpan = 2;
         keepRunning.setLayoutData( data );
+    }
+
+    private void createTestLoaderGroup( Composite composite ) {
+        createLabel( composite, "&Test runner:" );
+
+        testLoader = new ComboViewer( composite, SWT.DROP_DOWN | SWT.READ_ONLY );
+        GridData data = new GridData();
+        data.horizontalSpan = 2;
+        testLoader.getCombo().setLayoutData( data );
+
+        testLoader.setContentProvider( new ArrayContentProvider() );
+        testLoader.setLabelProvider( new LabelProvider() {
+            @Override
+            public String getText( Object element ) {
+                return ((TestKind)element).getDisplayName();
+            }
+        } );
+        testLoader.setInput( TestKindRegistry.getDefault().getAllKinds() );
+        testLoader.addSelectionChangedListener( new ISelectionChangedListener() {
+            public void selectionChanged( SelectionChangedEvent event ) {
+                updateLaunchConfigurationDialog();
+            }
+        } );
+    }
+
+    private Label createLabel( Composite comp, String text ) {
+        Label label = new Label( comp, SWT.NONE );
+        label.setText( text );
+        GridData data = new GridData();
+        data.horizontalIndent = 0;
+        label.setLayoutData( data );
+        return label;
     }
 
     private IJavaElement getContext() {
@@ -299,9 +313,10 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
     }
 
     public void setDefaults( ILaunchConfigurationWorkingCopy config ) {
+        ExtendedJUnitLaunchConfigurationWriter writer = new ExtendedJUnitLaunchConfigurationWriter( config );
         IJavaElement javaElement = getContext();
         if( javaElement != null ) {
-            initializeJavaProject( javaElement, config );
+            initializeJavaProject( writer, javaElement );
             // TODO initialize checked projects
         } else {
             // We set empty attributes for project & main type so that when one config is
@@ -309,25 +324,25 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
             // incorrect result (the performApply() method can result in empty values
             // for these attributes being set on a config if there is nothing in the
             // corresponding text boxes)
-            config.setAttribute( IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, "" ); //$NON-NLS-1$
-            config.setAttribute( JUnitLaunchConfigurationConstants.ATTR_TEST_CONTAINER, "" ); //$NON-NLS-1$
+            writer.setProjectName( "" );
+            writer.setTestContainer( "" );
         }
-        initializeTestAttributes( javaElement, config );
+        initializeTestAttributes( javaElement, writer );
     }
 
-    private void initializeTestAttributes( IJavaElement javaElement, ILaunchConfigurationWorkingCopy config ) {
+    private void initializeTestAttributes( IJavaElement javaElement, ExtendedJUnitLaunchConfigurationWriter writer ) {
         if( javaElement != null && javaElement.getElementType() < IJavaElement.COMPILATION_UNIT )
-            initializeTestContainer( javaElement, config );
+            initializeTestContainer( writer, javaElement );
         else
-            initializeTestType( javaElement, config );
+            initializeTestType( writer, javaElement );
     }
 
-    private void initializeTestContainer( IJavaElement javaElement, ILaunchConfigurationWorkingCopy config ) {
-        config.setAttribute( JUnitLaunchConfigurationConstants.ATTR_TEST_CONTAINER, javaElement.getHandleIdentifier() );
+    private void initializeTestContainer( ExtendedJUnitLaunchConfigurationWriter config, IJavaElement javaElement ) {
+        config.setTestContainer( javaElement.getHandleIdentifier() );
         initializeName( config, javaElement.getElementName() );
     }
 
-    private void initializeName( ILaunchConfigurationWorkingCopy config, String inputName ) {
+    private void initializeName( ExtendedJUnitLaunchConfigurationWriter config, String inputName ) {
         if( inputName == null ) {
             return;
         }
@@ -338,144 +353,58 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
                 name = inputName.substring( index + 1 );
             }
             name = getLaunchConfigurationDialog().generateName( name );
-            config.rename( inputName );
+            config.renameTo( inputName );
         }
     }
 
-    private void initializeTestType( IJavaElement javaElement, ILaunchConfigurationWorkingCopy config ) {
-        String testKindId = null;
-        try {
-            // we only do a search for compilation units or class files or
-            // or source references
-            if( javaElement instanceof ISourceReference ) {
-                ITestKind testKind = TestKindRegistry.getContainerTestKind( javaElement );
-                testKindId = testKind.getId();
-
-                IType[] types = TestSearchEngine.findTests( getLaunchConfigurationDialog(), javaElement, testKind );
-                if( (types == null) || (types.length < 1) ) {
-                    return;
-                }
-
-            }
-        } catch( InterruptedException ie ) {
-
-        } catch( InvocationTargetException ite ) {
+    private void initializeTestType( ExtendedJUnitLaunchConfigurationWriter config, IJavaElement javaElement ) {
+        if( javaElement instanceof ISourceReference ) {
+            config.setTestKind( getContainerTestKind( javaElement ).getId() );
         }
-        config.setAttribute( IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, "" );
-        if( testKindId != null ) {
-            config.setAttribute( JUnitLaunchConfigurationConstants.ATTR_TEST_RUNNER_KIND, testKindId );
-        }
+        config.setUnusedAttributesToDefaults();
     }
 
-    private void initializeJavaProject( IJavaElement javaElement, ILaunchConfigurationWorkingCopy config ) {
+    private void initializeJavaProject( ExtendedJUnitLaunchConfigurationWriter config, IJavaElement javaElement ) {
         IJavaProject javaProject = javaElement.getJavaProject();
         String name = null;
         if( javaProject != null && javaProject.exists() ) {
             name = javaProject.getElementName();
         }
-        config.setAttribute( IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, name );
+        config.setProjectName( name );
     }
 
     public void initializeFrom( ILaunchConfiguration config ) {
-        updateProjectFrom( config );
-        updateCheckedProjectsFrom( config );
-        updateKeepRunning( config );
-        updateTestLoaderFromConfig( config );
-    }
-
-    private void updateCheckedProjectsFrom( ILaunchConfiguration config ) {
-        try {
-            checkedProjectsViewer.setCheckedElements( loadCheckedProjects( config ) );
-        } catch( CoreException exception ) {
-            // ignore for now
-        }
-    }
-
-    private void updateTestLoaderFromConfig( ILaunchConfiguration config ) {
-        ITestKind testKind = JUnitLaunchConfigurationConstants.getTestRunnerKind( config );
-        if( testKind.isNull() ) {
-            testKind = TestKindRegistry.getDefault().getKind( TestKindRegistry.JUNIT4_TEST_KIND_ID );
-        }
-        testLoader.setSelection( new StructuredSelection( testKind ) );
-    }
-
-    private void updateKeepRunning( ILaunchConfiguration config ) {
-        boolean running = false;
-        try {
-            running = config.getAttribute( JUnitLaunchConfigurationConstants.ATTR_KEEPRUNNING, false );
-        } catch( CoreException exception ) {
-            log( exception );
-        }
-        keepRunning.setSelection( running );
-    }
-
-    private void updateProjectFrom( ILaunchConfiguration config ) {
-        String projectName = ""; //$NON-NLS-1$
-        try {
-            projectName = config.getAttribute( IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, "" ); //$NON-NLS-1$
-        } catch( CoreException exception ) {
-            log( exception );
-        }
-        projectText.setText( projectName );
+        ExtendedJUnitLaunchConfigurationReader reader = new ExtendedJUnitLaunchConfigurationReader( config );
+        projectText.setText( reader.getProjectName() );
+        checkedProjectsViewer.setCheckedElements( reader.getCheckedProjects() );
+        keepRunning.setSelection( reader.isKeepRunning() );
+        testLoader.setSelection( new StructuredSelection( reader.getTestKind() ) );
     }
 
     public void performApply( ILaunchConfigurationWorkingCopy config ) {
-        config.setAttribute( IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, projectText.getText() );
-        config.setAttribute( JUnitLaunchConfigurationConstants.ATTR_TEST_CONTAINER, projectText.getText() );
-        config.setAttribute( IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, "" ); //$NON-NLS-1$
-        config.setAttribute( JUnitLaunchConfigurationConstants.ATTR_TEST_METHOD_NAME, "" ); //$NON-NLS-1$
-        config.setAttribute( JUnitLaunchConfigurationConstants.ATTR_KEEPRUNNING, keepRunning.getSelection() );
-        applyCheckedProjects( config );
+        ExtendedJUnitLaunchConfigurationWriter writer = new ExtendedJUnitLaunchConfigurationWriter( config );
+        writer.setUnusedAttributesToDefaults();
+        writer.setProjectName( projectText.getText() );
+        writer.setTestContainer( projectText.getText() );
+        writer.setKeepRunning( keepRunning.getSelection() );
+        applyCheckedProjects( writer );
+        applyTestKind( writer );
+    }
+
+    private void applyTestKind( ExtendedJUnitLaunchConfigurationWriter writer ) {
         IStructuredSelection testKindSelection = (IStructuredSelection)testLoader.getSelection();
         if( !testKindSelection.isEmpty() ) {
-            TestKind testKind = (TestKind)testKindSelection.getFirstElement();
-            config.setAttribute( JUnitLaunchConfigurationConstants.ATTR_TEST_RUNNER_KIND, testKind.getId() );
+            writer.setTestKind( ((TestKind)testKindSelection.getFirstElement()) );
         }
     }
 
-    private void applyCheckedProjects( ILaunchConfigurationWorkingCopy config ) {
+    private void applyCheckedProjects( ExtendedJUnitLaunchConfigurationWriter writer ) {
         List<IJavaProject> checkedProjects = transform( asList( checkedProjectsViewer.getCheckedElements() ), new Function<Object, IJavaProject>() {
             public IJavaProject apply( Object object ) {
                 return (IJavaProject)object;
             }
         } );
-        saveCheckedProjects( config, checkedProjects );
-    }
-
-    public String getName() {
-        return "Root Test Project";
-    }
-
-    private void createTestLoaderGroup( Composite composite ) {
-        createLabel( composite, "&Test runner:" );
-
-        testLoader = new ComboViewer( composite, SWT.DROP_DOWN | SWT.READ_ONLY );
-        GridData data = new GridData();
-        data.horizontalSpan = 2;
-        testLoader.getCombo().setLayoutData( data );
-
-        testLoader.setContentProvider( new ArrayContentProvider() );
-        testLoader.setLabelProvider( new LabelProvider() {
-            @Override
-            public String getText( Object element ) {
-                return ((TestKind)element).getDisplayName();
-            }
-        } );
-        testLoader.setInput( TestKindRegistry.getDefault().getAllKinds() );
-        testLoader.addSelectionChangedListener( new ISelectionChangedListener() {
-            public void selectionChanged( SelectionChangedEvent event ) {
-                updateLaunchConfigurationDialog();
-            }
-        } );
-    }
-
-    protected Label createLabel( Composite comp, String text ) {
-        Label label = new Label( comp, SWT.NONE );
-        label.setText( text );
-        GridData data = new GridData();
-        data.horizontalIndent = 0;
-        label.setLayoutData( data );
-        return label;
+        writer.setCheckedProjects( checkedProjects );
     }
 
 }

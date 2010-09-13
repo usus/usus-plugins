@@ -1,8 +1,7 @@
 package org.projectusus.autotestsuite.launch;
 
 import static java.util.Arrays.asList;
-import static org.eclipse.jdt.internal.junit.launcher.TestKindRegistry.JUNIT4_TEST_KIND_ID;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.loadCheckedProjects;
+import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.toProject;
 
 import java.text.MessageFormat;
 import java.util.Collection;
@@ -18,28 +17,30 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMember;
 import org.eclipse.jdt.internal.junit.launcher.ITestKind;
-import org.eclipse.jdt.internal.junit.launcher.JUnitLaunchConfigurationConstants;
-import org.eclipse.jdt.internal.junit.launcher.TestKindRegistry;
 import org.eclipse.jdt.junit.launcher.JUnitLaunchConfigurationDelegate;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.projectusus.autotestsuite.core.internal.AllJavaProjectsInWorkspace;
 import org.projectusus.autotestsuite.core.internal.IAllJavaProjects;
 import org.projectusus.autotestsuite.core.internal.RequiredJavaProjects;
-import org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin;
 
 public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigurationDelegate {
 
     @Override
     protected IMember[] evaluateTests( ILaunchConfiguration config, IProgressMonitor monitor ) throws CoreException {
+        return evaluateTests( new ExtendedJUnitLaunchConfigurationReader( config ), monitor );
+    }
+
+    private IMember[] evaluateTests( ExtendedJUnitLaunchConfigurationReader config, IProgressMonitor monitor ) throws CoreException {
         Collection<IJavaProject> projects = collectProjects( config );
         Set<IMember> result = collectTests( config, projects, monitor );
         checkResult( config, result );
         return result.toArray( new IMember[result.size()] );
     }
 
-    protected Set<IMember> collectTests( ILaunchConfiguration configuration, Collection<IJavaProject> projects, IProgressMonitor monitor ) throws CoreException {
+    @SuppressWarnings( "restriction" )
+    private Set<IMember> collectTests( ExtendedJUnitLaunchConfigurationReader config, Collection<IJavaProject> projects, IProgressMonitor monitor ) throws CoreException {
         Set<IMember> result = new HashSet<IMember>();
-        ITestKind testKind = findTestKind( configuration );
+        ITestKind testKind = config.getTestKind();
         monitor.beginTask( "Looking for tests", projects.size() );
         for( IJavaProject project : projects ) {
             monitor.subTask( project.getElementName() );
@@ -49,10 +50,11 @@ public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigu
         return result;
     }
 
-    protected Collection<IJavaProject> collectProjects( ILaunchConfiguration configuration ) throws CoreException {
-        IJavaProject project = getJavaProject( configuration );
+    private Collection<IJavaProject> collectProjects( ExtendedJUnitLaunchConfigurationReader config ) throws CoreException {
+        IJavaProject project = toProject( config.getProjectName() );
         List<IJavaProject> projects = new LinkedList<IJavaProject>( findRequired( project ) );
-        removeUncheckedProjects( projects, configuration );
+        IJavaProject[] checkedProjects = config.getCheckedProjects();
+        projects.retainAll( asList( checkedProjects ) );
         return projects;
     }
 
@@ -61,26 +63,10 @@ public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigu
         return new RequiredJavaProjects( allProjects ).findFor( project );
     }
 
-    private void removeUncheckedProjects( List<IJavaProject> projects, ILaunchConfiguration configuration ) {
-        try {
-            projects.retainAll( asList( loadCheckedProjects( configuration ) ) );
-        } catch( CoreException exception ) {
-            AutoTestSuitePlugin.log( exception, "Could not load checked projects" );
-        }
-    }
-
-    private ITestKind findTestKind( ILaunchConfiguration configuration ) {
-        ITestKind testKind = JUnitLaunchConfigurationConstants.getTestRunnerKind( configuration );
-        if( testKind.isNull() ) {
-            testKind = TestKindRegistry.getDefault().getKind( JUNIT4_TEST_KIND_ID );
-        }
-        return testKind;
-    }
-
-    private void checkResult( ILaunchConfiguration config, Collection<IMember> result ) throws CoreException {
+    private void checkResult( ExtendedJUnitLaunchConfigurationReader config, Collection<IMember> result ) throws CoreException {
         if( result.isEmpty() ) {
             String pattern = "No tests found with test runner ''{0}''.";
-            String message = MessageFormat.format( pattern, findTestKind( config ).getDisplayName() );
+            String message = MessageFormat.format( pattern, config.getTestKind().getDisplayName() );
             abort( message, null, IJavaLaunchConfigurationConstants.ERR_UNSPECIFIED_MAIN_TYPE );
         }
     }

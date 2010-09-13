@@ -1,9 +1,9 @@
 package org.projectusus.autotestsuite.launch;
 
 import static org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.getLaunchConfigType;
+import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.getLaunchConfigurationType;
 import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.getLaunchManager;
-import static org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin.log;
+import static org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin.logStatusOf;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -44,7 +44,7 @@ public class ExtendedJUnitLaunchShortcut implements ILaunchShortcut {
         // TODO wollen wir das? und wenn ja, wie...
 
         try {
-            ILaunchConfiguration[] configs = getLaunchManager().getLaunchConfigurations( getLaunchConfigType() );
+            ILaunchConfiguration[] configs = getLaunchManager().getLaunchConfigurations( getLaunchConfigurationType() );
             String projectName = project.getElementName();
             for( ILaunchConfiguration currentConfig : configs ) {
                 if( currentConfig.getAttribute( ATTR_PROJECT_NAME, "" ).equals( projectName ) ) {
@@ -52,7 +52,7 @@ public class ExtendedJUnitLaunchShortcut implements ILaunchShortcut {
                 }
             }
         } catch( CoreException exception ) {
-            log( exception );
+            logStatusOf( exception );
         }
         return null;
     }

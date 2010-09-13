@@ -1,12 +1,12 @@
 package org.projectusus.autotestsuite.core.internal;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+import static org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin.logStatusOf;
 
 import org.eclipse.jdt.core.IJavaModel;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
-import org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin;
 
 public class AllJavaProjectsInWorkspace implements IAllJavaProjects {
 
@@ -16,7 +16,7 @@ public class AllJavaProjectsInWorkspace implements IAllJavaProjects {
             IJavaModel rootModel = JavaCore.create( getWorkspace().getRoot() );
             result = rootModel.getJavaProjects();
         } catch( JavaModelException exception ) {
-            AutoTestSuitePlugin.log( exception.getStatus() );
+            logStatusOf( exception );
         }
         return result;
     }
