@@ -1,15 +1,15 @@
-package org.projectusus.autotestsuite.launch;
+package org.projectusus.autotestsuite.core.internal.config;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Iterables.toArray;
 import static com.google.common.collect.Iterables.transform;
 import static org.eclipse.jdt.internal.junit.launcher.JUnitLaunchConfigurationConstants.ATTR_KEEPRUNNING;
 import static org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.ATTR_CHECKED_PROJECTS;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.CHECKED_PROJECTS_SEPARATOR;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.DEFAULT_TEST_KIND_ID;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.toProject;
-import static org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin.logStatusOf;
+import static org.projectusus.autotestsuite.AutoTestSuitePlugin.logStatusOf;
+import static org.projectusus.autotestsuite.core.internal.config.ExtendedJUnitLaunchConfigurationConstants.ATTR_CHECKED_PROJECTS;
+import static org.projectusus.autotestsuite.core.internal.config.ExtendedJUnitLaunchConfigurationConstants.CHECKED_PROJECTS_SEPARATOR;
+import static org.projectusus.autotestsuite.core.internal.config.ExtendedJUnitLaunchConfigurationConstants.DEFAULT_TEST_KIND_ID;
+import static org.projectusus.autotestsuite.core.internal.config.ExtendedJUnitLaunchConfigurationConstants.toProject;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;

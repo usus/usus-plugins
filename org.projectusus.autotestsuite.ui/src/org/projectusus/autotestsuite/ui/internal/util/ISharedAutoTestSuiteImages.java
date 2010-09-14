@@ -6,7 +6,7 @@ package org.projectusus.autotestsuite.ui.internal.util;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
-import org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin;
+import org.projectusus.autotestsuite.AutoTestSuitePlugin;
 
 public interface ISharedAutoTestSuiteImages {
 

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Usus automatic test suite UI
 Bundle-SymbolicName: org.projectusus.autotestsuite.ui;singleton:=true
 Bundle-Version: 0.3.3
-Bundle-Activator: org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin
+Bundle-Activator: org.projectusus.autotestsuite.AutoTestSuitePlugin
 Bundle-Vendor: projectusus.org
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
@@ -19,7 +19,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.expressions
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.projectusus.autotestsuite.launch,
+Export-Package: org.projectusus.autotestsuite,
+ org.projectusus.autotestsuite.core.internal;x-internal:=true,
+ org.projectusus.autotestsuite.core.internal.config;x-internal:=true,
+ org.projectusus.autotestsuite.core.internal.shortcuts;x-internal:=true,
  org.projectusus.autotestsuite.ui.internal;x-internal:=true,
  org.projectusus.autotestsuite.ui.internal.util;x-internal:=true
 Bundle-ClassPath: .,

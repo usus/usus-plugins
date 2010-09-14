@@ -1,4 +1,4 @@
-package org.projectusus.autotestsuite.launch;
+package org.projectusus.autotestsuite.core.internal.config;
 
 import static com.google.common.collect.Lists.transform;
 import static java.util.Arrays.asList;

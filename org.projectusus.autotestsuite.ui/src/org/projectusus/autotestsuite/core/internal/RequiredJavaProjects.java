@@ -1,6 +1,7 @@
 package org.projectusus.autotestsuite.core.internal;
 
 import static java.text.MessageFormat.format;
+import static org.projectusus.autotestsuite.AutoTestSuitePlugin.logStatusOf;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -8,7 +9,6 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
-import org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin;
 
 public class RequiredJavaProjects {
 
@@ -27,8 +27,8 @@ public class RequiredJavaProjects {
                 // this works since there cannot be cycles in project dependencies
                 projects.addAll( findFor( required ) );
             }
-        } catch( JavaModelException jamox ) {
-            AutoTestSuitePlugin.log( jamox.getStatus() );
+        } catch( JavaModelException exception ) {
+            logStatusOf( exception );
         }
         return projects;
     }

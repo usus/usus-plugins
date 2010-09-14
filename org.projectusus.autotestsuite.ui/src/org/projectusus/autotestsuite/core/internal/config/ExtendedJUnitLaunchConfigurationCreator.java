@@ -1,9 +1,8 @@
-package org.projectusus.autotestsuite.launch;
+package org.projectusus.autotestsuite.core.internal.config;
 
 import static java.util.Arrays.asList;
 import static org.eclipse.jdt.ui.JavaElementLabels.ALL_FULLY_QUALIFIED;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.getLaunchConfigurationType;
-import static org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin.log;
+import static org.projectusus.autotestsuite.core.internal.config.ExtendedJUnitLaunchConfigurationConstants.getLaunchConfigurationType;
 
 import java.util.Collection;
 
@@ -14,20 +13,17 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.internal.junit.launcher.AssertionVMArg;
 import org.eclipse.jdt.internal.junit.launcher.JUnitMigrationDelegate;
 import org.eclipse.jdt.ui.JavaElementLabels;
+import org.projectusus.autotestsuite.core.internal.AllJavaProjectsInWorkspace;
 
+@SuppressWarnings( "restriction" )
 public class ExtendedJUnitLaunchConfigurationCreator {
 
-    public ILaunchConfiguration createAndSaveNewConfig( IJavaProject project ) {
-        try {
-            return createNewConfig( project ).doSave();
-        } catch( CoreException exception ) {
-            log( exception, "Could not create config" );
-            return null;
-        }
+    public ILaunchConfiguration createAndSaveNewConfig( IJavaProject project ) throws CoreException {
+        return createNewConfig( project ).doSave();
     }
 
     public ILaunchConfigurationWorkingCopy createNewConfig( IJavaProject root ) throws CoreException {
-        return createNewConfig( root, asList( root.getJavaModel().getJavaProjects() ) );
+        return createNewConfig( root, asList( new AllJavaProjectsInWorkspace().find() ) );
     }
 
     public ILaunchConfigurationWorkingCopy createNewConfig( IJavaProject root, Collection<IJavaProject> projects ) throws CoreException {
@@ -45,7 +41,7 @@ public class ExtendedJUnitLaunchConfigurationCreator {
         ExtendedJUnitLaunchConfigurationWriter writer = new ExtendedJUnitLaunchConfigurationWriter( config );
         writer.setUnusedAttributesToDefaults();
         writer.setProjectName( project.getElementName() );
-        writer.setDefaultTestKind( );
+        writer.setDefaultTestKind();
         writer.setCheckedProjects( projects );
         writer.setKeepRunning( false );
         writer.setTestContainer( project.getElementName() );

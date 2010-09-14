@@ -4,6 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.autotestsuite.ui.internal.util;
 
+import static org.projectusus.autotestsuite.AutoTestSuitePlugin.log;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -12,7 +14,7 @@ import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.osgi.framework.Bundle;
-import org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin;
+import org.projectusus.autotestsuite.AutoTestSuitePlugin;
 
 public class AutoTestSuiteUIImages implements ISharedAutoTestSuiteImages {
 
@@ -58,8 +60,8 @@ public class AutoTestSuiteUIImages implements ISharedAutoTestSuiteImages {
         ImageDescriptor desc = ImageDescriptor.getMissingImageDescriptor();
         try {
             desc = ImageDescriptor.createFromURL( makeIconFileURL( path ) );
-        } catch( MalformedURLException malfux ) {
-            AutoTestSuitePlugin.log( malfux );
+        } catch( MalformedURLException exception ) {
+            log( exception );
         }
         imageRegistry.put( key, desc );
     }

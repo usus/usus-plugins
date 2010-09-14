@@ -1,7 +1,7 @@
 package org.projectusus.autotestsuite.core.internal;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
-import static org.projectusus.autotestsuite.ui.internal.AutoTestSuitePlugin.logStatusOf;
+import static org.projectusus.autotestsuite.AutoTestSuitePlugin.logStatusOf;
 
 import org.eclipse.jdt.core.IJavaModel;
 import org.eclipse.jdt.core.IJavaProject;

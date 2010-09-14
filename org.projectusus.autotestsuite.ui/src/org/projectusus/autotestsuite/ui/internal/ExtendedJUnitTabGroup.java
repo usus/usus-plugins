@@ -1,4 +1,4 @@
-package org.projectusus.autotestsuite.launch;
+package org.projectusus.autotestsuite.ui.internal;
 
 import org.eclipse.debug.ui.CommonTab;
 import org.eclipse.debug.ui.EnvironmentTab;

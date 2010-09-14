@@ -2,7 +2,7 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.autotestsuite.launch;
+package org.projectusus.autotestsuite.ui.internal;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

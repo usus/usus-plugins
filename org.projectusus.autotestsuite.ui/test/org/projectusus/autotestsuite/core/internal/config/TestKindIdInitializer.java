@@ -1,4 +1,4 @@
-package org.projectusus.autotestsuite.launch;
+package org.projectusus.autotestsuite.core.internal.config;
 
 import org.eclipse.jdt.internal.junit.launcher.ITestKind;
 import org.mockito.Mockito;

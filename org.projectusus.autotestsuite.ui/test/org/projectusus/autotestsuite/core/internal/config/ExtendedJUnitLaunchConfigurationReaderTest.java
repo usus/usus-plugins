@@ -1,4 +1,4 @@
-package org.projectusus.autotestsuite.launch;
+package org.projectusus.autotestsuite.core.internal.config;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
@@ -10,7 +10,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.ATTR_CHECKED_PROJECTS;
+import static org.projectusus.autotestsuite.core.internal.config.ExtendedJUnitLaunchConfigurationConstants.ATTR_CHECKED_PROJECTS;
 
 
 import org.eclipse.core.runtime.CoreException;
@@ -21,6 +21,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.projectusus.autotestsuite.core.internal.config.ExtendedJUnitLaunchConfigurationReader;
 
 import com.google.common.base.Function;
 

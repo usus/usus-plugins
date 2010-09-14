@@ -5,8 +5,8 @@
    <extension
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
-            delegate="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationDelegate"
-            id="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfiguration"
+            delegate="org.projectusus.autotestsuite.core.internal.ExtendedJUnitLaunchConfigurationDelegate"
+            id="org.projectusus.autotestsuite.ExtendedJUnitLaunchConfiguration"
             modes="run,debug"
             name="Extended JUnit"
             sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
@@ -16,25 +16,25 @@
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
-            configTypeID="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfiguration"
+            configTypeID="org.projectusus.autotestsuite.ExtendedJUnitLaunchConfiguration"
             icon="icons/obj16/launch.gif"
-            id="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfiguration.image">
+            id="org.projectusus.autotestsuite.ExtendedJUnitLaunchConfiguration.image">
       </launchConfigurationTypeImage>
    </extension>
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup
-            class="org.projectusus.autotestsuite.launch.ExtendedJUnitTabGroup"
-            id="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfiguration.tabGroup"
-            type="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfiguration">
+            class="org.projectusus.autotestsuite.ui.internal.ExtendedJUnitTabGroup"
+            id="org.projectusus.autotestsuite.ui.internal.ExtendedJUnitTabGroup"
+            type="org.projectusus.autotestsuite.ExtendedJUnitLaunchConfiguration">
       </launchConfigurationTabGroup>
    </extension>
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
-            class="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchShortcut"
+            class="org.projectusus.autotestsuite.core.internal.shortcuts.ExtendedJUnitLaunchShortcut"
             icon="icons/obj16/launch.gif"
-            id="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchShortcut"
+            id="org.projectusus.autotestsuite.core.internal.shortcuts.ExtendedJUnitLaunchShortcut"
             label="Extended JUnit Test"
             modes="run, debug">
          <contextualLaunch>
@@ -61,7 +61,7 @@
             </enablement>
          </contextualLaunch>
          <configurationType
-               id="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfiguration">
+               id="org.projectusus.autotestsuite.ExtendedJUnitLaunchConfiguration">
          </configurationType>
          <description
                description="Runs all unit tests in the selected project and all required projects"
@@ -73,9 +73,9 @@
          </description>
       </shortcut>
       <shortcut
-            class="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut"
+            class="org.projectusus.autotestsuite.core.internal.shortcuts.MultiProjectJUnitLaunchShortcut"
             icon="icons/obj16/julaunch.gif"
-            id="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut"
+            id="org.projectusus.autotestsuite.core.internal.shortcuts.MultiProjectJUnitLaunchShortcut"
             label="JUnit Test"
             modes="run, debug">
          <contextualLaunch>
@@ -109,7 +109,7 @@
             </enablement>
          </contextualLaunch>
          <configurationType
-               id="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfiguration">
+               id="org.projectusus.autotestsuite.ExtendedJUnitLaunchConfiguration">
          </configurationType>
          <description
                description="Debugs all JUnit tests in selected projects"
@@ -124,8 +124,8 @@
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
-            class="org.projectusus.autotestsuite.launch.MultiProjectJUnitPropertyTester"
-            id="org.projectusus.autotestsuite.launch.MultiProjectJUnitPropertyTester"
+            class="org.projectusus.autotestsuite.core.internal.shortcuts.MultiProjectJUnitPropertyTester"
+            id="org.projectusus.autotestsuite.core.internal.shortcuts.MultiProjectJUnitPropertyTester"
             namespace="org.projectusus.autotestsuite"
             properties="haveCommonDependencyRoot"
             type="java.util.List">
@@ -134,7 +134,7 @@
    <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut.debug"
+            commandId="org.projectusus.autotestsuite.core.internal.shortcuts.MultiProjectJUnitLaunchShortcut.debug"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M2+M3+D T T">
       </key>
@@ -144,13 +144,13 @@
             sequence="M2+M3+D T T">
       </key>
       <key
-            commandId="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut.debug"
+            commandId="org.projectusus.autotestsuite.core.internal.shortcuts.MultiProjectJUnitLaunchShortcut.debug"
             platform="carbon"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+M3+M4+D T T">
       </key>
       <key
-            commandId="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut.run"
+            commandId="org.projectusus.autotestsuite.core.internal.shortcuts.MultiProjectJUnitLaunchShortcut.run"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M2+M3+X T T">
       </key>
@@ -160,7 +160,7 @@
             sequence="M2+M3+X T T">
       </key>
       <key
-            commandId="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut.run"
+            commandId="org.projectusus.autotestsuite.core.internal.shortcuts.MultiProjectJUnitLaunchShortcut.run"
             platform="carbon"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+M3+X T T">
@@ -171,13 +171,13 @@
       <command
             categoryId="org.eclipse.debug.ui.category.run"
             description="Run all JUnit tests in selected projects"
-            id="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut.run"
+            id="org.projectusus.autotestsuite.core.internal.shortcuts.MultiProjectJUnitLaunchShortcut.run"
             name="Run JUnit Test">
       </command>
       <command
             categoryId="org.eclipse.debug.ui.category.run"
             description="Debug all unit tests in selected projects"
-            id="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut.debug"
+            id="org.projectusus.autotestsuite.core.internal.shortcuts.MultiProjectJUnitLaunchShortcut.debug"
             name="Debug JUnit Test">
       </command>
    </extension>

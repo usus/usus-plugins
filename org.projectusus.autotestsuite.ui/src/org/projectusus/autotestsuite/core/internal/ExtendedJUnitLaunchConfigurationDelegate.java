@@ -1,7 +1,7 @@
-package org.projectusus.autotestsuite.launch;
+package org.projectusus.autotestsuite.core.internal;
 
 import static java.util.Arrays.asList;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.toProject;
+import static org.projectusus.autotestsuite.core.internal.config.ExtendedJUnitLaunchConfigurationConstants.toProject;
 
 import java.text.MessageFormat;
 import java.util.Collection;
@@ -19,10 +19,9 @@ import org.eclipse.jdt.core.IMember;
 import org.eclipse.jdt.internal.junit.launcher.ITestKind;
 import org.eclipse.jdt.junit.launcher.JUnitLaunchConfigurationDelegate;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
-import org.projectusus.autotestsuite.core.internal.AllJavaProjectsInWorkspace;
-import org.projectusus.autotestsuite.core.internal.IAllJavaProjects;
-import org.projectusus.autotestsuite.core.internal.RequiredJavaProjects;
+import org.projectusus.autotestsuite.core.internal.config.ExtendedJUnitLaunchConfigurationReader;
 
+@SuppressWarnings( "restriction" )
 public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigurationDelegate {
 
     @Override
@@ -37,7 +36,6 @@ public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigu
         return result.toArray( new IMember[result.size()] );
     }
 
-    @SuppressWarnings( "restriction" )
     private Set<IMember> collectTests( ExtendedJUnitLaunchConfigurationReader config, Collection<IJavaProject> projects, IProgressMonitor monitor ) throws CoreException {
         Set<IMember> result = new HashSet<IMember>();
         ITestKind testKind = config.getTestKind();

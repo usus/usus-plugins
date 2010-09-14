@@ -1,9 +1,9 @@
-package org.projectusus.autotestsuite.launch;
+package org.projectusus.autotestsuite.ui.internal;
 
 import static com.google.common.collect.Lists.transform;
 import static java.util.Arrays.asList;
 import static org.eclipse.jdt.internal.junit.launcher.TestKindRegistry.getContainerTestKind;
-import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.toProject;
+import static org.projectusus.autotestsuite.core.internal.config.ExtendedJUnitLaunchConfigurationConstants.toProject;
 
 import java.util.List;
 
@@ -51,11 +51,14 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.projectusus.autotestsuite.core.internal.AllJavaProjectsInWorkspace;
+import org.projectusus.autotestsuite.core.internal.config.ExtendedJUnitLaunchConfigurationReader;
+import org.projectusus.autotestsuite.core.internal.config.ExtendedJUnitLaunchConfigurationWriter;
 import org.projectusus.autotestsuite.ui.internal.util.AutoTestSuiteUIImages;
 import org.projectusus.autotestsuite.ui.internal.util.ISharedAutoTestSuiteImages;
 
 import com.google.common.base.Function;
 
+@SuppressWarnings( "restriction" )
 public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
 
     private Text projectText;
@@ -272,7 +275,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         IJavaElement javaElement = getContext();
         if( javaElement != null ) {
             initializeJavaProject( writer, javaElement );
-            // TODO initialize checked projects
+            writer.setCheckedProjects( asList( new AllJavaProjectsInWorkspace().find() ) );
         } else {
             // We set empty attributes for project & main type so that when one config is
             // compared to another, the existence of empty attributes doesn't cause an

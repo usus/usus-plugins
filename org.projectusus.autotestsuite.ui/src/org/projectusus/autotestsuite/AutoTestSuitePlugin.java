@@ -2,7 +2,7 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.autotestsuite.ui.internal;
+package org.projectusus.autotestsuite;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
@@ -38,7 +38,7 @@ public class AutoTestSuitePlugin extends AbstractUIPlugin {
         log( new Status( IStatus.ERROR, getPluginId(), message, throwable ) );
     }
 
-    public static void log( IStatus status ) {
+    private static void log( IStatus status ) {
         AutoTestSuitePlugin plugin = getDefault();
         if( plugin != null ) {
             plugin.getLog().log( status );
