@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata.collectors;
+package org.projectusus.metrics;
 
 import java.util.Stack;
 

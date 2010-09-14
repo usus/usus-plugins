@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata.collectors;
+package org.projectusus.metrics;
 
 import org.eclipse.jdt.core.dom.CatchClause;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
@@ -13,9 +13,10 @@ import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.metrics.MetricsCollector;
 
 @SuppressWarnings( "unused" )
-public class CCCollector extends Collector {
+public class CCCollector extends MetricsCollector {
 
     private Counter ccCount = new Counter();
 

@@ -1,12 +1,13 @@
-package org.projectusus.core.internal.proportions.rawdata.collectors;
+package org.projectusus.metrics;
 
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.metrics.MetricsCollector;
 
-public class ClassCollector extends Collector {
+public class ClassCollector extends MetricsCollector {
 
     public ClassCollector() {
         super();

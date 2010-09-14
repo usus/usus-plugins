@@ -3,10 +3,10 @@
 <schema targetNamespace="org.projectusus.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.projectusus.core" id="org.projectusus.core.statistics" name="Usus Statistics"/>
+         <meta.schema plugin="org.projectusus.core" id="org.projectusus.core.metrics" name="Usus Metrics Collectors"/>
       </appinfo>
       <documentation>
-         Statistics are used to examine the raw data that has been collected from the code by metrics.
+         This extension point allows to visit the abstract syntax trees of the examined files, to extract desired information and to store this information in the Usus kernel for further processing by suitable statistics.
       </documentation>
    </annotation>
 
@@ -18,7 +18,7 @@
       </annotation>
       <complexType>
          <choice minOccurs="1" maxOccurs="unbounded">
-            <element ref="statistics"/>
+            <element ref="metrics"/>
          </choice>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -47,7 +47,7 @@
       </complexType>
    </element>
 
-   <element name="statistics">
+   <element name="metrics">
       <complexType>
          <attribute name="class" type="string">
             <annotation>
@@ -55,7 +55,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.projectusus.core.statistics.IMetricsResultVisitor"/>
+                  <meta.attribute kind="java" basedOn=":org.projectusus.core.metrics.MetricsCollector"/>
                </appinfo>
             </annotation>
          </attribute>

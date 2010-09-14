@@ -1,15 +1,15 @@
-package org.projectusus.core.internal.proportions.rawdata.collectors;
+package org.projectusus.core.metrics;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.projectusus.core.IMetricsWriter;
 
-public abstract class Collector extends ASTVisitor {
+public abstract class MetricsCollector extends ASTVisitor {
 
     private IFile file;
     private IMetricsWriter metricsWriter;
 
-    public Collector() {
+    public MetricsCollector() {
         super();
     }
 
@@ -26,3 +26,6 @@ public abstract class Collector extends ASTVisitor {
         return metricsWriter;
     }
 }
+
+// List<Collector> metricsExtensions = asList( new ClassCollector(), new MLCollector(), new CCCollector(), new ACDCollector() );
+

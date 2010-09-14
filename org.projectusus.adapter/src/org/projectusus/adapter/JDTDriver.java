@@ -7,6 +7,7 @@ package org.projectusus.adapter;
 import static org.projectusus.adapter.TracingOption.SQI;
 
 import java.util.Collection;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -15,6 +16,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.projectusus.core.IUsusModelForAdapter;
 import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.basis.YellowCountCache;
+import org.projectusus.core.metrics.MetricsCollector;
+import org.projectusus.core.metrics.RegisteredMetricsExtensions;
 import org.projectusus.core.proportions.rawdata.jdtdriver.JavaFileDriver;
 import org.projectusus.core.util.FileSupport;
 
@@ -34,13 +37,14 @@ public class JDTDriver {
             YellowCountCache.yellowCountCache().clear( removedProject );
         }
         monitor.beginTask( null, countTicks( target.getProjects() ) );
+        Set<MetricsCollector> metricsExtensions = RegisteredMetricsExtensions.allExtensions(); // TODO improve!
         for( IProject project : target.getProjects() ) {
             monitor.subTask( project.getName() );
             for( IFile removedFile : target.getRemovedFiles( project ) ) {
                 model.dropRawData( removedFile );
             }
             YellowCountCache.yellowCountCache().add( project );
-            computeChangedFiles( project, monitor );
+            computeChangedFiles( metricsExtensions, project, monitor );
         }
         monitor.done();
     }
@@ -53,28 +57,28 @@ public class JDTDriver {
         return result;
     }
 
-    private void computeChangedFiles( IProject project, IProgressMonitor monitor ) throws CoreException {
+    private void computeChangedFiles( Set<MetricsCollector> metricsExtensions, IProject project, IProgressMonitor monitor ) throws CoreException {
         Collection<IFile> files = target.getFiles( project );
         if( !files.isEmpty() ) {
             StatusCollector statusCollector = new StatusCollector();
-            runDriver( project, files, statusCollector, monitor );
+            runDriver( metricsExtensions, project, files, statusCollector, monitor );
             statusCollector.finish();
         }
     }
 
-    private void runDriver( IProject project, Collection<IFile> files, StatusCollector statusCollector, IProgressMonitor monitor ) {
+    private void runDriver( Set<MetricsCollector> metricsExtensions, IProject project, Collection<IFile> files, StatusCollector statusCollector, IProgressMonitor monitor ) {
         computationStarted( project );
 
         for( IFile file : files ) {
             fileStarted( file );
-            runDriverOnFile( file, statusCollector, monitor );
+            runDriverOnFile( metricsExtensions, file, statusCollector, monitor );
         }
     }
 
-    private void runDriverOnFile( IFile file, StatusCollector statusCollector, IProgressMonitor monitor ) {
+    private void runDriverOnFile( Set<MetricsCollector> metricsExtensions, IFile file, StatusCollector statusCollector, IProgressMonitor monitor ) {
         try {
             if( FileSupport.isJavaFile( file ) ) {
-                new JavaFileDriver( file ).compute();
+                new JavaFileDriver( file ).compute( metricsExtensions );
             }
         } catch( Exception ex ) {
             statusCollector.add( ex );

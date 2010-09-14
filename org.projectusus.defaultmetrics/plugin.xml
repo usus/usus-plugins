@@ -28,5 +28,20 @@
              class="org.projectusus.statistics.LinearCyclomaticComplexityStatistic">
        </statistics>
    </extension>
+    <extension
+          point="org.projectusus.core.metrics"> 
+       <metrics
+             class="org.projectusus.metrics.ACDCollector">
+       </metrics> 
+       <metrics
+             class="org.projectusus.metrics.CCCollector">
+       </metrics>
+       <metrics
+             class="org.projectusus.metrics.ClassCollector">
+       </metrics>
+       <metrics
+             class="org.projectusus.metrics.MLCollector">
+       </metrics>
+    </extension>
 
 </plugin>

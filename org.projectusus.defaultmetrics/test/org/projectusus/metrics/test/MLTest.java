@@ -2,7 +2,7 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.proportions.rawdata.collectors.test;
+package org.projectusus.metrics.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -19,9 +19,9 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.UsusModelProvider;
-import org.projectusus.core.internal.proportions.rawdata.collectors.Counter;
-import org.projectusus.core.internal.proportions.rawdata.collectors.MLCollector;
 import org.projectusus.core.testutil.ReflectionUtil;
+import org.projectusus.metrics.Counter;
+import org.projectusus.metrics.MLCollector;
 
 public class MLTest {
 

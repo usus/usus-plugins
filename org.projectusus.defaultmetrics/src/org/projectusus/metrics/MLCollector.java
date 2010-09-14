@@ -1,11 +1,12 @@
-package org.projectusus.core.internal.proportions.rawdata.collectors;
+package org.projectusus.metrics;
 
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.metrics.MetricsCollector;
 
-public class MLCollector extends Collector {
+public class MLCollector extends MetricsCollector {
 
     private Counter statementCount = new Counter();
 

@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata.collectors;
+package org.projectusus.metrics;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
@@ -13,8 +13,9 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.filerelations.model.BoundType;
+import org.projectusus.core.metrics.MetricsCollector;
 
-public class ACDCollector extends Collector {
+public class ACDCollector extends MetricsCollector {
 
     private BoundType currentType;
 
