@@ -11,8 +11,9 @@ public class Tasks {
 		//      der Metriken und Statistiken zur Verfügung stellen
 	}
 	
-	void hideLinearMetrics() {
-		// TODO Lineare Metriken per Default nicht aktivieren? Oder in ein eigenes Plugin und Feature?
+	void hideConstantLimitMetrics() {
+		// TODO Metriken mit festem Limit per Default nicht aktivieren?
+		// TODO Oder in ein eigenes Plugin und Feature?
 	}
 
 	void statusHeaderzeileInDenGraphenVerbessern() {
