@@ -15,12 +15,12 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.debug.core,
  org.eclipse.debug.ui,
  org.projectusus.externals.test;resolution:=optional,
- org.projectusus.jfeet
+ org.projectusus.jfeet,
+ org.eclipse.core.expressions
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.projectusus.autotestsuite.core.internal.util;x-internal:=true,
  org.projectusus.autotestsuite.launch,
- org.projectusus.autotestsuite.ui,
  org.projectusus.autotestsuite.ui.internal;x-internal:=true,
  org.projectusus.autotestsuite.ui.internal.util;x-internal:=true
 Bundle-ClassPath: .,

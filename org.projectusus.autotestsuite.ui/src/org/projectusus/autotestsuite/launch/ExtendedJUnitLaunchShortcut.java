@@ -9,28 +9,20 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.ILaunchShortcut;
-import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.projectusus.jfeet.selection.ElementFrom;
 
 public class ExtendedJUnitLaunchShortcut implements ILaunchShortcut {
 
     private final ExtendedJUnitLaunchConfigurationCreator creator = new ExtendedJUnitLaunchConfigurationCreator();
 
     public void launch( ISelection selection, String mode ) {
-        if( selection instanceof IStructuredSelection ) {
-            Object first = ((IStructuredSelection)selection).getFirstElement();
-            if( first instanceof IJavaElement ) {
-                launch( (IJavaElement)first, mode );
-            }
-        }
+        launch( new ElementFrom( selection ).as( IJavaProject.class ), mode );
     }
 
-    private void launch( IJavaElement element, String mode ) {
-        IJavaProject project = element.getJavaProject();
+    private void launch( IJavaProject project, String mode ) {
         ILaunchConfiguration config = findExistingConfig( project );
         if( config == null ) {
             config = creator.createAndSaveNewConfig( project );
@@ -58,11 +50,6 @@ public class ExtendedJUnitLaunchShortcut implements ILaunchShortcut {
     }
 
     public void launch( IEditorPart editor, String mode ) {
-        IEditorInput input = editor.getEditorInput();
-        IJavaElement javaElement = (IJavaElement)input.getAdapter( IJavaElement.class );
-        if( javaElement != null ) {
-            launch( javaElement, mode );
-        }
+        // unsupported
     }
-
 }

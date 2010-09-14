@@ -34,7 +34,7 @@
       <shortcut
             class="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchShortcut"
             icon="icons/obj16/launch.gif"
-            id="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfiguration.shortcut"
+            id="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchShortcut"
             label="Extended JUnit Test"
             modes="run, debug">
          <contextualLaunch>
@@ -72,20 +72,113 @@
                mode="debug">
          </description>
       </shortcut>
+      <shortcut
+            class="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut"
+            icon="icons/obj16/julaunch.gif"
+            id="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut"
+            label="JUnit Test"
+            modes="run, debug">
+         <contextualLaunch>
+            <enablement>
+               <with
+                     variable="selection">
+                  <count
+                        value="(1-">
+                  </count>
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.jdt.core.IJavaProject">
+                        <test
+                              property="org.eclipse.jdt.core.isInJavaProject">
+                        </test>
+                        <test
+                              property="org.eclipse.jdt.core.hasTypeOnClasspath"
+                              value="junit.framework.Test">
+                        </test>
+                        <test
+                              forcePluginActivation="true"
+                              property="org.eclipse.jdt.junit.canLaunchAsJUnit">
+                        </test>
+                     </adapt>
+                  </iterate>
+                  <test
+                        forcePluginActivation="true"
+                        property="org.projectusus.autotestsuite.haveCommonDependencyRoot">
+                  </test>
+               </with>
+            </enablement>
+         </contextualLaunch>
+         <configurationType
+               id="org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfiguration">
+         </configurationType>
+         <description
+               description="Debugs all JUnit tests in selected projects"
+               mode="debug">
+         </description>
+         <description
+               description="Runs all JUnit tests in selected projects"
+               mode="run">
+         </description>
+      </shortcut>
    </extension>
    <extension
-         point="org.eclipse.ui.popupMenus">
-      <objectContribution
-            adaptable="true"
-            id="org.projectusus.autotestsuite.ui.objectContribution1"
-            objectClass="org.eclipse.jdt.core.IJavaProject">
-         <action
-               class="org.projectusus.autotestsuite.ui.RunTestsInSelectedProjects"
-               enablesFor="+"
-               icon="icons/obj16/launch.gif"
-               id="org.projectusus.autotestsuite.ui.RunTestsInSelectedProjects"
-               label="Run Tests In Selected Projects">
-         </action>
-      </objectContribution>
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.projectusus.autotestsuite.launch.MultiProjectJUnitPropertyTester"
+            id="org.projectusus.autotestsuite.launch.MultiProjectJUnitPropertyTester"
+            namespace="org.projectusus.autotestsuite"
+            properties="haveCommonDependencyRoot"
+            type="java.util.List">
+      </propertyTester>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut.debug"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M2+M3+D T T">
+      </key>
+      <key
+            platform="carbon"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M2+M3+D T T">
+      </key>
+      <key
+            commandId="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut.debug"
+            platform="carbon"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+M4+D T T">
+      </key>
+      <key
+            commandId="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut.run"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M2+M3+X T T">
+      </key>
+      <key
+            platform="carbon"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M2+M3+X T T">
+      </key>
+      <key
+            commandId="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut.run"
+            platform="carbon"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+X T T">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.eclipse.debug.ui.category.run"
+            description="Run all JUnit tests in selected projects"
+            id="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut.run"
+            name="Run JUnit Test">
+      </command>
+      <command
+            categoryId="org.eclipse.debug.ui.category.run"
+            description="Debug all unit tests in selected projects"
+            id="org.projectusus.autotestsuite.launch.MultiProjectJUnitLaunchShortcut.debug"
+            name="Debug JUnit Test">
+      </command>
    </extension>
 </plugin>
