@@ -3,12 +3,9 @@ package org.projectusus.autotestsuite.launch;
 import static com.google.common.collect.Lists.transform;
 import static java.util.Arrays.asList;
 import static org.eclipse.jdt.internal.junit.launcher.TestKindRegistry.getContainerTestKind;
-import static org.eclipse.jface.viewers.CheckboxTableViewer.newCheckList;
 import static org.projectusus.autotestsuite.launch.ExtendedJUnitLaunchConfigurationConstants.toProject;
 
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -25,7 +22,6 @@ import org.eclipse.jdt.ui.JavaElementLabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
-import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -55,8 +51,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.projectusus.autotestsuite.core.internal.AllJavaProjectsInWorkspace;
-import org.projectusus.autotestsuite.core.internal.IAllJavaProjects;
-import org.projectusus.autotestsuite.core.internal.RequiredJavaProjects;
 import org.projectusus.autotestsuite.ui.internal.util.AutoTestSuiteUIImages;
 import org.projectusus.autotestsuite.ui.internal.util.ISharedAutoTestSuiteImages;
 
@@ -67,7 +61,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
     private Text projectText;
     private Button keepRunning;
     private ComboViewer testLoader;
-    private CheckboxTableViewer checkedProjectsViewer;
+    private CheckedProjectsViewer checkedProjectsViewer;
 
     public String getName() {
         return "Test Projects";
@@ -102,52 +96,26 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         data.verticalAlignment = SWT.TOP;
         label.setLayoutData( data );
 
-        checkedProjectsViewer = newCheckList( composite, SWT.BORDER );
-        checkedProjectsViewer.setContentProvider( new ArrayContentProvider() );
-        checkedProjectsViewer.setLabelProvider( new JavaElementLabelProvider( JavaElementLabelProvider.SHOW_DEFAULT ) );
-        checkedProjectsViewer.setInput( new AllJavaProjectsInWorkspace().find() );
+        checkedProjectsViewer = new CheckedProjectsViewer( composite );
         checkedProjectsViewer.addCheckStateListener( new ICheckStateListener() {
             public void checkStateChanged( CheckStateChangedEvent event ) {
                 updateLaunchConfigurationDialog();
             }
         } );
 
-        data = new GridData( GridData.FILL_BOTH );
-        checkedProjectsViewer.getControl().setLayoutData( data );
-
-        Composite buttonPanel = new Composite( composite, SWT.NONE );
-        GridLayout layout = new GridLayout( 1, false );
-        layout.marginHeight = 0;
-        layout.marginWidth = 0;
-        layout.horizontalSpacing = 0;
-        layout.verticalSpacing = 0;
-        buttonPanel.setLayout( layout );
-        data = new GridData();
-        data.verticalAlignment = SWT.TOP;
-        buttonPanel.setLayoutData( data );
-
-        Button selectAllButton = new Button( buttonPanel, SWT.PUSH );
-        selectAllButton.setText( "Select All" );
-        selectAllButton.addSelectionListener( new SelectionAdapter() {
+        new MassSelectionComposite( composite ) {
             @Override
-            public void widgetSelected( SelectionEvent evt ) {
+            void onSelectAll() {
                 checkedProjectsViewer.setAllChecked( true );
                 updateLaunchConfigurationDialog();
             }
-        } );
-        setButtonGridData( selectAllButton );
 
-        Button deselectAllButton = new Button( buttonPanel, SWT.PUSH );
-        deselectAllButton.setText( "Deselect All" );
-        deselectAllButton.addSelectionListener( new SelectionAdapter() {
             @Override
-            public void widgetSelected( SelectionEvent evt ) {
+            void onDeselectAll() {
                 checkedProjectsViewer.setAllChecked( false );
                 updateLaunchConfigurationDialog();
             }
-        } );
-        setButtonGridData( deselectAllButton );
-
+        };
     }
 
     private void createRootProjectSection( Composite composite ) {
@@ -158,7 +126,7 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
         projectText.addModifyListener( new ModifyListener() {
             public void modifyText( ModifyEvent evt ) {
                 updateLaunchConfigurationDialog();
-                updateCheckedProjects();
+                checkedProjectsViewer.updateCheckedProjects( getRootProject() );
             }
         } );
 
@@ -171,19 +139,6 @@ public class ExtendedJUnitLaunchConfigurationTab extends AbstractLaunchConfigura
             }
         } );
         setButtonGridData( projectButton );
-    }
-
-    private void updateCheckedProjects() {
-        Object[] checked = checkedProjectsViewer.getCheckedElements();
-        IJavaProject root = getRootProject();
-
-        Set<IJavaProject> projects = new LinkedHashSet<IJavaProject>();
-        if( root != null ) {
-            IAllJavaProjects allProjects = new AllJavaProjectsInWorkspace();
-            projects.addAll( new RequiredJavaProjects( allProjects ).findFor( root ) );
-        }
-        checkedProjectsViewer.setInput( projects );
-        checkedProjectsViewer.setCheckedElements( checked );
     }
 
     private IJavaProject getRootProject() {

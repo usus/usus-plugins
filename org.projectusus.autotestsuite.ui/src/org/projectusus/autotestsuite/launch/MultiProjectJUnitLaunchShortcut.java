@@ -39,5 +39,4 @@ public class MultiProjectJUnitLaunchShortcut implements ILaunchShortcut {
             logStatusOf( exception );
         }
     }
-
 }

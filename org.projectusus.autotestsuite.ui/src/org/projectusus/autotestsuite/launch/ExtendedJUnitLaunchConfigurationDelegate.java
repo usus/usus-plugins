@@ -50,7 +50,7 @@ public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigu
         return result;
     }
 
-    private Collection<IJavaProject> collectProjects( ExtendedJUnitLaunchConfigurationReader config ) throws CoreException {
+    private Collection<IJavaProject> collectProjects( ExtendedJUnitLaunchConfigurationReader config ) {
         IJavaProject project = toProject( config.getProjectName() );
         List<IJavaProject> projects = new LinkedList<IJavaProject>( findRequired( project ) );
         IJavaProject[] checkedProjects = config.getCheckedProjects();
