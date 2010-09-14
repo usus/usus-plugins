@@ -93,11 +93,11 @@ public class CCCollector extends Collector {
     }
 
     private void submit( MethodDeclaration node ) {
-        getMetricsWriter().putData( file, node, MetricsResults.CC, ccCount.getAndClearCount() );
+        getMetricsWriter().putData( getFile(), node, MetricsResults.CC, ccCount.getAndClearCount() );
     }
 
     private void submit( Initializer node ) {
-        getMetricsWriter().putData( file, node, MetricsResults.CC, ccCount.getAndClearCount() );
+        getMetricsWriter().putData( getFile(), node, MetricsResults.CC, ccCount.getAndClearCount() );
     }
 
     private boolean increase() {

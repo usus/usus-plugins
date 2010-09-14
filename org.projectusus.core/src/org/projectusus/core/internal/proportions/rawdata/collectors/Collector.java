@@ -6,21 +6,20 @@ import org.projectusus.core.IMetricsWriter;
 
 public abstract class Collector extends ASTVisitor {
 
-    protected IFile file;
-    protected IMetricsWriter metricsWriter;
+    private IFile file;
+    private IMetricsWriter metricsWriter;
 
     public Collector() {
         super();
     }
 
-    // public Collector( IFile file ) {
-    // super();
-    // this.file = file;
-    // }
-
     public void setup( IFile newFile, IMetricsWriter newMetricsWriter ) {
         this.file = newFile;
         this.metricsWriter = newMetricsWriter;
+    }
+
+    protected IFile getFile() {
+        return file;
     }
 
     protected IMetricsWriter getMetricsWriter() {

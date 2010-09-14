@@ -28,7 +28,7 @@ public class ClassCollector extends Collector {
     }
 
     private boolean addAbstractTypeDeclaration( AbstractTypeDeclaration node ) {
-        getMetricsWriter().putData( file, node, MetricsResults.CLASS_CREATION, 0 );
+        getMetricsWriter().putData( getFile(), node, MetricsResults.CLASS_CREATION, 0 );
         return true;
     }
 }

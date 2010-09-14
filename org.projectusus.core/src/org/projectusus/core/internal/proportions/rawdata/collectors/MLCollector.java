@@ -28,13 +28,13 @@ public class MLCollector extends Collector {
     @Override
     public void endVisit( MethodDeclaration node ) {
         int count = statementCount.getAndClearCount();
-        getMetricsWriter().putData( file, node, MetricsResults.ML, count );
+        getMetricsWriter().putData( getFile(), node, MetricsResults.ML, count );
     }
 
     @Override
     public void endVisit( Initializer node ) {
         int count = statementCount.getAndClearCount();
-        getMetricsWriter().putData( file, node, MetricsResults.ML, count );
+        getMetricsWriter().putData( getFile(), node, MetricsResults.ML, count );
     }
 
     @Override

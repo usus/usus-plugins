@@ -1,27 +1,36 @@
 public class Tasks {
-	
-	/////////// Tasks to complete before Eclipse Magazin 6.10 comes out (27. September 2010)
-	
-	void tooltipsForStatistics() {
-		// TODO Tooltips für Statistiken im Cockpit
-	}
-	
-	void dynamicHelpForStatistics() {
-		// TODO Dynamische Hilfe des Cockpits und des Hotspot Views sollten Infos zur Berechnung
-		//      der Metriken und Statistiken zur Verfügung stellen
-	}
-	
-	void hideConstantLimitMetrics() {
-		// TODO Metriken mit festem Limit per Default nicht aktivieren?
-		// TODO Oder in ein eigenes Plugin und Feature?
-	}
 
-	void statusHeaderzeileInDenGraphenVerbessern() {
+    // ///////// Tasks to complete before Eclipse Magazin 6.10 comes out (27. September 2010)
+
+    void tooltipsForStatistics() {
+        // TODO Tooltips für Statistiken im Cockpit
+    }
+
+    void dynamicHelpForStatistics() {
+        // TODO Dynamische Hilfe des Cockpits und des Hotspot Views sollten Infos zur Berechnung
+        // der Metriken und Statistiken zur Verfügung stellen
+    }
+
+    void hideConstantLimitMetrics() {
+        // TODO Metriken mit festem Limit per Default nicht aktivieren?
+        // TODO Oder in ein eigenes Plugin und Feature?
+    }
+
+    void statusHeaderzeileInDenGraphenVerbessern() {
         // TODO die Statuszeile wird leicht zu lang. Wie damit umgehen?
         // Tooltip? Zusammenfassung?
     }
 
-	/////////// Tasks for USUS 1.0
+    void nicole_evtl_marc_bugACDAnalysis() {
+        // TODO static fields are not regarded. fix it.
+    }
+
+    void inprogress_nicole_makeMetricsPluggable() {
+        // TODO Metriken pluggable machen: Collectors zufŸügen, Werte in RawData Struktur werden in einer Map
+        // gehalten, pro Metrik ein gespeichertes Werteobjekt.
+    }
+
+    // ///////// Tasks for USUS 1.0
 
     void usabilityFuerDieGraphenPolieren() {
         // TODO - öffnet man einen Class Graph aus dem Package Graphen, sind nur zyklische aktiv
@@ -48,29 +57,18 @@ public class Tasks {
     void nicole_marc_createExplanatoryDocumentation() {
         // TODO Doku: Warum soll ich meinen Code äŠndern? Wo kann ich weiterlesen?
         // - Position Paper: Usus vs. Checkstyle, PMD, ...
-        // Dies fliesst ein in den Eclipse Magazin Artikel 6.10
+        // Sollen wir noch mehr schreiben oder genügt der Eclipse Magazin Artikel 6.10?
     }
-    
+
     void rightAlignValueColumnInHotspotsView() {
-    	// TODO Spalte rechtsbündig machen
+        // TODO Spalte rechtsbündig machen
     }
-    
+
     void removeUseLessTreeNodeInCockpit() {
-    	// TODO Momentan gibt es nur eine Art von Eintrag im Cockpit -> Unnötiger Wurzelknoten
+        // TODO Momentan gibt es nur eine Art von Eintrag im Cockpit -> Unnötiger Wurzelknoten
     }
 
-    ///// ----------------
-
-    void nicole_evtl_marc_bugACDAnalysis() {
-        // TODO static fields are not regarded. fix it.
-    }
-
-    void nicole_makeMetricsPluggable() {
-        // TODO Metriken pluggable machen: Collectors zufŸügen, Werte in RawData Struktur werden in einer Map
-        // gehalten, pro Metrik ein gespeichertes Werteobjekt.
-    }
-
-    /////////// Tasks for versions after USUS 1.0
+    // ///////// Tasks for versions after USUS 1.0
 
     void addLayoutCacheForZest() {
         // TODO "Layout Cache", der sich die Positionen der Knoten in den Graphen
@@ -83,6 +81,7 @@ public class Tasks {
 
     void createMudHoleHotspots() {
         // TODO Aggregierte Hotspots = "Schlammlšöcher"
+        // Dazu brauchen wir post-visit-hooks für den Baumdurchlauf
     }
 
     void makeJobCancellable() {
