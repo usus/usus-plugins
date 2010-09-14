@@ -1,6 +1,7 @@
 package org.projectusus.autotestsuite.core.internal;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.either;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -11,8 +12,6 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.junit.Test;
 
 public class CommonDependencyRootTest extends TestsWithProjectDependencies {
-
-    // TODO theory: if there is at least one common root, then exists() returns true
 
     private final CommonDependencyRoot finder = new CommonDependencyRoot( projects() );
 
@@ -94,9 +93,8 @@ public class CommonDependencyRootTest extends TestsWithProjectDependencies {
         IJavaProject dependencyBottom = addProject( "p4" );
         addDependency( dependencyRight, dependencyBottom );
 
-        // TODO lf why does this not compile?
-        // IJavaProject result = finder.findFor( asList( dependencyLeft, dependencyBottom ) );
-        // assertThat( result, either( is( uberRoot ) ).or( is( project ) ) );
+        IJavaProject result = finder.findFor( asList( dependencyLeft, dependencyBottom ) );
+        assertThat( result, either( is( uberRoot ) ).or( is( project ) ) );
     }
 
     @Test

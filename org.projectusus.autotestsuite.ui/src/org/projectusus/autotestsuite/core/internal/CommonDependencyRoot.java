@@ -15,16 +15,37 @@ public class CommonDependencyRoot {
     }
 
     public IJavaProject findFor( Collection<IJavaProject> projects ) {
+        ProjectRank result = new ProjectRank();
         for( IJavaProject project : allProjects.find() ) {
             Collection<IJavaProject> requiredProjects = requiredProjectsFinder.findFor( project );
             if( requiredProjects.containsAll( projects ) ) {
-                return project;
+                result.update( project, requiredProjects.size() );
             }
         }
-        return null;
+        return result.getProject();
     }
 
     public boolean existsFor( Collection<IJavaProject> projects ) {
         return findFor( projects ) != null;
+    }
+
+    class ProjectRank {
+        private int size;
+        private IJavaProject project;
+
+        IJavaProject getProject() {
+            return project;
+        }
+
+        void update( IJavaProject project, int size ) {
+            if( isMoreInterestingThanPreviouslyFoundResult( size ) ) {
+                this.size = size;
+                this.project = project;
+            }
+        }
+
+        private boolean isMoreInterestingThanPreviouslyFoundResult( int size ) {
+            return project == null || size < this.size;
+        }
     }
 }
