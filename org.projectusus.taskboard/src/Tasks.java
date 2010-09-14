@@ -1,6 +1,6 @@
 public class Tasks {
 	
-	// Tasks to complete before Eclipse Magazin 6.10 comes out
+	/////////// Tasks to complete before Eclipse Magazin 6.10 comes out (27. September 2010)
 	
 	void tooltipsForStatistics() {
 		// TODO Tooltips für Statistiken im Cockpit
@@ -10,13 +10,17 @@ public class Tasks {
 		// TODO Dynamische Hilfe des Cockpits und des Hotspot Views sollten Infos zur Berechnung
 		//      der Metriken und Statistiken zur Verfügung stellen
 	}
+	
+	void hideLinearMetrics() {
+		// TODO Lineare Metriken per Default nicht aktivieren? Oder in ein eigenes Plugin und Feature?
+	}
 
-    // Tasks for USUS 1.0
-
-    void statusHeaderzeileInDenGraphenVerbessern() {
+	void statusHeaderzeileInDenGraphenVerbessern() {
         // TODO die Statuszeile wird leicht zu lang. Wie damit umgehen?
         // Tooltip? Zusammenfassung?
     }
+
+	/////////// Tasks for USUS 1.0
 
     void usabilityFuerDieGraphenPolieren() {
         // TODO - öffnet man einen Class Graph aus dem Package Graphen, sind nur zyklische aktiv
@@ -54,7 +58,7 @@ public class Tasks {
     	// TODO Momentan gibt es nur eine Art von Eintrag im Cockpit -> Unnötiger Wurzelknoten
     }
 
-    // ----------------
+    ///// ----------------
 
     void nicole_evtl_marc_bugACDAnalysis() {
         // TODO static fields are not regarded. fix it.
@@ -65,7 +69,7 @@ public class Tasks {
         // gehalten, pro Metrik ein gespeichertes Werteobjekt.
     }
 
-    // ///////// Tasks for versions after USUS 1.0
+    /////////// Tasks for versions after USUS 1.0
 
     void addLayoutCacheForZest() {
         // TODO "Layout Cache", der sich die Positionen der Knoten in den Graphen
