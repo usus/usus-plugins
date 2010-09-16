@@ -16,11 +16,6 @@ public class Tasks {
         // geht ein in dynamic help
     }
 
-    void nicole_hideConstantLimitMetrics() {
-        // TODO Metriken mit festem Limit per Default nicht aktivieren?
-        // TODO Oder in ein eigenes Plugin und Feature?
-    }
-
     void marc_statusHeaderzeileInDenGraphenVerbessern() {
         // TODO die Statuszeile wird leicht zu lang. Wie damit umgehen?
         // Tooltip? Zusammenfassung?
