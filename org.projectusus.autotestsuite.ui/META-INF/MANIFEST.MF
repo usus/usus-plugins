@@ -22,8 +22,8 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.projectusus.autotestsuite,
  org.projectusus.autotestsuite.core.internal;x-internal:=true,
  org.projectusus.autotestsuite.core.internal.config;x-internal:=true,
- org.projectusus.autotestsuite.core.internal.shortcuts;x-internal:=true,
  org.projectusus.autotestsuite.ui.internal;x-internal:=true,
+ org.projectusus.autotestsuite.ui.internal.shortcuts;x-internal:=true,
  org.projectusus.autotestsuite.ui.internal.util;x-internal:=true
 Bundle-ClassPath: .,
  lib/guava-r06.jar

@@ -1,4 +1,4 @@
-package org.projectusus.autotestsuite.core.internal.shortcuts;
+package org.projectusus.autotestsuite.ui.internal.shortcuts;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.projectusus.autotestsuite.core.internal.shortcuts;
+package org.projectusus.autotestsuite.ui.internal.shortcuts;
 
 import static org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME;
 import static org.projectusus.autotestsuite.AutoTestSuitePlugin.logStatusOf;
