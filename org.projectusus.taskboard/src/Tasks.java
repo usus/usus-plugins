@@ -2,23 +2,34 @@ public class Tasks {
 
     // ///////// Tasks to complete before Eclipse Magazin 6.10 comes out (27. September 2010)
 
-    void tooltipsForStatistics() {
+    void evtl_andreas_tooltipsForStatistics() {
         // TODO Tooltips für Statistiken im Cockpit
     }
 
-    void dynamicHelpForStatistics() {
+    void marc_dynamicHelpForStatistics() {
         // TODO Dynamische Hilfe des Cockpits und des Hotspot Views sollten Infos zur Berechnung
         // der Metriken und Statistiken zur Verfügung stellen
     }
 
-    void hideConstantLimitMetrics() {
+    void nicole_documentationOfCalculations() {
+        // TODO Doku der Usus-Interna. Welche Schwellwerte? Was sind die Level? etc.
+        // geht ein in dynamic help
+    }
+
+    void nicole_hideConstantLimitMetrics() {
         // TODO Metriken mit festem Limit per Default nicht aktivieren?
         // TODO Oder in ein eigenes Plugin und Feature?
     }
 
-    void statusHeaderzeileInDenGraphenVerbessern() {
+    void marc_statusHeaderzeileInDenGraphenVerbessern() {
         // TODO die Statuszeile wird leicht zu lang. Wie damit umgehen?
         // Tooltip? Zusammenfassung?
+        // keine kryptischen Zeichen unter Windows
+        // Hilfebutton mit dahinterliegendem InfoPresenter, der alle Filterregeln auflistet
+    }
+
+    void nicole_statusHeaderzeileInDenHotspotViewsVerbessern() {
+        // TODO Texte in den Statistics etwas aussagekräftiger formulieren
     }
 
     void nicole_evtl_marc_bugACDAnalysis() {
@@ -44,10 +55,6 @@ public class Tasks {
 
     void checkContextMenuInCockpit() {
         // TODO soll das so bleiben?
-    }
-
-    void nicole_documentationOfCalculations() {
-        // TODO Doku der Usus-Interna. Welche Schwellwerte? Was sind die Level? etc.
     }
 
     void andreas_marc_maximizeTablesInCockpitAndHotspots() {
