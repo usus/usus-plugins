@@ -26,6 +26,3 @@ public abstract class MetricsCollector extends ASTVisitor {
         return metricsWriter;
     }
 }
-
-// List<Collector> metricsExtensions = asList( new ClassCollector(), new MLCollector(), new CCCollector(), new ACDCollector() );
-
