@@ -4,6 +4,7 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.cockpit;
 
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.widgets.Composite;
@@ -16,8 +17,8 @@ class CockpitTreeViewer extends UsusTreeViewer<AnalysisDisplayEntry> {
     CockpitTreeViewer( Composite parent ) {
         super( parent, CockpitColumnDesc.values() );
         setUseHashlookup( true );
-
-        setLabelProvider( new CockpitLP() );
+        ColumnViewerToolTipSupport.enableFor( this );
+        setLabelProvider( new CockpitCellLP() );
         setContentProvider( new CockpitCP() );
     }
 
