@@ -6,38 +6,61 @@ package org.projectusus.ui.internal.proportions.cockpit;
 
 import static org.projectusus.ui.internal.proportions.cockpit.CockpitColumnDesc.Indicator;
 
-import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.ui.internal.AnalysisDisplayEntry;
-import org.projectusus.ui.internal.proportions.UsusModelLabelProvider;
+import org.projectusus.ui.internal.IDisplayCategory;
 
-public class CockpitLP extends UsusModelLabelProvider implements ITableLabelProvider {
+public class CockpitLP extends ColumnLabelProvider {
 
-    public Image getColumnImage( Object element, int columnIndex ) {
+    @Override
+    public String getToolTipText( Object element ) {
+        if( element instanceof AnalysisDisplayEntry ) {
+            return ((AnalysisDisplayEntry)element).getToolTipText();
+        }
+        return super.getToolTipText( element );
+    }
+
+    @Override
+    public int getToolTipDisplayDelayTime( @SuppressWarnings( "unused" ) Object object ) {
+        return 500;
+    }
+
+    @Override
+    public int getToolTipTimeDisplayed( @SuppressWarnings( "unused" ) Object object ) {
+        return 10000;
+    }
+
+    @Override
+    public void update( ViewerCell cell ) {
+        Object element = cell.getElement();
+        int columnIndex = cell.getColumnIndex();
+        cell.setImage( getColumnImage( element, columnIndex ) );
+        cell.setText( getColumnText( element, columnIndex ) );
+
+    }
+
+    private Image getColumnImage( Object element, int columnIndex ) {
         CockpitColumnDesc cockpitColumnDesc = CockpitColumnDesc.values()[columnIndex];
-        if( cockpitColumnDesc == CockpitColumnDesc.Trend && element instanceof AnalysisDisplayEntry ) {
-            return ((AnalysisDisplayEntry)element).getTrendImage();
+        if( element instanceof IDisplayCategory ) {
+            return cockpitColumnDesc == Indicator ? ((IDisplayCategory)element).getImage() : null;
         }
         if( cockpitColumnDesc.hasImage() ) {
-            return getColumnImageFor( element );
+            return cockpitColumnDesc.getImage( (AnalysisDisplayEntry)element );
         }
         return null;
     }
 
-    public String getColumnText( Object element, int columnIndex ) {
+    private String getColumnText( Object element, int columnIndex ) {
+        CockpitColumnDesc cockpitColumnDesc = CockpitColumnDesc.values()[columnIndex];
         if( element instanceof AnalysisDisplayEntry ) {
-            return getColumnTextFor( (AnalysisDisplayEntry)element, columnIndex );
-        } else if( CockpitColumnDesc.values()[columnIndex] == Indicator ) {
-            return getNodeTextFor( element );
+            return cockpitColumnDesc.getLabel( ((AnalysisDisplayEntry)element) );
+        }
+        if( cockpitColumnDesc == Indicator ) {
+            return ((IDisplayCategory)element).getLabel();
         }
         return null;
-    }
-
-    // internal methods
-    // ////////////////
-
-    private String getColumnTextFor( AnalysisDisplayEntry element, int columnIndex ) {
-        return CockpitColumnDesc.values()[columnIndex].getLabel( element );
     }
 
 }

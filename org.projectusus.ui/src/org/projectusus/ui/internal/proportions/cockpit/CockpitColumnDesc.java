@@ -4,11 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.proportions.cockpit;
 
+import static org.projectusus.ui.colors.ISharedUsusImages.OBJ_INFO;
+import static org.projectusus.ui.colors.UsusUIImages.getSharedImages;
 import static org.projectusus.ui.viewer.ColumnAlignment.CENTER;
 import static org.projectusus.ui.viewer.ColumnAlignment.RIGHT;
 
 import java.text.DecimalFormat;
 
+import org.eclipse.swt.graphics.Image;
 import org.projectusus.ui.internal.AnalysisDisplayEntry;
 import org.projectusus.ui.viewer.IColumnDesc;
 import org.projectusus.ui.viewer.UsusTreeColumn;
@@ -40,9 +43,14 @@ enum CockpitColumnDesc implements IColumnDesc<AnalysisDisplayEntry> {
         }
     },
     @UsusTreeColumn( header = "Trend", align = CENTER, weight = 8, sortable = false )
-    Trend( false ) {
+    Trend( true ) {
         public String getLabel( @SuppressWarnings( "unused" ) AnalysisDisplayEntry element ) {
             return ""; // using image //$NON-NLS-1$
+        }
+
+        @Override
+        public Image getImage( AnalysisDisplayEntry element ) {
+            return element.getTrendImage();
         }
     };
 
@@ -55,5 +63,9 @@ enum CockpitColumnDesc implements IColumnDesc<AnalysisDisplayEntry> {
 
     public boolean hasImage() {
         return hasImage;
+    }
+
+    public Image getImage( @SuppressWarnings( "unused" ) AnalysisDisplayEntry element ) {
+        return getSharedImages().getImage( OBJ_INFO );
     }
 }

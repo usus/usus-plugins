@@ -29,8 +29,6 @@ import org.projectusus.core.basis.SourceCodeLocation;
  */
 public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisitor implements ICockpitExtension {
 
-    private final String label;
-    private final String description;
     private final String unit;
     private final int violationLimit;
     private int basis;
@@ -39,10 +37,8 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
     private IFile currentFile;
     private List<Hotspot> hotspots;
 
-    public DefaultCockpitExtension( String label, String description, String unit, int violationLimit ) {
+    public DefaultCockpitExtension( String unit, int violationLimit ) {
         super();
-        this.label = label;
-        this.description = description;
         this.unit = unit;
         this.violationLimit = violationLimit;
         reset();
@@ -73,14 +69,7 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
         return violationSum;
     }
 
-    @Override
-    public String getLabel() {
-        return label;
-    }
-
-    public String getDescription() {
-        return description;
-    }
+    protected abstract String getDescription();
 
     public int getViolations() {
         return violations;
@@ -103,7 +92,11 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
     }
 
     public CodeProportion getCodeProportion() {
-        return new CodeProportion( getLabel(), getDescription(), getViolations(), getBasisStatistic(), getAverage(), getHotspots() );
+        return new CodeProportion( getLabel(), getDescription(), getTooltip(), getViolations(), getBasisStatistic(), getAverage(), getHotspots() );
+    }
+
+    protected String getTooltip() {
+        return getDescription();
     }
 
     public static double calculateAverage( double numberOfViolations, double numberOfBaseElems ) {

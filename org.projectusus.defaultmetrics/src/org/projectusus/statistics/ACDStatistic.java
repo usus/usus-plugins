@@ -8,15 +8,14 @@ import org.projectusus.core.statistics.visitors.ClassCountVisitor;
 
 public class ACDStatistic extends DefaultCockpitExtension {
 
-    private static final String label = "Average component dependency"; //$NON-NLS-1$
-    private static final String description = label + ": Hotspots are classes with a CCD greater than %d."; //$NON-NLS-1$
-
-    private static String metricsDescription() {
+    @Override
+    protected String getDescription() {
+        String description = getLabel() + ": Hotspots are classes with a CCD greater than %d."; //$NON-NLS-1$
         return String.format( description, new Integer( calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) ) );
     }
 
     public ACDStatistic() {
-        super( label, metricsDescription(), codeProportionUnit_CLASS_label, calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) );
+        super( codeProportionUnit_CLASS_label, calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) );
     }
 
     @Override
@@ -41,6 +40,11 @@ public class ACDStatistic extends DefaultCockpitExtension {
 
     @Override
     public CodeProportion getCodeProportion() {
-        return new CodeProportion( getLabel(), getDescription(), getViolations(), getBasisStatistic(), 100 * getRelativeACD(), getHotspots() );
+        return new CodeProportion( getLabel(), getDescription(), getTooltip(), getViolations(), getBasisStatistic(), 100 * getRelativeACD(), getHotspots() );
+    }
+
+    @Override
+    public String getLabel() {
+        return "Average component dependency"; //$NON-NLS-1$
     }
 }

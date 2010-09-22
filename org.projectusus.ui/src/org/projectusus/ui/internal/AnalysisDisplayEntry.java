@@ -113,4 +113,7 @@ public class AnalysisDisplayEntry {
         return getTrend();
     }
 
+    public String getToolTipText() {
+        return current.getToolTipText();
+    }
 }

@@ -12,7 +12,7 @@ public class MudholeStatistic extends DefaultCockpitExtension {
     // private CyclomaticComplexityStatistic ccStatistic = new CyclomaticComplexityStatistic();
 
     public MudholeStatistic() {
-        super( "Mudholes", "Mudholes", codeProportionUnit_CLASS_label, KG_LIMIT ); //$NON-NLS-1$ //$NON-NLS-2$
+        super( codeProportionUnit_CLASS_label, KG_LIMIT );
     }
 
     @Override
@@ -21,4 +21,13 @@ public class MudholeStatistic extends DefaultCockpitExtension {
         acdStatistic.inspectClass( location, results );
     }
 
+    @Override
+    public String getLabel() {
+        return "Mudholes"; //$NON-NLS-1$
+    }
+
+    @Override
+    protected String getDescription() {
+        return "Mudholes"; //$NON-NLS-1$
+    }
 }

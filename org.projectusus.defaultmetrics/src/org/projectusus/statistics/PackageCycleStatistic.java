@@ -16,11 +16,8 @@ import org.projectusus.core.statistics.visitors.PackageCountVisitor;
 
 public class PackageCycleStatistic extends DefaultCockpitExtension {
 
-    private static String label = "Packages with cyclic dependencies"; //$NON-NLS-1$
-    private static String description = label + ": Rating function: f(value) = value"; //$NON-NLS-1$
-
     public PackageCycleStatistic() {
-        super( label, description, "", 0 ); //$NON-NLS-1$
+        super( "", 0 ); //$NON-NLS-1$
     }
 
     @Override
@@ -29,7 +26,7 @@ public class PackageCycleStatistic extends DefaultCockpitExtension {
         PackageCycles packageCycles = new PackageRelations().getPackageCycles();
         int violations = packageCycles.numberOfPackagesInAnyCycles();
         double level = calculateAverage( violations, basisStatistic.getValue() );
-        return new CodeProportion( getLabel(), getDescription(), violations, basisStatistic, level, createHotspots( packageCycles ) );
+        return new CodeProportion( getLabel(), getDescription(), getTooltip(), violations, basisStatistic, level, createHotspots( packageCycles ) );
     }
 
     private List<Hotspot> createHotspots( PackageCycles packageCycles ) {
@@ -57,4 +54,15 @@ public class PackageCycleStatistic extends DefaultCockpitExtension {
     public int getViolations() {
         return new PackageRelations().getPackageCycles().numberOfPackagesInAnyCycles();
     }
+
+    @Override
+    public String getLabel() {
+        return "Packages with cyclic dependencies"; //$NON-NLS-1$
+    }
+
+    @Override
+    protected String getDescription() {
+        return getLabel() + ": Rating function: f(value) = value"; //$NON-NLS-1$
+    }
+
 }

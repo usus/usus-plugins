@@ -8,19 +8,23 @@ public class MethodLengthStatistic extends DefaultCockpitExtension {
 
     private static int ML_LIMIT = 15;
 
-    private static final String label = "Method length (constant limit)"; //$NON-NLS-1$
-    private static final String description = label + ": Hotspots are methods with more than %d statements."; //$NON-NLS-1$
-
-    private static String metricsDescription() {
-        return String.format( description, new Integer( ML_LIMIT ) );
-    }
-
     public MethodLengthStatistic() {
-        super( label, metricsDescription(), codeProportionUnit_METHOD_label, ML_LIMIT );
+        super( codeProportionUnit_METHOD_label, ML_LIMIT );
     }
 
     @Override
     public void inspectMethod( SourceCodeLocation location, MetricsResults result ) {
         addViolation( location, result.getIntValue( MetricsResults.ML ) );
+    }
+
+    @Override
+    public String getLabel() {
+        return "Method length (constant limit)"; //$NON-NLS-1$
+    }
+
+    @Override
+    protected String getDescription() {
+        String description = getLabel() + ": Hotspots are methods with more than %d statements."; //$NON-NLS-1$   
+        return String.format( description, new Integer( ML_LIMIT ) );
     }
 }

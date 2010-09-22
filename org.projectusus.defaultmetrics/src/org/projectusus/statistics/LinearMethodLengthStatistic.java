@@ -8,17 +8,10 @@ public class LinearMethodLengthStatistic extends DefaultCockpitExtension {
 
     private static int ML_LIMIT = 9;
 
-    private static final String label = "Method length"; //$NON-NLS-1$
-    private static final String description = label + ": Hotspots are methods with more than %d statements. Rating function: f(value) = 1/%d value - 1"; //$NON-NLS-1$
-
     private double linearViolations = 0.0;
 
-    private static String metricsDescription() {
-        return String.format( description, new Integer( ML_LIMIT ), new Integer( ML_LIMIT ) );
-    }
-
     public LinearMethodLengthStatistic() {
-        super( label, metricsDescription(), codeProportionUnit_METHOD_label, ML_LIMIT );
+        super( codeProportionUnit_METHOD_label, ML_LIMIT );
     }
 
     @Override
@@ -34,6 +27,17 @@ public class LinearMethodLengthStatistic extends DefaultCockpitExtension {
     @Override
     public double getAverage() {
         return calculateAverage( linearViolations, getBasis() );
+    }
+
+    @Override
+    public String getLabel() {
+        return "Method length"; //$NON-NLS-1$
+    }
+
+    @Override
+    protected String getDescription() {
+        String description = getLabel() + ": Hotspots are methods with more than %d statements. Rating function: f(value) = 1/%d value - 1"; //$NON-NLS-1$    
+        return String.format( description, new Integer( ML_LIMIT ), new Integer( ML_LIMIT ) );
     }
 
 }

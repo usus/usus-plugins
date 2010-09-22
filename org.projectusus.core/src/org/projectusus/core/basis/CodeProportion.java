@@ -19,18 +19,20 @@ public class CodeProportion extends PlatformObject {
     private final double average;
     private final List<Hotspot> hotspots;
     private final boolean hasHotspots;
+    private final String tooltip;
 
     public CodeProportion( String label, String description, int violations, CodeStatistic basis, double average ) {
-        this( label, description, violations, basis, average, new ArrayList<Hotspot>( 0 ), false );
+        this( label, description, "", violations, basis, average, new ArrayList<Hotspot>( 0 ), false ); //$NON-NLS-1$
     }
 
-    public CodeProportion( String label, String description, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots ) {
-        this( label, description, violations, basis, average, hotspots, true );
+    public CodeProportion( String label, String description, String tooltip, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots ) {
+        this( label, description, tooltip, violations, basis, average, hotspots, true );
     }
 
-    private CodeProportion( String label, String description, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots, boolean hasHotspots ) {
+    private CodeProportion( String label, String description, String tooltip, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots, boolean hasHotspots ) {
         this.label = label;
         this.description = description;
+        this.tooltip = tooltip;
         this.violations = violations;
         this.basis = basis;
         this.hasHotspots = hasHotspots;
@@ -76,5 +78,9 @@ public class CodeProportion extends PlatformObject {
 
     public boolean hasHotspots() {
         return hasHotspots;
+    }
+
+    public String getToolTipText() {
+        return tooltip;
     }
 }

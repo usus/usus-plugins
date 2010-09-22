@@ -8,17 +8,10 @@ public class LinearCyclomaticComplexityStatistic extends DefaultCockpitExtension
 
     private static int CC_LIMIT = 4;
 
-    private static final String label = "Cyclomatic complexity"; //$NON-NLS-1$
-    private static final String description = label + ": Hotspots are methods with a CC greater than %d. Rating function: f(value) = 1/%d value - 1"; //$NON-NLS-1$
-
     private double linearViolations = 0.0;
 
-    private static String metricsDescription() {
-        return String.format( description, new Integer( CC_LIMIT ), new Integer( CC_LIMIT ) );
-    }
-
     public LinearCyclomaticComplexityStatistic() {
-        super( label, metricsDescription(), codeProportionUnit_METHOD_label, CC_LIMIT );
+        super( codeProportionUnit_METHOD_label, CC_LIMIT );
     }
 
     @Override
@@ -36,4 +29,14 @@ public class LinearCyclomaticComplexityStatistic extends DefaultCockpitExtension
         return calculateAverage( linearViolations, getBasis() );
     }
 
+    @Override
+    public String getLabel() {
+        return "Cyclomatic complexity"; //$NON-NLS-1$
+    }
+
+    @Override
+    protected String getDescription() {
+        String description = getLabel() + ": Hotspots are methods with a CC greater than %d. Rating function: f(value) = 1/%d value - 1"; //$NON-NLS-1$
+        return String.format( description, new Integer( CC_LIMIT ), new Integer( CC_LIMIT ) );
+    }
 }

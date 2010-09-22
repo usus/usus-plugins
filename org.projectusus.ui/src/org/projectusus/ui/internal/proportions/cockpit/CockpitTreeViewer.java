@@ -18,7 +18,7 @@ class CockpitTreeViewer extends UsusTreeViewer<AnalysisDisplayEntry> {
         super( parent, CockpitColumnDesc.values() );
         setUseHashlookup( true );
         ColumnViewerToolTipSupport.enableFor( this );
-        setLabelProvider( new CockpitCellLP() );
+        setLabelProvider( new CockpitLP() );
         setContentProvider( new CockpitCP() );
     }
 
