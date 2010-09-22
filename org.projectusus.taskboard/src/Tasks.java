@@ -2,16 +2,15 @@ public class Tasks {
 
     // ///////// Tasks to complete before Eclipse Magazin 6.10 comes out (27. September 2010)
 
+    void inprogress_nicole_bugACDAnalysis() {
+        // TODO static fields are not regarded. fix it.
+    }
+
     void inprogress_andreas_tooltipsForStatistics() {
         // TODO Tooltips für Statistiken im Cockpit
     }
 
-    void marc_dynamicHelpForStatistics() {
-        // TODO Dynamische Hilfe des Cockpits und des Hotspot Views sollten Infos zur Berechnung
-        // der Metriken und Statistiken zur Verfügung stellen
-    }
-
-    void nicole_documentationOfCalculations() {
+    void nicole_documentationOfCalculations_inTooltipMethodOfStatistics() {
         // TODO Doku der Usus-Interna. Welche Schwellwerte? Was sind die Level? etc.
         // geht ein in dynamic help
     }
@@ -23,16 +22,17 @@ public class Tasks {
         // Hilfebutton mit dahinterliegendem InfoPresenter, der alle Filterregeln auflistet
     }
 
-    void nicole_evtl_marc_bugACDAnalysis() {
-        // TODO static fields are not regarded. fix it.
-    }
-
-    void done_nicole_makeMetricsPluggable() {
-        // TODO Metriken pluggable machen: Collectors zufŸügen, Werte in RawData Struktur werden in einer Map
-        // gehalten, pro Metrik ein gespeichertes Werteobjekt.
-    }
-
     // ///////// Tasks for USUS 1.0
+
+    void nicole_SingleValueObjectInRawdataStructure() {
+        // TODO Pro Metrik ein gespeichertes Werteobjekt??
+    }
+
+    void marc_dynamicHelpForStatistics() {
+        // TODO Dynamische Hilfe des Cockpits und des Hotspot Views sollten Infos zur Berechnung
+        // der Metriken und Statistiken zur Verfügung stellen
+        // Brauchen wir das wirklich mit den ausfuehrlichen Tooltips?
+    }
 
     void usabilityFuerDieGraphenPolieren() {
         // TODO - öffnet man einen Class Graph aus dem Package Graphen, sind nur zyklische aktiv
