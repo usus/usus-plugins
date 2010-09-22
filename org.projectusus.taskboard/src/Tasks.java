@@ -2,7 +2,7 @@ public class Tasks {
 
     // ///////// Tasks to complete before Eclipse Magazin 6.10 comes out (27. September 2010)
 
-    void evtl_andreas_tooltipsForStatistics() {
+    void inprogress_andreas_tooltipsForStatistics() {
         // TODO Tooltips für Statistiken im Cockpit
     }
 
@@ -23,7 +23,7 @@ public class Tasks {
         // Hilfebutton mit dahinterliegendem InfoPresenter, der alle Filterregeln auflistet
     }
 
-    void nicole_statusHeaderzeileInDenHotspotViewsVerbessern() {
+    void inprogress_nicole_statusHeaderzeileInDenHotspotViewsVerbessern() {
         // TODO Texte in den Statistics etwas aussagekräftiger formulieren
     }
 
@@ -31,7 +31,7 @@ public class Tasks {
         // TODO static fields are not regarded. fix it.
     }
 
-    void inprogress_nicole_makeMetricsPluggable() {
+    void done_nicole_makeMetricsPluggable() {
         // TODO Metriken pluggable machen: Collectors zufŸügen, Werte in RawData Struktur werden in einer Map
         // gehalten, pro Metrik ein gespeichertes Werteobjekt.
     }
