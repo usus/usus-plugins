@@ -17,9 +17,10 @@ import org.projectusus.core.statistics.visitors.PackageCountVisitor;
 public class PackageCycleStatistic extends DefaultCockpitExtension {
 
     private static String label = "Packages with cyclic dependencies"; //$NON-NLS-1$
+    private static String description = label + ": Rating function: f(value) = value"; //$NON-NLS-1$
 
     public PackageCycleStatistic() {
-        super( label, label, "", 0 ); //$NON-NLS-1$
+        super( label, description, "", 0 ); //$NON-NLS-1$
     }
 
     @Override

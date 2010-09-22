@@ -7,9 +7,9 @@ import org.projectusus.core.statistics.DefaultCockpitExtension;
 public class MethodLengthStatistic extends DefaultCockpitExtension {
 
     private static int ML_LIMIT = 15;
-    
+
     private static final String label = "Method length (constant limit)"; //$NON-NLS-1$
-    private static final String description = label + " [0: <= %d]"; //$NON-NLS-1$
+    private static final String description = label + ": Hotspots are methods with more than %d statements."; //$NON-NLS-1$
 
     private static String metricsDescription() {
         return String.format( description, new Integer( ML_LIMIT ) );

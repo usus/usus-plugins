@@ -7,9 +7,9 @@ import org.projectusus.core.statistics.DefaultCockpitExtension;
 public class ClassSizeStatistic extends DefaultCockpitExtension {
 
     private static int KG_LIMIT = 20;
-    
+
     private static final String label = "Class size (constant limit)"; //$NON-NLS-1$
-    private static final String description = label + " [0: <= %d]"; //$NON-NLS-1$
+    private static final String description = label + ": Hotspots are classes with more than %d methods."; //$NON-NLS-1$
 
     private static String metricsDescription() {
         return String.format( description, new Integer( KG_LIMIT ) );

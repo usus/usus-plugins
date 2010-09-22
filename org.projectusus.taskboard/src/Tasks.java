@@ -23,10 +23,6 @@ public class Tasks {
         // Hilfebutton mit dahinterliegendem InfoPresenter, der alle Filterregeln auflistet
     }
 
-    void inprogress_nicole_statusHeaderzeileInDenHotspotViewsVerbessern() {
-        // TODO Texte in den Statistics etwas aussagekräftiger formulieren
-    }
-
     void nicole_evtl_marc_bugACDAnalysis() {
         // TODO static fields are not regarded. fix it.
     }

@@ -9,7 +9,7 @@ public class CyclomaticComplexityStatistic extends DefaultCockpitExtension {
     private static int CC_LIMIT = 5;
 
     private static final String label = "Cyclomatic complexity (constant limit)"; //$NON-NLS-1$
-    private static final String description = label + " [0: <= %d]"; //$NON-NLS-1$
+    private static final String description = label + ": Hotspots are methods with a CC greater than %d."; //$NON-NLS-1$
 
     private static String metricsDescription() {
         return String.format( description, new Integer( CC_LIMIT ) );

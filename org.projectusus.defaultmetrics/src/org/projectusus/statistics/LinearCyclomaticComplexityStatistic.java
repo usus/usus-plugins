@@ -7,14 +7,14 @@ import org.projectusus.core.statistics.DefaultCockpitExtension;
 public class LinearCyclomaticComplexityStatistic extends DefaultCockpitExtension {
 
     private static int CC_LIMIT = 4;
-    
+
     private static final String label = "Cyclomatic complexity"; //$NON-NLS-1$
-    private static final String description = label + " [0: <= %d | 1: %d]"; //$NON-NLS-1$
+    private static final String description = label + ": Hotspots are methods with a CC greater than %d. Rating function: f(value) = 1/%d value - 1"; //$NON-NLS-1$
 
     private double linearViolations = 0.0;
 
     private static String metricsDescription() {
-        return String.format( description, new Integer( CC_LIMIT ), new Integer( 2 * CC_LIMIT ) );
+        return String.format( description, new Integer( CC_LIMIT ), new Integer( CC_LIMIT ) );
     }
 
     public LinearCyclomaticComplexityStatistic() {

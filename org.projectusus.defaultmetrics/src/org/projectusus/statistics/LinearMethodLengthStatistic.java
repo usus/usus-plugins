@@ -7,14 +7,14 @@ import org.projectusus.core.statistics.DefaultCockpitExtension;
 public class LinearMethodLengthStatistic extends DefaultCockpitExtension {
 
     private static int ML_LIMIT = 9;
-    
+
     private static final String label = "Method length"; //$NON-NLS-1$
-    private static final String description = label + " [0: <= %d | 1: %d]"; //$NON-NLS-1$
+    private static final String description = label + ": Hotspots are methods with more than %d statements. Rating function: f(value) = 1/%d value - 1"; //$NON-NLS-1$
 
     private double linearViolations = 0.0;
 
     private static String metricsDescription() {
-        return String.format( description, new Integer( ML_LIMIT ), new Integer( 2 * ML_LIMIT ) );
+        return String.format( description, new Integer( ML_LIMIT ), new Integer( ML_LIMIT ) );
     }
 
     public LinearMethodLengthStatistic() {

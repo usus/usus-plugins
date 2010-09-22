@@ -9,7 +9,7 @@ import org.projectusus.core.statistics.visitors.ClassCountVisitor;
 public class ACDStatistic extends DefaultCockpitExtension {
 
     private static final String label = "Average component dependency"; //$NON-NLS-1$
-    private static final String description = label + " [0: <= %d]"; //$NON-NLS-1$
+    private static final String description = label + ": Hotspots are classes with a CCD greater than %d."; //$NON-NLS-1$
 
     private static String metricsDescription() {
         return String.format( description, new Integer( calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) ) );

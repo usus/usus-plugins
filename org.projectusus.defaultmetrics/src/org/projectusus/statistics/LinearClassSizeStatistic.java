@@ -13,14 +13,14 @@ import org.projectusus.core.statistics.DefaultCockpitExtension;
 public class LinearClassSizeStatistic extends DefaultCockpitExtension {
 
     private static int KG_LIMIT = 12;
-    
+
     private static final String label = "Class size"; //$NON-NLS-1$
-    private static final String description = label + " [0: <= %d | 1: %d]"; //$NON-NLS-1$
+    private static final String description = label + ": Hotspots are classes with more than %d methods. Rating function: f(value) = 1/%d value - 1"; //$NON-NLS-1$
 
     private double linearViolations = 0.0;
 
     private static String metricsDescription() {
-        return String.format( description, new Integer( KG_LIMIT ), new Integer( 2 * KG_LIMIT ) );
+        return String.format( description, new Integer( KG_LIMIT ), new Integer( KG_LIMIT ) );
     }
 
     public LinearClassSizeStatistic() {
