@@ -1,7 +1,5 @@
 package org.projectusus.core.statistics;
 
-import static java.lang.Math.min;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,7 +101,7 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
         if( numberOfBaseElems == 0 ) {
             return 0.0;
         }
-        return min( 100, 100 * numberOfViolations / numberOfBaseElems );
+        return 100 * numberOfViolations / numberOfBaseElems;
     }
 
 }

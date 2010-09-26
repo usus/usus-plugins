@@ -21,7 +21,7 @@ public class DefaultCockpitExtensionCalculateLevelTest {
         assertEquals( 100.0, DefaultCockpitExtension.calculateAverage( 10, 10 ), DELTA );
         assertEquals( 10.0, DefaultCockpitExtension.calculateAverage( 10, 100 ), DELTA );
         assertEquals( 90.0, DefaultCockpitExtension.calculateAverage( 9, 10 ), DELTA );
-        assertEquals( 100.0, DefaultCockpitExtension.calculateAverage( 1000, 100 ), DELTA );
+        assertEquals( 1000.0, DefaultCockpitExtension.calculateAverage( 1000, 100 ), DELTA );
         assertEquals( 0, DefaultCockpitExtension.calculateAverage( 0, 100 ), DELTA );
         assertEquals( 25.0, DefaultCockpitExtension.calculateAverage( 1, 4 ), DELTA );
     }
