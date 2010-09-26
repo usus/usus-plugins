@@ -8,10 +8,6 @@ public class AutoTestSuiteTasks {
 		// TODO Sollte zumindest mit 3.5 laufen
 	}
 	
-	void PaketAufteilen() {
-		// TODO Logik von UI trennen
-	}
-	
 	// Nach dem Release
 	
 	void EclEmma() {
