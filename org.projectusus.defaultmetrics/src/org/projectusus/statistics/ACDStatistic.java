@@ -8,11 +8,8 @@ import org.projectusus.core.statistics.visitors.ClassCountVisitor;
 
 public class ACDStatistic extends DefaultCockpitExtension {
 
-    @Override
-    protected String getDescription() {
-        String description = getLabel() + ": Hotspots are classes with a CCD greater than %d."; //$NON-NLS-1$
-        return String.format( description, new Integer( calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) ) );
-    }
+    private static final String DESCRIPTION = String.format(
+            "Hotspots are classes with a CCD greater than %d.", new Integer( calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) ) ); //$NON-NLS-1$
 
     public ACDStatistic() {
         super( codeProportionUnit_CLASS_label, calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) );
@@ -46,5 +43,18 @@ public class ACDStatistic extends DefaultCockpitExtension {
     @Override
     public String getLabel() {
         return "Average component dependency"; //$NON-NLS-1$
+    }
+
+    @Override
+    protected String getDescription() {
+        return getLabel() + ": " + DESCRIPTION; //$NON-NLS-1$
+    }
+
+    @Override
+    protected String getTooltip() {
+        return "The underlying metric is called Cumulative Component Dependency (CCD). It determines for each class the amount of other classes it knows.\n" //$NON-NLS-1$
+                + "The corresponding statistic uses the average CCD of all classes in percent, the so-called Average Component Dependency (ACD).\n" + //$NON-NLS-1$
+                "A class is regarded as hotspot when its CCD exceeds a value that depends on the project size.\n" //$NON-NLS-1$
+                + "For small projects, a CCD that equals 15 % of the total number of classes is acceptable, while classes in large projects should not exceed a value of 5 %.\n" + DESCRIPTION; //$NON-NLS-1$
     }
 }

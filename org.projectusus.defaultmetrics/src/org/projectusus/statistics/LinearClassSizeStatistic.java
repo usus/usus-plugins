@@ -14,6 +14,9 @@ public class LinearClassSizeStatistic extends DefaultCockpitExtension {
 
     private static int KG_LIMIT = 12;
 
+    private static final String DESCRIPTION = String.format(
+            "Hotspots are classes with more than %d methods. Rating function: f(value) = 1/%d value - 1", new Integer( KG_LIMIT ), new Integer( KG_LIMIT ) ); //$NON-NLS-1$
+
     private double linearViolations = 0.0;
 
     public LinearClassSizeStatistic() {
@@ -42,7 +45,12 @@ public class LinearClassSizeStatistic extends DefaultCockpitExtension {
 
     @Override
     protected String getDescription() {
-        String description = getLabel() + ": Hotspots are classes with more than %d methods. Rating function: f(value) = 1/%d value - 1"; //$NON-NLS-1$
-        return String.format( description, new Integer( KG_LIMIT ), new Integer( KG_LIMIT ) );
+        return getLabel() + ": " + DESCRIPTION; //$NON-NLS-1$
+    }
+
+    @Override
+    protected String getTooltip() {
+        return "The underlying metric determines the number of static and nonstatic methods and initializers in each class.\n" //$NON-NLS-1$
+                + "The method visibility is not taken into account.\n" + DESCRIPTION; //$NON-NLS-1$
     }
 }

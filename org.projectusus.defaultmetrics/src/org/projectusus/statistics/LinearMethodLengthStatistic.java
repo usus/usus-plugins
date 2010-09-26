@@ -7,6 +7,8 @@ import org.projectusus.core.statistics.DefaultCockpitExtension;
 public class LinearMethodLengthStatistic extends DefaultCockpitExtension {
 
     private static int ML_LIMIT = 9;
+    private static final String DESCRIPTION = String.format(
+            "Hotspots are methods with more than %d statements. Rating function: f(value) = 1/%d value - 1", new Integer( ML_LIMIT ), new Integer( ML_LIMIT ) ); //$NON-NLS-1$
 
     private double linearViolations = 0.0;
 
@@ -36,8 +38,13 @@ public class LinearMethodLengthStatistic extends DefaultCockpitExtension {
 
     @Override
     protected String getDescription() {
-        String description = getLabel() + ": Hotspots are methods with more than %d statements. Rating function: f(value) = 1/%d value - 1"; //$NON-NLS-1$    
-        return String.format( description, new Integer( ML_LIMIT ), new Integer( ML_LIMIT ) );
+        return getLabel() + ": " + DESCRIPTION; //$NON-NLS-1$
+    }
+
+    @Override
+    protected String getTooltip() {
+        return "The underlying metric determines the number of statements in each method body.\n" //$NON-NLS-1$
+                + "This value is similar to the number of lines of code, but it ignores empty lines, comments and single brackets.\n" + DESCRIPTION; //$NON-NLS-1$
     }
 
 }
