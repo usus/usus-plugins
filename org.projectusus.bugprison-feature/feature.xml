@@ -2,7 +2,7 @@
 <feature
       id="org.projectusus.bugprison"
       label="Project Usus Bug Prison (experimental)"
-      version="0.5.2"
+      version="0.6.0"
       provider-name="projectusus.org">
 
    <description url="http://www.projectusus.org">
@@ -35,14 +35,14 @@ can be found at http://www.eclipse.org/legal/epl-v10.html.
          id="org.projectusus.bugprison.core"
          download-size="0"
          install-size="0"
-         version="0.5.2"
+         version="0.6.0"
          unpack="false"/>
 
    <plugin
          id="org.projectusus.bugprison.ui"
          download-size="0"
          install-size="0"
-         version="0.5.2"
+         version="0.6.0"
          unpack="false"/>
 
 </feature>
