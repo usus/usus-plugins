@@ -6,20 +6,15 @@ public class Tasks {
         // TODO static fields are not regarded. fix it.
     }
 
-    void inprogress_andreas_tooltipsForStatistics() {
-        // TODO Tooltips für Statistiken im Cockpit
-    }
-
-    void nicole_documentationOfCalculations_inTooltipMethodOfStatistics() {
-        // TODO Doku der Usus-Interna. Welche Schwellwerte? Was sind die Level? etc.
-        // geht ein in dynamic help
-    }
-
     void marc_statusHeaderzeileInDenGraphenVerbessern() {
         // TODO die Statuszeile wird leicht zu lang. Wie damit umgehen?
         // Tooltip? Zusammenfassung?
         // keine kryptischen Zeichen unter Windows
         // Hilfebutton mit dahinterliegendem InfoPresenter, der alle Filterregeln auflistet
+    }
+
+    void testStatisticsFactoryBauen() {
+
     }
 
     // ///////// Tasks for USUS 1.0
