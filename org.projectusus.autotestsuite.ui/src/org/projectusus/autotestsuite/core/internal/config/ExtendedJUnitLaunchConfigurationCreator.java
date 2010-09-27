@@ -28,12 +28,8 @@ public class ExtendedJUnitLaunchConfigurationCreator {
 
     public ILaunchConfigurationWorkingCopy createNewConfig( IJavaProject root, Collection<IJavaProject> projects ) throws CoreException {
         String name = JavaElementLabels.getTextLabel( root, ALL_FULLY_QUALIFIED );
-        // TODO lf Eclipse 3.6
-        // ILaunchConfigurationWorkingCopy config = getLaunchConfigType().newInstance( null,
-        // ExtendedJUnitLaunchConfigurationConstants.getLaunchManager().generateLaunchConfigurationName( name ) );
-        // TODO lf Eclipse 3.5
-        ILaunchConfigurationWorkingCopy config = getLaunchConfigurationType().newInstance( null,
-                ExtendedJUnitLaunchConfigurationConstants.getLaunchManager().generateUniqueLaunchConfigurationNameFrom( name ) );
+        String uniqueName = ExtendedJUnitLaunchConfigurationConstants.getLaunchManager().generateUniqueLaunchConfigurationNameFrom( name );
+        ILaunchConfigurationWorkingCopy config = getLaunchConfigurationType().newInstance( null, uniqueName );
         return fillAttributes( root, config, projects );
     }
 
@@ -49,5 +45,4 @@ public class ExtendedJUnitLaunchConfigurationCreator {
         AssertionVMArg.setArgDefault( config );
         return config;
     }
-
 }
