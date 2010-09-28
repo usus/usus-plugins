@@ -4,10 +4,6 @@ public class AutoTestSuiteTasks {
 		// TODO "All Tests Suite"?
 	}
 	
-	void CompatibilityProblem() {
-		// TODO Sollte zumindest mit 3.5 laufen
-	}
-	
 	// Nach dem Release
 	
 	void EclEmma() {
