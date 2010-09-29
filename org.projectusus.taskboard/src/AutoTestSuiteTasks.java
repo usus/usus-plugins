@@ -1,11 +1,5 @@
 public class AutoTestSuiteTasks {
 	
-	void NamenDerExtendedSuiteUeberdenken() {
-		// TODO "All Tests Suite"?
-	}
-	
-	// Nach dem Release
-	
 	void EclEmma() {
 		// TODO Separates Plugin, das analog zu EclEmma launch shortcuts, tab groups, commands, 
 		// etc. definiert

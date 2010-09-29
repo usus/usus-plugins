@@ -8,7 +8,7 @@
             delegate="org.projectusus.autotestsuite.core.internal.ExtendedJUnitLaunchConfigurationDelegate"
             id="org.projectusus.autotestsuite.ExtendedJUnitLaunchConfiguration"
             modes="run,debug"
-            name="Extended JUnit"
+            name="All Tests Suite (JUnit)"
             sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
             sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer">
       </launchConfigurationType>
@@ -35,7 +35,7 @@
             class="org.projectusus.autotestsuite.ui.internal.shortcuts.ExtendedJUnitLaunchShortcut"
             icon="icons/obj16/launch.gif"
             id="org.projectusus.autotestsuite.ui.internal.shortcuts.ExtendedJUnitLaunchShortcut"
-            label="Extended JUnit Test"
+            label="All Tests Suite (JUnit)"
             modes="run, debug">
          <contextualLaunch>
             <enablement>
