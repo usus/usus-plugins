@@ -1,0 +1,59 @@
+Präsentationsvorschläge für den Industrietag: 
+Auf dem Industrietag sollen aktuelle Technologien oder Vorgehensweisen, praxisrelevante 
+Konstruktionsansätze oder Erfahrungen aus kommerziellen Projekten für ein breites IT-Fachpublikum 
+dargestellt werden. Vorschläge für Präsentationen auf dem Industrietag sind als 2-seitige formlose 
+Kurzfassung elektronisch einzureichen. Vorschläge für Präsentationen können sich an folgender 
+Gliederung orientieren: Ausgangssituation, Ziele, beteiligte Rollen, Lösungsansatz, Vorgehen, 
+Ergebnisse, Erfahrungen, Nächste Schritte. Der Vortragende muss sich offiziell als Teilnehmer der 
+Veranstaltung anmelden. 
+
+== Präsentationsthema
+
+Auf dem Industrietag möchten wir Project Usus vorstellen, ein Eclipse Plug-In, das 
+beim Entwickeln von Java-Software unmittelbares Feedback im Hinblick auf die innere
+Codequalität gibt und konkrete Hinweise zur Steigerung der Codequalität anbietet.  
+Insbesondere die graphische Bearbeitung von Paketzyklen und Klassenabhängigkeiten
+...
+
+== Ausgangssituation
+
+Es gibt einige Metriktools, die mit Java-Code arbeiten. ...
+
+== Ziele
+
+Das Ziel von Usus ist nicht nur, Einsicht über die Qualität des vorliegenden Java-Codes zu
+gewinnen, sondern auch konkrete Handlungsmöglichkeiten aufzuzeigen, um die Qualität zu verbessern.
+
+== Beteiligte Rollen
+
+Usus wird als Eclipse-Plugin eingesetzt, interagiert also direkt mit dem einzelnen Entwickler.
+Weitere Rollen sind nicht vorgesehen.
+
+== Lösungsansatz
+== Vorgehen
+
+Usus ist ein Eclipse-Plugin, das direkt in den Kompilierungsprozess von Eclipse eingebunden ist
+und durch Wiederverwenden des abstrakten Syntaxbaums von Eclipse Analysen mit minimalem Overhead
+durchführen kann. Durch das inkrementelle Ermitteln der Metrikwerte nur für modifizierte Dateien
+wird die Effizienz weiter gesteigert. So kann Usus bei jedem Speichern die aktuellen Werte
+berechnen und sofort in der IDE anzeigen.
+Für die dateilokalen Metriken werden Listen der betroffenen Codestellen ausgegeben, mit deren
+Hilfe unmittelbar zur jeweiligen Stelle navigiert werden kann. So werden dem Anwender Handlungsmöglichkeiten
+unmittelbar aufgezeigt.
+Für relationenbezogene Metriken hat sich eine graphische Darstellung der Abhängigkeiten zwischen
+Klassen und Paketen als sehr hilfreich erwiesen. Hier lassen sich Zyklen einfach erkennen und oft
+die verursachenden Beziehungen auf einen Blick identifizieren. Auch diese Informationen werden
+unmittelbar nach einer Veränderung aktualisiert, so dass der Anwender nach einer Veränderung, 
+z. B. dem Verschieben einer Datei, sofort die aktualisierte graphische Darstellung sehen und so
+seinen Erfolg kontrollieren kann.
+All dies geschieht automatisch direkt in der IDE, ohne dass ein Wechsel in ein anderes Programm
+oder ein manuelles Anstoßen einer Berechnung stattfinden muss. 
+
+== Ergebnisse
+
+== Erfahrungen
+
+== Nächste Schritte
+
+Die Erweiterung auf andere Programmiersprachen wird eines der nächsten Ziele von Usus sein.
+Hier ist insbesondere die Unterstützung von Scala im Fokus der Entwickler.
