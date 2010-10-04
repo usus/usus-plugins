@@ -44,6 +44,9 @@
        <metrics
              class="org.projectusus.metrics.MLCollector">
        </metrics>
+       <metrics
+             class="org.projectusus.metrics.PublicFieldCollector">
+       </metrics>
     </extension>
 
 </plugin>
