@@ -29,6 +29,9 @@
        <statistics
              class="org.projectusus.statistics.LinearCyclomaticComplexityStatistic">
        </statistics>
+       <statistics
+             class="org.projectusus.statistics.PublicFieldStatistic">
+       </statistics>
    </extension>
     <extension
           point="org.projectusus.core.metrics"> 

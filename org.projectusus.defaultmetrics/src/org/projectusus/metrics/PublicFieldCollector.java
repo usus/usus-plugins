@@ -7,25 +7,25 @@ import org.projectusus.core.metrics.MetricsCollector;
 
 public class PublicFieldCollector extends MetricsCollector {
 
-    public static final String PUBLIC_FIELDS = "public fields";
-    private int count;
+    public static final String PUBLIC_FIELDS = "public fields"; //$NON-NLS-1$
+    private Counter count = new Counter();
 
     @Override
     public boolean visit( TypeDeclaration node ) {
-        count = 0;
+        count.startNewCount();
         return super.visit( node );
     }
 
     @Override
     public void endVisit( TypeDeclaration node ) {
-        getMetricsWriter().putData( getFile(), node, PUBLIC_FIELDS, count );
+        getMetricsWriter().putData( getFile(), node, PUBLIC_FIELDS, count.getAndClearCount() );
     }
 
     @Override
     public boolean visit( FieldDeclaration node ) {
         int fieldModifiers = node.getModifiers();
-        if( (fieldModifiers & Modifier.PUBLIC) != 0 ) {
-            count++;
+        if( (fieldModifiers & Modifier.PUBLIC) != 0 && (fieldModifiers & (Modifier.STATIC | Modifier.FINAL)) == 0 ) {
+            count.increaseLastCountBy( 1 );
         }
         return super.visit( node );
     }
