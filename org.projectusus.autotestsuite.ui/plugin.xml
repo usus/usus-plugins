@@ -136,34 +136,34 @@
       <key
             commandId="org.projectusus.autotestsuite.ui.internal.shortcuts.MultiProjectJUnitLaunchShortcut.debug"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M2+M3+D T T">
+            sequence="M2+M3+D U">
       </key>
       <key
             platform="carbon"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M2+M3+D T T">
+            sequence="M2+M3+D U">
       </key>
       <key
             commandId="org.projectusus.autotestsuite.ui.internal.shortcuts.MultiProjectJUnitLaunchShortcut.debug"
             platform="carbon"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+M3+M4+D T T">
+            sequence="M1+M3+M4+D U">
       </key>
       <key
             commandId="org.projectusus.autotestsuite.ui.internal.shortcuts.MultiProjectJUnitLaunchShortcut.run"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M2+M3+X T T">
+            sequence="M2+M3+X U">
       </key>
       <key
             platform="carbon"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M2+M3+X T T">
+            sequence="M2+M3+X U">
       </key>
       <key
             commandId="org.projectusus.autotestsuite.ui.internal.shortcuts.MultiProjectJUnitLaunchShortcut.run"
             platform="carbon"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+M3+X T T">
+            sequence="M1+M3+X U">
       </key>
    </extension>
    <extension
