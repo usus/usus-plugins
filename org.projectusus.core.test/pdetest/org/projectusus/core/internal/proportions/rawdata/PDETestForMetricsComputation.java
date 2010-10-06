@@ -71,6 +71,12 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
         return file;
     }
 
+    protected IFile createJavaFileAndBuild( String fullName ) throws Exception {
+        IFile file = createJavaWSFile( fullName + ".java" );
+        buildFullyAndWait();
+        return file;
+    }
+
     protected IFile createFile( String name ) throws Exception {
         return createWSFile( name + ".java", loadContent( name + ".test" ), project1 );
     }
