@@ -48,7 +48,7 @@
              class="org.projectusus.metrics.MLCollector">
        </metrics>
        <metrics
-             class="org.projectusus.metrics.PublicFieldCollector">
+             class="org.projectusus.metrics.PublicFieldMetrics">
        </metrics>
     </extension>
 

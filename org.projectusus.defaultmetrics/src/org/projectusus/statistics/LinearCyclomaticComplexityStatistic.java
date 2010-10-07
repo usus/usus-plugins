@@ -20,7 +20,7 @@ public class LinearCyclomaticComplexityStatistic extends DefaultCockpitExtension
     @Override
     public void inspectMethod( SourceCodeLocation location, MetricsResults results ) {
         int ccValue = results.getIntValue( MetricsResults.CC, 1 );
-        addViolation( location, ccValue );
+        addResult( location, ccValue );
         int exceedingCC = ccValue - CC_LIMIT;
         if( exceedingCC > 0 ) {
             linearViolations += ((double)exceedingCC / CC_LIMIT);

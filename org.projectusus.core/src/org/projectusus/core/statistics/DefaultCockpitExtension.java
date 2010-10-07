@@ -49,7 +49,7 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
         hotspots = new ArrayList<Hotspot>();
     }
 
-    protected void addViolation( SourceCodeLocation location, int count ) {
+    protected void addResult( SourceCodeLocation location, int count ) {
         basis++;
         violationSum += count;
         if( count > violationLimit ) {
@@ -66,8 +66,6 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
     public int getMetricsSum() {
         return violationSum;
     }
-
-    protected abstract String getDescription();
 
     public int getViolations() {
         return violations;
@@ -91,6 +89,10 @@ public abstract class DefaultCockpitExtension extends DefaultMetricsResultVisito
 
     public CodeProportion getCodeProportion() {
         return new CodeProportion( getLabel(), getDescription(), getTooltip(), getViolations(), getBasisStatistic(), getAverage(), getHotspots() );
+    }
+
+    protected String getDescription() {
+        return ""; //$NON-NLS-1$
     }
 
     protected String getTooltip() {

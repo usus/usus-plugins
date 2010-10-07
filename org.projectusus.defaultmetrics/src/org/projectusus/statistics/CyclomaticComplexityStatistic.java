@@ -14,7 +14,7 @@ public class CyclomaticComplexityStatistic extends DefaultCockpitExtension {
 
     @Override
     public void inspectMethod( SourceCodeLocation location, MetricsResults results ) {
-        addViolation( location, results.getIntValue( MetricsResults.CC, 1 ) );
+        addResult( location, results.getIntValue( MetricsResults.CC, 1 ) );
     }
 
     @Override

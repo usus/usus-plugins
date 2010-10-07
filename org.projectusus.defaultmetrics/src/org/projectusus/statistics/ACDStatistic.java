@@ -17,7 +17,7 @@ public class ACDStatistic extends DefaultCockpitExtension {
 
     @Override
     public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
-        addViolation( location, results.getIntValue( MetricsResults.CCD, 1 ) );
+        addResult( location, results.getIntValue( MetricsResults.CCD, 1 ) );
     }
 
     public double getRelativeACD() {

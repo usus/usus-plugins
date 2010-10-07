@@ -19,7 +19,7 @@ public class LinearMethodLengthStatistic extends DefaultCockpitExtension {
     @Override
     public void inspectMethod( SourceCodeLocation location, MetricsResults result ) {
         int methodLength = result.getIntValue( MetricsResults.ML );
-        addViolation( location, methodLength );
+        addResult( location, methodLength );
         int exceedingLines = methodLength - ML_LIMIT;
         if( exceedingLines > 0 ) {
             linearViolations += ((double)exceedingLines / ML_LIMIT);

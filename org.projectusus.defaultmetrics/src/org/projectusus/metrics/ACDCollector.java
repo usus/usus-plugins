@@ -6,9 +6,13 @@ import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
+import org.eclipse.jdt.core.dom.SuperFieldAccess;
+import org.eclipse.jdt.core.dom.ThisExpression;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.projectusus.core.UsusModelProvider;
@@ -108,6 +112,71 @@ public class ACDCollector extends MetricsCollector {
             }
         }
     }
+
+    // FieldAccess:
+    // Expression . Identifier
+    //
+    // Note that there are several kinds of expressions that resemble field access expressions: qualified names, this expressions, and super field access expressions. The following
+    // guidelines help with correct usage:
+    //
+    // An expression like "foo.this" can only be represented as a this expression (ThisExpression) containing a simple name. "this" is a keyword, and therefore invalid as an
+    // identifier.
+    // An expression like "this.foo" can only be represented as a field access expression (FieldAccess) containing a this expression and a simple name. Again, this is because
+    // "this" is a keyword, and therefore invalid as an identifier.
+    // An expression with "super" can only be represented as a super field access expression (SuperFieldAccess). "super" is a also keyword, and therefore invalid as an identifier.
+    // An expression like "foo.bar" can be represented either as a qualified name (QualifiedName) or as a field access expression (FieldAccess) containing simple names. Either is
+    // acceptable, and there is no way to choose between them without information about what the names resolve to (ASTParser may return either).
+    // Other expressions ending in an identifier, such as "foo().bar" can only be represented as field access expressions (FieldAccess).
+
+    @Override
+    public boolean visit( FieldAccess node ) {
+        // TODO Auto-generated method stub
+        return super.visit( node );
+    }
+
+    @Override
+    public boolean visit( SuperFieldAccess node ) {
+        // TODO Auto-generated method stub
+        return super.visit( node );
+    }
+
+    @Override
+    public boolean visit( ThisExpression node ) {
+
+        return super.visit( node );
+    }
+
+    // AST node for a qualified name. A qualified name is defined recursively as a simple name preceded by a name, which qualifies it. Expressing it this way means that the
+    // qualifier and the simple name get their own AST nodes.
+    //
+    // QualifiedName:
+    // Name . SimpleName
+    //    
+    // See FieldAccess for guidelines on handling other expressions that resemble qualified names.
+    @Override
+    public boolean visit( QualifiedName node ) {
+        // TODO Auto-generated method stub
+        return super.visit( node );
+    }
+
+    // public boolean visit(final SimpleName node) {
+    // if (!node.isDeclaration()) {
+    // final IBinding nodeBinding = node.resolveBinding();
+    // if (nodeBinding instanceof IVariableBinding) {
+    // ...
+    // }
+    // }
+    // return false;
+    // }
+
+    // public class SimpleName
+    // extends Name
+    // AST node for a simple name. A simple name is an identifier other than a keyword, boolean literal ("true", "false") or null literal ("null").
+    //
+    // SimpleName:
+    // Identifier
+
+    // static import, static with declaring class
 
     // @Override
     // public boolean visit( QualifiedName node ) {

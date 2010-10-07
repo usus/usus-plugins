@@ -4,7 +4,7 @@ import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
 import org.projectusus.core.statistics.DefaultCockpitExtension;
-import org.projectusus.metrics.PublicFieldCollector;
+import org.projectusus.metrics.PublicFieldMetrics;
 
 public class PublicFieldStatistic extends DefaultCockpitExtension {
 
@@ -19,12 +19,11 @@ public class PublicFieldStatistic extends DefaultCockpitExtension {
 
     @Override
     protected String getDescription() {
-        return getLabel() + ": Hotspots are Classes with at least one such field"; //$NON-NLS-1$
+        return getLabel() + ": Hotspots are classes with at least one such field"; //$NON-NLS-1$
     }
 
     @Override
     public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
-        addViolation( location, results.getIntValue( PublicFieldCollector.PUBLIC_FIELDS ) );
+        addResult( location, results.getIntValue( PublicFieldMetrics.PUBLIC_FIELDS ) );
     }
-
 }

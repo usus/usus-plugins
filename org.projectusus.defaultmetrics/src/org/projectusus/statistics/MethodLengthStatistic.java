@@ -14,7 +14,7 @@ public class MethodLengthStatistic extends DefaultCockpitExtension {
 
     @Override
     public void inspectMethod( SourceCodeLocation location, MetricsResults result ) {
-        addViolation( location, result.getIntValue( MetricsResults.ML ) );
+        addResult( location, result.getIntValue( MetricsResults.ML ) );
     }
 
     @Override

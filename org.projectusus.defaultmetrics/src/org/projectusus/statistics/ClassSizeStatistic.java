@@ -14,7 +14,7 @@ public class ClassSizeStatistic extends DefaultCockpitExtension {
 
     @Override
     public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
-        addViolation( location, results.getIntValue( MetricsResults.METHODS ) );
+        addResult( location, results.getIntValue( MetricsResults.METHODS ) );
     }
 
     @Override
