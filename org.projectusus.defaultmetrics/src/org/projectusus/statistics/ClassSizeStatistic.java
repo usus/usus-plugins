@@ -2,9 +2,9 @@ package org.projectusus.statistics;
 
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.statistics.DefaultCockpitExtension;
+import org.projectusus.core.statistics.CockpitExtension;
 
-public class ClassSizeStatistic extends DefaultCockpitExtension {
+public class ClassSizeStatistic extends CockpitExtension {
 
     private static int KG_LIMIT = 20;
 

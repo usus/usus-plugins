@@ -2,9 +2,9 @@ package org.projectusus.statistics;
 
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.statistics.DefaultCockpitExtension;
+import org.projectusus.core.statistics.CockpitExtension;
 
-public class LinearMethodLengthStatistic extends DefaultCockpitExtension {
+public class LinearMethodLengthStatistic extends CockpitExtension {
 
     private static int ML_LIMIT = 9;
     private static final String DESCRIPTION = String.format(

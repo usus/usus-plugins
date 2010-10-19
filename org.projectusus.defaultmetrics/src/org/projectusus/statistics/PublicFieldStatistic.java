@@ -3,10 +3,10 @@ package org.projectusus.statistics;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.statistics.DefaultCockpitExtension;
+import org.projectusus.core.statistics.CockpitExtension;
 import org.projectusus.metrics.PublicFieldMetrics;
 
-public class PublicFieldStatistic extends DefaultCockpitExtension {
+public class PublicFieldStatistic extends CockpitExtension {
 
     public PublicFieldStatistic() {
         super( IMetricsResultVisitor.codeProportionUnit_CLASS_label, 0 );

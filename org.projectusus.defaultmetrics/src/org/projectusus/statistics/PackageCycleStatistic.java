@@ -11,10 +11,10 @@ import org.projectusus.core.filerelations.model.Cycle;
 import org.projectusus.core.filerelations.model.PackageCycles;
 import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.statistics.DefaultCockpitExtension;
+import org.projectusus.core.statistics.CockpitExtension;
 import org.projectusus.core.statistics.visitors.PackageCountVisitor;
 
-public class PackageCycleStatistic extends DefaultCockpitExtension {
+public class PackageCycleStatistic extends CockpitExtension {
 
     private static final String DESCRIPTION = "Rating function: f(value) = value"; //$NON-NLS-1$
 

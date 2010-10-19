@@ -3,10 +3,10 @@ package org.projectusus.statistics;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.statistics.DefaultCockpitExtension;
+import org.projectusus.core.statistics.CockpitExtension;
 import org.projectusus.core.statistics.visitors.ClassCountVisitor;
 
-public class ACDStatistic extends DefaultCockpitExtension {
+public class ACDStatistic extends CockpitExtension {
 
     private static final String DESCRIPTION = String.format(
             "Hotspots are classes with a CCD greater than %d.", new Integer( calculateCcdLimit( new ClassCountVisitor().visitAndReturn().getClassCount() ) ) ); //$NON-NLS-1$

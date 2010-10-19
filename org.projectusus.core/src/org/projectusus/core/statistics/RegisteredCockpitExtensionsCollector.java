@@ -5,18 +5,15 @@ import static com.google.common.collect.Collections2.transform;
 import static com.google.common.collect.Iterables.getOnlyElement;
 import static com.google.common.collect.Sets.filter;
 import static com.google.common.collect.Sets.newHashSet;
-import static org.eclipse.core.runtime.Platform.getExtensionRegistry;
 import static org.projectusus.core.statistics.CockpitExtensionPref.ON_BY_DEFAULT;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
+import org.projectusus.core.ExtensionCollector;
 import org.projectusus.core.UsusCorePlugin;
 
 import com.google.common.base.Function;
@@ -25,12 +22,10 @@ import com.google.common.base.Predicate;
 public class RegisteredCockpitExtensionsCollector {
 
     private static final String STATISTICS_EXTENSIONS = "statistics-extensions"; //$NON-NLS-1$
-    private static final String CLASS = "class"; //$NON-NLS-1$
     private static final String ENABLED = "enabled"; //$NON-NLS-1$
-    private static final String STATISTICS_ID = "org.projectusus.core.statistics"; //$NON-NLS-1$
 
-    private static final Function<ICockpitExtension, CockpitExtensionPref> toExtensionPref = new Function<ICockpitExtension, CockpitExtensionPref>() {
-        public CockpitExtensionPref apply( ICockpitExtension extension ) {
+    private static final Function<CockpitExtension, CockpitExtensionPref> toExtensionPref = new Function<CockpitExtension, CockpitExtensionPref>() {
+        public CockpitExtensionPref apply( CockpitExtension extension ) {
             return new CockpitExtensionPref( extension.getClass().getName(), extension.getLabel() );
         }
     };
@@ -39,38 +34,22 @@ public class RegisteredCockpitExtensionsCollector {
         super();
     }
 
-    public static Set<ICockpitExtension> getEnabled() {
+    public static Set<CockpitExtension> getEnabled() {
         final SortedSet<CockpitExtensionPref> allStates = getExtensionsStates();
-        return filter( allExtensions(), new Predicate<ICockpitExtension>() {
-            public boolean apply( ICockpitExtension extension ) {
+        return filter( allExtensions(), new Predicate<CockpitExtension>() {
+            public boolean apply( CockpitExtension extension ) {
                 return isEnabled( extension, allStates );
             }
         } );
     }
 
-    private static boolean isEnabled( ICockpitExtension extension, Set<CockpitExtensionPref> allStates ) {
+    private static boolean isEnabled( CockpitExtension extension, Set<CockpitExtensionPref> allStates ) {
         CockpitExtensionPref extensionPref = findByClassName( allStates, extension.getClass().getName() );
         return extensionPref == null ? ON_BY_DEFAULT : extensionPref.isOn();
     }
 
-    public static Set<ICockpitExtension> allExtensions() {
-        Set<ICockpitExtension> extensions = new HashSet<ICockpitExtension>();
-        for( IConfigurationElement statisticElement : getExtensionRegistry().getConfigurationElementsFor( STATISTICS_ID ) ) {
-            Object extension = createExecutableExtension( statisticElement );
-            if( extension instanceof ICockpitExtension ) {
-                extensions.add( (ICockpitExtension)extension );
-            }
-        }
-        return extensions;
-    }
-
-    private static Object createExecutableExtension( IConfigurationElement statisticElement ) {
-        try {
-            return statisticElement.createExecutableExtension( CLASS );
-        } catch( CoreException exception ) {
-            log( exception );
-            return null;
-        }
+    public static Set<CockpitExtension> allExtensions() {
+        return new ExtensionCollector<CockpitExtension>( CockpitExtension.EXTENSION_POINT_ID ).allExtensions();
     }
 
     private static Set<CockpitExtensionPref> getAllPresentExtensions() {

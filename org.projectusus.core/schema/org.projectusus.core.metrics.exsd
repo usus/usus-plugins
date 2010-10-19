@@ -76,7 +76,7 @@
          <meta.section type="examples"/>
       </appinfo>
       <documentation>
-         [Enter extension point usage example here.]
+         See the plugin: &quot;org.projectusus.defaultmetrics&quot;
       </documentation>
    </annotation>
 
@@ -85,7 +85,7 @@
          <meta.section type="apiinfo"/>
       </appinfo>
       <documentation>
-         [Enter API information here.]
+         Extend the class MetricsCollector. For Details on the visiting side see the API of ASTVisitor. To access the usus datastructure use getFile() and getMetricsWriter()
       </documentation>
    </annotation>
 
@@ -94,7 +94,7 @@
          <meta.section type="implementation"/>
       </appinfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         See the plugin: &quot;org.projectusus.defaultmetrics&quot;
       </documentation>
    </annotation>
 

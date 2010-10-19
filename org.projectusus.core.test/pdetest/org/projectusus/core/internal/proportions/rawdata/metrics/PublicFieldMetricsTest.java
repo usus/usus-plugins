@@ -6,11 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.ValidatorFactory;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
-import org.projectusus.core.statistics.DefaultCockpitExtension;
+import org.projectusus.core.statistics.CockpitExtension;
 
 public class PublicFieldMetricsTest extends PDETestForMetricsComputation {
 
-    private DefaultCockpitExtension statistic;
+    private CockpitExtension statistic;
 
     @Before
     public void setup() throws Exception {

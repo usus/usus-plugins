@@ -2,7 +2,7 @@ package org.projectusus.statistics;
 
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.statistics.DefaultCockpitExtension;
+import org.projectusus.core.statistics.CockpitExtension;
 
 /**
  * Implements a linear measurement schema for class size. Classes with more than 20 methods are measured. 21 methods counts 0.05, 40 methods counts 1, and so on.
@@ -10,7 +10,7 @@ import org.projectusus.core.statistics.DefaultCockpitExtension;
  * @author Nicole Rauch
  * 
  */
-public class LinearClassSizeStatistic extends DefaultCockpitExtension {
+public class LinearClassSizeStatistic extends CockpitExtension {
 
     private static int KG_LIMIT = 12;
 

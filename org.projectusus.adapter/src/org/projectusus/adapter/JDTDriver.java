@@ -13,11 +13,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.projectusus.core.ExtensionCollector;
 import org.projectusus.core.IUsusModelForAdapter;
 import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.basis.YellowCountCache;
 import org.projectusus.core.metrics.MetricsCollector;
-import org.projectusus.core.metrics.RegisteredMetricsExtensions;
 import org.projectusus.core.proportions.rawdata.jdtdriver.JavaFileDriver;
 import org.projectusus.core.util.FileSupport;
 
@@ -25,6 +25,7 @@ public class JDTDriver {
 
     private final IUsusModelForAdapter model;
     private final ICodeProportionComputationTarget target;
+    private Set<MetricsCollector> allExtensions;
 
     public JDTDriver( ICodeProportionComputationTarget target ) {
         model = UsusModelProvider.ususModelForAdapter();
@@ -37,16 +38,22 @@ public class JDTDriver {
             YellowCountCache.yellowCountCache().clear( removedProject );
         }
         monitor.beginTask( null, countTicks( target.getProjects() ) );
-        Set<MetricsCollector> metricsExtensions = RegisteredMetricsExtensions.allExtensions(); // TODO improve!
         for( IProject project : target.getProjects() ) {
             monitor.subTask( project.getName() );
             for( IFile removedFile : target.getRemovedFiles( project ) ) {
                 model.dropRawData( removedFile );
             }
             YellowCountCache.yellowCountCache().add( project );
-            computeChangedFiles( metricsExtensions, project, monitor );
+            computeChangedFiles( allExtensions(), project, monitor );
         }
         monitor.done();
+    }
+
+    private Set<MetricsCollector> allExtensions() {
+        if( allExtensions == null ) {
+            allExtensions = new ExtensionCollector<MetricsCollector>( MetricsCollector.EXTENSION_POINT_ID ).allExtensions();
+        }
+        return allExtensions;
     }
 
     private int countTicks( Collection<IProject> projects ) throws CoreException {

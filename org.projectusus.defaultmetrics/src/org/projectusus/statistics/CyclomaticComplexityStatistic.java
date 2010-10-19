@@ -2,9 +2,9 @@ package org.projectusus.statistics;
 
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.statistics.DefaultCockpitExtension;
+import org.projectusus.core.statistics.CockpitExtension;
 
-public class CyclomaticComplexityStatistic extends DefaultCockpitExtension {
+public class CyclomaticComplexityStatistic extends CockpitExtension {
 
     private static int CC_LIMIT = 5;
 

@@ -25,7 +25,7 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
-import org.projectusus.core.statistics.ICockpitExtension;
+import org.projectusus.core.statistics.CockpitExtension;
 import org.projectusus.core.statistics.RegisteredCockpitExtensionsCollector;
 
 public class UsusModel implements IUsusModel, IUsusModelForAdapter {
@@ -63,7 +63,7 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
     private void runStatisticsExtensions() {
         cache = new UsusModelCache();
-        for( final ICockpitExtension cockpitExtension : RegisteredCockpitExtensionsCollector.getEnabled() ) {
+        for( final CockpitExtension cockpitExtension : RegisteredCockpitExtensionsCollector.getEnabled() ) {
             ISafeRunnable runnable = new ISafeRunnable() {
                 public void handleException( Throwable exception ) {
                     UsusCorePlugin.log( exception );
