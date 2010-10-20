@@ -5,43 +5,45 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.Set;
 
 import org.projectusus.core.basis.IRawData;
 
 class RawData<S, T extends IRawData> implements IRawData {
 
-    private final RawDataMapWrapper<S, T> wrapper;
+    private Map<S, T> rawDataMap;
 
     RawData() {
-        wrapper = new RawDataMapWrapper<S, T>();
+        rawDataMap = new Hashtable<S, T>();
     }
 
     synchronized T getRawData( S key ) {
-        return wrapper.getRawData( key );
+        return rawDataMap.get( key );
     }
 
     synchronized void addRawData( S key, T newObject ) {
-        wrapper.addRawData( key, newObject );
+        rawDataMap.put( key, newObject );
     }
 
     synchronized int getRawDataElementCount() {
-        return wrapper.getRawDataElementCount();
+        return rawDataMap.size();
     }
 
     synchronized void remove( S key ) {
-        wrapper.remove( key );
+        rawDataMap.remove( key );
     }
 
     synchronized void removeAll() {
-        wrapper.removeAll();
+        rawDataMap.clear();
     }
 
     synchronized Set<S> getAllKeys() {
-        return wrapper.getAllKeys();
+        return rawDataMap.keySet();
     }
 
     synchronized Collection<T> getAllRawDataElements() {
-        return wrapper.getAllRawDataElements();
+        return rawDataMap.values();
     }
 }
