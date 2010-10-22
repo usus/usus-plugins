@@ -6,8 +6,8 @@ Bundle-Version: 0.6.0
 Bundle-Activator: org.projectusus.ui.dependencygraph.DependencyGraphPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.zest.core;bundle-version="1.2.0",
- org.eclipse.zest.layouts;bundle-version="1.1.0",
+ org.eclipse.zest.core;bundle-version="1.0.0",
+ org.eclipse.zest.layouts;bundle-version="1.0.0",
  org.projectusus.core,
  org.eclipse.jdt.ui,
  org.projectusus.ui,
