@@ -236,7 +236,7 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="toolbar:org.projectusus.ui.dependencygraph.ClassGraphView">
+            locationURI="toolbar:org.projectusus.ui.dependencygraph.ClassGraphView?before=zoom">
          <command
                commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
                style="push">
@@ -260,7 +260,7 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="toolbar:org.projectusus.ui.dependencygraph.CrossPackageClassGraphView">
+            locationURI="toolbar:org.projectusus.ui.dependencygraph.CrossPackageClassGraphView?before=zoom">
          <command
                commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
                style="push">
@@ -284,7 +284,7 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="toolbar:org.projectusus.ui.dependencygraph.PackageGraphView">
+            locationURI="toolbar:org.projectusus.ui.dependencygraph.PackageGraphView?before=zoom">
          <command
                commandId="org.projectusus.ui.dependencygraph.command.ShowInClassGraph"
                icon="icons/graph-class.gif"

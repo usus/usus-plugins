@@ -4,6 +4,8 @@ import static java.util.Arrays.sort;
 
 import java.util.Set;
 
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -23,9 +25,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.part.IShowInTarget;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
+import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.basis.GraphNode;
@@ -34,8 +40,9 @@ import org.projectusus.ui.dependencygraph.filters.IFilterLimitProvider;
 import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
 import org.projectusus.ui.dependencygraph.filters.NodeFilter;
 import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
+import org.projectusus.ui.dependencygraph.handlers.ChangeZoom;
 
-public abstract class DependencyGraphView extends ViewPart implements IFilterLimitProvider, IShowInTarget {
+public abstract class DependencyGraphView extends ViewPart implements IFilterLimitProvider, IShowInTarget, IZoomableWorkbenchPart {
 
     private static final String LAYOUT_LABEL = "Layout:";
     private static final String SCALE_TOOLTIP_TEXT = "Change the number of visible nodes by moving the slider";
@@ -59,19 +66,35 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
 
     @Override
     public void createPartControl( Composite parent ) {
+        Composite composite = createComposite( parent );
+        createFilterArea( composite );
+        createGraphArea( composite );
+        IViewSite site = getViewSite();
+        site.setSelectionProvider( graphViewer );
+        contributeTo( site.getActionBars() );
+        refresh();
+        extendSelectionBehavior();
+    }
+
+    protected Composite createComposite( Composite parent ) {
         Composite composite = new Composite( parent, SWT.NONE );
         GridLayout layout = new GridLayout( 1, false );
         layout.marginHeight = 0;
         layout.marginWidth = 0;
         composite.setLayout( layout );
-        Composite filterArea = createFilterArea( composite );
-        GridData data = new GridData();
-        data.horizontalAlignment = SWT.FILL;
-        filterArea.setLayoutData( data );
-        createGraphArea( composite );
-        getViewSite().setSelectionProvider( graphViewer );
-        refresh();
-        extendSelectionBehavior();
+        return composite;
+    }
+
+    protected void contributeTo( IActionBars actionBars ) {
+        IToolBarManager toolBar = actionBars.getToolBarManager();
+        Separator separator = new Separator( "zoom" );
+        separator.setVisible( false );
+        toolBar.add( separator );
+        toolBar.add( new ChangeZoom( this ) );
+    }
+
+    public AbstractZoomableViewer getZoomableViewer() {
+        return graphViewer;
     }
 
     private void initFilterLimit( int maxFilterValue ) {
@@ -92,6 +115,10 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
 
         createScale( filterArea );
         createLayoutCombo( filterArea );
+
+        GridData data = new GridData();
+        data.horizontalAlignment = SWT.FILL;
+        filterArea.setLayoutData( data );
 
         return filterArea;
     }

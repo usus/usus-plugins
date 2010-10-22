@@ -22,7 +22,6 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.zest.core.viewers.GraphViewer;
-import org.eclipse.zest.core.viewers.internal.ZoomManager;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphItem;
 import org.eclipse.zest.core.widgets.ZestStyles;
@@ -90,29 +89,6 @@ public class DependencyGraphViewer extends GraphViewer {
     }
 
     public Image takeScreenshot() {
-        zoomIn();
-        Image image = captureScreenshot();
-        zoomOut();
-        return image;
-    }
-
-    @SuppressWarnings( "restriction" )
-    private void zoomOut() {
-        labelProvider.resetZoom();
-        getZoomManager().setZoomAsText( "100%" );
-        refresh();
-    }
-
-    @SuppressWarnings( "restriction" )
-    private void zoomIn() {
-        ZoomManager zoomManager = getZoomManager();
-        double factor = zoomManager.getMaxZoom();
-        labelProvider.setZoom( factor );
-        zoomManager.setZoom( factor );
-        refresh();
-    }
-
-    private Image captureScreenshot() {
         Graph graph = (Graph)getControl();
 
         IFigure contents = graph.getContents();
