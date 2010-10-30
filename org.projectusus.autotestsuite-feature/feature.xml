@@ -2,7 +2,7 @@
 <feature
       id="org.projectusus.autotestsuite"
       label="Project Usus Multi-Project JUnit Runner"
-      version="0.6.1"
+      version="0.6.2"
       provider-name="projectusus.org">
 
    <description url="http://www.projectusus.org">
@@ -37,7 +37,7 @@ can be found at http://www.eclipse.org/legal/epl-v10.html.
          id="org.projectusus.autotestsuite.ui"
          download-size="0"
          install-size="0"
-         version="0.6.1"
+         version="0.6.2"
          unpack="false"/>
 
    <plugin
