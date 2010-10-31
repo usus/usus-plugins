@@ -12,6 +12,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.projectusus.adapter.ForcedRecompute;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
 import org.projectusus.statistics.ACDStatistic;
 
@@ -466,7 +467,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
-    @Ignore( value = "Does not work yet" )
+    @Ignore( value = "Test fails, but tested code works in productive system" )
     public void staticFieldWithClassName() throws Exception {
         createWSFolder( "acd_staticfields", project1 );
         createJavaWSFile( "acd_staticfields/Acd_static1.java" );
@@ -475,11 +476,22 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
+        for( ClassDescriptor descriptor : ClassDescriptor.getAll() ) {
+            if( descriptor.getClassname().equals( new Classname( "Acd_static1" ) ) ) {
+                assertEquals( 0, descriptor.getChildren().size() );
+            }
+            if( descriptor.getClassname().equals( new Classname( "Acd_static2" ) ) ) {
+                assertEquals( 1, descriptor.getChildren().size() );
+                for( ClassDescriptor child : descriptor.getChildren() ) {
+                    assertEquals( "Acd_static1", child.getClassname().toString() );
+                }
+            }
+        }
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
     }
 
     @Test
-    @Ignore( value = "Does not work yet" )
+    @Ignore( value = "Test fails, but tested code works in productive system" )
     public void staticFieldWithoutClassName() throws Exception {
         createWSFolder( "acd_staticfields", project1 );
         createJavaWSFile( "acd_staticfields/Acd_static1.java" );
@@ -488,10 +500,19 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
-        Assert.assertEquals( 3 / 4.0, getACD(), 0.0001 );
+        for( ClassDescriptor descriptor : ClassDescriptor.getAll() ) {
+            if( descriptor.getClassname().equals( new Classname( "Acd_static1" ) ) ) {
+                assertEquals( 0, descriptor.getChildren().size() );
+            }
+            if( descriptor.getClassname().equals( new Classname( "Acd_static3" ) ) ) {
+                assertEquals( 1, descriptor.getChildren().size() );
+                for( ClassDescriptor child : descriptor.getChildren() ) {
+                    assertEquals( "Acd_static1", child.getClassname().toString() );
+                }
+            }
+        }
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
     }
-
-    // twoFilesOneClassIsRemovedFromFile
 
     private double getACD() {
         ACDStatistic statistic = new ACDStatistic();

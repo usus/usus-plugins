@@ -16,6 +16,10 @@ public class Tasks {
     void testStatisticsFactoryBauen() {
 
     }
+    
+    void projectSettingsAnZentralerStelleSpeichern(){
+    // TODO die Einstellungen pro Projekt finde ich (NR) sehr unkomfortabel
+    }
 
     // ///////// Tasks for USUS 1.0
 
@@ -75,6 +79,10 @@ public class Tasks {
     void createMudHoleHotspots() {
         // TODO Aggregierte Hotspots = "Schlammlšöcher"
         // Dazu brauchen wir post-visit-hooks für den Baumdurchlauf
+    }
+
+    void codeDuplicationMetric() {
+        // TODO wie soll das gehen?
     }
 
     void makeJobCancellable() {

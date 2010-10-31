@@ -4,10 +4,13 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.IVariableBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.projectusus.core.project2.UsusProjectSupport;
@@ -37,11 +40,25 @@ public class BoundType {
         return null;
     }
 
+    public static BoundType of( IVariableBinding varBinding ) {
+        return BoundType.of( varBinding.getDeclaringClass() );
+    }
+
     public static BoundType of( MethodInvocation node ) {
         if( node != null ) {
             IMethodBinding methodBinding = node.resolveMethodBinding();
             if( methodBinding != null ) {
                 return of( methodBinding.getDeclaringClass() );
+            }
+        }
+        return null;
+    }
+
+    public static BoundType of( FieldAccess node ) {
+        if( node != null ) {
+            ITypeBinding typeBinding = node.resolveTypeBinding();
+            if( typeBinding != null ) {
+                return of( typeBinding );
             }
         }
         return null;
@@ -113,5 +130,9 @@ public class BoundType {
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append( classname ).append( packagename ).toHashCode();
+    }
+
+    public static BoundType of( QualifiedName qualifier ) {
+        return of( qualifier.resolveTypeBinding() );
     }
 }
