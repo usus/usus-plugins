@@ -15,8 +15,6 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -24,7 +22,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Scale;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.part.IShowInTarget;
@@ -49,13 +46,12 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
 
     private final DependencyGraphModel model;
     private DependencyGraphViewer graphViewer;
-    private int filterLimit = -1;
     private IUsusModelListener listener;
-    private Scale scale;
     private ViewerFilter customFilter;
     private final WorkbenchContext customFilterContext;
     private DependencyGraphSelectionListener selectionListener;
     private final HideNodesFilter hideNodesFilter = new HideNodesFilter();
+    private int filterLimit = -1;
 
     public DependencyGraphView( DependencyGraphModel model ) {
         super();
@@ -97,13 +93,6 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         return graphViewer;
     }
 
-    private void initFilterLimit( int maxFilterValue ) {
-        if( filterLimit == -1 ) {
-            setFilterLimit( maxFilterValue );
-            scale.setSelection( filterLimit );
-        }
-    }
-
     private Composite createFilterArea( Composite composite ) {
         Composite filterArea = new Composite( composite, SWT.NONE );
         filterArea.setToolTipText( SCALE_TOOLTIP_TEXT );
@@ -113,7 +102,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         layout.marginTop = 5;
         filterArea.setLayout( layout );
 
-        createScale( filterArea );
+        createAdditionalWidget( filterArea );
         createLayoutCombo( filterArea );
 
         GridData data = new GridData();
@@ -124,7 +113,8 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     }
 
     private void createLayoutCombo( Composite filterArea ) {
-        createLabel( filterArea, LAYOUT_LABEL );
+        Label label = createLabel( filterArea, LAYOUT_LABEL );
+        label.setLayoutData( new GridData( SWT.RIGHT, SWT.CENTER, true, false ) );
         ComboViewer comboViewer = new ComboViewer( filterArea, SWT.READ_ONLY );
         comboViewer.setContentProvider( new ArrayContentProvider() );
         comboViewer.setLabelProvider( new LabelProvider() );
@@ -145,37 +135,9 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         } );
     }
 
-    private void createScale( Composite filterArea ) {
-        createLabel( filterArea, getScaleLeftLabelText() );
+    protected abstract void createAdditionalWidget( Composite filterArea );
 
-        scale = new Scale( filterArea, SWT.HORIZONTAL );
-        scale.setMinimum( 0 );
-        scale.setMaximum( 9999999 );
-        scale.setSelection( getFilterLimit() );
-        scale.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                Display.getDefault().asyncExec( new Runnable() {
-                    public void run() {
-                        int spinnerValue = scale.getSelection();
-                        setFilterLimit( spinnerValue );
-                        drawGraphConditionally();
-                    }
-                } );
-            }
-        } );
-
-        Label filterText = createLabel( filterArea, getScaleRightLabelText() );
-        GridData gridData = new GridData();
-        gridData.grabExcessHorizontalSpace = true;
-        filterText.setLayoutData( gridData );
-    }
-
-    protected abstract String getScaleRightLabelText();
-
-    protected abstract String getScaleLeftLabelText();
-
-    private Label createLabel( Composite parent, String labelText ) {
+    protected Label createLabel( Composite parent, String labelText ) {
         Label label = new Label( parent, SWT.NONE );
         label.setText( labelText );
         return label;
@@ -225,7 +187,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         } );
     }
 
-    private void drawGraphConditionally() {
+    public void drawGraphConditionally() {
         if( model.isChanged() ) {
             drawGraphUnconditionally();
         } else {
@@ -237,7 +199,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     private void drawGraphUnconditionally() {
         Set<? extends GraphNode> graphNodes = model.getGraphNodes();
         if( !graphNodes.isEmpty() ) {
-            updateSpinnerAndFilter();
+            updateAdditionalWidget();
         }
         graphViewer.setInput( graphNodes );
         model.resetChanged();
@@ -246,14 +208,6 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     @Override
     public void setFocus() {
         graphViewer.getControl().setFocus();
-    }
-
-    public int getFilterLimit() {
-        return filterLimit;
-    }
-
-    private void setFilterLimit( int filterLimit ) {
-        this.filterLimit = filterLimit;
     }
 
     @Override
@@ -277,11 +231,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         UsusModelProvider.ususModel().addUsusModelListener( listener );
     }
 
-    private void updateSpinnerAndFilter() {
-        int maxFilterValue = model.getMaxFilterValue();
-        initFilterLimit( maxFilterValue );
-        scale.setMaximum( calcMaxFilterValue( maxFilterValue ) );
-    }
+    protected abstract void updateAdditionalWidget();
 
     protected int calcMaxFilterValue( int maxFilterValue ) {
         return maxFilterValue;
@@ -320,4 +270,17 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     }
 
     public abstract String getFilenameForScreenshot();
+
+    protected int getMaxFilterValue() {
+        return model.getMaxFilterValue();
+    }
+
+    public int getFilterLimit() {
+        return filterLimit;
+    }
+
+    protected void setFilterLimit( int filterLimit ) {
+        this.filterLimit = filterLimit;
+    }
+
 }
