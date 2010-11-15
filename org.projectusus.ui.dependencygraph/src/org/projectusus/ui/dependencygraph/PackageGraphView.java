@@ -1,5 +1,10 @@
 package org.projectusus.ui.dependencygraph;
 
+import java.util.Set;
+
+import org.projectusus.core.UsusModelProvider;
+import org.projectusus.core.basis.GraphNode;
+import org.projectusus.ui.dependencygraph.common.DependencyGraphModel;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
 
 public class PackageGraphView extends DependencyGraphView {
@@ -8,8 +13,16 @@ public class PackageGraphView extends DependencyGraphView {
 
     private static final String ONLY_IN_CYCLES = "only with cyclic dependencies";
 
+    private static final DependencyGraphModel packageGraphModel = new DependencyGraphModel() {
+
+        @Override
+        protected Set<? extends GraphNode> getRefreshedNodes() {
+            return UsusModelProvider.getAllPackages();
+        }
+    };
+
     public PackageGraphView() {
-        super( new PackageGraphModel() );
+        super( packageGraphModel );
     }
 
     @Override
