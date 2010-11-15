@@ -23,7 +23,6 @@ import org.eclipse.zest.core.viewers.IEntityConnectionStyleProvider;
 import org.eclipse.zest.core.viewers.IEntityStyleProvider;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.util.Defect;
 import org.projectusus.ui.colors.UsusColors;
 
@@ -136,10 +135,8 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     private boolean areClassesInDifferentPackages( Object src, Object dest ) {
-        if( (src instanceof ClassRepresenter) && dest instanceof ClassRepresenter ) {
-            ClassRepresenter srcClass = (ClassRepresenter)src;
-            ClassRepresenter destClass = (ClassRepresenter)dest;
-            return !srcClass.getPackagename().equals( destClass.getPackagename() );
+        if( (src instanceof GraphNode) && dest instanceof GraphNode ) {
+            return ((GraphNode)src).isInDifferentPackageThan( (GraphNode)dest );
         }
         return false;
     }

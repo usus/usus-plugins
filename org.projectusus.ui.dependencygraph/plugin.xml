@@ -12,14 +12,6 @@
             id="org.projectusus.ui.dependencygraph.PackageGraphView"
             category="org.projectusus.ui.viewCategory"
             name="Usus Package Graph"/>
-       <view
-             class="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView"
-             icon="icons/graph-cross-package.gif"
-             id="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView"
-             category="org.projectusus.ui.viewCategory"
-             name="Cross-Package Class Graph"
-             restorable="true">
-       </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
@@ -37,20 +29,11 @@
                relationship="stack"
                relative="org.projectusus.ui.dependencygraph.ClassGraphView">
          </view>
-         <view
-               id="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView"
-               minimized="false"
-               relationship="stack"
-               relative="org.projectusus.ui.dependencygraph.ClassGraphView">
-         </view>
          <viewShortcut
                id="org.projectusus.ui.dependencygraph.ClassGraphView">
          </viewShortcut>
          <viewShortcut
                id="org.projectusus.ui.dependencygraph.PackageGraphView">
-         </viewShortcut>
-         <viewShortcut
-               id="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView">
          </viewShortcut>
          <showInPart
                id="org.projectusus.ui.dependencygraph.ClassGraphView">
@@ -94,23 +77,6 @@
                          </iterate>
                       </with>
                    </and>
-                   <and>
-                      <with
-                            variable="activePartId">
-                         <equals
-                               value="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView">
-                         </equals>
-                      </with>
-                      <with
-                            variable="activeContexts">
-                         <iterate
-                               ifEmpty="false"
-                               operator="or">
-                            <equals
-                                  value="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView.context.customFilter">
-                            </equals>
-                         </iterate>
-                      </with></and>
                    <and>
                       <with
                             variable="activePartId">
@@ -260,30 +226,6 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="toolbar:org.projectusus.ui.dependencygraph.CrossPackageClassGraphView?before=zoom">
-         <command
-               commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
-               style="push">
-         </command>
-         <command
-               commandId="org.projectusus.ui.dependencygraph.command.ClearCustomFilter"
-               style="push">
-         </command>
-         <separator
-               name="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView.toolbar.separator"
-               visible="true">
-         </separator>
-         <command
-               commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView"
-               style="push">
-         </command>
-         <command
-               commandId="org.projectusus.ui.dependencygraph.command.SaveScreenshot"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
             locationURI="toolbar:org.projectusus.ui.dependencygraph.PackageGraphView?before=zoom">
          <command
                commandId="org.projectusus.ui.dependencygraph.command.ShowInClassGraph"
@@ -293,16 +235,6 @@
             <parameter
                   name="org.projectusus.ui.dependencygraph.handlers.ShowInClassGraph.targetViewId"
                   value="org.projectusus.ui.dependencygraph.ClassGraphView">
-            </parameter>
-         </command>
-         <command
-               commandId="org.projectusus.ui.dependencygraph.command.ShowInClassGraph"
-               icon="icons/graph-cross-package.gif"
-               label="Show in cross-package class graph"
-               style="push">
-            <parameter
-                  name="org.projectusus.ui.dependencygraph.handlers.ShowInClassGraph.targetViewId"
-                  value="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView">
             </parameter>
          </command>
          <separator
@@ -355,10 +287,6 @@
       <context
             id="org.projectusus.ui.dependencygraph.ClassGraphView.context.customFilter"
             name="org.projectusus.ui.dependencygraph.ClassGraphView.context.customFilter">
-      </context>
-      <context
-            id="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView.context.customFilter"
-            name="org.projectusus.ui.dependencygraph.CrossPackageClassGraphView.context.customFilter">
       </context>
       <context
             id="org.projectusus.ui.dependencygraph.PackageGraphView.context.customFilter"

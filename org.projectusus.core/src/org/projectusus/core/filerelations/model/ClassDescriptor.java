@@ -207,4 +207,14 @@ public class ClassDescriptor {
             clearOwnAndParentsTransitiveChildrenCache();
         }
     }
+
+    public Set<ClassDescriptor> getParentsInOtherPackages() {
+        Set<ClassDescriptor> result = new HashSet<ClassDescriptor>();
+        for( ClassDescriptor parent : parents ) {
+            if( !this.getPackagename().equals( parent.getPackagename() ) ) {
+                result.add( parent );
+            }
+        }
+        return result;
+    }
 }

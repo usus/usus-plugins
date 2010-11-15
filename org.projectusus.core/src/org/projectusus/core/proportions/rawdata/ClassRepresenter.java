@@ -1,16 +1,21 @@
 package org.projectusus.core.proportions.rawdata;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.jdt.core.IJavaElement;
 import org.projectusus.core.basis.GraphNode;
-import org.projectusus.core.filerelations.internal.metrics.BottleneckCalculator;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.Packagename;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 
-public class ClassRepresenter extends AbstractClassRepresenter {
+public class ClassRepresenter implements GraphNode {
+
+    private final ClassDescriptor clazz;
 
     public static Set<GraphNode> transformToRepresenterSet( Set<ClassDescriptor> classes ) {
         Function<ClassDescriptor, ClassRepresenter> function = new Function<ClassDescriptor, ClassRepresenter>() {
@@ -22,7 +27,7 @@ public class ClassRepresenter extends AbstractClassRepresenter {
     }
 
     public ClassRepresenter( ClassDescriptor clazz ) {
-        super( clazz );
+        this.clazz = clazz;
     }
 
     public Set<GraphNode> getChildren() {
@@ -35,14 +40,96 @@ public class ClassRepresenter extends AbstractClassRepresenter {
 
     @Override
     public boolean equals( Object obj ) {
-        return obj instanceof ClassRepresenter && super.equals( obj );
-    }
-
-    public boolean isVisibleFor( int limit ) {
-        return getFilterValue() >= limit;
+        return obj instanceof ClassRepresenter && clazz.equals( ((ClassRepresenter)obj).clazz );
     }
 
     public int getFilterValue() {
-        return BottleneckCalculator.getBottleneckCount( this.clazz );
+        return getChildrenAndParentsInOtherPackages().size();
+    }
+
+    private Set<ClassDescriptor> getChildrenAndParentsInOtherPackages() {
+        Set<ClassDescriptor> result = clazz.getChildrenInOtherPackages();
+        result.addAll( clazz.getParentsInOtherPackages() );
+        return result;
+    }
+
+    public boolean isVisibleForLimitWithOtherNodes( boolean restricting, Set<GraphNode> others ) {
+        if( !restricting ) {
+            return true;
+        }
+        if( getFilterValue() == 0 ) {
+            return false;
+        }
+        for( GraphNode graphNode : others ) {
+            ClassRepresenter otherRepresenter = (ClassRepresenter)graphNode;
+            if( containsOtherInChildrenAndParentsInOtherPackages( otherRepresenter ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean containsOtherInChildrenAndParentsInOtherPackages( ClassRepresenter otherRepresenter ) {
+        return getChildrenAndParentsInOtherPackages().contains( otherRepresenter.clazz );
+    }
+
+    public boolean isPackage() {
+        return false;
+    }
+
+    public IFile getFile() {
+        return clazz.getFile();
+    }
+
+    public String getEdgeEndLabel() {
+        return ""; //$NON-NLS-1$
+    }
+
+    public String getEdgeMiddleLabel() {
+        return ""; //$NON-NLS-1$
+    }
+
+    public String getEdgeStartLabel() {
+        return ""; //$NON-NLS-1$
+    }
+
+    @Override
+    public int hashCode() {
+        return clazz.hashCode();
+    }
+
+    public boolean isPackageOneOf( Collection<Packagename> packages ) {
+        return packages.contains( getPackagename() );
+    }
+
+    public IJavaElement getNodeJavaElement() {
+        return getPackagename().getJavaElement();
+    }
+
+    public Packagename getPackagename() {
+        return clazz.getPackagename();
+    }
+
+    public boolean isAtEitherEndOf( Packagename source, Packagename dest ) {
+        return connects( source, clazz.getChildren(), dest ) || connects( dest, clazz.getParents(), source );
+    }
+
+    private boolean connects( Packagename classPackage, Set<ClassDescriptor> relateds, Packagename relatedPackage ) {
+        if( clazz.getPackagename().equals( classPackage ) ) {
+            for( ClassDescriptor related : relateds ) {
+                if( related.getPackagename().equals( relatedPackage ) ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Packagename getRelatedPackage() {
+        return clazz.getPackagename();
+    }
+
+    public boolean isInDifferentPackageThan( GraphNode destination ) {
+        return !getRelatedPackage().equals( destination.getRelatedPackage() );
     }
 }

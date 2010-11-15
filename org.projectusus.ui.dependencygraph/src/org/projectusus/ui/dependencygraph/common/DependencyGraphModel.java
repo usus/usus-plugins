@@ -36,5 +36,4 @@ public abstract class DependencyGraphModel {
         }
     }
 
-    public abstract int getMaxFilterValue();
 }

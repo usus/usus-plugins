@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.projectusus.core.basis.GraphNode;
 
-public class HideNodesFilter extends NodeFilter {
+public class HideNodesFilter extends NodeAndEdgeFilter {
 
     Set<GraphNode> nodesToHide = new HashSet<GraphNode>();
 
@@ -16,7 +16,7 @@ public class HideNodesFilter extends NodeFilter {
     }
 
     @Override
-    public boolean select( GraphNode node ) {
+    protected boolean select( GraphNode node, Set<GraphNode> others ) {
         return !nodesToHide.contains( node );
     }
 

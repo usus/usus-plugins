@@ -56,13 +56,6 @@ public class PackageRepresenter implements GraphNode {
         return packagename.getJavaElement();
     }
 
-    public boolean isVisibleFor( int limit ) {
-        if( limit > 0 ) {
-            return relations.getPackageCycles().containsPackage( packagename );
-        }
-        return true;
-    }
-
     @Override
     public boolean equals( Object obj ) {
         return obj instanceof PackageRepresenter && packagename.equals( ((PackageRepresenter)obj).packagename );
@@ -101,4 +94,14 @@ public class PackageRepresenter implements GraphNode {
         return packagename;
     }
 
+    public boolean isVisibleForLimitWithOtherNodes( boolean restricting, @SuppressWarnings( "unused" ) Set<GraphNode> others ) {
+        if( restricting ) {
+            return relations.getPackageCycles().containsPackage( packagename );
+        }
+        return true;
+    }
+
+    public boolean isInDifferentPackageThan( GraphNode destination ) {
+        return !getRelatedPackage().equals( destination.getRelatedPackage() );
+    }
 }

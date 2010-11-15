@@ -1,18 +1,31 @@
 package org.projectusus.ui.dependencygraph.filters;
 
+import java.util.Set;
+
+import org.eclipse.zest.core.viewers.EntityConnectionData;
 import org.projectusus.core.basis.GraphNode;
 
-public class LimitNodeFilter extends NodeFilter {
+public class LimitNodeFilter extends NodeAndEdgeFilter {
 
-    private final IFilterLimitProvider limitProvider;
+    private final IRestrictNodesFilterProvider limitProvider;
 
-    public LimitNodeFilter( IFilterLimitProvider limitProvider ) {
+    public LimitNodeFilter( IRestrictNodesFilterProvider limitProvider ) {
         this.limitProvider = limitProvider;
     }
 
     @Override
-    public boolean select( GraphNode node ) {
-        return node.isVisibleFor( limit() );
+    protected boolean select( GraphNode node, Set<GraphNode> others ) {
+        return node.isVisibleForLimitWithOtherNodes( limit(), others );
+    }
+
+    @Override
+    protected boolean select( EntityConnectionData edge, Set<GraphNode> others ) {
+        if( !limit() ) {
+            return true;
+        }
+        GraphNode source = (GraphNode)edge.source;
+        GraphNode destination = (GraphNode)edge.dest;
+        return select( source, others ) && select( destination, others ) && source.isInDifferentPackageThan( destination );
     }
 
     @Override
@@ -20,7 +33,7 @@ public class LimitNodeFilter extends NodeFilter {
         return "Only nodes visible for limit " + limit();
     }
 
-    private int limit() {
-        return limitProvider.getFilterLimit();
+    private boolean limit() {
+        return limitProvider.isRestricting();
     }
 }

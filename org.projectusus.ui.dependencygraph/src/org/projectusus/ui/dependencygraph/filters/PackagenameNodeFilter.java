@@ -4,6 +4,7 @@ import static com.google.common.collect.Collections2.transform;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Set;
 
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jface.viewers.ISelection;
@@ -11,12 +12,13 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.zest.core.viewers.EntityConnectionData;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.proportions.rawdata.PackageRepresenter;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 
-public class PackagenameNodeFilter extends NodeFilter {
+public class PackagenameNodeFilter extends NodeAndEdgeFilter {
 
     private static final Joiner commaJoiner = Joiner.on( ", " );
     private static final Function<EntityConnectionData, String> toArrowSeparatedStrings = new Function<EntityConnectionData, String>() {
@@ -27,6 +29,7 @@ public class PackagenameNodeFilter extends NodeFilter {
 
     private Collection<Packagename> packages;
     private Collection<EntityConnectionData> edges;
+    private IRestrictNodesFilterProvider filterLimitProvider;
 
     public void setPackages( Collection<Packagename> packages ) {
         this.packages = packages;
@@ -110,8 +113,29 @@ public class PackagenameNodeFilter extends NodeFilter {
     }
 
     @Override
-    public boolean select( GraphNode node ) {
+    protected boolean select( GraphNode node, Set<GraphNode> others ) {
+        return isDirectlySelected( node ) && checkRelations( node, others );
+    }
+
+    private boolean isDirectlySelected( GraphNode node ) {
         return selectedByPackages( node ) || selectedByEdges( node );
+    }
+
+    private boolean checkRelations( GraphNode node, Set<GraphNode> others ) {
+        if( node instanceof ClassRepresenter ) {
+            ClassRepresenter representer = (ClassRepresenter)node;
+            if( !this.filterLimitProvider.isRestricting() ) {
+                return true;
+            }
+            for( GraphNode graphNode : others ) {
+                ClassRepresenter otherRepresenter = (ClassRepresenter)graphNode;
+                if( representer.containsOtherInChildrenAndParentsInOtherPackages( otherRepresenter ) && isDirectlySelected( graphNode ) ) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
     }
 
     private boolean selectedByEdges( GraphNode node ) {
@@ -154,4 +178,9 @@ public class PackagenameNodeFilter extends NodeFilter {
         }
         parts.add( "Only items in one of the following packages: " + commaJoiner.join( packages ) );
     }
+
+    public void setFilterLimitProvider( IRestrictNodesFilterProvider filterLimitProvider ) {
+        this.filterLimitProvider = filterLimitProvider;
+    }
+
 }

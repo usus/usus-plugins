@@ -15,10 +15,13 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -33,13 +36,12 @@ import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.ui.dependencygraph.filters.HideNodesFilter;
-import org.projectusus.ui.dependencygraph.filters.IFilterLimitProvider;
+import org.projectusus.ui.dependencygraph.filters.IRestrictNodesFilterProvider;
 import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
-import org.projectusus.ui.dependencygraph.filters.NodeFilter;
 import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
 import org.projectusus.ui.dependencygraph.handlers.ChangeZoom;
 
-public abstract class DependencyGraphView extends ViewPart implements IFilterLimitProvider, IShowInTarget, IZoomableWorkbenchPart {
+public abstract class DependencyGraphView extends ViewPart implements IRestrictNodesFilterProvider, IShowInTarget, IZoomableWorkbenchPart {
 
     private static final String LAYOUT_LABEL = "Layout:";
     private static final String SCALE_TOOLTIP_TEXT = "Change the number of visible nodes by moving the slider";
@@ -47,11 +49,11 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     private final DependencyGraphModel model;
     private DependencyGraphViewer graphViewer;
     private IUsusModelListener listener;
-    private ViewerFilter customFilter;
+    private PackagenameNodeFilter packageNameFilter;
     private final WorkbenchContext customFilterContext;
     private DependencyGraphSelectionListener selectionListener;
     private final HideNodesFilter hideNodesFilter = new HideNodesFilter();
-    private int filterLimit = -1;
+    private boolean restricting = false;
 
     public DependencyGraphView( DependencyGraphModel model ) {
         super();
@@ -135,7 +137,23 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         } );
     }
 
-    protected abstract void createAdditionalWidget( Composite filterArea );
+    protected void createAdditionalWidget( Composite filterArea ) {
+        final Button checkbox = new Button( filterArea, SWT.CHECK );
+        checkbox.setText( getCheckboxLabelName() );
+        checkbox.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                Display.getDefault().asyncExec( new Runnable() {
+                    public void run() {
+                        setRestricting( checkbox.getSelection() );
+                        drawGraphConditionally();
+                        refresh();
+                    }
+                } );
+            }
+        } );
+        setRestricting( false );
+    }
 
     protected Label createLabel( Composite parent, String labelText ) {
         Label label = new Label( parent, SWT.NONE );
@@ -156,11 +174,12 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         graphViewer.setFilters( new ViewerFilter[] { new LimitNodeFilter( this ), hideNodesFilter } );
     }
 
-    public synchronized void setCustomFilter( NodeFilter customFilter ) {
+    public synchronized void setCustomFilter( PackagenameNodeFilter packageNameFilter ) {
         clearCustomFilter();
-        this.customFilter = customFilter;
-        graphViewer.addFilter( customFilter );
-        setContentDescription( customFilter.getDescription() );
+        this.packageNameFilter = packageNameFilter;
+        this.packageNameFilter.setFilterLimitProvider( this );
+        graphViewer.addFilter( this.packageNameFilter );
+        setContentDescription( this.packageNameFilter.getDescription() );
         customFilterContext.activate();
         drawGraphUnconditionally();
     }
@@ -170,9 +189,9 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     }
 
     public synchronized void clearCustomFilter() {
-        if( customFilter != null ) {
-            graphViewer.removeFilter( customFilter );
-            customFilter = null;
+        if( packageNameFilter != null ) {
+            graphViewer.removeFilter( packageNameFilter );
+            packageNameFilter = null;
             setContentDescription( "" );
         }
         customFilterContext.deactivate();
@@ -197,11 +216,7 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
     }
 
     private void drawGraphUnconditionally() {
-        Set<? extends GraphNode> graphNodes = model.getGraphNodes();
-        if( !graphNodes.isEmpty() ) {
-            updateAdditionalWidget();
-        }
-        graphViewer.setInput( graphNodes );
+        graphViewer.setInput( model.getGraphNodes() );
         model.resetChanged();
     }
 
@@ -230,8 +245,6 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
         };
         UsusModelProvider.ususModel().addUsusModelListener( listener );
     }
-
-    protected abstract void updateAdditionalWidget();
 
     protected int calcMaxFilterValue( int maxFilterValue ) {
         return maxFilterValue;
@@ -271,16 +284,13 @@ public abstract class DependencyGraphView extends ViewPart implements IFilterLim
 
     public abstract String getFilenameForScreenshot();
 
-    protected int getMaxFilterValue() {
-        return model.getMaxFilterValue();
+    public boolean isRestricting() {
+        return restricting;
     }
 
-    public int getFilterLimit() {
-        return filterLimit;
+    protected void setRestricting( boolean restricting ) {
+        this.restricting = restricting;
     }
 
-    protected void setFilterLimit( int filterLimit ) {
-        this.filterLimit = filterLimit;
-    }
-
+    protected abstract String getCheckboxLabelName();
 }

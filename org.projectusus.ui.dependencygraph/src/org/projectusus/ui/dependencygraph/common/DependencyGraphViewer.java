@@ -105,4 +105,5 @@ public class DependencyGraphViewer extends GraphViewer {
         gc.dispose();
         return image;
     }
+
 }

@@ -21,7 +21,7 @@ public interface GraphNode {
 
     int getFilterValue();
 
-    boolean isVisibleFor( int limit );
+    boolean isVisibleForLimitWithOtherNodes( boolean restricting, Set<GraphNode> others );
 
     boolean isPackage();
 
@@ -34,4 +34,6 @@ public interface GraphNode {
     boolean isAtEitherEndOf( Packagename source, Packagename dest );
 
     Packagename getRelatedPackage();
+
+    boolean isInDifferentPackageThan( GraphNode destination );
 }
