@@ -16,6 +16,8 @@ import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
+import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.widgets.Composite;
@@ -91,7 +93,14 @@ public class HotspotsPage extends Page implements IHotspotsPage {
     }
 
     public void setInput( AnalysisDisplayEntry entry ) {
+        TreeSelection selection = (TreeSelection)viewer.getSelection();
         viewer.setInput( entry );
+        if( !selection.isEmpty() ) {
+            Object selectedDisplayHotspot = selection.getFirstElement();
+            if( selectedDisplayHotspot instanceof DisplayHotspot<?> ) {
+                selectCodeProportionInTree( (DisplayHotspot<?>)selectedDisplayHotspot );
+            }
+        }
     }
 
     @Override
@@ -132,4 +141,18 @@ public class HotspotsPage extends Page implements IHotspotsPage {
     public String getDescription() {
         return entry.getDescription();
     }
+
+    private void selectCodeProportionInTree( DisplayHotspot<?> hotspot ) {
+        for( DisplayHotspot<?> currrent : entry.getHotspots() ) {
+            if( currrent.getCurrentOrOldHotspot().equals( hotspot.getCurrentOrOldHotspot() ) ) {
+                viewer.setSelection( createTreeSelection( currrent ) );
+                return;
+            }
+        }
+    }
+
+    private TreeSelection createTreeSelection( Object... elements ) {
+        return new TreeSelection( new TreePath( elements ) );
+    }
+
 }
