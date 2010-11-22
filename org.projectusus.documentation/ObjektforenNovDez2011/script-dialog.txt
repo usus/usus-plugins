@@ -1,0 +1,78 @@
+[Es war einmal... in einem Entwicklerbüro igendwo...]
+
+Leif tippt, Marc kommt rein.
+Leif: Hallo Marc.
+Marc: Hi Leif.
+Leif: (versteht 'High Life?') Nee, wie immer.
+Marc: Woran arbeitest Du gerade?
+Leif: Hmmm. Wir machen gerade diese neue Anwendung. Haben gerade damit angefangen. Und diesmal
+      machen wir's richtig. So mit Tests und so weiter! Schau mal, ich bin gerade an dieser 
+      zentralen Modellklasse und habe schon einen Unit Test dafür!
+Marc: Toll!
+Leif: Schaun wir mal ...
+Both: GRÜN!
+Leif: Ok, pass mal auf. Ich schreib noch nen Test.
+      (Schreibt Test, lässt ihn laufen.)
+Both: GRÜN!
+Leif: Cool. Jetzt hab ich zwei. ...  Moment mal. Angenommen ich habe viele. Sagen wir mal, hundert.
+      Kann ich die denn irgendwie alle auf einmal laufen lassen?
+Marc: Klar, da gibt es Test Suites.
+      (Erklärt Test Suites - speziell AllTests)
+
+[Ein paar Stunden später... bei der Kaffeemaschine...]
+
+Marc: Hallo Leif, hast Du noch ein paar Tests geschrieben?
+Leif: Klar, ich habe jetzt sechzehn Tests!
+Marc: Wow.
+Leif: Und alle in der Test Suite. Und die lasse ich die ganze Zeit immer laufen. - Ähhh
+      - Ich habe sie gerade laufen lassen. Sie war grün.
+Marc: Klasse. Das ist doch gut, oder stimmt was nicht?
+Leif: Schon, aber jetzt wo ich daran denke, sollte die Suite eigentlich rot sein. Ich habe gerade
+      den Code geändert - natürlich mit nem neuen Test - aber jetzt sollten einer der alten Tests 
+      rot sein.
+      (Stille)
+Leif: Mist!
+Marc: Du hast vergessen, den Test zur Test Suite hinzuzufügen.
+Leif: Yupp.
+Marc: Das passiert schnell.
+Leif: Hm. Das ist nicht gut.
+Marc: In Eclipse kannst Du das Problem umgehen.
+      (Erklärt Rechtsklick/Run As auf project oder source folder)
+Leif: Schick. Komm, wir probieren das gleich mal aus.
+      (Lassen die Suite laufen... Rot.)
+      Siehst Du? Ich muss den Test gleich korrigieren.
+Both: GRÜN!
+Leif: Cool. Dann kann ich diese AllTests Suite gleich wegschmeissen.
+
+[Am nächsten Tag... morgens früh... (für Entwickler jedenfalls...)]
+Leif: Morgen.
+Marc: Morgen.
+Leif: Schau mal, wir haben einen grossen Schritt geschafft: Die serverseitigen Bundles laufen und 
+      jetzt fange ich mit dem RCP Client an.
+Marc: Gibts schon was zu sehen?
+Leif: Nicht viel, ich habe schon zwei Testfälle. Eventuell kannst Du mir hier helfen. Ich habe jetzt 
+      ein paar Projekte - logisch, weil der Code ja in verschiedenen Bundles ist :-).
+      Aber Eclipse lässt mich nicht alle Tests auf einmal ausführen. Rechtsklick mit einem Projekt
+      funktioniert einwandfrei, aber wenn ich das mit mehreren Projekten machen will, bietet mir
+      Eclipse das Ausführen der Tests nicht an. Kann man da was machen?
+Marc: Nein.
+Leif: Mist.
+Marc: Natürlich gibts da Gründe für.
+Leif: Ja klar, das hilft mir aber nicht weiter. Kannst mir die Gründe später erklären. Was mach ich jetzt?
+Marc: Hm. Du könntest Die ClasspathSuite benutzen.
+      (Erklärt.)
+Leif: Klingt interessant. Lass uns das mal ausprobieren.
+      (Lassen die Tests laufen.)
+Both: GRÜN!
+
+[Ein paar Tage später... Ein regnerischer Tag, der Wind heult...]
+Leif: Aaargh!
+Marc: Was geht?
+Leif: Warten, warten, warten. Das Ausführen der Tests dauert ewig! ... Ewig! Und außerdem... ha! Ich 
+      krieg da immer so ne seltsame NPE, ist in einem static code block! Argh!
+Marc: Und was braucht so lange??
+Leif: (Ruhiger.) Weiss nicht. Am Anfang war alles echt gut. Aber wir haben jetzt viel mehr Code...
+Marc: ... und mehr Tests...
+Leif: ... und mehr Tests, und alles wird immer zäher. Argh!
+
+[... wir unterbrechen nun das reguäre Programm für einige Erklärungen.]
