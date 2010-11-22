@@ -6,7 +6,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.core.basis.Hotspot;
 
-public abstract class DisplayHotspot<T extends Hotspot> implements Comparable<DisplayHotspot<T>> {
+public abstract class DisplayHotspot<T extends Hotspot> implements Comparable<DisplayHotspot<?>> {
 
     private final T historyHotspot;
     private final T currentHotspot;
@@ -63,8 +63,13 @@ public abstract class DisplayHotspot<T extends Hotspot> implements Comparable<Di
         return getName() + "-" + getMetricsValue() + "[" + super.toString() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
-    public int compareTo( DisplayHotspot<T> o ) {
-        return getName().compareTo( o.getName() );
+    public int compareTo( DisplayHotspot<?> otherHotspot ) {
+        int trend1 = this.getTrend();
+        int trend2 = otherHotspot.getTrend();
+        if( trend1 != trend2 ) {
+            return trend1 - trend2;
+        }
+        return otherHotspot.getMetricsValue() - this.getMetricsValue();
     }
 
     public String getPath() {

@@ -58,17 +58,8 @@ public class HotspotsPage extends Page implements IHotspotsPage {
         viewer.setContentProvider( createContentProvider() );
         comparator = new ViewerComparator() {
             @Override
-            public int compare( @SuppressWarnings( "unused" ) Viewer viewr, Object e1, Object e2 ) {
-                DisplayHotspot<?> hotspot1 = (DisplayHotspot<?>)e1;
-                DisplayHotspot<?> hotspot2 = (DisplayHotspot<?>)e2;
-                int trend1 = hotspot1.getTrend();
-                int trend2 = hotspot2.getTrend();
-                if( trend1 < 0 || trend2 < 0 ) {
-                    if( trend1 != trend2 ) {
-                        return trend1 - trend2;
-                    }
-                }
-                return hotspot2.getMetricsValue() - hotspot1.getMetricsValue();
+            public int compare( @SuppressWarnings( "unused" ) Viewer viewer1, Object e1, Object e2 ) {
+                return ((DisplayHotspot<?>)e1).compareTo( (DisplayHotspot<?>)e2 );
             }
         };
         viewer.setComparator( comparator );
