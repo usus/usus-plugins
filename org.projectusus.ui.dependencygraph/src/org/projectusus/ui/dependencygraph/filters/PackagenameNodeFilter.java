@@ -123,10 +123,10 @@ public class PackagenameNodeFilter extends NodeAndEdgeFilter {
 
     private boolean checkRelations( GraphNode node, Set<GraphNode> others ) {
         if( node instanceof ClassRepresenter ) {
-            ClassRepresenter representer = (ClassRepresenter)node;
             if( !this.filterLimitProvider.isRestricting() ) {
                 return true;
             }
+            ClassRepresenter representer = (ClassRepresenter)node;
             for( GraphNode graphNode : others ) {
                 ClassRepresenter otherRepresenter = (ClassRepresenter)graphNode;
                 if( representer.containsOtherInChildrenAndParentsInOtherPackages( otherRepresenter ) && isDirectlySelected( graphNode ) ) {

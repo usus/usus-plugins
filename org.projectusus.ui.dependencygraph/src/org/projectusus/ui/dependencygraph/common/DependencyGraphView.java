@@ -107,9 +107,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         createAdditionalWidget( filterArea );
         createLayoutCombo( filterArea );
 
-        GridData data = new GridData();
-        data.horizontalAlignment = SWT.FILL;
-        filterArea.setLayoutData( data );
+        filterArea.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, false, false ) );
 
         return filterArea;
     }
