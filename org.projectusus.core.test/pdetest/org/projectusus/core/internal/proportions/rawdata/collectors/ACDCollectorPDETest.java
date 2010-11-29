@@ -442,6 +442,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
+    @Ignore( value = "later" )
     public void staticMethodWithClassName() throws Exception {
         createWSFolder( "oops", project1 );
         createJavaWSFile( "oops/Acd_static1.java" );
