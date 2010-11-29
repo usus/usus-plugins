@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.IVariableBinding;
-import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
@@ -95,16 +94,16 @@ public class ACDCollector extends MetricsCollector {
     // return false;
     // }
 
-    @Override
-    public boolean visit( MethodInvocation node ) {
-        Expression targetExpression = node.getExpression();
-        if( targetExpression != null ) {
-            visitExpression( targetExpression );
-        } else {
-            visitType( BoundType.of( node ) );
-        }
-        return false;
-    }
+    // @Override
+    // public boolean visit( MethodInvocation node ) {
+    // Expression targetExpression = node.getExpression();
+    // if( targetExpression != null ) {
+    // visitExpression( targetExpression );
+    // } else {
+    // visitType( BoundType.of( node ) );
+    // }
+    // return false;
+    // }
 
     @Override
     public boolean visit( FieldAccess node ) {
