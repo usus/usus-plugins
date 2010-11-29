@@ -5,15 +5,14 @@
 package org.projectusus.core.project;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ProjectScope;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.osgi.service.prefs.BackingStoreException;
+import org.osgi.service.prefs.Preferences;
 import org.projectusus.core.UsusCorePlugin;
 import org.projectusus.core.project2.IUSUSProject;
 
 class UsusProject implements IUSUSProject {
 
     private static final String ATT_USUS_PROJECT = "ususProject"; //$NON-NLS-1$
+    private static final String ENABLED = "enabled"; //$NON-NLS-1$
     private final IProject project;
 
     UsusProject( IProject project ) {
@@ -21,29 +20,22 @@ class UsusProject implements IUSUSProject {
     }
 
     public void setUsusProject( boolean ususProject ) {
-        try {
-            IEclipsePreferences node = getProjectSettings();
-            node.putBoolean( ATT_USUS_PROJECT, ususProject );
-            node.flush();
-        } catch( BackingStoreException basex ) {
-            UsusCorePlugin.log( basex );
-        }
+        getPreferences().putBoolean( ENABLED, ususProject );
     }
 
     public boolean isUsusProject() {
-        return getProjectSettings().getBoolean( ATT_USUS_PROJECT, false );
+        return getPreferences().getBoolean( ENABLED, false );
+    }
+
+    public String getProjectName() {
+        return project.getName();
     }
 
     // internal
     // /////////
 
-    private IEclipsePreferences getProjectSettings() {
-        ProjectScope projectScope = new ProjectScope( project );
-        return projectScope.getNode( UsusCorePlugin.PLUGIN_ID );
-    }
-
-    public String getProjectName() {
-        return project.getName();
+    private Preferences getPreferences() {
+        return UsusCorePlugin.getDefault().getPreferences().node( ATT_USUS_PROJECT ).node( getProjectName() );
     }
 
 }
