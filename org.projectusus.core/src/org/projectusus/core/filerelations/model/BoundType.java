@@ -13,42 +13,40 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
-import org.projectusus.core.project2.UsusProjectSupport;
 
 public class BoundType {
 
-    private static final String JAVA = "java"; //$NON-NLS-1$
     private IFile underlyingResource;
     private final Classname classname;
     private final Packagename packagename;
 
     public static BoundType of( AbstractTypeDeclaration node ) {
-        return node == null ? null : of( node.resolveBinding() );
+        return node == null ? null : new WrappedTypeBinding( node.resolveBinding() ).getBoundType();
     }
 
     public static BoundType of( SimpleType node ) {
-        return node == null ? null : of( node.resolveBinding() );
+        return node == null ? null : new WrappedTypeBinding( node.resolveBinding() ).getBoundType();
     }
 
     public static BoundType of( SimpleName node ) {
         if( node != null ) {
             IBinding binding = node.resolveBinding();
             if( binding instanceof ITypeBinding ) {
-                return of( (ITypeBinding)binding );
+                return new WrappedTypeBinding( ((ITypeBinding)binding) ).getBoundType();
             }
         }
         return null;
     }
 
     public static BoundType of( IVariableBinding varBinding ) {
-        return BoundType.of( varBinding.getDeclaringClass() );
+        return new WrappedTypeBinding( varBinding.getDeclaringClass() ).getBoundType();
     }
 
     public static BoundType of( MethodInvocation node ) {
         if( node != null ) {
             IMethodBinding methodBinding = node.resolveMethodBinding();
             if( methodBinding != null ) {
-                return of( methodBinding.getDeclaringClass() );
+                return new WrappedTypeBinding( methodBinding.getDeclaringClass() ).getBoundType();
             }
         }
         return null;
@@ -56,37 +54,16 @@ public class BoundType {
 
     public static BoundType of( FieldAccess node ) {
         if( node != null ) {
-            ITypeBinding typeBinding = node.resolveTypeBinding();
-            if( typeBinding != null ) {
-                return of( typeBinding );
-            }
+            return new WrappedTypeBinding( node.resolveTypeBinding() ).getBoundType();
         }
         return null;
     }
 
-    private static BoundType of( final ITypeBinding type ) {
-        if( type == null || type.isPrimitive() ) {
-            return null;
-        }
-        ITypeBinding erasedType = type.getErasure();
-        if( invalidType( erasedType ) ) {
-            return null;
-        }
-        return new BoundType( erasedType );
+    public static BoundType of( QualifiedName qualifier ) {
+        return new WrappedTypeBinding( qualifier.resolveTypeBinding() ).getBoundType();
     }
 
-    private static boolean invalidType( ITypeBinding erasedType ) {
-        return erasedType == null || isATypeVariable( erasedType ) || resourceIsNotInUsusProject( erasedType );
-    }
-
-    private static boolean resourceIsNotInUsusProject( ITypeBinding binding ) {
-        IFile underlyingResource = determineUnderlyingResource( binding );
-        if( underlyingResource == null || !underlyingResource.getFileExtension().equals( JAVA ) ) {
-            return true;
-        }
-
-        return !UsusProjectSupport.isUsusProject( underlyingResource.getProject() );
-    }
+    // kann bald weg
 
     private static IFile determineUnderlyingResource( ITypeBinding binding ) {
         try {
@@ -96,11 +73,7 @@ public class BoundType {
         }
     }
 
-    private static boolean isATypeVariable( ITypeBinding binding ) {
-        return binding.isTypeVariable() || binding.isCapture() || binding.isWildcardType();
-    }
-
-    private BoundType( ITypeBinding binding ) {
+    public BoundType( ITypeBinding binding ) {
         classname = new Classname( binding.getName() );
         packagename = Packagename.of( binding.getPackage().getName(), binding.getPackage().getJavaElement() );
         underlyingResource = determineUnderlyingResource( binding );
@@ -130,9 +103,5 @@ public class BoundType {
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append( classname ).append( packagename ).toHashCode();
-    }
-
-    public static BoundType of( QualifiedName qualifier ) {
-        return of( qualifier.resolveTypeBinding() );
     }
 }
