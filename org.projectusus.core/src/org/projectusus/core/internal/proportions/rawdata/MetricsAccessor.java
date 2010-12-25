@@ -10,6 +10,8 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.IMetricsWriter;
+import org.projectusus.core.UsusModelProvider;
+import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 
@@ -55,4 +57,9 @@ public class MetricsAccessor implements IMetricsWriter {
         }
         monitor.done();
     }
+
+    public void addClassReference( BoundType source, BoundType target ) {
+        UsusModelProvider.addClassReference( source, target );
+    }
+
 }
