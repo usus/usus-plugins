@@ -30,8 +30,11 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
     @Test
     public void projectAddedToUsus() throws Exception {
         makeUsusProject( false, project1 );
+        makeUsusProject( false, project2 );
+        buildFullyAndWait();
         getWorkspace().addResourceChangeListener( listener );
         makeUsusProject( true, project1 );
+        buildFullyAndWait();
 
         listener.assertNoException();
 
@@ -54,6 +57,7 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 1, listener.getTarget().getProjects().size() );
 
         makeUsusProject( false, project1 );
+        buildFullyAndWait();
 
         listener.assertNoException();
 

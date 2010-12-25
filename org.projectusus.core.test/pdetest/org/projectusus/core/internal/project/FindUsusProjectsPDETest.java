@@ -7,7 +7,6 @@ package org.projectusus.core.internal.project;
 import static java.util.Arrays.asList;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -36,19 +35,21 @@ public class FindUsusProjectsPDETest extends PDETestUsingWSProject {
     @Test
     public void singleNonUsusProject() throws CoreException {
         makeUsusProject( false, project1 );
+        buildFullyAndWait();
         assertEquals( 1, computeWithAllProjects().size() );
         makeUsusProject( false, project2 );
-        assertTrue( computeWithAllProjects().isEmpty() );
+        buildFullyAndWait();
+        assertEquals( 0, computeWithAllProjects().size() );
     }
 
     @Test
     public void noProjects() throws CoreException {
         project1.delete( true, new NullProgressMonitor() );
         buildFullyAndWait();
-        assertFalse( computeWithAllProjects().isEmpty() );
+        assertEquals( 1, computeWithAllProjects().size() );
         project2.delete( true, new NullProgressMonitor() );
         buildFullyAndWait();
-        assertTrue( computeWithAllProjects().isEmpty() );
+        assertEquals( 0, computeWithAllProjects().size() );
     }
 
     @Test

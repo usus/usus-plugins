@@ -22,17 +22,22 @@ import org.projectusus.core.project2.IUSUSProject;
 public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
 
     private TestResourceChangeListener listener = new TestResourceChangeListener();
+    private IProject otherProject = null;
 
     @After
     public void tearDown() throws CoreException {
         getWorkspace().removeResourceChangeListener( listener );
+        if( otherProject != null ) {
+            otherProject.delete( true, new NullProgressMonitor() );
+            otherProject = null;
+        }
         super.tearDown();
     }
 
     @Test
     public void projectCreated() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
-        IProject otherProject = createAdditionalProjectWithFile();
+        otherProject = createAdditionalProjectWithFile();
 
         listener.assertNoException();
 
@@ -41,7 +46,6 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
         assertEquals( 1, target.getProjects().size() );
         IProject affectedProject = target.getProjects().iterator().next();
         assertEquals( otherProject, affectedProject );
-        otherProject.delete( true, new NullProgressMonitor() );
     }
 
     @Test

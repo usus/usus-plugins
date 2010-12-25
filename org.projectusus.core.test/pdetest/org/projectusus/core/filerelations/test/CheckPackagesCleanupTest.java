@@ -27,7 +27,7 @@ public class CheckPackagesCleanupTest extends PDETestForMetricsComputation {
         Thread.sleep( 1000 );
         assertEquals( 2, Packagename.getAll().size() );
         makeUsusProject( false, project2 );
-        Thread.sleep( 1000 );
+        buildFullyAndWait();
         assertEquals( 1, Packagename.getAll().size() );
     }
 
