@@ -74,11 +74,4 @@ public class WrappedTypeBinding {
     public int hashCode() {
         return new HashCodeBuilder().append( classname ).append( packagename ).toHashCode();
     }
-
-    public BoundType getBoundType() {
-        if( isValid ) {
-            return new BoundType( binding );
-        }
-        return null;
-    }
 }

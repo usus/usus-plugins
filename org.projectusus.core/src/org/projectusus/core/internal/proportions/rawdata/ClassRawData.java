@@ -16,9 +16,9 @@ import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
+import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
 public class ClassRawData extends RawData<Integer, MethodRawData> {
 
@@ -33,7 +33,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
         data = new MetricsResults();
     }
 
-    public ClassRawData( BoundType binding, String name, int startPosition, int line ) {
+    public ClassRawData( WrappedTypeBinding binding, String name, int startPosition, int line ) {
         this( name, startPosition, line );
         this.descriptor = ClassDescriptor.of( binding );
     }

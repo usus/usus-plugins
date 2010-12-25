@@ -17,9 +17,10 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
-import org.projectusus.core.filerelations.model.BoundType;
+import org.projectusus.core.filerelations.model.BoundTypeConverter;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
+import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
 public class FileRawData extends RawData<Integer, ClassRawData> {
 
@@ -59,14 +60,14 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
     }
 
     private ClassRawData getOrCreateClassRawData( AbstractTypeDeclaration node ) {
-        BoundType boundType = BoundType.of( node );
+        WrappedTypeBinding boundType = BoundTypeConverter.wrap( node );
         if( boundType == null ) {
             return null;
         }
         return getOrCreateClassRawData( boundType, node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
     }
 
-    private ClassRawData getOrCreateClassRawData( BoundType typeBinding, int start, int lineNumber, String name ) {
+    private ClassRawData getOrCreateClassRawData( WrappedTypeBinding typeBinding, int start, int lineNumber, String name ) {
         Integer startObject = new Integer( start );
         ClassRawData rawData = super.getRawData( startObject );
         if( rawData == null ) {

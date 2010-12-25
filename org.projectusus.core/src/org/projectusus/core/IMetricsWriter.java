@@ -4,7 +4,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.projectusus.core.filerelations.model.BoundType;
+import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
 public interface IMetricsWriter {
 
@@ -14,5 +14,5 @@ public interface IMetricsWriter {
 
     void putData( IFile file, AbstractTypeDeclaration node, String dataKey, int value );
 
-    void addClassReference( BoundType source, BoundType target );
+    void addClassReference( WrappedTypeBinding source, WrappedTypeBinding target );
 }

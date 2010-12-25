@@ -28,7 +28,7 @@ public class ClassDescriptor {
         return new HashSet<ClassDescriptor>( classes.values() );
     }
 
-    public static ClassDescriptor of( BoundType type ) {
+    public static ClassDescriptor of( WrappedTypeBinding type ) {
         return ClassDescriptor.of( new ClassDescriptorKey( type ) );
     }
 
@@ -60,23 +60,23 @@ public class ClassDescriptor {
         this.key = key;
         this.parents = new HashSet<ClassDescriptor>();
         this.children = new HashSet<ClassDescriptor>();
-        key.packagename.addClass( this );
+        key.getPackagename().addClass( this );
     }
 
     private void removeFromPackage() {
-        key.packagename.removeClass( this );
+        key.getPackagename().removeClass( this );
     }
 
     public IFile getFile() {
-        return key.file;
+        return key.getFile();
     }
 
     public Classname getClassname() {
-        return key.classname;
+        return key.getClassname();
     }
 
     public Packagename getPackagename() {
-        return key.packagename;
+        return key.getPackagename();
     }
 
     @Override
@@ -88,27 +88,27 @@ public class ClassDescriptor {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(). //
-                append( key.file ). //
-                append( key.classname ). //
-                append( key.packagename ). //
+                append( key.getFile() ). //
+                append( key.getClassname() ). //
+                append( key.getPackagename() ). //
                 toHashCode();
     }
 
     private boolean equals( ClassDescriptor other ) {
         return new EqualsBuilder(). //
-                append( key.file, other.key.file ). //
-                append( key.classname, other.key.classname ). //
-                append( key.packagename, other.key.packagename ). //
+                append( key.getFile(), other.key.getFile() ). //
+                append( key.getClassname(), other.key.getClassname() ). //
+                append( key.getPackagename(), other.key.getPackagename() ). //
                 isEquals();
     }
 
     @Override
     public String toString() {
-        return qualifiedClassName() + "[" + key.file.getName() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+        return qualifiedClassName() + "[" + key.getFile().getName() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public String qualifiedClassName() {
-        return key.packagename + "." + key.classname; //$NON-NLS-1$ 
+        return key.getPackagename() + "." + key.getClassname(); //$NON-NLS-1$ 
     }
 
     private void clearOwnAndParentsTransitiveChildrenCache() {

@@ -5,9 +5,9 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
 
 class ClassDescriptorKey {
-    public IFile file;
-    public Classname classname;
-    public Packagename packagename;
+    private final IFile file;
+    private final Classname classname;
+    private final Packagename packagename;
 
     public ClassDescriptorKey( IFile file, Classname classname, Packagename packagename ) {
         if( file == null || classname == null || packagename == null ) {
@@ -18,7 +18,7 @@ class ClassDescriptorKey {
         this.packagename = packagename;
     }
 
-    public ClassDescriptorKey( BoundType type ) {
+    public ClassDescriptorKey( WrappedTypeBinding type ) {
         this( type.getUnderlyingResource(), type.getClassname(), type.getPackagename() );
     }
 
@@ -28,17 +28,29 @@ class ClassDescriptorKey {
     }
 
     private boolean equals( ClassDescriptorKey other ) {
-        return new EqualsBuilder().append( file, other.file ). //
-                append( classname, other.classname ).append( packagename, other.packagename ).isEquals();
+        return new EqualsBuilder().append( getFile(), other.getFile() ). //
+                append( getClassname(), other.getClassname() ).append( getPackagename(), other.getPackagename() ).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append( file ).append( classname ).append( packagename ).toHashCode();
+        return new HashCodeBuilder().append( getFile() ).append( getClassname() ).append( getPackagename() ).toHashCode();
     }
 
     @Override
     public String toString() {
-        return packagename + "." + classname + " in " + file; //$NON-NLS-1$ //$NON-NLS-2$
+        return getPackagename() + "." + getClassname() + " in " + getFile(); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    public IFile getFile() {
+        return file;
+    }
+
+    public Classname getClassname() {
+        return classname;
+    }
+
+    public Packagename getPackagename() {
+        return packagename;
     }
 }

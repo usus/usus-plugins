@@ -9,17 +9,18 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.IVariableBinding;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.projectusus.core.UsusModelProvider;
-import org.projectusus.core.filerelations.model.BoundType;
+import org.projectusus.core.filerelations.model.BoundTypeConverter;
+import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 import org.projectusus.core.metrics.MetricsCollector;
 
 public class ACDCollector extends MetricsCollector {
 
-    private BoundType currentType;
+    private WrappedTypeBinding currentType;
 
     public ACDCollector() {
         super();
@@ -59,10 +60,7 @@ public class ACDCollector extends MetricsCollector {
 
     @Override
     public boolean visit( SimpleType node ) {
-        BoundType targetType = BoundType.of( node );
-        if( currentType != null && targetType != null ) {
-            UsusModelProvider.addClassReference( currentType, targetType );
-        }
+        visitType( BoundTypeConverter.wrap( node ) );
         return false;
     }
 
@@ -73,7 +71,7 @@ public class ACDCollector extends MetricsCollector {
         if( !node.isDeclaration() ) {
             IBinding binding = node.resolveBinding();
             if( binding instanceof IVariableBinding ) {
-                visitType( BoundType.of( (IVariableBinding)binding ) );
+                visitType( BoundTypeConverter.wrap( (IVariableBinding)binding ) );
             }
         }
         return false;
@@ -94,16 +92,16 @@ public class ACDCollector extends MetricsCollector {
     // return false;
     // }
 
-    // @Override
-    // public boolean visit( MethodInvocation node ) {
-    // Expression targetExpression = node.getExpression();
-    // if( targetExpression != null ) {
-    // visitExpression( targetExpression );
-    // } else {
-    // visitType( BoundType.of( node ) );
-    // }
-    // return false;
-    // }
+    @Override
+    public boolean visit( MethodInvocation node ) {
+        Expression targetExpression = node.getExpression();
+        if( targetExpression != null ) {
+            visitExpression( targetExpression );
+        } else {
+            visitType( BoundTypeConverter.wrap( node ) );
+        }
+        return false;
+    }
 
     @Override
     public boolean visit( FieldAccess node ) {
@@ -111,25 +109,25 @@ public class ACDCollector extends MetricsCollector {
         if( targetExpression != null ) {
             visitExpression( targetExpression );
         } else {
-            visitType( BoundType.of( node ) );
+            visitType( BoundTypeConverter.wrap( node ) );
         }
         return false;
     }
 
-    private void visitType( BoundType targetType ) {
-        if( currentType != null && targetType != null && !currentType.equals( targetType ) ) {
-            UsusModelProvider.addClassReference( currentType, targetType );
+    private void visitType( WrappedTypeBinding targetType ) {
+        if( currentType != null && targetType != null && targetType.isValid() && !currentType.equals( targetType ) ) {
+            getMetricsWriter().addClassReference( currentType, targetType );
         }
     }
 
     private void visitExpression( Expression targetExpression ) {
         if( targetExpression.getNodeType() == ASTNode.SIMPLE_NAME ) {
-            visitType( BoundType.of( (SimpleName)targetExpression ) );
+            visitType( BoundTypeConverter.wrap( (SimpleName)targetExpression ) );
         }
     }
 
     private void setCurrentType( AbstractTypeDeclaration node ) {
-        currentType = BoundType.of( node );
+        currentType = BoundTypeConverter.wrap( node );
     }
 
 }

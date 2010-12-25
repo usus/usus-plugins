@@ -11,9 +11,9 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.IMetricsWriter;
 import org.projectusus.core.UsusModelProvider;
-import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
+import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
 public class MetricsAccessor implements IMetricsWriter {
     public final WorkspaceRawData workspaceRawData;
@@ -58,7 +58,7 @@ public class MetricsAccessor implements IMetricsWriter {
         monitor.done();
     }
 
-    public void addClassReference( BoundType source, BoundType target ) {
+    public void addClassReference( WrappedTypeBinding source, WrappedTypeBinding target ) {
         UsusModelProvider.addClassReference( source, target );
     }
 

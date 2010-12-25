@@ -6,16 +6,16 @@ import static org.mockito.Mockito.when;
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
 import org.projectusus.core.UsusModelProvider;
-import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
 public class MetricsAccessorTest {
 
     @Test
     public void addFileRelation() {
-        BoundType sourceBinding = mock( BoundType.class );
-        BoundType targetBinding = mock( BoundType.class );
+        WrappedTypeBinding sourceBinding = mock( WrappedTypeBinding.class );
+        WrappedTypeBinding targetBinding = mock( WrappedTypeBinding.class );
         when( sourceBinding.getClassname() ).thenReturn( new Classname( "sourceName" ) ); //$NON-NLS-1$
         when( targetBinding.getClassname() ).thenReturn( new Classname( "targetName" ) ); //$NON-NLS-1$
         Packagename packagename = Packagename.of( "package", null ); //$NON-NLS-1$

@@ -13,9 +13,9 @@ import org.eclipse.jdt.core.dom.SimpleName;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.basis.MetricsResults;
-import org.projectusus.core.filerelations.model.BoundType;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
 public class ClassRawDataTest {
 
@@ -30,14 +30,14 @@ public class ClassRawDataTest {
 
     @Before
     public void setup() {
-        BoundType typeBinding = setupMocks();
+        WrappedTypeBinding typeBinding = setupMocks();
         classRawData = new ClassRawData( typeBinding, CLASSNAME, SOURCEPOSITION, LINENUMBER );
         method1 = mock( MethodDeclaration.class );
         initMethod( method1, METHODNAME1 );
     }
 
-    private BoundType setupMocks() {
-        BoundType typeBinding = mock( BoundType.class );
+    private WrappedTypeBinding setupMocks() {
+        WrappedTypeBinding typeBinding = mock( WrappedTypeBinding.class );
         IFile resourceMock = mock( IFile.class );
         when( typeBinding.getUnderlyingResource() ).thenReturn( resourceMock );
         when( typeBinding.getClassname() ).thenReturn( new Classname( CLASSNAME ) );
