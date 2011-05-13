@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.eclipse.jdt.core,
  org.eclipse.core.runtime,
- org.projectusus.core;bundle-version="0.4.2",
- org.projectusus.externals.test;bundle-version="0.0.1";resolution:=optional
+ org.projectusus.core,
+ org.projectusus.externals.test;resolution:=optional,
+ org.junit4;resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

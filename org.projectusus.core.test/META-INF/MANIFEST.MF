@@ -8,7 +8,8 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.debug.core,
  org.projectusus.adapter,
- org.junit4;bundle-version="4.3.0";resolution:=optional,
+ org.projectusus.externals.test;resolution:=optional,
+ org.junit4;resolution:=optional,
  org.projectusus.bugprison.core,
  org.projectusus.defaultmetrics
 Bundle-ClassPath: lib/mockito-all-1.8.4.jar,
