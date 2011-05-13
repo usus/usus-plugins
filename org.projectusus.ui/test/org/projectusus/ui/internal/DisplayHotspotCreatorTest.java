@@ -104,8 +104,8 @@ public class DisplayHotspotCreatorTest {
         assertEquals( 2, result.size() );
         checkContains( result, hotspot1_1_1, null );
         checkContains( result, null, hotspot2_1_1 );
-        checkTrendPositive( 1, result.get( 0 ) );
-        checkTrendNegative( -1, result.get( 1 ) );
+        checkTrendNegative( -1, result.get( 0 ) );
+        checkTrendPositive( 1, result.get( 1 ) );
     }
 
     @Test
@@ -120,9 +120,9 @@ public class DisplayHotspotCreatorTest {
         checkContains( result, hotspot1_1_1, null );
         checkContains( result, hotspot2_1_1, hotspot2_1_1 );
         checkContains( result, null, hotspot3_1_1 );
-        checkTrendPositive( 1, result.get( 0 ) );
+        checkTrendNegative( -1, result.get( 0 ) );
         checkTrendConstant( result.get( 1 ) );
-        checkTrendNegative( -1, result.get( 2 ) );
+        checkTrendPositive( 1, result.get( 2 ) );
     }
 
     @Test
@@ -137,9 +137,9 @@ public class DisplayHotspotCreatorTest {
         checkContains( result, hotspot1_1_1, null );
         checkContains( result, hotspot2_1_1, hotspot2_2_1 );
         checkContains( result, null, hotspot3_1_1 );
-        checkTrendPositive( 1, result.get( 0 ) );
+        checkTrendNegative( -1, result.get( 0 ) );
         checkTrendNegative( -1, result.get( 1 ) );
-        checkTrendNegative( -1, result.get( 2 ) );
+        checkTrendPositive( 1, result.get( 2 ) );
     }
 
     @Test
@@ -156,8 +156,8 @@ public class DisplayHotspotCreatorTest {
         checkContains( result, hotspot1_1_1, hotspot1_1_1 );
         checkContains( result, hotspot2_1_1, hotspot2_2_1 );
         checkContains( result, hotspot3_1_1, hotspot3_1_1 );
-        checkTrendConstant( result.get( 0 ) );
-        checkTrendNegative( -1, result.get( 1 ) );
+        checkTrendNegative( -1, result.get( 0 ) );
+        checkTrendConstant( result.get( 1 ) );
         checkTrendConstant( result.get( 2 ) );
     }
 
