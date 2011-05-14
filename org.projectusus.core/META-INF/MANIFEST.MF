@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Usus Core
-Bundle-SymbolicName: org.projectusus.core;singleton:=true
+Bundle-SymbolicName: org.projectusus.core
 Bundle-Version: 0.6.3.qualifier
 Bundle-Activator: org.projectusus.core.UsusCorePlugin
 Bundle-Vendor: projectusus.org

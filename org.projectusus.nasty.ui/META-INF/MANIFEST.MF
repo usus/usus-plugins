@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Nasty Mode for Usus
-Bundle-SymbolicName: org.projectusus.nasty.ui; singleton:=true
+Bundle-SymbolicName: org.projectusus.nasty.ui
 Bundle-Version: 0.3.6
 Bundle-Activator: org.projectusus.nasty.ui.internal.NastyUsus
 Bundle-Vendor: projectusus.org

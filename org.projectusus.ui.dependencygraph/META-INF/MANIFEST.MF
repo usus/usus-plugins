@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Dependencygraph
-Bundle-SymbolicName: org.projectusus.ui.dependencygraph;singleton:=true
+Bundle-SymbolicName: org.projectusus.ui.dependencygraph
 Bundle-Version: 0.6.3.qualifier
 Bundle-Activator: org.projectusus.ui.dependencygraph.DependencyGraphPlugin
 Require-Bundle: org.eclipse.ui,

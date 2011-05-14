@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Usus code review support
-Bundle-SymbolicName: org.projectusus.codereview.ui;singleton:=true
+Bundle-SymbolicName: org.projectusus.codereview.ui
 Bundle-Version: 0.4.2
 Bundle-Activator: org.projectusus.codereview.internal.ui.CodeReviewUIPlugin
 Bundle-Vendor: projectusus.org
