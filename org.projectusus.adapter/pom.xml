@@ -9,6 +9,6 @@
   </parent>
   <groupId>org.projectusus</groupId>
   <artifactId>org.projectusus.adapter</artifactId>
-  <version>0.6.2</version>
+  <version>0.6.3-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
 </project>
