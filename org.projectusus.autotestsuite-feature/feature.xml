@@ -37,14 +37,14 @@ can be found at http://www.eclipse.org/legal/epl-v10.html.
          id="org.projectusus.autotestsuite.ui"
          download-size="0"
          install-size="0"
-         version="0.6.3.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.projectusus.jfeet"
          download-size="0"
          install-size="0"
-         version="0.1.0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

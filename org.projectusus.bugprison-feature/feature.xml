@@ -28,21 +28,21 @@ can be found at http://www.eclipse.org/legal/epl-v10.html.
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.projectusus.ui"/>
       <import plugin="org.eclipse.jdt.ui"/>
-      <import feature="org.projectusus" version="0.4.2"/>
+      <import feature="org.projectusus" version="0.0.0"/>
    </requires>
 
    <plugin
          id="org.projectusus.bugprison.core"
          download-size="0"
          install-size="0"
-         version="0.6.3.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.projectusus.bugprison.ui"
          download-size="0"
          install-size="0"
-         version="0.6.3.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>
