@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Project Usus Bug Prison Core
-Bundle-SymbolicName: org.projectusus.bugprison.core
+Bundle-SymbolicName: org.projectusus.bugprison.core;singleton:=true
 Bundle-Version: 0.6.3.qualifier
 Bundle-Activator: org.projectusus.bugprison.core.BugPrisonCorePlugin
 Require-Bundle: org.eclipse.core.runtime,

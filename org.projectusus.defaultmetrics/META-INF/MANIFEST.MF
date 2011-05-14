@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Defaultmetrics
-Bundle-SymbolicName: org.projectusus.defaultmetrics
+Bundle-SymbolicName: org.projectusus.defaultmetrics;singleton:=true
 Bundle-Version: 0.6.3.qualifier
 Bundle-Activator: org.projectusus.defaultmetrics.Activator
 Require-Bundle: org.eclipse.core.runtime,
