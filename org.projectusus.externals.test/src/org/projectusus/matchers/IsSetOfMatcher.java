@@ -1,4 +1,4 @@
-package org.projectusus.core.testutil;
+package org.projectusus.matchers;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -7,11 +7,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 
-public class IsSetOfMatcher<T> extends TypeSafeMatcher<Set<? extends T>> {
+public class IsSetOfMatcher<T> extends BaseMatcher<Set<? extends T>> {
 
     private Matcher<?> matcher;
 
@@ -23,8 +24,12 @@ public class IsSetOfMatcher<T> extends TypeSafeMatcher<Set<? extends T>> {
         matcher = is( set );
     }
 
-    @Override
-    public boolean matchesSafely( Set<? extends T> set ) {
+    @SuppressWarnings( "unchecked" )
+    public boolean matches( Object object ) {
+        return matchesSafely( (Set<? extends T>)object );
+    }
+
+    protected boolean matchesSafely( Set<? extends T> set ) {
         return matcher.matches( set );
     }
 
@@ -32,11 +37,13 @@ public class IsSetOfMatcher<T> extends TypeSafeMatcher<Set<? extends T>> {
         matcher.describeTo( description );
     }
 
-    public static <T> IsSetOfMatcher<T> isSetOf( T... items ) {
+    @Factory
+    public static <T> org.hamcrest.Matcher<Set<? extends T>> setOf( T... items ) {
         return new IsSetOfMatcher<T>( items );
     }
 
-    public static <T> IsSetOfMatcher<T> isEmptySet() {
+    @Factory
+    public static <T> org.hamcrest.Matcher<Set<? extends T>> emptySet() {
         return new IsSetOfMatcher<T>( Collections.<T> emptySet() );
     }
 

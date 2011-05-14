@@ -1,10 +1,10 @@
 package org.projectusus.autotestsuite.core.internal;
 
 import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.either;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.either;
 
 import java.util.HashSet;
 

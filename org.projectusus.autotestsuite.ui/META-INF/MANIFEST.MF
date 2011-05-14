@@ -14,10 +14,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jdt.debug.ui,
  org.eclipse.debug.core,
  org.eclipse.debug.ui,
- org.projectusus.externals.test;resolution:=optional,
- org.junit4;resolution:=optional,
  org.projectusus.jfeet,
- org.eclipse.core.expressions
+ org.eclipse.core.expressions,
+ org.projectusus.externals.test;resolution:=optional,
+ org.junit4;resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.projectusus.autotestsuite,

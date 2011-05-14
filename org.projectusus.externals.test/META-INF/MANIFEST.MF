@@ -4,18 +4,22 @@ Bundle-Name: External Testing Libraries
 Bundle-SymbolicName: org.projectusus.externals.test
 Bundle-Version: 0.0.2.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-ClassPath: lib/cpsuite-1.2.5.jar,
+Bundle-ClassPath: lib/hamcrest-core-1.1.jar,
+ .,
+ lib/cpsuite-1.2.5.jar,
  lib/mockito-core-1.8.5.jar,
  lib/org.objenesis-1.0.0.jar,
- lib/hamcrest-library-1.1.jar
+ lib/hamcrest-library-1.1.jar,
+ lib/hamcrest-generator-1.1.jar
 Export-Package: org.hamcrest,
  org.hamcrest.beans,
  org.hamcrest.collection,
+ org.hamcrest.core,
+ org.hamcrest.internal,
  org.hamcrest.number,
  org.hamcrest.object,
  org.hamcrest.text,
  org.hamcrest.xml,
- org.junit.extensions.cpsuite,
  org.mockito,
  org.mockito.asm,
  org.mockito.asm.signature,
@@ -74,7 +78,8 @@ Export-Package: org.hamcrest,
  org.objenesis.instantiator.gcj,
  org.objenesis.instantiator.jrockit,
  org.objenesis.instantiator.sun,
- org.objenesis.strategy
+ org.objenesis.strategy,
+ org.projectusus.matchers
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
-Require-Bundle: org.hamcrest.core;visibility:=reexport
+Require-Bundle: org.junit4;bundle-version="4.8.1"

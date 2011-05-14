@@ -2,8 +2,8 @@ package org.projectusus.core.filerelations.test;
 
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.projectusus.core.testutil.IsSetOfMatcher.isEmptySet;
-import static org.projectusus.core.testutil.IsSetOfMatcher.isSetOf;
+import static org.projectusus.matchers.UsusMatchers.emptySet;
+import static org.projectusus.matchers.UsusMatchers.setOf;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
@@ -32,32 +32,32 @@ public class ClassDescriptorChildrenTest {
 
     @Test
     public void noRelations() {
-        assertThat( descriptor1.getChildren(), isEmptySet() );
+        assertThat( descriptor1.getChildren(), emptySet() );
     }
 
     @Test
     public void oneRelation() {
         descriptor1.addChild( descriptor2 );
-        assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
-        assertThat( descriptor2.getChildren(), isEmptySet() );
+        assertThat( descriptor1.getChildren(), setOf( descriptor2 ) );
+        assertThat( descriptor2.getChildren(), emptySet() );
     }
 
     @Test
     public void oneClassKnows2() {
         descriptor1.addChild( descriptor2 );
         descriptor1.addChild( descriptor3 );
-        assertThat( descriptor1.getChildren(), isSetOf( descriptor2, descriptor3 ) );
-        assertThat( descriptor2.getChildren(), isEmptySet() );
-        assertThat( descriptor3.getChildren(), isEmptySet() );
+        assertThat( descriptor1.getChildren(), setOf( descriptor2, descriptor3 ) );
+        assertThat( descriptor2.getChildren(), emptySet() );
+        assertThat( descriptor3.getChildren(), emptySet() );
     }
 
     @Test
     public void oneClassKnows1Knows1() {
         descriptor1.addChild( descriptor2 );
         descriptor2.addChild( descriptor3 );
-        assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
-        assertThat( descriptor2.getChildren(), isSetOf( descriptor3 ) );
-        assertThat( descriptor3.getChildren(), isEmptySet() );
+        assertThat( descriptor1.getChildren(), setOf( descriptor2 ) );
+        assertThat( descriptor2.getChildren(), setOf( descriptor3 ) );
+        assertThat( descriptor3.getChildren(), emptySet() );
     }
 
     @Test
@@ -65,9 +65,9 @@ public class ClassDescriptorChildrenTest {
         descriptor1.addChild( descriptor2 );
         descriptor2.addChild( descriptor3 );
         descriptor3.addChild( descriptor1 );
-        assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
-        assertThat( descriptor2.getChildren(), isSetOf( descriptor3 ) );
-        assertThat( descriptor3.getChildren(), isSetOf( descriptor1 ) );
+        assertThat( descriptor1.getChildren(), setOf( descriptor2 ) );
+        assertThat( descriptor2.getChildren(), setOf( descriptor3 ) );
+        assertThat( descriptor3.getChildren(), setOf( descriptor1 ) );
     }
 
     @Test
@@ -75,8 +75,8 @@ public class ClassDescriptorChildrenTest {
         descriptor1.addChild( descriptor2 );
         descriptor2.addChild( descriptor3 );
         descriptor3.addChild( descriptor2 );
-        assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
-        assertThat( descriptor2.getChildren(), isSetOf( descriptor3 ) );
-        assertThat( descriptor3.getChildren(), isSetOf( descriptor2 ) );
+        assertThat( descriptor1.getChildren(), setOf( descriptor2 ) );
+        assertThat( descriptor2.getChildren(), setOf( descriptor3 ) );
+        assertThat( descriptor3.getChildren(), setOf( descriptor2 ) );
     }
 }

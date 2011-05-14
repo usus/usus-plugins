@@ -4,8 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata.test;
 
+import org.junit.Test;
 
 public class MethodRawDataTest {
+    // TODO what's up with this test? do we still need it?
+    @Test
+    public void dummy() {
+        // does nothing
+    }
     //
     //    private final String CLASSNAME = "ClassName"; //$NON-NLS-1$
     //    private final String METHODNAME = "methodname"; //$NON-NLS-1$

@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.projectusus.core.testutil.IsSetOfMatcher.isEmptySet;
-import static org.projectusus.core.testutil.IsSetOfMatcher.isSetOf;
+import static org.projectusus.matchers.UsusMatchers.emptySet;
+import static org.projectusus.matchers.UsusMatchers.setOf;
 
 import java.util.Set;
 
@@ -54,8 +54,8 @@ public class FileRelationMetricsRemoveTest {
         setupTwoWithOneFile();
         descriptor1.prepareRemoval();
         descriptor2.prepareRemoval();
-        assertThat( descriptor1.getChildren(), isEmptySet() );
-        assertThat( descriptor2.getChildren(), isEmptySet() );
+        assertThat( descriptor1.getChildren(), emptySet() );
+        assertThat( descriptor2.getChildren(), emptySet() );
         assertEquals( 2, ClassDescriptorCleanup.extractDescriptorsRegisteredForCleanup().size() );
     }
 
@@ -63,8 +63,8 @@ public class FileRelationMetricsRemoveTest {
     public void oneRelationDifferentFilesRemoveSource() {
         setupTwoWithTwoFiles();
         descriptor1.prepareRemoval();
-        assertThat( descriptor1.getChildren(), isEmptySet() );
-        assertThat( descriptor2.getChildren(), isEmptySet() );
+        assertThat( descriptor1.getChildren(), emptySet() );
+        assertThat( descriptor2.getChildren(), emptySet() );
         assertEquals( 1, ClassDescriptorCleanup.extractDescriptorsRegisteredForCleanup().size() );
     }
 
@@ -72,8 +72,8 @@ public class FileRelationMetricsRemoveTest {
     public void oneRelationDifferentFilesRemoveTarget() {
         setupTwoWithTwoFiles();
         descriptor2.prepareRemoval();
-        assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
-        assertThat( descriptor2.getChildren(), isEmptySet() );
+        assertThat( descriptor1.getChildren(), setOf( descriptor2 ) );
+        assertThat( descriptor2.getChildren(), emptySet() );
         checkRelationsToRepair( descriptor1, descriptor2 );
     }
 
@@ -85,9 +85,9 @@ public class FileRelationMetricsRemoveTest {
         descriptor2.prepareRemoval();
         descriptor3.prepareRemoval();
 
-        assertThat( descriptor1.getChildren(), isEmptySet() );
-        assertThat( descriptor2.getChildren(), isEmptySet() );
-        assertThat( descriptor3.getChildren(), isEmptySet() );
+        assertThat( descriptor1.getChildren(), emptySet() );
+        assertThat( descriptor2.getChildren(), emptySet() );
+        assertThat( descriptor3.getChildren(), emptySet() );
         assertEquals( 3, ClassDescriptorCleanup.extractDescriptorsRegisteredForCleanup().size() );
     }
 
@@ -97,9 +97,9 @@ public class FileRelationMetricsRemoveTest {
 
         descriptor1.prepareRemoval();
 
-        assertThat( descriptor1.getChildren(), isEmptySet() );
-        assertThat( descriptor2.getChildren(), isSetOf( descriptor3 ) );
-        assertThat( descriptor3.getChildren(), isEmptySet() );
+        assertThat( descriptor1.getChildren(), emptySet() );
+        assertThat( descriptor2.getChildren(), setOf( descriptor3 ) );
+        assertThat( descriptor3.getChildren(), emptySet() );
         assertEquals( 1, ClassDescriptorCleanup.extractDescriptorsRegisteredForCleanup().size() );
     }
 
@@ -109,9 +109,9 @@ public class FileRelationMetricsRemoveTest {
 
         descriptor2.prepareRemoval();
 
-        assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
-        assertThat( descriptor2.getChildren(), isEmptySet() );
-        assertThat( descriptor3.getChildren(), isEmptySet() );
+        assertThat( descriptor1.getChildren(), setOf( descriptor2 ) );
+        assertThat( descriptor2.getChildren(), emptySet() );
+        assertThat( descriptor3.getChildren(), emptySet() );
 
         checkRelationsToRepair( descriptor1, descriptor2 );
     }
@@ -122,9 +122,9 @@ public class FileRelationMetricsRemoveTest {
 
         descriptor3.prepareRemoval();
 
-        assertThat( descriptor1.getChildren(), isSetOf( descriptor2 ) );
-        assertThat( descriptor2.getChildren(), isSetOf( descriptor3 ) );
-        assertThat( descriptor3.getChildren(), isEmptySet() );
+        assertThat( descriptor1.getChildren(), setOf( descriptor2 ) );
+        assertThat( descriptor2.getChildren(), setOf( descriptor3 ) );
+        assertThat( descriptor3.getChildren(), emptySet() );
 
         checkRelationsToRepair( descriptor2, descriptor3 );
     }
@@ -168,7 +168,7 @@ public class FileRelationMetricsRemoveTest {
             assertEquals( target, descriptor );
             descriptor.removeFromPool();
         }
-        assertThat( source.getChildren(), isEmptySet() );
+        assertThat( source.getChildren(), emptySet() );
     }
 
 }

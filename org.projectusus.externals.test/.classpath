@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/hamcrest-core-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hamcrest-generator-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hamcrest-library-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/mockito-core-1.8.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.objenesis-1.0.0.jar"/>
