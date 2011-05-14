@@ -10,6 +10,8 @@ import static org.projectusus.ui.viewer.ColumnAlignment.CENTER;
 import static org.projectusus.ui.viewer.ColumnAlignment.RIGHT;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.ui.internal.AnalysisDisplayEntry;
@@ -55,7 +57,7 @@ enum CockpitColumnDesc implements IColumnDesc<AnalysisDisplayEntry> {
     };
 
     private final boolean hasImage;
-    private final static DecimalFormat formatter = new DecimalFormat( "0.0" ); //$NON-NLS-1$
+    private final static DecimalFormat formatter = new DecimalFormat( "0.0", new DecimalFormatSymbols( Locale.US ) ); //$NON-NLS-1$
 
     CockpitColumnDesc( boolean hasImage ) {
         this.hasImage = hasImage;

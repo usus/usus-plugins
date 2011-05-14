@@ -11,9 +11,9 @@ public class CockpitColumnDescTest {
 
     @Test
     public void averageFormat() {
-        assertEquals( "0,0", getLabel( 0 ) ); //$NON-NLS-1$
-        assertEquals( "0,9", getLabel( 0.9 ) ); //$NON-NLS-1$
-        assertEquals( "100,0", getLabel( 100 ) ); //$NON-NLS-1$
+        assertEquals( "0.0", getLabel( 0 ) ); //$NON-NLS-1$
+        assertEquals( "0.9", getLabel( 0.9 ) ); //$NON-NLS-1$
+        assertEquals( "100.0", getLabel( 100 ) ); //$NON-NLS-1$
     }
 
     private String getLabel( double average ) {
