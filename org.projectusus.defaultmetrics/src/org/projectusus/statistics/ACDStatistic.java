@@ -37,7 +37,7 @@ public class ACDStatistic extends CockpitExtension {
 
     @Override
     public CodeProportion getCodeProportion() {
-        return new CodeProportion( getLabel(), getDescription(), getTooltip(), getViolations(), getBasisStatistic(), 100 * getRelativeACD(), getHotspots() );
+        return new CodeProportion( getLabel(), getDescription(), getTooltip(), getViolations(), getBasisStatistic(), 100 * getRelativeACD(), getHotspots(), getHistogram() );
     }
 
     @Override

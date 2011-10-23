@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.core.basis.CodeProportion;
+import org.projectusus.core.statistics.Histogram;
 
 public class AnalysisDisplayEntry {
 
@@ -115,5 +116,9 @@ public class AnalysisDisplayEntry {
 
     public String getToolTipText() {
         return current.getToolTipText();
+    }
+
+    public Histogram getHistogram() {
+        return current.getHistogram();
     }
 }

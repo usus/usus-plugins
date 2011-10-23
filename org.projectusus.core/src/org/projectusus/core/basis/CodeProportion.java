@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.PlatformObject;
+import org.projectusus.core.statistics.Histogram;
 
 public class CodeProportion extends PlatformObject {
 
@@ -20,22 +21,25 @@ public class CodeProportion extends PlatformObject {
     private final List<Hotspot> hotspots;
     private final boolean hasHotspots;
     private final String tooltip;
+    private final Histogram histogram;
 
     public CodeProportion( String label, String description, int violations, CodeStatistic basis, double average ) {
-        this( label, description, "", violations, basis, average, new ArrayList<Hotspot>( 0 ), false ); //$NON-NLS-1$
+        this( label, description, "", violations, basis, average, new ArrayList<Hotspot>( 0 ), false, new Histogram() ); //$NON-NLS-1$
     }
 
-    public CodeProportion( String label, String description, String tooltip, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots ) {
-        this( label, description, tooltip, violations, basis, average, hotspots, true );
+    public CodeProportion( String label, String description, String tooltip, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots, Histogram histogram ) {
+        this( label, description, tooltip, violations, basis, average, hotspots, true, histogram );
     }
 
-    private CodeProportion( String label, String description, String tooltip, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots, boolean hasHotspots ) {
+    private CodeProportion( String label, String description, String tooltip, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots, boolean hasHotspots,
+            Histogram histogram ) {
         this.label = label;
         this.description = description;
         this.tooltip = tooltip;
         this.violations = violations;
         this.basis = basis;
         this.hasHotspots = hasHotspots;
+        this.histogram = histogram;
         this.hotspots = sort( hotspots );
         this.average = average;
     }
@@ -82,5 +86,9 @@ public class CodeProportion extends PlatformObject {
 
     public String getToolTipText() {
         return tooltip;
+    }
+
+    public Histogram getHistogram() {
+        return histogram;
     }
 }

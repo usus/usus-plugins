@@ -14,6 +14,7 @@ import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 import org.projectusus.ui.internal.coveredprojects.CoveredProjectsView;
+import org.projectusus.ui.internal.histogram.HistogramView;
 import org.projectusus.ui.internal.hotspots.HotSpotsView;
 import org.projectusus.ui.internal.proportions.cockpit.CockpitView;
 import org.projectusus.ui.internal.yellowcount.YellowCountView;
@@ -39,6 +40,7 @@ public class USUSPerspective implements IPerspectiveFactory {
         // right-hand side
         IFolderLayout analysis = layout.createFolder( "analysis", BOTTOM, 0.33f, layout.getEditorArea() ); //$NON-NLS-1$
         analysis.addView( HotSpotsView.class.getName() );
+        analysis.addView( HistogramView.class.getName() );
         for( String viewId : INTERESTING_THIRD_PARTY_VIEWS ) {
             analysis.addView( viewId );
         }

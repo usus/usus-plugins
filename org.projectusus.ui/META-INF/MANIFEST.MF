@@ -15,13 +15,13 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.debug.core,
  org.projectusus.adapter,
  org.projectusus.externals.test;resolution:=optional,
- org.junit4;resolution:=optional
+ org.junit4;resolution:=optional,
+ org.projectusus.jfeet,
+ org.swtchart,
+ org.swtchart.ext
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org,
- org.projectusus,
- org.projectusus.ui,
- org.projectusus.ui.colors,
+Export-Package: org.projectusus.ui.colors,
  org.projectusus.ui.internal,
  org.projectusus.ui.internal.coveredprojects;x-internal:=true,
  org.projectusus.ui.internal.hotspots;x-friends:="org.projectusus.ui.test",

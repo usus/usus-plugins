@@ -34,6 +34,12 @@
             id="org.projectusus.ui.internal.coveredprojects.CoveredProjectsView"
             category="org.projectusus.ui.viewCategory"
             name="Projects covered by Usus"/>
+      <view
+            class="org.projectusus.ui.internal.histogram.HistogramView"
+            id="org.projectusus.ui.internal.histogram.HistogramView"
+            name="Histogram"
+            restorable="true">
+      </view>
    </extension>
    <!-- register page book pages for model objects -->
    <!-- view actions --> 

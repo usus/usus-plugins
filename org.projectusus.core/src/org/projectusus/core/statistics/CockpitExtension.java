@@ -33,6 +33,7 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
     private int violationSum;
     private IFile currentFile;
     private List<Hotspot> hotspots;
+    private Histogram histogram;
 
     public CockpitExtension( String unit, int violationLimit ) {
         super();
@@ -46,10 +47,12 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
         violations = 0;
         violationSum = 0;
         hotspots = new ArrayList<Hotspot>();
+        histogram = new Histogram();
     }
 
     protected void addResult( SourceCodeLocation location, int count ) {
         basis++;
+        histogram.increment( count );
         violationSum += count;
         if( count > violationLimit ) {
             violations++;
@@ -87,7 +90,7 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
     }
 
     public CodeProportion getCodeProportion() {
-        return new CodeProportion( getLabel(), getDescription(), getTooltip(), getViolations(), getBasisStatistic(), getAverage(), getHotspots() );
+        return new CodeProportion( getLabel(), getDescription(), getTooltip(), getViolations(), getBasisStatistic(), getAverage(), getHotspots(), getHistogram() );
     }
 
     protected String getDescription() {
@@ -103,6 +106,10 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
             return 0.0;
         }
         return 100 * numberOfViolations / numberOfBaseElems;
+    }
+
+    protected Histogram getHistogram() {
+        return histogram;
     }
 
 }
