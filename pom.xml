@@ -44,6 +44,11 @@
       <layout>p2</layout>
       <url>http://usus.github.com/JFeet</url>
     </repository>
+    <repository>
+      <id>org.swtchart</id>
+      <layout>p2</layout>
+      <url>http://usus.github.com/swtchart</url>
+    </repository>
   </repositories>
   <build>
     <plugins>
