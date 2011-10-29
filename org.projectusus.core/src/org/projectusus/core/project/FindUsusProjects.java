@@ -6,7 +6,7 @@ package org.projectusus.core.project;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.projectusus.core.project2.UsusProjectSupport.isUsusProject;
+import static org.projectusus.core.project2.UsusProjectSupport.asUsusProject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,7 @@ public class FindUsusProjects {
     private List<IProject> compute( boolean findUsusProjects ) {
         List<IProject> result = new ArrayList<IProject>();
         for( IProject project : candidates ) {
-            if( findUsusProjects == isUsusProject( project ) ) {
+            if( findUsusProjects == asUsusProject( project ).isUsusProject() ) {
                 result.add( project );
             }
         }

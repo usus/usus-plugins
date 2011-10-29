@@ -4,8 +4,9 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.project;
 
-import static org.junit.Assert.*;
-import static org.projectusus.core.project2.UsusProjectSupport.isUsusProject;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.projectusus.core.project2.UsusProjectSupport.asUsusProject;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -16,20 +17,20 @@ public class IsUsusProjectPDETest extends PDETestUsingWSProject {
 
     @Test
     public void ususProject() {
-        assertTrue(  isUsusProject( project1 ));
+        assertTrue( asUsusProject( project1 ).isUsusProject() );
     }
 
     @Test
     public void nonUsusProject() throws CoreException {
         makeUsusProject( false, project1 );
-        assertFalse( isUsusProject( project1 ));
+        assertFalse( asUsusProject( project1 ).isUsusProject() );
     }
 
     @Test
     public void inaccessibleProject() throws CoreException {
         project1.close( new NullProgressMonitor() );
         buildFullyAndWait();
-        assertFalse( isUsusProject( project1 ));
+        assertFalse( asUsusProject( project1 ).isUsusProject() );
         project1.open( new NullProgressMonitor() ); // this fixes some following tests
     }
 }

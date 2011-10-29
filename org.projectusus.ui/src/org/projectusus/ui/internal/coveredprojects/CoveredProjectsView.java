@@ -5,12 +5,18 @@
 package org.projectusus.ui.internal.coveredprojects;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+import static org.projectusus.core.project2.UsusProjectSupport.asUsusProject;
+import static org.projectusus.ui.internal.coveredprojects.SetUsusProjectOnSelection.checkSelected;
+import static org.projectusus.ui.internal.coveredprojects.SetUsusProjectOnSelection.uncheckSelected;
 
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.jface.action.IContributionManager;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -29,7 +35,6 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.project.FindUsusProjects;
-import org.projectusus.core.project2.IUSUSProject;
 
 public class CoveredProjectsView extends ViewPart {
 
@@ -64,25 +69,32 @@ public class CoveredProjectsView extends ViewPart {
                 refresh();
             }
         } );
+        MenuManager menuManager = new MenuManager();
+        menuManager.addMenuListener( createContextMenu() );
+        table.setMenu( menuManager.createContextMenu( parent ) );
+    }
+
+    private IMenuListener createContextMenu() {
+        return new IMenuListener() {
+            public void menuAboutToShow( IMenuManager manager ) {
+                manager.removeAll();
+                manager.add( checkSelected( CoveredProjectsView.this, viewer.getSelection() ) );
+                manager.add( uncheckSelected( CoveredProjectsView.this, viewer.getSelection() ) );
+            }
+        };
     }
 
     private void updateUsusProject( Object element, boolean checked ) {
         if( element instanceof IProject ) {
             IProject project = (IProject)element;
-            if( project.isAccessible() ) {
-                Object adapter = project.getAdapter( IUSUSProject.class );
-                if( adapter instanceof IUSUSProject ) {
-                    IUSUSProject ususProject = (IUSUSProject)adapter;
-                    ususProject.setUsusProject( checked );
-                }
-            }
+            asUsusProject( project ).setUsusProject( checked );
         }
     }
 
     private Table createTable( Composite parent ) {
         Composite comp = new Composite( parent, SWT.NONE );
 
-        int style = SWT.CHECK | SWT.SINGLE | SWT.FULL_SELECTION | SWT.V_SCROLL;
+        int style = SWT.CHECK | SWT.MULTI | SWT.FULL_SELECTION | SWT.V_SCROLL;
         Table result = new Table( comp, style );
         TableColumnLayout layout = new TableColumnLayout();
         comp.setLayout( layout );
@@ -113,7 +125,7 @@ public class CoveredProjectsView extends ViewPart {
         manager.add( new Separator( IWorkbenchActionConstants.MB_ADDITIONS ) );
     }
 
-    private void refresh() {
+    void refresh() {
         IWorkspaceRoot input = getWorkspace().getRoot();
         viewer.setInput( input );
         applyCheckedState( input );

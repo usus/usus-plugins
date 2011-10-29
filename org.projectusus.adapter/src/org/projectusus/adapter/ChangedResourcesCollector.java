@@ -9,7 +9,7 @@ import static org.eclipse.core.resources.IResourceDelta.CHANGED;
 import static org.eclipse.core.resources.IResourceDelta.MARKERS;
 import static org.eclipse.core.resources.IResourceDelta.REMOVED;
 import static org.projectusus.adapter.TracingOption.RESOURCE_CHANGES;
-import static org.projectusus.core.project2.UsusProjectSupport.isUsusProject;
+import static org.projectusus.core.project2.UsusProjectSupport.asUsusProject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ class ChangedResourcesCollector implements IResourceDeltaVisitor {
     }
 
     private boolean isNonUsusProject( IResource resource ) {
-        return resource instanceof IProject && !(isUsusProject( (IProject)resource ));
+        return resource instanceof IProject && !(asUsusProject( (IProject)resource ).isUsusProject());
     }
 
     private boolean handleRemovedProject( IResourceDelta delta ) {

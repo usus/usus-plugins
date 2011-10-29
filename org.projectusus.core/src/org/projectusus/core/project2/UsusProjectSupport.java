@@ -8,15 +8,15 @@ import org.eclipse.core.resources.IProject;
 
 public class UsusProjectSupport {
 
-    public static boolean isUsusProject( IProject project ) {
-        boolean result = false;
+    public static IUSUSProject asUsusProject( IProject project ) {
+        IUSUSProject ususProject = new NullUsusProject();
         if( project.isAccessible() ) {
             Object adapter = project.getAdapter( IUSUSProject.class );
             if( adapter instanceof IUSUSProject ) {
-                result = ((IUSUSProject)adapter).isUsusProject();
+                ususProject = (IUSUSProject)adapter;
             }
         }
-        return result;
+        return ususProject;
     }
 
     private UsusProjectSupport() {

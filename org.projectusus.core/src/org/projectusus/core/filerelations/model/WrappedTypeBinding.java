@@ -36,7 +36,7 @@ public class WrappedTypeBinding {
         if( underlyingResource == null || !underlyingResource.getFileExtension().equals( JAVA ) ) {
             return;
         }
-        if( !UsusProjectSupport.isUsusProject( underlyingResource.getProject() ) ) {
+        if( !UsusProjectSupport.asUsusProject( underlyingResource.getProject() ).isUsusProject() ) {
             return;
         }
 
