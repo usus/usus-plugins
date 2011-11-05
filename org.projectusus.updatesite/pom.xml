@@ -29,11 +29,17 @@
 			</executions>
 			<configuration>
 				<source>
-					<!-- source repositori(es) to mirror from -->
 					<repository>
 						<url>http://projectusus.googlecode.com/svn/updates</url>
 						<layout>p2</layout>
-						<!-- sypported layouts are "p2-metadata", "p2-artifacts", and "p2" (for joint repositories) -->
+					</repository>
+					<repository>
+						<url>http://usus.github.com/JFeet</url>
+						<layout>p2</layout>
+					</repository>
+					<repository>
+						<url>http://usus.github.com/swtchart</url>
+						<layout>p2</layout>
 					</repository>
 				</source>
 
