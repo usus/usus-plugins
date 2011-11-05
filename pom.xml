@@ -12,6 +12,8 @@
   <properties>
     <tycho-version>0.13.0</tycho-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <platform-version-name>indigo</platform-version-name>
+    <eclipse-site>http://download.eclipse.org/releases/${platform-version-name}</eclipse-site>
   </properties>
 
   <modules>
@@ -34,11 +36,80 @@
     <module>org.projectusus.ui.dependencygraph</module>
     <module>org.projectusus.updatesite</module>
   </modules>
+
+  <profiles>
+    <profile>
+      <id>platform-ganymede</id>
+      <activation>
+        <property>
+          <name>platform-version-name</name>
+          <value>ganymede</value>
+        </property>
+      </activation>
+      <properties>
+        <eclipse-site>http://download.eclipse.org/releases/ganymede</eclipse-site>
+        <platform-version>[3.4,3.5)</platform-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>platform-galileo</id>
+      <activation>
+        <property>
+          <name>platform-version-name</name>
+          <value>galileo</value>
+        </property>
+      </activation>
+      <properties>
+        <eclipse-site>http://download.eclipse.org/releases/galileo</eclipse-site>
+        <platform-version>[3.5,3.6)</platform-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>platform-helios</id>
+      <activation>
+        <property>
+          <name>platform-version-name</name>
+          <value>helios</value>
+        </property>
+      </activation>
+      <properties>
+        <eclipse-site>http://download.eclipse.org/releases/helios</eclipse-site>
+        <platform-version>[3.6,3.7)</platform-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>platform-indigo</id>
+      <activation>
+        <property>
+          <name>platform-version-name</name>
+          <value>indigo</value>
+        </property>
+      </activation>
+      <properties>
+        <eclipse-site>http://download.eclipse.org/releases/indigo</eclipse-site>
+        <platform-version>[3.7,3.8)</platform-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>platform-juno</id>
+      <activation>
+        <property>
+          <name>platform-version-name</name>
+          <value>juno</value>
+        </property>
+      </activation>
+      <properties>
+        <eclipse-site>http://download.eclipse.org/releases/juno</eclipse-site>
+        <platform-version>[4.2,4.3)</platform-version>
+      </properties>
+    </profile>
+  </profiles>
+
   <repositories>
     <repository>
-      <id>eclipse-helios</id>
+      <id>org.eclipse.release</id>
       <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/helios</url>
+      <url>${eclipse-site}</url>
     </repository>
     <repository>
       <id>org.projectusus.jfeet</id>
