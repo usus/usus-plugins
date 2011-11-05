@@ -1,5 +1,6 @@
 <project name="Project Usus Release" basedir="." default="release">
 
+	<property name="maven.executable" value="mvn"/>
 	<property name="tycho.repo" location="${basedir}/target/repository"/>
 	<property name="svn.dir" location="${basedir}/svn"/>
 
@@ -47,7 +48,7 @@
 		</svn>
 	</target>
 
-	<target name="release" depends="merge">
+	<target name="commit" depends="merge">
 		<echo>Committing ${release.version}...</echo>
 		<fail unless="release.version" message="Missing property: release.version"/>
 		<echo>svn commit</echo>
@@ -55,5 +56,15 @@
 			<commit dir="${svn.dir}" recurse="true" message="Released ${release.version}"/>
 		</svn>
 	</target>
+
+	<target name="increment-versions">
+		<echo>Incrementing version numbers to ${new.version}</echo>
+		<fail unless="new.version" message="Missing property: new.version"/>
+		<exec executable="${maven.executable}" dir="..">
+			<arg line="-Dtycho.mode=maven org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=${new.version}-SNAPSHOT"/>
+		</exec>
+	</target>
+
+	<target name="release" depends="commit, increment-versions"/>
 
 </project>
