@@ -5,12 +5,12 @@
 
   <groupId>org.projectusus</groupId>
   <artifactId>projectusus</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.6.3-SNAPSHOT</version>
   <name>Project Usus</name>
   <packaging>pom</packaging>
 
   <properties>
-    <tycho-version>0.12.0</tycho-version>
+    <tycho-version>0.13.0</tycho-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
@@ -32,6 +32,7 @@
     <module>org.projectusus.projectsettings.ui</module>
     <module>org.projectusus.ui</module>
     <module>org.projectusus.ui.dependencygraph</module>
+    <module>org.projectusus.updatesite</module>
   </modules>
   <repositories>
     <repository>

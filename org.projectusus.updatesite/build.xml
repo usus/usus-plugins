@@ -1,0 +1,70 @@
+<project name="Project Usus Release" basedir="." default="release">
+
+	<property name="maven.executable" value="mvn"/>
+	<property name="tycho.repo" location="${basedir}/target/repository"/>
+	<property name="svn.dir" location="${basedir}/svn"/>
+
+	<condition property="already.checked.out">
+		<available file="${svn.dir}" type="dir"/>
+	</condition>
+
+	<!-- Setup SvnAnt tasks -->
+	<path id="path.svnant">
+		<fileset dir="ant" includes="*.jar"/>
+	</path>
+	<typedef 
+		resource="org/tigris/subversion/svnant/svnantlib.xml" 
+		classpathref="path.svnant"/>
+	<svnSetting
+		javahl="false"
+		svnkit="true"
+		username="${svn.user}"
+		password="${svn.password}"
+		id="svn.settings"/>
+
+
+	<target name="checkout" unless="already.checked.out">
+		<echo>svn checkout</echo>
+		<svn refid="svn.settings">
+			<checkout url="https://projectusus.googlecode.com/svn/updates" destPath="${svn.dir}" />
+		</svn>
+	</target>
+
+	<target name="update" if="already.checked.out">
+		<echo>svn update</echo>
+		<svn refid="svn.settings">
+			<update dir="${svn.dir}" recurse="true"/>
+		</svn>
+	</target>
+
+	<target name="merge" depends="checkout, update">
+		<echo>copying current snapshot</echo>
+		<copy todir="${svn.dir}" overwrite="true">
+			<fileset dir="${tycho.repo}"/>
+		</copy>
+		<echo>svn add</echo>
+		<svn refid="svn.settings">
+			<add dir="${svn.dir}" recurse="true" force="true"/>
+		</svn>
+	</target>
+
+	<target name="commit" depends="merge">
+		<echo>Committing ${release.version}...</echo>
+		<fail unless="release.version" message="Missing property: release.version"/>
+		<echo>svn commit</echo>
+		<svn refid="svn.settings">
+			<commit dir="${svn.dir}" recurse="true" message="Released ${release.version}"/>
+		</svn>
+	</target>
+
+	<target name="increment-versions">
+		<echo>Incrementing version numbers to ${new.version}</echo>
+		<fail unless="new.version" message="Missing property: new.version"/>
+		<exec executable="${maven.executable}" dir="..">
+			<arg line="-Dtycho.mode=maven org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=${new.version}-SNAPSHOT"/>
+		</exec>
+	</target>
+
+	<target name="release" depends="commit, increment-versions"/>
+
+</project>
