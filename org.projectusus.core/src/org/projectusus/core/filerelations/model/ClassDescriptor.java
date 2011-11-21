@@ -1,5 +1,7 @@
 package org.projectusus.core.filerelations.model;
 
+import net.sourceforge.c4j.*;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +12,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
 
+@ContractReference(contractClassName = "ClassDescriptorContract")
 public class ClassDescriptor {
 
     private static Map<ClassDescriptorKey, ClassDescriptor> classes = new HashMap<ClassDescriptorKey, ClassDescriptor>();

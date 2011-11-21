@@ -1,5 +1,7 @@
 package org.projectusus.core.filerelations.model;
 
+import net.sourceforge.c4j.*;
+
 import static com.google.common.collect.Sets.union;
 
 import java.util.Collection;
@@ -10,6 +12,7 @@ import java.util.Set;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 
+@ContractReference(contractClassName = "RelationsContract")
 public class Relations<K> {
 
     protected final SetMultimap<K, Relation<K>> incomingRelations;

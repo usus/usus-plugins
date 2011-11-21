@@ -1,8 +1,11 @@
 package org.projectusus.core.filerelations.model;
 
+import net.sourceforge.c4j.*;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+@ContractReference(contractClassName = "RelationContract")
 public class Relation<T> {
 
     protected final T source;
