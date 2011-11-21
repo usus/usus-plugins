@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="lib" path="lib/javassist.jar"/>
+	<classpathentry kind="lib" path="lib/c4j.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/guava-r06.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="design"/>
 	<classpathentry exported="true" kind="lib" path="lib/joda-time-1.6.jar" sourcepath="lib/joda-time-1.6-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-lang-2.4.jar" sourcepath="org.projectusus.coresrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgrapht-jdk1.5.jar" sourcepath="org.projectusus.coresrc.zip"/>
