@@ -11,9 +11,11 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.projectusus.adapter.ForcedRecompute;
+import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
+import org.projectusus.core.statistics.visitors.CCDCountVisitor;
 import org.projectusus.statistics.ACDStatistic;
 
 public class ACDCollectorPDETest extends PDETestForMetricsComputation {
@@ -63,7 +65,12 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void twoRelatedClasses1knows2Generic() throws Exception {
-        createFileAndBuild( "_1knows2generic" );
+        IFile file = createFileAndBuild( "_1knows2generic" );
+        new MetricsResultPrinter( System.out ).visit();
+
+        CCDCountVisitor ccdVisitor = new CCDCountVisitor( new JavaModelPath( file ) ).visitAndReturn();
+        assertEquals( 3, ccdVisitor.getMetricsSum() );
+
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
