@@ -7,15 +7,12 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.projectusus.adapter.ForcedRecompute;
-import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
-import org.projectusus.core.statistics.visitors.CCDCountVisitor;
 import org.projectusus.statistics.ACDStatistic;
 
 public class ACDCollectorPDETest extends PDETestForMetricsComputation {
@@ -65,12 +62,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void twoRelatedClasses1knows2Generic() throws Exception {
-        IFile file = createFileAndBuild( "_1knows2generic" );
-        new MetricsResultPrinter( System.out ).visit();
-
-        CCDCountVisitor ccdVisitor = new CCDCountVisitor( new JavaModelPath( file ) ).visitAndReturn();
-        assertEquals( 3, ccdVisitor.getMetricsSum() );
-
+        createFileAndBuild( "_1knows2generic" );
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
@@ -449,7 +441,6 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
-    @Ignore( value = "later" )
     public void staticMethodWithClassName() throws Exception {
         createWSFolder( "oops", project1 );
         createJavaWSFile( "oops/Acd_static1.java" );
@@ -471,11 +462,10 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
-        Assert.assertEquals( 3 / 4.0, getACD(), 0.0001 );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
     }
 
     @Test
-    @Ignore( value = "Test fails, but tested code works in productive system" )
     public void staticFieldWithClassName() throws Exception {
         createWSFolder( "acd_staticfields", project1 );
         createJavaWSFile( "acd_staticfields/Acd_static1.java" );
