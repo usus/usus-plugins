@@ -17,8 +17,8 @@ public class ClassDescriptor {
     protected final Set<ClassDescriptor> parents;
     protected final Set<ClassDescriptor> children;
 
-    private ClassDescriptorKey key;
-    private Set<ClassDescriptor> transitiveChildrenCache = new HashSet<ClassDescriptor>();
+    private final ClassDescriptorKey key;
+    private final Set<ClassDescriptor> transitiveChildrenCache = new HashSet<ClassDescriptor>();
 
     public static void clear() {
         classes.clear();
