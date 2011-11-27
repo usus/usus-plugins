@@ -76,28 +76,31 @@ public class UsusModelProviderContract extends ContractBase<UsusModelProvider> {
         // TODO Auto-generated pre-condition
         assert sourceType != null : "sourceType_not_null";
         assert targetType != null : "targetType_not_null";
+        assert !sourceType.equals( targetType ) : fullString( "Source ", sourceType ) + " must not equal" + fullString( " Target ", targetType );
     }
 
     public static void post_addClassReference( WrappedTypeBinding sourceType, WrappedTypeBinding targetType ) {
-        String sourceString = " Source " + sourceType.getPackagename() + " " + sourceType.getClassname();
-        String targetString = " Target " + targetType.getPackagename() + " " + targetType.getClassname();
+        String sourceString = fullString( " Source: ", sourceType );
+        String targetString = fullString( " Target: ", targetType );
         ClassDescriptor source = null;
         ClassDescriptor target = null;
         for( ClassDescriptor descriptor : ClassDescriptor.getAll() ) {
-            if( descriptor.getFile().equals( sourceType.getUnderlyingResource() ) ) {
+            if( descriptor.getClassname().equals( sourceType.getClassname() ) && descriptor.getFile().equals( sourceType.getUnderlyingResource() ) ) {
                 source = descriptor;
             }
-            if( descriptor.getFile().equals( targetType.getUnderlyingResource() ) ) {
+            if( descriptor.getClassname().equals( targetType.getClassname() ) && descriptor.getFile().equals( targetType.getUnderlyingResource() ) ) {
                 target = descriptor;
             }
         }
 
         assert source != null : "There is a ClassDescriptor for" + sourceString;
         assert target != null : "There is a ClassDescriptor for" + targetString;
-        if( !source.equals( target ) ) {
-            assert source.getChildren().contains( target ) : "Target is a child of Source." + sourceString + targetString;
-            assert target.getParents().contains( source ) : "Source is a parent of Target." + sourceString + targetString;
-        }
+        assert source.getChildren().contains( target ) : "Target is a child of Source." + sourceString + targetString;
+        assert target.getParents().contains( source ) : "Source is a parent of Target." + sourceString + targetString;
+    }
+
+    private static String fullString( String label, WrappedTypeBinding type ) {
+        return label + type.getPackagename() + " " + type.getClassname();
     }
 
     public static void pre_acceptAndGuide( IMetricsResultVisitor visitor ) {

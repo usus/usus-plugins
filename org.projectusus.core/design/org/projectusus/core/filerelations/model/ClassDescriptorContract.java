@@ -51,7 +51,7 @@ public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
 
     public static void post_of( WrappedTypeBinding type ) {
         ClassDescriptor returnValue = (ClassDescriptor)getReturnValue();
-        // TODO no post-condition identified yet
+        assert ClassDescriptor.getAll().contains( returnValue ) : "List of all contains ClassDescriptor " + returnValue;
     }
 
     public static void pre_of( IFile file, Classname classname, Packagename packagename ) {
@@ -62,6 +62,7 @@ public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
 
     public static void post_of( IFile file, Classname classname, Packagename packagename ) {
         ClassDescriptor returnValue = (ClassDescriptor)getReturnValue();
+        assert ClassDescriptor.getAll().contains( returnValue ) : "List of all contains ClassDescriptor " + returnValue;
         String classtext = " Class: " + returnValue;
         assert returnValue.getFile() == file : "Created class is associated with file." + classtext + " File: " + file;
         assert returnValue.getClassname() == classname : "Created class is associated with classname." + classtext + " Classname: " + classname;

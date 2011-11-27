@@ -1,5 +1,7 @@
 package org.projectusus.core.filerelations.model;
 
+import net.sourceforge.c4j.*;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -7,6 +9,7 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.IJavaElement;
 
+@ContractReference(contractClassName = "PackagenameContract")
 public class Packagename {
 
     private static Map<String, Packagename> allPackages = new HashMap<String, Packagename>();
