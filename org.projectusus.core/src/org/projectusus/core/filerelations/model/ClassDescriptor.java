@@ -1,18 +1,18 @@
 package org.projectusus.core.filerelations.model;
 
-import net.sourceforge.c4j.*;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.c4j.ContractReference;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
 
-@ContractReference(contractClassName = "ClassDescriptorContract")
+@ContractReference( contractClassName = "ClassDescriptorContract" )
 public class ClassDescriptor {
 
     private static Map<ClassDescriptorKey, ClassDescriptor> classes = new HashMap<ClassDescriptorKey, ClassDescriptor>();
@@ -115,11 +115,13 @@ public class ClassDescriptor {
     }
 
     private void clearOwnAndParentsTransitiveChildrenCache() {
-        if( !transitiveChildrenCache.isEmpty() ) {
-            transitiveChildrenCache.clear();
-            for( ClassDescriptor parent : parents ) {
-                parent.clearOwnAndParentsTransitiveChildrenCache();
-            }
+        if( transitiveChildrenCache.isEmpty() ) {
+            return;
+        }
+
+        transitiveChildrenCache.clear();
+        for( ClassDescriptor parent : parents ) {
+            parent.clearOwnAndParentsTransitiveChildrenCache();
         }
     }
 

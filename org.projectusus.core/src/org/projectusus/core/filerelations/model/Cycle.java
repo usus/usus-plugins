@@ -1,7 +1,10 @@
 package org.projectusus.core.filerelations.model;
 
+import net.sourceforge.c4j.*;
+
 import java.util.Set;
 
+@ContractReference(contractClassName = "CycleContract")
 public class Cycle<Element> {
 
     private final Set<Element> elementsInCycle;

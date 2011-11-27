@@ -7,14 +7,18 @@ import net.sourceforge.c4j.ContractBase;
 
 public class RelationsContract<K> extends ContractBase<Relations<K>> {
 
+    private String targetString() {
+        return " Meth-Target: " + m_target;
+    }
+
     public RelationsContract( Relations<K> target ) {
         super( target );
     }
 
     public void classInvariant() {
         for( Relation<K> relation : m_target.getAllDirectRelations() ) {
-            assert m_target.getDirectRelationsFrom( relation.getSource() ).contains( relation ) : "Each relation is in the relations-from set";
-            assert m_target.getDirectRelationsTo( relation.getTarget() ).contains( relation ) : "Each relation is in the relations-to set";
+            assert m_target.getDirectRelationsFrom( relation.getSource() ).contains( relation ) : "Each relation is in the relations-from set" + targetString();
+            assert m_target.getDirectRelationsTo( relation.getTarget() ).contains( relation ) : "Each relation is in the relations-to set" + targetString();
         }
     }
 
@@ -27,16 +31,16 @@ public class RelationsContract<K> extends ContractBase<Relations<K>> {
     }
 
     public void pre_getDirectRelationsFrom( K sourceFile ) {
-        assert sourceFile != null : "sourceFile_not_null";
+        assert sourceFile != null : "sourceFile_not_null" + targetString();
     }
 
     public void post_getDirectRelationsFrom( K sourceFile ) {
         Set<Relation<K>> returnValue = (Set<Relation<K>>)getReturnValue();
         for( Relation<K> relation : returnValue ) {
-            assert relation.getSource().equals( sourceFile ) : "Method argument is source of all returned relations";
+            assert relation.getSource().equals( sourceFile ) : "Method argument is source of all returned relations" + targetString();
         }
         if( !m_target.containsKey( sourceFile ) ) {
-            assert returnValue.isEmpty() : "No direct relations when method argument is not in key list";
+            assert returnValue.isEmpty() : "No direct relations when method argument is not in key list" + targetString();
         }
     }
 
@@ -47,21 +51,21 @@ public class RelationsContract<K> extends ContractBase<Relations<K>> {
     public void post_getDirectRelationsTo( K targetFile ) {
         Set<Relation<K>> returnValue = (Set<Relation<K>>)getReturnValue();
         for( Relation<K> relation : returnValue ) {
-            assert relation.getTarget().equals( targetFile ) : "Method argument is target of all returned relations";
+            assert relation.getTarget().equals( targetFile ) : "Method argument is target of all returned relations" + targetString();
         }
         if( !m_target.containsKey( targetFile ) ) {
-            assert returnValue.isEmpty() : "No direct relations when method argument is not in key list";
+            assert returnValue.isEmpty() : "No direct relations when method argument is not in key list" + targetString();
         }
     }
 
     public void pre_removeDirectRelationsFrom( K sourceFile ) {
-        assert sourceFile != null : "sourceFile_not_null";
+        assert sourceFile != null : "sourceFile_not_null" + targetString();
     }
 
     public void post_removeDirectRelationsFrom( K sourceFile ) {
-        assert m_target.getDirectRelationsFrom( sourceFile ).isEmpty() : "No direct relations from method argument are available";
+        assert m_target.getDirectRelationsFrom( sourceFile ).isEmpty() : "No direct relations from method argument are available" + targetString();
         for( Relation<K> relation : m_target.getAllDirectRelations() ) {
-            assert !relation.getSource().equals( sourceFile ) : "No direct relations have method argument as source";
+            assert !relation.getSource().equals( sourceFile ) : "No direct relations have method argument as source" + targetString();
         }
     }
 
@@ -75,26 +79,26 @@ public class RelationsContract<K> extends ContractBase<Relations<K>> {
     }
 
     public void pre_remove( K sourceKey, K targetKey ) {
-        assert sourceKey != null : "sourceKey_not_null";
-        assert targetKey != null : "targetKey_not_null";
+        assert sourceKey != null : "sourceKey_not_null" + targetString();
+        assert targetKey != null : "targetKey_not_null" + targetString();
     }
 
     public void post_remove( K sourceKey, K targetKey ) {
         for( Relation<K> relation : m_target.getDirectRelationsFrom( sourceKey ) ) {
-            assert !relation.getTarget().equals( targetKey ) : "Relations from removed source do not contain relations to removed target";
+            assert !relation.getTarget().equals( targetKey ) : "Relations from removed source do not contain relations to removed target" + targetString();
         }
         for( Relation<K> relation : m_target.getDirectRelationsTo( targetKey ) ) {
-            assert !relation.getSource().equals( sourceKey ) : "Relations to removed target do not contain relations from removed source";
+            assert !relation.getSource().equals( sourceKey ) : "Relations to removed target do not contain relations from removed source" + targetString();
         }
     }
 
     public void pre_containsKey( K key ) {
-        assert key != null : "key_not_null";
+        assert key != null : "key_not_null" + targetString();
     }
 
     public void post_containsKey( K key ) {
         boolean returnValue = ((Boolean)getReturnValue()).booleanValue();
-        assert returnValue == m_target.keySet().contains( key ) : "Relations contains key iff keyset contains key";
+        assert returnValue == m_target.keySet().contains( key ) : "Relations contains key iff keyset contains key" + targetString();
     }
 
     public void pre_keySet() {

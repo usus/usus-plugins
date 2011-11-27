@@ -7,6 +7,10 @@ public class RelationContract<T> extends ContractBase<Relation<T>> {
     private T source;
     private T target;
 
+    private String targetString() {
+        return " Meth-Target: " + m_target;
+    }
+
     public RelationContract( Relation<T> target ) {
         super( target );
     }
@@ -16,9 +20,10 @@ public class RelationContract<T> extends ContractBase<Relation<T>> {
     }
 
     public void pre_Relation( T source, T target ) {
-        assert source != null : "source_not_null";
-        assert target != null : "target_not_null";
-        assert !source.equals( target ) : "source and target are different";
+        String arguments = " source: " + source + " target: " + target;
+        assert source != null : "source_not_null:" + arguments;
+        assert target != null : "target_not_null" + arguments;
+        assert !source.equals( target ) : "source and target are different" + arguments;
         this.source = source;
         this.target = target;
     }
@@ -33,7 +38,7 @@ public class RelationContract<T> extends ContractBase<Relation<T>> {
 
     public void post_getSource() {
         T returnValue = (T)getReturnValue();
-        assert returnValue.equals( source ) : "getSource provides the first constructor argument";
+        assert returnValue.equals( source ) : "getSource provides the first constructor argument" + targetString();
     }
 
     public void pre_getTarget() {
@@ -42,7 +47,7 @@ public class RelationContract<T> extends ContractBase<Relation<T>> {
 
     public void post_getTarget() {
         T returnValue = (T)getReturnValue();
-        assert returnValue.equals( target ) : "getTarget provides the second constructor argument";
+        assert returnValue.equals( target ) : "getTarget provides the second constructor argument" + targetString();
     }
 
 }
