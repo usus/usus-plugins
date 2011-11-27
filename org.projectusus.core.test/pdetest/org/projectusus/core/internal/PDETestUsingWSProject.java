@@ -11,6 +11,7 @@ import static org.eclipse.core.resources.ResourcesPlugin.FAMILY_AUTO_REFRESH;
 import static org.eclipse.core.resources.ResourcesPlugin.FAMILY_MANUAL_BUILD;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.eclipse.core.runtime.jobs.Job.getJobManager;
+import static org.projectusus.core.internal.TestProjectCreator.SOURCE_FOLDER;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -73,8 +74,8 @@ public class PDETestUsingWSProject {
         System.out.println( " OK." );
     }
 
-    protected IFile createWSFile( String fileName, String content, IProject theProject ) throws CoreException {
-        IFile result = theProject.getFile( fileName );
+    protected IFile createWSFile( String fileName, String content, IProject project ) throws CoreException {
+        IFile result = project.getFile( SOURCE_FOLDER + "/" + fileName );
         result.create( createInputStream( content ), true, new NullProgressMonitor() );
         return result;
     }
@@ -87,14 +88,14 @@ public class PDETestUsingWSProject {
         file.setContents( createInputStream( newContent ), true, false, new NullProgressMonitor() );
     }
 
-    protected IFolder createWSFolder( String name, IProject theProject ) throws CoreException {
-        IFolder result = theProject.getFolder( name );
+    protected IFolder createWSFolder( String name, IProject project ) throws CoreException {
+        IFolder result = project.getFolder( SOURCE_FOLDER + "/" + name );
         result.create( true, true, new NullProgressMonitor() );
         return result;
     }
 
-    protected void makeUsusProject( boolean makeUsusProject, IProject theProject ) throws CoreException {
-        TestProjectCreator.makeUsusProject( makeUsusProject, theProject );
+    protected void makeUsusProject( boolean makeUsusProject, IProject project ) throws CoreException {
+        TestProjectCreator.makeUsusProject( makeUsusProject, project );
     }
 
     private InputStream createInputStream( String content ) {

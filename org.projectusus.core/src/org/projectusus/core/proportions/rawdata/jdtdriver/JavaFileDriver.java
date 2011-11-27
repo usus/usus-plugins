@@ -38,7 +38,6 @@ public class JavaFileDriver {
         ASTParser parser = newParser( AST.JLS3 );
         parser.setKind( ASTParser.K_COMPILATION_UNIT );
         parser.setResolveBindings( true );
-        parser.setBindingsRecovery( true );
         parser.setSource( unit );
         return (CompilationUnit)parser.createAST( null );
     }
