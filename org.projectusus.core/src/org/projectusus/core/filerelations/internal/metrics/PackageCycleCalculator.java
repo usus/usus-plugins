@@ -6,6 +6,7 @@ import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.filerelations.model.Relation;
 import org.projectusus.core.filerelations.model.RelationGraph;
 
+@Deprecated
 public class PackageCycleCalculator {
 
     private final PackageRelations packageRelations;

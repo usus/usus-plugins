@@ -171,6 +171,7 @@ public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
     }
 
     public void post_removeFromPool() {
+        post_prepareRemoval();
         assert m_target.getParents().isEmpty() : "Target is not connected to any parents any more" + targetString();
         assert m_target.getTransitiveParentCount() == 1 : "Target's transitive parent count is 1" + targetString();
         for( ClassDescriptor parent : ClassDescriptor.getAll() ) {

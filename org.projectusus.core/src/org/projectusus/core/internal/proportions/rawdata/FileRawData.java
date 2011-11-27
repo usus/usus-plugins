@@ -4,6 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
+import net.sourceforge.c4j.*;
+
 import static org.projectusus.core.internal.proportions.rawdata.JDTSupport.getCompilationUnit;
 
 import org.eclipse.core.resources.IFile;
@@ -22,6 +24,7 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
+@ContractReference(contractClassName = "FileRawDataContract")
 public class FileRawData extends RawData<Integer, ClassRawData> {
 
     private MetricsResults data;

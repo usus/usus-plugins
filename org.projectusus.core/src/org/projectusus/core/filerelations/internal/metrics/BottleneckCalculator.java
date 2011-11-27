@@ -2,6 +2,7 @@ package org.projectusus.core.filerelations.internal.metrics;
 
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 
+@Deprecated
 public class BottleneckCalculator {
 
     public static int getBottleneckCount( ClassDescriptor descriptor ) {
