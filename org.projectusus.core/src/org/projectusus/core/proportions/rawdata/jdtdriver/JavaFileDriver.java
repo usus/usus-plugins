@@ -10,7 +10,6 @@ import static org.eclipse.jdt.core.dom.ASTParser.newParser;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
@@ -38,8 +37,8 @@ public class JavaFileDriver {
     private CompilationUnit parse( ICompilationUnit unit ) {
         ASTParser parser = newParser( AST.JLS3 );
         parser.setKind( ASTParser.K_COMPILATION_UNIT );
-        parser.setSource( unit );
         parser.setResolveBindings( true );
-        return (CompilationUnit)parser.createAST( new NullProgressMonitor() );
+        parser.setSource( unit );
+        return (CompilationUnit)parser.createAST( null );
     }
 }

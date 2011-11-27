@@ -7,6 +7,7 @@ package org.projectusus.core.internal.proportions;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.projectusus.core.internal.TestProjectCreator.SOURCE_FOLDER;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -102,12 +103,12 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         // original file comes along as deleted
         assertEquals( 1, target.getRemovedFiles( project1 ).size() );
         IFile removedFile = target.getRemovedFiles( project1 ).iterator().next();
-        assertEquals( new Path( "/" + PROJECT_NAME_1 + "/Bla.java" ), removedFile.getFullPath() );
+        assertEquals( new Path( "/" + PROJECT_NAME_1 + "/" + SOURCE_FOLDER + "/Bla.java" ), removedFile.getFullPath() );
 
         // file at new location is registered as affected file
         assertEquals( 1, target.getFiles( project1 ).size() );
         IFile affectedFile = target.getFiles( project1 ).iterator().next();
-        assertEquals( new Path( "/" + PROJECT_NAME_1 + "/dir/Bla.java" ), affectedFile.getFullPath() );
+        assertEquals( new Path( "/" + PROJECT_NAME_1 + "/" + SOURCE_FOLDER + "/dir/Bla.java" ), affectedFile.getFullPath() );
     }
 
     @Test

@@ -7,8 +7,6 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.projectusus.adapter.ForcedRecompute;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
@@ -158,12 +156,12 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     @Test
     public void twoFiles_GameStateLoaded2nd_KnowsLRUCacheLoaded1st_WithPackages() throws Exception {
         createWSFolders();
-        createWSFile( "org/doublemill/model/util/Acd_LRUCache.java", loadContent( "Acd_LRUCache.test" ), project1 );
+        createWSFile( "org/doublemill/model/util/LRUCache.java", loadContent( "Acd_LRUCache.test" ), project1 );
         buildFullyAndWait();
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, ClassDescriptor.getAll().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
-        createWSFile( "org/doublemill/model/ai/Acd_GameStateAI.java", loadContent( "Acd_GameStateAI.test" ), project1 );
+        createWSFile( "org/doublemill/model/ai/GameStateAI.java", loadContent( "Acd_GameStateAI.test" ), project1 );
         buildIncrementallyAndWait();
         new ForcedRecompute().schedule();
         Thread.sleep( 1000 );
@@ -177,14 +175,14 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     @Test
     public void twoFiles_GameStateLoaded1st_KnowsLRUCacheLoaded2nd_WithPackages() throws Exception {
         createWSFolders();
-        createWSFile( "org/doublemill/model/ai/Acd_GameStateAI.java", loadContent( "Acd_GameStateAI.test" ), project1 );
+        createWSFile( "org/doublemill/model/ai/GameStateAI.java", loadContent( "Acd_GameStateAI.test" ), project1 );
         buildFullyAndWait();
         System.out.println( "=====================" );
         System.out.println( "Erster Autobuild beendet." );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, ClassDescriptor.getAll().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
-        createWSFile( "org/doublemill/model/util/Acd_LRUCache.java", loadContent( "Acd_LRUCache.test" ), project1 );
+        createWSFile( "org/doublemill/model/util/LRUCache.java", loadContent( "Acd_LRUCache.test" ), project1 );
         buildIncrementallyAndWait();
         new ForcedRecompute().schedule();
         Thread.sleep( 1000 );
@@ -442,7 +440,6 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
-    @Ignore( value = "later" )
     public void staticMethodWithClassName() throws Exception {
         createWSFolder( "oops", project1 );
         createJavaWSFile( "oops/Acd_static1.java" );
@@ -455,7 +452,6 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
-    @Ignore( value = "Test fails, but tested code works in productive system" )
     public void staticMethodWithoutClassName() throws Exception {
         createWSFolder( "oops", project1 );
         createJavaWSFile( "oops/Acd_static1.java" );
@@ -464,11 +460,10 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
-        Assert.assertEquals( 3 / 4.0, getACD(), 0.0001 );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
     }
 
     @Test
-    @Ignore( value = "Test fails, but tested code works in productive system" )
     public void staticFieldWithClassName() throws Exception {
         createWSFolder( "acd_staticfields", project1 );
         createJavaWSFile( "acd_staticfields/Acd_static1.java" );
@@ -492,7 +487,6 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
-    @Ignore( value = "Test fails, but tested code works in productive system" )
     public void staticFieldWithoutClassName() throws Exception {
         createWSFolder( "acd_staticfields", project1 );
         createJavaWSFile( "acd_staticfields/Acd_static1.java" );
