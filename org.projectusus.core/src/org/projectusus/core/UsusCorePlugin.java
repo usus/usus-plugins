@@ -41,6 +41,7 @@ public class UsusCorePlugin extends Plugin {
     }
 
     public IEclipsePreferences getPreferences() {
+        // TODO fix needs 3.4
         return new InstanceScope().getNode( PLUGIN_ID );
     }
 

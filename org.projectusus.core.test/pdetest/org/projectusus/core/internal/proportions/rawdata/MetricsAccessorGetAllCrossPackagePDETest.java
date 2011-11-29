@@ -34,7 +34,7 @@ public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsC
     @Test
     public void twoClassesInOnePackageKnowEachOther() throws Exception {
         createFileAndBuild( "_file1Knows2" );
-        IFile file = createFileAndBuild( "_file2Knows1" );
+        createFileAndBuild( "_file2Knows1" );
 
         checkTwoNodesWithOneChildEach();
 
@@ -48,7 +48,7 @@ public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsC
         createWSFolder( "package2", project1 );
         createWSFile( "package1/MetricsAccessor_package1file1Knows2.java", loadContent( "MetricsAccessor_package1file1Knows2.test" ), project1 );
         buildFullyAndWait();
-        IFile file = createWSFile( "package2/MetricsAccessor_package2file2Knows1.java", loadContent( "MetricsAccessor_package2file2Knows1.test" ), project1 );
+        createWSFile( "package2/MetricsAccessor_package2file2Knows1.java", loadContent( "MetricsAccessor_package2file2Knows1.test" ), project1 );
         buildFullyAndWait();
 
         checkTwoNodesWithOneChildEach();

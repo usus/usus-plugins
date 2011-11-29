@@ -1,6 +1,7 @@
-// Generated source.
 package org.projectusus.matchers;
 
+// Generated source.
+@SuppressWarnings("all")
 public class UsusMatchers {
 
   public static <T> org.hamcrest.Matcher<T> is(org.hamcrest.Matcher<T> p0) {

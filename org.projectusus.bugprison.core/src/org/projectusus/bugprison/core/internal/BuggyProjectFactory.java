@@ -11,7 +11,8 @@ import org.projectusus.bugprison.core.IBuggyProject;
 public class BuggyProjectFactory implements IAdapterFactory {
 
     // raw type in interface we implement - no chance
-    public Object getAdapter( Object adaptableObject, Class adapterType ) {
+    @SuppressWarnings("rawtypes")
+	public Object getAdapter( Object adaptableObject, Class adapterType ) {
         if( adapterType == IBuggyProject.class && adaptableObject instanceof IProject ) {
             return new BuggyProject( (IProject)adaptableObject );
         }

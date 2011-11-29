@@ -56,7 +56,7 @@ public class IncrementalUsusBuilder extends IncrementalProjectBuilder {
     }
 
     @Override
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings( "rawtypes" )
     protected IProject[] build( int kind, Map args, IProgressMonitor monitor ) throws CoreException {
         if( kind == IncrementalProjectBuilder.FULL_BUILD ) {
             fullBuild( monitor );
