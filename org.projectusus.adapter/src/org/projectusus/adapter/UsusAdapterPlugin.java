@@ -26,7 +26,7 @@ public class UsusAdapterPlugin extends Plugin {
     }
 
     @Override
-    public void stop( @SuppressWarnings( "unused" ) BundleContext bundleContext ) throws Exception {
+    public void stop( BundleContext bundleContext ) throws Exception {
         autoComputer.dispose();
     }
 
