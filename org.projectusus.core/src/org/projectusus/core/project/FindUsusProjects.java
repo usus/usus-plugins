@@ -15,9 +15,9 @@ import org.eclipse.core.resources.IProject;
 
 public class FindUsusProjects {
 
-    private final List<IProject> candidates;
+    private final Iterable<IProject> candidates;
 
-    private static List<IProject> asProjectList( Object[] elements ) {
+    private static Iterable<IProject> asProjectList( Object[] elements ) {
         List<IProject> projects = new ArrayList<IProject>();
         for( Object element : elements ) {
             if( element instanceof IProject ) {
@@ -27,7 +27,7 @@ public class FindUsusProjects {
         return projects;
     }
 
-    public FindUsusProjects( List<IProject> candidates ) {
+    public FindUsusProjects( Iterable<IProject> candidates ) {
         this.candidates = candidates;
     }
 

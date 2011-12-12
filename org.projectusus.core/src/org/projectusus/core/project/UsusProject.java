@@ -5,14 +5,13 @@
 package org.projectusus.core.project;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.Preferences;
 import org.projectusus.core.UsusCorePlugin;
 import org.projectusus.core.project2.IUSUSProject;
 
 class UsusProject implements IUSUSProject {
 
-    private static final String ATT_USUS_PROJECT = "ususProject"; //$NON-NLS-1$
-    private static final String ENABLED = "enabled"; //$NON-NLS-1$
     private final IProject project;
 
     UsusProject( IProject project ) {
@@ -35,7 +34,9 @@ class UsusProject implements IUSUSProject {
     // /////////
 
     private Preferences getPreferences() {
-        return UsusCorePlugin.getDefault().getPreferences().node( ATT_USUS_PROJECT ).node( getProjectName() );
+        UsusCorePlugin plugin = UsusCorePlugin.getDefault();
+        IEclipsePreferences preferences = plugin.getPreferences();
+        return preferences.node( ATT_USUS_PROJECT ).node( getProjectName() );
     }
 
 }
