@@ -1,5 +1,6 @@
 package org.projectusus.ui.internal.histogram;
 
+import static org.projectusus.ui.colors.UsusColors.getSharedColors;
 import static org.projectusus.ui.internal.AnalysisDisplayModel.displayModel;
 
 import org.eclipse.swt.SWT;
@@ -7,6 +8,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.part.ViewPart;
+import org.projectusus.ui.colors.UsusColors;
 import org.swtchart.Chart;
 import org.swtchart.IAxis;
 import org.swtchart.ILineSeries;
@@ -43,6 +45,7 @@ public class HistogramView extends ViewPart {
     private void initializeChart() {
         ILineSeries series = (ILineSeries)chart.getSeriesSet().createSeries( SeriesType.LINE, SERIES_ID );
         series.setLineStyle( LineStyle.NONE );
+        series.setSymbolColor( getSharedColors().getColor( UsusColors.USUS_LIGHT_BLUE ) );
 
         chart.getTitle().setVisible( false );
         chart.getLegend().setVisible( false );

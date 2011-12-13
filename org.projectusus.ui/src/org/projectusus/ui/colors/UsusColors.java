@@ -17,6 +17,7 @@ public class UsusColors {
     public static final String DARK_GREY = "DARK_GREY"; //$NON-NLS-1$
     public static final String BLACK = "BLACK"; //$NON-NLS-1$
     public static final String WHITE = "WHITE"; //$NON-NLS-1$
+    public static final String USUS_LIGHT_BLUE = "USUS_LIGHT_BLUE"; //$NON-NLS-1$
 
     private static final UsusColors _instance = new UsusColors();
     private ColorRegistry colorRegistry;
@@ -39,6 +40,7 @@ public class UsusColors {
         declare( DARK_GREY, new RGB( 100, 100, 100 ) );
         declare( BLACK, new RGB( 0, 0, 0 ) );
         declare( WHITE, new RGB( 255, 255, 255 ) );
+        declare( USUS_LIGHT_BLUE, new RGB( 0, 122, 197 ) );
     }
 
     private void declare( String key, RGB rgb ) {
