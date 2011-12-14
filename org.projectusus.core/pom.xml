@@ -5,10 +5,10 @@
   <parent>
     <artifactId>projectusus</artifactId>
     <groupId>org.projectusus</groupId>
-    <version>0.6.3-SNAPSHOT</version>
+    <version>0.6.4-SNAPSHOT</version>
   </parent>
   <groupId>org.projectusus</groupId>
   <artifactId>org.projectusus.core</artifactId>
-  <version>0.6.3-SNAPSHOT</version>
+  <version>0.6.4-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
 </project>

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Usus Projectsettings Core
 Bundle-SymbolicName: org.projectusus.projectsettings.core;singleton:=true
-Bundle-Version: 0.6.3.qualifier
+Bundle-Version: 0.6.4.qualifier
 Bundle-Vendor: projectusus.org
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
