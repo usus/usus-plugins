@@ -1,4 +1,4 @@
-# Usus 0.6.4 Release Notes
+# Usus 0.6.3 Release Notes
 
 ## New Features
 
