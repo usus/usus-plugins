@@ -35,23 +35,38 @@ public class PDETestUsingWSProject {
     protected IProject project2;
 
     @Before
-    public void setUp() throws CoreException {
+    public void createProjects() {
         project1 = createProject( PROJECT_NAME_1 );
         project2 = createProject( PROJECT_NAME_2 );
         UsusAdapterPlugin.getDefault(); // to load bundle with ResourceChangeListener
     }
 
-    private IProject createProject( String projectName ) throws CoreException {
+    private IProject createProject( String projectName ) {
         System.out.print( "  Creating project '" + projectName + "' at " + System.nanoTime() + " ..." );
         System.out.flush();
-        IProject project = new TestProjectCreator( projectName ).getProject();
-        if( project.exists() ) {
+        IProject project = null;
+        CoreException exception = null;
+        try {
+            project = new TestProjectCreator( projectName ).getProject();
+        } catch( CoreException e ) {
+            exception = e;
+        }
+        logResult( projectName, project, exception );
+        return project;
+    }
+
+    private void logResult( String projectName, IProject project, CoreException exception ) {
+        if( project != null && project.exists() ) {
             System.out.println( " OK." );
         } else {
             System.out.println( " FAILED." );
-            fail( "Could not create project '" + projectName + "'" );
+            String message = "Could not create project '" + projectName + "'";
+            if( exception != null ) {
+                exception.printStackTrace( System.out );
+                message += ": " + exception.getMessage();
+            }
+            fail( message );
         }
-        return project;
     }
 
     @After
