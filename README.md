@@ -7,3 +7,5 @@ The goal of this project is to provide Eclipse Plug-Ins that help to integrate c
 These settings and metrics reflect the "usus" (common practice) in projects we've worked in and have proven useful; we want to integrate them in order to have them handy at all times.
 
 For further information, please see http://www.projectusus.org.
+
+[![Build Status](https://buildhive.cloudbees.com/job/usus/job/usus-plugins/badge/icon)](https://buildhive.cloudbees.com/job/usus/job/usus-plugins/)
