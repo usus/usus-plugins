@@ -1,0 +1,7 @@
+
+public class CC_conditional_3operants {
+
+	public void threeOperants() {
+		boolean y = true && false && true;
+	}
+}

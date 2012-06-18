@@ -82,6 +82,14 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
+    public void allOperantsWithinConditionalAreCounted() throws Exception {
+        createFileAndBuild( "_conditional_3operants" );
+        assertEquals( 1, getNumberOfClasses() );
+        assertEquals( 1, getNumberOfMethods() );
+        assertEquals( 3, getMetricsSum() );
+    }
+
+    @Test
     public void twoLogicalsAndTwoBitwise() throws Exception {
         createFileAndBuild( "_logical" );
         assertEquals( 1, getNumberOfClasses() );
