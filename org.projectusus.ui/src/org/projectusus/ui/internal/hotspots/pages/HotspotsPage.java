@@ -5,12 +5,7 @@
 package org.projectusus.ui.internal.hotspots.pages;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.EMPTY_MAP;
 
-import java.util.List;
-
-import org.eclipse.core.commands.Command;
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -22,24 +17,26 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.Page;
+import org.eclipse.ui.services.IServiceLocator;
 import org.projectusus.core.util.Defect;
 import org.projectusus.ui.internal.AnalysisDisplayEntry;
 import org.projectusus.ui.internal.DisplayHotspot;
 import org.projectusus.ui.internal.hotspots.commands.AbstractOpenHotspotHandler;
-import org.projectusus.ui.internal.selection.ExtractHotspots;
 import org.projectusus.ui.viewer.UsusTreeViewer;
 
 public class HotspotsPage extends Page implements IHotspotsPage {
 
-    protected UsusTreeViewer<DisplayHotspot<?>> viewer;
+    private final IServiceLocator serviceLocator;
     private final AnalysisDisplayEntry entry;
+
+    private UsusTreeViewer<DisplayHotspot<?>> viewer;
     private ViewerComparator comparator;
 
-    public HotspotsPage( AnalysisDisplayEntry entry ) {
+    public HotspotsPage( IServiceLocator serviceLocator, AnalysisDisplayEntry entry ) {
         super();
+        this.serviceLocator = serviceLocator;
         this.entry = entry;
     }
 
@@ -68,12 +65,10 @@ public class HotspotsPage extends Page implements IHotspotsPage {
 
     protected void initOpenListener() {
         viewer.addOpenListener( new IOpenListener() {
-            public void open( OpenEvent event ) {
-                List<DisplayHotspot<?>> hotspots = new ExtractHotspots( event.getSelection() ).compute();
-                ICommandService service = (ICommandService)PlatformUI.getWorkbench().getService( ICommandService.class );
-                Command command = service.getCommand( AbstractOpenHotspotHandler.COMMAND_ID );
+            public void open( @SuppressWarnings( "unused" ) OpenEvent event ) {
+                IHandlerService handlerService = (IHandlerService)serviceLocator.getService( IHandlerService.class );
                 try {
-                    command.executeWithChecks( new ExecutionEvent( command, EMPTY_MAP, event.getSource(), hotspots ) );
+                    handlerService.executeCommand( AbstractOpenHotspotHandler.COMMAND_ID, null );
                 } catch( NotHandledException ignore ) {
                     // to be ignored
                 } catch( Exception exception ) {
