@@ -10,7 +10,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <tycho-version>0.13.0</tycho-version>
+    <tycho-version>0.16.0</tycho-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <platform-version-name>helios</platform-version-name>
     <eclipse-site>http://download.eclipse.org/releases/${platform-version-name}</eclipse-site>
