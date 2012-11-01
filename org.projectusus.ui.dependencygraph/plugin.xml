@@ -165,6 +165,18 @@
             </with>
          </activeWhen>
       </handler>
+      <handler
+            class="org.projectusus.ui.dependencygraph.handlers.SelectAllClassesInSamePackage"
+            commandId="org.projectusus.ui.dependencygraph.command.SelectAllClassesInSamePackage">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <count
+                     value="1">
+               </count>
+            </with>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -196,6 +208,10 @@
             description="Save a screenshot of the current graph"
             id="org.projectusus.ui.dependencygraph.command.SaveScreenshot"
             name="Save Screenshot">
+      </command>
+      <command
+            id="org.projectusus.ui.dependencygraph.command.SelectAllClassesInSamePackage"
+            name="Select all classes in same package">
       </command>
    </extension>
    <extension
@@ -229,7 +245,6 @@
             locationURI="toolbar:org.projectusus.ui.dependencygraph.PackageGraphView?before=zoom">
          <command
                commandId="org.projectusus.ui.dependencygraph.command.ShowInClassGraph"
-               icon="icons/graph-class.gif"
                label="Show in class graph"
                style="push">
             <parameter
@@ -262,6 +277,35 @@
                style="push">
          </command>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.projectusus.ui.dependencygraph.ClassGraphView?after=nodeActions">
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
+               style="push">
+         </command>
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.SelectAllClassesInSamePackage"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.projectusus.ui.dependencygraph.PackageGraphView?after=nodeActions">
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
+               style="push">
+         </command>
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.ShowInClassGraph"
+               label="Show in class graph"
+               style="push">
+            <parameter
+                  name="org.projectusus.ui.dependencygraph.handlers.ShowInClassGraph.targetViewId"
+                  value="org.projectusus.ui.dependencygraph.ClassGraphView">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commandImages">
@@ -280,6 +324,14 @@
       <image
             commandId="org.projectusus.ui.dependencygraph.command.SaveScreenshot"
             icon="icons/save-screenshot.gif">
+      </image>
+      <image
+            commandId="org.projectusus.ui.dependencygraph.command.SelectAllClassesInSamePackage"
+            icon="icons/package_obj.gif">
+      </image>
+      <image
+            commandId="org.projectusus.ui.dependencygraph.command.ShowInClassGraph"
+            icon="icons/graph-class.gif">
       </image>
    </extension>
    <extension
