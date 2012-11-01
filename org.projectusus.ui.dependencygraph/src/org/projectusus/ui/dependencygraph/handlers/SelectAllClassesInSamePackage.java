@@ -16,8 +16,10 @@ public class SelectAllClassesInSamePackage extends AbstractHandler {
     public Object execute( ExecutionEvent event ) throws ExecutionException {
         ISelection selection = getCurrentSelectionChecked( event );
         GraphNode node = new ElementFrom( selection ).as( GraphNode.class );
-        DependencyGraphView view = (DependencyGraphView)getActivePartChecked( event );
-        view.selectAllNodesInSamePackage( node );
+        if( node != null ) {
+            DependencyGraphView view = (DependencyGraphView)getActivePartChecked( event );
+            view.selectAllNodesInSamePackage( node );
+        }
         return null;
     }
 }
