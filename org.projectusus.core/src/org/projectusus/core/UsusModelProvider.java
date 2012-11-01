@@ -1,9 +1,9 @@
 package org.projectusus.core;
 
-import net.sourceforge.c4j.*;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import net.sourceforge.c4j.ContractReference;
 
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
@@ -14,7 +14,7 @@ import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 import org.projectusus.core.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.proportions.rawdata.PackageRepresenter;
 
-@ContractReference(contractClassName = "UsusModelProviderContract")
+@ContractReference( contractClassName = "UsusModelProviderContract" )
 public class UsusModelProvider {
 
     public static IUsusModel ususModel() {
