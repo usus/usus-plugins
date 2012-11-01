@@ -33,13 +33,9 @@ public class BoundTypeConverter {
             if( binding instanceof ITypeBinding ) {
                 return new WrappedTypeBinding( ((ITypeBinding)binding) );
             }
-        }
-        return null;
-    }
-
-    public static WrappedTypeBinding wrap( IVariableBinding varBinding ) {
-        if( varBinding != null ) {
-            return new WrappedTypeBinding( varBinding.getDeclaringClass() );
+            if( binding instanceof IVariableBinding ) {
+                return new WrappedTypeBinding( ((IVariableBinding)binding).getDeclaringClass() );
+            }
         }
         return null;
     }
