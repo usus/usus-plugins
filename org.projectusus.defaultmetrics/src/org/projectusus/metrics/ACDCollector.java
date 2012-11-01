@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
@@ -17,6 +18,26 @@ public class ACDCollector extends MetricsCollector {
 
     private WrappedTypeBinding currentType;
 
+    private void resetCurrentType() {
+        currentType = null;
+    }
+
+    // resetting the current type:
+
+    @Override
+    public boolean visit( CompilationUnit node ) {
+        resetCurrentType();
+        return true;
+    }
+
+
+    // these must be ignored:
+    @Override
+    public boolean visit( ImportDeclaration node ) {
+        return false;
+    }
+
+    // capturing the current type:
     @Override
     public boolean visit( TypeDeclaration node ) {
         setCurrentType( node );

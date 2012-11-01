@@ -629,6 +629,19 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
     }
 
+    @Test
+    public void importsAreNotConsideredForACD() throws Exception {
+        createWSFolder( "imports", project1 );
+        createJavaWSFile( "imports/Class1.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "imports/Class2.java" );
+        createJavaWSFile( "imports/Class3.java" );
+        buildFullyAndWait();
+        assertEquals( 3, getNumberOfClasses() );
+        assertEquals( 3, ClassDescriptor.getAll().size() );
+        assertEquals( 3 / 9.0, getACD(), 0.0001 );
+    }
+
     private double getACD() {
         ACDStatistic statistic = new ACDStatistic();
         statistic.visit();
