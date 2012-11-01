@@ -50,7 +50,7 @@ public class ReportBugPDETest extends PDETestUsingWSProject {
         assertEquals( 8, bug.getBugMetrics().getMethodLength() );
         assertEquals( 7, bug.getBugMetrics().getNumberOfMethods() );
 
-        assertEquals( PROJECT_NAME_1, bug.getLocation().getProject() );
+        assertEquals( project1.getName(), bug.getLocation().getProject() );
         assertEquals( "pde.test.package", bug.getLocation().getPackageName() );
         assertEquals( "TestClassName", bug.getLocation().getClassName() );
         assertEquals( "testMethodName", bug.getLocation().getMethodName() );

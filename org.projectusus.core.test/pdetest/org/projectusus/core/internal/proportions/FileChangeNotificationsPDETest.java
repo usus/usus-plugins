@@ -106,12 +106,12 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
         // original file comes along as deleted
         assertEquals( 1, target.getRemovedFiles( project1 ).size() );
         IFile removedFile = target.getRemovedFiles( project1 ).iterator().next();
-        assertEquals( new Path( "/" + PROJECT_NAME_1 + "/" + SOURCE_FOLDER + "/Bla.java" ), removedFile.getFullPath() );
+        assertEquals( new Path( "/" + project1.getName() + "/" + SOURCE_FOLDER + "/Bla.java" ), removedFile.getFullPath() );
 
         // file at new location is registered as affected file
         assertEquals( 1, target.getFiles( project1 ).size() );
         IFile affectedFile = target.getFiles( project1 ).iterator().next();
-        assertEquals( new Path( "/" + PROJECT_NAME_1 + "/" + SOURCE_FOLDER + "/dir/Bla.java" ), affectedFile.getFullPath() );
+        assertEquals( new Path( "/" + project1.getName() + "/" + SOURCE_FOLDER + "/dir/Bla.java" ), affectedFile.getFullPath() );
     }
 
     @Test

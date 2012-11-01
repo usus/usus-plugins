@@ -29,43 +29,34 @@ import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 
 public class PDETestUsingWSProject {
 
-    protected static final String PROJECT_NAME_1 = "p1";
-    protected static final String PROJECT_NAME_2 = "p2";
     protected IProject project1;
     protected IProject project2;
 
     @Before
     public void createProjects() {
-        project1 = createProject( PROJECT_NAME_1 );
-        project2 = createProject( PROJECT_NAME_2 );
+        project1 = createProject( "p1-" + System.nanoTime() );
+        project2 = createProject( "p2-" + System.nanoTime() );
         UsusAdapterPlugin.getDefault(); // to load bundle with ResourceChangeListener
     }
 
-    private IProject createProject( String projectName ) {
-        System.out.print( "  Creating project '" + projectName + "' at " + System.nanoTime() + " ..." );
-        System.out.flush();
+    private IProject createProject( String fullName ) {
+        print( "  Creating project '" + fullName + "' ..." );
         IProject project = null;
-        CoreException exception = null;
+        Exception exception = null;
         try {
-            project = new TestProjectCreator( projectName ).getProject();
-        } catch( CoreException e ) {
+            project = new TestProjectCreator( fullName ).getProject();
+        } catch( Exception e ) {
             exception = e;
         }
-        logResult( projectName, project, exception );
+        logResult( fullName, project, exception );
         return project;
     }
 
-    private void logResult( String projectName, IProject project, CoreException exception ) {
+    private void logResult( String projectName, IProject project, Exception exception ) {
         if( project != null && project.exists() ) {
-            System.out.println( " OK." );
+            println( " OK." );
         } else {
-            System.out.println( " FAILED." );
-            String message = "Could not create project '" + projectName + "'";
-            if( exception != null ) {
-                exception.printStackTrace( System.out );
-                message += ": " + exception.getMessage();
-            }
-            fail( message );
+            reportFailure( "Could not create project '" + projectName + "'", exception );
         }
     }
 
@@ -77,28 +68,40 @@ public class PDETestUsingWSProject {
     }
 
     private void delete( IProject project ) throws CoreException {
-        System.out.print( "  Deleting project '" + project.getName() + "' at " + System.nanoTime() + " ..." );
-        System.out.flush();
-        project.delete( true, null );
+        print( "  Deleting project '" + project.getName() + "' at " + System.nanoTime() + " ..." );
+        Exception exception = null;
+        try {
+            project.delete( true, null );
+        } catch( Exception e ) {
+            exception = e;
+        }
         if( project.exists() ) {
-            System.out.println( " FAILED." );
-            fail( "Could not delte project '" + project.getName() + "'" );
+            reportFailure( "Could not delete project '" + project.getName() + "'", exception );
         } else {
-            System.out.println( " OK." );
+            println( " OK." );
         }
     }
 
+    private void reportFailure( String message, Exception exception ) {
+        println( " FAILED." );
+        if( exception != null ) {
+            exception.printStackTrace( System.out );
+            message += ": " + exception.getMessage();
+        }
+        fail( message );
+    }
+
     protected void buildFullyAndWait() throws CoreException {
-        getWorkspace().build( FULL_BUILD, new NullProgressMonitor() );
-        System.out.print( "  Waiting for full build to complete ..." );
-        System.out.flush();
-        waitForBuild();
+        buildAndWait( FULL_BUILD, "full" );
     }
 
     protected void buildIncrementallyAndWait() throws CoreException {
-        getWorkspace().build( INCREMENTAL_BUILD, new NullProgressMonitor() );
-        System.out.print( "  Waiting for incremental build to complete ..." );
-        System.out.flush();
+        buildAndWait( INCREMENTAL_BUILD, "incremental" );
+    }
+
+    private void buildAndWait( int kind, String description ) throws CoreException {
+        getWorkspace().build( kind, new NullProgressMonitor() );
+        print( "  Waiting for " + description + " build to complete ..." );
         waitForBuild();
     }
 
@@ -114,7 +117,7 @@ public class PDETestUsingWSProject {
                 // ignore and retry
             }
         }
-        System.out.println( " OK." );
+        println( " OK." );
     }
 
     protected IFile createWSFile( String fileName, String content, IProject project ) throws CoreException {
@@ -143,5 +146,14 @@ public class PDETestUsingWSProject {
 
     private InputStream createInputStream( String content ) {
         return new ByteArrayInputStream( content.getBytes() );
+    }
+
+    private void print( String message ) {
+        System.out.print( message );
+        System.out.flush();
+    }
+
+    private void println( String message ) {
+        System.out.println( message );
     }
 }
