@@ -452,6 +452,88 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
+    public void methodChainingWithClassnameAndStaticAndNonstaticMethod() throws Exception {
+        createWSFolder( "methodchaining", project1 );
+        createJavaWSFile( "methodchaining/Chain1.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "methodchaining/Chain2.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getNumberOfClasses() );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    public void methodChainingWithStaticImportAndStaticAndNonstaticMethod() throws Exception {
+        createWSFolder( "methodchaining", project1 );
+        createJavaWSFile( "methodchaining/Chain1.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "methodchaining/Chain5.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getNumberOfClasses() );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    public void methodChainingWithConstructorAndNonstaticAndStaticMethod() throws Exception {
+        createWSFolder( "methodchaining", project1 );
+        createJavaWSFile( "methodchaining/Chain3.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "methodchaining/Chain4.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getNumberOfClasses() );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    public void fieldChainingWithClassnameAndStaticAndNonstaticField() throws Exception {
+        createWSFolder( "methodchaining", project1 );
+        createJavaWSFile( "methodchaining/Field1.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "methodchaining/Field2.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getNumberOfClasses() );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    public void fieldChainingWithStaticImportAndStaticAndNonstaticField() throws Exception {
+        createWSFolder( "methodchaining", project1 );
+        createJavaWSFile( "methodchaining/Field1.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "methodchaining/Field5.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getNumberOfClasses() );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    public void fieldChainingWithConstructorAndNonstaticAndStaticField() throws Exception {
+        createWSFolder( "methodchaining", project1 );
+        createJavaWSFile( "methodchaining/Field3.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "methodchaining/Field4.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getNumberOfClasses() );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
+    }
+
+    // classname.static().nonstatic()
+    // classname.nonstatic().static()
+    // classname.nonstatic().nonstatic()
+    // classname.static().static()
+
+    // classname.static.nonstatic
+    // classname.nonstatic.static
+    // classname.nonstatic.nonstatic
+    // classname.static.static
+
+    @Test
     public void staticMethodWithoutClassName() throws Exception {
         createWSFolder( "oops", project1 );
         createJavaWSFile( "oops/Acd_static1.java" );
