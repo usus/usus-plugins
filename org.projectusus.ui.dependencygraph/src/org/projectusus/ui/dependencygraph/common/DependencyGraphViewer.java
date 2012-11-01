@@ -76,9 +76,17 @@ public class DependencyGraphViewer extends GraphViewer {
         }
     }
 
+    @SuppressWarnings( "unchecked" )
     public Set<GraphNode> getSelectedNodes() {
-        @SuppressWarnings( "unchecked" )
-        List<GraphItem> selection = getGraphControl().getSelection();
+        return convert( getGraphControl().getSelection() );
+    }
+
+    @SuppressWarnings( "unchecked" )
+    public Set<GraphNode> getAllNodes() {
+        return convert( getGraphControl().getNodes() );
+    }
+
+    private Set<GraphNode> convert( List<GraphItem> selection ) {
         Set<GraphNode> result = new HashSet<GraphNode>();
         for( GraphItem graphItem : selection ) {
             if( graphItem instanceof org.eclipse.zest.core.widgets.GraphNode ) {

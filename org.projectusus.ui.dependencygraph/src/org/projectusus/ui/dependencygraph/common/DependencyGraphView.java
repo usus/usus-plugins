@@ -2,9 +2,12 @@ package org.projectusus.ui.dependencygraph.common;
 
 import static java.util.Arrays.sort;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -72,6 +75,14 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         contributeTo( site.getActionBars() );
         refresh();
         extendSelectionBehavior();
+        registerContextMenu( site );
+    }
+
+    private void registerContextMenu( IViewSite site ) {
+        MenuManager menuManager = new MenuManager();
+        menuManager.add( new Separator( "nodeActions" ) );
+        graphViewer.getGraphControl().setMenu( menuManager.createContextMenu( graphViewer.getControl() ) );
+        site.registerContextMenu( menuManager, graphViewer );
     }
 
     protected Composite createComposite( Composite parent ) {
@@ -269,6 +280,17 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
             drawGraphConditionally();
         }
         customFilterContext.activate();
+    }
+
+    public void selectAllNodesInSamePackage( GraphNode selectedNode ) {
+        Set<GraphNode> allNodes = graphViewer.getAllNodes();
+        List<GraphNode> nodesInSamePackage = new LinkedList<GraphNode>();
+        for( GraphNode node : allNodes ) {
+            if( !node.isInDifferentPackageThan( selectedNode ) ) {
+                nodesInSamePackage.add( node );
+            }
+        }
+        graphViewer.setSelection( new StructuredSelection( nodesInSamePackage ) );
     }
 
     public void resetHiddenNodes() {
