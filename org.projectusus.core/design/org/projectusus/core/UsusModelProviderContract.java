@@ -20,6 +20,7 @@ public class UsusModelProviderContract extends ContractBase<UsusModelProvider> {
 
     public static void pre_ususModel() {
         // TODO no pre-condition identified yet
+        assert false : "C4J ist aktiviert!";
     }
 
     public static void post_ususModel() {
@@ -76,6 +77,10 @@ public class UsusModelProviderContract extends ContractBase<UsusModelProvider> {
         // TODO Auto-generated pre-condition
         assert sourceType != null : "sourceType_not_null";
         assert targetType != null : "targetType_not_null";
+        assert sourceType.isValid() : "Wrapped source type must be valid";
+        assert targetType.isValid() : "Wrapped target type must be valid";
+        assert sourceType.getUnderlyingResource() != null : "Underlying Resource of source type must not be null.";
+        assert targetType.getUnderlyingResource() != null : "Underlying Resource of target type must not be null.";
         assert !sourceType.equals( targetType ) : fullString( "Source ", sourceType ) + " must not equal" + fullString( " Target ", targetType );
     }
 

@@ -1,5 +1,7 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
+import net.sourceforge.c4j.*;
+
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -15,6 +17,7 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
+@ContractReference(contractClassName = "MetricsAccessorContract")
 public class MetricsAccessor implements IMetricsWriter {
     public final WorkspaceRawData workspaceRawData;
 

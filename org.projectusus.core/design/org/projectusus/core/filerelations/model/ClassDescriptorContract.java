@@ -47,6 +47,10 @@ public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
 
     public static void pre_of( WrappedTypeBinding type ) {
         assert type != null : "type_not_null";
+        assert type.isValid() : "Wrapped type must be valid";
+        assert type.getUnderlyingResource() != null : "Underlying Resource of type must not be null.";
+        assert type.getClassname() != null : "Classname of type must not be null";
+        assert type.getPackagename() != null : "Packagename of type must not be null";
     }
 
     public static void post_of( WrappedTypeBinding type ) {

@@ -1,9 +1,12 @@
 package org.projectusus.core.filerelations.model;
 
+import net.sourceforge.c4j.*;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
 
+@ContractReference(contractClassName = "ClassDescriptorKeyContract")
 class ClassDescriptorKey {
     private final IFile file;
     private final Classname classname;

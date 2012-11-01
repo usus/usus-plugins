@@ -4,9 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.internal.proportions.rawdata;
 
-import net.sourceforge.c4j.*;
-
 import static org.projectusus.core.internal.proportions.rawdata.JDTSupport.getCompilationUnit;
+import net.sourceforge.c4j.ContractReference;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -24,7 +23,7 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
-@ContractReference(contractClassName = "FileRawDataContract")
+@ContractReference( contractClassName = "FileRawDataContract" )
 public class FileRawData extends RawData<Integer, ClassRawData> {
 
     private MetricsResults data;
@@ -64,7 +63,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
 
     private ClassRawData getOrCreateClassRawData( AbstractTypeDeclaration node ) {
         WrappedTypeBinding boundType = BoundTypeConverter.wrap( node );
-        if( boundType == null ) {
+        if( boundType == null || !boundType.isValid() ) {
             return null;
         }
         return getOrCreateClassRawData( boundType, node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );

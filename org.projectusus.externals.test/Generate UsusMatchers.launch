@@ -9,4 +9,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.hamcrest.generator.config.XmlConfigurator"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="usus-matchers.xml&#10;src&#10;org.projectusus.matchers.UsusMatchers&#10;src"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.projectusus.externals.test"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-javaagent:lib/c4j.jar=trace=false,loglevel=warn,exit-on-unknown-contract=true -ea"/>
 </launchConfiguration>
