@@ -20,7 +20,7 @@ public class UsusModelProviderContract extends ContractBase<UsusModelProvider> {
 
     public static void pre_ususModel() {
         // TODO no pre-condition identified yet
-        assert false : "C4J ist aktiviert!";
+        // assert false : "C4J ist aktiviert!";
     }
 
     public static void post_ususModel() {
