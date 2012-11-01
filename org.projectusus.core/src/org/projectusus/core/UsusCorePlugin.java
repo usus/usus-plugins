@@ -6,7 +6,12 @@ package org.projectusus.core;
 
 import static org.eclipse.core.runtime.IStatus.ERROR;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -23,6 +28,7 @@ public class UsusCorePlugin extends Plugin {
     // some jobs still run
     public static final String PLUGIN_ID = "org.projectusus.core"; //$NON-NLS-1$
     private static UsusCorePlugin plugin;
+    private PrintWriter writer;
 
     public static UsusCorePlugin getDefault() {
         return plugin;
@@ -56,6 +62,7 @@ public class UsusCorePlugin extends Plugin {
     @Override
     public void start( final BundleContext context ) throws Exception {
         super.start( context );
+        openC4JFileWriter();
         plugin = this;
         context.addBundleListener( new BundleListener() {
             public void bundleChanged( BundleEvent event ) {
@@ -70,7 +77,29 @@ public class UsusCorePlugin extends Plugin {
     public void stop( BundleContext context ) throws Exception {
         plugin.savePreferences();
         plugin = null;
+        closeC4JFileWriter();
         super.stop( context );
+    }
+
+    private void openC4JFileWriter() {
+        try {
+            writer = new PrintWriter( new File( getC4JLogFile() ) );
+        } catch( IOException e ) {
+            log( e );
+        }
+    }
+
+    public PrintWriter getC4JFileWriter() {
+        return writer;
+    }
+
+    private void closeC4JFileWriter() {
+        writer.close();
+    }
+
+    @SuppressWarnings( "nls" )
+    private String getC4JLogFile() throws IOException {
+        return Platform.getInstallLocation().getDataArea( PLUGIN_ID + "/c4j.log" ).getFile();
     }
 
 }
