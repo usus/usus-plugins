@@ -2,13 +2,12 @@ package org.projectusus.core;
 
 import java.util.Set;
 
-import net.sourceforge.c4j.ContractBase;
-
+import org.projectusus.c4j.UsusContractBase;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
-public class UsusModelProviderContract extends ContractBase<UsusModelProvider> {
+public class UsusModelProviderContract extends UsusContractBase<UsusModelProvider> {
 
     public UsusModelProviderContract( UsusModelProvider target ) {
         super( target );
@@ -74,13 +73,13 @@ public class UsusModelProviderContract extends ContractBase<UsusModelProvider> {
 
     public static void pre_addClassReference( WrappedTypeBinding sourceType, WrappedTypeBinding targetType ) {
         // TODO Auto-generated pre-condition
-        assert sourceType != null : "sourceType_not_null";
-        assert targetType != null : "targetType_not_null";
-        assert sourceType.isValid() : "Wrapped source type must be valid";
-        assert targetType.isValid() : "Wrapped target type must be valid";
-        assert sourceType.getUnderlyingResource() != null : "Underlying Resource of source type must not be null.";
-        assert targetType.getUnderlyingResource() != null : "Underlying Resource of target type must not be null.";
-        assert !sourceType.equals( targetType ) : fullString( "Source ", sourceType ) + " must not equal" + fullString( " Target ", targetType );
+        assertStatic( sourceType != null, "sourceType_not_null" );
+        assertStatic( targetType != null, "targetType_not_null" );
+        assertStatic( sourceType.isValid(), "Wrapped source type must be valid" );
+        assertStatic( targetType.isValid(), "Wrapped target type must be valid" );
+        assertStatic( sourceType.getUnderlyingResource() != null, "Underlying Resource of source type must not be null." );
+        assertStatic( targetType.getUnderlyingResource() != null, "Underlying Resource of target type must not be null." );
+        assertStatic( !sourceType.equals( targetType ), fullString( "Source ", sourceType ) + " must not equal" + fullString( " Target ", targetType ) );
     }
 
     public static void post_addClassReference( WrappedTypeBinding sourceType, WrappedTypeBinding targetType ) {
@@ -97,10 +96,10 @@ public class UsusModelProviderContract extends ContractBase<UsusModelProvider> {
             }
         }
 
-        assert source != null : "There is a ClassDescriptor for" + sourceString;
-        assert target != null : "There is a ClassDescriptor for" + targetString;
-        assert source.getChildren().contains( target ) : "Target is a child of Source." + sourceString + targetString;
-        assert target.getParents().contains( source ) : "Source is a parent of Target." + sourceString + targetString;
+        assertStatic( source != null, "There is a ClassDescriptor for" + sourceString );
+        assertStatic( target != null, "There is a ClassDescriptor for" + targetString );
+        assertStatic( source.getChildren().contains( target ), "Target is a child of Source." + sourceString + targetString );
+        assertStatic( target.getParents().contains( source ), "Source is a parent of Target." + sourceString + targetString );
     }
 
     private static String fullString( String label, WrappedTypeBinding type ) {
@@ -109,7 +108,7 @@ public class UsusModelProviderContract extends ContractBase<UsusModelProvider> {
 
     public static void pre_acceptAndGuide( IMetricsResultVisitor visitor ) {
         // TODO Auto-generated pre-condition
-        assert visitor != null : "visitor_not_null";
+        assertStatic( visitor != null, "visitor_not_null" );
     }
 
     public static void post_acceptAndGuide( IMetricsResultVisitor visitor ) {

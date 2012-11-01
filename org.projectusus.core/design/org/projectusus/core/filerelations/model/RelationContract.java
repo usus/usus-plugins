@@ -1,8 +1,8 @@
 package org.projectusus.core.filerelations.model;
 
-import net.sourceforge.c4j.ContractBase;
+import org.projectusus.c4j.UsusContractBase;
 
-public class RelationContract<T> extends ContractBase<Relation<T>> {
+public class RelationContract<T> extends UsusContractBase<Relation<T>> {
 
     private T source;
     private T target;
@@ -21,9 +21,9 @@ public class RelationContract<T> extends ContractBase<Relation<T>> {
 
     public void pre_Relation( T source, T target ) {
         String arguments = " source: " + source + " target: " + target;
-        assert source != null : "source_not_null:" + arguments;
-        assert target != null : "target_not_null" + arguments;
-        assert !source.equals( target ) : "source and target are different" + arguments;
+        assertThat( source != null, "source_not_null:" + arguments );
+        assertThat( target != null, "target_not_null" + arguments );
+        assertThat( !source.equals( target ), "source and target are different" + arguments );
         this.source = source;
         this.target = target;
     }
@@ -38,7 +38,7 @@ public class RelationContract<T> extends ContractBase<Relation<T>> {
 
     public void post_getSource() {
         T returnValue = (T)getReturnValue();
-        assert returnValue.equals( source ) : "getSource provides the first constructor argument" + targetString();
+        assertThat( returnValue.equals( source ), "getSource provides the first constructor argument" + targetString() );
     }
 
     public void pre_getTarget() {
@@ -47,7 +47,7 @@ public class RelationContract<T> extends ContractBase<Relation<T>> {
 
     public void post_getTarget() {
         T returnValue = (T)getReturnValue();
-        assert returnValue.equals( target ) : "getTarget provides the second constructor argument" + targetString();
+        assertThat( returnValue.equals( target ), "getTarget provides the second constructor argument" + targetString() );
     }
 
 }

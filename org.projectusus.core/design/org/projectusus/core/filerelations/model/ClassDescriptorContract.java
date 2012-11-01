@@ -2,11 +2,10 @@ package org.projectusus.core.filerelations.model;
 
 import java.util.Set;
 
-import net.sourceforge.c4j.ContractBase;
-
 import org.eclipse.core.resources.IFile;
+import org.projectusus.c4j.UsusContractBase;
 
-public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
+public class ClassDescriptorContract extends UsusContractBase<ClassDescriptor> {
 
     private String targetString() {
         return " Meth-Target: " + m_target;
@@ -17,14 +16,14 @@ public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
     }
 
     public void classInvariant() {
-        assert ClassDescriptor.getAll().contains( m_target ) : "Element is contained in list of all:" + targetString();
+        assertThat( ClassDescriptor.getAll().contains( m_target ), "Element is contained in list of all:" + targetString() );
 
         for( ClassDescriptor child : m_target.getChildren() ) {
-            assert child.getParents().contains( m_target ) : "Target is parent of each child" + targetString() + " child: " + child;
+            assertThat( child.getParents().contains( m_target ), "Target is parent of each child" + targetString() + " child: " + child );
         }
 
         for( ClassDescriptor parent : m_target.getParents() ) {
-            assert parent.getChildren().contains( m_target ) : "Target is child of each parent" + targetString() + " parent: " + parent;
+            assertThat( parent.getChildren().contains( m_target ), "Target is child of each parent" + targetString() + " parent: " + parent );
         }
     }
 
@@ -33,7 +32,7 @@ public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
     }
 
     public static void post_clear() {
-        assert ClassDescriptor.getAll().isEmpty() : "Set of all class descriptors is empty";
+        assertStatic( ClassDescriptor.getAll().isEmpty(), "Set of all class descriptors is empty" );
     }
 
     public static void pre_getAll() {
@@ -46,32 +45,32 @@ public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
     }
 
     public static void pre_of( WrappedTypeBinding type ) {
-        assert type != null : "type_not_null";
-        assert type.isValid() : "Wrapped type must be valid";
-        assert type.getUnderlyingResource() != null : "Underlying Resource of type must not be null.";
-        assert type.getClassname() != null : "Classname of type must not be null";
-        assert type.getPackagename() != null : "Packagename of type must not be null";
+        assertStatic( type != null, "type_not_null" );
+        assertStatic( type.isValid(), "Wrapped type must be valid" );
+        assertStatic( type.getUnderlyingResource() != null, "Underlying Resource of type must not be null." );
+        assertStatic( type.getClassname() != null, "Classname of type must not be null" );
+        assertStatic( type.getPackagename() != null, "Packagename of type must not be null" );
     }
 
     public static void post_of( WrappedTypeBinding type ) {
         ClassDescriptor returnValue = (ClassDescriptor)getReturnValue();
-        assert ClassDescriptor.getAll().contains( returnValue ) : "List of all contains ClassDescriptor " + returnValue;
+        assertStatic( ClassDescriptor.getAll().contains( returnValue ), "List of all contains ClassDescriptor " + returnValue );
     }
 
     public static void pre_of( IFile file, Classname classname, Packagename packagename ) {
-        assert file != null : "file_not_null";
-        assert classname != null : "classname_not_null";
-        assert packagename != null : "packagename_not_null";
+        assertStatic( file != null, "file_not_null" );
+        assertStatic( classname != null, "classname_not_null" );
+        assertStatic( packagename != null, "packagename_not_null" );
     }
 
     public static void post_of( IFile file, Classname classname, Packagename packagename ) {
         ClassDescriptor returnValue = (ClassDescriptor)getReturnValue();
-        assert ClassDescriptor.getAll().contains( returnValue ) : "List of all contains ClassDescriptor " + returnValue;
+        assertStatic( ClassDescriptor.getAll().contains( returnValue ), "List of all contains ClassDescriptor " + returnValue );
         String classtext = " Class: " + returnValue;
-        assert returnValue.getFile() == file : "Created class is associated with file." + classtext + " File: " + file;
-        assert returnValue.getClassname() == classname : "Created class is associated with classname." + classtext + " Classname: " + classname;
-        assert returnValue.getPackagename() == packagename : "Created class is associated with packagename." + classtext + " Package: " + packagename;
-        assert packagename.containsClass( returnValue ) : "Package of created class contains this class." + classtext + " Package: " + packagename;
+        assertStatic( returnValue.getFile() == file, "Created class is associated with file." + classtext + " File: " + file );
+        assertStatic( returnValue.getClassname() == classname, "Created class is associated with classname." + classtext + " Classname: " + classname );
+        assertStatic( returnValue.getPackagename() == packagename, "Created class is associated with packagename." + classtext + " Package: " + packagename );
+        assertStatic( packagename.containsClass( returnValue ), "Package of created class contains this class." + classtext + " Package: " + packagename );
     }
 
     public void pre_getFile() {
@@ -116,7 +115,7 @@ public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
 
     public void post_getChildren() {
         Set<ClassDescriptor> returnValue = (Set<ClassDescriptor>)getReturnValue();
-        assert !returnValue.contains( m_target ) : "Target is not a child" + targetString();
+        assertThat( !returnValue.contains( m_target ), "Target is not a child" + targetString() );
     }
 
     public void pre_getParents() {
@@ -125,7 +124,7 @@ public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
 
     public void post_getParents() {
         Set<ClassDescriptor> returnValue = (Set<ClassDescriptor>)getReturnValue();
-        assert !returnValue.contains( m_target ) : "Target is not a parent" + targetString();
+        assertThat( !returnValue.contains( m_target ), "Target is not a parent" + targetString() );
     }
 
     public void pre_getChildrenInOtherPackages() {
@@ -134,9 +133,9 @@ public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
 
     public void post_getChildrenInOtherPackages() {
         Set<ClassDescriptor> returnValue = (Set<ClassDescriptor>)getReturnValue();
-        assert !returnValue.contains( m_target ) : "Target is not a child in another package" + targetString();
+        assertThat( !returnValue.contains( m_target ), "Target is not a child in another package" + targetString() );
         for( ClassDescriptor descriptor : returnValue ) {
-            assert !descriptor.getPackagename().equals( m_target.getPackagename() ) : "Children are not in the same package as target" + targetString();
+            assertThat( !descriptor.getPackagename().equals( m_target.getPackagename() ), "Children are not in the same package as target" + targetString() );
         }
     }
 
@@ -163,10 +162,10 @@ public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
     }
 
     public void post_prepareRemoval() {
-        assert m_target.getChildren().isEmpty() : "Target is not connected to any children any more" + targetString();
-        assert m_target.getCCD() == 1 : "Target's CCD is 1" + targetString();
+        assertThat( m_target.getChildren().isEmpty(), "Target is not connected to any children any more" + targetString() );
+        assertThat( m_target.getCCD() == 1, "Target's CCD is 1" + targetString() );
         for( ClassDescriptor child : ClassDescriptor.getAll() ) {
-            assert !child.getParents().contains( m_target ) : "There are no children for target any more" + targetString() + " Child: " + child;
+            assertThat( !child.getParents().contains( m_target ), "There are no children for target any more" + targetString() + " Child: " + child );
         }
 
     }
@@ -177,20 +176,20 @@ public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
 
     public void post_removeFromPool() {
         post_prepareRemoval();
-        assert m_target.getParents().isEmpty() : "Target is not connected to any parents any more" + targetString();
-        assert m_target.getTransitiveParentCount() == 1 : "Target's transitive parent count is 1" + targetString();
+        assertThat( m_target.getParents().isEmpty(), "Target is not connected to any parents any more" + targetString() );
+        assertThat( m_target.getTransitiveParentCount() == 1, "Target's transitive parent count is 1" + targetString() );
         for( ClassDescriptor parent : ClassDescriptor.getAll() ) {
-            assert !parent.getChildren().contains( m_target ) : "There are no parents for target any more" + targetString() + " Parent: " + parent;
+            assertThat( !parent.getChildren().contains( m_target ), "There are no parents for target any more" + targetString() + " Parent: " + parent );
         }
     }
 
     public void pre_addChild( ClassDescriptor target ) {
-        assert target != null : "target_not_null" + targetString();
+        assertThat( target != null, "target_not_null" + targetString() );
     }
 
     public void post_addChild( ClassDescriptor target ) {
         if( !m_target.equals( target ) ) {
-            assert m_target.getChildren().contains( target ) : "Method argument is now in set of children" + targetString();
+            assertThat( m_target.getChildren().contains( target ), "Method argument is now in set of children" + targetString() );
         }
     }
 
@@ -200,10 +199,9 @@ public class ClassDescriptorContract extends ContractBase<ClassDescriptor> {
 
     public void post_getParentsInOtherPackages() {
         Set<ClassDescriptor> returnValue = (Set<ClassDescriptor>)getReturnValue();
-        assert !returnValue.contains( m_target ) : "Target is not a parent in another package" + targetString();
+        assertThat( !returnValue.contains( m_target ), "Target is not a parent in another package" + targetString() );
         for( ClassDescriptor descriptor : returnValue ) {
-            assert !descriptor.getPackagename().equals( m_target.getPackagename() ) : "Parents are not in the same package as target" + targetString();
+            assertThat( !descriptor.getPackagename().equals( m_target.getPackagename() ), "Parents are not in the same package as target" + targetString() );
         }
     }
-
 }

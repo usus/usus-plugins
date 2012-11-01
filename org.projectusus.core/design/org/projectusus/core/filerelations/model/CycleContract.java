@@ -2,9 +2,9 @@ package org.projectusus.core.filerelations.model;
 
 import java.util.Set;
 
-import net.sourceforge.c4j.ContractBase;
+import org.projectusus.c4j.UsusContractBase;
 
-public class CycleContract<Element> extends ContractBase<Cycle<Element>> {
+public class CycleContract<Element> extends UsusContractBase<Cycle<Element>> {
 
     private int numberOfElements;
 
@@ -17,13 +17,13 @@ public class CycleContract<Element> extends ContractBase<Cycle<Element>> {
     }
 
     public void classInvariant() {
-        assert m_target.getElementsInCycle() != null : "Set of elements in cycle must not be null" + targetString();
-        assert m_target.numberOfElements() == numberOfElements : "Cycle must not be manipulated from outside" + targetString();
+        assertThat( m_target.getElementsInCycle() != null, "Set of elements in cycle must not be null" + targetString() );
+        assertThat( m_target.numberOfElements() == numberOfElements, "Cycle must not be manipulated from outside" + targetString() );
     }
 
     public void pre_Cycle( Set<Element> elements ) {
         // TODO Auto-generated pre-condition
-        assert elements != null : "elements_not_null";
+        assertThat( elements != null, "elements_not_null" );
     }
 
     public void post_Cycle( Set<Element> elements ) {
@@ -41,7 +41,7 @@ public class CycleContract<Element> extends ContractBase<Cycle<Element>> {
 
     public void pre_contains( Element packagename ) {
         // TODO Auto-generated pre-condition
-        assert packagename != null : "packagename_not_null";
+        assertThat( packagename != null, "packagename_not_null" );
     }
 
     public void post_contains( Element packagename ) {
