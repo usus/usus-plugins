@@ -2,14 +2,12 @@ package org.projectusus.metrics;
 
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
-import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
-import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.projectusus.core.filerelations.model.BoundTypeConverter;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
@@ -38,18 +36,6 @@ public class ACDCollector extends MetricsCollector {
     }
 
     // referenced types
-
-    @Override
-    public boolean visit( ArrayType node ) {
-        if( currentType == null ) {
-            return true;
-        }
-        Type element = node.getElementType();
-        if( element.isSimpleType() ) {
-            visit( (SimpleType)element );
-        }
-        return false;
-    }
 
     @Override
     public boolean visit( SimpleType node ) {

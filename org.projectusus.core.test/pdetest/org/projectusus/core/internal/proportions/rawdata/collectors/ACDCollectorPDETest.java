@@ -523,16 +523,6 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
     }
 
-    // classname.static().nonstatic()
-    // classname.nonstatic().static()
-    // classname.nonstatic().nonstatic()
-    // classname.static().static()
-
-    // classname.static.nonstatic
-    // classname.nonstatic.static
-    // classname.nonstatic.nonstatic
-    // classname.static.static
-
     @Test
     public void staticMethodWithoutClassName() throws Exception {
         createWSFolder( "oops", project1 );
@@ -588,6 +578,54 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
                 }
             }
         }
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    public void arrayReferenceInField() throws Exception {
+        createWSFolder( "arrays", project1 );
+        createJavaWSFile( "arrays/NormalClass.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "arrays/ClassWithArrayReferenceInField.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getNumberOfClasses() );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    public void arrayReferenceInLocalVariable() throws Exception {
+        createWSFolder( "arrays", project1 );
+        createJavaWSFile( "arrays/NormalClass.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "arrays/ClassWithArrayReferenceInLocalVariable.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getNumberOfClasses() );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    public void arrayReferenceInMethodParameter() throws Exception {
+        createWSFolder( "arrays", project1 );
+        createJavaWSFile( "arrays/NormalClass.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "arrays/ClassWithArrayReferenceInMethodParameter.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getNumberOfClasses() );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        assertEquals( 3 / 4.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    public void arrayReferenceInMethodReturnType() throws Exception {
+        createWSFolder( "arrays", project1 );
+        createJavaWSFile( "arrays/NormalClass.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "arrays/ClassWithArrayReferenceInMethodReturnType.java" );
+        buildFullyAndWait();
+        assertEquals( 2, getNumberOfClasses() );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
     }
 
