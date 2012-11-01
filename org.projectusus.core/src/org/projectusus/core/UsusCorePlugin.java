@@ -83,7 +83,10 @@ public class UsusCorePlugin extends Plugin {
 
     private void openC4JFileWriter() {
         try {
-            writer = new PrintWriter( new File( getC4JLogFile() ) );
+            File logFile = new File( getC4JLogFile() );
+            logFile.getParentFile().mkdirs();
+            logFile.createNewFile();
+            writer = new PrintWriter( logFile );
         } catch( IOException e ) {
             log( e );
         }
@@ -99,7 +102,7 @@ public class UsusCorePlugin extends Plugin {
 
     @SuppressWarnings( "nls" )
     private String getC4JLogFile() throws IOException {
-        return Platform.getInstallLocation().getDataArea( PLUGIN_ID + "/c4j.log" ).getFile();
+        return Platform.getInstanceLocation().getDataArea( PLUGIN_ID + "/c4j.log" ).getFile();
     }
 
 }
