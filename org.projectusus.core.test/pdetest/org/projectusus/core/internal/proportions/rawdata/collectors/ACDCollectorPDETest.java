@@ -642,6 +642,30 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 3 / 9.0, getACD(), 0.0001 );
     }
 
+    @Test
+    public void innerClassesHaveTheirOwnConnections_InnerClassBeforeAttribute() throws Exception {
+        createWSFolder( "inner", project1 );
+        createJavaWSFile( "inner/ClassWithInnerBeforeAttribute.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "inner/Class2.java" );
+        buildFullyAndWait();
+        assertEquals( 3, getNumberOfClasses() );
+        assertEquals( 3, ClassDescriptor.getAll().size() );
+        assertEquals( 5 / 9.0, getACD(), 0.0001 );
+    }
+
+    @Test
+    public void innerClassesHaveTheirOwnConnections_AttributeBeforeInnerClass() throws Exception {
+        createWSFolder( "inner", project1 );
+        createJavaWSFile( "inner/ClassWithInnerAfterAttribute.java" );
+        buildFullyAndWait();
+        createJavaWSFile( "inner/Class2.java" );
+        buildFullyAndWait();
+        assertEquals( 3, getNumberOfClasses() );
+        assertEquals( 3, ClassDescriptor.getAll().size() );
+        assertEquals( 5 / 9.0, getACD(), 0.0001 );
+    }
+
     private double getACD() {
         ACDStatistic statistic = new ACDStatistic();
         statistic.visit();

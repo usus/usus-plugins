@@ -1,5 +1,7 @@
 package org.projectusus.metrics;
 
+import java.util.Stack;
+
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
@@ -16,20 +18,24 @@ import org.projectusus.core.metrics.MetricsCollector;
 
 public class ACDCollector extends MetricsCollector {
 
-    private WrappedTypeBinding currentType;
+    private static Stack<WrappedTypeBinding> types = new Stack<WrappedTypeBinding>();
 
-    private void resetCurrentType() {
-        currentType = null;
+    private void addCurrentType( AbstractTypeDeclaration node ) {
+        types.push( BoundTypeConverter.wrap( node ) );
     }
 
-    // resetting the current type:
-
-    @Override
-    public boolean visit( CompilationUnit node ) {
-        resetCurrentType();
-        return true;
+    private WrappedTypeBinding currentType() {
+        if( types.empty() ) {
+            return null;
+        }
+        return types.peek();
     }
 
+    private void dropCurrentType() {
+        if( !types.empty() ) {
+            types.pop();
+        }
+    }
 
     // these must be ignored:
     @Override
@@ -40,20 +46,37 @@ public class ACDCollector extends MetricsCollector {
     // capturing the current type:
     @Override
     public boolean visit( TypeDeclaration node ) {
-        setCurrentType( node );
+        addCurrentType( node );
         return true;
     }
 
     @Override
     public boolean visit( AnnotationTypeDeclaration node ) {
-        setCurrentType( node );
+        addCurrentType( node );
         return true;
     }
 
     @Override
     public boolean visit( EnumDeclaration node ) {
-        setCurrentType( node );
+        addCurrentType( node );
         return true;
+    }
+
+    // resetting the current type:
+
+    @Override
+    public void endVisit( TypeDeclaration node ) {
+        dropCurrentType();
+    }
+
+    @Override
+    public void endVisit( AnnotationTypeDeclaration node ) {
+        dropCurrentType();
+    }
+
+    @Override
+    public void endVisit( EnumDeclaration node ) {
+        dropCurrentType();
     }
 
     // referenced types
@@ -92,14 +115,9 @@ public class ACDCollector extends MetricsCollector {
     }
 
     private boolean connectCurrentTypeAnd( WrappedTypeBinding targetType ) {
-        if( currentType != null && targetType != null && targetType.isValid() && !currentType.equals( targetType ) ) {
-            getMetricsWriter().addClassReference( currentType, targetType );
+        if( currentType() != null && targetType != null && targetType.isValid() && !currentType().equals( targetType ) ) {
+            getMetricsWriter().addClassReference( currentType(), targetType );
         }
         return false;
     }
-
-    private void setCurrentType( AbstractTypeDeclaration node ) {
-        currentType = BoundTypeConverter.wrap( node );
-    }
-
 }
