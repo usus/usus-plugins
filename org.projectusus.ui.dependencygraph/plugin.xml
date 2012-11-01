@@ -171,9 +171,13 @@
          <activeWhen>
             <with
                   variable="selection">
-               <count
-                     value="1">
-               </count>
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <instanceof
+                        value="org.projectusus.core.basis.GraphNode">
+                  </instanceof>
+               </iterate>
             </with>
          </activeWhen>
       </handler>
