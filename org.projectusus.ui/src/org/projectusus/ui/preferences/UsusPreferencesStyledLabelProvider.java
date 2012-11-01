@@ -7,6 +7,7 @@ import org.projectusus.core.statistics.CockpitExtensionPref;
 
 public class UsusPreferencesStyledLabelProvider extends WorkbenchLabelProvider implements IStyledLabelProvider {
 
+    @Override
     public StyledString getStyledText( Object element ) {
         if( element instanceof CockpitExtensionPref ) {
             return getStyledText( (CockpitExtensionPref)element );

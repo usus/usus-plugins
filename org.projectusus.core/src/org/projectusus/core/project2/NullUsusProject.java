@@ -4,13 +4,14 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.project2;
 
-
 public class NullUsusProject implements IUSUSProject {
 
     public boolean isUsusProject() {
         return false;
     }
 
+    // implements interface
+    @SuppressWarnings( "unused" )
     public void setUsusProject( boolean ususProject ) {
         // can't make this project an usus project
     }

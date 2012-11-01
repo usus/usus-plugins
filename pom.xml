@@ -5,7 +5,7 @@
 
   <groupId>org.projectusus</groupId>
   <artifactId>projectusus</artifactId>
-  <version>0.6.3-SNAPSHOT</version>
+  <version>0.6.4-SNAPSHOT</version>
   <name>Project Usus</name>
   <packaging>pom</packaging>
 
@@ -144,7 +144,7 @@
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho-version}</version>
-	  <configuration>
+        <configuration>
             <environments>
               <environment>
                 <os>linux</os>
@@ -173,7 +173,7 @@
               </environment>
             </environments>
             <ignoreTychoRepositories>false</ignoreTychoRepositories>
-	  </configuration>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.eclipse.tycho</groupId>

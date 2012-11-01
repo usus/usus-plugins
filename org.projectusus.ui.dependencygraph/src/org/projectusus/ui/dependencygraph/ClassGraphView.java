@@ -11,7 +11,7 @@ public class ClassGraphView extends DependencyGraphView {
 
     public static final String VIEW_ID = ClassGraphView.class.getName();
 
-    private static final String ONLY_CROSS_PACKAGE = "Only with cross-package relations";
+    private static final String ONLY_CROSS_PACKAGE = "Only cross-package relations";
 
     private static final DependencyGraphModel classGraphModel = new DependencyGraphModel() {
 

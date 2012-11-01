@@ -82,4 +82,4 @@ Export-Package: org.hamcrest,
  org.projectusus.matchers
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
-Require-Bundle: org.junit4;bundle-version="4.8.1"
+Require-Bundle: org.junit4;bundle-version="4.7.0"

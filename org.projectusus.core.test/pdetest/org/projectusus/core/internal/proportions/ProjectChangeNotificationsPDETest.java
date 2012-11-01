@@ -6,15 +6,16 @@ package org.projectusus.core.internal.proportions;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.projectusus.adapter.ICodeProportionComputationTarget;
 import org.projectusus.core.internal.PDETestUsingWSProject;
@@ -36,10 +37,13 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
     }
 
     @Test
-    @Ignore( "temporarily broken?" )
     public void projectCreated() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
         otherProject = createAdditionalProjectWithFile();
+
+        assertTrue( otherProject.isAccessible() );
+        IUSUSProject ususProject = (IUSUSProject)otherProject.getAdapter( IUSUSProject.class );
+        assertTrue( ususProject.isUsusProject() );
 
         listener.assertNoException();
 
@@ -97,13 +101,19 @@ public class ProjectChangeNotificationsPDETest extends PDETestUsingWSProject {
     }
 
     private IProject createAdditionalProjectWithFile() throws CoreException {
-        IProject result = getWorkspace().getRoot().getProject( "anotherProject" );
-        result.create( new NullProgressMonitor() );
-        result.open( new NullProgressMonitor() );
-        InputStream is = new ByteArrayInputStream( new byte[0] );
-        result.getFile( "blubb.java" ).create( is, true, new NullProgressMonitor() );
-        IUSUSProject ususProject = (IUSUSProject)result.getAdapter( IUSUSProject.class );
-        ususProject.setUsusProject( true );
-        return result;
+        final IProject project = getWorkspace().getRoot().getProject( "anotherProject" );
+
+        getWorkspace().run( new IWorkspaceRunnable() {
+            public void run( IProgressMonitor monitor ) throws CoreException {
+                project.create( new NullProgressMonitor() );
+                project.open( new NullProgressMonitor() );
+                project.getFile( "blubb.java" ).create( new ByteArrayInputStream( new byte[0] ), true, null );
+                IUSUSProject ususProject = (IUSUSProject)project.getAdapter( IUSUSProject.class );
+                ususProject.setUsusProject( true );
+            }
+
+        }, null );
+
+        return project;
     }
 }

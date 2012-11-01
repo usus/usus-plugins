@@ -5,7 +5,6 @@
 package org.projectusus.ui.internal.coveredprojects;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
-import static org.projectusus.core.project2.UsusProjectSupport.asUsusProject;
 import static org.projectusus.ui.internal.coveredprojects.SetUsusProjectOnSelection.checkSelected;
 import static org.projectusus.ui.internal.coveredprojects.SetUsusProjectOnSelection.uncheckSelected;
 
@@ -86,8 +85,13 @@ public class CoveredProjectsView extends ViewPart {
 
     private void updateUsusProject( Object element, boolean checked ) {
         if( element instanceof IProject ) {
+            UsusProjectMarker marker = new UsusProjectMarker( );
             IProject project = (IProject)element;
-            asUsusProject( project ).setUsusProject( checked );
+            if( checked ) {
+                marker.check( project );
+            } else {
+                marker.uncheck( project );
+            }
         }
     }
 

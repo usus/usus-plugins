@@ -1,7 +1,5 @@
 package org.projectusus.ui.internal.coveredprojects;
 
-import static org.projectusus.core.project2.UsusProjectSupport.asUsusProject;
-
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
@@ -41,10 +39,17 @@ class SetUsusProjectOnSelection extends Action {
 
     @Override
     public void run() {
-        for( IProject project : getSelectedProjects() ) {
-            asUsusProject( project ).setUsusProject( checked );
-        }
+        markProjects( getSelectedProjects() );
         coveredProjectsView.refresh();
+    }
+
+    private void markProjects( List<IProject> selectedProjects ) {
+        UsusProjectMarker marker = new UsusProjectMarker();
+        if( checked ) {
+            marker.check( selectedProjects );
+        } else {
+            marker.uncheck( selectedProjects );
+        }
     }
 
     private void updateEnablement() {

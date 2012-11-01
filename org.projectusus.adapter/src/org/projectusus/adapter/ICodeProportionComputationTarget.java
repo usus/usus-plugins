@@ -24,6 +24,4 @@ public interface ICodeProportionComputationTarget {
     Collection<IFile> getFiles( IProject project ) throws CoreException;
 
     Collection<IFile> getRemovedFiles( IProject project ) throws CoreException;
-
-    boolean isCleanRequested();
 }

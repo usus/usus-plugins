@@ -2,7 +2,9 @@ package org.projectusus.ui.internal.hotspots.commands;
 
 import static org.eclipse.jdt.core.JavaCore.createCompilationUnitFrom;
 
-import org.eclipse.core.commands.ExecutionEvent;
+import java.util.List;
+
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.projectusus.core.basis.FileHotspot;
 import org.projectusus.ui.internal.DisplayHotspot;
@@ -11,7 +13,13 @@ import org.projectusus.ui.util.EditorOpener;
 public class OpenHotspotInEditor extends AbstractOpenHotspotHandler<FileHotspot> {
 
     @Override
-    protected void open( @SuppressWarnings( "unused" ) ExecutionEvent event, DisplayHotspot<FileHotspot> hotspot ) {
+    protected void open( List<DisplayHotspot<FileHotspot>> hotspots ) throws ExecutionException {
+        for( DisplayHotspot<FileHotspot> hotspot : hotspots ) {
+            open( hotspot );
+        }
+    }
+
+    private void open( DisplayHotspot<FileHotspot> hotspot ) {
         FileHotspot realHotspot = hotspot.getHotspot();
         ICompilationUnit compilationUnit = extractCompilationUnit( hotspot );
         EditorOpener opener = new EditorOpener();

@@ -6,8 +6,12 @@ package org.projectusus.core.internal.proportions;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.hasItem;
+import static org.junit.matchers.JUnitMatchers.hasItems;
 import static org.projectusus.core.internal.TestProjectCreator.SOURCE_FOLDER;
+
+import java.util.Collection;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -18,7 +22,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.projectusus.adapter.ICodeProportionComputationTarget;
 import org.projectusus.core.internal.PDETestUsingWSProject;
@@ -42,7 +45,7 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
 
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 1, target.getProjects().size() );
-        assertThatAffectedProjectIsTheExpectedOne( target );
+        assertThat( target.getProjects(), hasItem( project1 ) );
         assertEquals( 1, target.getFiles( project1 ).size() );
         IFile affectedFile = target.getFiles( project1 ).iterator().next();
         assertEquals( file, affectedFile );
@@ -60,7 +63,7 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
 
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 1, target.getProjects().size() );
-        assertThatAffectedProjectIsTheExpectedOne( target );
+        assertThat( target.getProjects(), hasItem( project1 ) );
         assertEquals( 0, target.getFiles( project1 ).size() );
         assertEquals( 1, target.getRemovedFiles( project1 ).size() );
         IFile affectedFile = target.getRemovedFiles( project1 ).iterator().next();
@@ -79,7 +82,7 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
 
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 1, target.getProjects().size() );
-        assertThatAffectedProjectIsTheExpectedOne( target );
+        assertThat( target.getProjects(), hasItem( project1 ) );
         assertEquals( 0, target.getRemovedFiles( project1 ).size() );
         assertEquals( 1, target.getFiles( project1 ).size() );
         IFile affectedFile = target.getFiles( project1 ).iterator().next();
@@ -99,7 +102,7 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
 
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 1, target.getProjects().size() );
-        assertThatAffectedProjectIsTheExpectedOne( target );
+        assertThat( target.getProjects(), hasItem( project1 ) );
         // original file comes along as deleted
         assertEquals( 1, target.getRemovedFiles( project1 ).size() );
         IFile removedFile = target.getRemovedFiles( project1 ).iterator().next();
@@ -112,30 +115,27 @@ public class FileChangeNotificationsPDETest extends PDETestUsingWSProject {
     }
 
     @Test
-    @Ignore( "temporarily broken?" )
-    public void multipleFiles() throws Exception {
+    public void multipleFilesCreatedAtOnce() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
         // run in batch so that we get only one cumulative notification
         getWorkspace().run( new IWorkspaceRunnable() {
             public void run( IProgressMonitor monitor ) throws CoreException {
                 createWSFile( "a.java", "really", project1 );
                 createWSFile( "b.java", "interesting", project1 );
-                createWSFile( "c.java", "stuff", project1 );
+                createWSFile( "c.java", "stuff", project2 );
             }
         }, new NullProgressMonitor() );
         buildFullyAndWait();
 
         listener.assertNoException();
-
         ICodeProportionComputationTarget target = listener.getTarget();
-        assertEquals( 2, target.getProjects().size() );
-        assertThatAffectedProjectIsTheExpectedOne( target );
-        IProject affectedProject = project1;
-        assertEquals( 3, target.getFiles( affectedProject ).size() );
-    }
 
-    private void assertThatAffectedProjectIsTheExpectedOne( ICodeProportionComputationTarget target ) {
-        assertTrue( target.getProjects().contains( project1 ) );
+        Collection<IProject> affectedProjects = target.getProjects();
+        assertEquals( 2, affectedProjects.size() );
+        assertThat( affectedProjects, hasItems( project1, project2 ) );
+
+        assertEquals( 2, target.getFiles( project1 ).size() );
+        assertEquals( 1, target.getFiles( project2 ).size() );
     }
 
 }

@@ -36,8 +36,9 @@
             name="Projects covered by Usus"/>
       <view
             class="org.projectusus.ui.internal.histogram.HistogramView"
+            icon="icons/full/elcl16/histogram.png"
             id="org.projectusus.ui.internal.histogram.HistogramView"
-            name="Histogram"
+            name="Usus Histogram"
             restorable="true">
       </view>
    </extension>

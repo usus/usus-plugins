@@ -11,7 +11,7 @@ public class PackageGraphView extends DependencyGraphView {
 
     public static final String VIEW_ID = PackageGraphView.class.getName();
 
-    private static final String ONLY_IN_CYCLES = "only with cyclic dependencies";
+    private static final String ONLY_IN_CYCLES = "Only cyclic dependencies";
 
     private static final DependencyGraphModel packageGraphModel = new DependencyGraphModel() {
 

@@ -98,7 +98,7 @@ public class HotSpotsView extends ViewPart {
                 return page;
             }
         }
-        HotspotsPage page = new HotspotsPage( entry );
+        HotspotsPage page = new HotspotsPage( getSite(), entry );
         pages.add( page );
         return page;
     }

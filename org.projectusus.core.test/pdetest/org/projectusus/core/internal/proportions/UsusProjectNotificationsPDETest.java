@@ -7,66 +7,65 @@ package org.projectusus.core.internal.proportions;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.junit.Assert.assertEquals;
 
-import java.util.Collection;
-
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.projectusus.adapter.ICodeProportionComputationTarget;
+import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.internal.PDETestUsingWSProject;
+import org.projectusus.core.statistics.DefaultMetricsResultVisitor;
 
 public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
+
+    private final class ProjectCountingVisitor extends DefaultMetricsResultVisitor {
+        int projects = 0;
+
+        public void inspectProject( MetricsResults results ) {
+            projects++;
+        }
+    }
 
     private TestResourceChangeListener listener = new TestResourceChangeListener();
 
     @After
-    public void tearDown() throws CoreException {
+    public void removeResourceChangeListener() {
         getWorkspace().removeResourceChangeListener( listener );
-        super.tearDown();
     }
 
     @Test
-    @Ignore( "temporarily broken?" )
     public void projectAddedToUsus() throws Exception {
+        createWSFile( "A.java", "class A {}", project1 );
         makeUsusProject( false, project1 );
-        makeUsusProject( false, project2 );
         buildFullyAndWait();
-        getWorkspace().addResourceChangeListener( listener );
+
+        assertEquals( 0, countProjects() );
+
         makeUsusProject( true, project1 );
         buildFullyAndWait();
 
-        listener.assertNoException();
-
-        ICodeProportionComputationTarget target = listener.getTarget();
-        assertEquals( 0, target.getRemovedProjects().size() );
-        assertEquals( 1, target.getProjects().size() );
-        IProject affectedProject = target.getProjects().iterator().next();
-        assertEquals( project1, affectedProject );
-        Collection<IFile> files = target.getFiles( project1 );
-        assertEquals( 1, files.size() );
-        assertEquals( "org.projectusus.core.prefs", files.iterator().next().getName() );
+        assertEquals( 1, countProjects() );
     }
 
-    @Ignore( "temporarily broken?" )
     @Test
     public void projectRemovedFromUsus() throws Exception {
-        getWorkspace().addResourceChangeListener( listener );
-        createWSFile( "a.java", "created before removing project from usus", project1 );
+        createWSFile( "A.java", "class A {}", project1 );
+        createWSFile( "B.java", "class B {}", project2 );
+        buildFullyAndWait();
+        assertEquals( 2, countProjects() );
 
-        listener.assertNoException();
-        assertEquals( 1, listener.getTarget().getProjects().size() );
+        makeUsusProject( false, project2 );
+        buildFullyAndWait();
+        assertEquals( 1, countProjects() );
 
         makeUsusProject( false, project1 );
         buildFullyAndWait();
+        assertEquals( 0, countProjects() );
+    }
 
-        listener.assertNoException();
-
-        ICodeProportionComputationTarget target = listener.getTarget();
-        assertEquals( 0, target.getProjects().size() );
-        assertRemovedProject( target );
+    private int countProjects() {
+        ProjectCountingVisitor visitor = new ProjectCountingVisitor();
+        visitor.visit();
+        return visitor.projects;
     }
 
     @Test

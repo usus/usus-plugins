@@ -29,6 +29,7 @@ public class UsusPreferenceInitializer extends AbstractPreferenceInitializer {
     }
 
     private IEclipsePreferences getPreferencesDefaults() {
+        // TODO fix needs 3.4
         return new DefaultScope().getNode( UsusCorePlugin.PLUGIN_ID );
     }
 

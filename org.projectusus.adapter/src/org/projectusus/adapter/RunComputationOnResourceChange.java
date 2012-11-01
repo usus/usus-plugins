@@ -12,7 +12,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.projectusus.core.UsusCorePlugin;
 import org.projectusus.core.UsusModelProvider;
 
-public class RunComputationOnResourceChange implements IResourceChangeListener {
+class RunComputationOnResourceChange implements IResourceChangeListener {
 
     public void resourceChanged( IResourceChangeEvent event ) {
         IResourceDelta delta = event.getDelta();

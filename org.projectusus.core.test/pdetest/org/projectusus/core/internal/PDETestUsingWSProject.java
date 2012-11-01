@@ -11,6 +11,7 @@ import static org.eclipse.core.resources.ResourcesPlugin.FAMILY_AUTO_REFRESH;
 import static org.eclipse.core.resources.ResourcesPlugin.FAMILY_MANUAL_BUILD;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.eclipse.core.runtime.jobs.Job.getJobManager;
+import static org.junit.Assert.fail;
 import static org.projectusus.core.internal.TestProjectCreator.SOURCE_FOLDER;
 
 import java.io.ByteArrayInputStream;
@@ -34,28 +35,70 @@ public class PDETestUsingWSProject {
     protected IProject project2;
 
     @Before
-    public void setUp() throws CoreException {
-        project1 = new TestProjectCreator( PROJECT_NAME_1 ).getProject();
-        project2 = new TestProjectCreator( PROJECT_NAME_2 ).getProject();
+    public void createProjects() {
+        project1 = createProject( PROJECT_NAME_1 );
+        project2 = createProject( PROJECT_NAME_2 );
         UsusAdapterPlugin.getDefault(); // to load bundle with ResourceChangeListener
+    }
+
+    private IProject createProject( String projectName ) {
+        System.out.print( "  Creating project '" + projectName + "' at " + System.nanoTime() + " ..." );
+        System.out.flush();
+        IProject project = null;
+        CoreException exception = null;
+        try {
+            project = new TestProjectCreator( projectName ).getProject();
+        } catch( CoreException e ) {
+            exception = e;
+        }
+        logResult( projectName, project, exception );
+        return project;
+    }
+
+    private void logResult( String projectName, IProject project, CoreException exception ) {
+        if( project != null && project.exists() ) {
+            System.out.println( " OK." );
+        } else {
+            System.out.println( " FAILED." );
+            String message = "Could not create project '" + projectName + "'";
+            if( exception != null ) {
+                exception.printStackTrace( System.out );
+                message += ": " + exception.getMessage();
+            }
+            fail( message );
+        }
     }
 
     @After
     public void tearDown() throws CoreException {
-        project1.delete( true, new NullProgressMonitor() );
-        project2.delete( true, new NullProgressMonitor() );
+        delete( project1 );
+        delete( project2 );
         UsusModel.clear();
+    }
+
+    private void delete( IProject project ) throws CoreException {
+        System.out.print( "  Deleting project '" + project.getName() + "' at " + System.nanoTime() + " ..." );
+        System.out.flush();
+        project.delete( true, null );
+        if( project.exists() ) {
+            System.out.println( " FAILED." );
+            fail( "Could not delte project '" + project.getName() + "'" );
+        } else {
+            System.out.println( " OK." );
+        }
     }
 
     protected void buildFullyAndWait() throws CoreException {
         getWorkspace().build( FULL_BUILD, new NullProgressMonitor() );
         System.out.print( "  Waiting for full build to complete ..." );
+        System.out.flush();
         waitForBuild();
     }
 
     protected void buildIncrementallyAndWait() throws CoreException {
         getWorkspace().build( INCREMENTAL_BUILD, new NullProgressMonitor() );
         System.out.print( "  Waiting for incremental build to complete ..." );
+        System.out.flush();
         waitForBuild();
     }
 

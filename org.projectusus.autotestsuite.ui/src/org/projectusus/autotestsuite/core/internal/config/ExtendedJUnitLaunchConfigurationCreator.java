@@ -28,6 +28,7 @@ public class ExtendedJUnitLaunchConfigurationCreator {
 
     public ILaunchConfigurationWorkingCopy createNewConfig( IJavaProject root, Collection<IJavaProject> projects ) throws CoreException {
         String name = JavaElementLabels.getTextLabel( root, ALL_FULLY_QUALIFIED );
+        // TODO fix needs 3.6
         String uniqueName = ExtendedJUnitLaunchConfigurationConstants.getLaunchManager().generateUniqueLaunchConfigurationNameFrom( name );
         ILaunchConfigurationWorkingCopy config = getLaunchConfigurationType().newInstance( null, uniqueName );
         return fillAttributes( root, config, projects );
