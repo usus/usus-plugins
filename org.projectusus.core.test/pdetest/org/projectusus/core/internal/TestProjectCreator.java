@@ -30,14 +30,14 @@ public class TestProjectCreator {
 
     private final IProject project;
 
-    TestProjectCreator( String name ) throws CoreException {
+    public TestProjectCreator( String name ) throws CoreException {
         super();
         project = createNewProject( name );
         addJavaNature( project );
         makeUsusProject();
     }
 
-    IProject getProject() {
+    public IProject getProject() {
         return project;
     }
 

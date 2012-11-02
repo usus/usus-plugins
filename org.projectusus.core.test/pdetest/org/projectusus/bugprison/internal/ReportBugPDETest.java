@@ -11,33 +11,33 @@ import static org.junit.Assert.assertTrue;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
+import org.junit.Rule;
 import org.junit.Test;
 import org.projectusus.bugprison.core.Bug;
 import org.projectusus.bugprison.core.BugList;
 import org.projectusus.bugprison.core.IBuggyProject;
 import org.projectusus.bugprison.core.internal.SaveBugsJob;
-import org.projectusus.core.internal.PDETestUsingWSProject;
+import org.projectusus.core.internal.JavaProject;
 
-public class ReportBugPDETest extends PDETestUsingWSProject {
+public class ReportBugPDETest {
 
     private static final DateTime TODAY = new DateMidnight().toDateTime();
 
-    protected IBuggyProject getBuggyProjectAdapter() {
-        return (IBuggyProject)project1.getAdapter( IBuggyProject.class );
-    }
+    @Rule
+    public JavaProject project = new JavaProject();
 
     @Test
-    public void testgetBugsWithNoBugs() throws Exception {
-        BugList bugs = getBuggyProjectAdapter().getBugs();
+    public void testGetBugsWithNoBugs() throws Exception {
+        BugList bugs = project.as( IBuggyProject.class ).getBugs();
         assertTrue( bugs.isEmpty() );
     }
 
     @Test
     public void testCreateBug() throws Exception {
         Bug bug = createBug();
-        getBuggyProjectAdapter().saveBug( bug );
+        project.as( IBuggyProject.class ).saveBug( bug );
         getJobManager().join( SaveBugsJob.FAMILY, new NullProgressMonitor() );
-        BugList bugs = getBuggyProjectAdapter().getBugs();
+        BugList bugs = project.as( IBuggyProject.class ).getBugs();
         assertEquals( 1, bugs.size() );
         testBugContent( bugs.getBugs()[0] );
     }
@@ -50,7 +50,7 @@ public class ReportBugPDETest extends PDETestUsingWSProject {
         assertEquals( 8, bug.getBugMetrics().getMethodLength() );
         assertEquals( 7, bug.getBugMetrics().getNumberOfMethods() );
 
-        assertEquals( project1.getName(), bug.getLocation().getProject() );
+        assertEquals( project.get().getName(), bug.getLocation().getProject() );
         assertEquals( "pde.test.package", bug.getLocation().getPackageName() );
         assertEquals( "TestClassName", bug.getLocation().getClassName() );
         assertEquals( "testMethodName", bug.getLocation().getMethodName() );

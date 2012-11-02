@@ -9,13 +9,24 @@ import static org.junit.Assert.assertEquals;
 
 import org.eclipse.core.resources.IProject;
 import org.junit.After;
+import org.junit.Rule;
 import org.junit.Test;
 import org.projectusus.adapter.ICodeProportionComputationTarget;
 import org.projectusus.core.basis.MetricsResults;
-import org.projectusus.core.internal.PDETestUsingWSProject;
+import org.projectusus.core.internal.JavaProject;
+import org.projectusus.core.internal.Workspace;
 import org.projectusus.core.statistics.DefaultMetricsResultVisitor;
 
-public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
+public class UsusProjectNotificationsPDETest {
+
+    @Rule
+    public Workspace workspace = new Workspace();
+
+    @Rule
+    public JavaProject project1 = new JavaProject();
+
+    @Rule
+    public JavaProject project2 = new JavaProject();
 
     private final class ProjectCountingVisitor extends DefaultMetricsResultVisitor {
         int projects = 0;
@@ -34,31 +45,31 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
 
     @Test
     public void projectAddedToUsus() throws Exception {
-        createWSFile( "A.java", "class A {}", project1 );
-        makeUsusProject( false, project1 );
-        buildFullyAndWait();
+        project1.createFile( "A.java", "class A {}" );
+        project1.disableUsus();
+        workspace.buildFullyAndWait();
 
         assertEquals( 0, countProjects() );
 
-        makeUsusProject( true, project1 );
-        buildFullyAndWait();
+        project1.enableUsus();
+        workspace.buildFullyAndWait();
 
         assertEquals( 1, countProjects() );
     }
 
     @Test
     public void projectRemovedFromUsus() throws Exception {
-        createWSFile( "A.java", "class A {}", project1 );
-        createWSFile( "B.java", "class B {}", project2 );
-        buildFullyAndWait();
+        project1.createFile( "A.java", "class A {}" );
+        project2.createFile( "B.java", "class B {}" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, countProjects() );
 
-        makeUsusProject( false, project2 );
-        buildFullyAndWait();
+        project1.disableUsus();
+        workspace.buildFullyAndWait();
         assertEquals( 1, countProjects() );
 
-        makeUsusProject( false, project1 );
-        buildFullyAndWait();
+        project2.disableUsus();
+        workspace.buildFullyAndWait();
         assertEquals( 0, countProjects() );
     }
 
@@ -70,9 +81,9 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
 
     @Test
     public void excludeNonUsusProjects() throws Exception {
-        makeUsusProject( false, project1 );
+        project1.disableUsus();
         getWorkspace().addResourceChangeListener( listener );
-        createWSFile( "a.java", "file that is ignored because in non-usus project", project1 );
+        project1.createFile( "a.java", "file that is ignored because in non-usus project" );
 
         listener.assertNoException();
 
@@ -88,6 +99,6 @@ public class UsusProjectNotificationsPDETest extends PDETestUsingWSProject {
     private void assertRemovedProject( ICodeProportionComputationTarget target ) {
         assertEquals( 1, target.getRemovedProjects().size() );
         IProject removedProject = target.getRemovedProjects().iterator().next();
-        assertEquals( project1, removedProject );
+        assertEquals( project1.get(), removedProject );
     }
 }

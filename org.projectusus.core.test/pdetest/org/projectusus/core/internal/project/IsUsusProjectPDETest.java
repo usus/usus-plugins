@@ -9,28 +9,34 @@ import static org.junit.Assert.assertTrue;
 import static org.projectusus.core.project2.UsusProjectSupport.asUsusProject;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Rule;
 import org.junit.Test;
-import org.projectusus.core.internal.PDETestUsingWSProject;
+import org.projectusus.core.internal.JavaProject;
+import org.projectusus.core.internal.Workspace;
 
-public class IsUsusProjectPDETest extends PDETestUsingWSProject {
+public class IsUsusProjectPDETest {
+
+    @Rule
+    public Workspace workspace = new Workspace();
+
+    @Rule
+    public JavaProject project = new JavaProject();
 
     @Test
     public void ususProject() {
-        assertTrue( asUsusProject( project1 ).isUsusProject() );
+        assertTrue( asUsusProject( project.get() ).isUsusProject() );
     }
 
     @Test
     public void nonUsusProject() throws CoreException {
-        makeUsusProject( false, project1 );
-        assertFalse( asUsusProject( project1 ).isUsusProject() );
+        project.disableUsus();
+        assertFalse( asUsusProject( project.get() ).isUsusProject() );
     }
 
     @Test
     public void inaccessibleProject() throws CoreException {
-        project1.close( new NullProgressMonitor() );
-        buildFullyAndWait();
-        assertFalse( asUsusProject( project1 ).isUsusProject() );
-        project1.open( new NullProgressMonitor() ); // this fixes some following tests
+        project.close();
+        workspace.buildFullyAndWait();
+        assertFalse( asUsusProject( project.get() ).isUsusProject() );
     }
 }

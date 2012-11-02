@@ -67,7 +67,7 @@ public class PDETestUsingWSProject {
         UsusModel.clear();
     }
 
-    private void delete( IProject project ) throws CoreException {
+    private void delete( IProject project ) {
         print( "  Deleting project '" + project.getName() + "' at " + System.nanoTime() + " ..." );
         Exception exception = null;
         try {
