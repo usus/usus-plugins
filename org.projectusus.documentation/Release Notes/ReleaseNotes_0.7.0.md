@@ -1,4 +1,4 @@
-# Usus 0.6.5 Release Notes
+# Usus 0.7.0 Release Notes
 
 ## New Features
 
