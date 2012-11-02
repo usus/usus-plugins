@@ -16,14 +16,14 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
     @Test
     public void dropProjectWithFile1() throws Exception {
         computeFile1AndCheckPreconditions();
-        ususModel().dropRawData( project1 );
+        ususModel().dropRawData( project.get() );
         checkProjectRawDataIsEmpty();
     }
 
     @Test
     public void dropProjectWithFiles2() throws Exception {
         computeFiles2AndCheckPreconditions();
-        ususModel().dropRawData( project1 );
+        ususModel().dropRawData( project.get() );
         checkProjectRawDataIsEmpty();
     }
 
@@ -78,10 +78,10 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
     }
 
     private int getNumberOfMethodsInProject() {
-        return new MethodCountVisitor( new JavaModelPath( project1 ) ).visitAndReturn().getMethodCount();
+        return new MethodCountVisitor( new JavaModelPath( project.get() ) ).visitAndReturn().getMethodCount();
     }
 
     private int getNumberOfClassesInProject() {
-        return new ClassCountVisitor( new JavaModelPath( project1 ) ).visitAndReturn().getClassCount();
+        return new ClassCountVisitor( new JavaModelPath( project.get() ) ).visitAndReturn().getClassCount();
     }
 }

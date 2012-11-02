@@ -49,8 +49,8 @@ public class MetricsAccessorGetAllClassRepresentersPDETest extends PDETestForMet
     @Test
     public void twoClassesInOneFileKnowEachOtherOneIsRemoved() throws Exception {
         IFile file = createFileAndBuild( "_twoKnowEachOther" );
-        updateFileContent( file, loadContent( "MetricsAccessor_oneKnowsTheOther.test" ) );
-        buildFullyAndWait();
+        project.updateContent( file, loadResource( "MetricsAccessor_oneKnowsTheOther.test" ) );
+        workspace.buildFullyAndWait();
         Set<GraphNode> representers = UsusModelProvider.getAllClassRepresenters();
         assertEquals( 2, representers.size() );
         GraphNode node = representers.iterator().next();
@@ -73,8 +73,8 @@ public class MetricsAccessorGetAllClassRepresentersPDETest extends PDETestForMet
         node = representers.iterator().next();
         assertEquals( 1, node.getChildren().size() );
 
-        updateFileContent( file, loadContent( "MetricsAccessor_file2Knows1Not.test" ) );
-        buildFullyAndWait();
+        project.updateContent( file, loadResource( "MetricsAccessor_file2Knows1Not.test" ) );
+        workspace.buildFullyAndWait();
 
         representers = UsusModelProvider.getAllClassRepresenters();
         assertEquals( 2, representers.size() );

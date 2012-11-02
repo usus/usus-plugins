@@ -44,12 +44,12 @@ public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsC
 
     @Test
     public void twoClassesInTwoPackagesKnowEachOther() throws Exception {
-        createWSFolder( "package1", project1 );
-        createWSFolder( "package2", project1 );
-        createWSFile( "package1/MetricsAccessor_package1file1Knows2.java", loadContent( "MetricsAccessor_package1file1Knows2.test" ), project1 );
-        buildFullyAndWait();
-        createWSFile( "package2/MetricsAccessor_package2file2Knows1.java", loadContent( "MetricsAccessor_package2file2Knows1.test" ), project1 );
-        buildFullyAndWait();
+        project.createFolder( "package1" );
+        project.createFolder( "package2" );
+        project.createFile( "package1/MetricsAccessor_package1file1Knows2.java", loadResource( "MetricsAccessor_package1file1Knows2.test" ) );
+        workspace.buildFullyAndWait();
+        project.createFile( "package2/MetricsAccessor_package2file2Knows1.java", loadResource( "MetricsAccessor_package2file2Knows1.test" ) );
+        workspace.buildFullyAndWait();
 
         checkTwoNodesWithOneChildEach();
 
@@ -77,8 +77,8 @@ public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsC
         node = representers.iterator().next();
         assertEquals( 1, node.getChildren().size() );
 
-        updateFileContent( file, loadContent( "MetricsAccessor_file2Knows1Not.test" ) );
-        buildFullyAndWait();
+        project.updateContent( file, loadResource( "MetricsAccessor_file2Knows1Not.test" ) );
+        workspace.buildFullyAndWait();
 
         representers = UsusModelProvider.getAllCrossPackageClasses();
         assertEquals( 2, representers.size() );

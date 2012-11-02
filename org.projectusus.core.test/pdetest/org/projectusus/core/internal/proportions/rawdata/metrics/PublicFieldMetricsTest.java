@@ -15,7 +15,7 @@ public class PublicFieldMetricsTest extends PDETestForMetricsComputation {
     @Before
     public void setup() throws Exception {
         statistic = ValidatorFactory.getClassValidator( "public fields" );
-        createWSFolder( "publicfields", project1 );
+        project.createFolder( "publicfields" );
     }
 
     @Test

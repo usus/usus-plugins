@@ -30,83 +30,83 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void findMarkerOnProject() throws CoreException {
-        project1.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        buildFullyAndWait();
+        project.get().createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
+        workspace.buildFullyAndWait();
         assertEquals( 1, yellowCountCache().yellows() );
     }
 
     @Test
     public void findMarkerOnJavaFile() throws CoreException {
-        IFile file = createWSFile( "a.java", "no content", project1 );
+        IFile file = project.createFile( "a.java", "no content" );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        buildFullyAndWait();
+        workspace.buildFullyAndWait();
         assertEquals( 1, yellowCountCache().yellows() );
     }
 
     @Test
     public void findMarkerOnNonJavaFile() throws Exception {
-        IFile file = createWSFile( "a", "no content", project1 );
+        IFile file = project.createFile( "a", "no content" );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        buildFullyAndWait();
+        workspace.buildFullyAndWait();
         assertEquals( 1, yellowCountCache().yellows() );
     }
 
     @Test
     public void findMultipleMarkersOnFile() throws CoreException {
-        IFile file = createWSFile( "a", "no content\non two lines", project1 );
+        IFile file = project.createFile( "a", "no content\non two lines" );
         IMarker marker1 = file.createMarker( PROBLEM );
         marker1.setAttribute( LINE_NUMBER, 1 );
         marker1.setAttribute( SEVERITY, SEVERITY_WARNING );
         IMarker marker2 = file.createMarker( PROBLEM );
         marker2.setAttribute( LINE_NUMBER, 2 );
         marker2.setAttribute( SEVERITY, SEVERITY_WARNING );
-        buildFullyAndWait();
+        workspace.buildFullyAndWait();
         assertEquals( 2, yellowCountCache().yellows() );
         assertEquals( 1, yellowCountCache().yellowProjects() );
     }
 
     @Test
     public void findMarkersOnMultipleFiles() throws Exception {
-        IFile file1 = createWSFile( "a", "no content", project1 );
+        IFile file1 = project.createFile( "a", "no content" );
         file1.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        IFile file2 = createWSFile( "b.java", "no content", project1 );
+        IFile file2 = project.createFile( "b.java", "no content" );
         file2.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        buildFullyAndWait();
+        workspace.buildFullyAndWait();
         assertEquals( 2, yellowCountCache().yellows() );
     }
 
     @Test
     public void hotspotsOnMultipleNonJavaFiles() throws Exception {
-        IFile fileA = createWSFile( "a", "no content", project1 );
+        IFile fileA = project.createFile( "a", "no content" );
         fileA.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        IFile fileB = createWSFile( "b", "no content", project1 );
+        IFile fileB = project.createFile( "b", "no content" );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        buildFullyAndWait();
+        workspace.buildFullyAndWait();
         assertEquals( 3, yellowCountCache().yellows() );
     }
 
     @Test
     public void hotspotsOnMultipleJavaFiles() throws CoreException {
-        IFile fileA = createWSFile( "a.java", "no content", project1 );
+        IFile fileA = project.createFile( "a.java", "no content" );
         fileA.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        IFile fileB = createWSFile( "b.java", "no content", project1 );
+        IFile fileB = project.createFile( "b.java", "no content" );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         fileB.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        buildFullyAndWait();
+        workspace.buildFullyAndWait();
         assertEquals( 3, yellowCountCache().yellows() );
     }
 
     @Test
     public void findOnlyWarningMarkers() throws CoreException {
-        IFile file = createWSFile( "a", "no content", project1 );
+        IFile file = project.createFile( "a", "no content" );
         // put stuff we want to ignore
         file.createMarker( BOOKMARK );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_INFO );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_ERROR );
         // this is the guy
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
-        buildFullyAndWait();
+        workspace.buildFullyAndWait();
         assertEquals( 1, yellowCountCache().yellows() );
     }
 }

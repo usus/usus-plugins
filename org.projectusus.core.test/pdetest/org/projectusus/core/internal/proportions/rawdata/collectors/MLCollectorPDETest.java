@@ -131,13 +131,13 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
     @Test
     public void interfaceBug() throws Exception {
         // org.eclipse.core.runtime.content
-        createWSFolder( "org", project1 );
-        createWSFolder( "org/eclipse", project1 );
-        createWSFolder( "org/eclipse/core", project1 );
-        createWSFolder( "org/eclipse/core/runtime", project1 );
-        createWSFolder( "org/eclipse/core/runtime/content", project1 );
-        createWSFile( "org/eclipse/core/runtime/content/IContentTypeSettings.java", loadContent( "IContentTypeSettings.test" ), project1 );
-        buildFullyAndWait();
+        project.createFolder( "org" );
+        project.createFolder( "org/eclipse" );
+        project.createFolder( "org/eclipse/core" );
+        project.createFolder( "org/eclipse/core/runtime" );
+        project.createFolder( "org/eclipse/core/runtime/content" );
+        project.createFile( "org/eclipse/core/runtime/content/IContentTypeSettings.java", loadResource( "IContentTypeSettings.test" ) );
+        workspace.buildFullyAndWait();
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 6, getNumberOfMethods() );
         assertEquals( 0, getMethodLengths() );

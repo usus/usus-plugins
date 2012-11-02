@@ -14,43 +14,49 @@ import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
+import org.junit.Rule;
 import org.projectusus.core.basis.JavaModelPath;
-import org.projectusus.core.internal.PDETestUsingWSProject;
+import org.projectusus.core.internal.JavaProject;
+import org.projectusus.core.internal.Workspace;
 import org.projectusus.core.statistics.visitors.ClassCountVisitor;
 import org.projectusus.core.statistics.visitors.MethodCountVisitor;
 import org.projectusus.statistics.MethodLengthStatistic;
 
-public class PDETestForMetricsComputation extends PDETestUsingWSProject {
+public class PDETestForMetricsComputation {
+
+    @Rule
+    public Workspace workspace = new Workspace();
+
+    @Rule
+    public JavaProject project = new JavaProject();
 
     public void simpleCaseTestDemo() throws Exception {
-        IFile file = createWSFile( "A.java", loadContent( "A.test" ), project1 );
-        buildFullyAndWait();
+        IFile file = project.createFile( "A.java", loadResource( "A.test" ) );
+        workspace.buildFullyAndWait();
         MethodLengthStatistic stat = new MethodLengthStatistic();
         stat.visit();
         assertEquals( 1, stat.getViolations() );
         assertEquals( 2, new MethodCountVisitor( new JavaModelPath( file.getProject() ) ).visitAndReturn().getMethodCount() );
     }
 
-    protected String loadContent( String fileName ) throws Exception {
-        URL entry = loadEntry( fileName );
-        return readPreservingBinaryIdentity( entry.openStream() );
+    protected IFile createJavaFile( String fileName ) throws Exception {
+        return project.createFile( fileName, loadJavaResource( fileName ) );
     }
 
-    private URL loadEntry( String fileName ) {
-        return Platform.getBundle( "org.projectusus.core.test" ).getEntry( "resources/" + fileName );
+    protected String loadResource( String fileName ) throws Exception {
+        return loadContent( "resources/" + fileName );
     }
 
-    protected IFile createJavaWSFile( String fileName ) throws Exception {
-        return createWSFile( fileName, loadJavaContent( fileName ), project1 );
+    protected String loadJavaResource( String fileName ) throws Exception {
+        return loadContent( "javaresources/" + fileName );
     }
 
-    protected String loadJavaContent( String fileName ) throws Exception {
-        URL entry = loadJavaEntry( fileName );
-        return readPreservingBinaryIdentity( entry.openStream() );
+    private String loadContent( String path ) throws IOException {
+        return readPreservingBinaryIdentity( toURL( path ).openStream() );
     }
 
-    private URL loadJavaEntry( String fileName ) {
-        return Platform.getBundle( "org.projectusus.core.test" ).getEntry( "javaresources/" + fileName );
+    private URL toURL( String path ) {
+        return Platform.getBundle( "org.projectusus.core.test" ).getEntry( path );
     }
 
     private String readPreservingBinaryIdentity( InputStream is ) throws IOException {
@@ -67,18 +73,18 @@ public class PDETestForMetricsComputation extends PDETestUsingWSProject {
 
     protected IFile createFileAndBuild( String name ) throws Exception {
         IFile file = createFile( name );
-        buildFullyAndWait();
+        workspace.buildFullyAndWait();
         return file;
     }
 
     protected IFile createJavaFileAndBuild( String fullName ) throws Exception {
-        IFile file = createJavaWSFile( fullName + ".java" );
-        buildFullyAndWait();
+        IFile file = createJavaFile( fullName + ".java" );
+        workspace.buildFullyAndWait();
         return file;
     }
 
     protected IFile createFile( String name ) throws Exception {
-        return createWSFile( name + ".java", loadContent( name + ".test" ), project1 );
+        return project.createFile( name + ".java", loadResource( name + ".test" ) );
     }
 
     public int getNumberOfMethods() {

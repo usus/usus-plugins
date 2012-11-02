@@ -147,7 +147,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 1, ClassDescriptor.getAll().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
         createFile( "11a" );
-        buildIncrementallyAndWait();
+        workspace.buildIncrementallyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
@@ -156,13 +156,13 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     @Test
     public void twoFiles_GameStateLoaded2nd_KnowsLRUCacheLoaded1st_WithPackages() throws Exception {
         createWSFolders();
-        createWSFile( "org/doublemill/model/util/LRUCache.java", loadContent( "Acd_LRUCache.test" ), project1 );
-        buildFullyAndWait();
+        project.createFile( "org/doublemill/model/util/LRUCache.java", loadResource( "Acd_LRUCache.test" ) );
+        workspace.buildFullyAndWait();
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, ClassDescriptor.getAll().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
-        createWSFile( "org/doublemill/model/ai/GameStateAI.java", loadContent( "Acd_GameStateAI.test" ), project1 );
-        buildIncrementallyAndWait();
+        project.createFile( "org/doublemill/model/ai/GameStateAI.java", loadResource( "Acd_GameStateAI.test" ) );
+        workspace.buildIncrementallyAndWait();
         new ForcedRecompute().schedule();
         Thread.sleep( 1000 );
         assertEquals( 2, getNumberOfClasses() );
@@ -175,15 +175,15 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     @Test
     public void twoFiles_GameStateLoaded1st_KnowsLRUCacheLoaded2nd_WithPackages() throws Exception {
         createWSFolders();
-        createWSFile( "org/doublemill/model/ai/GameStateAI.java", loadContent( "Acd_GameStateAI.test" ), project1 );
-        buildFullyAndWait();
+        project.createFile( "org/doublemill/model/ai/GameStateAI.java", loadResource( "Acd_GameStateAI.test" ) );
+        workspace.buildFullyAndWait();
         System.out.println( "=====================" );
         System.out.println( "Erster Autobuild beendet." );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, ClassDescriptor.getAll().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
-        createWSFile( "org/doublemill/model/util/LRUCache.java", loadContent( "Acd_LRUCache.test" ), project1 );
-        buildIncrementallyAndWait();
+        project.createFile( "org/doublemill/model/util/LRUCache.java", loadResource( "Acd_LRUCache.test" ) );
+        workspace.buildIncrementallyAndWait();
         new ForcedRecompute().schedule();
         Thread.sleep( 1000 );
         System.out.println( "=====================" );
@@ -201,12 +201,12 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
     public void twoFiles_11aLoaded2nd_Knows11bLoaded1st_11bIsDeleted() throws Exception {
         IFile file11b = createFileAndBuild( "11b" );
         createFileAndBuild( "11a" );
-        buildFullyAndWait(); // seems to fix a racing condition that only occurs during testing
+        workspace.buildFullyAndWait(); // seems to fix a racing condition that only occurs during testing
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
-        deleteFile( file11b );
-        buildIncrementallyAndWait();
+        project.delete( file11b );
+        workspace.buildIncrementallyAndWait();
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, ClassDescriptor.getAll().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
@@ -227,7 +227,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 1, ClassDescriptor.getAll().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
         createFile( "11b" );
-        buildIncrementallyAndWait();
+        workspace.buildIncrementallyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
@@ -240,7 +240,7 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 1, ClassDescriptor.getAll().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
         createFile( "11a" );
-        buildIncrementallyAndWait();
+        workspace.buildIncrementallyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
@@ -253,8 +253,8 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 0.75, getACD(), 0.0001 );
-        deleteFile( firstFile );
-        buildIncrementallyAndWait();
+        project.delete( firstFile );
+        workspace.buildIncrementallyAndWait();
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, ClassDescriptor.getAll().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
@@ -278,8 +278,8 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
-        deleteFile( secondFile );
-        buildIncrementallyAndWait();
+        project.delete( secondFile );
+        workspace.buildIncrementallyAndWait();
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, ClassDescriptor.getAll().size() );
         assertEquals( 1.0, getACD(), 0.0001 );
@@ -441,11 +441,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void staticMethodWithClassName() throws Exception {
-        createWSFolder( "oops", project1 );
-        createJavaWSFile( "oops/Acd_static1.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "oops/Acd_static2.java" );
-        buildFullyAndWait();
+        project.createFolder( "oops" );
+        createJavaFile( "oops/Acd_static1.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "oops/Acd_static2.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
@@ -453,11 +453,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void methodChainingWithClassnameAndStaticAndNonstaticMethod() throws Exception {
-        createWSFolder( "methodchaining", project1 );
-        createJavaWSFile( "methodchaining/Chain1.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "methodchaining/Chain2.java" );
-        buildFullyAndWait();
+        project.createFolder( "methodchaining" );
+        createJavaFile( "methodchaining/Chain1.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "methodchaining/Chain2.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
@@ -465,11 +465,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void methodChainingWithStaticImportAndStaticAndNonstaticMethod() throws Exception {
-        createWSFolder( "methodchaining", project1 );
-        createJavaWSFile( "methodchaining/Chain1.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "methodchaining/Chain5.java" );
-        buildFullyAndWait();
+        project.createFolder( "methodchaining" );
+        createJavaFile( "methodchaining/Chain1.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "methodchaining/Chain5.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
@@ -477,11 +477,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void methodChainingWithConstructorAndNonstaticAndStaticMethod() throws Exception {
-        createWSFolder( "methodchaining", project1 );
-        createJavaWSFile( "methodchaining/Chain3.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "methodchaining/Chain4.java" );
-        buildFullyAndWait();
+        project.createFolder( "methodchaining" );
+        createJavaFile( "methodchaining/Chain3.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "methodchaining/Chain4.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
@@ -489,11 +489,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void fieldChainingWithClassnameAndStaticAndNonstaticField() throws Exception {
-        createWSFolder( "methodchaining", project1 );
-        createJavaWSFile( "methodchaining/Field1.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "methodchaining/Field2.java" );
-        buildFullyAndWait();
+        project.createFolder( "methodchaining" );
+        createJavaFile( "methodchaining/Field1.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "methodchaining/Field2.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
@@ -501,11 +501,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void fieldChainingWithStaticImportAndStaticAndNonstaticField() throws Exception {
-        createWSFolder( "methodchaining", project1 );
-        createJavaWSFile( "methodchaining/Field1.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "methodchaining/Field5.java" );
-        buildFullyAndWait();
+        project.createFolder( "methodchaining" );
+        createJavaFile( "methodchaining/Field1.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "methodchaining/Field5.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
@@ -513,11 +513,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void fieldChainingWithConstructorAndNonstaticAndStaticField() throws Exception {
-        createWSFolder( "methodchaining", project1 );
-        createJavaWSFile( "methodchaining/Field3.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "methodchaining/Field4.java" );
-        buildFullyAndWait();
+        project.createFolder( "methodchaining" );
+        createJavaFile( "methodchaining/Field3.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "methodchaining/Field4.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
@@ -525,11 +525,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void staticMethodWithoutClassName() throws Exception {
-        createWSFolder( "oops", project1 );
-        createJavaWSFile( "oops/Acd_static1.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "oops/Acd_static3.java" );
-        buildFullyAndWait();
+        project.createFolder( "oops" );
+        createJavaFile( "oops/Acd_static1.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "oops/Acd_static3.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
@@ -537,11 +537,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void staticFieldWithClassName() throws Exception {
-        createWSFolder( "acd_staticfields", project1 );
-        createJavaWSFile( "acd_staticfields/Acd_static1.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "acd_staticfields/Acd_static2.java" );
-        buildFullyAndWait();
+        project.createFolder( "acd_staticfields" );
+        createJavaFile( "acd_staticfields/Acd_static1.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "acd_staticfields/Acd_static2.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         for( ClassDescriptor descriptor : ClassDescriptor.getAll() ) {
@@ -560,11 +560,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void staticFieldWithoutClassName() throws Exception {
-        createWSFolder( "acd_staticfields", project1 );
-        createJavaWSFile( "acd_staticfields/Acd_static1.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "acd_staticfields/Acd_static3.java" );
-        buildFullyAndWait();
+        project.createFolder( "acd_staticfields" );
+        createJavaFile( "acd_staticfields/Acd_static1.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "acd_staticfields/Acd_static3.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         for( ClassDescriptor descriptor : ClassDescriptor.getAll() ) {
@@ -583,11 +583,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void arrayReferenceInField() throws Exception {
-        createWSFolder( "arrays", project1 );
-        createJavaWSFile( "arrays/NormalClass.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "arrays/ClassWithArrayReferenceInField.java" );
-        buildFullyAndWait();
+        project.createFolder( "arrays" );
+        createJavaFile( "arrays/NormalClass.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "arrays/ClassWithArrayReferenceInField.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
@@ -595,11 +595,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void arrayReferenceInLocalVariable() throws Exception {
-        createWSFolder( "arrays", project1 );
-        createJavaWSFile( "arrays/NormalClass.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "arrays/ClassWithArrayReferenceInLocalVariable.java" );
-        buildFullyAndWait();
+        project.createFolder( "arrays" );
+        createJavaFile( "arrays/NormalClass.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "arrays/ClassWithArrayReferenceInLocalVariable.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
@@ -607,11 +607,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void arrayReferenceInMethodParameter() throws Exception {
-        createWSFolder( "arrays", project1 );
-        createJavaWSFile( "arrays/NormalClass.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "arrays/ClassWithArrayReferenceInMethodParameter.java" );
-        buildFullyAndWait();
+        project.createFolder( "arrays" );
+        createJavaFile( "arrays/NormalClass.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "arrays/ClassWithArrayReferenceInMethodParameter.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
@@ -619,11 +619,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void arrayReferenceInMethodReturnType() throws Exception {
-        createWSFolder( "arrays", project1 );
-        createJavaWSFile( "arrays/NormalClass.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "arrays/ClassWithArrayReferenceInMethodReturnType.java" );
-        buildFullyAndWait();
+        project.createFolder( "arrays" );
+        createJavaFile( "arrays/NormalClass.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "arrays/ClassWithArrayReferenceInMethodReturnType.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 2, getNumberOfClasses() );
         assertEquals( 2, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 4.0, getACD(), 0.0001 );
@@ -631,12 +631,12 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void importsAreNotConsideredForACD() throws Exception {
-        createWSFolder( "imports", project1 );
-        createJavaWSFile( "imports/Class1.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "imports/Class2.java" );
-        createJavaWSFile( "imports/Class3.java" );
-        buildFullyAndWait();
+        project.createFolder( "imports" );
+        createJavaFile( "imports/Class1.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "imports/Class2.java" );
+        createJavaFile( "imports/Class3.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 3, getNumberOfClasses() );
         assertEquals( 3, ClassDescriptor.getAll().size() );
         assertEquals( 3 / 9.0, getACD(), 0.0001 );
@@ -644,11 +644,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void innerClassesHaveTheirOwnConnections_InnerClassBeforeAttribute() throws Exception {
-        createWSFolder( "inner", project1 );
-        createJavaWSFile( "inner/ClassWithInnerBeforeAttribute.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "inner/Class2.java" );
-        buildFullyAndWait();
+        project.createFolder( "inner" );
+        createJavaFile( "inner/ClassWithInnerBeforeAttribute.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "inner/Class2.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 3, getNumberOfClasses() );
         assertEquals( 3, ClassDescriptor.getAll().size() );
         assertEquals( 5 / 9.0, getACD(), 0.0001 );
@@ -656,11 +656,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void innerClassesHaveTheirOwnConnections_AttributeBeforeInnerClass() throws Exception {
-        createWSFolder( "inner", project1 );
-        createJavaWSFile( "inner/ClassWithInnerAfterAttribute.java" );
-        buildFullyAndWait();
-        createJavaWSFile( "inner/Class2.java" );
-        buildFullyAndWait();
+        project.createFolder( "inner" );
+        createJavaFile( "inner/ClassWithInnerAfterAttribute.java" );
+        workspace.buildFullyAndWait();
+        createJavaFile( "inner/Class2.java" );
+        workspace.buildFullyAndWait();
         assertEquals( 3, getNumberOfClasses() );
         assertEquals( 3, ClassDescriptor.getAll().size() );
         assertEquals( 5 / 9.0, getACD(), 0.0001 );
@@ -676,15 +676,11 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         return super.createFile( "Acd" + filenumber );
     }
 
-    private void deleteFile( IFile file11b ) throws CoreException {
-        deleteWSFile( file11b );
-    }
-
     private void createWSFolders() throws CoreException {
-        createWSFolder( "org", project1 );
-        createWSFolder( "org/doublemill", project1 );
-        createWSFolder( "org/doublemill/model", project1 );
-        createWSFolder( "org/doublemill/model/ai", project1 );
-        createWSFolder( "org/doublemill/model/util", project1 );
+        project.createFolder( "org" );
+        project.createFolder( "org/doublemill" );
+        project.createFolder( "org/doublemill/model" );
+        project.createFolder( "org/doublemill/model/ai" );
+        project.createFolder( "org/doublemill/model/util" );
     }
 }
