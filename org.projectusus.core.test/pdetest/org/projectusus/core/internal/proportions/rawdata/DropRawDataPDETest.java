@@ -55,7 +55,7 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
     }
 
     private void computeFile1AndCheckPreconditions() throws Exception {
-        createFileAndBuild( "Reset" + "1" );
+        createFileAndBuild( "Reset1" );
 
         assertEquals( 1, getNumberOfClassesInProject() );
         assertEquals( 0, getVisitedClassSizeStatistic().getViolations() );
@@ -66,8 +66,8 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
     }
 
     private void computeFiles2AndCheckPreconditions() throws Exception {
-        createFile( "Reset" + "2" );
-        createFileAndBuild( "Reset" + "1" );
+        createFile( "Reset2" );
+        createFileAndBuild( "Reset1" );
 
         assertEquals( 2, getNumberOfClassesInProject() );
         assertEquals( 0, getVisitedClassSizeStatistic().getViolations() );
