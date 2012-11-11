@@ -1,7 +1,5 @@
 # Usus 0.7.0 Release Notes
 
-## New Features
-
 ## Bug Fixes
 
 ### Import Declarations
