@@ -1,16 +1,19 @@
-package org.projectusus.core;
+package org.projectusus.core.internal.proportions.rawdata;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.c4j.ContractReference;
 
+import org.projectusus.core.IMetricsResultVisitor;
+import org.projectusus.core.IMetricsWriter;
+import org.projectusus.core.IUsusModel;
+import org.projectusus.core.IUsusModelForAdapter;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 import org.projectusus.core.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.proportions.rawdata.PackageRepresenter;
 

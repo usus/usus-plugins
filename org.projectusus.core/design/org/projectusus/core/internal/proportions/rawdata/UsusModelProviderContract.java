@@ -1,11 +1,16 @@
-package org.projectusus.core;
+package org.projectusus.core.internal.proportions.rawdata;
 
 import java.util.Set;
 
 import org.projectusus.c4j.UsusContractBase;
+import org.projectusus.core.IMetricsResultVisitor;
+import org.projectusus.core.IMetricsWriter;
+import org.projectusus.core.IUsusModel;
+import org.projectusus.core.IUsusModelForAdapter;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
+import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
 
 public class UsusModelProviderContract extends UsusContractBase<UsusModelProvider> {
 

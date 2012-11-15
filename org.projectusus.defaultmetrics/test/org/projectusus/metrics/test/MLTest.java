@@ -18,7 +18,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.UsusModelProvider;
+import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
 import org.projectusus.core.testutil.ReflectionUtil;
 import org.projectusus.metrics.Counter;
 import org.projectusus.metrics.MLCollector;

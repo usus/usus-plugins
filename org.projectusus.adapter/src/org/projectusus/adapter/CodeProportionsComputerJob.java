@@ -13,7 +13,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
-import org.projectusus.core.UsusModelProvider;
+import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
 
 public class CodeProportionsComputerJob extends Job {
 

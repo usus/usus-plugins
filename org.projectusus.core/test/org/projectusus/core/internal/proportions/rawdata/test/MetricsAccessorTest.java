@@ -5,10 +5,10 @@ import static org.mockito.Mockito.when;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
-import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
+import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
 
 public class MetricsAccessorTest {
 

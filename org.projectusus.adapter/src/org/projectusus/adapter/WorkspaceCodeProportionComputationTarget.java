@@ -6,7 +6,7 @@ package org.projectusus.adapter;
 
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 
-import org.projectusus.core.UsusModelProvider;
+import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
 
 /**
  * convenience implementation of target that runs over the whole workspace.

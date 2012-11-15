@@ -9,7 +9,7 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.projectusus.core.UsusModelProvider;
+import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
 import org.projectusus.core.util.Defect;
 
 @SuppressWarnings( { "unused" } )

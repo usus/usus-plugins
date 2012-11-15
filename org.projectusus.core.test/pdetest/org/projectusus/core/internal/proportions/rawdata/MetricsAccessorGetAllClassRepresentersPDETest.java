@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
-import org.projectusus.core.UsusModelProvider;
 import org.projectusus.core.basis.GraphNode;
 
 public class MetricsAccessorGetAllClassRepresentersPDETest extends PDETestForMetricsComputation {
