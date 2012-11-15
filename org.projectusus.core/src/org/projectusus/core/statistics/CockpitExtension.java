@@ -8,6 +8,7 @@ import org.projectusus.core.CollectibleExtension;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.FileHotspot;
+import org.projectusus.core.basis.Histogram;
 import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;

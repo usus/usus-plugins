@@ -1,4 +1,4 @@
-package org.projectusus.core.statistics;
+package org.projectusus.core.basis;
 
 import static java.lang.Integer.valueOf;
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.statistics.Histogram;
+import org.projectusus.core.basis.Histogram;
 
 public class AnalysisDisplayEntry {
 

@@ -3,7 +3,7 @@ package org.projectusus.ui.internal.histogram;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
-import org.projectusus.core.statistics.Histogram;
+import org.projectusus.core.basis.Histogram;
 import org.projectusus.jfeet.selection.ElementFrom;
 import org.projectusus.ui.internal.AnalysisDisplayEntry;
 import org.projectusus.ui.internal.AnalysisDisplayModel;
