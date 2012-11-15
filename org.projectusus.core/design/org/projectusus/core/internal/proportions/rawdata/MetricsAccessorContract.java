@@ -1,10 +1,11 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
-import static org.projectusus.c4j.ContractUtil.fullString;
+import static org.projectusus.core.internal.proportions.rawdata.ContractUtil.fullString;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.projectusus.c4j.C4JFileWriter;
 import org.projectusus.c4j.UsusContractBase;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
@@ -66,13 +67,13 @@ public class MetricsAccessorContract extends UsusContractBase<MetricsAccessor> {
 
     public static void pre_addClassReference( WrappedTypeBinding sourceType, WrappedTypeBinding targetType ) {
         // TODO Auto-generated pre-condition
-        assertStatic( sourceType != null, "sourceType_not_null" );
-        assertStatic( targetType != null, "targetType_not_null" );
-        assertStatic( sourceType.isValid(), "Wrapped source type must be valid" );
-        assertStatic( targetType.isValid(), "Wrapped target type must be valid" );
-        assertStatic( sourceType.getUnderlyingResource() != null, "Underlying Resource of source type must not be null." );
-        assertStatic( targetType.getUnderlyingResource() != null, "Underlying Resource of target type must not be null." );
-        assertStatic( !sourceType.equals( targetType ), fullString( "Source ", sourceType ) + " must not equal" + fullString( " Target ", targetType ) );
+        C4JFileWriter.assertStatic( sourceType != null, "sourceType_not_null" );
+        C4JFileWriter.assertStatic( targetType != null, "targetType_not_null" );
+        C4JFileWriter.assertStatic( sourceType.isValid(), "Wrapped source type must be valid" );
+        C4JFileWriter.assertStatic( targetType.isValid(), "Wrapped target type must be valid" );
+        C4JFileWriter.assertStatic( sourceType.getUnderlyingResource() != null, "Underlying Resource of source type must not be null." );
+        C4JFileWriter.assertStatic( targetType.getUnderlyingResource() != null, "Underlying Resource of target type must not be null." );
+        C4JFileWriter.assertStatic( !sourceType.equals( targetType ), fullString( "Source ", sourceType ) + " must not equal" + fullString( " Target ", targetType ) );
     }
 
     public static void post_addClassReference( WrappedTypeBinding sourceType, WrappedTypeBinding targetType ) {
@@ -89,10 +90,10 @@ public class MetricsAccessorContract extends UsusContractBase<MetricsAccessor> {
             }
         }
 
-        assertStatic( source != null, "There is a ClassDescriptor for" + sourceString );
-        assertStatic( target != null, "There is a ClassDescriptor for" + targetString );
-        assertStatic( source.getChildren().contains( target ), "Target is a child of Source." + sourceString + targetString );
-        assertStatic( target.getParents().contains( source ), "Source is a parent of Target." + sourceString + targetString );
+        C4JFileWriter.assertStatic( source != null, "There is a ClassDescriptor for" + sourceString );
+        C4JFileWriter.assertStatic( target != null, "There is a ClassDescriptor for" + targetString );
+        C4JFileWriter.assertStatic( source.getChildren().contains( target ), "Target is a child of Source." + sourceString + targetString );
+        C4JFileWriter.assertStatic( target.getParents().contains( source ), "Source is a parent of Target." + sourceString + targetString );
     }
 
 }

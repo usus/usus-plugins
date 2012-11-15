@@ -3,6 +3,7 @@ package org.projectusus.core.filerelations.model;
 import java.util.Set;
 
 import org.eclipse.jdt.core.IJavaElement;
+import org.projectusus.c4j.C4JFileWriter;
 import org.projectusus.c4j.UsusContractBase;
 
 public class PackagenameContract extends UsusContractBase<Packagename> {
@@ -27,18 +28,18 @@ public class PackagenameContract extends UsusContractBase<Packagename> {
     }
 
     public static void post_clear() {
-        assertStatic( Packagename.getAll().isEmpty(), "Clear removes all Packagename objects." );
+        C4JFileWriter.assertStatic( Packagename.getAll().isEmpty(), "Clear removes all Packagename objects." );
     }
 
     public static void pre_of( String name, IJavaElement javaElement ) {
         // TODO Auto-generated pre-condition
-        assertStatic( name != null, "name_not_null" );
-        assertStatic( javaElement != null, "javaElement_not_null" );
+        C4JFileWriter.assertStatic( name != null, "name_not_null" );
+        C4JFileWriter.assertStatic( javaElement != null, "javaElement_not_null" );
     }
 
     public static void post_of( String name, IJavaElement javaElement ) {
         Packagename returnValue = (Packagename)getReturnValue();
-        assertStatic( Packagename.getAll().contains( returnValue ), "List of all contains Packagename " + returnValue );
+        C4JFileWriter.assertStatic( Packagename.getAll().contains( returnValue ), "List of all contains Packagename " + returnValue );
     }
 
     public static void pre_getAll() {

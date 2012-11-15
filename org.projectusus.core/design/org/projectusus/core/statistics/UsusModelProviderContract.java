@@ -2,6 +2,7 @@ package org.projectusus.core.statistics;
 
 import java.util.Set;
 
+import org.projectusus.c4j.C4JFileWriter;
 import org.projectusus.c4j.UsusContractBase;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.IMetricsWriter;
@@ -75,7 +76,7 @@ public class UsusModelProviderContract extends UsusContractBase<UsusModelProvide
 
     public static void pre_acceptAndGuide( IMetricsResultVisitor visitor ) {
         // TODO Auto-generated pre-condition
-        assertStatic( visitor != null, "visitor_not_null" );
+        C4JFileWriter.assertStatic( visitor != null, "visitor_not_null" );
     }
 
     public static void post_acceptAndGuide( IMetricsResultVisitor visitor ) {

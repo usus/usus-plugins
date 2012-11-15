@@ -20,6 +20,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 import org.osgi.service.prefs.BackingStoreException;
+import org.projectusus.c4j.C4JFileWriter;
 
 public class UsusCorePlugin extends Plugin {
 
@@ -28,7 +29,6 @@ public class UsusCorePlugin extends Plugin {
     // some jobs still run
     public static final String PLUGIN_ID = "org.projectusus.core"; //$NON-NLS-1$
     private static UsusCorePlugin plugin;
-    private PrintWriter writer;
 
     public static UsusCorePlugin getDefault() {
         return plugin;
@@ -86,18 +86,14 @@ public class UsusCorePlugin extends Plugin {
             File logFile = new File( getC4JLogFile() );
             logFile.getParentFile().mkdirs();
             logFile.createNewFile();
-            writer = new PrintWriter( logFile );
+            C4JFileWriter.setWriter( new PrintWriter( logFile ) );
         } catch( IOException e ) {
             log( e );
         }
     }
 
-    public PrintWriter getC4JFileWriter() {
-        return writer;
-    }
-
     private void closeC4JFileWriter() {
-        writer.close();
+        C4JFileWriter.closeWriter();
     }
 
     @SuppressWarnings( "nls" )
