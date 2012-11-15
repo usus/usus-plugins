@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.statistics;
 
 import java.util.Set;
 
@@ -10,7 +10,7 @@ import org.projectusus.core.IUsusModelForAdapter;
 import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
-import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 public class UsusModelProviderContract extends UsusContractBase<UsusModelProvider> {
 

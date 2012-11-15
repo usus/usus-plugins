@@ -18,7 +18,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.YellowCountCache;
 import org.projectusus.core.basis.YellowCountResult;
-import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 /**
  * A simple view that displays the current yellow count to the user.

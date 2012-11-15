@@ -17,9 +17,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.projectusus.core.UsusCorePlugin;
-import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
 import org.projectusus.core.statistics.CockpitExtensionPref;
 import org.projectusus.core.statistics.RegisteredCockpitExtensionsCollector;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 public class UsusPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 

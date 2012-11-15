@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 public class AnalysisDisplayModel {
 

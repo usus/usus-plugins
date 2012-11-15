@@ -5,7 +5,6 @@ import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
 
 /**
  * Default implementation of <code>IMetricsResultVisitor</code>.

@@ -37,7 +37,7 @@ import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.basis.GraphNode;
-import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
+import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.ui.dependencygraph.filters.HideNodesFilter;
 import org.projectusus.ui.dependencygraph.filters.IRestrictNodesFilterProvider;
 import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;

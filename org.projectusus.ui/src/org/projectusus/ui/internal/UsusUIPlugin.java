@@ -12,7 +12,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.projectusus.adapter.ForcedRecompute;
-import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 public class UsusUIPlugin extends AbstractUIPlugin {
 

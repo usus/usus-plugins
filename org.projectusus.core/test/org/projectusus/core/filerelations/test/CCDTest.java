@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 public class CCDTest {
 
@@ -19,7 +19,7 @@ public class CCDTest {
 
     @Before
     public void setupClassDescriptors() {
-        UsusModel.clear();
+        UsusModelProvider.clear();
         descriptor1 = createClassDescriptor( "Descriptor1" ); //$NON-NLS-1$
         descriptor2 = createClassDescriptor( "Descriptor2" ); //$NON-NLS-1$
         descriptor3 = createClassDescriptor( "Descriptor3" ); //$NON-NLS-1$

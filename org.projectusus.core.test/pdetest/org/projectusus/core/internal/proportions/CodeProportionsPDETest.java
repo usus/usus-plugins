@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.projectusus.adapter.CodeProportionsComputerJob;
 import org.projectusus.core.IUsusModelForAdapter;
 import org.projectusus.core.IUsusModelListener;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 public class CodeProportionsPDETest {
 
@@ -24,14 +24,14 @@ public class CodeProportionsPDETest {
 
     @Test
     public void listenerHandling() throws InterruptedException {
-        IUsusModelForAdapter ususModelWriteAccess = UsusModel.ususModel();
+        IUsusModelForAdapter ususModelWriteAccess = UsusModelProvider.ususModelForAdapter();
         DummyCodeProportionsListener listener = new DummyCodeProportionsListener();
-        UsusModel.ususModel().addUsusModelListener( listener );
+        UsusModelProvider.ususModel().addUsusModelListener( listener );
 
         ususModelWriteAccess.updateAfterComputationRun( false, new NullProgressMonitor() );
         assertEquals( 1, listener.getCallCount() );
 
-        UsusModel.ususModel().removeUsusModelListener( listener );
+        UsusModelProvider.ususModel().removeUsusModelListener( listener );
         ususModelWriteAccess.updateAfterComputationRun( false, new NullProgressMonitor() );
         // no more calls
         assertEquals( 1, listener.getCallCount() );

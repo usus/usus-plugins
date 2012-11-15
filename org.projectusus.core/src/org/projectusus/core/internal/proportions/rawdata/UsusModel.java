@@ -114,7 +114,7 @@ public class UsusModel implements IUsusModel, IUsusModelForAdapter {
     // internal
     // ////////
 
-    public void notifyListeners() {
+    private void notifyListeners() {
         for( IUsusModelListener listener : listeners ) {
             listener.ususModelChanged();
         }

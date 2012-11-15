@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.statistics;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +14,7 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
+import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 import org.projectusus.core.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.proportions.rawdata.PackageRepresenter;
 
@@ -50,12 +51,12 @@ public class UsusModelProvider {
         return ClassRepresenter.transformToRepresenterSet( crossPackageClasses );
     }
 
-    public static void addClassReference( WrappedTypeBinding sourceType, WrappedTypeBinding targetType ) {
-        ClassDescriptor.of( sourceType ).addChild( ClassDescriptor.of( targetType ) );
-    }
-
     public static void acceptAndGuide( IMetricsResultVisitor visitor ) {
         UsusModel.ususModel().acceptAndGuide( visitor );
+    }
+
+    public static void clear() {
+        UsusModel.clear();
     }
 
 }

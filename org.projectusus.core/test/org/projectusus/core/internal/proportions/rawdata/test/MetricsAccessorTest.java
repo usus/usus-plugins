@@ -5,10 +5,11 @@ import static org.mockito.Mockito.when;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
-import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 public class MetricsAccessorTest {
 
@@ -25,7 +26,7 @@ public class MetricsAccessorTest {
         when( sourceBinding.getUnderlyingResource() ).thenReturn( file );
         when( targetBinding.getUnderlyingResource() ).thenReturn( file );
 
-        UsusModelProvider.addClassReference( sourceBinding, targetBinding );
+        ClassDescriptor.of( sourceBinding ).addChild( ClassDescriptor.of( targetBinding ) );
 
         // TODO und was jetzt?? Was wollen wir hier testen?
     }

@@ -16,9 +16,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.projectusus.core.ExtensionCollector;
 import org.projectusus.core.IUsusModelForAdapter;
 import org.projectusus.core.basis.YellowCountCache;
-import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
 import org.projectusus.core.metrics.MetricsCollector;
 import org.projectusus.core.proportions.rawdata.jdtdriver.JavaFileDriver;
+import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.core.util.FileSupport;
 
 public class JDTDriver {

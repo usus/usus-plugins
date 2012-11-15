@@ -13,7 +13,7 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 public class FileRelationClassDescriptorTest {
 
@@ -28,7 +28,7 @@ public class FileRelationClassDescriptorTest {
 
     @Before
     public void init() {
-        UsusModel.clear();
+        UsusModelProvider.clear();
     }
 
     @Test

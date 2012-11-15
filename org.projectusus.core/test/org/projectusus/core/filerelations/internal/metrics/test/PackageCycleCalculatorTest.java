@@ -11,7 +11,7 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 public class PackageCycleCalculatorTest {
 
@@ -29,7 +29,7 @@ public class PackageCycleCalculatorTest {
 
     @Before
     public void setup() {
-        UsusModel.clear();
+        UsusModelProvider.clear();
         I_A = createDescriptor( I );
         I_B = createDescriptor( I );
         II_A = createDescriptor( II );

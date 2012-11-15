@@ -21,8 +21,8 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.launching.IVMInstall;
 import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jdt.launching.LibraryLocation;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 import org.projectusus.core.project2.IUSUSProject;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 public class TestProjectCreator {
 
@@ -88,7 +88,7 @@ public class TestProjectCreator {
 
     private void makeUsusProject() throws CoreException {
         makeUsusProject( true, project );
-        UsusModel.ususModel().dropRawData( project );
+        UsusModelProvider.ususModelForAdapter().dropRawData( project );
     }
 
     static void makeUsusProject( boolean makeUsusProject, IProject project ) throws CoreException {

@@ -15,6 +15,7 @@ import org.projectusus.core.IMetricsWriter;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 @ContractReference( contractClassName = "MetricsAccessorContract" )
 public class MetricsAccessor implements IMetricsWriter {
@@ -61,7 +62,7 @@ public class MetricsAccessor implements IMetricsWriter {
     }
 
     public void addClassReference( WrappedTypeBinding source, WrappedTypeBinding target ) {
-        UsusModelProvider.addClassReference( source, target );
+        ClassDescriptor.of( source ).addChild( ClassDescriptor.of( target ) );
     }
 
 }

@@ -12,7 +12,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.rules.ExternalResource;
 import org.projectusus.adapter.UsusAdapterPlugin;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 public class Workspace extends ExternalResource {
 
@@ -23,7 +23,7 @@ public class Workspace extends ExternalResource {
 
     @Override
     protected void after() {
-        UsusModel.clear();
+        UsusModelProvider.clear();
     }
 
     public void buildFullyAndWait() throws CoreException {

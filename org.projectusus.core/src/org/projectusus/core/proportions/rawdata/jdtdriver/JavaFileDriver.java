@@ -14,8 +14,8 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.projectusus.core.internal.proportions.rawdata.UsusModelProvider;
 import org.projectusus.core.metrics.MetricsCollector;
+import org.projectusus.core.statistics.UsusModelProvider;
 
 public class JavaFileDriver {
 
