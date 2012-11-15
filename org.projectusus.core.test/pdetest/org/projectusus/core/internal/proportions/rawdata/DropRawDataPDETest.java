@@ -1,7 +1,7 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import static org.junit.Assert.assertEquals;
-import static org.projectusus.core.internal.proportions.rawdata.UsusModel.ususModel;
+import static org.projectusus.core.statistics.UsusModelProvider.ususModelForAdapter;
 
 import org.junit.Test;
 import org.projectusus.core.basis.JavaModelPath;
@@ -16,14 +16,14 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
     @Test
     public void dropProjectWithFile1() throws Exception {
         computeFile1AndCheckPreconditions();
-        ususModel().dropRawData( project.get() );
+        ususModelForAdapter().dropRawData( project.get() );
         checkProjectRawDataIsEmpty();
     }
 
     @Test
     public void dropProjectWithFiles2() throws Exception {
         computeFiles2AndCheckPreconditions();
-        ususModel().dropRawData( project.get() );
+        ususModelForAdapter().dropRawData( project.get() );
         checkProjectRawDataIsEmpty();
     }
 

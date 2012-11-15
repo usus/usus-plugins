@@ -2,7 +2,7 @@
 // This software is released under the terms and conditions
 // of the Eclipse Public License (EPL) 1.0.
 // See http://www.eclipse.org/legal/epl-v10.html for details.
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.statistics;
 
 import java.util.HashSet;
 import java.util.List;
@@ -25,10 +25,9 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.proportions.model.UsusModelCache;
-import org.projectusus.core.statistics.CockpitExtension;
-import org.projectusus.core.statistics.RegisteredCockpitExtensionsCollector;
+import org.projectusus.core.internal.proportions.rawdata.MetricsAccessor;
 
-public class UsusModel implements IUsusModel, IUsusModelForAdapter {
+class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
     private static UsusModel instance = new UsusModel();
 

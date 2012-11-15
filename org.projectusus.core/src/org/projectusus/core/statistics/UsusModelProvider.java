@@ -14,7 +14,6 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
-import org.projectusus.core.internal.proportions.rawdata.UsusModel;
 import org.projectusus.core.proportions.rawdata.ClassRepresenter;
 import org.projectusus.core.proportions.rawdata.PackageRepresenter;
 
