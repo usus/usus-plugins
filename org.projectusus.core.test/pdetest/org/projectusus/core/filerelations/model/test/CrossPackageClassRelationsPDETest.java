@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.filerelations.model.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -9,8 +9,9 @@ import org.eclipse.core.resources.IFile;
 import org.junit.Test;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.CrossPackageClassRelations;
+import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
 
-public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsComputation {
+public class CrossPackageClassRelationsPDETest extends PDETestForMetricsComputation {
 
     @Test
     public void emptyProject() throws Exception {
