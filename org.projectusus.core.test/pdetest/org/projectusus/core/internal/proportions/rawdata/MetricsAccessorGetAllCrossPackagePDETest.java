@@ -7,26 +7,26 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
-import org.projectusus.core.basis.GraphNode;
-import org.projectusus.core.statistics.UsusModelProvider;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.CrossPackageClassRelations;
 
 public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsComputation {
 
     @Test
     public void emptyProject() throws Exception {
-        Set<GraphNode> representers = UsusModelProvider.getAllCrossPackageClasses();
+        Set<ClassDescriptor> representers = new CrossPackageClassRelations().keySet();
         assertEquals( 0, representers.size() );
     }
 
     @Test
     public void oneClassInOneFile() throws Exception {
         createFileAndBuild( "_1" );
-        Set<GraphNode> representers = UsusModelProvider.getAllCrossPackageClasses();
+        Set<ClassDescriptor> representers = new CrossPackageClassRelations().keySet();
         assertEquals( 0, representers.size() );
     }
 
-    private void checkName( GraphNode node, String name1, String name2 ) {
-        if( !node.getNodeName().equals( name1 ) && !node.getNodeName().equals( name2 ) ) {
+    private void checkName( ClassDescriptor node, String name1, String name2 ) {
+        if( !node.getClassname().equals( name1 ) && !node.getClassname().equals( name2 ) ) {
             fail( "Falscher Name" );
         }
     }
@@ -38,7 +38,7 @@ public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsC
 
         checkTwoNodesWithOneChildEach();
 
-        Set<GraphNode> representers = UsusModelProvider.getAllCrossPackageClasses();
+        Set<ClassDescriptor> representers = new CrossPackageClassRelations().keySet();
         assertEquals( 0, representers.size() );
     }
 
@@ -53,14 +53,14 @@ public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsC
 
         checkTwoNodesWithOneChildEach();
 
-        Set<GraphNode> representers = UsusModelProvider.getAllCrossPackageClasses();
+        Set<ClassDescriptor> representers = new CrossPackageClassRelations().keySet();
         assertEquals( 2, representers.size() );
     }
 
     private void checkTwoNodesWithOneChildEach() {
-        Set<GraphNode> allRepresenters = UsusModelProvider.getAllClassRepresenters();
+        Set<ClassDescriptor> allRepresenters = ClassDescriptor.getAll();
         assertEquals( 2, allRepresenters.size() );
-        GraphNode node = allRepresenters.iterator().next();
+        ClassDescriptor node = allRepresenters.iterator().next();
         assertEquals( 1, node.getChildren().size() );
         node = allRepresenters.iterator().next();
         assertEquals( 1, node.getChildren().size() );
@@ -70,9 +70,9 @@ public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsC
         createFileAndBuild( "_file1Knows2" );
         IFile file = createFileAndBuild( "_file2Knows1" );
 
-        Set<GraphNode> representers = UsusModelProvider.getAllCrossPackageClasses();
+        Set<ClassDescriptor> representers = new CrossPackageClassRelations().keySet();
         assertEquals( 2, representers.size() );
-        GraphNode node = representers.iterator().next();
+        ClassDescriptor node = representers.iterator().next();
         assertEquals( 1, node.getChildren().size() );
         node = representers.iterator().next();
         assertEquals( 1, node.getChildren().size() );
@@ -80,7 +80,7 @@ public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsC
         project.updateContent( file, loadResource( "MetricsAccessor_file2Knows1Not.test" ) );
         workspace.buildFullyAndWait();
 
-        representers = UsusModelProvider.getAllCrossPackageClasses();
+        representers = new CrossPackageClassRelations().keySet();
         assertEquals( 2, representers.size() );
         node = representers.iterator().next();
         checkName( node, "MetricsAccessor_file1Knows2", "MetricsAccessor_file2Knows1" );
@@ -90,8 +90,8 @@ public class MetricsAccessorGetAllCrossPackagePDETest extends PDETestForMetricsC
         checkChildren( node, "MetricsAccessor_file1Knows2" );
     }
 
-    private void checkChildren( GraphNode node, String name ) {
-        if( node.getNodeName().equals( name ) ) {
+    private void checkChildren( ClassDescriptor node, String name ) {
+        if( node.getClassname().equals( name ) ) {
             assertEquals( 1, node.getChildren().size() );
         } else {
             assertEquals( 0, node.getChildren().size() );
