@@ -1,4 +1,4 @@
-package org.projectusus.ui.internal.hotspots;
+package org.projectusus.ui.internal.hotspots.selectionprovider;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;

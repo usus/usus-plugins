@@ -17,6 +17,7 @@ import org.projectusus.ui.internal.AnalysisDisplayEntry;
 import org.projectusus.ui.internal.hotspots.pages.DefaultHotspotsPage;
 import org.projectusus.ui.internal.hotspots.pages.HotspotsPage;
 import org.projectusus.ui.internal.hotspots.pages.IHotspotsPage;
+import org.projectusus.ui.internal.hotspots.selectionprovider.DelegatingSelectionProvider;
 
 public class HotSpotsView extends ViewPart {
 

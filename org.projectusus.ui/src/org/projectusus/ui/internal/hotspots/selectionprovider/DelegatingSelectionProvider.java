@@ -1,4 +1,4 @@
-package org.projectusus.ui.internal.hotspots;
+package org.projectusus.ui.internal.hotspots.selectionprovider;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

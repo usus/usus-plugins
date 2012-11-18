@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.Page;
 import org.projectusus.ui.internal.AnalysisDisplayEntry;
-import org.projectusus.ui.internal.hotspots.NullSelectionProvider;
+import org.projectusus.ui.internal.hotspots.selectionprovider.NullSelectionProvider;
 
 public class DefaultHotspotsPage extends Page implements IHotspotsPage {
 
