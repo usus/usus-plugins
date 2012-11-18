@@ -19,7 +19,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
+import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
 public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
 

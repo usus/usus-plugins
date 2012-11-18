@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.internal.ValidatorFactory;
-import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
 import org.projectusus.core.statistics.CockpitExtension;
+import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
 public class PublicFieldMetricsTest extends PDETestForMetricsComputation {
 

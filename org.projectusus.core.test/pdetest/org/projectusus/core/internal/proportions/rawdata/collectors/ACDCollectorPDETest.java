@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.projectusus.adapter.ForcedRecompute;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
-import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
+import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 import org.projectusus.statistics.ACDStatistic;
 
 public class ACDCollectorPDETest extends PDETestForMetricsComputation {

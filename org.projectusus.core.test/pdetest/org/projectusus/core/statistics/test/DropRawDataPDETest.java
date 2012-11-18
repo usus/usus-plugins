@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata;
+package org.projectusus.core.statistics.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.projectusus.core.statistics.UsusModelProvider.ususModelForAdapter;

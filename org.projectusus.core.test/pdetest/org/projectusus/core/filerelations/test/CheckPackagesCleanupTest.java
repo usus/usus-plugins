@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.projectusus.adapter.ForcedRecompute;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.JavaProject;
-import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
+import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
 public class CheckPackagesCleanupTest extends PDETestForMetricsComputation {
 

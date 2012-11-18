@@ -9,7 +9,7 @@ import org.eclipse.core.resources.IFile;
 import org.junit.Test;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.CrossPackageClassRelations;
-import org.projectusus.core.internal.proportions.rawdata.PDETestForMetricsComputation;
+import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
 public class CrossPackageClassRelationsPDETest extends PDETestForMetricsComputation {
 
