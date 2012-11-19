@@ -65,15 +65,6 @@ public class UsusModelProviderContract extends UsusContractBase<UsusModelProvide
         // TODO no post-condition identified yet
     }
 
-    public static void pre_getAllCrossPackageClasses() {
-        // TODO no pre-condition identified yet
-    }
-
-    public static void post_getAllCrossPackageClasses() {
-        Set<GraphNode> returnValue = (Set<GraphNode>)getReturnValue();
-        // TODO no post-condition identified yet
-    }
-
     public static void pre_acceptAndGuide( IMetricsResultVisitor visitor ) {
         // TODO Auto-generated pre-condition
         C4JFileWriter.assertStatic( visitor != null, "visitor_not_null" );
