@@ -6,7 +6,7 @@ import org.projectusus.core.statistics.CockpitExtension;
 
 public class CyclomaticComplexityStatistic extends CockpitExtension {
 
-    private static int CC_LIMIT = 5;
+    public static final int CC_LIMIT = 5;
 
     public CyclomaticComplexityStatistic() {
         super( codeProportionUnit_METHOD_label, CC_LIMIT );
@@ -14,7 +14,11 @@ public class CyclomaticComplexityStatistic extends CockpitExtension {
 
     @Override
     public void inspectMethod( SourceCodeLocation location, MetricsResults results ) {
-        addResult( location, results.getIntValue( MetricsResults.CC, 1 ) );
+        addResult( location, valueForMethod( results ) );
+    }
+
+    public int valueForMethod( MetricsResults results ) {
+        return results.getIntValue( MetricsResults.CC, 1 );
     }
 
     @Override

@@ -6,7 +6,7 @@ import org.projectusus.core.statistics.CockpitExtension;
 
 public class MethodLengthStatistic extends CockpitExtension {
 
-    private static int ML_LIMIT = 15;
+    public static final int ML_LIMIT = 15;
 
     public MethodLengthStatistic() {
         super( codeProportionUnit_METHOD_label, ML_LIMIT );
@@ -14,7 +14,11 @@ public class MethodLengthStatistic extends CockpitExtension {
 
     @Override
     public void inspectMethod( SourceCodeLocation location, MetricsResults result ) {
-        addResult( location, result.getIntValue( MetricsResults.ML ) );
+        addResult( location, valueForMethod( result ) );
+    }
+
+    public int valueForMethod( MetricsResults result ) {
+        return result.getIntValue( MetricsResults.ML );
     }
 
     @Override
