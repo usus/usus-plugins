@@ -32,6 +32,9 @@
        <statistics
              class="org.projectusus.statistics.PublicFieldStatistic">
        </statistics>
+       <statistics
+             class="org.projectusus.statistics.MudholeStatistic">
+       </statistics>
    </extension>
     <extension
           point="org.projectusus.core.metrics"> 
