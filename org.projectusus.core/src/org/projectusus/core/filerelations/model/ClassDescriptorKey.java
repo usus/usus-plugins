@@ -1,12 +1,11 @@
 package org.projectusus.core.filerelations.model;
 
-import net.sourceforge.c4j.*;
+import net.sourceforge.c4j.ContractReference;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
 
-@ContractReference(contractClassName = "ClassDescriptorKeyContract")
+@ContractReference( contractClassName = "ClassDescriptorKeyContract" )
 class ClassDescriptorKey {
     private final IFile file;
     private final Classname classname;
@@ -37,7 +36,12 @@ class ClassDescriptorKey {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append( getFile() ).append( getClassname() ).append( getPackagename() ).toHashCode();
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((classname == null) ? 0 : classname.hashCode());
+        result = prime * result + ((file == null) ? 0 : file.hashCode());
+        result = prime * result + ((packagename == null) ? 0 : packagename.hashCode());
+        return result;
     }
 
     @Override

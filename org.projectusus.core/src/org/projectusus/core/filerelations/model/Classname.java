@@ -1,6 +1,5 @@
 package org.projectusus.core.filerelations.model;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
 
 public class Classname {
 
@@ -17,9 +16,7 @@ public class Classname {
 
     @Override
     public int hashCode() {
-        HashCodeBuilder builder = new HashCodeBuilder();
-        builder.append( name );
-        return builder.toHashCode();
+        return name.hashCode();
     }
 
     @Override
