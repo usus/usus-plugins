@@ -8,8 +8,6 @@ import java.util.Set;
 
 import net.sourceforge.c4j.ContractReference;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
 
 @ContractReference( contractClassName = "ClassDescriptorContract" )
@@ -90,19 +88,11 @@ public class ClassDescriptor {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(). //
-                append( key.getFile() ). //
-                append( key.getClassname() ). //
-                append( key.getPackagename() ). //
-                toHashCode();
+        return key.hashCode();
     }
 
     private boolean equals( ClassDescriptor other ) {
-        return new EqualsBuilder(). //
-                append( key.getFile(), other.key.getFile() ). //
-                append( key.getClassname(), other.key.getClassname() ). //
-                append( key.getPackagename(), other.key.getPackagename() ). //
-                isEquals();
+        return key.equals( other.key );
     }
 
     @Override
