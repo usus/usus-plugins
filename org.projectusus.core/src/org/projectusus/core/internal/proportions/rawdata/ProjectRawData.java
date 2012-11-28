@@ -90,11 +90,11 @@ class ProjectRawData extends RawData<IFile, FileRawData> {
     public void removeRelationIfTargetIsGone( ClassDescriptor descriptor ) {
 
         IFile targetFile = descriptor.getFile();
-        FileRawData fileRawData = getFileRawData( targetFile );
-        if( fileRawData == null ) {
+        PackageRawData rawData = getPackageRawData( targetFile );
+        if( rawData == null ) {
             descriptor.removeFromPool();
         } else {
-            fileRawData.removeRelationIfTargetIsGone( descriptor );
+            rawData.removeRelationIfTargetIsGone( descriptor );
         }
     }
 }
