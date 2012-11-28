@@ -11,13 +11,12 @@ public class WrappedTypeBinding {
     private static final String JAVA = "java"; //$NON-NLS-1$
 
     private boolean isValid = false;
-    private ITypeBinding binding;
     private IFile underlyingResource;
     private Classname classname;
     private Packagename packagename;
 
     public WrappedTypeBinding( ITypeBinding typeBinding ) {
-        this.binding = typeBinding;
+        ITypeBinding binding = typeBinding;
         if( binding == null || binding.isPrimitive() ) {
             return;
         }
