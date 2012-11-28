@@ -15,96 +15,90 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
-class ProjectRawData extends RawData<Packagename, PackageRawData> {
+class PackageRawData extends RawData<IFile, FileRawData> {
 
     MetricsResults data;
+    private Packagename pkg;
 
-    public ProjectRawData() {
+    public PackageRawData( Packagename pkg ) {
+        this.pkg = pkg;
         data = new MetricsResults();
     }
 
-    private PackageRawData getOrCreatePackageRawData( Packagename pkg ) {
-        PackageRawData rawData = getPackageRawData( pkg );
+    private FileRawData getOrCreateFileRawData( IFile file ) {
+        FileRawData rawData = getFileRawData( file );
         if( rawData == null ) {
-            rawData = createPackageRawData( pkg );
+            rawData = createFileRawData( file );
         }
         return rawData;
     }
 
-    private PackageRawData getPackageRawData( Packagename pkg ) {
-        return super.getRawData( pkg );
+    private FileRawData getFileRawData( IFile file ) {
+        return super.getRawData( file );
     }
 
-    private PackageRawData getPackageRawData( IFile file ) {
-        for( PackageRawData pkg : getAllRawDataElements() ) {
-            FileRawData fileRawData = pkg.getRawData( file );
-            if( fileRawData != null ) {
-                return pkg;
-            }
-        }
-        return null;
-    }
-
-    private PackageRawData createPackageRawData( Packagename pkg ) {
-        PackageRawData rawData = new PackageRawData( pkg );
-        super.addRawData( pkg, rawData );
+    private FileRawData createFileRawData( IFile file ) {
+        FileRawData rawData = new FileRawData( file );
+        super.addRawData( file, rawData );
         return rawData;
     }
 
     public void dropRawData( IFile file ) {
-        for( PackageRawData rawData : getAllRawDataElements() ) {
-            rawData.dropRawData( file );
+        FileRawData fileRawData = getFileRawData( file );
+        if( fileRawData != null ) {
+            fileRawData.dropRawData();
         }
+        remove( file ); // TODO nach oben?
     }
 
     public void dropRawData() {
-        for( PackageRawData rawData : getAllRawDataElements() ) {
-            rawData.dropRawData();
+        for( FileRawData fileRD : getAllRawDataElements() ) {
+            fileRD.dropRawData();
         }
         removeAll();
     }
 
     public void acceptAndGuide( IMetricsResultVisitor visitor ) {
-        visitor.inspectProject( data );
+        visitor.inspectPackage( pkg, data );
         JavaModelPath path = visitor.getPath();
         if( path.isRestrictedToFile() ) {
-            this.getPackageRawData( path.getFile() ).acceptAndGuide( visitor );
+            this.getFileRawData( path.getFile() ).acceptAndGuide( visitor );
         } else {
-            for( PackageRawData rawData : getAllRawDataElements() ) {
+            for( FileRawData rawData : getAllRawDataElements() ) {
                 rawData.acceptAndGuide( visitor );
             }
         }
     }
 
     public void putData( WrappedTypeBinding boundType, IFile file, MethodDeclaration methodDecl, String dataKey, int value ) {
-        PackageRawData rawData = getOrCreatePackageRawData( boundType.getPackagename() );
-        if( rawData != null ) {
-            rawData.putData( boundType, file, methodDecl, dataKey, value );
+        FileRawData fileRawData = getOrCreateFileRawData( file );
+        if( fileRawData != null ) {
+            fileRawData.putData( boundType, methodDecl, dataKey, value );
         }
     }
 
     public void putData( WrappedTypeBinding boundType, IFile file, Initializer initializer, String dataKey, int value ) {
-        PackageRawData rawData = getOrCreatePackageRawData( boundType.getPackagename() );
-        if( rawData != null ) {
-            rawData.putData( boundType, file, initializer, dataKey, value );
+        FileRawData fileRawData = getOrCreateFileRawData( file );
+        if( fileRawData != null ) {
+            fileRawData.putData( boundType, initializer, dataKey, value );
         }
     }
 
     public void putData( WrappedTypeBinding boundType, IFile file, AbstractTypeDeclaration node, String dataKey, int value ) {
-        PackageRawData rawData = getOrCreatePackageRawData( boundType.getPackagename() );
-        if( rawData != null ) {
-            rawData.putData( boundType, file, node, dataKey, value );
+        FileRawData fileRawData = getOrCreateFileRawData( file );
+        if( fileRawData != null ) {
+            fileRawData.putData( boundType, node, dataKey, value );
         }
     }
 
     public void removeRelationIfTargetIsGone( ClassDescriptor descriptor ) {
 
         IFile targetFile = descriptor.getFile();
-        PackageRawData rawData = getPackageRawData( targetFile );
-        if( rawData == null ) {
+        FileRawData fileRawData = getFileRawData( targetFile );
+        if( fileRawData == null ) {
             descriptor.removeFromPool();
         } else {
-            rawData.removeRelationIfTargetIsGone( descriptor );
+            fileRawData.removeRelationIfTargetIsGone( descriptor );
         }
     }
 }

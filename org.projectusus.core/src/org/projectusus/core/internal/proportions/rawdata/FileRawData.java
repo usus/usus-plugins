@@ -18,7 +18,6 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
-import org.projectusus.core.filerelations.model.BoundTypeConverter;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
@@ -40,32 +39,28 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
         return "Data for " + file.getFullPath() + ", " + getRawDataElementCount() + " classes"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
-    public void putData( MethodDeclaration methodDecl, String dataKey, int value ) {
-        ClassRawData classRawData = getOrCreateClassRawData( methodDecl );
+    public void putData( WrappedTypeBinding boundType, MethodDeclaration methodDecl, String dataKey, int value ) {
+        ClassRawData classRawData = getOrCreateClassRawData( boundType, methodDecl );
         if( classRawData != null ) {
-            classRawData.putData( methodDecl, dataKey, value );
+            classRawData.putData( boundType, methodDecl, dataKey, value );
         }
     }
 
-    public void putData( Initializer initializer, String dataKey, int value ) {
-        ClassRawData classRawData = getOrCreateClassRawData( initializer );
+    public void putData( WrappedTypeBinding boundType, Initializer initializer, String dataKey, int value ) {
+        ClassRawData classRawData = getOrCreateClassRawData( boundType, initializer );
         if( classRawData != null ) {
             classRawData.putData( initializer, dataKey, value );
         }
     }
 
-    public void putData( AbstractTypeDeclaration node, String dataKey, int value ) {
-        ClassRawData classRawData = getOrCreateClassRawData( node );
+    public void putData( WrappedTypeBinding boundType, AbstractTypeDeclaration node, String dataKey, int value ) {
+        ClassRawData classRawData = getOrCreateClassRawData( boundType, node );
         if( classRawData != null ) {
             classRawData.putData( dataKey, value );
         }
     }
 
-    private ClassRawData getOrCreateClassRawData( AbstractTypeDeclaration node ) {
-        WrappedTypeBinding boundType = BoundTypeConverter.wrap( node );
-        if( boundType == null || !boundType.isValid() ) {
-            return null;
-        }
+    private ClassRawData getOrCreateClassRawData( WrappedTypeBinding boundType, AbstractTypeDeclaration node ) {
         return getOrCreateClassRawData( boundType, node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
     }
 
@@ -79,12 +74,12 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
         return rawData;
     }
 
-    private ClassRawData getOrCreateClassRawData( MethodDeclaration node ) {
-        return getOrCreateClassRawData( findEnclosingClass( node ) );
+    private ClassRawData getOrCreateClassRawData( WrappedTypeBinding boundType, MethodDeclaration node ) {
+        return getOrCreateClassRawData( boundType, findEnclosingClass( node ) );
     }
 
-    private ClassRawData getOrCreateClassRawData( Initializer node ) {
-        return getOrCreateClassRawData( findEnclosingClass( node ) );
+    private ClassRawData getOrCreateClassRawData( WrappedTypeBinding boundType, Initializer node ) {
+        return getOrCreateClassRawData( boundType, findEnclosingClass( node ) );
     }
 
     private ClassRawData getClassRawData( IJavaElement element ) {
@@ -144,7 +139,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
         }
     }
 
-    private static AbstractTypeDeclaration findEnclosingClass( ASTNode node ) {
+    public static AbstractTypeDeclaration findEnclosingClass( ASTNode node ) {
         ASTNode enclosingClass = node;
         while( enclosingClass != null && !(enclosingClass instanceof AbstractTypeDeclaration) ) {
             enclosingClass = enclosingClass.getParent();

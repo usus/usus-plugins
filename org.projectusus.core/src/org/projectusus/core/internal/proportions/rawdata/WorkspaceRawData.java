@@ -11,7 +11,9 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.filerelations.model.BoundTypeConverter;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
 class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
@@ -62,23 +64,35 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
     }
 
     public void putData( IFile file, MethodDeclaration methodDecl, String dataKey, int value ) {
+        WrappedTypeBinding boundType = BoundTypeConverter.wrap( FileRawData.findEnclosingClass( methodDecl ) );
+        if( boundType == null || !boundType.isValid() ) {
+            return;
+        }
         ProjectRawData projectRawData = getOrCreateProjectRawData( file.getProject() );
         if( projectRawData != null ) {
-            projectRawData.putData( file, methodDecl, dataKey, value );
+            projectRawData.putData( boundType, file, methodDecl, dataKey, value );
         }
     }
 
     public void putData( IFile file, Initializer initializer, String dataKey, int value ) {
+        WrappedTypeBinding boundType = BoundTypeConverter.wrap( FileRawData.findEnclosingClass( initializer ) );
+        if( boundType == null || !boundType.isValid() ) {
+            return;
+        }
         ProjectRawData projectRawData = getOrCreateProjectRawData( file.getProject() );
         if( projectRawData != null ) {
-            projectRawData.putData( file, initializer, dataKey, value );
+            projectRawData.putData( boundType, file, initializer, dataKey, value );
         }
     }
 
     public void putData( IFile file, AbstractTypeDeclaration node, String dataKey, int value ) {
+        WrappedTypeBinding boundType = BoundTypeConverter.wrap( node );
+        if( boundType == null || !boundType.isValid() ) {
+            return;
+        }
         ProjectRawData projectRawData = getOrCreateProjectRawData( file.getProject() );
         if( projectRawData != null ) {
-            projectRawData.putData( file, node, dataKey, value );
+            projectRawData.putData( boundType, file, node, dataKey, value );
         }
     }
 
