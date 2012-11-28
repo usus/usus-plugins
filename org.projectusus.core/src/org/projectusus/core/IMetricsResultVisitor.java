@@ -4,6 +4,7 @@ import org.eclipse.core.resources.IFile;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.filerelations.model.Packagename;
 
 /**
  * Visitor interface to traverse the raw data collected by Usus.
@@ -28,6 +29,8 @@ public interface IMetricsResultVisitor {
     String codeProportionUnit_PACKAGE_label = "packages"; //$NON-NLS-1$
 
     void inspectProject( MetricsResults results );
+
+    void inspectPackage( Packagename pkg, MetricsResults results );
 
     void inspectFile( IFile file, MetricsResults results );
 

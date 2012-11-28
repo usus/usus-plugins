@@ -5,6 +5,7 @@ import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.filerelations.model.Packagename;
 
 /**
  * Default implementation of <code>IMetricsResultVisitor</code>.
@@ -32,6 +33,10 @@ public abstract class DefaultMetricsResultVisitor implements IMetricsResultVisit
     }
 
     public void inspectProject( @SuppressWarnings( "unused" ) MetricsResults results ) {
+        // do nothing with the data
+    }
+
+    public void inspectPackage( @SuppressWarnings( "unused" ) Packagename pkg, @SuppressWarnings( "unused" ) MetricsResults results ) {
         // do nothing with the data
     }
 
