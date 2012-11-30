@@ -59,6 +59,7 @@ class PackageRawData extends RawData<IFile, FileRawData> {
     }
 
     public void acceptAndGuide( IMetricsResultVisitor visitor ) {
+        updateData();
         visitor.inspectPackage( pkg, data );
         JavaModelPath path = visitor.getPath();
         if( path.isRestrictedToFile() ) {
@@ -68,6 +69,10 @@ class PackageRawData extends RawData<IFile, FileRawData> {
                 rawData.acceptAndGuide( visitor );
             }
         }
+    }
+
+    private void updateData() {
+        data.put( MetricsResults.CLASSES, getRawDataElementCount() );
     }
 
     public void putData( WrappedTypeBinding boundType, IFile file, MethodDeclaration methodDecl, String dataKey, int value ) {

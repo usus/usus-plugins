@@ -6,6 +6,7 @@ import java.util.Map;
 public class MetricsResults {
 
     public static final String METHODS = "NumberOfMethods"; //$NON-NLS-1$
+    public static final String CLASSES = "NumberOfClasses"; //$NON-NLS-1$
     public static final String CCD = "CCD"; //$NON-NLS-1$
     public static final String CC = "CyclomaticComplexity"; //$NON-NLS-1$
     public static final String ML = "MethodLength"; //$NON-NLS-1$
