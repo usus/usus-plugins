@@ -13,29 +13,35 @@ import org.projectusus.ui.viewer.UsusTreeColumn;
 
 public enum HotspotsColumnDesc implements IColumnDesc<DisplayHotspot<?>> {
 
-    @UsusTreeColumn( header = "Value", align = RIGHT, weight = 5, numeric = true )
-    Value {
+    @UsusTreeColumn( align = RIGHT, weight = 5, numeric = true )
+    Value( "Value" ) { //$NON-NLS-1$
         @Override
         public String getLabel( DisplayHotspot<?> element ) {
             return String.valueOf( element.getMetricsValue() );
         }
     },
-    @UsusTreeColumn( header = "Name", weight = 25 )
-    Name {
+    @UsusTreeColumn( weight = 25 )
+    Name( "Name" ) { //$NON-NLS-1$
         @Override
         public String getLabel( DisplayHotspot<?> element ) {
             return element.getName();
         }
     },
-    @UsusTreeColumn( header = "Path", weight = 60 )
-    Path {
+    @UsusTreeColumn( weight = 60 )
+    Path( "Path" ) { //$NON-NLS-1$
         @Override
         public String getLabel( DisplayHotspot<?> element ) {
             return element.getPath();
         }
+
+        @Override
+        public String getHeader() {
+            // TODO Hier weitermachen
+            return super.getHeader();
+        }
     },
-    @UsusTreeColumn( header = "Trend", align = CENTER, weight = 8, numeric = true )
-    Trend() {
+    @UsusTreeColumn( align = CENTER, weight = 8, numeric = true )
+    Trend( "Trend" ) { //$NON-NLS-1$
         @Override
         public boolean hasImage() {
             return true;
@@ -46,6 +52,16 @@ public enum HotspotsColumnDesc implements IColumnDesc<DisplayHotspot<?>> {
             return String.valueOf( element.getTrend() );
         }
     };
+
+    private final String header;
+
+    HotspotsColumnDesc( String header ) {
+        this.header = header;
+    }
+
+    public String getHeader() {
+        return header;
+    }
 
     public boolean hasImage() {
         return false;

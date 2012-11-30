@@ -31,7 +31,8 @@ public class UsusProjectNotificationsPDETest {
     private final class ProjectCountingVisitor extends DefaultMetricsResultVisitor {
         int projects = 0;
 
-        public void inspectProject( MetricsResults results ) {
+        @Override
+        public void inspectProject( IProject project, MetricsResults results ) {
             projects++;
         }
     }

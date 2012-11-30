@@ -11,45 +11,47 @@ import org.projectusus.ui.viewer.IColumnDesc;
 import org.projectusus.ui.viewer.UsusTreeColumn;
 
 public enum AverageMetricsColumns implements IColumnDesc<IAverageMetrics> {
-    @UsusTreeColumn( header = "Name", weight = 15 )
-    NAME( false, true ) {
+	
+    @UsusTreeColumn( weight = 15 )
+    NAME("Name") {
         public String getLabel( IAverageMetrics element ) {
             return element.getName();
         }
     },
-    @UsusTreeColumn( header = "Avg. CC", align = RIGHT, weight = 15 )
-    AVG_CC( false, true ) {
+    
+    @UsusTreeColumn(  align = RIGHT, weight = 15 )
+    AVG_CC("Avg. CC") {
         public String getLabel( IAverageMetrics metrics ) {
             return String.valueOf( metrics.getAverageCyclomaticComplexity() );
         }
 
     },
-    @UsusTreeColumn( header = "Avg. ML", align = RIGHT, weight = 40 )
-    AVG_ML( false, true ) {
+    
+    @UsusTreeColumn( align = RIGHT, weight = 40 )
+    AVG_ML("Avg. ML") {
         public String getLabel( IAverageMetrics metrics ) {
             return String.valueOf( metrics.getAverageMethodLength() );
         }
     },
-    @UsusTreeColumn( header = "Avg. methods in class", align = RIGHT, weight = 20 )
-    AVG_NUMBER_OF_METHOS_IN_CLASS( false, true ) {
+    
+    @UsusTreeColumn(  align = RIGHT, weight = 20 )
+    AVG_NUMBER_OF_METHOS_IN_CLASS("Avg. methods in class") {
         public String getLabel( IAverageMetrics metrics ) {
             return String.valueOf( metrics.getAverageNumberOfMethodsInClass() );
         }
     };
+    
+    private String header;
 
-    private final boolean hasImage;
-    private final boolean hasText;
-
-    AverageMetricsColumns( boolean hasImage, boolean hasText ) {
-        this.hasImage = hasImage;
-        this.hasText = hasText;
-    }
+	AverageMetricsColumns(String header) {
+		this.header = header;
+	}
+	
+	public String getHeader() {
+		return header;
+	}
 
     public boolean hasImage() {
-        return hasImage;
-    }
-
-    public boolean isHasText() {
-        return hasText;
+        return false;
     }
 }
