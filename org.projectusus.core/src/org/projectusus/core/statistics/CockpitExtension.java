@@ -11,7 +11,9 @@ import org.projectusus.core.basis.FileHotspot;
 import org.projectusus.core.basis.Histogram;
 import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.basis.SinglePackageHotspot;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.filerelations.model.Packagename;
 
 /**
  * Implementors of extensions for the <code>org.projectusus.core.statistics</code> extension point must use this implementation as a basis for their own implementations. It
@@ -52,12 +54,20 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
     }
 
     protected void addResult( SourceCodeLocation location, int count ) {
+        incrementState( count, new FileHotspot( location, count, currentFile ) );
+    }
+
+    protected void addResult( Packagename pkg, int count ) {
+        incrementState( count, new SinglePackageHotspot( pkg, count ) );
+    }
+
+    private void incrementState( int count, Hotspot hotspot ) {
         basis++;
         histogram.increment( count );
         violationSum += count;
         if( count > violationLimit ) {
             violations++;
-            hotspots.add( new FileHotspot( location, count, currentFile ) );
+            hotspots.add( hotspot );
         }
     }
 

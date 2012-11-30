@@ -35,6 +35,9 @@
        <statistics
              class="org.projectusus.statistics.MudholeStatistic">
        </statistics>
+       <statistics
+             class="org.projectusus.statistics.LinearPackageLocationSizeStatistic">
+       </statistics>
    </extension>
     <extension
           point="org.projectusus.core.metrics"> 
