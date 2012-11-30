@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.projectusus.core.CollectibleExtension;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
@@ -38,6 +39,8 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
     private List<Hotspot> hotspots;
     private Histogram histogram;
 
+    private IProject project;
+
     public CockpitExtension( String unit, int violationLimit ) {
         super();
         this.unit = unit;
@@ -58,7 +61,7 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
     }
 
     protected void addResult( Packagename pkg, int count ) {
-        incrementState( count, new SinglePackageHotspot( pkg, count ) );
+        incrementState( count, new SinglePackageHotspot( pkg, count, project ) );
     }
 
     private void incrementState( int count, Hotspot hotspot ) {
@@ -69,6 +72,11 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
             violations++;
             hotspots.add( hotspot );
         }
+    }
+
+    @Override
+    public void inspectProject( IProject project, @SuppressWarnings( "unused" ) MetricsResults results ) {
+        this.project = project;
     }
 
     @Override

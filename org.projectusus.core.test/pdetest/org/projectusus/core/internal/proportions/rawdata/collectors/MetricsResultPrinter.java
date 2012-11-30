@@ -4,6 +4,7 @@ import java.io.PrintStream;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
 import org.projectusus.core.statistics.DefaultMetricsResultVisitor;
@@ -17,7 +18,7 @@ public class MetricsResultPrinter extends DefaultMetricsResultVisitor {
     }
 
     @Override
-    public void inspectProject( MetricsResults results ) {
+    public void inspectProject( IProject project, MetricsResults results ) {
         out.print( "\n Project: " );
         out.println( ReflectionToStringBuilder.toString( results ) );
     }

@@ -6,16 +6,19 @@ package org.projectusus.core.basis;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.eclipse.core.resources.IProject;
 import org.projectusus.core.filerelations.model.Packagename;
 
 public class SinglePackageHotspot implements Hotspot {
 
     private final int metricsValue;
     private Packagename packagename;
+    private IProject project;
 
-    public SinglePackageHotspot( Packagename pkg, int metricsValue ) {
+    public SinglePackageHotspot( Packagename pkg, int metricsValue, IProject iProject ) {
         this.packagename = pkg;
         this.metricsValue = metricsValue;
+        this.project = iProject;
     }
 
     public String getName() {
@@ -50,6 +53,6 @@ public class SinglePackageHotspot implements Hotspot {
     }
 
     public String getPath() {
-        return "";
+        return project.getName();
     }
 }

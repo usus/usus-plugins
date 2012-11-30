@@ -1,6 +1,7 @@
 package org.projectusus.core.statistics;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
@@ -32,7 +33,7 @@ public abstract class DefaultMetricsResultVisitor implements IMetricsResultVisit
         path = modelPath;
     }
 
-    public void inspectProject( @SuppressWarnings( "unused" ) MetricsResults results ) {
+    public void inspectProject( @SuppressWarnings( "unused" ) IProject project, @SuppressWarnings( "unused" ) MetricsResults results ) {
         // do nothing with the data
     }
 

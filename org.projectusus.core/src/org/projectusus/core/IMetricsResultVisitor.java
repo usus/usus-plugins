@@ -1,6 +1,7 @@
 package org.projectusus.core;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
@@ -29,7 +30,7 @@ public interface IMetricsResultVisitor {
     String codeProportionUnit_PACKAGE_label = "packages"; //$NON-NLS-1$
     String codeProportionUnit_PACKAGE_PER_PROJECT_label = "packages/project"; //$NON-NLS-1$
 
-    void inspectProject( MetricsResults results );
+    void inspectProject( IProject project, MetricsResults results );
 
     void inspectPackage( Packagename pkg, MetricsResults results );
 

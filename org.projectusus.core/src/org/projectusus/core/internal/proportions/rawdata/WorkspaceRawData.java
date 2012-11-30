@@ -24,7 +24,7 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
     private ProjectRawData getOrCreateProjectRawData( IProject project ) {
         ProjectRawData rawData = getProjectRawData( project );
         if( rawData == null ) {
-            rawData = new ProjectRawData();
+            rawData = new ProjectRawData( project );
             super.addRawData( project, rawData );
         }
         return rawData;

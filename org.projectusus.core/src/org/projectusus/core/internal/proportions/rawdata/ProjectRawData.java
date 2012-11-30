@@ -5,6 +5,7 @@
 package org.projectusus.core.internal.proportions.rawdata;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -18,8 +19,10 @@ import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 class ProjectRawData extends RawData<Packagename, PackageRawData> {
 
     MetricsResults data;
+    private IProject project;
 
-    public ProjectRawData() {
+    public ProjectRawData( IProject project ) {
+        this.project = project;
         data = new MetricsResults();
     }
 
@@ -65,7 +68,7 @@ class ProjectRawData extends RawData<Packagename, PackageRawData> {
     }
 
     public void acceptAndGuide( IMetricsResultVisitor visitor ) {
-        visitor.inspectProject( data );
+        visitor.inspectProject( project, data );
         JavaModelPath path = visitor.getPath();
         if( path.isRestrictedToFile() ) {
             this.getPackageRawData( path.getFile() ).acceptAndGuide( visitor );
