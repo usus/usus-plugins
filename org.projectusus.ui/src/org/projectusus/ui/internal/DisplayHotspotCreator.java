@@ -9,6 +9,7 @@ import java.util.Set;
 import org.projectusus.core.basis.FileHotspot;
 import org.projectusus.core.basis.Hotspot;
 import org.projectusus.core.basis.PackageHotspot;
+import org.projectusus.core.basis.SinglePackageHotspot;
 
 import com.google.common.collect.Sets;
 
@@ -59,6 +60,9 @@ class DisplayHotspotCreator {
     private DisplayHotspot<?> createDisplayHotspot( Hotspot oldHotspot, Hotspot newHotspot ) {
         if( oldHotspot instanceof FileHotspot || newHotspot instanceof FileHotspot ) {
             return new FileDisplayHotspot( (FileHotspot)oldHotspot, (FileHotspot)newHotspot );
+        }
+        if( oldHotspot instanceof SinglePackageHotspot || newHotspot instanceof SinglePackageHotspot ) {
+            return new SinglePackageDisplayHotspot( (SinglePackageHotspot)oldHotspot, (SinglePackageHotspot)newHotspot );
         }
         return new PackageDisplayHotspot( (PackageHotspot)oldHotspot, (PackageHotspot)newHotspot );
     }
