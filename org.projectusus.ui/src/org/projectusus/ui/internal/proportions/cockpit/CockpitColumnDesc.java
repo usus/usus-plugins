@@ -20,32 +20,32 @@ import org.projectusus.ui.viewer.UsusTreeColumn;
 
 enum CockpitColumnDesc implements IColumnDesc<AnalysisDisplayEntry> {
 
-    @UsusTreeColumn( weight = 51 )
-    Indicator( "Indicator", true ) { //$NON-NLS-1$
+    @UsusTreeColumn( header = "Indicator", weight = 51 )
+    Indicator( true ) {
         public String getLabel( AnalysisDisplayEntry element ) {
             return element.getLabel();
         }
     },
-    @UsusTreeColumn( align = RIGHT, weight = 14, numeric = true )
-    Average( "Avg. Rating", false ) { //$NON-NLS-1$
+    @UsusTreeColumn( header = "Avg. Rating", align = RIGHT, weight = 14, numeric = true )
+    Average( false ) {
         public String getLabel( AnalysisDisplayEntry element ) {
             return formatter.format( element.getAverage() );
         }
     },
-    @UsusTreeColumn( align = RIGHT, weight = 11, numeric = true )
-    Violations( "Hotspots", false ) { //$NON-NLS-1$
+    @UsusTreeColumn( header = "Hotspots", align = RIGHT, weight = 11, numeric = true )
+    Violations( false ) {
         public String getLabel( AnalysisDisplayEntry element ) {
             return String.valueOf( element.getViolations() );
         }
     },
-    @UsusTreeColumn( align = RIGHT, weight = 17 )
-    Total( "Total", false ) { //$NON-NLS-1$
+    @UsusTreeColumn( header = "Total", align = RIGHT, weight = 17 )
+    Total( false ) {
         public String getLabel( AnalysisDisplayEntry element ) {
             return element.getBasis();
         }
     },
-    @UsusTreeColumn( align = CENTER, weight = 8, sortable = false )
-    Trend( "Trend", true ) { //$NON-NLS-1$
+    @UsusTreeColumn( header = "Trend", align = CENTER, weight = 8, sortable = false )
+    Trend( true ) {
         public String getLabel( @SuppressWarnings( "unused" ) AnalysisDisplayEntry element ) {
             return ""; // using image //$NON-NLS-1$
         }
@@ -58,15 +58,9 @@ enum CockpitColumnDesc implements IColumnDesc<AnalysisDisplayEntry> {
 
     private final boolean hasImage;
     private final static DecimalFormat formatter = new DecimalFormat( "0.0", new DecimalFormatSymbols( Locale.US ) ); //$NON-NLS-1$
-    private final String header;
 
-    CockpitColumnDesc( String header, boolean hasImage ) {
-        this.header = header;
+    CockpitColumnDesc( boolean hasImage ) {
         this.hasImage = hasImage;
-    }
-
-    public String getHeader() {
-        return header;
     }
 
     public boolean hasImage() {

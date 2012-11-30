@@ -12,59 +12,49 @@ import org.projectusus.ui.viewer.UsusTreeColumn;
 
 enum BugsColumnDesc implements IColumnDesc<Bug> {
 
-	@UsusTreeColumn(weight = 15)
-	COVERED("Title") {
-		public String getLabel(Bug bug) {
-			return bug.getTitle();
-		}
-	},
-	@UsusTreeColumn(weight = 40)
-	PACKAGE("Package") {
-		public String getLabel(Bug bug) {
-			return bug.getLocation().getPackageName();
-		}
-	},
-	@UsusTreeColumn(weight = 20)
-	CLASS_NAME("Classname") {
-		public String getLabel(Bug bug) {
-			return bug.getLocation().getClassName();
-		}
-	},
-	@UsusTreeColumn(weight = 20)
-	METHOD_NAME("Methodname") {
-		public String getLabel(Bug bug) {
-			return bug.getLocation().getMethodName();
-		}
-	},
-	@UsusTreeColumn(weight = 20)
-	METHOD_LENGTH("Method length") {
-		public String getLabel(Bug bug) {
-			return String.valueOf(bug.getBugMetrics().getMethodLength());
-		}
-	},
-	@UsusTreeColumn(align = RIGHT, weight = 20)
-	CYCLOMATIC_COMPLEXITY("Cyclomatic complexity") {
-		public String getLabel(Bug bug) {
-			return String
-					.valueOf(bug.getBugMetrics().getCyclomaticComplexity());
-		}
-	},
-	@UsusTreeColumn(align = RIGHT, weight = 20)
-	NUMBER_OF_METHODS_IN_CLASS("# methods in class") {
-		public String getLabel(Bug bug) {
-			return String.valueOf(bug.getBugMetrics().getNumberOfMethods());
-		}
-	};
+    @UsusTreeColumn( header = "Title", weight = 15 )
+    COVERED {
+        public String getLabel( Bug bug ) {
+            return bug.getTitle();
+        }
+    },
+    @UsusTreeColumn( header = "Package", weight = 40 )
+    PACKAGE {
+        public String getLabel( Bug bug ) {
+            return bug.getLocation().getPackageName();
+        }
+    },
+    @UsusTreeColumn( header = "Classname", weight = 20 )
+    CLASS_NAME {
+        public String getLabel( Bug bug ) {
+            return bug.getLocation().getClassName();
+        }
+    },
+    @UsusTreeColumn( header = "Methodname", weight = 20 )
+    METHOD_NAME {
+        public String getLabel( Bug bug ) {
+            return bug.getLocation().getMethodName();
+        }
+    },
+    @UsusTreeColumn( header = "Methodlength", weight = 20 )
+    METHOD_LENGTH {
+        public String getLabel( Bug bug ) {
+            return String.valueOf( bug.getBugMetrics().getMethodLength() );
+        }
+    },
+    @UsusTreeColumn( header = "Cyclomatic complexity", align = RIGHT, weight = 20 )
+    CYCLOMATIC_COMPLEXITY {
+        public String getLabel( Bug bug ) {
+            return String.valueOf( bug.getBugMetrics().getCyclomaticComplexity() );
+        }
+    },
+    @UsusTreeColumn( header = "# methods in class", align = RIGHT, weight = 20 )
+    NUMBER_OF_METHODS_IN_CLASS {
+        public String getLabel( Bug bug ) {
+            return String.valueOf( bug.getBugMetrics().getNumberOfMethods() );
+        }
+    };
 
-	private String header;
-
-	BugsColumnDesc(String header) {
-		this.header = header;
-	}
-
-	public String getHeader() {
-		return header;
-	}
 
 	public boolean hasImage() {
 		return false;

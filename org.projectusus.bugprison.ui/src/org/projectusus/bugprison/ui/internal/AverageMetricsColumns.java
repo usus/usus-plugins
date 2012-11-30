@@ -11,45 +11,31 @@ import org.projectusus.ui.viewer.IColumnDesc;
 import org.projectusus.ui.viewer.UsusTreeColumn;
 
 public enum AverageMetricsColumns implements IColumnDesc<IAverageMetrics> {
-	
-    @UsusTreeColumn( weight = 15 )
-    NAME("Name") {
+    @UsusTreeColumn( header = "Name", weight = 15 )
+    NAME {
         public String getLabel( IAverageMetrics element ) {
             return element.getName();
         }
     },
-    
-    @UsusTreeColumn(  align = RIGHT, weight = 15 )
-    AVG_CC("Avg. CC") {
+    @UsusTreeColumn( header = "Avg. CC", align = RIGHT, weight = 15 )
+    AVG_CC {
         public String getLabel( IAverageMetrics metrics ) {
             return String.valueOf( metrics.getAverageCyclomaticComplexity() );
         }
 
     },
-    
-    @UsusTreeColumn( align = RIGHT, weight = 40 )
-    AVG_ML("Avg. ML") {
+    @UsusTreeColumn( header = "Avg. ML", align = RIGHT, weight = 40 )
+    AVG_ML {
         public String getLabel( IAverageMetrics metrics ) {
             return String.valueOf( metrics.getAverageMethodLength() );
         }
     },
-    
-    @UsusTreeColumn(  align = RIGHT, weight = 20 )
-    AVG_NUMBER_OF_METHOS_IN_CLASS("Avg. methods in class") {
+    @UsusTreeColumn( header = "Avg. methods in class", align = RIGHT, weight = 20 )
+    AVG_NUMBER_OF_METHOS_IN_CLASS {
         public String getLabel( IAverageMetrics metrics ) {
             return String.valueOf( metrics.getAverageNumberOfMethodsInClass() );
         }
     };
-    
-    private String header;
-
-	AverageMetricsColumns(String header) {
-		this.header = header;
-	}
-	
-	public String getHeader() {
-		return header;
-	}
 
     public boolean hasImage() {
         return false;

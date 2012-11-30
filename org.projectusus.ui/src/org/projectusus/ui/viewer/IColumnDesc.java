@@ -10,6 +10,4 @@ public interface IColumnDesc<T> {
 
     String getLabel( T element );
 
-    String getHeader();
-
 }

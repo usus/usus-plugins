@@ -55,7 +55,7 @@ public abstract class TableViewPart<T> extends ViewPart {
             TableColumn column = new TableColumn( table, ususTreeColumn.align().toSwtStyle() );
             ColumnWeightData data = new ColumnWeightData( ususTreeColumn.weight() );
             layout.setColumnData( column, data );
-            column.setText( columnDesc.getHeader() );
+            column.setText( ususTreeColumn.header() );
         }
     }
 

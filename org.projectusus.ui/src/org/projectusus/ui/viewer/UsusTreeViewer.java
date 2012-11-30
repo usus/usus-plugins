@@ -43,7 +43,7 @@ public class UsusTreeViewer<T> extends TreeViewer {
             IColumnDesc<T> desc = columns[i];
             UsusTreeColumn ususTreeColumn = new AnnotationReader( desc ).compute();
             TreeViewerColumn column = createColumn( ususTreeColumn.align().toSwtStyle() );
-            column.getColumn().setText( desc.getHeader() );
+            column.getColumn().setText( ususTreeColumn.header() );
             if( ususTreeColumn.sortable() ) {
                 new ColumnByLabelSorter( this, column.getColumn(), i, ususTreeColumn.numeric() );
             }
