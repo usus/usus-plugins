@@ -1,5 +1,8 @@
 package org.projectusus.statistics;
 
+import static org.projectusus.core.basis.LocationType.PROJECT;
+
+import org.projectusus.core.basis.LocationType;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.statistics.CockpitExtension;
@@ -52,5 +55,10 @@ public class LinearPackageLocationSizeStatistic extends CockpitExtension {
     protected String getTooltip() {
         return "The underlying metric determines the number of classes in each package.\n" //$NON-NLS-1$
                 + "The class visibility is not taken into account.\n" + DESCRIPTION; //$NON-NLS-1$
+    }
+
+    @Override
+    protected LocationType getLocationType() {
+        return PROJECT;
     }
 }

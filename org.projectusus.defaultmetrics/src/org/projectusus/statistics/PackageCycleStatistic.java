@@ -28,7 +28,8 @@ public class PackageCycleStatistic extends CockpitExtension {
         PackageCycles packageCycles = new PackageRelations().getPackageCycles();
         int violations = packageCycles.numberOfPackagesInAnyCycles();
         double level = calculateAverage( violations, basisStatistic.getValue() );
-        return new CodeProportion( getLabel(), getDescription(), getTooltip(), violations, basisStatistic, level, createHotspots( packageCycles ), getHistogram() );
+        return new CodeProportion( getLabel(), getDescription(), getTooltip(), violations, basisStatistic, level, createHotspots( packageCycles ), getHistogram(),
+                getLocationType() );
     }
 
     private List<Hotspot> createHotspots( PackageCycles packageCycles ) {

@@ -11,6 +11,7 @@ import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.FileHotspot;
 import org.projectusus.core.basis.Histogram;
 import org.projectusus.core.basis.Hotspot;
+import org.projectusus.core.basis.LocationType;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SinglePackageHotspot;
 import org.projectusus.core.basis.SourceCodeLocation;
@@ -109,7 +110,11 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
     }
 
     public CodeProportion getCodeProportion() {
-        return new CodeProportion( getLabel(), getDescription(), getTooltip(), getViolations(), getBasisStatistic(), getAverage(), getHotspots(), getHistogram() );
+        return new CodeProportion( getLabel(), getDescription(), getTooltip(), getViolations(), getBasisStatistic(), getAverage(), getHotspots(), getHistogram(), getLocationType() );
+    }
+
+    protected LocationType getLocationType() {
+        return LocationType.PATH;
     }
 
     protected String getDescription() {

@@ -4,6 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.basis;
 
+import static org.projectusus.core.basis.LocationType.PATH;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,17 +23,19 @@ public class CodeProportion extends PlatformObject {
     private final boolean hasHotspots;
     private final String tooltip;
     private final Histogram histogram;
+    private final LocationType locationType;
 
     public CodeProportion( String label, String description, int violations, CodeStatistic basis, double average ) {
-        this( label, description, "", violations, basis, average, new ArrayList<Hotspot>( 0 ), false, new Histogram() ); //$NON-NLS-1$
+        this( label, description, "", violations, basis, average, new ArrayList<Hotspot>( 0 ), false, new Histogram(), PATH ); //$NON-NLS-1$
     }
 
-    public CodeProportion( String label, String description, String tooltip, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots, Histogram histogram ) {
-        this( label, description, tooltip, violations, basis, average, hotspots, true, histogram );
+    public CodeProportion( String label, String description, String tooltip, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots, Histogram histogram,
+            LocationType locationType ) {
+        this( label, description, tooltip, violations, basis, average, hotspots, true, histogram, locationType );
     }
 
     private CodeProportion( String label, String description, String tooltip, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots, boolean hasHotspots,
-            Histogram histogram ) {
+            Histogram histogram, LocationType locationType ) {
         this.label = label;
         this.description = description;
         this.tooltip = tooltip;
@@ -41,6 +45,7 @@ public class CodeProportion extends PlatformObject {
         this.histogram = histogram;
         this.hotspots = sort( hotspots );
         this.average = average;
+        this.locationType = locationType;
     }
 
     public double getAverage() {
@@ -89,5 +94,9 @@ public class CodeProportion extends PlatformObject {
 
     public Histogram getHistogram() {
         return histogram;
+    }
+
+    public LocationType getLocationType() {
+        return locationType;
     }
 }

@@ -33,11 +33,12 @@ public enum HotspotsColumnDesc implements IColumnDesc<DisplayHotspot<?>> {
         public String getLabel( DisplayHotspot<?> element ) {
             return element.getPath();
         }
-
+    },
+    @UsusTreeColumn( weight = 60 )
+    Project( "Project" ) { //$NON-NLS-1$
         @Override
-        public String getHeader() {
-            // TODO Hier weitermachen
-            return super.getHeader();
+        public String getLabel( DisplayHotspot<?> element ) {
+            return element.getPath();
         }
     },
     @UsusTreeColumn( align = CENTER, weight = 8, numeric = true )
