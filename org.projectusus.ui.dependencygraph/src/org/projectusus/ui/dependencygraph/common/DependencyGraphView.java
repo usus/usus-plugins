@@ -185,11 +185,11 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     }
 
     public synchronized void setCustomFilter( NodeAndEdgeFilter packageNameFilter ) {
-        clearCustomFilter();
+        packageNameFilter.setFilterLimitProvider( this );
+        graphViewer.replaceFilter( this.packageNameFilter, packageNameFilter );
         this.packageNameFilter = packageNameFilter;
-        this.packageNameFilter.setFilterLimitProvider( this );
-        graphViewer.addFilter( this.packageNameFilter );
-        setContentDescription( this.packageNameFilter.getDescription() );
+
+        setContentDescription( packageNameFilter.getDescription() );
         customFilterContext.activate();
         drawGraphUnconditionally();
     }

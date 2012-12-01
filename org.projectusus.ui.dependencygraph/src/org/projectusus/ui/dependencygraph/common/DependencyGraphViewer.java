@@ -17,6 +17,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -112,6 +113,22 @@ public class DependencyGraphViewer extends GraphViewer {
         gc.copyArea( image, 0, 0 );
         gc.dispose();
         return image;
+    }
+
+    public void replaceFilter( ViewerFilter existingFilter, ViewerFilter newFilter ) {
+        List<ViewerFilter> filters = collectFiltersExcept( existingFilter );
+        filters.add( newFilter );
+        setFilters( filters.toArray( new ViewerFilter[filters.size()] ) );
+    }
+
+    private List<ViewerFilter> collectFiltersExcept( ViewerFilter existingFilter ) {
+        List<ViewerFilter> filters = new ArrayList<ViewerFilter>();
+        for( ViewerFilter viewerFilter : getFilters() ) {
+            if( viewerFilter != existingFilter ) {
+                filters.add( viewerFilter );
+            }
+        }
+        return filters;
     }
 
 }
