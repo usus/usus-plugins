@@ -11,6 +11,7 @@ public class MetricsResults {
     public static final String CC = "CyclomaticComplexity"; //$NON-NLS-1$
     public static final String ML = "MethodLength"; //$NON-NLS-1$
     public static final String CLASS_CREATION = "ClassCreation"; //$NON-NLS-1$
+    public static final String ABSTRACTNESS = "Abstractness";
 
     private Map<String, Integer> results = new HashMap<String, Integer>();
 

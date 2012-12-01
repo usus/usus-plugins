@@ -56,6 +56,9 @@
        <metrics
              class="org.projectusus.metrics.PublicFieldMetrics">
        </metrics>
+       <metrics
+             class="org.projectusus.metrics.AbstractClassCollector">
+       </metrics>
     </extension>
 
 </plugin>
