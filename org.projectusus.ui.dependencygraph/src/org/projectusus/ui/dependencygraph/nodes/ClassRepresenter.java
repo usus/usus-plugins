@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.ui.ISharedImages;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Packagename;
 
@@ -35,10 +35,6 @@ public class ClassRepresenter implements GraphNode {
 
     public Set<GraphNode> getChildren() {
         return transformToRepresenterSet( clazz.getChildren() );
-    }
-
-    public String getNodeName() {
-        return clazz.getClassname().toString();
     }
 
     @Override
@@ -76,10 +72,6 @@ public class ClassRepresenter implements GraphNode {
         return getChildrenAndParentsInOtherPackages().contains( otherRepresenter.clazz );
     }
 
-    public boolean isPackage() {
-        return false;
-    }
-
     public IFile getFile() {
         return clazz.getFile();
     }
@@ -103,10 +95,6 @@ public class ClassRepresenter implements GraphNode {
 
     public boolean isPackageOneOf( Collection<Packagename> packages ) {
         return packages.contains( getPackagename() );
-    }
-
-    public IJavaElement getNodeJavaElement() {
-        return getPackagename().getJavaElement();
     }
 
     public Packagename getPackagename() {
@@ -137,6 +125,14 @@ public class ClassRepresenter implements GraphNode {
     }
 
     public String getDisplayText() {
-        return getNodeName();
+        return clazz.getClassname().toString();
+    }
+
+    public String getImageName() {
+        return ISharedImages.IMG_OBJS_CLASS;
+    }
+
+    public String getTooltipText() {
+        return new PackageRepresenter( getRelatedPackage() ).getTooltipText();
     }
 }

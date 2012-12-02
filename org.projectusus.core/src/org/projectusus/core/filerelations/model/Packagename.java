@@ -82,4 +82,12 @@ public class Packagename {
     public Relation<Packagename> getRelationTo( Packagename target ) {
         return new Relation<Packagename>( this, target );
     }
+
+    public String getDisplayName( ) {
+        return getJavaElement().getElementName();
+    }
+
+    public String getOSPath( ) {
+        return getJavaElement().getPath().toOSString();
+    }
 }

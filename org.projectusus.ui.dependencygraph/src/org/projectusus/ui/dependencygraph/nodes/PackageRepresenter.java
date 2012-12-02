@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.ui.ISharedImages;
+import org.eclipse.jdt.ui.JavaElementLabels;
 import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 
@@ -31,7 +32,7 @@ public class PackageRepresenter implements GraphNode {
         return new HashSet<GraphNode>( Collections2.transform( classes, function ) );
     }
 
-    private PackageRepresenter( Packagename pkg ) {
+    protected PackageRepresenter( Packagename pkg ) {
         this.packagename = pkg;
     }
 
@@ -51,14 +52,6 @@ public class PackageRepresenter implements GraphNode {
         return ""; //$NON-NLS-1$
     }
 
-    public String getNodeName() {
-        return packagename.toString();
-    }
-
-    public IJavaElement getNodeJavaElement() {
-        return packagename.getJavaElement();
-    }
-
     @Override
     public boolean equals( Object obj ) {
         return obj instanceof PackageRepresenter && packagename.equals( ((PackageRepresenter)obj).packagename );
@@ -71,10 +64,6 @@ public class PackageRepresenter implements GraphNode {
 
     public int getFilterValue() {
         return 0;
-    }
-
-    public boolean isPackage() {
-        return true;
     }
 
     public IFile getFile() {
@@ -97,7 +86,7 @@ public class PackageRepresenter implements GraphNode {
         return packagename;
     }
 
-    public boolean isVisibleForLimitWithOtherNodes( boolean restricting, @SuppressWarnings( "unused" ) Set<GraphNode> others ) {
+    public boolean isVisibleForLimitWithOtherNodes( boolean restricting, Set<GraphNode> others ) {
         if( restricting ) {
             return relations.getPackageCycles().containsPackage( packagename );
         }
@@ -109,7 +98,15 @@ public class PackageRepresenter implements GraphNode {
     }
 
     public String getDisplayText() {
-        return ""; // JavaElementLabels.getTextLabel( getNodeJavaElement(), P_COMPRESSED );
+        return JavaElementLabels.getTextLabel( packagename.getJavaElement(), JavaElementLabels.P_COMPRESSED );
+    }
+
+    public String getImageName() {
+        return ISharedImages.IMG_OBJS_PACKAGE;
+    }
+
+    public String getTooltipText() {
+        return getDisplayText();
     }
 
 }

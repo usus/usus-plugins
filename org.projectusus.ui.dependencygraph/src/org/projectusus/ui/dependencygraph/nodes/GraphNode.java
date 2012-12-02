@@ -4,38 +4,38 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jdt.core.IJavaElement;
 import org.projectusus.core.filerelations.model.Packagename;
 
 public interface GraphNode {
 
     Set<? extends GraphNode> getChildren();
 
-    String getNodeName();
+    String getDisplayText();
 
+    String getTooltipText();
+
+    String getImageName();
+
+    @Deprecated
     String getEdgeStartLabel();
 
+    @Deprecated
     String getEdgeMiddleLabel();
 
     String getEdgeEndLabel();
 
+    @Deprecated
     int getFilterValue();
-
-    boolean isVisibleForLimitWithOtherNodes( boolean restricting, Set<GraphNode> others );
-
-    boolean isPackage();
 
     IFile getFile();
 
-    String getDisplayText();
+    Packagename getRelatedPackage();
 
     boolean isPackageOneOf( Collection<Packagename> packages );
 
-    IJavaElement getNodeJavaElement();
-
     boolean isAtEitherEndOf( Packagename source, Packagename dest );
 
-    Packagename getRelatedPackage();
-
     boolean isInDifferentPackageThan( GraphNode destination );
+
+    boolean isVisibleForLimitWithOtherNodes( boolean restricting, Set<GraphNode> others );
 }

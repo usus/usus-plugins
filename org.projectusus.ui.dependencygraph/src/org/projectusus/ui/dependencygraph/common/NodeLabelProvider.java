@@ -1,7 +1,5 @@
 package org.projectusus.ui.dependencygraph.common;
 
-import static org.eclipse.jdt.ui.ISharedImages.IMG_OBJS_CLASS;
-import static org.eclipse.jdt.ui.ISharedImages.IMG_OBJS_PACKAGE;
 import static org.eclipse.zest.core.widgets.ZestStyles.CONNECTIONS_DOT;
 import static org.eclipse.zest.core.widgets.ZestStyles.CONNECTIONS_SOLID;
 import static org.projectusus.ui.colors.UsusColors.BLACK;
@@ -46,14 +44,9 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     @Override
     public Image getImage( Object element ) {
         if( element instanceof GraphNode ) {
-            return getImage( (GraphNode)element );
+            return JavaUI.getSharedImages().getImage( ((GraphNode)element).getImageName() );
         }
         return null;
-    }
-
-    private Image getImage( GraphNode node ) {
-        String imageName = node.isPackage() ? IMG_OBJS_PACKAGE : IMG_OBJS_CLASS;
-        return JavaUI.getSharedImages().getImage( imageName );
     }
 
     // From IEntityStyleProvider
@@ -99,7 +92,7 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     public IFigure getTooltip( Object entity ) {
         if( entity instanceof GraphNode ) {
             Label label = new Label();
-            label.setText( ((GraphNode)entity).getDisplayText() );
+            label.setText( ((GraphNode)entity).getTooltipText() );
             return label;
         }
         return null;

@@ -24,11 +24,11 @@ public class PackageHotspot implements Hotspot {
     }
 
     public String getName() {
-        return packagename.getJavaElement().getElementName();
+        return packagename.getDisplayName();
     }
 
     public String getPath() {
-        return packagename.getJavaElement().getPath().toOSString();
+        return packagename.getOSPath();
     }
 
     public int compareTo( Hotspot other ) {
