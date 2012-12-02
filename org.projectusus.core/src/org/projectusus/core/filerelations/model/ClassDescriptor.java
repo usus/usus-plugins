@@ -10,9 +10,9 @@ import java.util.Set;
 import net.sourceforge.c4j.ContractReference;
 
 import org.eclipse.core.resources.IFile;
+import org.projectusus.core.util.SelectUnique;
 
 import ch.akuhn.foreach.ForEach;
-import ch.akuhn.foreach.Select;
 
 @ContractReference( contractClassName = "ClassDescriptorContract" )
 public class ClassDescriptor {
@@ -128,10 +128,10 @@ public class ClassDescriptor {
     }
 
     public Set<ClassDescriptor> getChildrenInOtherPackages() {
-        for( Select<ClassDescriptor> target : ForEach.select( children ) ) {
+        for( SelectUnique<ClassDescriptor> target : Query.with( new SelectUnique<ClassDescriptor>(), children ) ) {
             target.yield = !this.getPackagename().equals( target.value.getPackagename() );
         }
-        return new HashSet<ClassDescriptor>( (List<ClassDescriptor>)ForEach.result() );
+        return ForEach.result();
     }
 
     private Set<ClassDescriptor> getTransitiveChildren() {
