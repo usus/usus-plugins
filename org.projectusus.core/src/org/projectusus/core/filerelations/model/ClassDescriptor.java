@@ -3,7 +3,6 @@ package org.projectusus.core.filerelations.model;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,6 +12,7 @@ import org.eclipse.core.resources.IFile;
 import org.projectusus.core.util.SelectUnique;
 
 import ch.akuhn.foreach.ForEach;
+import ch.akuhn.foreach.Query;
 
 @ContractReference( contractClassName = "ClassDescriptorContract" )
 public class ClassDescriptor {
@@ -130,6 +130,13 @@ public class ClassDescriptor {
     public Set<ClassDescriptor> getChildrenInOtherPackages() {
         for( SelectUnique<ClassDescriptor> target : Query.with( new SelectUnique<ClassDescriptor>(), children ) ) {
             target.yield = !this.getPackagename().equals( target.value.getPackagename() );
+        }
+        return ForEach.result();
+    }
+
+    public Set<ClassDescriptor> getChildrenInSamePackage() {
+        for( SelectUnique<ClassDescriptor> target : Query.with( new SelectUnique<ClassDescriptor>(), children ) ) {
+            target.yield = this.getPackagename().equals( target.value.getPackagename() );
         }
         return ForEach.result();
     }
