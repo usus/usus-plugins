@@ -27,7 +27,7 @@ public class HotspotsLP extends UsusModelLabelProvider implements ITableLabelPro
     }
 
     public Image getColumnImage( Object element, int columnIndex ) {
-        HotspotsColumnDesc cockpitColumnDesc = HotspotsColumnDesc.values()[columnIndex];
+        HotspotsColumnDesc cockpitColumnDesc = columnDescs.get( columnIndex );
         if( cockpitColumnDesc == HotspotsColumnDesc.Trend && element instanceof DisplayHotspot ) {
             return ((DisplayHotspot<?>)element).getTrendImage();
         }
