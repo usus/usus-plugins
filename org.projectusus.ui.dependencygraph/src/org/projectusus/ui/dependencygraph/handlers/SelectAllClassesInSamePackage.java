@@ -7,9 +7,9 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.ISelection;
-import org.projectusus.core.basis.GraphNode;
 import org.projectusus.jfeet.selection.ElementFrom;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
+import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public class SelectAllClassesInSamePackage extends AbstractHandler {
 

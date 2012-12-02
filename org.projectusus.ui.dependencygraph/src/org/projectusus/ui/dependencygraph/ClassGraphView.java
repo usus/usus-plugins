@@ -2,10 +2,11 @@ package org.projectusus.ui.dependencygraph;
 
 import java.util.Set;
 
-import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphModel;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
+import org.projectusus.ui.dependencygraph.nodes.ClassRepresenter;
+import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public class ClassGraphView extends DependencyGraphView {
 
@@ -17,7 +18,7 @@ public class ClassGraphView extends DependencyGraphView {
 
         @Override
         protected Set<? extends GraphNode> getRefreshedNodes() {
-            return UsusModelProvider.getAllClassRepresenters();
+            return ClassRepresenter.getAllClassRepresenters();
         }
     };
 

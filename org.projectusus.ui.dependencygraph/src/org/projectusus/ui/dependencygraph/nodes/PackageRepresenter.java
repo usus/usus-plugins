@@ -1,4 +1,4 @@
-package org.projectusus.core.proportions.rawdata;
+package org.projectusus.ui.dependencygraph.nodes;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.IJavaElement;
-import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 
@@ -17,6 +16,10 @@ public class PackageRepresenter implements GraphNode {
 
     private final Packagename packagename;
     private static PackageRelations relations;
+
+    public static Set<GraphNode> getAllPackages() {
+        return transformToRepresenterSet( Packagename.getAll(), new PackageRelations() );
+    }
 
     public static Set<GraphNode> transformToRepresenterSet( Set<Packagename> classes, final PackageRelations rel ) {
         relations = rel;
@@ -104,4 +107,9 @@ public class PackageRepresenter implements GraphNode {
     public boolean isInDifferentPackageThan( GraphNode destination ) {
         return !getRelatedPackage().equals( destination.getRelatedPackage() );
     }
+
+    public String getDisplayText() {
+        return ""; // JavaElementLabels.getTextLabel( getNodeJavaElement(), P_COMPRESSED );
+    }
+
 }

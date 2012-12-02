@@ -36,13 +36,13 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.projectusus.core.IUsusModelListener;
-import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.ui.dependencygraph.filters.HideNodesFilter;
 import org.projectusus.ui.dependencygraph.filters.IRestrictNodesFilterProvider;
 import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
 import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
 import org.projectusus.ui.dependencygraph.handlers.ChangeZoom;
+import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public abstract class DependencyGraphView extends ViewPart implements IRestrictNodesFilterProvider, IShowInTarget, IZoomableWorkbenchPart {
 

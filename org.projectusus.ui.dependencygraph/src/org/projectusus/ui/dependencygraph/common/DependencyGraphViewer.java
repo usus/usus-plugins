@@ -25,7 +25,7 @@ import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphItem;
 import org.eclipse.zest.core.widgets.ZestStyles;
-import org.projectusus.core.basis.GraphNode;
+import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 import org.projectusus.ui.util.EditorOpener;
 
 public class DependencyGraphViewer extends GraphViewer {

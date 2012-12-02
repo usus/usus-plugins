@@ -2,7 +2,7 @@ package org.projectusus.ui.dependencygraph.common;
 
 import java.util.Set;
 
-import org.projectusus.core.basis.GraphNode;
+import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public abstract class DependencyGraphModel {
 

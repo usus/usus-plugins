@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.projectusus.core.basis.GraphNode;
+import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public class HideNodesFilter extends NodeAndEdgeFilter {
 

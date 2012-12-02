@@ -1,4 +1,4 @@
-package org.projectusus.core.internal.proportions.rawdata.test;
+package org.projectusus.ui.dependencygraph.nodes.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.junit.Test;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.core.proportions.rawdata.ClassRepresenter;
+import org.projectusus.ui.dependencygraph.nodes.ClassRepresenter;
 
 public class ClassRepresenterTest {
 

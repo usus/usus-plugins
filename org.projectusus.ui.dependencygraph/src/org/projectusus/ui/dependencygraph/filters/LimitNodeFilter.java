@@ -3,7 +3,7 @@ package org.projectusus.ui.dependencygraph.filters;
 import java.util.Set;
 
 import org.eclipse.zest.core.viewers.EntityConnectionData;
-import org.projectusus.core.basis.GraphNode;
+import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public class LimitNodeFilter extends NodeAndEdgeFilter {
 

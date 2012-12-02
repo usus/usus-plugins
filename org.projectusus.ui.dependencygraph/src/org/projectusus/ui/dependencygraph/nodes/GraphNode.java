@@ -1,4 +1,4 @@
-package org.projectusus.core.basis;
+package org.projectusus.ui.dependencygraph.nodes;
 
 import java.util.Collection;
 import java.util.Set;
@@ -26,6 +26,8 @@ public interface GraphNode {
     boolean isPackage();
 
     IFile getFile();
+
+    String getDisplayText();
 
     boolean isPackageOneOf( Collection<Packagename> packages );
 

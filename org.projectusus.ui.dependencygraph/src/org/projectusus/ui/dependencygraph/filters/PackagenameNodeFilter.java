@@ -10,10 +10,10 @@ import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.zest.core.viewers.EntityConnectionData;
-import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.core.proportions.rawdata.ClassRepresenter;
-import org.projectusus.core.proportions.rawdata.PackageRepresenter;
+import org.projectusus.ui.dependencygraph.nodes.ClassRepresenter;
+import org.projectusus.ui.dependencygraph.nodes.GraphNode;
+import org.projectusus.ui.dependencygraph.nodes.PackageRepresenter;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;

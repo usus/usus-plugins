@@ -2,7 +2,6 @@ package org.projectusus.ui.dependencygraph.common;
 
 import static org.eclipse.jdt.ui.ISharedImages.IMG_OBJS_CLASS;
 import static org.eclipse.jdt.ui.ISharedImages.IMG_OBJS_PACKAGE;
-import static org.eclipse.jdt.ui.JavaElementLabels.P_COMPRESSED;
 import static org.eclipse.zest.core.widgets.ZestStyles.CONNECTIONS_DOT;
 import static org.eclipse.zest.core.widgets.ZestStyles.CONNECTIONS_SOLID;
 import static org.projectusus.ui.colors.UsusColors.BLACK;
@@ -12,8 +11,6 @@ import static org.projectusus.ui.colors.UsusColors.getSharedColors;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
-import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.ui.JavaElementLabels;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Color;
@@ -21,10 +18,10 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.zest.core.viewers.EntityConnectionData;
 import org.eclipse.zest.core.viewers.IEntityConnectionStyleProvider;
 import org.eclipse.zest.core.viewers.IEntityStyleProvider;
-import org.projectusus.core.basis.GraphNode;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.util.Defect;
 import org.projectusus.ui.colors.UsusColors;
+import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public class NodeLabelProvider extends LabelProvider implements IEntityStyleProvider, IEntityConnectionStyleProvider {
 
@@ -34,7 +31,7 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     @Override
     public String getText( Object element ) {
         if( element instanceof GraphNode ) {
-            return getText( (GraphNode)element );
+            return ((GraphNode)element).getDisplayText();
         }
         if( element instanceof EntityConnectionData ) {
             return getText( (EntityConnectionData)element );
@@ -43,19 +40,7 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     private String getText( EntityConnectionData data ) {
-        GraphNode dest = (GraphNode)data.dest;
-        return dest.getEdgeEndLabel();
-    }
-
-    private String getText( GraphNode node ) {
-        if( node.isPackage() ) {
-            return getText( node.getNodeJavaElement() );
-        }
-        return node.getNodeName();
-    }
-
-    private String getText( IJavaElement javaElement ) {
-        return JavaElementLabels.getTextLabel( javaElement, P_COMPRESSED );
+        return ((GraphNode)data.dest).getEdgeEndLabel();
     }
 
     @Override
@@ -114,8 +99,7 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     public IFigure getTooltip( Object entity ) {
         if( entity instanceof GraphNode ) {
             Label label = new Label();
-            GraphNode node = (GraphNode)entity;
-            label.setText( getText( node.getNodeJavaElement() ) );
+            label.setText( ((GraphNode)entity).getDisplayText() );
             return label;
         }
         return null;

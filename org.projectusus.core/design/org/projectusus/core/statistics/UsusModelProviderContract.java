@@ -1,14 +1,11 @@
 package org.projectusus.core.statistics;
 
-import java.util.Set;
-
 import org.projectusus.c4j.C4JFileWriter;
 import org.projectusus.c4j.UsusContractBase;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.IMetricsWriter;
 import org.projectusus.core.IUsusModel;
 import org.projectusus.core.IUsusModelForAdapter;
-import org.projectusus.core.basis.GraphNode;
 
 public class UsusModelProviderContract extends UsusContractBase<UsusModelProvider> {
 
@@ -44,24 +41,6 @@ public class UsusModelProviderContract extends UsusContractBase<UsusModelProvide
 
     public static void post_ususModelForAdapter() {
         IUsusModelForAdapter returnValue = (IUsusModelForAdapter)getReturnValue();
-        // TODO no post-condition identified yet
-    }
-
-    public static void pre_getAllClassRepresenters() {
-        // TODO no pre-condition identified yet
-    }
-
-    public static void post_getAllClassRepresenters() {
-        Set<GraphNode> returnValue = (Set<GraphNode>)getReturnValue();
-        // TODO no post-condition identified yet
-    }
-
-    public static void pre_getAllPackages() {
-        // TODO no pre-condition identified yet
-    }
-
-    public static void post_getAllPackages() {
-        Set<GraphNode> returnValue = (Set<GraphNode>)getReturnValue();
         // TODO no post-condition identified yet
     }
 

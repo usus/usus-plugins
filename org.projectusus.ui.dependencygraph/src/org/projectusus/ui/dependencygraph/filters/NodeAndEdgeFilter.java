@@ -6,7 +6,7 @@ import java.util.Set;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.zest.core.viewers.EntityConnectionData;
-import org.projectusus.core.basis.GraphNode;
+import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public abstract class NodeAndEdgeFilter extends ViewerFilter {
 
