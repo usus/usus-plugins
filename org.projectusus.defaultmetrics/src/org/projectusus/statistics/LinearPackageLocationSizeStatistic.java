@@ -28,12 +28,16 @@ public class LinearPackageLocationSizeStatistic extends CockpitExtension {
 
     @Override
     public void inspectPackage( Packagename pkg, MetricsResults results ) {
-        int pkgSize = results.getIntValue( MetricsResults.CLASSES );
+        int pkgSize = valueForPackage( results );
         addResult( pkg, pkgSize );
         int surplusClasses = pkgSize - PKG_LIMIT;
         if( surplusClasses > 0 ) {
             linearViolations += ((double)surplusClasses / PKG_LIMIT);
         }
+    }
+
+    public int valueForPackage( MetricsResults results ) {
+        return results.getIntValue( MetricsResults.CLASSES );
     }
 
     @Override
