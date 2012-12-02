@@ -129,7 +129,7 @@ public class PackagenameNodeFilter extends NodeAndEdgeFilter {
             ClassRepresenter representer = (ClassRepresenter)node;
             for( GraphNode graphNode : others ) {
                 ClassRepresenter otherRepresenter = (ClassRepresenter)graphNode;
-                if( representer.containsOtherInChildrenAndParentsInOtherPackages( otherRepresenter ) && isDirectlySelected( graphNode ) ) {
+                if( representer.hasConnectionTo( otherRepresenter ) && isDirectlySelected( graphNode ) ) {
                     return true;
                 }
             }

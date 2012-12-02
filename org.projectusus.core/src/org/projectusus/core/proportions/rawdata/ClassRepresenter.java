@@ -62,14 +62,14 @@ public class ClassRepresenter implements GraphNode {
         }
         for( GraphNode graphNode : others ) {
             ClassRepresenter otherRepresenter = (ClassRepresenter)graphNode;
-            if( containsOtherInChildrenAndParentsInOtherPackages( otherRepresenter ) ) {
+            if( hasConnectionTo( otherRepresenter ) ) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean containsOtherInChildrenAndParentsInOtherPackages( ClassRepresenter otherRepresenter ) {
+    public boolean hasConnectionTo( ClassRepresenter otherRepresenter ) {
         return getChildrenAndParentsInOtherPackages().contains( otherRepresenter.clazz );
     }
 
