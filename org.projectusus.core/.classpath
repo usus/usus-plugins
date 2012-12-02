@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="lib/jgrapht-jdk1.6.jar" sourcepath="lib/jgrapht-jdk1.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/java-foreach.jar"/>
 	<classpathentry kind="lib" path="lib/javassist.jar"/>
 	<classpathentry kind="lib" path="lib/c4j.jar"/>
@@ -11,6 +12,5 @@
 	<classpathentry kind="src" path="design"/>
 	<classpathentry exported="true" kind="lib" path="lib/joda-time-1.6.jar" sourcepath="lib/joda-time-1.6-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-lang-2.4.jar" sourcepath="org.projectusus.coresrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/jgrapht-jdk1.5.jar" sourcepath="org.projectusus.coresrc.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
