@@ -25,14 +25,6 @@ public class CrossPackageClassRelations extends Relations<ClassDescriptor> {
         classCycles = new ClassCycles( inspector.stronglyConnectedSets() );
     }
 
-    // public Set<ClassDescriptor> getDirectChildrenFrom( ClassDescriptor packagename ) {
-    // Set<ClassDescriptor> descriptors = new HashSet<ClassDescriptor>();
-    // for( Relation<ClassDescriptor> relation : this.getDirectRelationsFrom( packagename ) ) {
-    // descriptors.add( relation.getTarget() );
-    // }
-    // return descriptors;
-    // }
-
     public ClassCycles getCrossPackageClassCycles() {
         return classCycles;
     }
