@@ -38,6 +38,9 @@
        <statistics
              class="org.projectusus.statistics.LinearPackageLocationSizeStatistic">
        </statistics>
+       <statistics
+             class="org.projectusus.statistics.LackOfCohesionOfClassesStatistic">
+       </statistics>
    </extension>
     <extension
           point="org.projectusus.core.metrics"> 
