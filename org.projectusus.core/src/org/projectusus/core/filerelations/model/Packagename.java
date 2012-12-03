@@ -1,15 +1,16 @@
 package org.projectusus.core.filerelations.model;
 
-import net.sourceforge.c4j.*;
-
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.c4j.ContractReference;
+
 import org.eclipse.jdt.core.IJavaElement;
 
-@ContractReference(contractClassName = "PackagenameContract")
+@ContractReference( contractClassName = "PackagenameContract" )
 public class Packagename {
 
     private static Map<String, Packagename> allPackages = new HashMap<String, Packagename>();
@@ -83,11 +84,15 @@ public class Packagename {
         return new Relation<Packagename>( this, target );
     }
 
-    public String getDisplayName( ) {
+    public String getDisplayName() {
         return getJavaElement().getElementName();
     }
 
-    public String getOSPath( ) {
+    public String getOSPath() {
         return getJavaElement().getPath().toOSString();
+    }
+
+    public Set<ClassDescriptor> getClassesInPackage() {
+        return Collections.unmodifiableSet( classesInPackage );
     }
 }

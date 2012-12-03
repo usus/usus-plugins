@@ -138,6 +138,22 @@
          </activeWhen>
       </handler>
       <handler
+            class="org.projectusus.ui.dependencygraph.handlers.OpenHotspotInClassGraph"
+            commandId="org.projectusus.ui.commands.OpenHotspot">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <instanceof
+                        value="org.projectusus.ui.internal.SinglePackageDisplayHotspot">
+                  </instanceof>
+               </iterate>
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
             class="org.projectusus.ui.dependencygraph.handlers.HideSelectedNodes"
             commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes">
          <activeWhen>

@@ -2,6 +2,7 @@ package org.projectusus.core.statistics;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -15,6 +16,7 @@ import org.projectusus.core.basis.LocationType;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SinglePackageHotspot;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Packagename;
 
 /**
@@ -61,8 +63,8 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
         incrementState( count, new FileHotspot( location, count, currentFile ) );
     }
 
-    protected void addResult( Packagename pkg, int count ) {
-        incrementState( count, new SinglePackageHotspot( pkg, count, project ) );
+    protected void addResult( Packagename pkg, int count, Set<ClassDescriptor> set ) {
+        incrementState( count, new SinglePackageHotspot( pkg, count, project.getName(), set ) );
     }
 
     private void incrementState( int count, Hotspot hotspot ) {

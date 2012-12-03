@@ -4,21 +4,25 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.core.basis;
 
+import java.util.Set;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.eclipse.core.resources.IProject;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Packagename;
 
 public class SinglePackageHotspot implements Hotspot {
 
     private final int metricsValue;
     private Packagename packagename;
-    private IProject project;
+    private Set<ClassDescriptor> classes;
+    private String pathname;
 
-    public SinglePackageHotspot( Packagename pkg, int metricsValue, IProject iProject ) {
+    public SinglePackageHotspot( Packagename pkg, int metricsValue, String pathname, Set<ClassDescriptor> classes ) {
         this.packagename = pkg;
         this.metricsValue = metricsValue;
-        this.project = iProject;
+        this.pathname = pathname;
+        this.classes = classes;
     }
 
     public String getName() {
@@ -53,6 +57,10 @@ public class SinglePackageHotspot implements Hotspot {
     }
 
     public String getPath() {
-        return project.getName();
+        return pathname;
+    }
+
+    public Set<ClassDescriptor> getRelevantClasses() {
+        return classes;
     }
 }
