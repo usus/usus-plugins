@@ -6,10 +6,11 @@ import java.util.Set;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
 import org.projectusus.core.basis.Hotspot;
-import org.projectusus.core.basis.PackageHotspot;
+import org.projectusus.core.basis.SinglePackageHotspot;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.IntraPackageComponents;
 import org.projectusus.core.filerelations.model.PackageRelations;
+import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.statistics.CockpitExtension;
 import org.projectusus.core.statistics.visitors.PackageCountVisitor;
 
@@ -50,7 +51,8 @@ public class LackOfCohesionOfClassesStatistic extends CockpitExtension {
 
         for( Collect<List<Set<ClassDescriptor>>> element : ForEach.collect( listen ) ) {
             Set<ClassDescriptor> menge = element.value.iterator().next();
-            element.yield = new PackageHotspot( menge.iterator().next().getPackagename(), element.value.size(), null );
+            Packagename pkg = menge.iterator().next().getPackagename();
+            element.yield = new SinglePackageHotspot( pkg, element.value.size(), pkg.getOSPath(), pkg.getClassesInPackage() );
         }
         return ForEach.result();
     }

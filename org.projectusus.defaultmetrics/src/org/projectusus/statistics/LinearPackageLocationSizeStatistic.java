@@ -15,7 +15,7 @@ import org.projectusus.core.statistics.CockpitExtension;
  */
 public class LinearPackageLocationSizeStatistic extends CockpitExtension {
 
-    private static int PKG_LIMIT = 2;
+    private static int PKG_LIMIT = 12;
 
     private static final String DESCRIPTION = String.format(
             "Hotspots are packages with more than %d classes. Rating function: f(value) = 1/%d value - 1", new Integer( PKG_LIMIT ), new Integer( PKG_LIMIT ) ); //$NON-NLS-1$
@@ -29,7 +29,7 @@ public class LinearPackageLocationSizeStatistic extends CockpitExtension {
     @Override
     public void inspectPackage( Packagename pkg, MetricsResults results ) {
         int pkgSize = valueForPackage( results );
-        addResult( pkg, pkgSize );
+        addResult( pkg, pkgSize, pkg.getClassesInPackage() );
         int surplusClasses = pkgSize - PKG_LIMIT;
         if( surplusClasses > 0 ) {
             linearViolations += ((double)surplusClasses / PKG_LIMIT);
