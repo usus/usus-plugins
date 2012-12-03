@@ -43,4 +43,8 @@ public abstract class NodeAndEdgeFilter extends ViewerFilter {
         return others;
     }
 
+    public void setFilterLimitProvider( IRestrictNodesFilterProvider filterLimitProvider ) {
+        // no limit
+    }
+
 }

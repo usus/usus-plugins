@@ -40,6 +40,7 @@ import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.ui.dependencygraph.filters.HideNodesFilter;
 import org.projectusus.ui.dependencygraph.filters.IRestrictNodesFilterProvider;
 import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
+import org.projectusus.ui.dependencygraph.filters.NodeAndEdgeFilter;
 import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
 import org.projectusus.ui.dependencygraph.handlers.ChangeZoom;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
@@ -52,7 +53,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     private final DependencyGraphModel model;
     private DependencyGraphViewer graphViewer;
     private IUsusModelListener listener;
-    private PackagenameNodeFilter packageNameFilter;
+    private NodeAndEdgeFilter packageNameFilter;
     private final WorkbenchContext customFilterContext;
     private DependencyGraphSelectionListener selectionListener;
     private final HideNodesFilter hideNodesFilter = new HideNodesFilter();
@@ -183,7 +184,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         graphViewer.setFilters( new ViewerFilter[] { new LimitNodeFilter( this ), hideNodesFilter } );
     }
 
-    public synchronized void setCustomFilter( PackagenameNodeFilter packageNameFilter ) {
+    public synchronized void setCustomFilter( NodeAndEdgeFilter packageNameFilter ) {
         clearCustomFilter();
         this.packageNameFilter = packageNameFilter;
         this.packageNameFilter.setFilterLimitProvider( this );

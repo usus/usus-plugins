@@ -4,7 +4,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
-import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
+import org.projectusus.ui.dependencygraph.filters.NodeAndEdgeFilter;
 
 public class DependencyGraphViewFilterer {
 
@@ -14,7 +14,7 @@ public class DependencyGraphViewFilterer {
         this.page = page;
     }
 
-    public void applyFilterToView( String viewId, PackagenameNodeFilter filter ) throws ExecutionException {
+    public void applyFilterToView( String viewId, NodeAndEdgeFilter filter ) throws ExecutionException {
         activateView( viewId ).setCustomFilter( filter );
     }
 
