@@ -15,7 +15,7 @@ public class DependencyGraphViewFilterer {
     }
 
     public void applyFilterToView( String viewId, NodeAndEdgeFilter filter ) throws ExecutionException {
-        activateView( viewId ).setCustomFilter( filter );
+        activateView( viewId ).replaceCustomFilter( filter );
     }
 
     private DependencyGraphView activateView( String viewId ) throws ExecutionException {

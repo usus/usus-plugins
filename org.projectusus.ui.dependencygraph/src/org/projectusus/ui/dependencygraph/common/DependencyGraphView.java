@@ -53,7 +53,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     private final DependencyGraphModel model;
     private DependencyGraphViewer graphViewer;
     private IUsusModelListener listener;
-    private NodeAndEdgeFilter packageNameFilter;
+    private NodeAndEdgeFilter customFilter;
     private final WorkbenchContext customFilterContext;
     private DependencyGraphSelectionListener selectionListener;
     private final HideNodesFilter hideNodesFilter = new HideNodesFilter();
@@ -184,12 +184,12 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         graphViewer.setFilters( new ViewerFilter[] { new LimitNodeFilter( this ), hideNodesFilter } );
     }
 
-    public synchronized void setCustomFilter( NodeAndEdgeFilter packageNameFilter ) {
-        packageNameFilter.setFilterLimitProvider( this );
-        graphViewer.replaceFilter( this.packageNameFilter, packageNameFilter );
-        this.packageNameFilter = packageNameFilter;
+    public synchronized void replaceCustomFilter( NodeAndEdgeFilter newCustomFilter ) {
+        newCustomFilter.setFilterLimitProvider( this );
+        graphViewer.replaceFilter( customFilter, newCustomFilter );
+        customFilter = newCustomFilter;
 
-        setContentDescription( packageNameFilter.getDescription() );
+        setContentDescription( newCustomFilter.getDescription() );
         customFilterContext.activate();
         drawGraphUnconditionally();
     }
@@ -199,9 +199,9 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     }
 
     public synchronized void clearCustomFilter() {
-        if( packageNameFilter != null ) {
-            graphViewer.removeFilter( packageNameFilter );
-            packageNameFilter = null;
+        if( customFilter != null ) {
+            graphViewer.removeFilter( customFilter );
+            customFilter = null;
             setContentDescription( "" );
         }
         customFilterContext.deactivate();
@@ -270,7 +270,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         if( filter.isEmpty() ) {
             return false;
         }
-        setCustomFilter( filter );
+        replaceCustomFilter( filter );
         return true;
     }
 
