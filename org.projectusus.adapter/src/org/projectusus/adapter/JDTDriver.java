@@ -84,7 +84,7 @@ public class JDTDriver {
 
     private void runDriverOnFile( Set<MetricsCollector> metricsExtensions, IFile file, StatusCollector statusCollector, IProgressMonitor monitor ) {
         try {
-            if( FileSupport.isJavaFile( file ) ) {
+            if( FileSupport.isJavaFile( file ) && file.exists() ) {
                 new JavaFileDriver( file ).compute( metricsExtensions );
             }
         } catch( Exception ex ) {
