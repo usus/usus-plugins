@@ -35,14 +35,15 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
 
     private final String unit;
     private final int violationLimit;
+
     private int basis;
     private int violations;
     private int violationSum;
-    private IFile currentFile;
     private List<Hotspot> hotspots;
     private Histogram histogram;
 
-    private IProject project;
+    private IProject currentProject;
+    private IFile currentFile;
 
     public CockpitExtension( String unit, int violationLimit ) {
         super();
@@ -64,7 +65,7 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
     }
 
     protected void addResult( Packagename pkg, int count, Set<ClassDescriptor> set ) {
-        incrementState( count, new SinglePackageHotspot( pkg, count, project.getName(), set ) );
+        incrementState( count, new SinglePackageHotspot( pkg, count, currentProject.getName(), set ) );
     }
 
     private void incrementState( int count, Hotspot hotspot ) {
@@ -79,7 +80,7 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
 
     @Override
     public void inspectProject( IProject project, @SuppressWarnings( "unused" ) MetricsResults results ) {
-        this.project = project;
+        currentProject = project;
     }
 
     @Override
