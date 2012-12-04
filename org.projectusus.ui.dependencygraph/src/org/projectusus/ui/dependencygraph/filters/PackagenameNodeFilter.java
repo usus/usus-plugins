@@ -179,6 +179,7 @@ public class PackagenameNodeFilter extends NodeAndEdgeFilter {
         parts.add( "Only items in one of the following packages: " + commaJoiner.join( packages ) );
     }
 
+    @Override
     public void setFilterLimitProvider( IRestrictNodesFilterProvider filterLimitProvider ) {
         this.filterLimitProvider = filterLimitProvider;
     }
