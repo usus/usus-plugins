@@ -13,7 +13,7 @@ public class ClassDescriptorNodeFilter extends NodeAndEdgeFilter {
 
     @Override
     public String getDescription() {
-        return "Classes belonging to the selected Hotspot:";
+        return "Classes belonging to the selected hotspot";
     }
 
     @Override
