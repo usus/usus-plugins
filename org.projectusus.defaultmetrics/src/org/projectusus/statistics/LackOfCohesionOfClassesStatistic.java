@@ -20,7 +20,10 @@ import ch.akuhn.foreach.Select;
 
 public class LackOfCohesionOfClassesStatistic extends CockpitExtension {
 
-    private static final String DESCRIPTION = "Rating function: f(value) = value"; //$NON-NLS-1$
+    private static final int LCOC_LIMIT = 1;
+
+    private static final String DESCRIPTION = String.format(
+            "Hotspots are methods with a LCOC greater than %d.\n Rating function: f(value) = 1/%d value - 1", new Integer( LCOC_LIMIT ), new Integer( LCOC_LIMIT ) ); //$NON-NLS-1$
 
     public LackOfCohesionOfClassesStatistic() {
         super( "", 0 ); //$NON-NLS-1$
@@ -59,7 +62,7 @@ public class LackOfCohesionOfClassesStatistic extends CockpitExtension {
 
     private List<List<Set<ClassDescriptor>>> zusammenhangskomponentenListenFuerMehrteiligePackages( IntraPackageComponents intraPackageComponents ) {
         for( Select<List<Set<ClassDescriptor>>> entry : ForEach.select( intraPackageComponents.getSetsPerPackage().values() ) ) {
-            entry.yield = entry.value.size() > 1;
+            entry.yield = entry.value.size() > LCOC_LIMIT;
         }
         return ForEach.<List<List<Set<ClassDescriptor>>>> result();
     }
@@ -91,6 +94,6 @@ public class LackOfCohesionOfClassesStatistic extends CockpitExtension {
 
     @Override
     protected String getTooltip() {
-        return DESCRIPTION;
+        return "This statistic describes the number of unconnected groups of classes in a package.\n" + DESCRIPTION;
     }
 }

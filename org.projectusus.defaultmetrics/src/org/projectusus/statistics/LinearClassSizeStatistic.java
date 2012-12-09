@@ -12,10 +12,10 @@ import org.projectusus.core.statistics.CockpitExtension;
  */
 public class LinearClassSizeStatistic extends CockpitExtension {
 
-    private static int KG_LIMIT = 12;
+    public static final int KG_LIMIT = 12;
 
     private static final String DESCRIPTION = String.format(
-            "Hotspots are classes with more than %d methods. Rating function: f(value) = 1/%d value - 1", new Integer( KG_LIMIT ), new Integer( KG_LIMIT ) ); //$NON-NLS-1$
+            "Hotspots are classes with more than %d methods.\nRating function: f(value) = 1/%d value - 1", new Integer( KG_LIMIT ), new Integer( KG_LIMIT ) ); //$NON-NLS-1$
 
     private double linearViolations = 0.0;
 

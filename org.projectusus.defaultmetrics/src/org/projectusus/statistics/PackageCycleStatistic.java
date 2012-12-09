@@ -16,7 +16,7 @@ import org.projectusus.core.statistics.visitors.PackageCountVisitor;
 
 public class PackageCycleStatistic extends CockpitExtension {
 
-    private static final String DESCRIPTION = "Rating function: f(value) = value"; //$NON-NLS-1$
+    private static final String DESCRIPTION = "Hotspots are packages that are part of a cycle.\nRating function: f(value) = value"; //$NON-NLS-1$
 
     public PackageCycleStatistic() {
         super( "", 0 ); //$NON-NLS-1$

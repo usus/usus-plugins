@@ -7,6 +7,7 @@ import org.projectusus.core.statistics.CockpitExtension;
 public class MudholeStatistic extends CockpitExtension {
 
     private static final int MUDHOLE_LIMIT = 49;
+    private static final String DESCRIPTION = String.format( "Rating function: f(ML) * f(CC) + f(KG) > %d", Integer.valueOf( MUDHOLE_LIMIT ) ); //$NON-NLS-1$
 
     // class metrics
     private LinearClassSizeStatistic classSize = new LinearClassSizeStatistic();
@@ -41,6 +42,14 @@ public class MudholeStatistic extends CockpitExtension {
 
     @Override
     protected String getDescription() {
-        return "Mudholes"; //$NON-NLS-1$
+        String description = getLabel() + ": " + DESCRIPTION;
+        return String.format( description, Integer.valueOf( MUDHOLE_LIMIT ) ); //$NON-NLS-1$
+    }
+
+    @Override
+    protected String getTooltip() {
+        return "Mudholes are classes or methods that violate several aspects at once.\n" //
+                + "This mudhole statistic takes into account the method length and " //
+                + "cyclomatic complexity of a method as well as the size of its class.\n" + getDescription();
     }
 }

@@ -8,7 +8,7 @@ public class LinearMethodLengthStatistic extends CockpitExtension {
 
     private static int ML_LIMIT = 9;
     private static final String DESCRIPTION = String.format(
-            "Hotspots are methods with more than %d statements. Rating function: f(value) = 1/%d value - 1", new Integer( ML_LIMIT ), new Integer( ML_LIMIT ) ); //$NON-NLS-1$
+            "Hotspots are methods with more than %d statements.\nRating function: f(value) = 1/%d value - 1", new Integer( ML_LIMIT ), new Integer( ML_LIMIT ) ); //$NON-NLS-1$
 
     private double linearViolations = 0.0;
 

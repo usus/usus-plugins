@@ -9,7 +9,7 @@ public class LinearCyclomaticComplexityStatistic extends CockpitExtension {
     private static int CC_LIMIT = 4;
 
     private static final String DESCRIPTION = String.format(
-            "Hotspots are methods with a CC greater than %d. Rating function: f(value) = 1/%d value - 1", new Integer( CC_LIMIT ), new Integer( CC_LIMIT ) ); //$NON-NLS-1$
+            "Hotspots are methods with a CC greater than %d.\nRating function: f(value) = 1/%d value - 1", new Integer( CC_LIMIT ), new Integer( CC_LIMIT ) ); //$NON-NLS-1$
 
     private double linearViolations = 0.0;
 
