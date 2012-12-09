@@ -121,7 +121,7 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
     }
 
     protected String getDescription() {
-        return "Hotspots are " + unit + " " + hotspotsAreUnits() + "\n"; //$NON-NLS-1$
+        return "Hotspots are " + unit + " " + hotspotsAreUnits() + getRatingFunction(); //$NON-NLS-1$
     }
 
     protected abstract String hotspotsAreUnits();
@@ -147,6 +147,14 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
 
     protected String format( String string, int value1, int value2 ) {
         return String.format( string, Integer.valueOf( value1 ), Integer.valueOf( value2 ) );
+    }
+
+    protected String getRatingFunction() {
+        return "";
+    }
+
+    protected String linearRatingFunction( int limit ) {
+        return format( "\nRating function: f(value) = 1/%d value - 1", limit );
     }
 
 }

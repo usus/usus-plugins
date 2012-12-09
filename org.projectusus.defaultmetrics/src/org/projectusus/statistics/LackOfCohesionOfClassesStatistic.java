@@ -22,8 +22,6 @@ public class LackOfCohesionOfClassesStatistic extends CockpitExtension {
 
     private static final int LCOC_LIMIT = 1;
 
-    private static final String DESCRIPTION = String.format( "Rating function: f(value) = 1/%d value - 1", new Integer( LCOC_LIMIT ) ); //$NON-NLS-1$
-
     public LackOfCohesionOfClassesStatistic() {
         super( codeProportionUnit_PACKAGE_label, 0 ); //$NON-NLS-1$
     }
@@ -87,11 +85,6 @@ public class LackOfCohesionOfClassesStatistic extends CockpitExtension {
     }
 
     @Override
-    protected String getDescription() {
-        return super.getDescription() + DESCRIPTION; //$NON-NLS-1$
-    }
-
-    @Override
     protected String getTooltip() {
         return "This statistic describes the number of unconnected groups of classes in a package.\n" + getDescription();
     }
@@ -99,5 +92,10 @@ public class LackOfCohesionOfClassesStatistic extends CockpitExtension {
     @Override
     protected String hotspotsAreUnits() {
         return format( "with a LCOC greater than %d.", LCOC_LIMIT );
+    }
+
+    @Override
+    protected String getRatingFunction() {
+        return linearRatingFunction( LCOC_LIMIT );
     }
 }

@@ -7,7 +7,6 @@ import org.projectusus.core.statistics.CockpitExtension;
 public class LinearMethodLengthStatistic extends CockpitExtension {
 
     private static int ML_LIMIT = 9;
-    private static final String DESCRIPTION = String.format( "Rating function: f(value) = 1/%d value - 1", new Integer( ML_LIMIT ) ); //$NON-NLS-1$
 
     private double linearViolations = 0.0;
 
@@ -34,6 +33,7 @@ public class LinearMethodLengthStatistic extends CockpitExtension {
         return calculateAverage( linearViolations, getBasis() );
     }
 
+    @Override
     protected String hotspotsAreUnits() {
         return format( "with more than %d statements.", ML_LIMIT );
     }
@@ -44,8 +44,8 @@ public class LinearMethodLengthStatistic extends CockpitExtension {
     }
 
     @Override
-    protected String getDescription() {
-        return super.getDescription() + DESCRIPTION; //$NON-NLS-1$
+    protected String getRatingFunction() {
+        return linearRatingFunction( ML_LIMIT );
     }
 
     @Override

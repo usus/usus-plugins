@@ -7,7 +7,6 @@ import org.projectusus.core.statistics.CockpitExtension;
 public class MudholeStatistic extends CockpitExtension {
 
     private static final int MUDHOLE_LIMIT = 49;
-    private static final String DESCRIPTION = String.format( "Rating function: f(ML) * f(CC) + f(KG) > %d", Integer.valueOf( MUDHOLE_LIMIT ) ); //$NON-NLS-1$
 
     // class metrics
     private LinearClassSizeStatistic classSize = new LinearClassSizeStatistic();
@@ -45,4 +44,10 @@ public class MudholeStatistic extends CockpitExtension {
         return format( "where the product of method length and cyclomatic complexity, increased by the class size if the latter exceeds %d, is greater than %d.",
                 LinearClassSizeStatistic.KG_LIMIT, MUDHOLE_LIMIT );
     }
+
+    @Override
+    protected String getRatingFunction() {
+        return format( "\nRating function: f(ML) * f(CC) + f(KG) > %d", MUDHOLE_LIMIT ); //$NON-NLS-1$
+    }
+
 }

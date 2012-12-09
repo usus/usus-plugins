@@ -16,8 +16,6 @@ import org.projectusus.core.statistics.visitors.PackageCountVisitor;
 
 public class PackageCycleStatistic extends CockpitExtension {
 
-    private static final String DESCRIPTION = "Rating function: f(value) = value"; //$NON-NLS-1$
-
     public PackageCycleStatistic() {
         super( codeProportionUnit_PACKAGE_label, 0 ); //$NON-NLS-1$
     }
@@ -64,8 +62,8 @@ public class PackageCycleStatistic extends CockpitExtension {
     }
 
     @Override
-    protected String getDescription() {
-        return super.getDescription() + DESCRIPTION; //$NON-NLS-1$
+    protected String getRatingFunction() {
+        return "\nRating function: f(value) = value";
     }
 
     @Override

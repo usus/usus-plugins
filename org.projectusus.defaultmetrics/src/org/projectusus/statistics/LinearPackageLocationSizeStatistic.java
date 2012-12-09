@@ -17,8 +17,6 @@ public class LinearPackageLocationSizeStatistic extends CockpitExtension {
 
     private static int PKG_LIMIT = 12;
 
-    private static final String DESCRIPTION = String.format( "Rating function: f(value) = 1/%d value - 1", new Integer( PKG_LIMIT ) ); //$NON-NLS-1$
-
     private double linearViolations = 0.0;
 
     public LinearPackageLocationSizeStatistic() {
@@ -50,8 +48,8 @@ public class LinearPackageLocationSizeStatistic extends CockpitExtension {
     }
 
     @Override
-    protected String getDescription() {
-        return super.getDescription() + DESCRIPTION;
+    protected String getRatingFunction() {
+        return linearRatingFunction( PKG_LIMIT );
     }
 
     @Override
