@@ -12,6 +12,11 @@ public class CockpitExtensionTest {
         public CockpitExtensionStub() {
             super( "# of WTFs/minute", 0 ); //$NON-NLS-1$
         }
+
+        @Override
+        protected String hotspotsAreUnits() {
+            return "";
+        }
     }
 
     @Test

@@ -37,7 +37,7 @@ public class CodeProportion extends PlatformObject {
     private CodeProportion( String label, String description, String tooltip, int violations, CodeStatistic basis, double average, List<Hotspot> hotspots, boolean hasHotspots,
             Histogram histogram, LocationType locationType ) {
         this.label = label;
-        this.description = description;
+        this.description = label + ": " + description;
         this.tooltip = tooltip;
         this.violations = violations;
         this.basis = basis;

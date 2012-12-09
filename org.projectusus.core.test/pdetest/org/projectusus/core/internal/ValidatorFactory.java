@@ -12,6 +12,11 @@ public class ValidatorFactory {
             public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
                 addResult( location, results.getIntValue( resultName ) );
             }
+
+            @Override
+            protected String hotspotsAreUnits() {
+                return "";
+            }
         };
     }
 
@@ -20,6 +25,11 @@ public class ValidatorFactory {
             @Override
             public void inspectMethod( SourceCodeLocation location, MetricsResults results ) {
                 addResult( location, results.getIntValue( resultName ) );
+            }
+
+            @Override
+            protected String hotspotsAreUnits() {
+                return "";
             }
         };
     }

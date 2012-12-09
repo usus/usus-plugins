@@ -18,12 +18,12 @@ public class PublicFieldStatistic extends CockpitExtension {
     }
 
     @Override
-    protected String getDescription() {
-        return getLabel() + ": Hotspots are classes with at least one such field"; //$NON-NLS-1$
+    public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
+        addResult( location, results.getIntValue( PublicFieldMetrics.PUBLIC_FIELDS ) );
     }
 
     @Override
-    public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
-        addResult( location, results.getIntValue( PublicFieldMetrics.PUBLIC_FIELDS ) );
+    protected String hotspotsAreUnits() {
+        return "with at least one such field.";
     }
 }

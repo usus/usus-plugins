@@ -16,10 +16,10 @@ import org.projectusus.core.statistics.visitors.PackageCountVisitor;
 
 public class PackageCycleStatistic extends CockpitExtension {
 
-    private static final String DESCRIPTION = "Hotspots are packages that are part of a cycle.\nRating function: f(value) = value"; //$NON-NLS-1$
+    private static final String DESCRIPTION = "Rating function: f(value) = value"; //$NON-NLS-1$
 
     public PackageCycleStatistic() {
-        super( "", 0 ); //$NON-NLS-1$
+        super( codeProportionUnit_PACKAGE_label, 0 ); //$NON-NLS-1$
     }
 
     @Override
@@ -65,13 +65,19 @@ public class PackageCycleStatistic extends CockpitExtension {
 
     @Override
     protected String getDescription() {
-        return getLabel() + ": " + DESCRIPTION; //$NON-NLS-1$
+        return super.getDescription() + DESCRIPTION; //$NON-NLS-1$
     }
 
     @Override
     protected String getTooltip() {
         return "The underlying metric determines the relationships between classes.\n" //$NON-NLS-1$
                 + "The statistic reduces these class relationships to relationships between the packages involved and examines the result with regard to cyclic dependencies.\n" + //$NON-NLS-1$
-                "Such dependencies appear when classes are located in the wrong packages. It indicates problems in the design and the structuring of the code.\n" + DESCRIPTION; //$NON-NLS-1$
+                "Such dependencies appear when classes are located in the wrong packages. It indicates problems in the design and the structuring of the code.\n"
+                + getDescription(); //$NON-NLS-1$
+    }
+
+    @Override
+    protected String hotspotsAreUnits() {
+        return "that are part of a cycle.";
     }
 }

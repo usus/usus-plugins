@@ -17,8 +17,7 @@ public class LinearPackageLocationSizeStatistic extends CockpitExtension {
 
     private static int PKG_LIMIT = 12;
 
-    private static final String DESCRIPTION = String.format(
-            "Hotspots are packages with more than %d classes. Rating function: f(value) = 1/%d value - 1", new Integer( PKG_LIMIT ), new Integer( PKG_LIMIT ) ); //$NON-NLS-1$
+    private static final String DESCRIPTION = String.format( "Rating function: f(value) = 1/%d value - 1", new Integer( PKG_LIMIT ) ); //$NON-NLS-1$
 
     private double linearViolations = 0.0;
 
@@ -52,18 +51,23 @@ public class LinearPackageLocationSizeStatistic extends CockpitExtension {
 
     @Override
     protected String getDescription() {
-        return getLabel() + ": " + DESCRIPTION; //$NON-NLS-1$
+        return super.getDescription() + DESCRIPTION;
     }
 
     @Override
     protected String getTooltip() {
         return "The underlying metric determines the number of classes in each package of a project.\n" //$NON-NLS-1$
                 + "If a package occurs in multiple projects, it is counted multiply.\n" //$NON-NLS-1$
-                + "The class visibility is not taken into account.\n" + DESCRIPTION; //$NON-NLS-1$
+                + "The class visibility is not taken into account.\n" + getDescription(); //$NON-NLS-1$
     }
 
     @Override
     protected LocationType getLocationType() {
         return PROJECT;
+    }
+
+    @Override
+    protected String hotspotsAreUnits() {
+        return format( "with more than %d classes.", PKG_LIMIT );
     }
 }

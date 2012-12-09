@@ -41,15 +41,8 @@ public class MudholeStatistic extends CockpitExtension {
     }
 
     @Override
-    protected String getDescription() {
-        String description = getLabel() + ": " + DESCRIPTION;
-        return String.format( description, Integer.valueOf( MUDHOLE_LIMIT ) ); //$NON-NLS-1$
-    }
-
-    @Override
-    protected String getTooltip() {
-        return "Mudholes are classes or methods that violate several aspects at once.\n" //
-                + "This mudhole statistic takes into account the method length and " //
-                + "cyclomatic complexity of a method as well as the size of its class.\n" + getDescription();
+    protected String hotspotsAreUnits() {
+        return format( "where the product of method length and cyclomatic complexity, increased by the class size if the latter exceeds %d, is greater than %d.",
+                LinearClassSizeStatistic.KG_LIMIT, MUDHOLE_LIMIT );
     }
 }

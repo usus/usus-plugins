@@ -121,8 +121,10 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
     }
 
     protected String getDescription() {
-        return ""; //$NON-NLS-1$
+        return "Hotspots are " + unit + " " + hotspotsAreUnits() + "\n"; //$NON-NLS-1$
     }
+
+    protected abstract String hotspotsAreUnits();
 
     protected String getTooltip() {
         return getDescription();
@@ -137,6 +139,14 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
 
     protected Histogram getHistogram() {
         return histogram;
+    }
+
+    protected String format( String string, int value ) {
+        return String.format( string, Integer.valueOf( value ) );
+    }
+
+    protected String format( String string, int value1, int value2 ) {
+        return String.format( string, Integer.valueOf( value1 ), Integer.valueOf( value2 ) );
     }
 
 }
