@@ -54,9 +54,4 @@ public class LinearClassSizeStatistic extends CockpitExtension {
     protected String hotspotsAreUnits() {
         return format( "with more than %d methods.", KG_LIMIT );
     }
-
-    @Override
-    protected String getRatingFunction() {
-        return linearRatingFunction( KG_LIMIT );
-    }
 }

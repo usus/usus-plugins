@@ -26,4 +26,9 @@ public class PublicFieldStatistic extends CockpitExtension {
     protected String hotspotsAreUnits() {
         return "with at least one such field.";
     }
+
+    @Override
+    protected String getRatingFunction() {
+        return "";
+    }
 }

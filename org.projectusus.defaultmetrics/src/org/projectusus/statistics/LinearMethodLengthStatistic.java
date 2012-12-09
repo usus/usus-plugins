@@ -44,11 +44,6 @@ public class LinearMethodLengthStatistic extends CockpitExtension {
     }
 
     @Override
-    protected String getRatingFunction() {
-        return linearRatingFunction( ML_LIMIT );
-    }
-
-    @Override
     protected String getTooltip() {
         return "The underlying metric determines the number of statements in each method body.\n" //$NON-NLS-1$
                 + "This value is similar to the number of lines of code, but it ignores empty lines, comments and single brackets.\n" + getDescription(); //$NON-NLS-1$

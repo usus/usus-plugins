@@ -51,6 +51,11 @@ public class ACDStatistic extends CockpitExtension {
     }
 
     @Override
+    protected String getRatingFunction() {
+        return "";
+    }
+
+    @Override
     protected String getTooltip() {
         return "The underlying metric is called Cumulative Component Dependency (CCD). It determines for each class the amount of other classes it knows.\n" //$NON-NLS-1$
                 + "The corresponding statistic uses the average CCD of all classes in percent, the so-called Average Component Dependency (ACD).\n" + //$NON-NLS-1$

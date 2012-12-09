@@ -23,7 +23,7 @@ public class LackOfCohesionOfClassesStatistic extends CockpitExtension {
     private static final int LCOC_LIMIT = 1;
 
     public LackOfCohesionOfClassesStatistic() {
-        super( codeProportionUnit_PACKAGE_label, 0 ); //$NON-NLS-1$
+        super( codeProportionUnit_PACKAGE_label, LCOC_LIMIT ); //$NON-NLS-1$
     }
 
     @Override
@@ -92,10 +92,5 @@ public class LackOfCohesionOfClassesStatistic extends CockpitExtension {
     @Override
     protected String hotspotsAreUnits() {
         return format( "with a LCOC greater than %d.", LCOC_LIMIT );
-    }
-
-    @Override
-    protected String getRatingFunction() {
-        return linearRatingFunction( LCOC_LIMIT );
     }
 }

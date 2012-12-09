@@ -150,10 +150,10 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
     }
 
     protected String getRatingFunction() {
-        return "";
+        return linearRatingFunction( violationLimit );
     }
 
-    protected String linearRatingFunction( int limit ) {
+    private String linearRatingFunction( int limit ) {
         return format( "\nRating function: f(value) = 1/%d value - 1", limit );
     }
 

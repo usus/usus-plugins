@@ -49,10 +49,4 @@ public class LinearCyclomaticComplexityStatistic extends CockpitExtension {
     protected String hotspotsAreUnits() {
         return format( "with a CC greater than %d.", CC_LIMIT );
     }
-
-    @Override
-    protected String getRatingFunction() {
-        return linearRatingFunction( CC_LIMIT );
-    }
-
 }
