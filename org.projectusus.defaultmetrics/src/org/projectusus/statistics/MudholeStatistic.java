@@ -9,11 +9,11 @@ public class MudholeStatistic extends CockpitExtension {
     private static final int MUDHOLE_LIMIT = 49;
 
     // class metrics
-    private ClassSizeStatistic classSize = new ClassSizeStatistic();
+    private LinearClassSizeStatistic classSize = new LinearClassSizeStatistic();
 
     // method metrics
-    private MethodLengthStatistic methodLength = new MethodLengthStatistic();
-    private CyclomaticComplexityStatistic cc = new CyclomaticComplexityStatistic();
+    private LinearMethodLengthStatistic methodLength = new LinearMethodLengthStatistic();
+    private LinearCyclomaticComplexityStatistic cc = new LinearCyclomaticComplexityStatistic();
 
     private int currentClassValue;
 
@@ -24,7 +24,7 @@ public class MudholeStatistic extends CockpitExtension {
     @Override
     public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
         int result = classSize.valueForClass( results );
-        currentClassValue = result >= ClassSizeStatistic.KG_LIMIT ? result : 0;
+        currentClassValue = result >= LinearClassSizeStatistic.KG_LIMIT ? result : 0;
     }
 
     @Override

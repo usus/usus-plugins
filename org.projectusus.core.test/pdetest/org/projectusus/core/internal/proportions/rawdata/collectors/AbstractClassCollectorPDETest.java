@@ -5,10 +5,8 @@ import static org.junit.Assert.assertThat;
 
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Test;
-import org.projectusus.core.basis.MetricsResults;
-import org.projectusus.core.basis.SourceCodeLocation;
-import org.projectusus.core.statistics.DefaultMetricsResultVisitor;
 import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
+import org.projectusus.metrics.util.AbstractnessVisitor;
 
 public class AbstractClassCollectorPDETest extends PDETestForMetricsComputation {
 
@@ -76,24 +74,5 @@ public class AbstractClassCollectorPDETest extends PDETestForMetricsComputation 
         project.createFolder( packagename );
         createJavaFile( packagename + "/" + filename );
         workspace.buildFullyAndWait();
-    }
-}
-
-class AbstractnessVisitor extends DefaultMetricsResultVisitor {
-    private int abstractness;
-    private String name;
-
-    @Override
-    public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
-        name = location.getName();
-        abstractness = results.getIntValue( MetricsResults.ABSTRACTNESS );
-    }
-
-    public int getAbstractness() {
-        return abstractness;
-    }
-
-    public String getName() {
-        return name;
     }
 }

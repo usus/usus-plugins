@@ -6,7 +6,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Test;
 import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
-import org.projectusus.statistics.MethodLengthStatistic;
+import org.projectusus.metrics.util.MethodLengthVisitor;
 
 public class MLCollectorPDETest extends PDETestForMetricsComputation {
 
@@ -16,12 +16,6 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
         assertEquals( 0, getMethodLengths() );
-    }
-
-    private int getMethodLengths() {
-        MethodLengthStatistic r = new MethodLengthStatistic();
-        r.visit();
-        return r.getMetricsSum();
     }
 
     @Test
@@ -145,5 +139,11 @@ public class MLCollectorPDETest extends PDETestForMetricsComputation {
 
     protected IFile createFileAndBuild( String filenumber ) throws CoreException, Exception {
         return super.createFileAndBuild( "ML" + filenumber );
+    }
+
+    private int getMethodLengths() {
+        MethodLengthVisitor r = new MethodLengthVisitor();
+        r.visit();
+        return r.getML();
     }
 }

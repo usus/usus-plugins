@@ -25,12 +25,16 @@ public class LinearClassSizeStatistic extends CockpitExtension {
 
     @Override
     public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
-        int classSize = results.getIntValue( MetricsResults.METHODS );
+        int classSize = valueForClass( results );
         addResult( location, classSize );
         int surplusMethods = classSize - KG_LIMIT;
         if( surplusMethods > 0 ) {
             linearViolations += ((double)surplusMethods / KG_LIMIT);
         }
+    }
+
+    public int valueForClass( MetricsResults results ) {
+        return results.getIntValue( MetricsResults.METHODS );
     }
 
     @Override

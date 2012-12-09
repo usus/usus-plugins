@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
 import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
-import org.projectusus.statistics.CyclomaticComplexityStatistic;
+import org.projectusus.metrics.util.CyclomaticComplexityVisitor;
 
 public class CCCollectorPDETest extends PDETestForMetricsComputation {
 
@@ -14,7 +14,7 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "1" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 1, getMetricsSum() );
+        assertEquals( 1, getCC() );
     }
 
     @Test
@@ -22,7 +22,7 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_while" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 2, getMetricsSum() );
+        assertEquals( 2, getCC() );
     }
 
     @Test
@@ -30,7 +30,7 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_do" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 2, getMetricsSum() );
+        assertEquals( 2, getCC() );
     }
 
     @Test
@@ -38,7 +38,7 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_for" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 2, getMetricsSum() );
+        assertEquals( 2, getCC() );
     }
 
     @Test
@@ -46,7 +46,7 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_foreach" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 2, getMetricsSum() );
+        assertEquals( 2, getCC() );
     }
 
     @Test
@@ -54,7 +54,7 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_if" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 3, getMetricsSum() );
+        assertEquals( 3, getCC() );
     }
 
     @Test
@@ -62,7 +62,7 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_switch" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 4, getMetricsSum() );
+        assertEquals( 4, getCC() );
     }
 
     @Test
@@ -70,7 +70,7 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_catch" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 2, getMetricsSum() );
+        assertEquals( 2, getCC() );
     }
 
     @Test
@@ -78,7 +78,7 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_conditional" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 4, getMetricsSum() );
+        assertEquals( 4, getCC() );
     }
 
     @Test
@@ -86,7 +86,7 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_conditional_3operants" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 3, getMetricsSum() );
+        assertEquals( 3, getCC() );
     }
 
     @Test
@@ -94,7 +94,7 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_logical" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
-        assertEquals( 1, getMetricsSum() );
+        assertEquals( 1, getCC() );
     }
 
     @Test
@@ -102,7 +102,7 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_bestScores2" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 3, getNumberOfMethods() );
-        assertEquals( 5, getMetricsSum() );
+        assertEquals( 5, getCC() );
     }
 
     @Test
@@ -110,16 +110,16 @@ public class CCCollectorPDETest extends PDETestForMetricsComputation {
         createFileAndBuild( "_bestScores1" );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 2, getNumberOfMethods() );
-        assertEquals( 4, getMetricsSum() );
+        assertEquals( 4, getCC() );
     }
 
     protected IFile createFileAndBuild( String filenumber ) throws Exception {
         return super.createFileAndBuild( "CC" + filenumber );
     }
 
-    private int getMetricsSum() {
-        CyclomaticComplexityStatistic r = new CyclomaticComplexityStatistic();
+    private int getCC() {
+        CyclomaticComplexityVisitor r = new CyclomaticComplexityVisitor();
         r.visit();
-        return r.getMetricsSum();
+        return r.getCC();
     }
 }

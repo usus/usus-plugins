@@ -22,7 +22,7 @@ import org.projectusus.core.internal.JavaProject;
 import org.projectusus.core.internal.Workspace;
 import org.projectusus.core.statistics.visitors.ClassCountVisitor;
 import org.projectusus.core.statistics.visitors.MethodCountVisitor;
-import org.projectusus.statistics.MethodLengthStatistic;
+import org.projectusus.metrics.util.MethodLengthVisitor;
 
 public class PDETestForMetricsComputation {
 
@@ -43,9 +43,9 @@ public class PDETestForMetricsComputation {
     public void simpleCaseTestDemo() throws Exception {
         IFile file = project.createFile( "A.java", loadResource( "A.test" ) );
         workspace.buildFullyAndWait();
-        MethodLengthStatistic stat = new MethodLengthStatistic();
+        MethodLengthVisitor stat = new MethodLengthVisitor();
         stat.visit();
-        assertEquals( 1, stat.getViolations() );
+        assertEquals( 1, stat.getML() );
         assertEquals( 2, new MethodCountVisitor( new JavaModelPath( file.getProject() ) ).visitAndReturn().getMethodCount() );
     }
 
