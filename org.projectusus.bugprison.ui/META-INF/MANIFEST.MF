@@ -10,5 +10,5 @@ Require-Bundle: org.eclipse.ui,
  org.projectusus.ui,
  org.eclipse.jdt.ui
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: projectusus.org

@@ -10,6 +10,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.core,
  org.projectusus.projectsettings.core
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: projectusus.org
 Export-Package: org.projectusus.projectsettings.ui.internal;x-internal:=true

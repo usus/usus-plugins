@@ -4,7 +4,7 @@ Bundle-Name: Unit tests for Usus core
 Bundle-SymbolicName: org.projectusus.core.test
 Bundle-Version: 0.7.1.qualifier
 Bundle-Vendor: projectusus.org
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.debug.core,
  org.projectusus.adapter,

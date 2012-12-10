@@ -19,7 +19,7 @@ Require-Bundle: org.eclipse.ui,
  org.projectusus.jfeet,
  org.swtchart,
  org.swtchart.ext
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.projectusus.ui.colors,
  org.projectusus.ui.internal,

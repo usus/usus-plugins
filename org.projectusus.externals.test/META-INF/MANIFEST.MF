@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: External Testing Libraries
 Bundle-SymbolicName: org.projectusus.externals.test
 Bundle-Version: 0.0.2.qualifier
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: lib/hamcrest-core-1.1.jar,
  .,
  lib/cpsuite-1.2.5.jar,
