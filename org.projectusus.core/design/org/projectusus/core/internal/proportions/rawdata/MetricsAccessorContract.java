@@ -8,6 +8,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.projectusus.c4j.C4JFileWriter;
 import org.projectusus.c4j.UsusContractBase;
 import org.projectusus.core.IMetricsResultVisitor;
+import org.projectusus.core.filerelations.model.BoundTypeConverter;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
@@ -21,11 +22,11 @@ public class MetricsAccessorContract extends UsusContractBase<MetricsAccessor> {
         // TODO no class invariant identified yet
     }
 
-    public void pre_MetricsAccessor() {
+    public void pre_MetricsAccessor( BoundTypeConverter converter ) {
         // TODO no pre-condition identified yet
     }
 
-    public void post_MetricsAccessor() {
+    public void post_MetricsAccessor( BoundTypeConverter converter ) {
         // TODO no post-condition identified yet
     }
 

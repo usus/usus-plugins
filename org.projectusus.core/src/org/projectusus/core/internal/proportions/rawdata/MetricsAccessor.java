@@ -12,18 +12,18 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.IMetricsWriter;
+import org.projectusus.core.filerelations.model.BoundTypeConverter;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
-import org.projectusus.core.statistics.UsusModelProvider;
 
 @ContractReference( contractClassName = "MetricsAccessorContract" )
 public class MetricsAccessor implements IMetricsWriter {
     private final WorkspaceRawData workspaceRawData;
 
-    public MetricsAccessor() {
+    public MetricsAccessor( BoundTypeConverter converter ) {
         super();
-        workspaceRawData = new WorkspaceRawData();
+        workspaceRawData = new WorkspaceRawData( converter );
     }
 
     public void putData( IFile file, MethodDeclaration methodDecl, String dataKey, int value ) {

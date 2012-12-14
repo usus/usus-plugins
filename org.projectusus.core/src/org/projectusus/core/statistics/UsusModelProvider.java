@@ -6,6 +6,7 @@ import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.IMetricsWriter;
 import org.projectusus.core.IUsusModel;
 import org.projectusus.core.IUsusModelForAdapter;
+import org.projectusus.core.filerelations.model.BoundTypeConverter;
 
 @ContractReference( contractClassName = "UsusModelProviderContract" )
 public class UsusModelProvider {
@@ -27,7 +28,11 @@ public class UsusModelProvider {
     }
 
     public static void clear() {
-        UsusModel.clear();
+        clear( new BoundTypeConverter() );
+    }
+
+    public static void clear( BoundTypeConverter converter ) {
+        UsusModel.clear( converter );
     }
 
 }

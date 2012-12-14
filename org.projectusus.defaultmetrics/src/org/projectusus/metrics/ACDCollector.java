@@ -21,7 +21,7 @@ public class ACDCollector extends MetricsCollector {
     private static Stack<WrappedTypeBinding> types = new Stack<WrappedTypeBinding>();
 
     private void addCurrentType( AbstractTypeDeclaration node ) {
-        types.push( BoundTypeConverter.wrap( node ) );
+        types.push( new BoundTypeConverter().wrap( node ) );
     }
 
     private WrappedTypeBinding currentType() {
@@ -83,7 +83,7 @@ public class ACDCollector extends MetricsCollector {
 
     @Override
     public boolean visit( SimpleType node ) {
-        return connectCurrentTypeAnd( BoundTypeConverter.wrap( node ) );
+        return connectCurrentTypeAnd( new BoundTypeConverter().wrap( node ) );
     }
 
     // expressions
@@ -93,14 +93,14 @@ public class ACDCollector extends MetricsCollector {
         if( node.isDeclaration() ) {
             return false;
         }
-        return connectCurrentTypeAnd( BoundTypeConverter.wrap( node ) );
+        return connectCurrentTypeAnd( new BoundTypeConverter().wrap( node ) );
     }
 
     @Override
     public boolean visit( MethodInvocation node ) {
         Expression targetExpression = node.getExpression();
         if( targetExpression == null ) {
-            return connectCurrentTypeAnd( BoundTypeConverter.wrap( node ) );
+            return connectCurrentTypeAnd( new BoundTypeConverter().wrap( node ) );
         }
         return true;
     }
@@ -109,7 +109,7 @@ public class ACDCollector extends MetricsCollector {
     public boolean visit( FieldAccess node ) {
         Expression targetExpression = node.getExpression();
         if( targetExpression == null ) {
-            return connectCurrentTypeAnd( BoundTypeConverter.wrap( node ) );
+            return connectCurrentTypeAnd( new BoundTypeConverter().wrap( node ) );
         }
         return true;
     }
