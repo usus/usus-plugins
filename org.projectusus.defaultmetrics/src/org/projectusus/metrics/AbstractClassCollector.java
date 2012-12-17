@@ -29,11 +29,11 @@ public class AbstractClassCollector extends MetricsCollector {
         return node.isInterface() || Modifier.isAbstract( node.getModifiers() );
     }
 
-    private boolean markAsAbstract( TypeDeclaration node ) {
+    protected boolean markAsAbstract( TypeDeclaration node ) {
         return writeAbstractness( node, 1 );
     }
 
-    private boolean markAsConcrete( AbstractTypeDeclaration node ) {
+    protected boolean markAsConcrete( AbstractTypeDeclaration node ) {
         return writeAbstractness( node, 0 );
     }
 
