@@ -3,6 +3,7 @@ package org.projectusus.metrics.test;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.projectusus.metrics.util.CountingUtils.getNumberOfClasses;
 import static org.projectusus.metrics.util.TypeBindingMocker.createFile;
 import static org.projectusus.metrics.util.TypeBindingMocker.createTypeBinding;
 
@@ -141,9 +142,4 @@ public class AbstractClassCollectorTest {
         when( name.toString() ).thenReturn( nodename );
         when( theNode.getName() ).thenReturn( name );
     }
-
-    public static int getNumberOfClasses() {
-        return new ClassCountVisitor().visitAndReturn().getClassCount();
-    }
-
 }
