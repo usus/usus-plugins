@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.filerelations.model.ASTNodeHelper;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
@@ -79,24 +80,24 @@ class ProjectRawData extends RawData<Packagename, PackageRawData> {
         }
     }
 
-    public void putData( WrappedTypeBinding boundType, IFile file, MethodDeclaration methodDecl, String dataKey, int value ) {
+    public void putData( WrappedTypeBinding boundType, IFile file, MethodDeclaration methodDecl, ASTNodeHelper nodeHelper, String dataKey, int value ) {
         PackageRawData rawData = getOrCreatePackageRawData( boundType.getPackagename() );
         if( rawData != null ) {
-            rawData.putData( boundType, file, methodDecl, dataKey, value );
+            rawData.putData( boundType, file, methodDecl, nodeHelper, dataKey, value );
         }
     }
 
-    public void putData( WrappedTypeBinding boundType, IFile file, Initializer initializer, String dataKey, int value ) {
+    public void putData( WrappedTypeBinding boundType, IFile file, Initializer initializer, ASTNodeHelper nodeHelper, String dataKey, int value ) {
         PackageRawData rawData = getOrCreatePackageRawData( boundType.getPackagename() );
         if( rawData != null ) {
-            rawData.putData( boundType, file, initializer, dataKey, value );
+            rawData.putData( boundType, file, initializer, nodeHelper, dataKey, value );
         }
     }
 
-    public void putData( WrappedTypeBinding boundType, IFile file, AbstractTypeDeclaration node, String dataKey, int value ) {
+    public void putData( WrappedTypeBinding boundType, IFile file, AbstractTypeDeclaration node, ASTNodeHelper nodeHelper, String dataKey, int value ) {
         PackageRawData rawData = getOrCreatePackageRawData( boundType.getPackagename() );
         if( rawData != null ) {
-            rawData.putData( boundType, file, node, dataKey, value );
+            rawData.putData( boundType, file, node, nodeHelper, dataKey, value );
         }
     }
 

@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.projectusus.core.filerelations.model.ASTNodeHelper;
 import org.projectusus.core.filerelations.model.BoundTypeConverter;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 import org.projectusus.core.metrics.MetricsCollector;
@@ -21,7 +22,7 @@ public class ACDCollector extends MetricsCollector {
     private static Stack<WrappedTypeBinding> types = new Stack<WrappedTypeBinding>();
 
     private void addCurrentType( AbstractTypeDeclaration node ) {
-        types.push( new BoundTypeConverter().wrap( node ) );
+        types.push( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
     }
 
     private WrappedTypeBinding currentType() {
@@ -83,7 +84,7 @@ public class ACDCollector extends MetricsCollector {
 
     @Override
     public boolean visit( SimpleType node ) {
-        return connectCurrentTypeAnd( new BoundTypeConverter().wrap( node ) );
+        return connectCurrentTypeAnd( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
     }
 
     // expressions
@@ -93,14 +94,14 @@ public class ACDCollector extends MetricsCollector {
         if( node.isDeclaration() ) {
             return false;
         }
-        return connectCurrentTypeAnd( new BoundTypeConverter().wrap( node ) );
+        return connectCurrentTypeAnd( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
     }
 
     @Override
     public boolean visit( MethodInvocation node ) {
         Expression targetExpression = node.getExpression();
         if( targetExpression == null ) {
-            return connectCurrentTypeAnd( new BoundTypeConverter().wrap( node ) );
+            return connectCurrentTypeAnd( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
         }
         return true;
     }
@@ -109,7 +110,7 @@ public class ACDCollector extends MetricsCollector {
     public boolean visit( FieldAccess node ) {
         Expression targetExpression = node.getExpression();
         if( targetExpression == null ) {
-            return connectCurrentTypeAnd( new BoundTypeConverter().wrap( node ) );
+            return connectCurrentTypeAnd( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
         }
         return true;
     }

@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.filerelations.model.ASTNodeHelper;
 import org.projectusus.core.filerelations.model.BoundTypeConverter;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
@@ -18,10 +19,12 @@ import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
 
     private BoundTypeConverter converter;
+    private ASTNodeHelper nodeHelper;
 
-    public WorkspaceRawData( BoundTypeConverter converter ) {
+    public WorkspaceRawData( ASTNodeHelper nodeHelper ) {
         super();
-        this.converter = converter;
+        this.nodeHelper = nodeHelper;
+        this.converter = new BoundTypeConverter( nodeHelper );
     }
 
     private ProjectRawData getOrCreateProjectRawData( IProject project ) {
@@ -67,24 +70,24 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
     }
 
     public void putData( IFile file, MethodDeclaration methodDecl, String dataKey, int value ) {
-        WrappedTypeBinding boundType = converter.wrap( FileRawData.findEnclosingClass( methodDecl ) );
+        WrappedTypeBinding boundType = converter.wrap( nodeHelper.findEnclosingClass( methodDecl ) );
         if( boundType == null || !boundType.isValid() ) {
             return;
         }
         ProjectRawData projectRawData = getOrCreateProjectRawData( file.getProject() );
         if( projectRawData != null ) {
-            projectRawData.putData( boundType, file, methodDecl, dataKey, value );
+            projectRawData.putData( boundType, file, methodDecl, nodeHelper, dataKey, value );
         }
     }
 
     public void putData( IFile file, Initializer initializer, String dataKey, int value ) {
-        WrappedTypeBinding boundType = converter.wrap( FileRawData.findEnclosingClass( initializer ) );
+        WrappedTypeBinding boundType = converter.wrap( nodeHelper.findEnclosingClass( initializer ) );
         if( boundType == null || !boundType.isValid() ) {
             return;
         }
         ProjectRawData projectRawData = getOrCreateProjectRawData( file.getProject() );
         if( projectRawData != null ) {
-            projectRawData.putData( boundType, file, initializer, dataKey, value );
+            projectRawData.putData( boundType, file, initializer, nodeHelper, dataKey, value );
         }
     }
 
@@ -95,7 +98,7 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         }
         ProjectRawData projectRawData = getOrCreateProjectRawData( file.getProject() );
         if( projectRawData != null ) {
-            projectRawData.putData( boundType, file, node, dataKey, value );
+            projectRawData.putData( boundType, file, node, nodeHelper, dataKey, value );
         }
     }
 

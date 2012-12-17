@@ -11,13 +11,13 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
+import org.projectusus.core.filerelations.model.ASTNodeHelper;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
@@ -27,10 +27,12 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
 
     private MetricsResults data;
     private final IFile file;
+    ASTNodeHelper nodeHelper;
 
-    public FileRawData( IFile file ) {
+    public FileRawData( IFile file, ASTNodeHelper nodeHelper ) {
         super(); // sagt AL ;)
         this.file = file;
+        this.nodeHelper = nodeHelper;
         data = new MetricsResults();
     }
 
@@ -75,11 +77,11 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
     }
 
     private ClassRawData getOrCreateClassRawData( WrappedTypeBinding boundType, MethodDeclaration node ) {
-        return getOrCreateClassRawData( boundType, findEnclosingClass( node ) );
+        return getOrCreateClassRawData( boundType, nodeHelper.findEnclosingClass( node ) );
     }
 
     private ClassRawData getOrCreateClassRawData( WrappedTypeBinding boundType, Initializer node ) {
-        return getOrCreateClassRawData( boundType, findEnclosingClass( node ) );
+        return getOrCreateClassRawData( boundType, nodeHelper.findEnclosingClass( node ) );
     }
 
     private ClassRawData getClassRawData( IJavaElement element ) {
@@ -137,13 +139,5 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
         if( classRawData == null ) {
             descriptor.removeFromPool();
         }
-    }
-
-    public static AbstractTypeDeclaration findEnclosingClass( ASTNode node ) {
-        ASTNode enclosingClass = node;
-        while( enclosingClass != null && !(enclosingClass instanceof AbstractTypeDeclaration) ) {
-            enclosingClass = enclosingClass.getParent();
-        }
-        return (AbstractTypeDeclaration)enclosingClass;
     }
 }

@@ -21,7 +21,7 @@ import org.projectusus.core.IUsusModelForAdapter;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.UsusCorePlugin;
 import org.projectusus.core.basis.CodeProportion;
-import org.projectusus.core.filerelations.model.BoundTypeConverter;
+import org.projectusus.core.filerelations.model.ASTNodeHelper;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.Packagename;
@@ -30,7 +30,7 @@ import org.projectusus.core.internal.proportions.rawdata.MetricsAccessor;
 
 class UsusModel implements IUsusModel, IUsusModelForAdapter {
 
-    private static UsusModel instance = new UsusModel( new BoundTypeConverter() );
+    private static UsusModel instance = new UsusModel( new ASTNodeHelper() );
 
     private final Set<IUsusModelListener> listeners;
     private UsusModelCache cache;
@@ -41,7 +41,7 @@ class UsusModel implements IUsusModel, IUsusModelForAdapter {
         return instance;
     }
 
-    private UsusModel( BoundTypeConverter converter ) {
+    private UsusModel( ASTNodeHelper converter ) {
         cache = new UsusModelCache();
         listeners = new HashSet<IUsusModelListener>();
         metrics = new MetricsAccessor( converter );
@@ -124,7 +124,7 @@ class UsusModel implements IUsusModel, IUsusModelForAdapter {
         return needsFullRecompute;
     }
 
-    public static void clear( BoundTypeConverter converter ) {
+    public static void clear( ASTNodeHelper converter ) {
         instance = new UsusModel( converter );
         ClassDescriptor.clear();
         ClassDescriptorCleanup.clear();

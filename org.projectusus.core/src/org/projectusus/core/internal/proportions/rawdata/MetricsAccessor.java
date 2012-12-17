@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.IMetricsWriter;
-import org.projectusus.core.filerelations.model.BoundTypeConverter;
+import org.projectusus.core.filerelations.model.ASTNodeHelper;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.ClassDescriptorCleanup;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
@@ -21,7 +21,7 @@ import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 public class MetricsAccessor implements IMetricsWriter {
     private final WorkspaceRawData workspaceRawData;
 
-    public MetricsAccessor( BoundTypeConverter converter ) {
+    public MetricsAccessor( ASTNodeHelper converter ) {
         super();
         workspaceRawData = new WorkspaceRawData( converter );
     }

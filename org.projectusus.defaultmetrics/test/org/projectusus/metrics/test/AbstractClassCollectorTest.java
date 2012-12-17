@@ -10,17 +10,15 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.projectusus.core.basis.MetricsResults;
-import org.projectusus.core.filerelations.model.BoundTypeConverter;
-import org.projectusus.core.filerelations.model.WrappedTypeBinding;
+import org.projectusus.core.filerelations.model.ASTNodeHelper;
 import org.projectusus.core.statistics.UsusModelProvider;
-import org.projectusus.core.statistics.visitors.ClassCountVisitor;
 import org.projectusus.metrics.AbstractClassCollector;
 import org.projectusus.metrics.util.ClassValueVisitor;
 
@@ -31,11 +29,11 @@ public class AbstractClassCollectorTest {
 
     @Before
     public void setup() throws JavaModelException {
-        BoundTypeConverter converter = mock( BoundTypeConverter.class );
-        WrappedTypeBinding wrappedClassBinding = new WrappedTypeBinding( createTypeBinding() );
-        when( converter.wrap( Matchers.any( AbstractTypeDeclaration.class ) ) ).thenReturn( wrappedClassBinding );
+        ASTNodeHelper nodeHelper = mock( ASTNodeHelper.class );
+        ITypeBinding typeBinding = createTypeBinding();
+        when( nodeHelper.resolveBindingOf( org.mockito.Matchers.any( AbstractTypeDeclaration.class ) ) ).thenReturn( typeBinding );
 
-        UsusModelProvider.clear( converter );
+        UsusModelProvider.clear( nodeHelper );
         collector = new AbstractClassCollector();
     }
 

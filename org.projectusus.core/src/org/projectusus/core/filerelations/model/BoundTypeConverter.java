@@ -13,26 +13,29 @@ import org.eclipse.jdt.core.dom.SimpleType;
 
 public class BoundTypeConverter {
 
-    public BoundTypeConverter() {
+    private ASTNodeHelper nodeHelper;
+
+    public BoundTypeConverter( ASTNodeHelper nodeHelper ) {
+        this.nodeHelper = nodeHelper;
     }
 
     public WrappedTypeBinding wrap( AbstractTypeDeclaration node ) {
         if( node != null ) {
-            return new WrappedTypeBinding( node.resolveBinding() );
+            return new WrappedTypeBinding( nodeHelper.resolveBindingOf( node ) );
         }
         return null;
     }
 
     public WrappedTypeBinding wrap( SimpleType node ) {
         if( node != null ) {
-            return new WrappedTypeBinding( node.resolveBinding() );
+            return new WrappedTypeBinding( nodeHelper.resolveBindingOf( node ) );
         }
         return null;
     }
 
     public WrappedTypeBinding wrap( SimpleName node ) {
         if( node != null ) {
-            IBinding binding = node.resolveBinding();
+            IBinding binding = nodeHelper.resolveBindingOf( node );
             if( binding instanceof ITypeBinding ) {
                 return new WrappedTypeBinding( ((ITypeBinding)binding) );
             }
@@ -55,14 +58,14 @@ public class BoundTypeConverter {
 
     public WrappedTypeBinding wrap( FieldAccess node ) {
         if( node != null ) {
-            return new WrappedTypeBinding( node.resolveTypeBinding() );
+            return new WrappedTypeBinding( nodeHelper.resolveTypeBindingOf( node ) );
         }
         return null;
     }
 
     public WrappedTypeBinding wrap( QualifiedName qualifier ) {
         if( qualifier != null ) {
-            return new WrappedTypeBinding( qualifier.resolveTypeBinding() );
+            return new WrappedTypeBinding( nodeHelper.resolveTypeBindingOf( qualifier ) );
         }
         return null;
     }
