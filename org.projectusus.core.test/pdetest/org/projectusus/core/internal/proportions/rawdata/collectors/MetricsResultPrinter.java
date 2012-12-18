@@ -9,6 +9,7 @@ import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
 import org.projectusus.core.statistics.DefaultMetricsResultVisitor;
 
+//FIXME: kann weg?
 public class MetricsResultPrinter extends DefaultMetricsResultVisitor {
 
     private final PrintStream out;
