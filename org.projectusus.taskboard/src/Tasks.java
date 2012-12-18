@@ -2,10 +2,6 @@ public class Tasks {
 
     // ///////// Tasks to complete before Eclipse Magazin 6.10 comes out (27. September 2010)
 
-    void inprogress_nicole_bugACDAnalysis() {
-        // TODO static fields are not regarded. fix it.
-    }
-
     void marc_statusHeaderzeileInDenGraphenVerbessern() {
         // TODO die Statuszeile wird leicht zu lang. Wie damit umgehen?
         // Tooltip? Zusammenfassung?
@@ -74,11 +70,6 @@ public class Tasks {
 
     void statisticsForRelations() {
         // TODO Statistics für die Relation Metrics bauen. Daraus ein Pattern extrahieren.
-    }
-
-    void createMudHoleHotspots() {
-        // TODO Aggregierte Hotspots = "Schlammlšöcher"
-        // Dazu brauchen wir post-visit-hooks für den Baumdurchlauf
     }
 
     void codeDuplicationMetric() {
