@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.projectusus.c4j.UsusContractBase;
 import org.projectusus.core.IMetricsResultVisitor;
+import org.projectusus.core.filerelations.model.ASTNodeHelper;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 
@@ -19,12 +20,12 @@ public class FileRawDataContract extends UsusContractBase<FileRawData> {
         // TODO no class invariant identified yet
     }
 
-    public void pre_FileRawData( IFile file ) {
+    public void pre_FileRawData( IFile file, ASTNodeHelper nodeHelper ) {
         // TODO Auto-generated pre-condition
         assertThat( file != null, "file_not_null" );
     }
 
-    public void post_FileRawData( IFile file ) {
+    public void post_FileRawData( IFile file, ASTNodeHelper nodeHelper ) {
         // TODO no post-condition identified yet
     }
 
