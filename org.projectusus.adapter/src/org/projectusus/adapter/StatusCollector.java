@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.Status;
 
 public class StatusCollector {
 
-    public static String jdtDriver_errors = "Errors occurred during code proportions computation."; //$NON-NLS-1$
+    public static final String jdtDriver_errors = "Errors occurred during code proportions computation."; //$NON-NLS-1$
 
     private final Set<IStatus> errors = new HashSet<IStatus>();
 

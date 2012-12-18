@@ -23,7 +23,7 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
 
     private final Map<IProject, List<IFile>> changes = new HashMap<IProject, List<IFile>>();
     private final Map<IProject, List<IFile>> deletions = new HashMap<IProject, List<IFile>>();
-    public List<IProject> removedProjects = new ArrayList<IProject>();
+    private List<IProject> removedProjects = new ArrayList<IProject>();
 
     public DeltaCodeProportionComputationTarget( IResourceDelta delta ) throws CoreException {
         compute( delta );
