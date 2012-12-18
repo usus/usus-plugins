@@ -41,7 +41,7 @@ public class MudholeStatistic extends CockpitExtension {
 
     @Override
     protected String hotspotsAreUnits() {
-        return format( "where the product of method length and cyclomatic complexity, increased by the class size if the latter exceeds %d, is greater than %d.",
+        return format( "where the product of method length and cyclomatic complexity (increased by the class size if the latter exceeds %d) is greater than %d.",
                 LinearClassSizeStatistic.KG_LIMIT, MUDHOLE_LIMIT );
     }
 
