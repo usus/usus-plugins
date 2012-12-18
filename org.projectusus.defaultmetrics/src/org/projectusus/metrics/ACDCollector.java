@@ -119,6 +119,6 @@ public class ACDCollector extends MetricsCollector {
         if( currentType() != null && targetType != null && targetType.isValid() && !currentType().equals( targetType ) ) {
             getMetricsWriter().addClassReference( currentType(), targetType );
         }
-        return false;
+        return true;
     }
 }

@@ -666,6 +666,17 @@ public class ACDCollectorPDETest extends PDETestForMetricsComputation {
         assertEquals( 5 / 9.0, getACD(), 0.0001 );
     }
 
+    @Test
+    public void staticImportOfConstant() throws Exception {
+        project.createFolder( "acd_staticimport" );
+        createJavaFile( "acd_staticimport/ClassWithConstant.java" );
+        createJavaFile( "acd_staticimport/ClassWithStaticImportInMethodParameter.java" );
+        workspace.buildFullyAndWait();
+        assertEquals( 2, getNumberOfClasses() );
+        assertEquals( 2, ClassDescriptor.getAll().size() );
+        assertEquals( 0.75, getACD(), 0.0001 );
+    }
+
     private double getACD() {
         ACDStatistic statistic = new ACDStatistic();
         statistic.visit();
