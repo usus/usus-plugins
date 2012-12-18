@@ -39,14 +39,6 @@ public class AbstractClassCollectorTest {
     }
 
     @Test
-    public void rawDataTreeWithoutCollectorRunsIsEmpty() {
-        visitor.visit();
-        assertEquals( 0, visitor.getValueSum() );
-
-        assertEquals( 0, getNumberOfClasses() );
-    }
-
-    @Test
     public void interfaceIsMarkedAsAbstract() {
         TypeDeclaration node = setupCollectorAndMockFor( TypeDeclaration.class, "ClassName" );
         when( Boolean.valueOf( node.isInterface() ) ).thenReturn( Boolean.TRUE );
