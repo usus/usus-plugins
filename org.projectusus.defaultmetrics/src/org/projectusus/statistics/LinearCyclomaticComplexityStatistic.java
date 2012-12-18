@@ -6,7 +6,7 @@ import org.projectusus.core.statistics.CockpitExtension;
 
 public class LinearCyclomaticComplexityStatistic extends CockpitExtension {
 
-    private static int CC_LIMIT = 4;
+    public static final int CC_LIMIT = 4;
 
     private double linearViolations = 0.0;
 
