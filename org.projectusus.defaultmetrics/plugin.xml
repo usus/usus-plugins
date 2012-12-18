@@ -41,6 +41,9 @@
        <statistics
              class="org.projectusus.statistics.LackOfCohesionOfClassesStatistic">
        </statistics>
+       <statistics
+             class="org.projectusus.statistics.UnreferencedClassesStatistic">
+       </statistics>
    </extension>
     <extension
           point="org.projectusus.core.metrics"> 
