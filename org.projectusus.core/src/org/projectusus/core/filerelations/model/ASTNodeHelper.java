@@ -2,6 +2,7 @@ package org.projectusus.core.filerelations.model;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
@@ -37,6 +38,15 @@ public class ASTNodeHelper {
             enclosingClass = enclosingClass.getParent();
         }
         return (AbstractTypeDeclaration)enclosingClass;
+    }
+
+    public int calcLineNumberFor( ASTNode node ) {
+        ASTNode root = node.getRoot();
+        if( root instanceof CompilationUnit ) {
+            CompilationUnit cu = (CompilationUnit)root;
+            return cu.getLineNumber( node.getStartPosition() );
+        }
+        return 0;
     }
 
 }

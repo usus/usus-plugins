@@ -7,8 +7,6 @@ package org.projectusus.core.internal.proportions.rawdata;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IOpenable;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.CompilationUnit;
 
 class JDTSupport {
 
@@ -17,15 +15,6 @@ class JDTSupport {
             return null;
         }
         return toCompilationUnit( element.getOpenable() );
-    }
-
-    public static int calcLineNumber( ASTNode node ) {
-        ASTNode root = node.getRoot();
-        if( root instanceof CompilationUnit ) {
-            CompilationUnit cu = (CompilationUnit)root;
-            return cu.getLineNumber( node.getStartPosition() );
-        }
-        return 0;
     }
 
     private static ICompilationUnit toCompilationUnit( IOpenable openable ) {

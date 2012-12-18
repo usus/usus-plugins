@@ -16,6 +16,7 @@ import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
+import org.projectusus.core.filerelations.model.ASTNodeHelper;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
@@ -26,15 +27,13 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
     private MetricsResults data;
 
     private ClassDescriptor descriptor;
+    private ASTNodeHelper nodeHelper;
 
-    private ClassRawData( String name, int startPosition, int line ) {
+    public ClassRawData( WrappedTypeBinding binding, String name, ASTNodeHelper nodeHelper, int startPosition, int line ) {
         super();
+        this.nodeHelper = nodeHelper;
         location = new SourceCodeLocation( name, startPosition, line );
         data = new MetricsResults();
-    }
-
-    public ClassRawData( WrappedTypeBinding binding, String name, int startPosition, int line ) {
-        this( name, startPosition, line );
         this.descriptor = ClassDescriptor.of( binding );
     }
 
@@ -59,11 +58,11 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
     }
 
     private MethodRawData getOrCreateMethodRawData( MethodDeclaration node ) {
-        return getOrCreateMethodRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
+        return getOrCreateMethodRawData( node.getStartPosition(), nodeHelper.calcLineNumberFor( node ), node.getName().toString() );
     }
 
     private MethodRawData getOrCreateMethodRawData( Initializer node ) {
-        return getOrCreateMethodRawData( node.getStartPosition(), JDTSupport.calcLineNumber( node ), "initializer" ); //$NON-NLS-1$
+        return getOrCreateMethodRawData( node.getStartPosition(), nodeHelper.calcLineNumberFor( node ), "initializer" ); //$NON-NLS-1$
     }
 
     private MethodRawData getOrCreateMethodRawData( IMethod method ) {

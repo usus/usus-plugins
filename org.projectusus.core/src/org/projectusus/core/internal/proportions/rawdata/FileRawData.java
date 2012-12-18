@@ -27,7 +27,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
 
     private MetricsResults data;
     private final IFile file;
-    ASTNodeHelper nodeHelper;
+    private final ASTNodeHelper nodeHelper;
 
     public FileRawData( IFile file, ASTNodeHelper nodeHelper ) {
         super(); // sagt AL ;)
@@ -63,14 +63,14 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
     }
 
     private ClassRawData getOrCreateClassRawData( WrappedTypeBinding boundType, AbstractTypeDeclaration node ) {
-        return getOrCreateClassRawData( boundType, node.getStartPosition(), JDTSupport.calcLineNumber( node ), node.getName().toString() );
+        return getOrCreateClassRawData( boundType, node.getStartPosition(), nodeHelper.calcLineNumberFor( node ), node.getName().toString() );
     }
 
     private ClassRawData getOrCreateClassRawData( WrappedTypeBinding typeBinding, int start, int lineNumber, String name ) {
         Integer startObject = new Integer( start );
         ClassRawData rawData = super.getRawData( startObject );
         if( rawData == null ) {
-            rawData = new ClassRawData( typeBinding, name, start, lineNumber );
+            rawData = new ClassRawData( typeBinding, name, nodeHelper, start, lineNumber );
             super.addRawData( startObject, rawData );
         }
         return rawData;
