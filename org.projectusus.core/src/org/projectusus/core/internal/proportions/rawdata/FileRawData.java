@@ -77,11 +77,11 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
     }
 
     private ClassRawData getOrCreateClassRawData( WrappedTypeBinding boundType, MethodDeclaration node ) {
-        return getOrCreateClassRawData( boundType, nodeHelper.findEnclosingClass( node ) );
+        return getOrCreateClassRawData( boundType, nodeHelper.findEnclosingClassOf( node ) );
     }
 
     private ClassRawData getOrCreateClassRawData( WrappedTypeBinding boundType, Initializer node ) {
-        return getOrCreateClassRawData( boundType, nodeHelper.findEnclosingClass( node ) );
+        return getOrCreateClassRawData( boundType, nodeHelper.findEnclosingClassOf( node ) );
     }
 
     private ClassRawData getClassRawData( IJavaElement element ) {

@@ -31,7 +31,7 @@ public class ASTNodeHelper {
         return qualifier.resolveTypeBinding();
     }
 
-    public AbstractTypeDeclaration findEnclosingClass( ASTNode node ) {
+    public AbstractTypeDeclaration findEnclosingClassOf( ASTNode node ) {
         ASTNode enclosingClass = node;
         while( enclosingClass != null && !(enclosingClass instanceof AbstractTypeDeclaration) ) {
             enclosingClass = enclosingClass.getParent();
