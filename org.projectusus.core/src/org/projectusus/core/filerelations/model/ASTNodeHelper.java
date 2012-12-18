@@ -49,4 +49,8 @@ public class ASTNodeHelper {
         return 0;
     }
 
+    public int getStartPositionFor( ASTNode node ) {
+        return node.getStartPosition();
+    }
+
 }

@@ -58,11 +58,11 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
     }
 
     private MethodRawData getOrCreateMethodRawData( MethodDeclaration node ) {
-        return getOrCreateMethodRawData( node.getStartPosition(), nodeHelper.calcLineNumberFor( node ), node.getName().toString() );
+        return getOrCreateMethodRawData( nodeHelper.getStartPositionFor( node ), nodeHelper.calcLineNumberFor( node ), node.getName().toString() );
     }
 
     private MethodRawData getOrCreateMethodRawData( Initializer node ) {
-        return getOrCreateMethodRawData( node.getStartPosition(), nodeHelper.calcLineNumberFor( node ), "initializer" ); //$NON-NLS-1$
+        return getOrCreateMethodRawData( nodeHelper.getStartPositionFor( node ), nodeHelper.calcLineNumberFor( node ), "initializer" ); //$NON-NLS-1$
     }
 
     private MethodRawData getOrCreateMethodRawData( IMethod method ) {

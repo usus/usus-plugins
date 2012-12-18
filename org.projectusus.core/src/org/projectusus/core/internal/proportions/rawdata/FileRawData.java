@@ -63,11 +63,11 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
     }
 
     private ClassRawData getOrCreateClassRawData( WrappedTypeBinding boundType, AbstractTypeDeclaration node ) {
-        return getOrCreateClassRawData( boundType, node.getStartPosition(), nodeHelper.calcLineNumberFor( node ), node.getName().toString() );
+        return getOrCreateClassRawData( boundType, nodeHelper.getStartPositionFor( node ), nodeHelper.calcLineNumberFor( node ), node.getName().toString() );
     }
 
     private ClassRawData getOrCreateClassRawData( WrappedTypeBinding typeBinding, int start, int lineNumber, String name ) {
-        Integer startObject = new Integer( start );
+        Integer startObject = Integer.valueOf( start );
         ClassRawData rawData = super.getRawData( startObject );
         if( rawData == null ) {
             rawData = new ClassRawData( typeBinding, name, nodeHelper, start, lineNumber );
