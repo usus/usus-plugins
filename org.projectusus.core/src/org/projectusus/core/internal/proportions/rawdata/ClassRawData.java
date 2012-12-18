@@ -43,7 +43,7 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
         return "Class " + location.getName() + " in line " + location.getLineNumber() + " with " + getRawDataElementCount() + " methods."; //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$ //$NON-NLS-4$
     }
 
-    void putData( WrappedTypeBinding boundType, MethodDeclaration node, String dataKey, int value ) {
+    void putData( MethodDeclaration node, String dataKey, int value ) {
         MethodRawData methodRawData = getOrCreateMethodRawData( node );
         if( methodRawData != null ) {
             methodRawData.putData( dataKey, value );

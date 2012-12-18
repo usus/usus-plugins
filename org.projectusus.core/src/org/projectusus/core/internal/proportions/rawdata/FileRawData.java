@@ -44,7 +44,7 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
     public void putData( WrappedTypeBinding boundType, MethodDeclaration methodDecl, String dataKey, int value ) {
         ClassRawData classRawData = getOrCreateClassRawData( boundType, methodDecl );
         if( classRawData != null ) {
-            classRawData.putData( boundType, methodDecl, dataKey, value );
+            classRawData.putData( methodDecl, dataKey, value );
         }
     }
 
