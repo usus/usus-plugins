@@ -101,7 +101,7 @@ public abstract class CockpitExtension extends DefaultMetricsResultVisitor imple
     }
 
     public CodeStatistic getBasisStatistic() {
-        return new CodeStatistic( unit, basis );
+        return new CodeStatistic( unit, getBasis() );
     }
 
     public double getAverage() {
