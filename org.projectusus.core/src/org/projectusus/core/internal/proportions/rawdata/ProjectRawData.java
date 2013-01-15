@@ -80,21 +80,21 @@ class ProjectRawData extends RawData<Packagename, PackageRawData> {
         }
     }
 
-    public void putData( WrappedTypeBinding boundType, IFile file, MethodDeclaration methodDecl, ASTNodeHelper nodeHelper, String dataKey, int value ) {
+    public void putData( WrappedTypeBinding boundType, IFile file, MethodDeclaration methodDecl, ASTNodeHelper nodeHelper, String dataKey, Object value ) {
         PackageRawData rawData = getOrCreatePackageRawData( boundType.getPackagename() );
         if( rawData != null ) {
             rawData.putData( boundType, file, methodDecl, nodeHelper, dataKey, value );
         }
     }
 
-    public void putData( WrappedTypeBinding boundType, IFile file, Initializer initializer, ASTNodeHelper nodeHelper, String dataKey, int value ) {
+    public void putData( WrappedTypeBinding boundType, IFile file, Initializer initializer, ASTNodeHelper nodeHelper, String dataKey, Object value ) {
         PackageRawData rawData = getOrCreatePackageRawData( boundType.getPackagename() );
         if( rawData != null ) {
             rawData.putData( boundType, file, initializer, nodeHelper, dataKey, value );
         }
     }
 
-    public void putData( WrappedTypeBinding boundType, IFile file, AbstractTypeDeclaration node, ASTNodeHelper nodeHelper, String dataKey, int value ) {
+    public void putData( WrappedTypeBinding boundType, IFile file, AbstractTypeDeclaration node, ASTNodeHelper nodeHelper, String dataKey, Object value ) {
         PackageRawData rawData = getOrCreatePackageRawData( boundType.getPackagename() );
         if( rawData != null ) {
             rawData.putData( boundType, file, node, nodeHelper, dataKey, value );

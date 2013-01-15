@@ -10,9 +10,16 @@ public interface IMetricsWriter {
 
     void putData( IFile file, MethodDeclaration methodDecl, String dataKey, int value );
 
+    void putData( IFile file, MethodDeclaration node, String trainWrecks, Object value );
+
     void putData( IFile file, Initializer initializer, String dataKey, int value );
+
+    void putData( IFile file, Initializer initializer, String dataKey, Object value );
 
     void putData( IFile file, AbstractTypeDeclaration node, String dataKey, int value );
 
+    void putData( IFile file, AbstractTypeDeclaration node, String dataKey, Object value );
+
     void addClassReference( WrappedTypeBinding source, WrappedTypeBinding target );
+
 }

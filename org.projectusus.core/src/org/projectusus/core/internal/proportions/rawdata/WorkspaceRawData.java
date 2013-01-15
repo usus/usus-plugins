@@ -69,7 +69,7 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         }
     }
 
-    public void putData( IFile file, MethodDeclaration methodDecl, String dataKey, int value ) {
+    public void putData( IFile file, MethodDeclaration methodDecl, String dataKey, Object value ) {
         WrappedTypeBinding boundType = converter.wrap( nodeHelper.findEnclosingClassOf( methodDecl ) );
         if( boundType == null || !boundType.isValid() ) {
             return;
@@ -80,7 +80,7 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         }
     }
 
-    public void putData( IFile file, Initializer initializer, String dataKey, int value ) {
+    public void putData( IFile file, Initializer initializer, String dataKey, Object value ) {
         WrappedTypeBinding boundType = converter.wrap( nodeHelper.findEnclosingClassOf( initializer ) );
         if( boundType == null || !boundType.isValid() ) {
             return;
@@ -91,7 +91,7 @@ class WorkspaceRawData extends RawData<IProject, ProjectRawData> {
         }
     }
 
-    public void putData( IFile file, AbstractTypeDeclaration node, String dataKey, int value ) {
+    public void putData( IFile file, AbstractTypeDeclaration node, String dataKey, Object value ) {
         WrappedTypeBinding boundType = converter.wrap( node );
         if( boundType == null || !boundType.isValid() ) {
             return;

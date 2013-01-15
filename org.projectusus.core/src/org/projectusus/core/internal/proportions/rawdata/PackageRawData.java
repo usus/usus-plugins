@@ -73,24 +73,24 @@ class PackageRawData extends RawData<IFile, FileRawData> {
     }
 
     private void updateData() {
-        data.put( MetricsResults.CLASSES, getRawDataElementCount() );
+        data.put( MetricsResults.CLASSES, Integer.valueOf( getRawDataElementCount() ) );
     }
 
-    public void putData( WrappedTypeBinding boundType, IFile file, MethodDeclaration methodDecl, ASTNodeHelper nodeHelper, String dataKey, int value ) {
+    public void putData( WrappedTypeBinding boundType, IFile file, MethodDeclaration methodDecl, ASTNodeHelper nodeHelper, String dataKey, Object value ) {
         FileRawData fileRawData = getOrCreateFileRawData( file, nodeHelper );
         if( fileRawData != null ) {
             fileRawData.putData( boundType, methodDecl, dataKey, value );
         }
     }
 
-    public void putData( WrappedTypeBinding boundType, IFile file, Initializer initializer, ASTNodeHelper nodeHelper, String dataKey, int value ) {
+    public void putData( WrappedTypeBinding boundType, IFile file, Initializer initializer, ASTNodeHelper nodeHelper, String dataKey, Object value ) {
         FileRawData fileRawData = getOrCreateFileRawData( file, nodeHelper );
         if( fileRawData != null ) {
             fileRawData.putData( boundType, initializer, dataKey, value );
         }
     }
 
-    public void putData( WrappedTypeBinding boundType, IFile file, AbstractTypeDeclaration node, ASTNodeHelper nodeHelper, String dataKey, int value ) {
+    public void putData( WrappedTypeBinding boundType, IFile file, AbstractTypeDeclaration node, ASTNodeHelper nodeHelper, String dataKey, Object value ) {
         FileRawData fileRawData = getOrCreateFileRawData( file, nodeHelper );
         if( fileRawData != null ) {
             fileRawData.putData( boundType, node, dataKey, value );

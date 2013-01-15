@@ -27,14 +27,26 @@ public class MetricsAccessor implements IMetricsWriter {
     }
 
     public void putData( IFile file, MethodDeclaration methodDecl, String dataKey, int value ) {
+        workspaceRawData.putData( file, methodDecl, dataKey, Integer.valueOf( value ) );
+    }
+
+    public void putData( IFile file, MethodDeclaration methodDecl, String dataKey, Object value ) {
         workspaceRawData.putData( file, methodDecl, dataKey, value );
     }
 
     public void putData( IFile file, Initializer initializer, String dataKey, int value ) {
+        workspaceRawData.putData( file, initializer, dataKey, Integer.valueOf( value ) );
+    }
+
+    public void putData( IFile file, Initializer initializer, String dataKey, Object value ) {
         workspaceRawData.putData( file, initializer, dataKey, value );
     }
 
     public void putData( IFile file, AbstractTypeDeclaration node, String dataKey, int value ) {
+        workspaceRawData.putData( file, node, dataKey, Integer.valueOf( value ) );
+    }
+
+    public void putData( IFile file, AbstractTypeDeclaration node, String dataKey, Object value ) {
         workspaceRawData.putData( file, node, dataKey, value );
     }
 

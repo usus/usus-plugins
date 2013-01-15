@@ -41,21 +41,21 @@ public class FileRawData extends RawData<Integer, ClassRawData> {
         return "Data for " + file.getFullPath() + ", " + getRawDataElementCount() + " classes"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
-    public void putData( WrappedTypeBinding boundType, MethodDeclaration methodDecl, String dataKey, int value ) {
+    public void putData( WrappedTypeBinding boundType, MethodDeclaration methodDecl, String dataKey, Object value ) {
         ClassRawData classRawData = getOrCreateClassRawData( boundType, methodDecl );
         if( classRawData != null ) {
             classRawData.putData( methodDecl, dataKey, value );
         }
     }
 
-    public void putData( WrappedTypeBinding boundType, Initializer initializer, String dataKey, int value ) {
+    public void putData( WrappedTypeBinding boundType, Initializer initializer, String dataKey, Object value ) {
         ClassRawData classRawData = getOrCreateClassRawData( boundType, initializer );
         if( classRawData != null ) {
             classRawData.putData( initializer, dataKey, value );
         }
     }
 
-    public void putData( WrappedTypeBinding boundType, AbstractTypeDeclaration node, String dataKey, int value ) {
+    public void putData( WrappedTypeBinding boundType, AbstractTypeDeclaration node, String dataKey, Object value ) {
         ClassRawData classRawData = getOrCreateClassRawData( boundType, node );
         if( classRawData != null ) {
             classRawData.putData( dataKey, value );

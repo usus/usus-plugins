@@ -19,7 +19,7 @@ public class MethodRawData implements IRawData {
         data = new MetricsResults();
     }
 
-    public void putData( String dataKey, int value ) {
+    public void putData( String dataKey, Object value ) {
         data.put( dataKey, value );
     }
 

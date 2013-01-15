@@ -12,14 +12,19 @@ public class MetricsResults {
     public static final String ML = "MethodLength"; //$NON-NLS-1$
     public static final String CLASS_CREATION = "ClassCreation"; //$NON-NLS-1$
     public static final String ABSTRACTNESS = "Abstractness";
+    public static final String TRAIN_WRECKS = "TrainWrecks";
 
-    private Map<String, Integer> results = new HashMap<String, Integer>();
+    private Map<String, Object> results = new HashMap<String, Object>();
 
-    public void put( String key, int value ) {
-        results.put( key, new Integer( value ) );
+    public void put( String key, Object value ) {
+        results.put( key, value );
     }
 
-    public Integer get( String key ) {
+    public void put( String key, int value ) {
+        results.put( key, Integer.valueOf( value ) );
+    }
+
+    public Object get( String key ) {
         return results.get( key );
     }
 
@@ -28,7 +33,7 @@ public class MetricsResults {
     }
 
     public int getIntValue( String key, int defaultValue ) {
-        Integer result = get( key );
+        Integer result = (Integer)get( key );
         if( result == null ) {
             return defaultValue;
         }

@@ -43,14 +43,14 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
         return "Class " + location.getName() + " in line " + location.getLineNumber() + " with " + getRawDataElementCount() + " methods."; //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$ //$NON-NLS-4$
     }
 
-    void putData( MethodDeclaration node, String dataKey, int value ) {
+    void putData( MethodDeclaration node, String dataKey, Object value ) {
         MethodRawData methodRawData = getOrCreateMethodRawData( node );
         if( methodRawData != null ) {
             methodRawData.putData( dataKey, value );
         }
     }
 
-    void putData( Initializer node, String dataKey, int value ) {
+    void putData( Initializer node, String dataKey, Object value ) {
         MethodRawData methodRawData = getOrCreateMethodRawData( node );
         if( methodRawData != null ) {
             methodRawData.putData( dataKey, value );
@@ -117,7 +117,11 @@ public class ClassRawData extends RawData<Integer, MethodRawData> {
         putData( MetricsResults.CCD, descriptor.getCCD() );
     }
 
-    public void putData( String dataKey, int value ) {
+    private void putData( String dataKey, int value ) {
+        data.put( dataKey, Integer.valueOf( value ) );
+    }
+
+    public void putData( String dataKey, Object value ) {
         data.put( dataKey, value );
     }
 
