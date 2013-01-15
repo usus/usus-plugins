@@ -44,6 +44,9 @@
        <statistics
              class="org.projectusus.statistics.UnreferencedClassesStatistic">
        </statistics>
+       <statistics
+             class="org.projectusus.statistics.LinearTrainWreckStatistic">
+       </statistics>
    </extension>
     <extension
           point="org.projectusus.core.metrics"> 
@@ -64,6 +67,9 @@
        </metrics>
        <metrics
              class="org.projectusus.metrics.AbstractClassCollector">
+       </metrics>
+       <metrics
+             class="org.projectusus.metrics.TrainWreckCollector">
        </metrics>
     </extension>
 
