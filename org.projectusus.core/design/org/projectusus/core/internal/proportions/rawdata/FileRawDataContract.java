@@ -29,33 +29,33 @@ public class FileRawDataContract extends UsusContractBase<FileRawData> {
         // TODO no post-condition identified yet
     }
 
-    public void pre_putData( WrappedTypeBinding boundType, MethodDeclaration methodDecl, String dataKey, int value ) {
+    public void pre_putData( WrappedTypeBinding boundType, MethodDeclaration methodDecl, String dataKey, Object value ) {
         // TODO Auto-generated pre-condition
         assertThat( methodDecl != null, "methodDecl_not_null" );
         assertThat( dataKey != null, "dataKey_not_null" );
     }
 
-    public void post_putData( WrappedTypeBinding boundType, MethodDeclaration methodDecl, String dataKey, int value ) {
+    public void post_putData( WrappedTypeBinding boundType, MethodDeclaration methodDecl, String dataKey, Object value ) {
         // TODO no post-condition identified yet
     }
 
-    public void pre_putData( WrappedTypeBinding boundType, Initializer initializer, String dataKey, int value ) {
+    public void pre_putData( WrappedTypeBinding boundType, Initializer initializer, String dataKey, Object value ) {
         // TODO Auto-generated pre-condition
         assertThat( initializer != null, "initializer_not_null" );
         assertThat( dataKey != null, "dataKey_not_null" );
     }
 
-    public void post_putData( WrappedTypeBinding boundType, Initializer initializer, String dataKey, int value ) {
+    public void post_putData( WrappedTypeBinding boundType, Initializer initializer, String dataKey, Object value ) {
         // TODO no post-condition identified yet
     }
 
-    public void pre_putData( WrappedTypeBinding boundType, AbstractTypeDeclaration node, String dataKey, int value ) {
+    public void pre_putData( WrappedTypeBinding boundType, AbstractTypeDeclaration node, String dataKey, Object value ) {
         // TODO Auto-generated pre-condition
         assertThat( node != null, "node_not_null" );
         assertThat( dataKey != null, "dataKey_not_null" );
     }
 
-    public void post_putData( WrappedTypeBinding boundType, AbstractTypeDeclaration node, String dataKey, int value ) {
+    public void post_putData( WrappedTypeBinding boundType, AbstractTypeDeclaration node, String dataKey, Object value ) {
         // TODO no post-condition identified yet
     }
 
