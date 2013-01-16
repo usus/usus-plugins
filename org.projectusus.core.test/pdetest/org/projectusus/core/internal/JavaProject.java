@@ -74,6 +74,10 @@ public class JavaProject extends ExternalResource {
     }
 
     public void delete() throws CoreException {
+        IResource[] members = project.members();
+        for( IResource member : members ) {
+            member.delete( true, null );
+        }
         project.delete( true, null );
     }
 
