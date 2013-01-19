@@ -180,6 +180,7 @@
             <include>**/*Test.java</include>
           </includes>
           <failIfNoTests>false</failIfNoTests>
+          <showEclipseLog>true</showEclipseLog>
         </configuration>
       </plugin>
       <plugin>
