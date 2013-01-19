@@ -26,7 +26,7 @@ public class JavaProject extends ExternalResource {
     }
 
     public JavaProject( String prefix ) {
-        this.projectName = prefix + "-" + System.nanoTime();
+        this.projectName = prefix + "-" + System.currentTimeMillis();
     }
 
     public IProject get() {
