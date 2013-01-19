@@ -6,8 +6,5 @@
    <feature url="features/org.projectusus.autotestsuite_0.0.0.jar" id="org.projectusus.autotestsuite" version="0.0.0">
       <category name="org.projectusus"/>
    </feature>
-   <feature url="features/org.projectusus.bugprison.0.0.0.jar" id="org.projectusus.bugprison" version="0.0.0">
-      <category name="org.projectusus"/>
-   </feature>
    <category-def name="org.projectusus" label="Project Usus"/>
 </site>

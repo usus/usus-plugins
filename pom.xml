@@ -21,19 +21,15 @@
     <module>org.projectusus.adapter</module>
     <module>org.projectusus.autotestsuite-feature</module>
     <module>org.projectusus.autotestsuite.ui</module>
-    <module>org.projectusus.bugprison-feature</module>
-    <module>org.projectusus.bugprison.core</module>
-    <module>org.projectusus.bugprison.ui</module>
-    <module>org.projectusus.codereview.ui</module>
     <module>org.projectusus.core</module>
     <module>org.projectusus.core.test</module>
     <module>org.projectusus.defaultmetrics</module>
     <module>org.projectusus.externals.test</module>
-    <module>org.projectusus.nasty.ui</module>
     <module>org.projectusus.projectsettings.core</module>
     <module>org.projectusus.projectsettings.ui</module>
     <module>org.projectusus.ui</module>
     <module>org.projectusus.ui.dependencygraph</module>
+	<module>org.projectusus.work_in_progress_metrics</module>
     <module>org.projectusus.updatesite</module>
   </modules>
 
