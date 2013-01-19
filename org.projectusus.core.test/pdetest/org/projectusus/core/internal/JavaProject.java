@@ -110,7 +110,7 @@ public class JavaProject extends ExternalResource {
     }
 
     public void deleteAndReport() {
-        print( "  Deleting project '" + project.getName() + "' at " + System.nanoTime() + " ..." );
+        print( "  Deleting project '" + project.getName() + "' at " + System.currentTimeMillis() + " ..." );
         Exception exception = null;
         try {
             delete();
