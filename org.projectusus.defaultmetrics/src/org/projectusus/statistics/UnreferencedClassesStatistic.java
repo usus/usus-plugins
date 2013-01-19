@@ -15,7 +15,7 @@ public class UnreferencedClassesStatistic extends CockpitExtension {
     private List<Hotspot> hotspots = new ArrayList<Hotspot>();
 
     public UnreferencedClassesStatistic() {
-        super( codeProportionUnit_CLASS_label, -1 ); //$NON-NLS-1$
+        super( codeProportionUnit_CLASS_label, 0 ); //$NON-NLS-1$
     }
 
     @Override
@@ -26,7 +26,7 @@ public class UnreferencedClassesStatistic extends CockpitExtension {
                 // nodeHelper.getStartPositionFor( node );
                 // nodeHelper.calcLineNumberFor( node );
                 SourceCodeLocation location = new SourceCodeLocation( clazz.getClassname().toString(), 1, 1 );
-                addResult( location, 0 );
+                addResult( location, 1 );
             }
         }
 
