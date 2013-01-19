@@ -1,4 +1,4 @@
-package org.projectusus.statistics;
+package org.projectusus.wip.statistics;
 
 import java.util.List;
 

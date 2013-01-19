@@ -1,4 +1,4 @@
-package org.projectusus.metrics;
+package org.projectusus.wip.metrics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.metrics.MetricsCollector;
+import org.projectusus.metrics.Counter;
 
 @SuppressWarnings( "unused" )
 public class TrainWreckCollector extends MetricsCollector {
