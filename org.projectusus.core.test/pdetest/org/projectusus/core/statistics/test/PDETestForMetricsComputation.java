@@ -15,8 +15,6 @@ import java.net.URL;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
 import org.junit.Rule;
-import org.junit.rules.TestWatchman;
-import org.junit.runners.model.FrameworkMethod;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.internal.JavaProject;
 import org.projectusus.core.internal.Workspace;
@@ -31,14 +29,6 @@ public class PDETestForMetricsComputation {
 
     @Rule
     public JavaProject project = new JavaProject();
-
-    @Rule
-    public TestWatchman watchman = new TestWatchman() {
-        @Override
-        public void starting( FrameworkMethod method ) {
-            System.out.println( "> Starting " + method.getName() );
-        }
-    };
 
     public void simpleCaseTestDemo() throws Exception {
         IFile file = project.createFile( "A.java", loadResource( "A.test" ) );
