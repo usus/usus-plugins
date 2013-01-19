@@ -6,6 +6,7 @@ import static org.projectusus.core.internal.TestProjectCreator.makeUsusProject;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.Random;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -26,7 +27,7 @@ public class JavaProject extends ExternalResource {
     }
 
     public JavaProject( String prefix ) {
-        this.projectName = prefix + "-" + System.currentTimeMillis();
+        this.projectName = prefix + "-" + System.currentTimeMillis() + "-" + new Random().nextInt( Integer.MAX_VALUE );
     }
 
     public IProject get() {
