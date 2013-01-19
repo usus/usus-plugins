@@ -74,7 +74,7 @@ public class JavaProject extends ExternalResource {
     }
 
     public void delete() throws CoreException {
-        project.delete( true, null );
+        project.delete( IResource.FORCE | IResource.ALWAYS_DELETE_PROJECT_CONTENT, null );
     }
 
     public void disableUsus() throws CoreException {
