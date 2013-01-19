@@ -2,7 +2,6 @@ package org.projectusus.ui.dependencygraph;
 
 import java.util.Set;
 
-import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphModel;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
