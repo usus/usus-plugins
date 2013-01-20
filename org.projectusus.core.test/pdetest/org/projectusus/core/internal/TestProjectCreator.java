@@ -26,6 +26,8 @@ import org.projectusus.core.statistics.UsusModelProvider;
 
 public class TestProjectCreator {
 
+    private static final String OUTPUT_FOLDER = "bin";
+
     public static final String SOURCE_FOLDER = "src";
 
     private final IProject project;
@@ -69,8 +71,7 @@ public class TestProjectCreator {
     }
 
     private void addBinFolder( IJavaProject javaProject ) throws CoreException {
-        IFolder binFolder = javaProject.getProject().getFolder( "bin" );
-        binFolder.create( false, true, null );
+        IFolder binFolder = javaProject.getProject().getFolder( OUTPUT_FOLDER );
         javaProject.setOutputLocation( binFolder.getFullPath(), null );
     }
 
