@@ -5,7 +5,7 @@
 
 ### Lack of Cohesion of Classes
 
-This statistic lists packages in which the class connections form two or more unconnected graphs. This usually indicates that the classes in the package do not interact with each other. This may indicate a design problem.
+This statistic lists packages in which the class connections form two or more unconnected graphs. In such a situation at least some classes within the same package do not interact with each other. This may indicate a design problem.
 
 ### Mudholes
 
@@ -44,7 +44,7 @@ In ACD calculation, the references that stemmed from chained arguments of a chai
 
 ### Performance Issues
 
-The Class Graph and Package Graph visualizations were very slow, rendering Usus to become unusable on larger projects. In this release, the performance has been massively improved (thanks to the generosity of YourKit who supported us with a free license). Still, if Usus is too slow, you can improve the performance by closing one or both of these windows. 
+The Class Graph and Package Graph visualizations were very slow, rendering Usus to become unusable on larger projects. In this release, the performance has been massively improved (thanks to the generosity of YourKit who supported us with a free license). Still, if Usus is too slow, you can improve the performance by closing one or both of these views. 
 
 
 ## Known Problems
