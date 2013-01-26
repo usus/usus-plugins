@@ -113,7 +113,16 @@ public class CCCollectorTest {
     }
 
     @Test
-    public void threeSwitchHasCC4() {
+    public void oneLogicalOrBitwiseHasCC1() {
+        InfixExpression stmt = mock( InfixExpression.class );
+        when( stmt.getOperator() ).thenReturn( Operator.AND );
+        collector.visit( stmt );
+
+        checkMethodYieldsCC( 1 );
+    }
+
+    @Test
+    public void threeCaseHasCC4() {
         SwitchCase stmt = mock( SwitchCase.class );
         collector.visit( stmt );
         collector.visit( stmt );
@@ -161,6 +170,7 @@ public class CCCollectorTest {
         when( nodeHelper.findEnclosingClassOf( org.mockito.Matchers.any( MethodDeclaration.class ) ) ).thenReturn( parent );
         when( Integer.valueOf( nodeHelper.getStartPositionFor( org.mockito.Matchers.any( ASTNode.class ) ) ) ).thenReturn( Integer.valueOf( 100 ) );
 
+        // this is the sum of the CC's for both methods:
         checkMethodYieldsCC( 2 );
     }
 
