@@ -1,4 +1,4 @@
-package org.projectusus.core.proportions.rawdata.jdtdriver.test;
+package org.projectusus.core.proportions.rawdata.jdtdriver.trainwreck;
 
 import java.util.HashMap;
 import java.util.Map;
