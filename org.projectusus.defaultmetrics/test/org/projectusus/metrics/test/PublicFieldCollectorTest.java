@@ -22,8 +22,8 @@ import org.projectusus.metrics.util.Setup;
 
 public class PublicFieldCollectorTest {
 
-    private static final String ANOTHER_CLASS_NAME = "AnotherClassName";
     private static final String CLASS_NAME = "ClassName";
+    private static final String ANOTHER_CLASS_NAME = "AnotherClassName";
     private PublicFieldCollector collector;
     private ClassValueVisitor visitor = new ClassValueVisitor( MetricsResults.PUBLIC_FIELDS );
     private TypeDeclaration node;
