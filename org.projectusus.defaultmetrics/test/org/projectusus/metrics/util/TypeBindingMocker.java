@@ -27,7 +27,6 @@ public class TypeBindingMocker {
     public static IPackageBinding createPackageBinding() {
         IPackageBinding packageBinding = mock( IPackageBinding.class );
         when( packageBinding.getName() ).thenReturn( "packagename" );
-        // packageBinding.getJavaElement()
         return packageBinding;
     }
 
