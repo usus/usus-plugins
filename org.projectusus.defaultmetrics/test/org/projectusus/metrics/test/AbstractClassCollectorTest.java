@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.projectusus.metrics.util.CountingUtils.getNumberOfClasses;
-import static org.projectusus.metrics.util.TypeBindingMocker.createFile;
 import static org.projectusus.metrics.util.TypeBindingMocker.createTypeBinding;
 
 import org.eclipse.jdt.core.JavaModelException;
@@ -13,7 +12,6 @@ import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Modifier;
-import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +20,7 @@ import org.projectusus.core.filerelations.model.ASTNodeHelper;
 import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.metrics.AbstractClassCollector;
 import org.projectusus.metrics.util.ClassValueVisitor;
+import org.projectusus.metrics.util.Setup;
 
 public class AbstractClassCollectorTest {
 
@@ -40,7 +39,7 @@ public class AbstractClassCollectorTest {
 
     @Test
     public void interfaceIsMarkedAsAbstract() {
-        TypeDeclaration node = setupCollectorAndMockFor( TypeDeclaration.class, "ClassName" );
+        TypeDeclaration node = Setup.setupCollectorAndMockFor( collector, TypeDeclaration.class, "ClassName" );
         when( Boolean.valueOf( node.isInterface() ) ).thenReturn( Boolean.TRUE );
 
         collector.visit( node );
@@ -54,7 +53,7 @@ public class AbstractClassCollectorTest {
 
     @Test
     public void abstractClassIsMarkedAsAbstract() {
-        TypeDeclaration node = setupCollectorAndMockFor( TypeDeclaration.class, "ClassName" );
+        TypeDeclaration node = Setup.setupCollectorAndMockFor( collector, TypeDeclaration.class, "ClassName" );
         when( Integer.valueOf( node.getModifiers() ) ).thenReturn( Integer.valueOf( Modifier.ABSTRACT ) );
 
         collector.visit( node );
@@ -68,7 +67,7 @@ public class AbstractClassCollectorTest {
 
     @Test
     public void concreteClassIsNotMarkedAsAbstract() {
-        collector.visit( setupCollectorAndMockFor( TypeDeclaration.class, "ClassName" ) );
+        collector.visit( Setup.setupCollectorAndMockFor( collector, TypeDeclaration.class, "ClassName" ) );
 
         visitor.visit();
         assertEquals( 0, visitor.getValueSum() );
@@ -80,7 +79,7 @@ public class AbstractClassCollectorTest {
     @Test
     public void enumIsNotMarkedAsAbstract() {
 
-        collector.visit( setupCollectorAndMockFor( EnumDeclaration.class, "EnumName" ) );
+        collector.visit( Setup.setupCollectorAndMockFor( collector, EnumDeclaration.class, "EnumName" ) );
 
         visitor.visit();
         assertEquals( 0, visitor.getValueSum() );
@@ -91,7 +90,7 @@ public class AbstractClassCollectorTest {
 
     @Test
     public void annotationClassIsNotMarkedAsAbstract() {
-        collector.visit( setupCollectorAndMockFor( AnnotationTypeDeclaration.class, "AnnotationName" ) );
+        collector.visit( Setup.setupCollectorAndMockFor( collector, AnnotationTypeDeclaration.class, "AnnotationName" ) );
 
         visitor.visit();
         assertEquals( 0, visitor.getValueSum() );
@@ -102,36 +101,23 @@ public class AbstractClassCollectorTest {
 
     @Test
     public void abstractnessOfMultipleClassesIsAdditive() {
-        TypeDeclaration interfaceNode = setupCollectorAndMockFor( TypeDeclaration.class, "InterfaceName" );
+        TypeDeclaration interfaceNode = Setup.setupCollectorAndMockFor( collector, TypeDeclaration.class, "InterfaceName" );
         when( Boolean.valueOf( interfaceNode.isInterface() ) ).thenReturn( Boolean.TRUE );
         collector.visit( interfaceNode );
 
-        TypeDeclaration abstractNode = setupCollectorAndMockFor( TypeDeclaration.class, "AbstractClassName" );
+        TypeDeclaration abstractNode = Setup.setupCollectorAndMockFor( collector, TypeDeclaration.class, "AbstractClassName" );
         when( Integer.valueOf( abstractNode.getModifiers() ) ).thenReturn( Integer.valueOf( Modifier.ABSTRACT ) );
         collector.visit( abstractNode );
 
-        collector.visit( setupCollectorAndMockFor( TypeDeclaration.class, "ClassName" ) );
+        collector.visit( Setup.setupCollectorAndMockFor( collector, TypeDeclaration.class, "ClassName" ) );
 
-        collector.visit( setupCollectorAndMockFor( EnumDeclaration.class, "EnumName" ) );
+        collector.visit( Setup.setupCollectorAndMockFor( collector, EnumDeclaration.class, "EnumName" ) );
 
-        collector.visit( setupCollectorAndMockFor( AnnotationTypeDeclaration.class, "AnnotationName" ) );
+        collector.visit( Setup.setupCollectorAndMockFor( collector, AnnotationTypeDeclaration.class, "AnnotationName" ) );
 
         visitor.visit();
         assertEquals( 2, visitor.getValueSum() );
 
         assertEquals( 5, getNumberOfClasses() );
-    }
-
-    private <T extends AbstractTypeDeclaration> T setupCollectorAndMockFor( Class<T> type, String name ) {
-        collector.setup( createFile(), UsusModelProvider.getMetricsWriter() );
-        T node = mock( type );
-        addNameTo( node, name );
-        return node;
-    }
-
-    private void addNameTo( AbstractTypeDeclaration theNode, String nodename ) {
-        SimpleName name = mock( SimpleName.class );
-        when( name.toString() ).thenReturn( nodename );
-        when( theNode.getName() ).thenReturn( name );
     }
 }
