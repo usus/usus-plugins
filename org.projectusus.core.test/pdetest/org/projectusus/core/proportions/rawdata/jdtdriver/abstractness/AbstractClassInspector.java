@@ -1,4 +1,4 @@
-package org.projectusus.core.proportions.rawdata.jdtdriver.test;
+package org.projectusus.core.proportions.rawdata.jdtdriver.abstractness;
 
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
