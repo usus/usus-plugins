@@ -38,6 +38,11 @@ import org.projectusus.metrics.util.MethodValueVisitor;
 
 public class CCCollectorTest {
 
+    private static final String CLASS_NAME = "ClassName";
+    private static final String OUTER_CLASS_NAME = "OuterClassName";
+    private static final String INNER_METHOD = "innerMethod";
+    private static final String METHOD = "method";
+    private static final String CLASS_NAME_METHOD = CLASS_NAME + "." + METHOD + "()";
     private CCCollector collector;
     private MethodValueVisitor visitor = new MethodValueVisitor( MetricsResults.CC );
     private MethodDeclaration method;
@@ -46,7 +51,7 @@ public class CCCollectorTest {
     @Before
     public void setup() throws JavaModelException {
         nodeHelper = mock( ASTNodeHelper.class );
-        String classname = "ClassName";
+        String classname = CLASS_NAME;
         ITypeBinding typeBinding = createTypeBinding();
         when( nodeHelper.resolveBindingOf( org.mockito.Matchers.any( AbstractTypeDeclaration.class ) ) ).thenReturn( typeBinding );
         TypeDeclaration parent = setupMockFor( TypeDeclaration.class, classname );
@@ -55,7 +60,7 @@ public class CCCollectorTest {
 
         UsusModelProvider.clear( nodeHelper );
 
-        method = setupMethodDeclMock( "method" );
+        method = setupMethodDeclMock( METHOD );
 
         collector = new CCCollector();
         collector.setup( createFile(), UsusModelProvider.getMetricsWriter() );
@@ -69,8 +74,7 @@ public class CCCollectorTest {
         collector.endVisit( method );
 
         visitor.visit();
-        assertEquals( 1, visitor.getValueSum() );
-        assertEquals( "ClassName.method()", visitor.getName() );
+        assertEquals( 1, visitor.getValueMap().get( CLASS_NAME_METHOD ).intValue() );
 
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
@@ -160,25 +164,27 @@ public class CCCollectorTest {
 
     @Test
     public void methodInsideMethodYieldsCC2() {
-        MethodDeclaration innerMethod = setupMethodDeclMock( "innerMethod" );
+        MethodDeclaration innerMethod = setupMethodDeclMock( INNER_METHOD );
 
         collector.visit( innerMethod );
         collector.endVisit( innerMethod );
 
         // now we need to make sure that the outer method has a different enclosing class and start position in the file:
-        TypeDeclaration parent = setupMockFor( TypeDeclaration.class, "OuterClassName" );
+        TypeDeclaration parent = setupMockFor( TypeDeclaration.class, OUTER_CLASS_NAME );
         when( nodeHelper.findEnclosingClassOf( org.mockito.Matchers.any( MethodDeclaration.class ) ) ).thenReturn( parent );
         when( Integer.valueOf( nodeHelper.getStartPositionFor( org.mockito.Matchers.any( ASTNode.class ) ) ) ).thenReturn( Integer.valueOf( 100 ) );
 
-        // this is the sum of the CC's for both methods:
-        checkMethodYieldsCC( 2 );
+        collector.endVisit( method );
+        visitor.visit();
+        assertEquals( 1, visitor.getValueMap().get( OUTER_CLASS_NAME + "." + METHOD + "()" ).intValue() );
+        assertEquals( 1, visitor.getValueMap().get( CLASS_NAME + "." + INNER_METHOD + "()" ).intValue() );
     }
 
     private void checkMethodYieldsCC( int cc ) {
         collector.endVisit( method );
 
         visitor.visit();
-        assertEquals( cc, visitor.getValueSum() );
+        assertEquals( cc, visitor.getValueMap().get( CLASS_NAME_METHOD ).intValue() );
     }
 
     private <T extends AbstractTypeDeclaration> T setupMockFor( Class<T> type, String name ) {
