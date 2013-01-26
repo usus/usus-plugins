@@ -1,4 +1,4 @@
-package org.projectusus.metrics.test;
+package org.projectusus.metrics.old;
 
 import static org.junit.Assert.assertEquals;
 import static org.projectusus.metrics.util.CountingUtils.getNumberOfClasses;
