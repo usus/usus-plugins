@@ -22,7 +22,6 @@ public class EmptinessOfRawDataTreeWithoutCollectorRunsTest {
     public void classValueVisitorCheckingAbstractness() {
         ClassValueVisitor visitor = new ClassValueVisitor( MetricsResults.ABSTRACTNESS );
         visitor.visit();
-        assertEquals( 0, visitor.getValueSum() );
 
         assertEquals( 0, getNumberOfClasses() );
     }
@@ -32,7 +31,6 @@ public class EmptinessOfRawDataTreeWithoutCollectorRunsTest {
         MethodValueVisitor visitor = new MethodValueVisitor( MetricsResults.CC );
 
         visitor.visit();
-        assertEquals( 0, visitor.getValueSum() );
 
         assertEquals( 0, getNumberOfClasses() );
         assertEquals( 0, getNumberOfMethods() );
