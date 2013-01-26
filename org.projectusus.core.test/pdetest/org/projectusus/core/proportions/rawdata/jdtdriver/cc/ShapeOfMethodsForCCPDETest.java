@@ -1,4 +1,4 @@
-package org.projectusus.core.proportions.rawdata.jdtdriver.test;
+package org.projectusus.core.proportions.rawdata.jdtdriver.cc;
 
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;

@@ -1,4 +1,4 @@
-package org.projectusus.core.proportions.rawdata.jdtdriver.test;
+package org.projectusus.core.proportions.rawdata.jdtdriver.cc;
 
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
