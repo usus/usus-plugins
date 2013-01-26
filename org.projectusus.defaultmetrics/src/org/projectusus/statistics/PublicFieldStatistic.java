@@ -4,7 +4,6 @@ import org.projectusus.core.IMetricsResultVisitor;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
 import org.projectusus.core.statistics.CockpitExtension;
-import org.projectusus.metrics.PublicFieldMetrics;
 
 public class PublicFieldStatistic extends CockpitExtension {
 
@@ -19,7 +18,7 @@ public class PublicFieldStatistic extends CockpitExtension {
 
     @Override
     public void inspectClass( SourceCodeLocation location, MetricsResults results ) {
-        addResult( location, results.getIntValue( PublicFieldMetrics.PUBLIC_FIELDS ) );
+        addResult( location, results.getIntValue( MetricsResults.PUBLIC_FIELDS ) );
     }
 
     @Override

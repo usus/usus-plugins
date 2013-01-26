@@ -12,6 +12,7 @@ public class MetricsResults {
     public static final String ML = "MethodLength"; //$NON-NLS-1$
     public static final String CLASS_CREATION = "ClassCreation"; //$NON-NLS-1$
     public static final String ABSTRACTNESS = "Abstractness";
+    public static final String PUBLIC_FIELDS = "public fields"; //$NON-NLS-1$
     public static final String TRAIN_WRECKS = "TrainWrecks";
 
     private Map<String, Object> results = new HashMap<String, Object>();

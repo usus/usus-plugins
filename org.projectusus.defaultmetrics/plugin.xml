@@ -60,7 +60,7 @@
              class="org.projectusus.metrics.MLCollector">
        </metrics>
        <metrics
-             class="org.projectusus.metrics.PublicFieldMetrics">
+             class="org.projectusus.metrics.PublicFieldCollector">
        </metrics>
        <metrics
              class="org.projectusus.metrics.AbstractClassCollector">
