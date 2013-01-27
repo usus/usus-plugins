@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.ui,
  org.projectusus.externals.test;resolution:=optional,
  org.projectusus.jfeet,
  org.swtchart,
- org.swtchart.ext
+ org.swtchart.ext,
+ org.junit;bundle-version="4.11.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.projectusus.ui.colors,
