@@ -31,7 +31,7 @@
     <module>org.projectusus.projectsettings.ui</module>
     <module>org.projectusus.ui</module>
     <module>org.projectusus.ui.dependencygraph</module>
-	<module>org.projectusus.work_in_progress_metrics</module>
+    <module>org.projectusus.work_in_progress_metrics</module>
     <module>org.projectusus.updatesite</module>
   </modules>
 
