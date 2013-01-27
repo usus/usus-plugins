@@ -61,7 +61,7 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
         assertEquals( 1, getNumberOfClassesInProject() );
         assertEquals( 2, getNumberOfMethodsInProject() );
         assertEquals( 2, getClassSizeSum() );
-        assertEquals( 16, getMethodLengthSum() );
+        assertEquals( 22, getMethodLengthSum() );
         assertEquals( 8, getCCSum() );
     }
 
@@ -73,7 +73,7 @@ public class DropRawDataPDETest extends PDETestForMetricsComputation {
         assertEquals( 2, getNumberOfClassesInProject() );
         assertEquals( 3, getNumberOfMethodsInProject() );
         assertEquals( 3, getClassSizeSum() );
-        assertEquals( 17, getMethodLengthSum() );
+        assertEquals( 23, getMethodLengthSum() );
         assertEquals( 9, getCCSum() );
     }
 
