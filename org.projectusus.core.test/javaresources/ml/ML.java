@@ -1,5 +1,7 @@
 package ml;
 
+import java.util.List;
+
 public class ML {
 
     static int i;
@@ -17,9 +19,11 @@ public class ML {
     public void empty() {
     }
 
-    public void ite() {
+    public boolean ite_block() {
         if( true ) {
+            return true;
         } else {
+            return false;
         }
     }
 
@@ -30,16 +34,78 @@ public class ML {
             return false;
     }
 
-    public void assign() {
-        int i = 0;
+    public boolean for_block() {
+        for( ;; ) {
+            return true;
+        }
     }
 
-    public void iteassign() {
-        if( true ) {
-            int i = 0;
-        } else {
-            int j = 1;
+    public boolean for_single() {
+        for( ;; )
+            return true;
+    }
+
+    public void foreach_single( List l ) {
+        for( Object c : l )
+            ;
+    }
+
+    public void foreach_block( List l ) {
+        for( Object c : l ) {
+            ;
         }
+    }
+
+    public boolean do_block() {
+        do {
+            return false;
+        } while( true );
+    }
+
+    public boolean do_single() {
+        do
+            return false;
+        while( true );
+    }
+
+    public boolean while_block() {
+        while( true ) {
+            return false;
+        }
+    }
+
+    public boolean while_single() {
+        while( true )
+            return false;
+    }
+
+    public void switchCase( int i ) {
+        switch( i ) {
+        case 0:
+            int j = 1;
+            break;
+        case 1:
+            int k = 1;
+            k = 2;
+            break;
+        default:
+            int l = 3;
+            l = 4;
+            l = 5;
+            break;
+        }
+    }
+
+    public void tryCatch() {
+        try {
+            int a = 0;
+        } catch( Exception e ) {
+            int b = 1;
+        }
+    }
+
+    public void assign() {
+        int i = 0;
     }
 
     public void anon() {

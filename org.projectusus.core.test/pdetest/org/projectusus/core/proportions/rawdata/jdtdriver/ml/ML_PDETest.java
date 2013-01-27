@@ -29,18 +29,26 @@ public class ML_PDETest extends PDETestForMetricsComputation {
 
         Multimap<String, Integer> map = inspector.getValues();
 
-        assertThat( map.keySet().size(), is( 22 ) );
-
         assertThat( map.get( "initializer" ), contains( 1 ) );
         assertThat( map.get( "static initializer" ), contains( 1 ) );
         assertThat( map.get( "empty" ), contains( 0 ) );
-        assertThat( map.get( "ite" ), contains( 1, 0, 0 ) );
 
         // TODO Bug!!
+        assertThat( map.get( "ite_block" ), contains( 1, 1, 1 ) );
         assertThat( map.get( "ite_single" ), contains( 1 ) );
+        assertThat( map.get( "for_block" ), contains( 1, 1 ) );
+        assertThat( map.get( "for_single" ), contains( 1 ) );
+        assertThat( map.get( "foreach_block" ), contains( 1, 1 ) );
+        assertThat( map.get( "foreach_single" ), contains( 1 ) );
+        assertThat( map.get( "do_block" ), contains( 1, 1 ) );
+        assertThat( map.get( "do_single" ), contains( 1 ) );
+        assertThat( map.get( "while_block" ), contains( 1, 1 ) );
+        assertThat( map.get( "while_single" ), contains( 1 ) );
+        // assertThat( map.get( "switchCase" ), contains( 1, 2, 3, 4 ) );
+        assertThat( map.get( "switchCase" ), contains( 1 ) );
 
+        assertThat( map.get( "tryCatch" ), contains( 1, 1, 1 ) );
         assertThat( map.get( "assign" ), contains( 1 ) );
-        assertThat( map.get( "iteassign" ), contains( 1, 1, 1 ) );
         assertThat( map.get( "anon" ), contains( 1 ) );
 
         assertThat( map.get( "anonWithMeth" ), contains( 1 ) );
