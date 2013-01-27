@@ -10,10 +10,6 @@ public class MLCollector extends MetricsCollector {
 
     private Counter statementCount = new Counter();
 
-    public MLCollector() {
-        super();
-    }
-
     @Override
     public boolean visit( @SuppressWarnings( "unused" ) MethodDeclaration node ) {
         statementCount.startNewCount();
