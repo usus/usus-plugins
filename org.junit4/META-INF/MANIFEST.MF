@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JUnit 4 (homebrewn)
+Bundle-SymbolicName: org.junit4
+Bundle-Version: 4.11.0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit;bundle-version="4.11.0";visibility:=reexport
