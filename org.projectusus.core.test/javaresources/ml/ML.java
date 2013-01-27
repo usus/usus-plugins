@@ -79,7 +79,27 @@ public class ML {
             return false;
     }
 
-    public void switchCase( int i ) {
+    public void switchCase_block( int i ) {
+        switch( i ) {
+        case 0: {
+            int j = 1;
+            break;
+        }
+        case 1: {
+            int k = 1;
+            k = 2;
+            break;
+        }
+        default: {
+            int l = 3;
+            l = 4;
+            l = 5;
+            break;
+        }
+        }
+    }
+
+    public void switchCase_single( int i ) {
         switch( i ) {
         case 0:
             int j = 1;

@@ -1,7 +1,6 @@
 package org.projectusus.core.proportions.rawdata.jdtdriver.ml;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 import org.eclipse.jdt.core.dom.Initializer;
@@ -35,8 +34,8 @@ public class MLInspector extends MLCollector {
     }
 
     @Override
-    protected void calculate( List<?> statements ) {
-        values.put( names.peek(), Integer.valueOf( statements.size() ) );
+    protected void calculate( int count ) {
+        values.put( names.peek(), Integer.valueOf( count ) );
     }
 
     @Override
