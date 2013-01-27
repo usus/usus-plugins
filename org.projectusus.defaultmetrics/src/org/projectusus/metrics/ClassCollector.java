@@ -9,10 +9,6 @@ import org.projectusus.core.metrics.MetricsCollector;
 
 public class ClassCollector extends MetricsCollector {
 
-    public ClassCollector() {
-        super();
-    }
-
     @Override
     public boolean visit( TypeDeclaration node ) {
         return addAbstractTypeDeclaration( node );
