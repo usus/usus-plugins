@@ -8,8 +8,8 @@ Bundle-ClassPath: .,
  lib/cpsuite-1.2.5.jar,
  lib/mockito-core-1.8.5.jar,
  lib/org.objenesis-1.0.0.jar,
- lib/hamcrest-all-1.3-sources.jar,
- lib/hamcrest-all-1.3.jar
+ lib/hamcrest-all-1.3.jar,
+ lib/junit-4.11.jar
 Export-Package: org.hamcrest,
  org.hamcrest.beans,
  org.hamcrest.collection,
@@ -19,6 +19,14 @@ Export-Package: org.hamcrest,
  org.hamcrest.object,
  org.hamcrest.text,
  org.hamcrest.xml,
+ org.junit,
+ org.junit.matchers,
+ org.junit.rules,
+ org.junit.runner,
+ org.junit.runner.manipulation,
+ org.junit.runner.notification,
+ org.junit.runners,
+ org.junit.runners.model,
  org.mockito,
  org.mockito.asm,
  org.mockito.asm.signature,
@@ -81,4 +89,3 @@ Export-Package: org.hamcrest,
  org.projectusus.matchers
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
-Require-Bundle: org.junit4;bundle-version="4.7.0"

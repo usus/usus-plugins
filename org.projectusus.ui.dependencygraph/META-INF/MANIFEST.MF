@@ -15,7 +15,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.core,
  org.eclipse.core.expressions,
  org.projectusus.externals.test;resolution:=optional,
- org.junit4;resolution:=optional,
  org.projectusus.jfeet
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

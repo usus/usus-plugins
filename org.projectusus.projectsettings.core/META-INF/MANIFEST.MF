@@ -7,8 +7,7 @@ Bundle-Vendor: projectusus.org
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.eclipse.jdt.core,
- org.projectusus.externals.test;resolution:=optional,
- org.junit4;resolution:=optional
+ org.projectusus.externals.test;resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.projectusus.projectsettings.core

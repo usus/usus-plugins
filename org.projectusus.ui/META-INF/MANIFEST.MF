@@ -15,7 +15,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.debug.core,
  org.projectusus.adapter,
  org.projectusus.externals.test;resolution:=optional,
- org.junit4;resolution:=optional,
  org.projectusus.jfeet,
  org.swtchart,
  org.swtchart.ext
