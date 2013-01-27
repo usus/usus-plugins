@@ -17,6 +17,8 @@
   </properties>
 
   <modules>
+    <module>org.junit</module>
+    <module>org.junit4</module>
     <module>org.projectusus-feature</module>
     <module>org.projectusus.adapter</module>
     <module>org.projectusus.autotestsuite-feature</module>

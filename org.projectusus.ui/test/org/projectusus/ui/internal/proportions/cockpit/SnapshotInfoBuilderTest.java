@@ -1,10 +1,10 @@
 package org.projectusus.ui.internal.proportions.cockpit;
 
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
-import static org.projectusus.matchers.UsusMatchers.endsWith;
-import static org.projectusus.matchers.UsusMatchers.equalTo;
-import static org.projectusus.matchers.UsusMatchers.not;
-import static org.projectusus.matchers.UsusMatchers.startsWith;
 
 import java.util.Date;
 
