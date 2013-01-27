@@ -11,8 +11,4 @@ public class UsusMatchers {
     return org.projectusus.matchers.IsSetOfMatcher.<T>emptySet();
   }
 
-  public static <T> org.hamcrest.Matcher<java.util.Set<? extends T>> setOf(T... items) {
-    return org.projectusus.matchers.IsSetOfMatcher.<T>setOf(items);
-  }
-
 }
