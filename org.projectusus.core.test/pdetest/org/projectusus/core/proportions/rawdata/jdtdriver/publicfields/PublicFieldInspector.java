@@ -2,14 +2,13 @@ package org.projectusus.core.proportions.rawdata.jdtdriver.publicfields;
 
 import java.util.Stack;
 
-import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.projectusus.core.metrics.MetricsCollector;
+import org.projectusus.metrics.PublicFieldCollector;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-public class PublicFieldInspector extends MetricsCollector {
+public class PublicFieldInspector extends PublicFieldCollector {
 
     private Multimap<String, Integer> map = ArrayListMultimap.create();
     private Stack<String> names = new Stack<String>();
@@ -18,21 +17,16 @@ public class PublicFieldInspector extends MetricsCollector {
         return map;
     }
 
-    @Override
-    public boolean visit( TypeDeclaration node ) {
+    public void init( TypeDeclaration node ) {
         String name = node.getName().toString();
         names.push( name );
-        return true;
     }
 
-    @Override
-    public void endVisit( TypeDeclaration node ) {
+    public void calculate( int modifiers ) {
+        map.put( names.peek(), Integer.valueOf( modifiers ) );
+    }
+
+    public void commit( TypeDeclaration node ) {
         names.pop();
-    }
-
-    @Override
-    public boolean visit( FieldDeclaration node ) {
-        map.put( names.peek(), Integer.valueOf( node.getModifiers() ) );
-        return true;
     }
 }
