@@ -20,12 +20,12 @@ public class MLInspector extends MLCollector {
     private Stack<String> names = new Stack<String>();
 
     @Override
-    protected void init( MethodDeclaration node ) {
+    public void init( MethodDeclaration node ) {
         initWithEmptyListFor( node.getName().toString() );
     }
 
     @Override
-    protected void init( Initializer node ) {
+    public void init( Initializer node ) {
         if( (node.getModifiers() & Modifier.STATIC) == 0 ) {
             initWithEmptyListFor( INITIALIZER );
         } else {
@@ -34,17 +34,17 @@ public class MLInspector extends MLCollector {
     }
 
     @Override
-    protected void calculate( int count ) {
+    public void calculate( int count ) {
         values.put( names.peek(), Integer.valueOf( count ) );
     }
 
     @Override
-    protected void commit( MethodDeclaration node ) {
+    public void commit( MethodDeclaration node ) {
         names.pop();
     }
 
     @Override
-    protected void commit( Initializer node ) {
+    public void commit( Initializer node ) {
         names.pop();
     }
 

@@ -94,24 +94,24 @@ public class MLCollector extends MetricsCollector {
         return (stmt instanceof Block) ? 0 : 1;
     }
 
-    protected void init( @SuppressWarnings( "unused" ) MethodDeclaration node ) {
+    public void init( @SuppressWarnings( "unused" ) MethodDeclaration node ) {
         statementCount.startNewCount();
     }
 
-    protected void init( @SuppressWarnings( "unused" ) Initializer node ) {
+    public void init( @SuppressWarnings( "unused" ) Initializer node ) {
         statementCount.startNewCount();
     }
 
-    protected void calculate( int count ) {
+    public void calculate( int count ) {
         statementCount.increaseLastCountBy( count );
     }
 
-    protected void commit( MethodDeclaration node ) {
+    public void commit( MethodDeclaration node ) {
         int count = statementCount.getAndClearCount();
         getMetricsWriter().putData( getFile(), node, MetricsResults.ML, count );
     }
 
-    protected void commit( Initializer node ) {
+    public void commit( Initializer node ) {
         int count = statementCount.getAndClearCount();
         getMetricsWriter().putData( getFile(), node, MetricsResults.ML, count );
     }
