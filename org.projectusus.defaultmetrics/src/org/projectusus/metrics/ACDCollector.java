@@ -22,17 +22,20 @@ public class ACDCollector extends MetricsCollector {
     private static Stack<WrappedTypeBinding> types = new Stack<WrappedTypeBinding>();
 
     private void addCurrentType( AbstractTypeDeclaration node ) {
-        types.push( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
+        addCurrentType( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
     }
 
-    private WrappedTypeBinding currentType() {
-        if( types.empty() ) {
-            return null;
+    public void addCurrentType( WrappedTypeBinding wrap ) {
+        types.push( wrap );
+    }
+
+    public void connectCurrentTypeAnd( WrappedTypeBinding targetType ) {
+        if( currentType() != null && targetType != null && targetType.isValid() && !currentType().equals( targetType ) ) {
+            getMetricsWriter().addClassReference( currentType(), targetType );
         }
-        return types.peek();
     }
 
-    private void dropCurrentType() {
+    public void dropCurrentType() {
         if( !types.empty() ) {
             types.pop();
         }
@@ -84,7 +87,8 @@ public class ACDCollector extends MetricsCollector {
 
     @Override
     public boolean visit( SimpleType node ) {
-        return connectCurrentTypeAnd( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
+        connectCurrentTypeAnd( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
+        return true;
     }
 
     // expressions
@@ -94,14 +98,15 @@ public class ACDCollector extends MetricsCollector {
         if( node.isDeclaration() ) {
             return false;
         }
-        return connectCurrentTypeAnd( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
+        connectCurrentTypeAnd( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
+        return true;
     }
 
     @Override
     public boolean visit( MethodInvocation node ) {
         Expression targetExpression = node.getExpression();
         if( targetExpression == null ) {
-            return connectCurrentTypeAnd( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
+            connectCurrentTypeAnd( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
         }
         return true;
     }
@@ -110,15 +115,15 @@ public class ACDCollector extends MetricsCollector {
     public boolean visit( FieldAccess node ) {
         Expression targetExpression = node.getExpression();
         if( targetExpression == null ) {
-            return connectCurrentTypeAnd( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
+            connectCurrentTypeAnd( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
         }
         return true;
     }
 
-    private boolean connectCurrentTypeAnd( WrappedTypeBinding targetType ) {
-        if( currentType() != null && targetType != null && targetType.isValid() && !currentType().equals( targetType ) ) {
-            getMetricsWriter().addClassReference( currentType(), targetType );
+    private WrappedTypeBinding currentType() {
+        if( types.empty() ) {
+            return null;
         }
-        return true;
+        return types.peek();
     }
 }
