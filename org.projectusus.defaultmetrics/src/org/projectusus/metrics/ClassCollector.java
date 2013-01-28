@@ -11,21 +11,23 @@ public class ClassCollector extends MetricsCollector {
 
     @Override
     public boolean visit( TypeDeclaration node ) {
-        return addAbstractTypeDeclaration( node );
+        init( node );
+        return true;
     }
 
     @Override
     public boolean visit( AnnotationTypeDeclaration node ) {
-        return addAbstractTypeDeclaration( node );
+        init( node );
+        return true;
     }
 
     @Override
     public boolean visit( EnumDeclaration node ) {
-        return addAbstractTypeDeclaration( node );
+        init( node );
+        return true;
     }
 
-    private boolean addAbstractTypeDeclaration( AbstractTypeDeclaration node ) {
+    public void init( AbstractTypeDeclaration node ) {
         getMetricsWriter().putData( getFile(), node, MetricsResults.CLASS_CREATION, 0 );
-        return true;
     }
 }
