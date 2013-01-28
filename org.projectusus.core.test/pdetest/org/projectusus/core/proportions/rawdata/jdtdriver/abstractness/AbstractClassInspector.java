@@ -9,14 +9,12 @@ public class AbstractClassInspector extends AbstractClassCollector {
     private int concreteCount = 0;
     private int abstractCount = 0;
 
-    protected boolean markAsAbstract( TypeDeclaration node ) {
+    public void markAsAbstract( TypeDeclaration node ) {
         abstractCount++;
-        return true;
     }
 
-    protected boolean markAsConcrete( AbstractTypeDeclaration node ) {
+    public void markAsConcrete( AbstractTypeDeclaration node ) {
         concreteCount++;
-        return true;
     }
 
     public int getConcreteCount() {

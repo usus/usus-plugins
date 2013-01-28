@@ -12,34 +12,39 @@ public class AbstractClassCollector extends MetricsCollector {
 
     @Override
     public boolean visit( TypeDeclaration node ) {
-        return isAbstract( node ) ? markAsAbstract( node ) : markAsConcrete( node );
+        if( isAbstract( node ) )
+            markAsAbstract( node );
+        else
+            markAsConcrete( node );
+        return true;
     }
 
     @Override
     public boolean visit( AnnotationTypeDeclaration node ) {
-        return markAsConcrete( node );
+        markAsConcrete( node );
+        return true;
     }
 
     @Override
     public boolean visit( EnumDeclaration node ) {
-        return markAsConcrete( node );
+        markAsConcrete( node );
+        return true;
+    }
+
+    public void markAsAbstract( TypeDeclaration node ) {
+        writeAbstractness( node, 1 );
+    }
+
+    public void markAsConcrete( AbstractTypeDeclaration node ) {
+        writeAbstractness( node, 0 );
     }
 
     private boolean isAbstract( TypeDeclaration node ) {
         return node.isInterface() || Modifier.isAbstract( node.getModifiers() );
     }
 
-    protected boolean markAsAbstract( TypeDeclaration node ) {
-        return writeAbstractness( node, 1 );
-    }
-
-    protected boolean markAsConcrete( AbstractTypeDeclaration node ) {
-        return writeAbstractness( node, 0 );
-    }
-
-    private boolean writeAbstractness( AbstractTypeDeclaration node, int value ) {
+    private void writeAbstractness( AbstractTypeDeclaration node, int value ) {
         getMetricsWriter().putData( getFile(), node, MetricsResults.ABSTRACTNESS, value );
-        return true;
     }
 
 }
