@@ -1,16 +1,11 @@
 package org.projectusus.metrics.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.projectusus.metrics.util.Setup.setupCollectorAndMockFor;
-import static org.projectusus.metrics.util.TypeBindingMocker.createTypeBinding;
 
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +14,7 @@ import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.core.statistics.visitors.ClassCountVisitor;
 import org.projectusus.metrics.AbstractClassCollector;
 
-public class ClassCollectorTest {
+public class ClassCollectorTest extends CollectorTestHelper {
 
     private static final String NAME = "Name";
 
@@ -28,9 +23,7 @@ public class ClassCollectorTest {
 
     @Before
     public void setup() throws JavaModelException {
-        ASTNodeHelper nodeHelper = mock( ASTNodeHelper.class );
-        ITypeBinding typeBinding = createTypeBinding();
-        when( nodeHelper.resolveBindingOf( org.mockito.Matchers.any( AbstractTypeDeclaration.class ) ) ).thenReturn( typeBinding );
+        ASTNodeHelper nodeHelper = setupNodeHelperForClass();
 
         UsusModelProvider.clear( nodeHelper );
         collector = new AbstractClassCollector();

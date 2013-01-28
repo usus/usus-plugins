@@ -3,37 +3,30 @@ package org.projectusus.metrics.test;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.projectusus.metrics.util.TypeBindingMocker.createTypeBinding;
 
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.basis.MetricsResults;
-import org.projectusus.core.filerelations.model.ASTNodeHelper;
 import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.metrics.PublicFieldCollector;
 import org.projectusus.metrics.util.ClassValueVisitor;
 import org.projectusus.metrics.util.Setup;
 
-public class PublicFieldCollectorTest {
+public class PublicFieldCollectorTest extends CollectorTestHelper {
 
     private static final String CLASS_NAME = "ClassName";
     private static final String ANOTHER_CLASS_NAME = "AnotherClassName";
     private PublicFieldCollector collector;
-    private ClassValueVisitor visitor = new ClassValueVisitor( MetricsResults.PUBLIC_FIELDS );
     private TypeDeclaration node;
-    private ASTNodeHelper nodeHelper;
 
     @Before
     public void setup() throws JavaModelException {
-        nodeHelper = mock( ASTNodeHelper.class );
-        ITypeBinding typeBinding = createTypeBinding();
-        when( nodeHelper.resolveBindingOf( org.mockito.Matchers.any( AbstractTypeDeclaration.class ) ) ).thenReturn( typeBinding );
+        classVisitor = new ClassValueVisitor( MetricsResults.PUBLIC_FIELDS );
+        nodeHelper = setupNodeHelperForClass();
 
         UsusModelProvider.clear( nodeHelper );
         collector = new PublicFieldCollector();
@@ -45,7 +38,7 @@ public class PublicFieldCollectorTest {
     @Test
     public void emptyClassHasNoPublicFields() {
         collectorEndVisitAndVisitorVisit();
-        assertEquals( 0, visitor.getValueMap().get( CLASS_NAME ).intValue() );
+        assertEquals( 0, classVisitor.getValueMap().get( CLASS_NAME ).intValue() );
     }
 
     @Test
@@ -53,7 +46,7 @@ public class PublicFieldCollectorTest {
         visitFieldWithModifiers( Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL );
 
         collectorEndVisitAndVisitorVisit();
-        assertEquals( 0, visitor.getValueMap().get( CLASS_NAME ).intValue() );
+        assertEquals( 0, classVisitor.getValueMap().get( CLASS_NAME ).intValue() );
     }
 
     @Test
@@ -61,7 +54,7 @@ public class PublicFieldCollectorTest {
         visitFieldWithModifiers( Modifier.PUBLIC );
 
         collectorEndVisitAndVisitorVisit();
-        assertEquals( 1, visitor.getValueMap().get( CLASS_NAME ).intValue() );
+        assertEquals( 1, classVisitor.getValueMap().get( CLASS_NAME ).intValue() );
     }
 
     @Test
@@ -71,7 +64,7 @@ public class PublicFieldCollectorTest {
         visitFieldWithModifiers( Modifier.PUBLIC | Modifier.FINAL );
 
         collectorEndVisitAndVisitorVisit();
-        assertEquals( 3, visitor.getValueMap().get( CLASS_NAME ).intValue() );
+        assertEquals( 3, classVisitor.getValueMap().get( CLASS_NAME ).intValue() );
     }
 
     @Test
@@ -85,8 +78,8 @@ public class PublicFieldCollectorTest {
         collector.endVisit( node2 );
 
         collectorEndVisitAndVisitorVisit();
-        assertEquals( 1, visitor.getValueMap().get( CLASS_NAME ).intValue() );
-        assertEquals( 1, visitor.getValueMap().get( ANOTHER_CLASS_NAME ).intValue() );
+        assertEquals( 1, classVisitor.getValueMap().get( CLASS_NAME ).intValue() );
+        assertEquals( 1, classVisitor.getValueMap().get( ANOTHER_CLASS_NAME ).intValue() );
     }
 
     private void visitFieldWithModifiers( int modifiers ) {
@@ -97,7 +90,7 @@ public class PublicFieldCollectorTest {
 
     private void collectorEndVisitAndVisitorVisit() {
         collector.endVisit( node );
-        visitor.visit();
+        classVisitor.visit();
     }
 
 }

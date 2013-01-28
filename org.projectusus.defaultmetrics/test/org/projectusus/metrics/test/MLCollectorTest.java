@@ -24,7 +24,7 @@ public class MLCollectorTest extends CollectorTestHelper {
 
     @Before
     public void setup() throws JavaModelException {
-        visitor = new MethodValueVisitor( MetricsResults.ML );
+        methodVisitor = new MethodValueVisitor( MetricsResults.ML );
         nodeHelper = setupNodeHelperForMethod( CLASS_NAME );
 
         UsusModelProvider.clear( nodeHelper );
@@ -73,8 +73,8 @@ public class MLCollectorTest extends CollectorTestHelper {
     private void checkMethodYieldsML( int ml ) {
         collector.commit( method );
 
-        visitor.visit();
-        assertEquals( ml, visitor.getValueMap().get( CLASS_NAME_METHOD ).intValue() );
+        methodVisitor.visit();
+        assertEquals( ml, methodVisitor.getValueMap().get( CLASS_NAME_METHOD ).intValue() );
     }
 
 }

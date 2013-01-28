@@ -6,37 +6,32 @@ import static org.mockito.Mockito.when;
 import static org.projectusus.metrics.util.CountingUtils.getNumberOfClasses;
 import static org.projectusus.metrics.util.CountingUtils.getNumberOfMethods;
 import static org.projectusus.metrics.util.TypeBindingMocker.createFile;
-import static org.projectusus.metrics.util.TypeBindingMocker.createTypeBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.CatchClause;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 import org.eclipse.jdt.core.dom.DoStatement;
 import org.eclipse.jdt.core.dom.EnhancedForStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.basis.MetricsResults;
-import org.projectusus.core.filerelations.model.ASTNodeHelper;
 import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.metrics.CCCollector;
 import org.projectusus.metrics.util.MethodValueVisitor;
 
-public class CCCollectorTest {
+public class CCCollectorTest extends CollectorTestHelper {
 
     private static final String CLASS_NAME = "ClassName";
     private static final String OUTER_CLASS_NAME = "OuterClassName";
@@ -44,19 +39,12 @@ public class CCCollectorTest {
     private static final String METHOD = "method";
     private static final String CLASS_NAME_METHOD = CLASS_NAME + "." + METHOD + "()";
     private CCCollector collector;
-    private MethodValueVisitor visitor = new MethodValueVisitor( MetricsResults.CC );
     private MethodDeclaration method;
-    private ASTNodeHelper nodeHelper;
 
     @Before
     public void setup() throws JavaModelException {
-        nodeHelper = mock( ASTNodeHelper.class );
-        String classname = CLASS_NAME;
-        ITypeBinding typeBinding = createTypeBinding();
-        when( nodeHelper.resolveBindingOf( org.mockito.Matchers.any( AbstractTypeDeclaration.class ) ) ).thenReturn( typeBinding );
-        TypeDeclaration parent = setupMockFor( TypeDeclaration.class, classname );
-        when( nodeHelper.findEnclosingClassOf( org.mockito.Matchers.any( MethodDeclaration.class ) ) ).thenReturn( parent );
-        when( Integer.valueOf( nodeHelper.getStartPositionFor( org.mockito.Matchers.any( ASTNode.class ) ) ) ).thenReturn( Integer.valueOf( 1 ) );
+        methodVisitor = new MethodValueVisitor( MetricsResults.CC );
+        nodeHelper = setupNodeHelperForMethod( CLASS_NAME );
 
         UsusModelProvider.clear( nodeHelper );
 
@@ -73,8 +61,8 @@ public class CCCollectorTest {
     public void emptyMethodHasCC1() {
         collector.endVisit( method );
 
-        visitor.visit();
-        assertEquals( 1, visitor.getValueMap().get( CLASS_NAME_METHOD ).intValue() );
+        methodVisitor.visit();
+        assertEquals( 1, methodVisitor.getValueMap().get( CLASS_NAME_METHOD ).intValue() );
 
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
@@ -175,36 +163,16 @@ public class CCCollectorTest {
         when( Integer.valueOf( nodeHelper.getStartPositionFor( org.mockito.Matchers.any( ASTNode.class ) ) ) ).thenReturn( Integer.valueOf( 100 ) );
 
         collector.endVisit( method );
-        visitor.visit();
-        assertEquals( 1, visitor.getValueMap().get( OUTER_CLASS_NAME + "." + METHOD + "()" ).intValue() );
-        assertEquals( 1, visitor.getValueMap().get( CLASS_NAME + "." + INNER_METHOD + "()" ).intValue() );
+        methodVisitor.visit();
+        assertEquals( 1, methodVisitor.getValueMap().get( OUTER_CLASS_NAME + "." + METHOD + "()" ).intValue() );
+        assertEquals( 1, methodVisitor.getValueMap().get( CLASS_NAME + "." + INNER_METHOD + "()" ).intValue() );
     }
 
     private void checkMethodYieldsCC( int cc ) {
         collector.endVisit( method );
 
-        visitor.visit();
-        assertEquals( cc, visitor.getValueMap().get( CLASS_NAME_METHOD ).intValue() );
-    }
-
-    private <T extends AbstractTypeDeclaration> T setupMockFor( Class<T> type, String name ) {
-        T node = mock( type );
-        SimpleName nodename = createSimpleNameMockWithName( name );
-        when( node.getName() ).thenReturn( nodename );
-        return node;
-    }
-
-    private MethodDeclaration setupMethodDeclMock( String name ) {
-        MethodDeclaration node = mock( MethodDeclaration.class );
-        SimpleName nodename = createSimpleNameMockWithName( name );
-        when( node.getName() ).thenReturn( nodename );
-        return node;
-    }
-
-    private SimpleName createSimpleNameMockWithName( String nodename ) {
-        SimpleName name = mock( SimpleName.class );
-        when( name.toString() ).thenReturn( nodename );
-        return name;
+        methodVisitor.visit();
+        assertEquals( cc, methodVisitor.getValueMap().get( CLASS_NAME_METHOD ).intValue() );
     }
 
 }

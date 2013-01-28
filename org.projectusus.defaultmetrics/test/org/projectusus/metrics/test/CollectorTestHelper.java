@@ -12,24 +12,31 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.projectusus.core.filerelations.model.ASTNodeHelper;
+import org.projectusus.metrics.util.ClassValueVisitor;
 import org.projectusus.metrics.util.MethodValueVisitor;
 
 public class CollectorTestHelper {
 
-    protected MethodValueVisitor visitor;
+    protected ClassValueVisitor classVisitor;
+    protected MethodValueVisitor methodVisitor;
     protected ASTNodeHelper nodeHelper;
 
-    public ASTNodeHelper setupNodeHelperForMethod( String classname ) throws JavaModelException {
-        ASTNodeHelper nodeHelper = mock( ASTNodeHelper.class );
-        ITypeBinding typeBinding = createTypeBinding();
-        when( nodeHelper.resolveBindingOf( org.mockito.Matchers.any( AbstractTypeDeclaration.class ) ) ).thenReturn( typeBinding );
+    protected ASTNodeHelper setupNodeHelperForMethod( String classname ) throws JavaModelException {
+        ASTNodeHelper helper = setupNodeHelperForClass();
         TypeDeclaration parent = setupMockFor( TypeDeclaration.class, classname );
-        when( nodeHelper.findEnclosingClassOf( org.mockito.Matchers.any( MethodDeclaration.class ) ) ).thenReturn( parent );
-        when( Integer.valueOf( nodeHelper.getStartPositionFor( org.mockito.Matchers.any( ASTNode.class ) ) ) ).thenReturn( Integer.valueOf( 1 ) );
-        return nodeHelper;
+        when( helper.findEnclosingClassOf( org.mockito.Matchers.any( MethodDeclaration.class ) ) ).thenReturn( parent );
+        when( Integer.valueOf( helper.getStartPositionFor( org.mockito.Matchers.any( ASTNode.class ) ) ) ).thenReturn( Integer.valueOf( 1 ) );
+        return helper;
     }
 
-    private <T extends AbstractTypeDeclaration> T setupMockFor( Class<T> type, String name ) {
+    protected ASTNodeHelper setupNodeHelperForClass() throws JavaModelException {
+        ASTNodeHelper helper = mock( ASTNodeHelper.class );
+        ITypeBinding typeBinding = createTypeBinding();
+        when( helper.resolveBindingOf( org.mockito.Matchers.any( AbstractTypeDeclaration.class ) ) ).thenReturn( typeBinding );
+        return helper;
+    }
+
+    protected <T extends AbstractTypeDeclaration> T setupMockFor( Class<T> type, String name ) {
         T node = mock( type );
         SimpleName nodename = createSimpleNameMockWithName( name );
         when( node.getName() ).thenReturn( nodename );

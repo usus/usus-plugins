@@ -1,16 +1,12 @@
 package org.projectusus.metrics.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.projectusus.metrics.util.CountingUtils.getNumberOfClasses;
-import static org.projectusus.metrics.util.TypeBindingMocker.createTypeBinding;
 
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.junit.Before;
@@ -22,7 +18,7 @@ import org.projectusus.metrics.AbstractClassCollector;
 import org.projectusus.metrics.util.ClassValueVisitor;
 import org.projectusus.metrics.util.Setup;
 
-public class AbstractClassCollectorTest {
+public class AbstractClassCollectorTest extends CollectorTestHelper {
 
     private static final String ABSTRACT_CLASS_NAME = "AbstractClassName";
     private static final String ENUM_NAME = "EnumName";
@@ -31,13 +27,11 @@ public class AbstractClassCollectorTest {
     private static final String CLASS_NAME = "ClassName";
 
     private AbstractClassCollector collector;
-    private ClassValueVisitor visitor = new ClassValueVisitor( MetricsResults.ABSTRACTNESS );
 
     @Before
     public void setup() throws JavaModelException {
-        ASTNodeHelper nodeHelper = mock( ASTNodeHelper.class );
-        ITypeBinding typeBinding = createTypeBinding();
-        when( nodeHelper.resolveBindingOf( org.mockito.Matchers.any( AbstractTypeDeclaration.class ) ) ).thenReturn( typeBinding );
+        classVisitor = new ClassValueVisitor( MetricsResults.ABSTRACTNESS );
+        ASTNodeHelper nodeHelper = setupNodeHelperForClass();
 
         UsusModelProvider.clear( nodeHelper );
         collector = new AbstractClassCollector();
@@ -50,9 +44,9 @@ public class AbstractClassCollectorTest {
 
         collector.visit( node );
 
-        visitor.visit();
+        classVisitor.visit();
 
-        assertEquals( 1, visitor.getValueMap().get( CLASS_NAME ).intValue() );
+        assertEquals( 1, classVisitor.getValueMap().get( CLASS_NAME ).intValue() );
         assertEquals( 1, getNumberOfClasses() );
     }
 
@@ -63,9 +57,9 @@ public class AbstractClassCollectorTest {
 
         collector.visit( node );
 
-        visitor.visit();
+        classVisitor.visit();
 
-        assertEquals( 1, visitor.getValueMap().get( CLASS_NAME ).intValue() );
+        assertEquals( 1, classVisitor.getValueMap().get( CLASS_NAME ).intValue() );
         assertEquals( 1, getNumberOfClasses() );
     }
 
@@ -73,9 +67,9 @@ public class AbstractClassCollectorTest {
     public void concreteClassIsNotMarkedAsAbstract() {
         collector.visit( Setup.setupCollectorAndMockFor( collector, TypeDeclaration.class, CLASS_NAME ) );
 
-        visitor.visit();
+        classVisitor.visit();
 
-        assertEquals( 0, visitor.getValueMap().get( CLASS_NAME ).intValue() );
+        assertEquals( 0, classVisitor.getValueMap().get( CLASS_NAME ).intValue() );
         assertEquals( 1, getNumberOfClasses() );
     }
 
@@ -84,9 +78,9 @@ public class AbstractClassCollectorTest {
 
         collector.visit( Setup.setupCollectorAndMockFor( collector, EnumDeclaration.class, ENUM_NAME ) );
 
-        visitor.visit();
+        classVisitor.visit();
 
-        assertEquals( 0, visitor.getValueMap().get( ENUM_NAME ).intValue() );
+        assertEquals( 0, classVisitor.getValueMap().get( ENUM_NAME ).intValue() );
         assertEquals( 1, getNumberOfClasses() );
     }
 
@@ -94,9 +88,9 @@ public class AbstractClassCollectorTest {
     public void annotationClassIsNotMarkedAsAbstract() {
         collector.visit( Setup.setupCollectorAndMockFor( collector, AnnotationTypeDeclaration.class, ANNOTATION_NAME ) );
 
-        visitor.visit();
+        classVisitor.visit();
 
-        assertEquals( 0, visitor.getValueMap().get( ANNOTATION_NAME ).intValue() );
+        assertEquals( 0, classVisitor.getValueMap().get( ANNOTATION_NAME ).intValue() );
         assertEquals( 1, getNumberOfClasses() );
     }
 
@@ -116,10 +110,10 @@ public class AbstractClassCollectorTest {
 
         collector.visit( Setup.setupCollectorAndMockFor( collector, AnnotationTypeDeclaration.class, ANNOTATION_NAME ) );
 
-        visitor.visit();
+        classVisitor.visit();
 
-        assertEquals( 1, visitor.getValueMap().get( INTERFACE_NAME ).intValue() );
-        assertEquals( 1, visitor.getValueMap().get( ABSTRACT_CLASS_NAME ).intValue() );
+        assertEquals( 1, classVisitor.getValueMap().get( INTERFACE_NAME ).intValue() );
+        assertEquals( 1, classVisitor.getValueMap().get( ABSTRACT_CLASS_NAME ).intValue() );
 
         assertEquals( 5, getNumberOfClasses() );
     }
