@@ -3,13 +3,10 @@ package org.projectusus.core.proportions.rawdata.jdtdriver.trainwreck;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
-import org.projectusus.core.metrics.MetricsCollector;
 import org.projectusus.core.proportions.rawdata.jdtdriver.JavaFileDriver;
 import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
@@ -56,11 +53,5 @@ public class ShapeOfMethodInvocationsForTrainWreckPDETest extends PDETestForMetr
 
     private void validateAssignment( String invokedNodes ) {
         assertThat( invokedNodes, is( "MI b on MI a # MI y on MI x # " ) );
-    }
-
-    private Set<MetricsCollector> createSetWith( MetricsCollector inspector ) {
-        Set<MetricsCollector> set = new HashSet<MetricsCollector>();
-        set.add( inspector );
-        return set;
     }
 }

@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
@@ -18,6 +20,7 @@ import org.junit.Rule;
 import org.projectusus.core.basis.JavaModelPath;
 import org.projectusus.core.internal.JavaProject;
 import org.projectusus.core.internal.Workspace;
+import org.projectusus.core.metrics.MetricsCollector;
 import org.projectusus.core.statistics.visitors.ClassCountVisitor;
 import org.projectusus.core.statistics.visitors.MethodCountVisitor;
 import org.projectusus.metrics.util.MethodLengthVisitor;
@@ -93,5 +96,11 @@ public class PDETestForMetricsComputation {
 
     public int getNumberOfClasses() {
         return new ClassCountVisitor().visitAndReturn().getClassCount();
+    }
+
+    protected Set<MetricsCollector> createSetWith( MetricsCollector inspector ) {
+        Set<MetricsCollector> set = new HashSet<MetricsCollector>();
+        set.add( inspector );
+        return set;
     }
 }

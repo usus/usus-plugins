@@ -4,14 +4,11 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.junit.Test;
-import org.projectusus.core.metrics.MetricsCollector;
 import org.projectusus.core.proportions.rawdata.jdtdriver.JavaFileDriver;
 import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
@@ -103,11 +100,5 @@ public class PublicFieldPDETest extends PDETestForMetricsComputation {
 
     private boolean contains( int fieldModifiers, int flag ) {
         return (fieldModifiers & flag) != 0;
-    }
-
-    private Set<MetricsCollector> createSetWith( MetricsCollector inspector ) {
-        Set<MetricsCollector> set = new HashSet<MetricsCollector>();
-        set.add( inspector );
-        return set;
     }
 }

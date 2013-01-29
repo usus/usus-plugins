@@ -6,12 +6,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.eclipse.core.resources.IFile;
 import org.junit.Test;
-import org.projectusus.core.metrics.MetricsCollector;
 import org.projectusus.core.proportions.rawdata.jdtdriver.JavaFileDriver;
 import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
@@ -48,11 +44,4 @@ public class ShapeOfMethodsForCCPDETest extends PDETestForMetricsComputation {
         assertThat( map.get( "innerMethod" ), is( empty() ) );
         assertThat( map.get( "initializer" ), contains( "ConditionalExpression" ) );
     }
-
-    private Set<MetricsCollector> createSetWith( MetricsCollector inspector ) {
-        Set<MetricsCollector> set = new HashSet<MetricsCollector>();
-        set.add( inspector );
-        return set;
-    }
-
 }
