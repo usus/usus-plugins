@@ -1,5 +1,6 @@
 package org.projectusus.metrics;
 
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CatchClause;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 import org.eclipse.jdt.core.dom.DoStatement;
@@ -20,99 +21,103 @@ public class CCCollector extends MetricsCollector {
 
     private Counter ccCount = new Counter();
 
-    public CCCollector() {
-        super();
-    }
-
     @Override
     public boolean visit( MethodDeclaration node ) {
-        return init();
+        init( node );
+        return true;
     }
 
     @Override
     public boolean visit( Initializer node ) {
-        return init();
+        init( node );
+        return true;
     }
 
     @Override
     public void endVisit( MethodDeclaration node ) {
-        submit( node );
+        commit( node );
     }
 
     @Override
     public void endVisit( Initializer node ) {
-        submit( node );
+        commit( node );
     }
 
     @Override
     public boolean visit( WhileStatement node ) {
-        return increase();
+        calculate( node, 1 );
+        return true;
     }
 
     @Override
     public boolean visit( DoStatement node ) {
-        return increase();
+        calculate( node, 1 );
+        return true;
     }
 
     @Override
     public boolean visit( ForStatement node ) {
-        return increase();
+        calculate( node, 1 );
+        return true;
     }
 
     @Override
     public boolean visit( EnhancedForStatement node ) {
-        return increase();
+        calculate( node, 1 );
+        return true;
     }
 
     @Override
     public boolean visit( IfStatement node ) {
-        return increase();
+        calculate( node, 1 );
+        return true;
     }
 
     @Override
     public boolean visit( SwitchCase node ) {
-        return increase();
+        calculate( node, 1 );
+        return true;
     }
 
     @Override
     public boolean visit( CatchClause node ) {
-        return increase();
+        calculate( node, 1 );
+        return true;
     }
 
     @Override
     public boolean visit( ConditionalExpression node ) {
-        return increase();
+        calculate( node, 1 );
+        return true;
     }
 
     @Override
     public boolean visit( InfixExpression node ) {
         Operator operator = node.getOperator();
         if( operator.equals( Operator.CONDITIONAL_AND ) || operator.equals( Operator.CONDITIONAL_OR ) ) {
-            return increaseBy( 1 + node.extendedOperands().size() );
+            calculate( node, 1 + node.extendedOperands().size() );
         }
         return true;
     }
 
-    private void submit( MethodDeclaration node ) {
-        getMetricsWriter().putData( getFile(), node, MetricsResults.CC, ccCount.getAndClearCount() );
-    }
-
-    private void submit( Initializer node ) {
-        getMetricsWriter().putData( getFile(), node, MetricsResults.CC, ccCount.getAndClearCount() );
-    }
-
-    private boolean increase() {
-        return increaseBy( 1 );
-    }
-
-    private boolean increaseBy( int amount ) {
-        ccCount.increaseLastCountBy( amount );
-        return true;
-    }
-
-    private boolean init() {
+    public void init( MethodDeclaration node ) {
         ccCount.startNewCount( 1 );
-        return true;
+    }
+
+    public void init( Initializer node ) {
+        ccCount.startNewCount( 1 );
+    }
+
+    public void calculate( ASTNode node, int amount ) {
+        ccCount.increaseLastCountBy( amount );
+    }
+
+    public void commit( MethodDeclaration node ) {
+        getMetricsWriter().putData( getFile(), node, MetricsResults.CC, ccCount.getAndClearCount() );
+    }
+
+    public void commit( Initializer node ) {
+        getMetricsWriter().putData( getFile(), node, MetricsResults.CC, ccCount.getAndClearCount() );
     }
 
 }

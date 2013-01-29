@@ -1,96 +1,49 @@
 package org.projectusus.core.proportions.rawdata.jdtdriver.cc;
 
-import org.eclipse.jdt.core.dom.CatchClause;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.DoStatement;
-import org.eclipse.jdt.core.dom.EnhancedForStatement;
-import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SwitchCase;
-import org.eclipse.jdt.core.dom.WhileStatement;
-import org.projectusus.core.metrics.MetricsCollector;
+import org.projectusus.metrics.CCCollector;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-public class CCInspector extends MetricsCollector {
+public class CCInspector extends CCCollector {
 
-    private Multimap<String, ASTNodeTypes> map = ArrayListMultimap.create();
+    private Multimap<String, String> map = ArrayListMultimap.create();
+    private List<String> names = new ArrayList<String>();
     private String currentName;
 
-    public Multimap<String, ASTNodeTypes> getMap() {
-        return map;
-    }
-
-    @Override
-    public boolean visit( MethodDeclaration node ) {
+    public void init( MethodDeclaration node ) {
         currentName = node.getName().toString();
-        return true;
+        names.add( currentName );
     }
 
-    @Override
-    public boolean visit( Initializer node ) {
+    public void init( Initializer node ) {
         currentName = "initializer";
-        return true;
+        names.add( currentName );
     }
 
     @Override
-    public boolean visit( WhileStatement node ) {
-        map.put( currentName, new WhileStatementType() );
-        return true;
+    public void calculate( ASTNode node, int amount ) {
+        String amountSuffix = amount == 1 ? "" : " " + amount;
+        map.put( currentName, node.getClass().getSimpleName() + amountSuffix );
     }
 
-    @Override
-    public boolean visit( DoStatement node ) {
-        map.put( currentName, new DoStatementType() );
-        return true;
+    public void commit( MethodDeclaration node ) {
     }
 
-    @Override
-    public boolean visit( ForStatement node ) {
-        map.put( currentName, new ForStatementType() );
-        return true;
+    public void commit( Initializer node ) {
     }
 
-    @Override
-    public boolean visit( EnhancedForStatement node ) {
-        map.put( currentName, new EnhancedForStatementType() );
-        return true;
+    public List<String> getNames() {
+        return names;
     }
 
-    @Override
-    public boolean visit( IfStatement node ) {
-        map.put( currentName, new IfStatementType() );
-        return true;
-    }
-
-    @Override
-    public boolean visit( SwitchCase node ) {
-        map.put( currentName, new SwitchCaseType() );
-        return true;
-    }
-
-    @Override
-    public boolean visit( CatchClause node ) {
-        map.put( currentName, new CatchClauseType() );
-        return true;
-    }
-
-    @Override
-    public boolean visit( ConditionalExpression node ) {
-        map.put( currentName, new ConditionalExpressionType() );
-        return true;
-    }
-
-    @Override
-    public boolean visit( InfixExpression node ) {
-        Operator operator = node.getOperator();
-        if( operator == Operator.CONDITIONAL_AND || operator == Operator.CONDITIONAL_OR )
-            map.put( currentName, new InfixExpressionType( operator, node.extendedOperands().size() ) );
-        return true;
+    public Multimap<String, String> getMap() {
+        return map;
     }
 }
