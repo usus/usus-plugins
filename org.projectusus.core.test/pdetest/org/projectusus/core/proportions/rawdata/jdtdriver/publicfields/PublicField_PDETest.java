@@ -14,12 +14,12 @@ import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
 import com.google.common.collect.Multimap;
 
-public class PublicFieldPDETest extends PDETestForMetricsComputation {
+public class PublicField_PDETest extends PDETestForMetricsComputation {
 
     @Test
-    public void assumptionsRegardingAbstractAndConcreteTypesAreValid() throws Exception {
-        project.createFolder( "publicfields" );
-        IFile file = createJavaFile( "publicfields/PublicFields.java" );
+    public void assumptionsAreValid() throws Exception {
+        project.createFolder( "pde" );
+        IFile file = createJavaFile( "pde/PublicFields.java" );
 
         PublicFieldInspector inspector = new PublicFieldInspector();
 

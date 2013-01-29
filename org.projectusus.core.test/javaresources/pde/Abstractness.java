@@ -1,14 +1,14 @@
-package abstractness;
+package pde;
 
 public class Abstractness {
 
 }
 
-abstract class AbstractClass {
+abstract class AbstractClass2 {
 
 }
 
-@interface AnnotationClass {
+@interface AnnotationClass2 {
 
 }
 

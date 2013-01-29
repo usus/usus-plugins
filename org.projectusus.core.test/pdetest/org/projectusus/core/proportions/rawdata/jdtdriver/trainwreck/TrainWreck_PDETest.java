@@ -10,12 +10,12 @@ import org.junit.Test;
 import org.projectusus.core.proportions.rawdata.jdtdriver.JavaFileDriver;
 import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
-public class ShapeOfMethodInvocationsForTrainWreckPDETest extends PDETestForMetricsComputation {
+public class TrainWreck_PDETest extends PDETestForMetricsComputation {
 
     @Test
-    public void assumptionsRegardingMethodInvocationsAreValid() throws Exception {
-        project.createFolder( "trainwreck" );
-        IFile file = createJavaFile( "trainwreck/TrainWreck.java" );
+    public void assumptionsAreValid() throws Exception {
+        project.createFolder( "pde" );
+        IFile file = createJavaFile( "pde/TrainWreck.java" );
 
         TrainWreckInspector inspector = new TrainWreckInspector();
 

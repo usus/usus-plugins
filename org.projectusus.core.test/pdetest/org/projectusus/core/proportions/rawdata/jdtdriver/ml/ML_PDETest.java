@@ -15,9 +15,9 @@ import com.google.common.collect.Multimap;
 public class ML_PDETest extends PDETestForMetricsComputation {
 
     @Test
-    public void assumptionsRegardingMLAreValid() throws Exception {
-        project.createFolder( "ml" );
-        IFile file = createJavaFile( "ml/ML.java" );
+    public void assumptionsAreValid() throws Exception {
+        project.createFolder( "pde" );
+        IFile file = createJavaFile( "pde/ML.java" );
 
         MLInspector inspector = new MLInspector();
 

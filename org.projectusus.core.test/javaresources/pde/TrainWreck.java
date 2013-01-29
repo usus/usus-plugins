@@ -1,4 +1,4 @@
-package trainwreck;
+package pde;
 
 public class TrainWreck {
 

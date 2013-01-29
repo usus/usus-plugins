@@ -13,12 +13,12 @@ import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
 import com.google.common.collect.Multimap;
 
-public class ShapeOfMethodsForCCPDETest extends PDETestForMetricsComputation {
+public class CC_PDETest extends PDETestForMetricsComputation {
 
     @Test
     public void assumptionsAreValid() throws Exception {
-        project.createFolder( "cc" );
-        IFile file = createJavaFile( "cc/CC.java" );
+        project.createFolder( "pde" );
+        IFile file = createJavaFile( "pde/CC.java" );
 
         CCInspector inspector = new CCInspector();
 

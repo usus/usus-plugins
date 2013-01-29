@@ -10,12 +10,12 @@ import org.junit.Test;
 import org.projectusus.core.proportions.rawdata.jdtdriver.JavaFileDriver;
 import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
-public class ClassPDETest extends PDETestForMetricsComputation {
+public class Class_PDETest extends PDETestForMetricsComputation {
 
     @Test
-    public void assumptionsRegardingClassesAreValid() throws Exception {
-        project.createFolder( "classes" );
-        IFile file = createJavaFile( "classes/Classes.java" );
+    public void assumptionsAreValid() throws Exception {
+        project.createFolder( "pde" );
+        IFile file = createJavaFile( "pde/Classes.java" );
 
         ClassInspector inspector = new ClassInspector();
 
