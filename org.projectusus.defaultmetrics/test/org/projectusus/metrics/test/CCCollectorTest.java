@@ -1,29 +1,15 @@
 package org.projectusus.metrics.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.projectusus.metrics.util.CountingUtils.getNumberOfClasses;
 import static org.projectusus.metrics.util.CountingUtils.getNumberOfMethods;
 import static org.projectusus.metrics.util.TypeBindingMocker.createFile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.CatchClause;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.DoStatement;
-import org.eclipse.jdt.core.dom.EnhancedForStatement;
-import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.eclipse.jdt.core.dom.WhileStatement;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.basis.MetricsResults;
@@ -54,122 +40,65 @@ public class CCCollectorTest extends CollectorTestHelper {
         collector.setup( createFile(), UsusModelProvider.getMetricsWriter() );
 
         // start the visit:
-        collector.visit( method );
+        collector.init( method );
     }
 
     @Test
-    public void emptyMethodHasCC1() {
-        collector.endVisit( method );
-
-        methodVisitor.visit();
-        assertEquals( 1, methodVisitor.getValueMap().get( CLASS_NAME_METHOD ).intValue() );
-
+    public void noCalculationYieldsCC1() {
+        checkMethodYieldsCC( 1 );
         assertEquals( 1, getNumberOfClasses() );
         assertEquals( 1, getNumberOfMethods() );
     }
 
     @Test
-    public void oneWhileHasCC2() {
-        WhileStatement stmt = mock( WhileStatement.class );
-        collector.visit( stmt );
+    public void oneCalculationYieldsCC2() {
+        collector.calculate( null, 1 );
         checkMethodYieldsCC( 2 );
     }
 
     @Test
-    public void oneDoHasCC2() {
-        DoStatement stmt = mock( DoStatement.class );
-        collector.visit( stmt );
-        checkMethodYieldsCC( 2 );
-    }
-
-    @Test
-    public void oneForHasCC2() {
-        ForStatement stmt = mock( ForStatement.class );
-        collector.visit( stmt );
-        checkMethodYieldsCC( 2 );
-    }
-
-    @Test
-    public void oneForeachHasCC2() {
-        EnhancedForStatement stmt = mock( EnhancedForStatement.class );
-        collector.visit( stmt );
-        checkMethodYieldsCC( 2 );
-    }
-
-    @Test
-    public void twoIfHasCC3() {
-        IfStatement stmt = mock( IfStatement.class );
-        collector.visit( stmt );
-        collector.visit( stmt );
+    public void twoCalculationsYieldCC3() {
+        collector.calculate( null, 1 );
+        collector.calculate( null, 1 );
         checkMethodYieldsCC( 3 );
     }
 
     @Test
-    public void oneLogicalOrBitwiseHasCC1() {
-        InfixExpression stmt = mock( InfixExpression.class );
-        when( stmt.getOperator() ).thenReturn( Operator.AND );
-        collector.visit( stmt );
+    public void oneCalculationWith5YieldsCC6() {
+        collector.calculate( null, 5 );
 
-        checkMethodYieldsCC( 1 );
+        checkMethodYieldsCC( 6 );
     }
 
     @Test
-    public void threeCaseHasCC4() {
-        SwitchCase stmt = mock( SwitchCase.class );
-        collector.visit( stmt );
-        collector.visit( stmt );
-        collector.visit( stmt );
-        checkMethodYieldsCC( 4 );
-    }
+    public void calculationsAreSummedUp() {
+        collector.calculate( null, 5 );
+        collector.calculate( null, 2 );
+        collector.calculate( null, 1 );
 
-    @Test
-    public void oneCatchHasCC2() {
-        CatchClause stmt = mock( CatchClause.class );
-        collector.visit( stmt );
-        checkMethodYieldsCC( 2 );
-    }
-
-    @Test
-    public void threeConditionalsHasCC4() {
-        ConditionalExpression stmt = mock( ConditionalExpression.class );
-        collector.visit( stmt );
-        collector.visit( stmt );
-        collector.visit( stmt );
-        checkMethodYieldsCC( 4 );
-    }
-
-    @Test
-    public void infixExpressionWithThreeOperandsYieldsCC3() {
-        InfixExpression stmt = mock( InfixExpression.class );
-        when( stmt.getOperator() ).thenReturn( Operator.CONDITIONAL_AND );
-        List<?> operands = new ArrayList<Integer>();
-        operands.add( null );
-        when( stmt.extendedOperands() ).thenReturn( operands );
-        collector.visit( stmt );
-
-        checkMethodYieldsCC( 3 );
+        checkMethodYieldsCC( 9 );
     }
 
     @Test
     public void methodInsideMethodYieldsCC2() {
         MethodDeclaration innerMethod = setupMethodDeclMock( INNER_METHOD );
 
-        collector.visit( innerMethod );
-        collector.endVisit( innerMethod );
+        collector.init( innerMethod );
+        collector.commit( innerMethod );
 
         // now we need to make sure that the outer method has a different enclosing class and start position in the file:
         TypeDeclaration parent = setupMockFor( TypeDeclaration.class, OUTER_CLASS_NAME );
         when( nodeHelper.findEnclosingClassOf( org.mockito.Matchers.any( MethodDeclaration.class ) ) ).thenReturn( parent );
         when( Integer.valueOf( nodeHelper.getStartPositionFor( org.mockito.Matchers.any( ASTNode.class ) ) ) ).thenReturn( Integer.valueOf( 100 ) );
 
-        collector.endVisit( method );
+        collector.commit( method );
         methodVisitor.visit();
         assertEquals( 1, methodVisitor.getValueMap().get( OUTER_CLASS_NAME + "." + METHOD + "()" ).intValue() );
         assertEquals( 1, methodVisitor.getValueMap().get( CLASS_NAME + "." + INNER_METHOD + "()" ).intValue() );
     }
 
     private void checkMethodYieldsCC( int cc ) {
-        collector.endVisit( method );
+        collector.commit( method );
 
         methodVisitor.visit();
         assertEquals( cc, methodVisitor.getValueMap().get( CLASS_NAME_METHOD ).intValue() );

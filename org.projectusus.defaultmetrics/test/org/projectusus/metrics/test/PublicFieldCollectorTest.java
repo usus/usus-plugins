@@ -1,11 +1,8 @@
 package org.projectusus.metrics.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.junit.Before;
@@ -32,65 +29,63 @@ public class PublicFieldCollectorTest extends CollectorTestHelper {
         collector = new PublicFieldCollector();
         node = Setup.setupCollectorAndMockFor( collector, TypeDeclaration.class, CLASS_NAME );
 
-        collector.visit( node );
+        collector.init( node );
     }
 
     @Test
-    public void emptyClassHasNoPublicFields() {
-        collectorEndVisitAndVisitorVisit();
+    public void noCalculationsYieldCountOf0() {
+        collector.commit( node );
+        classVisitor.visit();
         assertEquals( 0, classVisitor.getValueMap().get( CLASS_NAME ).intValue() );
     }
 
     @Test
     public void publicStaticFinalFieldIsNotCounted() {
-        visitFieldWithModifiers( Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL );
+        collector.calculate( Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL );
 
-        collectorEndVisitAndVisitorVisit();
+        collector.commit( node );
+
+        classVisitor.visit();
         assertEquals( 0, classVisitor.getValueMap().get( CLASS_NAME ).intValue() );
     }
 
     @Test
     public void publicNonstaticNonfinalFieldIsCounted() {
-        visitFieldWithModifiers( Modifier.PUBLIC );
+        collector.calculate( Modifier.PUBLIC );
 
-        collectorEndVisitAndVisitorVisit();
+        collector.commit( node );
+
+        classVisitor.visit();
         assertEquals( 1, classVisitor.getValueMap().get( CLASS_NAME ).intValue() );
     }
 
     @Test
     public void combinationsOfPublicNonstaticNonfinalFieldIsCounted() {
-        visitFieldWithModifiers( Modifier.PUBLIC );
-        visitFieldWithModifiers( Modifier.PUBLIC | Modifier.STATIC );
-        visitFieldWithModifiers( Modifier.PUBLIC | Modifier.FINAL );
+        collector.calculate( Modifier.PUBLIC );
+        collector.calculate( Modifier.PUBLIC | Modifier.STATIC );
+        collector.calculate( Modifier.PUBLIC | Modifier.FINAL );
 
-        collectorEndVisitAndVisitorVisit();
+        collector.commit( node );
+
+        classVisitor.visit();
         assertEquals( 3, classVisitor.getValueMap().get( CLASS_NAME ).intValue() );
     }
 
     @Test
     public void publicFieldsInTwoClassesAreCountedSeparately() {
-        visitFieldWithModifiers( Modifier.PUBLIC );
+        collector.calculate( Modifier.PUBLIC );
 
         TypeDeclaration node2 = Setup.setupMockWithStartPosition( TypeDeclaration.class, PublicFieldCollectorTest.ANOTHER_CLASS_NAME, 100, nodeHelper );
 
-        collector.visit( node2 );
-        visitFieldWithModifiers( Modifier.PUBLIC );
-        collector.endVisit( node2 );
+        collector.init( node2 );
+        collector.calculate( Modifier.PUBLIC );
+        collector.commit( node2 );
 
-        collectorEndVisitAndVisitorVisit();
+        collector.commit( node );
+
+        classVisitor.visit();
         assertEquals( 1, classVisitor.getValueMap().get( CLASS_NAME ).intValue() );
         assertEquals( 1, classVisitor.getValueMap().get( ANOTHER_CLASS_NAME ).intValue() );
-    }
-
-    private void visitFieldWithModifiers( int modifiers ) {
-        FieldDeclaration field = mock( FieldDeclaration.class );
-        when( Integer.valueOf( field.getModifiers() ) ).thenReturn( Integer.valueOf( modifiers ) );
-        collector.visit( field );
-    }
-
-    private void collectorEndVisitAndVisitorVisit() {
-        collector.endVisit( node );
-        classVisitor.visit();
     }
 
 }

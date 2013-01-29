@@ -62,7 +62,7 @@ public class MLCollectorTest extends CollectorTestHelper {
     }
 
     @Test
-    public void methodWithMultipleGroupedStatements() {
+    public void methodWithMultipleGroupedStatementsSumsUpItsStatements() {
         collector.calculate( 3 );
         collector.calculate( 5 );
         collector.calculate( 2 );
