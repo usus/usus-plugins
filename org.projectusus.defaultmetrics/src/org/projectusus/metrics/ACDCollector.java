@@ -19,7 +19,7 @@ import org.projectusus.core.metrics.MetricsCollector;
 
 public class ACDCollector extends MetricsCollector {
 
-    private static Stack<WrappedTypeBinding> types = new Stack<WrappedTypeBinding>();
+    private Stack<WrappedTypeBinding> types = new Stack<WrappedTypeBinding>();
 
     private void addCurrentType( AbstractTypeDeclaration node ) {
         addCurrentType( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
@@ -29,10 +29,14 @@ public class ACDCollector extends MetricsCollector {
         types.push( wrap );
     }
 
-    public void connectCurrentTypeAnd( WrappedTypeBinding targetType ) {
+    private void connectCurrentTypeAnd( WrappedTypeBinding targetType ) {
         if( currentType() != null && targetType != null && targetType.isValid() && !currentType().equals( targetType ) ) {
-            getMetricsWriter().addClassReference( currentType(), targetType );
+            connectTypes( currentType(), targetType );
         }
+    }
+
+    public void connectTypes( WrappedTypeBinding sourceType, WrappedTypeBinding targetType ) {
+        getMetricsWriter().addClassReference( sourceType, targetType );
     }
 
     public void dropCurrentType() {
