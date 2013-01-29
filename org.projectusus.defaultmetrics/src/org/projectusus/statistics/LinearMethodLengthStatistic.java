@@ -6,7 +6,7 @@ import org.projectusus.core.statistics.CockpitExtension;
 
 public class LinearMethodLengthStatistic extends CockpitExtension {
 
-    private static int ML_LIMIT = 9;
+    public static final int ML_LIMIT = 9;
 
     private double linearViolations = 0.0;
 

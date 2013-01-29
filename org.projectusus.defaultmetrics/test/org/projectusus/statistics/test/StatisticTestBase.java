@@ -16,4 +16,9 @@ public class StatisticTestBase {
         statistic.inspectMethod( location, results );
     }
 
+    protected void inspectClassMetricsValue( int value ) {
+        results.put( metricsLabel, value );
+        statistic.inspectClass( location, results );
+    }
+
 }
