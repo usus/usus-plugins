@@ -12,8 +12,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.projectusus.defaultmetrics,
  org.eclipse.jdt.launching,
  org.projectusus.core,
- org.eclipse.jdt.core;bundle-version="3.4.0",
- org.junit;bundle-version="4.11.0"
+ org.eclipse.jdt.core
 Bundle-ClassPath: lib/mockito-all-1.8.4.jar,
  .
 Import-Package: org.eclipse.jdt.core.dom

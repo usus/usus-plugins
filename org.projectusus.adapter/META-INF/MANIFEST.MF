@@ -11,7 +11,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jdt.core,
  org.eclipse.core.runtime,
  org.projectusus.core,
- org.projectusus.externals.test;resolution:=optional,
- org.junit;bundle-version="4.11.0"
+ org.projectusus.externals.test;resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
