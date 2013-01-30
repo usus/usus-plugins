@@ -21,11 +21,15 @@ public class ACDCollector extends MetricsCollector {
 
     private Stack<WrappedTypeBinding> types = new Stack<WrappedTypeBinding>();
 
+    public void connectTypes( WrappedTypeBinding sourceType, WrappedTypeBinding targetType ) {
+        getMetricsWriter().addClassReference( sourceType, targetType );
+    }
+
     private void addCurrentType( AbstractTypeDeclaration node ) {
         addCurrentType( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
     }
 
-    public void addCurrentType( WrappedTypeBinding wrap ) {
+    private void addCurrentType( WrappedTypeBinding wrap ) {
         types.push( wrap );
     }
 
@@ -35,11 +39,7 @@ public class ACDCollector extends MetricsCollector {
         }
     }
 
-    public void connectTypes( WrappedTypeBinding sourceType, WrappedTypeBinding targetType ) {
-        getMetricsWriter().addClassReference( sourceType, targetType );
-    }
-
-    public void dropCurrentType() {
+    private void dropCurrentType() {
         if( !types.empty() ) {
             types.pop();
         }
