@@ -11,7 +11,7 @@ public class Acd {
     }
 }
 
-class Acd2 {
+class ClassWithStrings {
     private String string;
 
     public String getString() {
@@ -22,26 +22,11 @@ class Acd2 {
 class EmptyClass {
 }
 
-class Acd3Helper {
+class ToEmptyClass {
     private EmptyClass x;
 }
 
-class Acd4 {
-    private Acd4Helper x;
-}
-
-class Acd4Helper {
-    private Acd4 x;
-}
-
-class Acd5 {
-}
-
-class Acd5Helper {
-    private static Acd5 x;
-}
-
-class Acd6<T> {
+class ClassWithGeneric<T> {
 
     private T string;
 
@@ -51,63 +36,43 @@ class Acd6<T> {
 
 }
 
-class Acd6Helper {
-    private static Acd6<String> x;
+class ToClassWithGeneric {
+    private static ClassWithGeneric<String> x;
 }
 
-class Acd7Helper {
+class ToClassAsGenericArgument {
     private static List<Acd> x;
 }
 
-class Acd8 {
-    Helper1 h;
-    Helper2 h2;
+class ToTwoClasses {
+    EmptyClass h1;
+    Acd h2;
 }
 
-class Helper1 {
-    Helper3 h;
-    Helper4 h2;
-}
-
-class Helper2 {
-    Helper5 h;
-    Helper6 h2;
-}
-
-class Helper3 {
-}
-
-class Helper4 {
-}
-
-class Helper5 {
-}
-
-class Helper6 {
-}
-
-class Acd9 {
+class ToUnloadedClass {
     UnloadedClass x;
 }
 
-class Acd10 {
+class ToUnloadedClassInDifferentPackage {
     UnloadedClass2 x;
 }
 
-interface Intf {
+interface EmptyInterface {
 }
 
-interface Intf2 {
+interface InterfaceToClass {
 
     Acd m();
 
 }
 
-class Acd11 implements Intf {
+class ImplementingClass implements EmptyInterface {
 }
 
-class Acd12 extends Acd {
+class ExtendingClass extends Acd {
 }
+
+// cleaned up the examples up to here
 
 class Acd_static1 {
 
