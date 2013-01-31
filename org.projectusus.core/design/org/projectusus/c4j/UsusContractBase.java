@@ -1,8 +1,6 @@
 package org.projectusus.c4j;
 
-
 import net.sourceforge.c4j.ContractBase;
-
 
 public class UsusContractBase<T> extends ContractBase<T> {
     public UsusContractBase( T target ) {
@@ -14,5 +12,6 @@ public class UsusContractBase<T> extends ContractBase<T> {
         String target = m_target.getClass().getName();
         String extendedMessage = "Contract: " + contract + ", Target: " + target + " - " + message;
         C4JFileWriter.assertStatic( condition, extendedMessage );
+        assert condition : extendedMessage;
     }
 }
