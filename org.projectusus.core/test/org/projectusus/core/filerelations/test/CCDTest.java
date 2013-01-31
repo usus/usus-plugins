@@ -61,6 +61,14 @@ public class CCDTest {
     }
 
     @Test
+    public void twoClassCycle() {
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor1 );
+        assertEquals( 2, descriptor1.getCCD() );
+        assertEquals( 2, descriptor2.getCCD() );
+    }
+
+    @Test
     public void threeClassCycle() {
         descriptor1.addChild( descriptor2 );
         descriptor2.addChild( descriptor3 );
@@ -108,6 +116,20 @@ public class CCDTest {
         descriptor2.addChild( descriptor3 );
         descriptor3.addChild( descriptor2 );
         descriptor3.addChild( descriptor1 );
+        assertEquals( 3, descriptor1.getCCD() );
+        assertEquals( 3, descriptor2.getCCD() );
+        assertEquals( 3, descriptor3.getCCD() );
+    }
+
+    @Test
+    public void secondQueryingOfCCDYieldsTheSameResult() {
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor3 );
+        descriptor3.addChild( descriptor2 );
+        descriptor3.addChild( descriptor1 );
+        descriptor1.getCCD();
+        descriptor2.getCCD();
+        descriptor3.getCCD();
         assertEquals( 3, descriptor1.getCCD() );
         assertEquals( 3, descriptor2.getCCD() );
         assertEquals( 3, descriptor3.getCCD() );
