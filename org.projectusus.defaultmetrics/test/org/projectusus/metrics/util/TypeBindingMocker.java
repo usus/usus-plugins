@@ -13,20 +13,20 @@ import org.projectusus.core.project2.IUSUSProject;
 
 public class TypeBindingMocker {
 
-    public static ITypeBinding createTypeBinding() throws JavaModelException {
+    public static ITypeBinding createTypeBinding(String classname, String packagename) throws JavaModelException {
         ITypeBinding binding = mock( ITypeBinding.class );
         when( binding.getErasure() ).thenReturn( binding );
-        when( binding.getName() ).thenReturn( "Classname" );
-        IPackageBinding packageBinding = createPackageBinding();
+        when( binding.getName() ).thenReturn( classname );
+        IPackageBinding packageBinding = createPackageBinding( packagename );
         when( binding.getPackage() ).thenReturn( packageBinding );
         IJavaElement javaElement = createJavaElement();
         when( binding.getJavaElement() ).thenReturn( javaElement );
         return binding;
     }
 
-    public static IPackageBinding createPackageBinding() {
+    public static IPackageBinding createPackageBinding( String packagename ) {
         IPackageBinding packageBinding = mock( IPackageBinding.class );
-        when( packageBinding.getName() ).thenReturn( "packagename" );
+        when( packageBinding.getName() ).thenReturn( packagename );
         return packageBinding;
     }
 

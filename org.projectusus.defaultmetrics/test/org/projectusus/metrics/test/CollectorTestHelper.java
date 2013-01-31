@@ -30,8 +30,12 @@ public class CollectorTestHelper {
     }
 
     protected ASTNodeHelper setupNodeHelperForClass() throws JavaModelException {
+        return setupNodeHelperForClass( "Classname", "packagename" );
+    }
+
+    protected ASTNodeHelper setupNodeHelperForClass( String classname, String packagename ) throws JavaModelException {
         ASTNodeHelper helper = mock( ASTNodeHelper.class );
-        ITypeBinding typeBinding = createTypeBinding();
+        ITypeBinding typeBinding = createTypeBinding( classname, packagename );
         when( helper.resolveBindingOf( org.mockito.Matchers.any( AbstractTypeDeclaration.class ) ) ).thenReturn( typeBinding );
         return helper;
     }
