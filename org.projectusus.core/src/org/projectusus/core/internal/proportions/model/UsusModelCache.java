@@ -15,21 +15,21 @@ import java.util.Map;
 import org.projectusus.core.basis.CodeProportion;
 
 public class UsusModelCache {
-    private final Map<String, CodeProportion> isisMetricsValues;
+    private final Map<String, CodeProportion> metricsValues;
 
     public UsusModelCache() {
         super();
-        isisMetricsValues = new HashMap<String, CodeProportion>();
+        metricsValues = new HashMap<String, CodeProportion>();
     }
 
     public void refresh( CodeProportion proportion ) {
-        isisMetricsValues.put( proportion.getMetricLabel(), proportion );
+        metricsValues.put( proportion.getMetricLabel(), proportion );
     }
 
     public List<CodeProportion> getEntries() {
         List<CodeProportion> result = new ArrayList<CodeProportion>();
-        result.addAll( isisMetricsValues.values() );
-        sort( result, new ByIsisMetricsComparator() );
+        result.addAll( metricsValues.values() );
+        sort( result, new MetricsComparator() );
         return unmodifiableList( result );
     }
 
