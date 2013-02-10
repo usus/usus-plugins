@@ -33,6 +33,8 @@ public class CCDTest {
     @Test
     public void noRelations() {
         assertEquals( 1, descriptor1.getCCD() );
+        assertEquals( 1, descriptor2.getCCD() );
+        assertEquals( 1, descriptor3.getCCD() );
     }
 
     @Test
