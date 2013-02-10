@@ -1,12 +1,12 @@
 package org.projectusus.core.filerelations.model;
 
+import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.matchers.JUnitMatchers.hasItems;
 import static org.mockito.Mockito.mock;
 
 import org.eclipse.core.resources.IFile;
@@ -14,6 +14,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ClassDescriptorTest {
+
+    private static final String NAME_STRING = "name";
+    private static final String PACKAGENAME_STRING = "packagename";
+
+    private Classname classname1 = new Classname( NAME_STRING );
+    private Classname classname2 = new Classname( NAME_STRING );
+    private Packagename packagename1 = Packagename.of( PACKAGENAME_STRING, null );
+    private Packagename packagename2 = Packagename.of( PACKAGENAME_STRING, null );
 
     private IFile file;
 
@@ -31,18 +39,19 @@ public class ClassDescriptorTest {
     }
 
     @Test
-    public void keyComparison() {
-        String classNameString = "name"; //$NON-NLS-1$
-        Classname classname1 = new Classname( classNameString );
-        Classname classname2 = new Classname( classNameString );
+    public void differentClassnamesWithTheSameStringAreEqualAndNotSame() {
         assertEquals( classname1, classname2 );
         assertNotSame( classname1, classname2 );
+    }
 
-        Packagename packagename1 = Packagename.of( "packagename", null ); //$NON-NLS-1$
-        Packagename packagename2 = Packagename.of( "packagename", null ); //$NON-NLS-1$
+    @Test
+    public void differentPackagenamesWithTheSameStringAreEqualAndSame() {
         assertEquals( packagename1, packagename2 );
         assertSame( packagename1, packagename2 );
+    }
 
+    @Test
+    public void differentClassDescriptorKeysWithEqualContentsAreEqualAndNotSame() {
         ClassDescriptorKey key1a = new ClassDescriptorKey( file, classname1, packagename1 );
         ClassDescriptorKey key1b = new ClassDescriptorKey( file, classname1, packagename1 );
         ClassDescriptorKey key2 = new ClassDescriptorKey( file, classname2, packagename2 );
@@ -52,7 +61,10 @@ public class ClassDescriptorTest {
         assertNotSame( key1a, key1b );
         assertNotSame( key1a, key2 );
         assertNotSame( key1b, key2 );
+    }
 
+    @Test
+    public void differentClassDescriptorsWithEqualContentsAreEqualAndSame() {
         ClassDescriptor descriptor1a = ClassDescriptor.of( file, classname1, packagename1 );
         ClassDescriptor descriptor1b = ClassDescriptor.of( file, classname1, packagename1 );
         ClassDescriptor descriptor2 = ClassDescriptor.of( file, classname2, packagename2 );
@@ -88,7 +100,7 @@ public class ClassDescriptorTest {
 
     @Test
     public void classIsNotAddedToItsChildren() {
-        ClassDescriptor descriptor = ClassDescriptor.of( mock( IFile.class ), new Classname( "classname" ), Packagename.of( "name", null ) ); //$NON-NLS-1$ //$NON-NLS-2$
+        ClassDescriptor descriptor = ClassDescriptor.of( mock( IFile.class ), new Classname( "classname" ), Packagename.of( NAME_STRING, null ) ); //$NON-NLS-1$ 
         assertEquals( 0, descriptor.getChildren().size() );
         descriptor.addChild( descriptor );
         assertEquals( 0, descriptor.getChildren().size() );
