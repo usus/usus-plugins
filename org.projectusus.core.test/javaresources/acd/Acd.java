@@ -33,7 +33,6 @@ class ClassWithGeneric<T> {
     public T getString() {
         return string;
     }
-
 }
 
 class ToClassWithGeneric {
@@ -72,77 +71,83 @@ class ImplementingClass implements EmptyInterface {
 class ExtendingClass extends Acd {
 }
 
-// cleaned up the examples up to here
-
-class Acd_static1 {
-
-}
-
-class Acd_static {
+class InvokingStaticMethod {
     public String getString() {
         return Acd.getString1();
     }
 }
 
-class Chain1 {
-    public static Chain1 getInstance() {
-        return new Chain1();
+class MethodChain {
+    public static MethodChain getInstance() {
+        return new MethodChain();
     }
 
     public String hello() {
         return new String( "Hello World" );
     }
-}
 
-class Chain2 {
-
-    void testmethod() {
-        Chain1.getInstance().hello();
-    }
-}
-
-class Chain3 {
-    public Chain3 getNew() {
-        return new Chain3();
+    public MethodChain getNew() {
+        return new MethodChain();
     }
 
-    public static String hello() {
+    public static String helloStatic() {
         return new String( "Hello World" );
     }
 }
 
-class Chain4 {
+class MethodChain_StaticNonstatic {
 
     void testmethod() {
-        new Chain3().getNew().hello();
+        MethodChain.getInstance().hello();
     }
 }
 
-class Field1 {
-    public static Field1 INSTANCE = new Field1();
+class MethodChain_NonstaticStatic {
+
+    void testmethod() {
+        new MethodChain().getNew().hello();
+    }
+}
+
+class FieldChain {
+    public static FieldChain INSTANCE = new FieldChain();
 
     public String hello = new String( "Hello World" );
+
+    public FieldChain neww = new FieldChain();
+
+    public static String helloStatic = new String( "Hello World" );
 }
 
-class Field2 {
+class FieldChain_StaticNonstatic {
 
     void testmethod() {
-        String x = Field1.INSTANCE.hello;
+        String x = FieldChain.INSTANCE.hello;
     }
 }
 
-class Field3 {
-    public Field3 neww = new Field3();
-
-    public static String hello = new String( "Hello World" );
-}
-
-class Field4 {
+class FieldChain_NonstaticStatic {
 
     void testmethod() {
-        String x = new Field3().neww.hello;
+        String x = new FieldChain().neww.helloStatic;
     }
 }
+
+class FieldChain_StaticNonstaticPublic {
+
+    void testmethod() {
+        String x = FieldChainPublic.INSTANCE_PUBLIC.hello_public;
+    }
+}
+
+class FieldChain_NonstaticStaticPublic {
+
+    void testmethod() {
+        String x = new FieldChainPublic().neww_public.helloStatic_public;
+    }
+}
+
+// cleaned up the examples up to here
 
 // class implements interface
 // interface name; referenziert das Interface 2x
