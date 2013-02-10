@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.filerelations.model.ASTNodeHelper;
 import org.projectusus.core.filerelations.model.BoundTypeConverter;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
@@ -21,11 +22,22 @@ public class ACDCollector extends MetricsCollector {
 
     private Stack<WrappedTypeBinding> types = new Stack<WrappedTypeBinding>();
 
+    /**
+     * Action method, for testing purposes only!
+     */
     public void connectTypes( WrappedTypeBinding sourceType, WrappedTypeBinding targetType ) {
         getMetricsWriter().addClassReference( sourceType, targetType );
     }
 
+    /**
+     * Action method, for testing purposes only!
+     */
+    public void initRawDataTree( AbstractTypeDeclaration node ) {
+        getMetricsWriter().putData( getFile(), node, MetricsResults.CLASS_CREATION, 0 );
+    }
+
     private void addCurrentType( AbstractTypeDeclaration node ) {
+        initRawDataTree( node );
         addCurrentType( new BoundTypeConverter( new ASTNodeHelper() ).wrap( node ) );
     }
 
