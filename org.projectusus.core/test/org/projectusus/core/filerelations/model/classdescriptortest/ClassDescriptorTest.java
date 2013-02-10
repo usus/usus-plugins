@@ -1,9 +1,8 @@
-package org.projectusus.core.filerelations.model;
+package org.projectusus.core.filerelations.model.classdescriptortest;
 
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -12,6 +11,9 @@ import static org.mockito.Mockito.mock;
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.Classname;
+import org.projectusus.core.filerelations.model.Packagename;
 
 public class ClassDescriptorTest {
 
@@ -36,31 +38,6 @@ public class ClassDescriptorTest {
         Object descriptor2 = createDescriptor( file );
         assertTrue( descriptor1.equals( descriptor2 ) );
         assertSame( descriptor1, descriptor2 );
-    }
-
-    @Test
-    public void differentClassnamesWithTheSameStringAreEqualAndNotSame() {
-        assertEquals( classname1, classname2 );
-        assertNotSame( classname1, classname2 );
-    }
-
-    @Test
-    public void differentPackagenamesWithTheSameStringAreEqualAndSame() {
-        assertEquals( packagename1, packagename2 );
-        assertSame( packagename1, packagename2 );
-    }
-
-    @Test
-    public void differentClassDescriptorKeysWithEqualContentsAreEqualAndNotSame() {
-        ClassDescriptorKey key1a = new ClassDescriptorKey( file, classname1, packagename1 );
-        ClassDescriptorKey key1b = new ClassDescriptorKey( file, classname1, packagename1 );
-        ClassDescriptorKey key2 = new ClassDescriptorKey( file, classname2, packagename2 );
-        assertEquals( key1a, key1b );
-        assertEquals( key1a, key2 );
-        assertEquals( key1b, key2 );
-        assertNotSame( key1a, key1b );
-        assertNotSame( key1a, key2 );
-        assertNotSame( key1b, key2 );
     }
 
     @Test

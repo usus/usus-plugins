@@ -1,4 +1,4 @@
-package org.projectusus.core.filerelations.model.test;
+package org.projectusus.core.filerelations.model.classdescriptortest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
