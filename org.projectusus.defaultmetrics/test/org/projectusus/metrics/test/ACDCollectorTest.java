@@ -62,7 +62,7 @@ public class ACDCollectorTest {
     }
 
     @Test
-    public void unidirectionalConnectionOfTwoTypesYieldsOneIsChildOfTheOther() {
+    public void unidirectionalConnectionOfTwoTypesYieldsThatOneIsChildOfTheOther() {
 
         collector.connectTypes( TYPE_1, TYPE_2 );
 
@@ -74,7 +74,7 @@ public class ACDCollectorTest {
     }
 
     @Test
-    public void bidirectionalConnectionOfTwoTypesYieldsTypesAreChildrenOfEachOther() {
+    public void bidirectionalConnectionOfTwoTypesYieldsThatTypesAreChildrenOfEachOther() {
 
         collector.connectTypes( TYPE_1, TYPE_2 );
         collector.connectTypes( TYPE_2, TYPE_1 );
