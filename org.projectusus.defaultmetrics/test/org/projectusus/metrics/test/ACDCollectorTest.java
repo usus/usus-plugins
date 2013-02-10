@@ -9,8 +9,6 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.Set;
-
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,8 +54,8 @@ public class ACDCollectorTest {
 
         collector.connectTypes( TYPE_1, TYPE_1 );
 
-        ClassDescriptor classDescriptor1 = findClassDescriptorWithName( NAME_1, ClassDescriptor.getAll() );
-        ClassDescriptor classDescriptor2 = findClassDescriptorWithName( NAME_2, ClassDescriptor.getAll() );
+        ClassDescriptor classDescriptor1 = findClassDescriptorWithName( NAME_1 );
+        ClassDescriptor classDescriptor2 = findClassDescriptorWithName( NAME_2 );
 
         assertThat( classDescriptor1.getChildren(), is( empty() ) );
         assertThat( classDescriptor2, is( nullValue() ) );
@@ -68,8 +66,8 @@ public class ACDCollectorTest {
 
         collector.connectTypes( TYPE_1, TYPE_2 );
 
-        ClassDescriptor classDescriptor1 = findClassDescriptorWithName( NAME_1, ClassDescriptor.getAll() );
-        ClassDescriptor classDescriptor2 = findClassDescriptorWithName( NAME_2, ClassDescriptor.getAll() );
+        ClassDescriptor classDescriptor1 = findClassDescriptorWithName( NAME_1 );
+        ClassDescriptor classDescriptor2 = findClassDescriptorWithName( NAME_2 );
 
         assertThat( classDescriptor1.getChildren(), contains( classDescriptor2 ) );
         assertThat( classDescriptor2.getChildren(), is( empty() ) );
@@ -81,15 +79,15 @@ public class ACDCollectorTest {
         collector.connectTypes( TYPE_1, TYPE_2 );
         collector.connectTypes( TYPE_2, TYPE_1 );
 
-        ClassDescriptor classDescriptor1 = findClassDescriptorWithName( NAME_1, ClassDescriptor.getAll() );
-        ClassDescriptor classDescriptor2 = findClassDescriptorWithName( NAME_2, ClassDescriptor.getAll() );
+        ClassDescriptor classDescriptor1 = findClassDescriptorWithName( NAME_1 );
+        ClassDescriptor classDescriptor2 = findClassDescriptorWithName( NAME_2 );
 
         assertThat( classDescriptor1.getChildren(), contains( classDescriptor2 ) );
         assertThat( classDescriptor2.getChildren(), contains( classDescriptor1 ) );
     }
 
-    private ClassDescriptor findClassDescriptorWithName( String name, Set<ClassDescriptor> all ) {
-        for( ClassDescriptor classDescriptor : all ) {
+    private ClassDescriptor findClassDescriptorWithName( String name ) {
+        for( ClassDescriptor classDescriptor : ClassDescriptor.getAll() ) {
             if( classDescriptor.getClassname().toString().equals( name ) ) {
                 return classDescriptor;
             }
