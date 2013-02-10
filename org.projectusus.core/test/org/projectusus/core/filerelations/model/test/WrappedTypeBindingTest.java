@@ -50,74 +50,74 @@ public class WrappedTypeBindingTest {
     }
 
     @Test
-    public void nullTypeBindingYieldsNull() {
+    public void nullTypeBindingYieldsInvalidWrapper() {
         assertFalse( new WrappedTypeBinding( null ).isValid() );
     }
 
     @Test
-    public void primitiveTypeBindingYieldsNull() {
+    public void primitiveTypeBindingYieldsInvalidWrapper() {
         when( new Boolean( binding.isPrimitive() ) ).thenReturn( Boolean.TRUE );
         assertFalse( new WrappedTypeBinding( binding ).isValid() );
     }
 
     @Test
-    public void erasedBindingYieldsNull() {
+    public void erasedBindingYieldsInvalidWrapper() {
         when( binding.getErasure() ).thenReturn( null );
 
         assertFalse( new WrappedTypeBinding( binding ).isValid() );
     }
 
     @Test
-    public void erasedBindingTypeVariableYieldsNull() {
+    public void erasedBindingTypeVariableYieldsInvalidWrapper() {
         when( new Boolean( binding.isTypeVariable() ) ).thenReturn( Boolean.TRUE );
 
         assertFalse( new WrappedTypeBinding( binding ).isValid() );
     }
 
     @Test
-    public void erasedBindingCaptureYieldsNull() {
+    public void erasedBindingCaptureYieldsInvalidWrapper() {
         when( new Boolean( binding.isCapture() ) ).thenReturn( Boolean.TRUE );
 
         assertFalse( new WrappedTypeBinding( binding ).isValid() );
     }
 
     @Test
-    public void erasedBindingWildcardTypeYieldsNull() {
+    public void erasedBindingWildcardTypeYieldsInvalidWrapper() {
         when( new Boolean( binding.isWildcardType() ) ).thenReturn( Boolean.TRUE );
 
         assertFalse( new WrappedTypeBinding( binding ).isValid() );
     }
 
     @Test
-    public void erasedBindingNullJavaElementYieldsNull() {
+    public void erasedBindingNullJavaElementYieldsInvalidWrapper() {
         when( binding.getJavaElement() ).thenReturn( null );
 
         assertFalse( new WrappedTypeBinding( binding ).isValid() );
     }
 
     @Test
-    public void erasedBindingNullUnderlyingResourceYieldsNull() throws JavaModelException {
+    public void erasedBindingNullUnderlyingResourceYieldsInvalidWrapper() throws JavaModelException {
         when( javaElement.getUnderlyingResource() ).thenReturn( null );
 
         assertFalse( new WrappedTypeBinding( binding ).isValid() );
     }
 
     @Test
-    public void erasedBindingNonJavaFileYieldsNull() {
+    public void erasedBindingNonJavaFileYieldsInvalidWrapper() {
         when( resource.getFileExtension() ).thenReturn( "xyz" ); //$NON-NLS-1$
 
         assertFalse( new WrappedTypeBinding( binding ).isValid() );
     }
 
     @Test
-    public void erasedBindingProjectNotAccessibleYieldsNull() {
+    public void erasedBindingProjectNotAccessibleYieldsInvalidWrapper() {
         when( new Boolean( project.isAccessible() ) ).thenReturn( Boolean.FALSE );
 
         assertFalse( new WrappedTypeBinding( binding ).isValid() );
     }
 
     @Test
-    public void erasedBindingProjectAdapterWrongTypeYieldsNull() {
+    public void erasedBindingProjectAdapterWrongTypeYieldsInvalidWrapper() {
         Object wrongAdapter = mock( Object.class );
         when( project.getAdapter( any( Class.class ) ) ).thenReturn( wrongAdapter );
 
@@ -125,7 +125,7 @@ public class WrappedTypeBindingTest {
     }
 
     @Test
-    public void erasedBindingNotInUsusProjectYieldsNull() {
+    public void erasedBindingNotInUsusProjectYieldsInvalidWrapper() {
         when( new Boolean( adapter.isUsusProject() ) ).thenReturn( Boolean.FALSE );
 
         assertFalse( new WrappedTypeBinding( binding ).isValid() );
