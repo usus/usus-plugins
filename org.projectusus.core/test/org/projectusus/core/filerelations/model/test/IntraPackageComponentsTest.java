@@ -1,4 +1,4 @@
-package org.projectusus.core.filerelations.model;
+package org.projectusus.core.filerelations.model.test;
 
 import static org.mockito.Mockito.mock;
 
@@ -8,6 +8,10 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.Classname;
+import org.projectusus.core.filerelations.model.IntraPackageComponents;
+import org.projectusus.core.filerelations.model.Packagename;
 
 public class IntraPackageComponentsTest {
 

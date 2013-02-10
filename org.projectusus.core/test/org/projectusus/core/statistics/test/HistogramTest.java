@@ -1,4 +1,4 @@
-package org.projectusus.core.statistics;
+package org.projectusus.core.statistics.test;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
