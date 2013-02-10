@@ -24,6 +24,7 @@ public class ACD_PDETest extends PDETestForMetricsComputation {
         IFile fieldChainStaticImport = createJavaFile( "acd/FieldChainStaticImport.java" );
         IFile fieldChainPublic = createJavaFile( "acd/FieldChainPublic.java" );
         IFile methodChainPublic = createJavaFile( "acd/MethodChainPublic.java" );
+        IFile imports = createJavaFile( "acd2/Imports.java" );
 
         createJavaFile( "acd/UnloadedClass.java" );
         IFile unloadedFile2 = createJavaFile( "acd2/UnloadedClass2.java" );
@@ -35,6 +36,7 @@ public class ACD_PDETest extends PDETestForMetricsComputation {
         new JavaFileDriver( fieldChainStaticImport ).compute( createSetWith( inspector ) );
         new JavaFileDriver( fieldChainPublic ).compute( createSetWith( inspector ) );
         new JavaFileDriver( methodChainPublic ).compute( createSetWith( inspector ) );
+        new JavaFileDriver( imports ).compute( createSetWith( inspector ) );
 
         Multimap<String, String> map = inspector.getTypeConnections();
 
@@ -53,24 +55,35 @@ public class ACD_PDETest extends PDETestForMetricsComputation {
         assertThat( map.get( "acd/ImplementingClass" ), contains( "acd/EmptyInterface", "acd/EmptyInterface" ) );
         assertThat( map.get( "acd/ExtendingClass" ), contains( "acd/Acd", "acd/Acd" ) );
         assertThat( map.get( "acd/InvokingStaticMethod" ), contains( "acd/Acd" ) );
+
         assertThat( map.get( "acd/MethodChain" ), is( empty() ) );
         assertThat( map.get( "acd/MethodChain_StaticNonstatic" ), contains( "acd/MethodChain" ) );
         assertThat( map.get( "acd/MethodChain_NonstaticStatic" ), contains( "acd/MethodChain", "acd/MethodChain" ) );
-
         assertThat( map.get( "acd/FieldChain" ), is( empty() ) );
         assertThat( map.get( "acd/FieldChain_StaticNonstatic" ), contains( "acd/FieldChain", "acd/FieldChain", "acd/FieldChain" ) );
         assertThat( map.get( "acd/FieldChain_NonstaticStatic" ), contains( "acd/FieldChain", "acd/FieldChain", "acd/FieldChain", "acd/FieldChain" ) );
-        assertThat( map.get( "acd/FieldChainPublic" ), is( empty() ) );
-        assertThat( map.get( "acd/FieldChain_StaticNonstaticPublic" ), contains( "acd/FieldChainPublic", "acd/FieldChainPublic", "acd/FieldChainPublic" ) );
-        assertThat( map.get( "acd/FieldChain_NonstaticStaticPublic" ), contains( "acd/FieldChainPublic", "acd/FieldChainPublic", "acd/FieldChainPublic", "acd/FieldChainPublic" ) );
+
+        assertThat( map.get( "acd/ClassWithArrayReferenceInField" ), contains( "acd/EmptyClass", "acd/EmptyClass" ) );
+        assertThat( map.get( "acd/ClassWithArrayReferenceInLocalVariable" ), contains( "acd/EmptyClass", "acd/EmptyClass" ) );
+        assertThat( map.get( "acd/ClassWithArrayReferenceInMethodParameter" ), contains( "acd/EmptyClass", "acd/EmptyClass" ) );
+        assertThat( map.get( "acd/ClassWithArrayReferenceInMethodReturnType" ), contains( "acd/EmptyClass", "acd/EmptyClass" ) );
+
+        assertThat( map.get( "acd/ClassWithInnerBeforeAttribute" ), contains( "acd/EmptyClass", "acd/EmptyClass" ) );
+        assertThat( map.get( "acd/InnerClassBeforeAttribute" ), contains( "acd/EmptyClass", "acd/EmptyClass" ) );
+        assertThat( map.get( "acd/ClassWithInnerAfterAttribute" ), contains( "acd/EmptyClass", "acd/EmptyClass" ) );
+        assertThat( map.get( "acd/InnerClassAfterAttribute" ), contains( "acd/EmptyClass", "acd/EmptyClass" ) );
+
+        // the following tests use more than one file
+        assertThat( map.get( "acd2/Acd_staticImport" ), contains( "acd/Acd" ) );
 
         assertThat( map.get( "acd/MethodChainPublic" ), is( empty() ) );
-
-        assertThat( map.get( "acd2/Acd_staticImport" ), contains( "acd/Acd" ) );
         assertThat( map.get( "acd/MethodChainStaticImport" ), is( empty() ) ); // eclipse bug!
         assertThat( map.get( "acd/MethodChainStaticImportPublic" ), contains( "acd/MethodChainPublic" ) );
+
+        assertThat( map.get( "acd/FieldChainPublic" ), is( empty() ) );
         assertThat( map.get( "acd/FieldChainStaticImport" ), is( empty() ) ); // eclipse bug!
         assertThat( map.get( "acd/FieldChainStaticImportPublic" ), contains( "acd/FieldChainPublic", "acd/FieldChainPublic" ) );
+        assertThat( map.get( "acd2/Imports" ), is( empty() ) );
 
         // das gehört nicht hier hin!
         // Stattdessen sicherstellen, dass beim Anlegen und Löschen die entsprechende Neuberechnung auch stattfindet!

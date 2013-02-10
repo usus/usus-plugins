@@ -133,18 +133,45 @@ class FieldChain_NonstaticStatic {
     }
 }
 
-class FieldChain_StaticNonstaticPublic {
+class ClassWithArrayReferenceInField {
+    EmptyClass[] f;
+}
 
-    void testmethod() {
-        String x = FieldChainPublic.INSTANCE_PUBLIC.hello_public;
+class ClassWithArrayReferenceInLocalVariable {
+    void m() {
+        EmptyClass[] f;
     }
 }
 
-class FieldChain_NonstaticStaticPublic {
-
-    void testmethod() {
-        String x = new FieldChainPublic().neww_public.helloStatic_public;
+class ClassWithArrayReferenceInMethodParameter {
+    void m( EmptyClass[] f ) {
     }
+}
+
+class ClassWithArrayReferenceInMethodReturnType {
+    EmptyClass[] m() {
+        return null;
+    }
+}
+
+class ClassWithInnerBeforeAttribute {
+
+    private class InnerClassBeforeAttribute {
+
+        EmptyClass c;
+    }
+
+    EmptyClass c;
+}
+
+class ClassWithInnerAfterAttribute {
+    EmptyClass c;
+
+    private class InnerClassAfterAttribute {
+
+        EmptyClass c;
+    }
+
 }
 
 // cleaned up the examples up to here
