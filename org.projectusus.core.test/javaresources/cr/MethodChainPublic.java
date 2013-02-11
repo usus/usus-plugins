@@ -1,4 +1,4 @@
-package acd;
+package cr;
 
 public class MethodChainPublic {
     public static MethodChainPublic getInstancePublic() {

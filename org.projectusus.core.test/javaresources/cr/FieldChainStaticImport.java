@@ -1,7 +1,7 @@
-package acd;
+package cr;
 
-import static acd.FieldChain.INSTANCE;
-import static acd.FieldChainPublic.INSTANCE_PUBLIC;
+import static cr.FieldChain.INSTANCE;
+import static cr.FieldChainPublic.INSTANCE_PUBLIC;
 
 public class FieldChainStaticImport {
 

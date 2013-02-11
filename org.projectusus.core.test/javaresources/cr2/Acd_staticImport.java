@@ -1,6 +1,6 @@
-package acd2;
+package cr2;
 
-import static acd.Acd.getString1;
+import static cr.Acd.getString1;
 
 public class Acd_staticImport {
 

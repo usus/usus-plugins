@@ -1,6 +1,6 @@
-package acd2;
+package cr2;
 
-import static acd.Acd.STRING;
+import static cr.Acd.STRING;
 import static java.util.Locale.ENGLISH;
 import static org.joda.time.format.DateTimeFormat.forPattern;
 

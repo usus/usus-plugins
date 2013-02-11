@@ -1,7 +1,7 @@
-package acd;
+package cr;
 
-import static acd.MethodChain.getInstance;
-import static acd.MethodChainPublic.getInstancePublic;
+import static cr.MethodChain.getInstance;
+import static cr.MethodChainPublic.getInstancePublic;
 
 public class MethodChainStaticImport {
 
