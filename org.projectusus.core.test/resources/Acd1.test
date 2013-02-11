@@ -1,9 +1,0 @@
-public class Acd1 {
-
-	private String string;
-	
-	public String getString(){
-		return string;
-	}
-	
-}

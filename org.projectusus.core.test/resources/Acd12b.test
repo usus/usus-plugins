@@ -1,5 +1,0 @@
-public interface Acd12b extends Acd12c {
-
-// public static final Acd12c x = null;
-
-}
