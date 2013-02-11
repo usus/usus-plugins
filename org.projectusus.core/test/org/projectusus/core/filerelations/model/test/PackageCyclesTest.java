@@ -1,4 +1,4 @@
-package org.projectusus.core.filerelations.internal.metrics.test;
+package org.projectusus.core.filerelations.model.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
