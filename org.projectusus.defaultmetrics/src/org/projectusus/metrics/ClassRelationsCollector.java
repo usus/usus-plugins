@@ -18,7 +18,7 @@ import org.projectusus.core.filerelations.model.BoundTypeConverter;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 import org.projectusus.core.metrics.MetricsCollector;
 
-public class ACDCollector extends MetricsCollector {
+public class ClassRelationsCollector extends MetricsCollector {
 
     private Stack<WrappedTypeBinding> types = new Stack<WrappedTypeBinding>();
 

@@ -48,7 +48,7 @@
     <extension
           point="org.projectusus.core.metrics"> 
        <metrics
-             class="org.projectusus.metrics.ACDCollector">
+             class="org.projectusus.metrics.ClassRelationsCollector">
        </metrics> 
        <metrics
              class="org.projectusus.metrics.CCCollector">

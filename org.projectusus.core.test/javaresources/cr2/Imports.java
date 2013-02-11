@@ -1,7 +1,7 @@
 package cr2;
 
-import cr.Acd;
-import static cr.Acd.*;
+import cr.ClassRelations;
+import static cr.ClassRelations.*;
 
 public class Imports {
 

@@ -17,7 +17,7 @@ import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 import org.projectusus.core.statistics.UsusModelProvider;
-import org.projectusus.metrics.ACDCollector;
+import org.projectusus.metrics.ClassRelationsCollector;
 import org.projectusus.metrics.util.Setup;
 
 /**
@@ -40,12 +40,12 @@ public class ACDCollectorTest {
     private final WrappedTypeBinding TYPE_1 = createType( NAME_1 );
     private final WrappedTypeBinding TYPE_2 = createType( NAME_2 );
 
-    private ACDCollector collector;
+    private ClassRelationsCollector collector;
 
     @Before
     public void setup() {
         UsusModelProvider.clear();
-        collector = new ACDCollector();
+        collector = new ClassRelationsCollector();
         Setup.setupCollector( collector );
     }
 

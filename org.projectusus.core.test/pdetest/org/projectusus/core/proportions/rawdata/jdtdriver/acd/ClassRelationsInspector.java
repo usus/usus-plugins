@@ -2,12 +2,12 @@ package org.projectusus.core.proportions.rawdata.jdtdriver.acd;
 
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
-import org.projectusus.metrics.ACDCollector;
+import org.projectusus.metrics.ClassRelationsCollector;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-public class ACDInspector extends ACDCollector {
+public class ClassRelationsInspector extends ClassRelationsCollector {
 
     private Multimap<String, String> typeConnections = ArrayListMultimap.create();
 

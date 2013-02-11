@@ -5,7 +5,7 @@ import java.util.List;
 import cr2.UnloadedClass2;
 
 
-public class Acd {
+public class ClassRelations {
 
     public static String STRING = "";
 
@@ -43,12 +43,12 @@ class ToClassWithGeneric {
 }
 
 class ToClassAsGenericArgument {
-    private static List<Acd> x;
+    private static List<ClassRelations> x;
 }
 
 class ToTwoClasses {
     EmptyClass h1;
-    Acd h2;
+    ClassRelations h2;
 }
 
 class ToUnloadedClass {
@@ -64,25 +64,25 @@ interface EmptyInterface {
 
 interface InterfaceToClass {
 
-    Acd m();
+    ClassRelations m();
 
 }
 
 class ImplementingClass implements EmptyInterface {
 }
 
-class ExtendingClass extends Acd {
+class ExtendingClass extends ClassRelations {
 }
 
 class InvokingStaticMethod {
     public String getString() {
-        return Acd.getString1();
+        return ClassRelations.getString1();
     }
 }
 
 class ReferencingStaticField {
     public String getString() {
-        return Acd.STRING;
+        return ClassRelations.STRING;
     }
 }
 

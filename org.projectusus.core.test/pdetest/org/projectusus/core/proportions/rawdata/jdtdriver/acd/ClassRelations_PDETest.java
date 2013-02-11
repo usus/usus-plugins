@@ -18,7 +18,7 @@ public class ClassRelations_PDETest extends PDETestForMetricsComputation {
     public void assumptionsAreValid() throws Exception {
         project.createFolder( "cr" );
         project.createFolder( "cr2" );
-        IFile file = createJavaFile( "cr/Acd.java" );
+        IFile file = createJavaFile( "cr/ClassRelations.java" );
         IFile methodStaticImport = createJavaFile( "cr/MethodStaticImport.java" );
         IFile fieldStaticImport = createJavaFile( "cr/FieldStaticImport.java" );
         IFile methodChainStaticImport = createJavaFile( "cr/MethodChainStaticImport.java" );
@@ -31,7 +31,7 @@ public class ClassRelations_PDETest extends PDETestForMetricsComputation {
         createJavaFile( "cr/UnloadedClass.java" );
         IFile unloadedFile2 = createJavaFile( "cr2/UnloadedClass2.java" );
 
-        ACDInspector inspector = new ACDInspector();
+        ClassRelationsInspector inspector = new ClassRelationsInspector();
         new JavaFileDriver( file ).compute( createSetWith( inspector ) );
         new JavaFileDriver( methodChainPublic ).compute( createSetWith( inspector ) );
         new JavaFileDriver( methodStaticImport ).compute( createSetWith( inspector ) );
@@ -44,22 +44,22 @@ public class ClassRelations_PDETest extends PDETestForMetricsComputation {
 
         Multimap<String, String> map = inspector.getTypeConnections();
 
-        assertThat( map.get( "cr/Acd" ), is( empty() ) );
+        assertThat( map.get( "cr/ClassRelations" ), is( empty() ) );
         assertThat( map.get( "cr/ClassWithStrings" ), is( empty() ) );
         assertThat( map.get( "cr/EmptyClass" ), is( empty() ) );
         assertThat( map.get( "cr/ToEmptyClass" ), contains( "cr/EmptyClass", "cr/EmptyClass" ) );
         assertThat( map.get( "cr/ClassWithGeneric" ), is( empty() ) );
         assertThat( map.get( "cr/ToClassWithGeneric" ), contains( "cr/ClassWithGeneric", "cr/ClassWithGeneric" ) );
-        assertThat( map.get( "cr/ToClassAsGenericArgument" ), contains( "cr/Acd", "cr/Acd" ) );
-        assertThat( map.get( "cr/ToTwoClasses" ), contains( "cr/EmptyClass", "cr/EmptyClass", "cr/Acd", "cr/Acd" ) );
+        assertThat( map.get( "cr/ToClassAsGenericArgument" ), contains( "cr/ClassRelations", "cr/ClassRelations" ) );
+        assertThat( map.get( "cr/ToTwoClasses" ), contains( "cr/EmptyClass", "cr/EmptyClass", "cr/ClassRelations", "cr/ClassRelations" ) );
         assertThat( map.get( "cr/ToUnloadedClass" ), contains( "cr/UnloadedClass", "cr/UnloadedClass" ) );
         assertThat( map.get( "cr/ToUnloadedClassInDifferentPackage" ), contains( "cr2/UnloadedClass2", "cr2/UnloadedClass2" ) );
         assertThat( map.get( "cr/EmptyInterface" ), is( empty() ) );
-        assertThat( map.get( "cr/InterfaceToClass" ), contains( "cr/Acd", "cr/Acd" ) );
+        assertThat( map.get( "cr/InterfaceToClass" ), contains( "cr/ClassRelations", "cr/ClassRelations" ) );
         assertThat( map.get( "cr/ImplementingClass" ), contains( "cr/EmptyInterface", "cr/EmptyInterface" ) );
-        assertThat( map.get( "cr/ExtendingClass" ), contains( "cr/Acd", "cr/Acd" ) );
-        assertThat( map.get( "cr/InvokingStaticMethod" ), contains( "cr/Acd" ) );
-        assertThat( map.get( "cr/ReferencingStaticField" ), contains( "cr/Acd", "cr/Acd" ) );
+        assertThat( map.get( "cr/ExtendingClass" ), contains( "cr/ClassRelations", "cr/ClassRelations" ) );
+        assertThat( map.get( "cr/InvokingStaticMethod" ), contains( "cr/ClassRelations" ) );
+        assertThat( map.get( "cr/ReferencingStaticField" ), contains( "cr/ClassRelations", "cr/ClassRelations" ) );
 
         assertThat( map.get( "cr/MethodChain" ), is( empty() ) );
         assertThat( map.get( "cr/MethodChain_StaticNonstatic" ), contains( "cr/MethodChain" ) );
@@ -93,12 +93,12 @@ public class ClassRelations_PDETest extends PDETestForMetricsComputation {
         assertThat( map.get( "cr/FieldChainStaticImport" ), is( empty() ) ); // eclipse bug!
         assertThat( map.get( "cr/FieldChainStaticImportPublic" ), contains( "cr/FieldChainPublic", "cr/FieldChainPublic" ) );
         assertThat( map.get( "cr2/Imports" ), is( empty() ) );
-        assertThat( map.get( "cr2/ClassWithStaticImportInMethodParameter" ), contains( "cr/Acd" ) );
+        assertThat( map.get( "cr2/ClassWithStaticImportInMethodParameter" ), contains( "cr/ClassRelations" ) );
 
         // das gehört nicht hier hin!
         // Stattdessen sicherstellen, dass beim Anlegen und Löschen die entsprechende Neuberechnung auch stattfindet!
         project.delete( unloadedFile2 );
-        inspector = new ACDInspector();
+        inspector = new ClassRelationsInspector();
         new JavaFileDriver( file ).compute( createSetWith( inspector ) );
         map = inspector.getTypeConnections();
         assertThat( map.get( "cr/ToUnloadedClassInDifferentPackage" ), is( empty() ) );
