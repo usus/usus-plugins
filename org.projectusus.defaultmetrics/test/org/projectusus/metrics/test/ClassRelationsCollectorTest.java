@@ -28,7 +28,7 @@ import org.projectusus.metrics.util.Setup;
  * @author rauch
  * 
  */
-public class ACDCollectorTest {
+public class ClassRelationsCollectorTest {
 
     private static final String NAME_1 = "Name1";
     private static final String NAME_2 = "Name2";
