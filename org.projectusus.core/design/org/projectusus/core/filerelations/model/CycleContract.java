@@ -22,7 +22,6 @@ public class CycleContract<Element> extends UsusContractBase<Cycle<Element>> {
     }
 
     public void pre_Cycle( Set<Element> elements ) {
-        // TODO Auto-generated pre-condition
         assertThat( elements != null, "elements_not_null" );
     }
 
