@@ -6,14 +6,13 @@ import static org.mockito.Mockito.mock;
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.filerelations.internal.metrics.PackageCycleCalculator;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.statistics.UsusModelProvider;
 
-public class PackageCycleCalculatorTest {
+public class PackageCyclesTest {
 
     private static Packagename I = Packagename.of( "I", null ); //$NON-NLS-1$
     private static Packagename II = Packagename.of( "II", null ); //$NON-NLS-1$
@@ -40,34 +39,34 @@ public class PackageCycleCalculatorTest {
 
     @Test
     public void countPackagesInCycles1() {
-        assertEquals( 0, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
+        assertEquals( 0, packagesInCycles() );
     }
 
     @Test
     public void countPackagesInCycles2() {
         I_A.addChild( II_A );
-        assertEquals( 0, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
+        assertEquals( 0, packagesInCycles() );
     }
 
     @Test
     public void countPackagesInCycles3() {
         I_A.addChild( I_B );
         I_B.addChild( I_A );
-        assertEquals( 0, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
+        assertEquals( 0, packagesInCycles() );
     }
 
     @Test
     public void countPackagesInCycles4() {
         I_A.addChild( II_A );
         II_A.addChild( I_A );
-        assertEquals( 2, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
+        assertEquals( 2, packagesInCycles() );
     }
 
     @Test
     public void countPackagesInCycles5() {
         I_A.addChild( II_A );
         II_B.addChild( I_B );
-        assertEquals( 2, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
+        assertEquals( 2, packagesInCycles() );
     }
 
     @Test
@@ -76,7 +75,7 @@ public class PackageCycleCalculatorTest {
         II_A.addChild( III_A );
         III_A.addChild( I_A );
         IV_A.addChild( III_A );
-        assertEquals( 3, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
+        assertEquals( 3, packagesInCycles() );
     }
 
     @Test
@@ -85,7 +84,11 @@ public class PackageCycleCalculatorTest {
         II_A.addChild( I_A );
         III_A.addChild( IV_A );
         IV_A.addChild( III_A );
-        assertEquals( 4, new PackageCycleCalculator( new PackageRelations() ).countPackagesInCycles() );
+        assertEquals( 4, packagesInCycles() );
+    }
+
+    private int packagesInCycles() {
+        return new PackageRelations().getPackageCycles().numberOfPackagesInAnyCycles();
     }
 
     private static ClassDescriptor createDescriptor( Packagename packagename ) {
