@@ -19,7 +19,6 @@ public class ClassRelations_PDETest extends PDETestForMetricsComputation {
         project.createFolder( "cr" );
         project.createFolder( "cr2" );
         IFile file = createJavaFile( "cr/Acd.java" );
-        IFile staticImport = createJavaFile( "cr2/Acd_staticImport.java" );
         IFile methodStaticImport = createJavaFile( "cr/MethodStaticImport.java" );
         IFile fieldStaticImport = createJavaFile( "cr/FieldStaticImport.java" );
         IFile methodChainStaticImport = createJavaFile( "cr/MethodChainStaticImport.java" );
@@ -34,7 +33,6 @@ public class ClassRelations_PDETest extends PDETestForMetricsComputation {
 
         ACDInspector inspector = new ACDInspector();
         new JavaFileDriver( file ).compute( createSetWith( inspector ) );
-        new JavaFileDriver( staticImport ).compute( createSetWith( inspector ) );
         new JavaFileDriver( methodChainPublic ).compute( createSetWith( inspector ) );
         new JavaFileDriver( methodStaticImport ).compute( createSetWith( inspector ) );
         new JavaFileDriver( methodChainStaticImport ).compute( createSetWith( inspector ) );
@@ -81,8 +79,6 @@ public class ClassRelations_PDETest extends PDETestForMetricsComputation {
         assertThat( map.get( "cr/InnerClassAfterAttribute" ), contains( "cr/EmptyClass", "cr/EmptyClass" ) );
 
         // the following tests use more than one file
-        assertThat( map.get( "cr2/Acd_staticImport" ), contains( "cr/Acd" ) );
-
         assertThat( map.get( "cr/MethodStaticImport" ), is( empty() ) ); // eclipse bug!
         assertThat( map.get( "cr/MethodStaticImportPublic" ), contains( "cr/MethodChainPublic" ) );
 
