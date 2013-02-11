@@ -1,4 +1,0 @@
-public class MetricsAccessor_file2Knows1 {
-
-	private MetricsAccessor_file1Knows2 x;
-}

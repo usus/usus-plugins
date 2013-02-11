@@ -1,8 +1,0 @@
-public class Acd2 {
-
-	private Acd2Helper x;
-	
-}
-
-class Acd2Helper {
-}

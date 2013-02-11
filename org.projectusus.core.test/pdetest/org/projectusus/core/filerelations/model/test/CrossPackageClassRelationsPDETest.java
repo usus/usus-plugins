@@ -1,106 +1,85 @@
 package org.projectusus.core.filerelations.model.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.CrossPackageClassRelations;
-import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
+import org.projectusus.core.filerelations.model.Packagename;
+import org.projectusus.core.statistics.UsusModelProvider;
 
-public class CrossPackageClassRelationsPDETest extends PDETestForMetricsComputation {
+public class CrossPackageClassRelationsPDETest {
 
-    @Test
-    public void emptyProject() throws Exception {
-        Set<ClassDescriptor> representers = new CrossPackageClassRelations().keySet();
-        assertEquals( 0, representers.size() );
+    @Before
+    public void setup() {
+        UsusModelProvider.clear();
     }
 
     @Test
-    public void oneClassInOneFile() throws Exception {
-        createFileAndBuild( "_1" );
-        Set<ClassDescriptor> representers = new CrossPackageClassRelations().keySet();
-        assertEquals( 0, representers.size() );
-    }
-
-    private void checkName( ClassDescriptor node, String name1, String name2 ) {
-        if( !node.getClassname().equals( name1 ) && !node.getClassname().equals( name2 ) ) {
-            fail( "Falscher Name" );
-        }
+    public void emptyProject_NoCrossPackageRelations() throws Exception {
+        assertEquals( 0, new CrossPackageClassRelations().getAllDirectRelations().size() );
     }
 
     @Test
-    public void twoClassesInOnePackageKnowEachOther() throws Exception {
-        createFileAndBuild( "_file1Knows2" );
-        createFileAndBuild( "_file2Knows1" );
+    public void oneClassInOneFile_NoCrossPackageRelations() throws Exception {
+        createClassDescriptor( "Descriptor1" );
 
-        checkTwoNodesWithOneChildEach();
-
-        Set<ClassDescriptor> representers = new CrossPackageClassRelations().keySet();
-        assertEquals( 0, representers.size() );
+        assertEquals( 0, new CrossPackageClassRelations().getAllDirectRelations().size() );
     }
 
     @Test
-    public void twoClassesInTwoPackagesKnowEachOther() throws Exception {
-        project.createFolder( "package1" );
-        project.createFolder( "package2" );
-        project.createFile( "package1/MetricsAccessor_package1file1Knows2.java", loadResource( "MetricsAccessor_package1file1Knows2.test" ) );
-        workspace.buildFullyAndWait();
-        project.createFile( "package2/MetricsAccessor_package2file2Knows1.java", loadResource( "MetricsAccessor_package2file2Knows1.test" ) );
-        workspace.buildFullyAndWait();
+    public void twoClassesInOnePackageKnowEachOther_NoCrossPackageRelations() throws Exception {
+        ClassDescriptor descriptor1 = createClassDescriptorWithSamePackage( "Descriptor2" );
+        ClassDescriptor descriptor2 = createClassDescriptorWithSamePackage( "Descriptor3" );
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor1 );
 
-        checkTwoNodesWithOneChildEach();
-
-        Set<ClassDescriptor> representers = new CrossPackageClassRelations().keySet();
-        assertEquals( 2, representers.size() );
+        checkTwoNodesWithOneChildEach( ClassDescriptor.getAll() );
+        assertEquals( 0, new CrossPackageClassRelations().getAllDirectRelations().size() );
     }
 
-    private void checkTwoNodesWithOneChildEach() {
-        Set<ClassDescriptor> allRepresenters = ClassDescriptor.getAll();
-        assertEquals( 2, allRepresenters.size() );
-        ClassDescriptor node = allRepresenters.iterator().next();
+    @Test
+    public void twoClassesInTwoPackagesOneKnowsTheOther_OneCrossPackageRelation() throws Exception {
+        ClassDescriptor descriptor1 = createClassDescriptor( "Descriptor4" );
+        ClassDescriptor descriptor2 = createClassDescriptor( "Descriptor5" );
+        descriptor1.addChild( descriptor2 );
+
+        checkTwoNodesWithOneChildEach( ClassDescriptor.getAll() );
+        assertEquals( 1, new CrossPackageClassRelations().getAllDirectRelations().size() );
+    }
+
+    @Test
+    public void twoClassesInTwoPackagesKnowEachOther_TwoCrossPackageRelations() throws Exception {
+        ClassDescriptor descriptor1 = createClassDescriptor( "Descriptor6" );
+        ClassDescriptor descriptor2 = createClassDescriptor( "Descriptor7" );
+        descriptor1.addChild( descriptor2 );
+        descriptor2.addChild( descriptor1 );
+
+        checkTwoNodesWithOneChildEach( ClassDescriptor.getAll() );
+        assertEquals( 2, new CrossPackageClassRelations().getAllDirectRelations().size() );
+    }
+
+    private static ClassDescriptor createClassDescriptor( String name ) {
+        IFile file = mock( IFile.class );
+        return ClassDescriptor.of( file, new Classname( name ), Packagename.of( name, null ) );
+    }
+
+    private static ClassDescriptor createClassDescriptorWithSamePackage( String name ) {
+        IFile file = mock( IFile.class );
+        return ClassDescriptor.of( file, new Classname( name ), Packagename.of( "packagename", null ) );
+    }
+
+    private void checkTwoNodesWithOneChildEach( Set<ClassDescriptor> descriptors ) {
+        assertEquals( 2, descriptors.size() );
+        ClassDescriptor node = descriptors.iterator().next();
         assertEquals( 1, node.getChildren().size() );
-        node = allRepresenters.iterator().next();
+        node = descriptors.iterator().next();
         assertEquals( 1, node.getChildren().size() );
     }
-
-    public void twoClassesInTwoFilesKnowEachOtherOneIsRemoved() throws Exception {
-        createFileAndBuild( "_file1Knows2" );
-        IFile file = createFileAndBuild( "_file2Knows1" );
-
-        Set<ClassDescriptor> representers = new CrossPackageClassRelations().keySet();
-        assertEquals( 2, representers.size() );
-        ClassDescriptor node = representers.iterator().next();
-        assertEquals( 1, node.getChildren().size() );
-        node = representers.iterator().next();
-        assertEquals( 1, node.getChildren().size() );
-
-        project.updateContent( file, loadResource( "MetricsAccessor_file2Knows1Not.test" ) );
-        workspace.buildFullyAndWait();
-
-        representers = new CrossPackageClassRelations().keySet();
-        assertEquals( 2, representers.size() );
-        node = representers.iterator().next();
-        checkName( node, "MetricsAccessor_file1Knows2", "MetricsAccessor_file2Knows1" );
-        checkChildren( node, "MetricsAccessor_file1Knows2" );
-        node = representers.iterator().next();
-        checkName( node, "MetricsAccessor_file1Knows2", "MetricsAccessor_file2Knows1" );
-        checkChildren( node, "MetricsAccessor_file1Knows2" );
-    }
-
-    private void checkChildren( ClassDescriptor node, String name ) {
-        if( node.getClassname().equals( name ) ) {
-            assertEquals( 1, node.getChildren().size() );
-        } else {
-            assertEquals( 0, node.getChildren().size() );
-        }
-    }
-
-    protected IFile createFile( String filenumber ) throws Exception {
-        return super.createFile( "MetricsAccessor" + filenumber );
-    }
-
 }

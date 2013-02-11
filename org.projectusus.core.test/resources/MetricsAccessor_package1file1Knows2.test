@@ -1,9 +1,0 @@
-package package1;
-
-import package2.*;
-
-
-public class MetricsAccessor_package1file1Knows2 {
-
-	private MetricsAccessor_package2file2Knows1 i;
-}
