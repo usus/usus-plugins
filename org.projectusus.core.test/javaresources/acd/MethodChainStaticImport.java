@@ -1,6 +1,7 @@
 package acd;
 
 import static acd.MethodChain.getInstance;
+import static acd.MethodChainPublic.getInstancePublic;
 
 public class MethodChainStaticImport {
 
@@ -12,6 +13,6 @@ public class MethodChainStaticImport {
 class MethodChainStaticImportPublic {
 
     void testmethod() {
-        MethodChainPublic.getInstancePublic().helloPublic();
+        getInstancePublic().helloPublic();
     }
 }
