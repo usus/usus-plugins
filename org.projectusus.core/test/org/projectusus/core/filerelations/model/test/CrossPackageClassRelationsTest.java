@@ -14,7 +14,7 @@ import org.projectusus.core.filerelations.model.CrossPackageClassRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.statistics.UsusModelProvider;
 
-public class CrossPackageClassRelationsPDETest {
+public class CrossPackageClassRelationsTest {
 
     @Before
     public void setup() {
@@ -22,19 +22,19 @@ public class CrossPackageClassRelationsPDETest {
     }
 
     @Test
-    public void emptyProject_NoCrossPackageRelations() throws Exception {
+    public void emptyProject_NoCrossPackageRelations() {
         assertEquals( 0, new CrossPackageClassRelations().getAllDirectRelations().size() );
     }
 
     @Test
-    public void oneClassInOneFile_NoCrossPackageRelations() throws Exception {
+    public void oneClassInOneFile_NoCrossPackageRelations() {
         createClassDescriptor( "Descriptor1" );
 
         assertEquals( 0, new CrossPackageClassRelations().getAllDirectRelations().size() );
     }
 
     @Test
-    public void twoClassesInOnePackageKnowEachOther_NoCrossPackageRelations() throws Exception {
+    public void twoClassesInOnePackageKnowEachOther_NoCrossPackageRelations() {
         ClassDescriptor descriptor1 = createClassDescriptorWithSamePackage( "Descriptor2" );
         ClassDescriptor descriptor2 = createClassDescriptorWithSamePackage( "Descriptor3" );
         descriptor1.addChild( descriptor2 );
@@ -45,7 +45,7 @@ public class CrossPackageClassRelationsPDETest {
     }
 
     @Test
-    public void twoClassesInTwoPackagesOneKnowsTheOther_OneCrossPackageRelation() throws Exception {
+    public void twoClassesInTwoPackagesOneKnowsTheOther_OneCrossPackageRelation() {
         ClassDescriptor descriptor1 = createClassDescriptor( "Descriptor4" );
         ClassDescriptor descriptor2 = createClassDescriptor( "Descriptor5" );
         descriptor1.addChild( descriptor2 );
@@ -55,7 +55,7 @@ public class CrossPackageClassRelationsPDETest {
     }
 
     @Test
-    public void twoClassesInTwoPackagesKnowEachOther_TwoCrossPackageRelations() throws Exception {
+    public void twoClassesInTwoPackagesKnowEachOther_TwoCrossPackageRelations() {
         ClassDescriptor descriptor1 = createClassDescriptor( "Descriptor6" );
         ClassDescriptor descriptor2 = createClassDescriptor( "Descriptor7" );
         descriptor1.addChild( descriptor2 );
