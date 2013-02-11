@@ -21,9 +21,9 @@ public class RelationContract<T> extends UsusContractBase<Relation<T>> {
 
     public void pre_Relation( T source, T target ) {
         String arguments = " source: " + source + " target: " + target;
-        assertThat( source != null, "source_not_null:" + arguments );
-        assertThat( target != null, "target_not_null" + arguments );
-        assertThat( !source.equals( target ), "source and target are different" + arguments );
+        assertThat( source != null, "source must not be null:" + arguments );
+        assertThat( target != null, "target must not be null" + arguments );
+        assertThat( !source.equals( target ), "source and target must be different" + arguments );
         this.source = source;
         this.target = target;
     }
