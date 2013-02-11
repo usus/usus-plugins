@@ -3,8 +3,10 @@ package org.projectusus.core.statistics.test;
 import static org.junit.Assert.assertEquals;
 import static org.projectusus.core.statistics.UsusModelProvider.ususModelForAdapter;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.basis.JavaModelPath;
+import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.core.statistics.visitors.ClassCountVisitor;
 import org.projectusus.core.statistics.visitors.MethodCountVisitor;
 import org.projectusus.metrics.util.ClassSizeVisitor;
@@ -12,6 +14,11 @@ import org.projectusus.metrics.util.CyclomaticComplexityVisitor;
 import org.projectusus.metrics.util.MethodLengthVisitor;
 
 public class DropRawDataPDETest extends PDETestForMetricsComputation {
+
+    @Before
+    public void setup() {
+        UsusModelProvider.clear();
+    }
 
     @Test
     public void dropProjectWithFile1() throws Exception {

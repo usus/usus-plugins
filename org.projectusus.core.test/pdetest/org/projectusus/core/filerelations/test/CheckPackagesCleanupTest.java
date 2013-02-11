@@ -2,17 +2,24 @@ package org.projectusus.core.filerelations.test;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.projectusus.adapter.ForcedRecompute;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.internal.JavaProject;
+import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
 public class CheckPackagesCleanupTest extends PDETestForMetricsComputation {
 
     @Rule
     public JavaProject project2 = new JavaProject();
+
+    @Before
+    public void setup() {
+        UsusModelProvider.clear();
+    }
 
     @Test
     public void twoFilesInTwoProjects() throws Exception {
