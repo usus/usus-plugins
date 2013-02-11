@@ -12,7 +12,7 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
 
-public class ClassDescriptorChildrenTest {
+public class ClassDescriptorGetChildrenTest {
 
     private ClassDescriptor descriptor1;
     private ClassDescriptor descriptor2;
