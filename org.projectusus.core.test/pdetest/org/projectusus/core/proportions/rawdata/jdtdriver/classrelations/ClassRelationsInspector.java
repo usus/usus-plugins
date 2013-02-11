@@ -1,4 +1,4 @@
-package org.projectusus.core.proportions.rawdata.jdtdriver.acd;
+package org.projectusus.core.proportions.rawdata.jdtdriver.classrelations;
 
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;

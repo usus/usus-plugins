@@ -1,4 +1,4 @@
-package org.projectusus.core.proportions.rawdata.jdtdriver.acd;
+package org.projectusus.core.proportions.rawdata.jdtdriver.classrelations;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
