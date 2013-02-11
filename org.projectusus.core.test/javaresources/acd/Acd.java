@@ -6,6 +6,8 @@ import acd2.UnloadedClass2;
 
 public class Acd {
 
+    public static String STRING = "";
+
     public static String getString1() {
         return "";
     }
@@ -74,6 +76,12 @@ class ExtendingClass extends Acd {
 class InvokingStaticMethod {
     public String getString() {
         return Acd.getString1();
+    }
+}
+
+class ReferencingStaticField {
+    public String getString() {
+        return Acd.STRING;
     }
 }
 

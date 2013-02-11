@@ -20,11 +20,14 @@ public class ACD_PDETest extends PDETestForMetricsComputation {
         project.createFolder( "acd2" );
         IFile file = createJavaFile( "acd/Acd.java" );
         IFile staticImport = createJavaFile( "acd2/Acd_staticImport.java" );
+        IFile methodStaticImport = createJavaFile( "acd/MethodStaticImport.java" );
+        IFile fieldStaticImport = createJavaFile( "acd/FieldStaticImport.java" );
         IFile methodChainStaticImport = createJavaFile( "acd/MethodChainStaticImport.java" );
         IFile fieldChainStaticImport = createJavaFile( "acd/FieldChainStaticImport.java" );
         IFile fieldChainPublic = createJavaFile( "acd/FieldChainPublic.java" );
         IFile methodChainPublic = createJavaFile( "acd/MethodChainPublic.java" );
         IFile imports = createJavaFile( "acd2/Imports.java" );
+        IFile staticImportInParam = createJavaFile( "acd2/ClassWithStaticImportInMethodParameter.java" );
 
         createJavaFile( "acd/UnloadedClass.java" );
         IFile unloadedFile2 = createJavaFile( "acd2/UnloadedClass2.java" );
@@ -32,11 +35,14 @@ public class ACD_PDETest extends PDETestForMetricsComputation {
         ACDInspector inspector = new ACDInspector();
         new JavaFileDriver( file ).compute( createSetWith( inspector ) );
         new JavaFileDriver( staticImport ).compute( createSetWith( inspector ) );
-        new JavaFileDriver( methodChainStaticImport ).compute( createSetWith( inspector ) );
-        new JavaFileDriver( fieldChainStaticImport ).compute( createSetWith( inspector ) );
-        new JavaFileDriver( fieldChainPublic ).compute( createSetWith( inspector ) );
         new JavaFileDriver( methodChainPublic ).compute( createSetWith( inspector ) );
+        new JavaFileDriver( methodStaticImport ).compute( createSetWith( inspector ) );
+        new JavaFileDriver( methodChainStaticImport ).compute( createSetWith( inspector ) );
+        new JavaFileDriver( fieldChainPublic ).compute( createSetWith( inspector ) );
+        new JavaFileDriver( fieldStaticImport ).compute( createSetWith( inspector ) );
+        new JavaFileDriver( fieldChainStaticImport ).compute( createSetWith( inspector ) );
         new JavaFileDriver( imports ).compute( createSetWith( inspector ) );
+        new JavaFileDriver( staticImportInParam ).compute( createSetWith( inspector ) );
 
         Multimap<String, String> map = inspector.getTypeConnections();
 
@@ -55,6 +61,7 @@ public class ACD_PDETest extends PDETestForMetricsComputation {
         assertThat( map.get( "acd/ImplementingClass" ), contains( "acd/EmptyInterface", "acd/EmptyInterface" ) );
         assertThat( map.get( "acd/ExtendingClass" ), contains( "acd/Acd", "acd/Acd" ) );
         assertThat( map.get( "acd/InvokingStaticMethod" ), contains( "acd/Acd" ) );
+        assertThat( map.get( "acd/ReferencingStaticField" ), contains( "acd/Acd", "acd/Acd" ) );
 
         assertThat( map.get( "acd/MethodChain" ), is( empty() ) );
         assertThat( map.get( "acd/MethodChain_StaticNonstatic" ), contains( "acd/MethodChain" ) );
@@ -76,14 +83,21 @@ public class ACD_PDETest extends PDETestForMetricsComputation {
         // the following tests use more than one file
         assertThat( map.get( "acd2/Acd_staticImport" ), contains( "acd/Acd" ) );
 
+        assertThat( map.get( "acd/MethodStaticImport" ), is( empty() ) ); // eclipse bug!
+        assertThat( map.get( "acd/MethodStaticImportPublic" ), contains( "acd/MethodChainPublic" ) );
+
         assertThat( map.get( "acd/MethodChainPublic" ), is( empty() ) );
         assertThat( map.get( "acd/MethodChainStaticImport" ), is( empty() ) ); // eclipse bug!
         assertThat( map.get( "acd/MethodChainStaticImportPublic" ), contains( "acd/MethodChainPublic" ) );
+
+        assertThat( map.get( "acd/FieldStaticImport" ), is( empty() ) ); // eclipse bug!
+        assertThat( map.get( "acd/FieldStaticImportPublic" ), contains( "acd/FieldChainPublic" ) );
 
         assertThat( map.get( "acd/FieldChainPublic" ), is( empty() ) );
         assertThat( map.get( "acd/FieldChainStaticImport" ), is( empty() ) ); // eclipse bug!
         assertThat( map.get( "acd/FieldChainStaticImportPublic" ), contains( "acd/FieldChainPublic", "acd/FieldChainPublic" ) );
         assertThat( map.get( "acd2/Imports" ), is( empty() ) );
+        assertThat( map.get( "acd2/ClassWithStaticImportInMethodParameter" ), contains( "acd/Acd" ) );
 
         // das gehört nicht hier hin!
         // Stattdessen sicherstellen, dass beim Anlegen und Löschen die entsprechende Neuberechnung auch stattfindet!
