@@ -1,6 +1,7 @@
 package org.projectusus.core.filerelations.model.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,9 +12,18 @@ import org.projectusus.core.filerelations.model.Packagename;
 
 public class PackageCycleTest {
 
-    @Test( expected = IllegalArgumentException.class )
+    @Test
     public void nullPackageCycle() {
-        new Cycle<Object>( null );
+        try {
+            new Cycle<Object>( null );
+        } catch( IllegalArgumentException e ) {
+            // this exception is thrown by the Cycle constructor
+            return;
+        } catch( AssertionError e ) {
+            // this exception is thrown by the Contract if C4J is enabled
+            return;
+        }
+        fail( "Cycle with null argument should throw an exception" );
     }
 
     @Test( expected = IllegalArgumentException.class )
