@@ -9,7 +9,6 @@ import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
-import org.projectusus.core.statistics.UsusModelProvider;
 
 public class MetricsAccessorTest {
 
@@ -25,6 +24,8 @@ public class MetricsAccessorTest {
         IFile file = mock( IFile.class );
         when( sourceBinding.getUnderlyingResource() ).thenReturn( file );
         when( targetBinding.getUnderlyingResource() ).thenReturn( file );
+        when( Boolean.valueOf( sourceBinding.isValid() ) ).thenReturn( Boolean.TRUE );
+        when( Boolean.valueOf( targetBinding.isValid() ) ).thenReturn( Boolean.TRUE );
 
         ClassDescriptor.of( sourceBinding ).addChild( ClassDescriptor.of( targetBinding ) );
 
