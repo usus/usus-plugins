@@ -70,12 +70,12 @@ public abstract class DisplayHotspot<T extends Hotspot> implements Comparable<Di
     }
 
     public int compareTo( DisplayHotspot<?> otherHotspot ) {
-        int trend1 = this.getTrend();
-        int trend2 = otherHotspot.getTrend();
-        if( trend1 != trend2 ) {
-            return trend1 - trend2;
+        int thisValue = this.getMetricsValue();
+        int otherValue = otherHotspot.getMetricsValue();
+        if( thisValue != otherValue ) {
+            return otherValue - thisValue;
         }
-        return otherHotspot.getMetricsValue() - this.getMetricsValue();
+        return this.getTrend() - otherHotspot.getTrend();
     }
 
     public String getPath() {

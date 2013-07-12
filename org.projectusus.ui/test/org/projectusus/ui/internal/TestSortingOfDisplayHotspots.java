@@ -1,6 +1,6 @@
 package org.projectusus.ui.internal;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,65 +8,95 @@ import java.util.List;
 
 import org.junit.Test;
 import org.projectusus.core.basis.FileHotspot;
-import org.projectusus.ui.internal.FileDisplayHotspot;
 
 public class TestSortingOfDisplayHotspots {
 
     @Test
-    public void testSortingWorseFirst() {
-        sortAndCheck( createHotspotList( //
-                3, 3, //
-                3, 5, //
-                7, 10, //
-                5, 5, //
-                10, 10 ) );
+    public void twoUnchangedHotspots_largerValueIsFirst() {
+        List<FileDisplayHotspot> hotspots = createHotspotList( 3, 3, 5, 5 );
+        Collections.sort( hotspots );
+        assertEquals( 5, hotspots.get( 0 ).currentMetricsValue() );
+        assertEquals( 3, hotspots.get( 1 ).currentMetricsValue() );
+
+        // trends are both 0
+        assertEquals( 0, hotspots.get( 0 ).getTrend() );
+        assertEquals( 0, hotspots.get( 1 ).getTrend() );
     }
 
     @Test
-    public void testSortingEqualTrendUsesMetricsValue() {
-        sortAndCheck( createHotspotList( //
-                3, 3, //
-                5, 5, //
-                7, 7, //
-                5, 5, //
-                10, 10 ) );
+    public void twoWorsenedHotspots_largerValueIsFirst() {
+        List<FileDisplayHotspot> hotspots = createHotspotList( 1, 4, 5, 6 );
+        Collections.sort( hotspots );
+        assertEquals( 6, hotspots.get( 0 ).currentMetricsValue() );
+        assertEquals( 4, hotspots.get( 1 ).currentMetricsValue() );
+
+        // although the larger trend comes first:
+        assertEquals( -1, hotspots.get( 0 ).getTrend() );
+        assertEquals( -3, hotspots.get( 1 ).getTrend() );
     }
 
     @Test
-    public void testSortingImprovementsLast() {
-        sortAndCheck( createHotspotList( //
-                3, 3, //
-                3, 5, //
-                7, 10, //
-                5, 3, //
-                7, 5 ) );
+    public void twoImprovedHotspots_largerValueIsFirst() {
+        List<FileDisplayHotspot> hotspots = createHotspotList( 3, 2, 9, 4 );
+        Collections.sort( hotspots );
+        assertEquals( 4, hotspots.get( 0 ).currentMetricsValue() );
+        assertEquals( 2, hotspots.get( 1 ).currentMetricsValue() );
+
+        // although the larger trend comes first:
+        assertEquals( 5, hotspots.get( 0 ).getTrend() );
+        assertEquals( 1, hotspots.get( 1 ).getTrend() );
     }
 
-    @SuppressWarnings( "nls" )
-    public void sortAndCheck( List<FileDisplayHotspot> hotspotList ) {
-        Collections.sort( hotspotList );
-        int trend = -99;
-        int value = 99;
-        for( FileDisplayHotspot fileDisplayHotspot : hotspotList ) {
-            int newTrend = fileDisplayHotspot.getTrend();
-            int newValue = fileDisplayHotspot.getMetricsValue();
-            assertTrue( "new Trend: " + newTrend + " of Hotspot: [" + infoFor( fileDisplayHotspot ) + "] is higher then old: " + trend, newTrend >= trend );
-            if( newTrend == trend ) {
-                assertTrue( "new Value: " + newValue + " of Hotspot: [" + infoFor( fileDisplayHotspot ) + "] is lower then old: " + value, newValue <= value );
-            }
-            value = newValue;
-            trend = newTrend;
-        }
+    @Test
+    public void improvedAndWorsenedHotspots_largerValueIsFirst() {
+        List<FileDisplayHotspot> hotspots = createHotspotList( 3, 2, 2, 6 );
+        Collections.sort( hotspots );
+        assertEquals( 6, hotspots.get( 0 ).currentMetricsValue() );
+        assertEquals( 2, hotspots.get( 1 ).currentMetricsValue() );
+
+        assertEquals( -4, hotspots.get( 0 ).getTrend() );
+        assertEquals( 1, hotspots.get( 1 ).getTrend() );
     }
 
-    @SuppressWarnings( "nls" )
-    private String infoFor( FileDisplayHotspot hotspot ) {
-        return "Metrics: " + hotspot.getMetricsValue() + ", Trend: " + hotspot.getTrend();
+    @Test
+    public void worsenedAndImprovedHotspots_largerValueIsFirst() {
+        List<FileDisplayHotspot> hotspots = createHotspotList( 3, 4, 6, 5 );
+        Collections.sort( hotspots );
+        assertEquals( 5, hotspots.get( 0 ).currentMetricsValue() );
+        assertEquals( 4, hotspots.get( 1 ).currentMetricsValue() );
+
+        // although the larger trend comes first:
+        assertEquals( 1, hotspots.get( 0 ).getTrend() );
+        assertEquals( -1, hotspots.get( 1 ).getTrend() );
+    }
+
+    @Test
+    public void twoEqualHotspots_OneImproved_smallerTrendIsFirst() {
+        List<FileDisplayHotspot> hotspots = createHotspotList( 4, 4, 5, 4 );
+        Collections.sort( hotspots );
+        assertEquals( 0, hotspots.get( 0 ).getTrend() );
+        assertEquals( 1, hotspots.get( 1 ).getTrend() );
+    }
+
+    @Test
+    public void twoEqualHotspots_OneWorsened_smallerTrendIsFirst() {
+        List<FileDisplayHotspot> hotspots = createHotspotList( 4, 4, 3, 4 );
+        Collections.sort( hotspots );
+        assertEquals( -1, hotspots.get( 0 ).getTrend() );
+        assertEquals( 0, hotspots.get( 1 ).getTrend() );
+    }
+
+    @Test
+    public void twoEqualHotspots_OneImprovedOneWorsened_smallerTrendIsFirst() {
+        List<FileDisplayHotspot> hotspots = createHotspotList( 5, 4, 3, 4 );
+        Collections.sort( hotspots );
+        assertEquals( -1, hotspots.get( 0 ).getTrend() );
+        assertEquals( 1, hotspots.get( 1 ).getTrend() );
     }
 
     private List<FileDisplayHotspot> createHotspotList( int... oldAndNewPairs ) {
         List<FileDisplayHotspot> result = new ArrayList<FileDisplayHotspot>();
-        for( int i = 0; i < oldAndNewPairs.length; i = i + 2 ) {
+        for( int i = 0; i < oldAndNewPairs.length - 1; i = i + 2 ) {
             FileHotspot oldHotspot = new FileHotspot( null, oldAndNewPairs[i], null );
             FileHotspot newHotspot = new FileHotspot( null, oldAndNewPairs[i + 1], null );
             result.add( new FileDisplayHotspot( oldHotspot, newHotspot ) );
