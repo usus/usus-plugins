@@ -95,30 +95,32 @@ public class AnalysisDisplayEntry {
     }
 
     /**
+     * Indicates how many hotspot points got added or removed.
+     * 
      * package private for testing
      */
     int getTrend() {
         if( hasHotspots() ) {
-            return history.getHotspots().size() - getHotspots().size();
+            return getHotspots().size() - history.getHotspots().size();
         }
-        return (int)(history.getAverage() - getAverage());
+        return (int)(getAverage() - history.getAverage());
     }
 
     /**
+     * Indicates how many hotspot points got added or removed.
+     * 
      * package private for testing
      */
     int getAdvancedTrend() {
-        if( hasHotspots() ) {
-            int result = 0;
-            for( DisplayHotspot<?> hotspot : getHotspots() ) {
-                if( hotspot.getTrend() > 0 ) {
-                    return -1;
-                }
-                result -= hotspot.getTrend();
-            }
-            return result;
+        if( !hasHotspots() ) {
+            return getTrend();
         }
-        return -getTrend();
+
+        int result = 0;
+        for( DisplayHotspot<?> hotspot : getHotspots() ) {
+            result += hotspot.getTrend();
+        }
+        return result;
     }
 
     public String getToolTipText() {

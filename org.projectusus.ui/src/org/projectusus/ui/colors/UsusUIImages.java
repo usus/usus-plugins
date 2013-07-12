@@ -95,7 +95,7 @@ public class UsusUIImages implements ISharedUsusImages {
         if( trend == 0 ) {
             return null;
         }
-        return getImage( trend > 0 ? OBJ_LEVELUP : OBJ_LEVELDOWN );
+        return getImage( trend > 0 ? OBJ_LEVELDOWN : OBJ_LEVELUP );
     }
 
     public Image getTrendImage( int oldMetricsValue, int currentMetricsValue ) {
