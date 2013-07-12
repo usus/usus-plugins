@@ -57,6 +57,8 @@ public class UsusUIImages implements ISharedUsusImages {
         declare( VIEW_WARNING, VIEW + "warning.gif" ); //$NON-NLS-1$
         declare( OBJ_LEVELUP, OBJECT + "levelup.gif" ); //$NON-NLS-1$
         declare( OBJ_LEVELDOWN, OBJECT + "leveldown.gif" ); //$NON-NLS-1$
+        declare( OBJ_NEW, OBJECT + "new.gif" ); //$NON-NLS-1$
+        declare( OBJ_DELETED, OBJECT + "deleted.gif" ); //$NON-NLS-1$
     }
 
     private void declare( final String key, final String path ) {
@@ -94,6 +96,19 @@ public class UsusUIImages implements ISharedUsusImages {
             return null;
         }
         return getImage( trend > 0 ? OBJ_LEVELUP : OBJ_LEVELDOWN );
+    }
+
+    public Image getTrendImage( int oldMetricsValue, int currentMetricsValue ) {
+        if( oldMetricsValue == 0 ) {
+            return getImage( OBJ_NEW );
+        }
+        if( currentMetricsValue == 0 ) {
+            return getImage( OBJ_DELETED );
+        }
+        if( oldMetricsValue == currentMetricsValue ) {
+            return null;
+        }
+        return getImage( currentMetricsValue > oldMetricsValue ? OBJ_LEVELDOWN : OBJ_LEVELUP );
     }
 
 }

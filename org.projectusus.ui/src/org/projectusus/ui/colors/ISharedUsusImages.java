@@ -19,6 +19,8 @@ public interface ISharedUsusImages {
 
     String OBJ_LEVELUP = ID + ".OBJ_LEVELUP"; //$NON-NLS-1$
     String OBJ_LEVELDOWN = ID + ".OBJ_LEVELDOWN"; //$NON-NLS-1$
+    String OBJ_NEW = ID + ".OBJ_NEW"; //$NON-NLS-1$
+    String OBJ_DELETED = ID + ".OBJ_DELETED"; //$NON-NLS-1$
 
     String VIEW_WARNING = ID + ".VIEW_WARNING"; //$NON-NLS-1$
 
@@ -27,4 +29,6 @@ public interface ISharedUsusImages {
     ImageDescriptor getDescriptor( String key );
 
     Image getTrendImage( int level );
+
+    Image getTrendImage( int oldMetricsValue, int currentMetricsValue );
 }

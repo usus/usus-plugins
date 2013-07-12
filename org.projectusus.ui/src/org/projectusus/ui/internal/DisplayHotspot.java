@@ -45,7 +45,7 @@ public abstract class DisplayHotspot<T extends Hotspot> implements Comparable<Di
     }
 
     public Image getTrendImage() {
-        return getSharedImages().getTrendImage( getTrend() );
+        return getSharedImages().getTrendImage( oldMetricsValue(), currentMetricsValue() );
     }
 
     public T getCurrentOrOldHotspot() {
@@ -53,9 +53,15 @@ public abstract class DisplayHotspot<T extends Hotspot> implements Comparable<Di
     }
 
     public int getTrend() {
-        int currentMetricsValue = currentHotspot == null ? 0 : getMetricsValue();
-        int oldMetricsValue = historyHotspot == null ? 0 : historyHotspot.getMetricsValue();
-        return -(currentMetricsValue - oldMetricsValue);
+        return -(currentMetricsValue() - oldMetricsValue());
+    }
+
+    public int oldMetricsValue() {
+        return historyHotspot == null ? 0 : historyHotspot.getMetricsValue();
+    }
+
+    public int currentMetricsValue() {
+        return currentHotspot == null ? 0 : getMetricsValue();
     }
 
     @Override
