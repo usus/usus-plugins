@@ -1,18 +1,17 @@
 package org.projectusus.core.filerelations.model;
 
-import net.sourceforge.c4j.*;
-
 import static com.google.common.collect.Sets.union;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
+import net.sourceforge.c4j.ContractReference;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 
-@ContractReference(contractClassName = "RelationsContract")
+@ContractReference( contractClassName = "RelationsContract" )
 public class Relations<K> {
 
     protected final SetMultimap<K, Relation<K>> incomingRelations;

@@ -83,10 +83,10 @@ public class MetricsAccessorContract extends UsusContractBase<MetricsAccessor> {
         ClassDescriptor source = null;
         ClassDescriptor target = null;
         for( ClassDescriptor descriptor : ClassDescriptor.getAll() ) {
-            if( descriptor.getClassname().equals( sourceType.getClassname() ) && descriptor.getFile().equals( sourceType.getUnderlyingResource() ) ) {
+            if( classnameAndFilenameAreEqual( descriptor, sourceType ) ) {
                 source = descriptor;
             }
-            if( descriptor.getClassname().equals( targetType.getClassname() ) && descriptor.getFile().equals( targetType.getUnderlyingResource() ) ) {
+            if( classnameAndFilenameAreEqual( descriptor, targetType ) ) {
                 target = descriptor;
             }
         }
@@ -95,6 +95,10 @@ public class MetricsAccessorContract extends UsusContractBase<MetricsAccessor> {
         C4JFileWriter.assertStatic( target != null, "There is a ClassDescriptor for" + targetString );
         C4JFileWriter.assertStatic( source.getChildren().contains( target ), "Target is a child of Source." + sourceString + targetString );
         C4JFileWriter.assertStatic( target.getParents().contains( source ), "Source is a parent of Target." + sourceString + targetString );
+    }
+
+    public static boolean classnameAndFilenameAreEqual( ClassDescriptor descriptor, WrappedTypeBinding sourceType ) {
+        return descriptor.getClassname().equals( sourceType.getClassname() ) && descriptor.getFile().equals( sourceType.getUnderlyingResource() );
     }
 
 }
