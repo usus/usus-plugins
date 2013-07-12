@@ -191,7 +191,7 @@
                      ifEmpty="false"
                      operator="or">
                   <instanceof
-                        value="org.projectusus.core.basis.GraphNode">
+                        value="org.projectusus.ui.dependencygraph.nodes.GraphNode">
                   </instanceof>
                </iterate>
             </with>
