@@ -49,7 +49,7 @@ public class HotspotsPage extends Page implements IHotspotsPage {
     }
 
     private void createViewer( Composite parent ) {
-        HotspotsColumnDesc[] columnDescs = entry.getColumnDescs();
+        HotspotsColumnDesc[] columnDescs = HotspotsColumnDesc.getColumnDescs( entry.getLocationType() );
         viewer = new UsusTreeViewer<DisplayHotspot<?>>( parent, columnDescs );
         viewer.setLabelProvider( new HotspotsLP( asList( columnDescs ) ) );
         viewer.setContentProvider( createContentProvider() );

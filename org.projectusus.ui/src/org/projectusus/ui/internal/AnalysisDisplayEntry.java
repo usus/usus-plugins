@@ -1,12 +1,6 @@
 package org.projectusus.ui.internal;
 
-import static org.projectusus.core.basis.LocationType.PROJECT;
 import static org.projectusus.ui.colors.UsusUIImages.getSharedImages;
-import static org.projectusus.ui.internal.hotspots.pages.HotspotsColumnDesc.Name;
-import static org.projectusus.ui.internal.hotspots.pages.HotspotsColumnDesc.Path;
-import static org.projectusus.ui.internal.hotspots.pages.HotspotsColumnDesc.Project;
-import static org.projectusus.ui.internal.hotspots.pages.HotspotsColumnDesc.Trend;
-import static org.projectusus.ui.internal.hotspots.pages.HotspotsColumnDesc.Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +8,7 @@ import java.util.List;
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.Histogram;
-import org.projectusus.ui.internal.hotspots.pages.HotspotsColumnDesc;
+import org.projectusus.core.basis.LocationType;
 
 public class AnalysisDisplayEntry {
 
@@ -131,10 +125,7 @@ public class AnalysisDisplayEntry {
         return current.getHistogram();
     }
 
-    public HotspotsColumnDesc[] getColumnDescs() {
-        if( current.getLocationType() == PROJECT ) {
-            return new HotspotsColumnDesc[] { Value, Name, Project, Trend };
-        }
-        return new HotspotsColumnDesc[] { Value, Name, Path, Trend };
+    public LocationType getLocationType() {
+        return current.getLocationType();
     }
 }

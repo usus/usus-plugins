@@ -4,9 +4,11 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.internal.hotspots.pages;
 
+import static org.projectusus.core.basis.LocationType.PROJECT;
 import static org.projectusus.ui.viewer.ColumnAlignment.CENTER;
 import static org.projectusus.ui.viewer.ColumnAlignment.RIGHT;
 
+import org.projectusus.core.basis.LocationType;
 import org.projectusus.ui.internal.DisplayHotspot;
 import org.projectusus.ui.viewer.IColumnDesc;
 import org.projectusus.ui.viewer.UsusTreeColumn;
@@ -60,6 +62,13 @@ public enum HotspotsColumnDesc implements IColumnDesc<DisplayHotspot<?>> {
 
     public String getLabel( @SuppressWarnings( "unused" ) DisplayHotspot<?> element ) {
         return ""; //$NON-NLS-1$
+    }
+
+    public static HotspotsColumnDesc[] getColumnDescs( LocationType locationType ) {
+        if( locationType == PROJECT ) {
+            return new HotspotsColumnDesc[] { Value, Name, Project, Trend };
+        }
+        return new HotspotsColumnDesc[] { Value, Name, Path, Trend };
     }
 
 }
