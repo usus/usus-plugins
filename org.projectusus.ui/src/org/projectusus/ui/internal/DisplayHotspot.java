@@ -53,7 +53,7 @@ public abstract class DisplayHotspot<T extends Hotspot> implements Comparable<Di
     }
 
     public int getTrend() {
-        return -(currentMetricsValue() - oldMetricsValue());
+        return currentMetricsValue() - oldMetricsValue();
     }
 
     public int oldMetricsValue() {
@@ -75,7 +75,7 @@ public abstract class DisplayHotspot<T extends Hotspot> implements Comparable<Di
         if( thisValue != otherValue ) {
             return otherValue - thisValue;
         }
-        return this.getTrend() - otherHotspot.getTrend();
+        return otherHotspot.getTrend() - this.getTrend();
     }
 
     public String getPath() {

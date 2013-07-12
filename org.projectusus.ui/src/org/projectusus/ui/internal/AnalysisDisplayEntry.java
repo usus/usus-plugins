@@ -14,7 +14,6 @@ import java.util.List;
 import org.eclipse.swt.graphics.Image;
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.Histogram;
-import org.projectusus.core.basis.LocationType;
 import org.projectusus.ui.internal.hotspots.pages.HotspotsColumnDesc;
 
 public class AnalysisDisplayEntry {
@@ -112,14 +111,14 @@ public class AnalysisDisplayEntry {
         if( hasHotspots() ) {
             int result = 0;
             for( DisplayHotspot<?> hotspot : getHotspots() ) {
-                if( hotspot.getTrend() < 0 ) {
+                if( hotspot.getTrend() > 0 ) {
                     return -1;
                 }
-                result += hotspot.getTrend();
+                result -= hotspot.getTrend();
             }
             return result;
         }
-        return getTrend();
+        return -getTrend();
     }
 
     public String getToolTipText() {
