@@ -40,6 +40,10 @@ public class PackageRepresenter implements GraphNode {
         return transformToRepresenterSet( relations.getDirectPackageRelationsFrom( packagename ), relations );
     }
 
+    public Set<? extends GraphNode> getParents() {
+        return transformToRepresenterSet( relations.getDirectPackageRelationsTo( packagename ), relations );
+    }
+
     public String getEdgeEndLabel() {
         return ""; //$NON-NLS-1$
     }

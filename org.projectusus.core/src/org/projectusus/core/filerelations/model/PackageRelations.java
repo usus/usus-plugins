@@ -36,6 +36,14 @@ public class PackageRelations extends Relations<Packagename> {
         return descriptors;
     }
 
+    public Set<Packagename> getDirectPackageRelationsTo( Packagename packagename ) {
+        Set<Packagename> descriptors = new HashSet<Packagename>();
+        for( Relation<Packagename> relation : this.getDirectRelationsTo( packagename ) ) {
+            descriptors.add( relation.getSource() );
+        }
+        return descriptors;
+    }
+
     public PackageCycles getPackageCycles() {
         return packageCycles;
     }

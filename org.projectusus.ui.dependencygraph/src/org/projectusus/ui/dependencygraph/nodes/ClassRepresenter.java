@@ -65,6 +65,10 @@ public class ClassRepresenter implements GraphNode {
         return transformToRepresenterSet( clazz.getChildren() );
     }
 
+    public Set<GraphNode> getParents() {
+        return transformToRepresenterSet( clazz.getParents() );
+    }
+
     @Override
     public boolean equals( Object obj ) {
         return obj instanceof ClassRepresenter && clazz.equals( ((ClassRepresenter)obj).clazz );

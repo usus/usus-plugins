@@ -2,6 +2,7 @@ package org.projectusus.ui.dependencygraph.common;
 
 import static java.util.Arrays.sort;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -292,6 +293,27 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
             }
         }
         graphViewer.setSelection( new StructuredSelection( nodesInSamePackage ) );
+    }
+
+    public void showAllDirectNeighbours() {
+        Set<GraphNode> directNeighbours = new HashSet<GraphNode>();
+        for( GraphNode selectedNode : graphViewer.getSelectedNodes() ) {
+            directNeighbours.add( selectedNode );
+            directNeighbours.addAll( selectedNode.getChildren() );
+            directNeighbours.addAll( selectedNode.getParents() );
+        }
+
+        if( !directNeighbours.isEmpty() ) {
+            hideNodesFilter.reset();
+            // TODO this flickers :-( But multiple applications don't seem to work without drawing :-(
+            drawGraphConditionally();
+
+            HashSet<GraphNode> hideNodes = new HashSet<GraphNode>( graphViewer.getAllNodes() );
+            hideNodes.removeAll( directNeighbours );
+            hideNodesFilter.addNodesToHide( hideNodes );
+            drawGraphConditionally();
+        }
+        customFilterContext.activate();
     }
 
     public void resetHiddenNodes() {

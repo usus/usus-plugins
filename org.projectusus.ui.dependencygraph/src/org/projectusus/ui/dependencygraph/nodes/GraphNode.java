@@ -10,6 +10,8 @@ public interface GraphNode {
 
     Set<? extends GraphNode> getChildren();
 
+    Set<? extends GraphNode> getParents();
+
     String getDisplayText();
 
     String getTooltipText();

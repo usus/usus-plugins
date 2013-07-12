@@ -197,6 +197,22 @@
             </with>
          </activeWhen>
       </handler>
+      <handler
+            class="org.projectusus.ui.dependencygraph.handlers.ShowAllDirectNeighbours"
+            commandId="org.projectusus.ui.dependencygraph.command.ShowAllDirectNeighbours">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <instanceof
+                        value="org.projectusus.ui.dependencygraph.nodes.GraphNode">
+                  </instanceof>
+               </iterate>
+            </with>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -232,6 +248,10 @@
       <command
             id="org.projectusus.ui.dependencygraph.command.SelectAllClassesInSamePackage"
             name="Select all classes in same package">
+      </command>
+      <command
+            id="org.projectusus.ui.dependencygraph.command.ShowAllDirectNeighbours"
+            name="Show all direct neighbours">
       </command>
    </extension>
    <extension
@@ -308,6 +328,10 @@
                commandId="org.projectusus.ui.dependencygraph.command.SelectAllClassesInSamePackage"
                style="push">
          </command>
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.ShowAllDirectNeighbours"
+               style="push">
+         </command>
       </menuContribution>
       <menuContribution
             allPopups="false"
@@ -324,6 +348,10 @@
                   name="org.projectusus.ui.dependencygraph.handlers.ShowInClassGraph.targetViewId"
                   value="org.projectusus.ui.dependencygraph.ClassGraphView">
             </parameter>
+         </command>
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.ShowAllDirectNeighbours"
+               style="push">
          </command>
       </menuContribution>
    </extension>
