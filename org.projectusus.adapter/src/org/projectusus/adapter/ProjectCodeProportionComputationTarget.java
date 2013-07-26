@@ -81,4 +81,8 @@ class ProjectCodeProportionComputationTarget implements ICodeProportionComputati
     private void addFile( IFile file, Map<String, IFile> files ) {
         files.put( file.getLocation().toString(), file );
     }
+
+    public boolean isNotEmpty() {
+        return true; // simplifying assumption...
+    }
 }

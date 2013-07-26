@@ -32,7 +32,8 @@ class RunComputationOnResourceChange implements IResourceChangeListener {
         } else {
             target = new DeltaCodeProportionComputationTarget( delta );
         }
-        new CodeProportionsComputerJob( target ).schedule();
+        if( target.isNotEmpty() )
+            new CodeProportionsComputerJob( target ).schedule();
     }
 
     private void log( IStatus status ) {

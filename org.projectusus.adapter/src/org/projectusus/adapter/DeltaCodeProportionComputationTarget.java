@@ -61,4 +61,12 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
         }
         return result;
     }
+
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
+
+    private boolean isEmpty() {
+        return changes.isEmpty() && deletions.isEmpty() && removedProjects.isEmpty();
+    }
 }
