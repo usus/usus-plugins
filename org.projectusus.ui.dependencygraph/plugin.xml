@@ -213,6 +213,30 @@
             </with>
          </activeWhen>
       </handler>
+      <handler
+            class="org.projectusus.ui.dependencygraph.handlers.ToggleEditorSynchronization"
+            commandId="org.projectusus.ui.dependencygraph.command.ToggleEditorClassSynchronization">
+         <activeWhen>
+               <with
+                     variable="activePartId">
+                  <equals
+                        value="org.projectusus.ui.dependencygraph.ClassGraphView">
+                  </equals>
+               </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.projectusus.ui.dependencygraph.handlers.ToggleEditorSynchronization"
+            commandId="org.projectusus.ui.dependencygraph.command.ToggleEditorPackageSynchronization">
+         <activeWhen>
+               <with
+                     variable="activePartId">
+                  <equals
+                        value="org.projectusus.ui.dependencygraph.PackageGraphView">
+                  </equals>
+               </with>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -253,12 +277,36 @@
             id="org.projectusus.ui.dependencygraph.command.ShowAllDirectNeighbours"
             name="Show all direct neighbours">
       </command>
+      <command
+            id="org.projectusus.ui.dependencygraph.command.ToggleEditorClassSynchronization"
+            name="Link with Editor">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState"
+               id="org.projectusus.ui.dependencygraph.state.ToggleEditorClassSynchronization">
+         </state>
+      </command>
+      <command
+            id="org.projectusus.ui.dependencygraph.command.ToggleEditorPackageSynchronization"
+            name="Link with Editor">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState"
+               id="org.projectusus.ui.dependencygraph.state.ToggleEditorPackageSynchronization">
+         </state>
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
             locationURI="toolbar:org.projectusus.ui.dependencygraph.ClassGraphView?before=zoom">
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.ToggleEditorClassSynchronization"
+               style="toggle">
+         </command>
+         <separator
+               name="org.projectusus.ui.dependencygraph.PackageGraphView.toolbar.separator1"
+               visible="true">
+         </separator>
          <command
                commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
                style="push">
@@ -291,6 +339,10 @@
                   name="org.projectusus.ui.dependencygraph.handlers.ShowInClassGraph.targetViewId"
                   value="org.projectusus.ui.dependencygraph.ClassGraphView">
             </parameter>
+         </command>
+         <command
+               commandId="org.projectusus.ui.dependencygraph.command.ToggleEditorPackageSynchronization"
+               style="toggle">
          </command>
          <separator
                name="org.projectusus.ui.dependencygraph.PackageGraphView.toolbar.separator1"
@@ -380,6 +432,14 @@
       <image
             commandId="org.projectusus.ui.dependencygraph.command.ShowInClassGraph"
             icon="icons/graph-class.gif">
+      </image>
+      <image
+            commandId="org.projectusus.ui.dependencygraph.command.ToggleEditorClassSynchronization"
+            icon="icons/graph-cross-package.gif">
+      </image>
+      <image
+            commandId="org.projectusus.ui.dependencygraph.command.ToggleEditorPackageSynchronization"
+            icon="icons/graph-cross-package.gif">
       </image>
    </extension>
    <extension

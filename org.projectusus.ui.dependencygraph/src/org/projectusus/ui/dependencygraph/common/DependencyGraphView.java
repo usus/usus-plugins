@@ -84,8 +84,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         refresh();
         extendSelectionBehavior();
         registerContextMenu( site );
-
-        getSite().getPage().addPartListener( partListener );
     }
 
     private void registerContextMenu( IViewSite site ) {
@@ -248,8 +246,16 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     public void dispose() {
         UsusModelProvider.ususModel().removeUsusModelListener( listener );
         graphViewer.getGraphControl().removeSelectionListener( selectionListener );
-        getSite().getPage().removePartListener( partListener );
+        registerEditorSynchronizationListener( false );
         super.dispose();
+    }
+
+    public void registerEditorSynchronizationListener( boolean register ) {
+        if( register ) {
+            getSite().getPage().addPartListener( partListener );
+        } else {
+            getSite().getPage().removePartListener( partListener );
+        }
     }
 
     private void initUsusModelListener() {
@@ -363,4 +369,5 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     }
 
     protected abstract String getCheckboxLabelName();
+
 }
