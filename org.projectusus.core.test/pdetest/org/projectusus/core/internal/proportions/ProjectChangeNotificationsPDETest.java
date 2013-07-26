@@ -11,7 +11,6 @@ import static org.junit.Assert.assertTrue;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.projectusus.adapter.ICodeProportionComputationTarget;
@@ -38,8 +37,7 @@ public class ProjectChangeNotificationsPDETest {
     }
 
     @Test
-    @Ignore
-    public void projectCreated() throws Exception {
+    public void projectWithoutFileCreated_IsNotRecognizedAsProject() throws Exception {
         otherProject.delete();
         getWorkspace().addResourceChangeListener( listener );
         otherProject.create();
@@ -51,9 +49,7 @@ public class ProjectChangeNotificationsPDETest {
 
         ICodeProportionComputationTarget target = listener.getTarget();
         assertEquals( 0, target.getRemovedProjects().size() );
-        assertEquals( 1, target.getProjects().size() );
-        IProject affectedProject = target.getProjects().iterator().next();
-        assertEquals( otherProject.get(), affectedProject );
+        assertEquals( 0, target.getProjects().size() );
     }
 
     @Test
