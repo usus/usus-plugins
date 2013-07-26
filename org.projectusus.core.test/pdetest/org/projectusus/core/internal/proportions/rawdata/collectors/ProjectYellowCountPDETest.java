@@ -18,6 +18,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
@@ -44,6 +45,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
+    @Ignore
     public void findMarkerOnNonJavaFile() throws Exception {
         IFile file = project.createFile( "a", "no content" );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
@@ -52,6 +54,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
+    @Ignore
     public void findMultipleMarkersOnFile() throws CoreException {
         IFile file = project.createFile( "a", "no content\non two lines" );
         IMarker marker1 = file.createMarker( PROBLEM );
@@ -76,6 +79,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
+    @Ignore
     public void hotspotsOnMultipleNonJavaFiles() throws Exception {
         IFile fileA = project.createFile( "a", "no content" );
         fileA.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
@@ -98,6 +102,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
+    @Ignore
     public void findOnlyWarningMarkers() throws CoreException {
         IFile file = project.createFile( "a", "no content" );
         // put stuff we want to ignore

@@ -11,6 +11,7 @@ import static org.junit.Assert.assertTrue;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.projectusus.adapter.ICodeProportionComputationTarget;
@@ -37,6 +38,7 @@ public class ProjectChangeNotificationsPDETest {
     }
 
     @Test
+    @Ignore
     public void projectCreated() throws Exception {
         otherProject.delete();
         getWorkspace().addResourceChangeListener( listener );
@@ -55,7 +57,7 @@ public class ProjectChangeNotificationsPDETest {
     }
 
     @Test
-    public void projectClosed() throws Exception {
+    public void projectClosed_IsRecognizedAsRemovedProject() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
         project.close();
 
@@ -69,7 +71,7 @@ public class ProjectChangeNotificationsPDETest {
     }
 
     @Test
-    public void projectOpened() throws Exception {
+    public void projectWithFileOpened_IsRecognizedAsProject() throws Exception {
         project.createFile( "someFile.java", "some content" );
         project.close();
         workspace.buildFullyAndWait();
@@ -86,7 +88,7 @@ public class ProjectChangeNotificationsPDETest {
     }
 
     @Test
-    public void projectDeleted() throws Exception {
+    public void projectDeleted_IsRecognizedAsRemovedProject() throws Exception {
         getWorkspace().addResourceChangeListener( listener );
         project.delete();
 
