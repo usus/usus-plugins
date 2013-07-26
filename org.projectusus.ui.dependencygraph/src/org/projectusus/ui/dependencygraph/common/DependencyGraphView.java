@@ -2,11 +2,15 @@ package org.projectusus.ui.dependencygraph.common;
 
 import static java.util.Arrays.sort;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -30,6 +34,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.part.IShowInTarget;
 import org.eclipse.ui.part.ShowInContext;
@@ -59,6 +65,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     private DependencyGraphSelectionListener selectionListener;
     private final HideNodesFilter hideNodesFilter = new HideNodesFilter();
     private boolean restricting = false;
+    private final IPartListener2 partListener = new SelectionSynchronizationListener( this );
 
     public DependencyGraphView( DependencyGraphModel model ) {
         super();
@@ -78,6 +85,8 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         refresh();
         extendSelectionBehavior();
         registerContextMenu( site );
+
+        getSite().getPage().addPartListener( partListener );
     }
 
     private void registerContextMenu( IViewSite site ) {
@@ -240,6 +249,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     public void dispose() {
         UsusModelProvider.ususModel().removeUsusModelListener( listener );
         graphViewer.getGraphControl().removeSelectionListener( selectionListener );
+        getSite().getPage().removePartListener( partListener );
         super.dispose();
     }
 
@@ -292,11 +302,11 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
                 nodesInSamePackage.add( node );
             }
         }
-        graphViewer.setSelection( new StructuredSelection( nodesInSamePackage ) );
+        graphViewer.selectNodes( nodesInSamePackage );
     }
 
     public void showAllDirectNeighbours() {
-        hideNodesAndRefresh( getAllNodesToHide( selectAllDirectNeighboursOfSelectedNodes() ) );
+        hideNodesAndRefresh( getAllNodesToHide( findAllDirectNeighboursOfSelectedNodes() ) );
     }
 
     public void hideNodesAndRefresh( Set<GraphNode> hideNodes ) {
@@ -312,7 +322,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         return hideNodes;
     }
 
-    public Set<GraphNode> selectAllDirectNeighboursOfSelectedNodes() {
+    public Set<GraphNode> findAllDirectNeighboursOfSelectedNodes() {
         Set<GraphNode> directNeighbours = new HashSet<GraphNode>();
         for( GraphNode selectedNode : graphViewer.getSelectedNodes() ) {
             directNeighbours.add( selectedNode );
@@ -320,6 +330,18 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
             directNeighbours.addAll( selectedNode.getParents() );
         }
         return directNeighbours;
+    }
+
+    void selectNodeFromActiveEditor( IEditorPart editorPart ) {
+        IJavaElement javaElement = JavaUI.getEditorInputJavaElement( editorPart.getEditorInput() );
+        IResource resource = javaElement.getResource();
+        List<GraphNode> nodesToSelect = new ArrayList<GraphNode>();
+        for( GraphNode node : graphViewer.getAllNodes() ) {
+            if( resource.equals( node.getFile() ) ) {
+                nodesToSelect.add( node );
+            }
+        }
+        graphViewer.selectNodes( nodesToSelect );
     }
 
     public void resetHiddenNodes() {

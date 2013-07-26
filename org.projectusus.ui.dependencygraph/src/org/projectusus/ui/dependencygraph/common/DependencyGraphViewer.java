@@ -17,6 +17,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
@@ -129,6 +130,10 @@ public class DependencyGraphViewer extends GraphViewer {
             }
         }
         return filters;
+    }
+
+    void selectNodes( List<GraphNode> nodesToSelect ) {
+        setSelection( new StructuredSelection( nodesToSelect ) );
     }
 
 }
