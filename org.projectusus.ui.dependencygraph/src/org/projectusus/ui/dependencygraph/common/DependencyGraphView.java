@@ -296,24 +296,30 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     }
 
     public void showAllDirectNeighbours() {
+        hideNodesAndRefresh( getAllNodesToHide( selectAllDirectNeighboursOfSelectedNodes() ) );
+    }
+
+    public void hideNodesAndRefresh( Set<GraphNode> hideNodes ) {
+        hideNodesFilter.reset();
+        hideNodesFilter.addNodesToHide( hideNodes );
+        refresh();
+        customFilterContext.activate();
+    }
+
+    public Set<GraphNode> getAllNodesToHide( Set<GraphNode> directNeighbours ) {
+        HashSet<GraphNode> hideNodes = new HashSet<GraphNode>( model.getGraphNodes() );
+        hideNodes.removeAll( directNeighbours );
+        return hideNodes;
+    }
+
+    public Set<GraphNode> selectAllDirectNeighboursOfSelectedNodes() {
         Set<GraphNode> directNeighbours = new HashSet<GraphNode>();
         for( GraphNode selectedNode : graphViewer.getSelectedNodes() ) {
             directNeighbours.add( selectedNode );
             directNeighbours.addAll( selectedNode.getChildren() );
             directNeighbours.addAll( selectedNode.getParents() );
         }
-
-        if( !directNeighbours.isEmpty() ) {
-            hideNodesFilter.reset();
-            // TODO this flickers :-( But multiple applications don't seem to work without drawing :-(
-            drawGraphConditionally();
-
-            HashSet<GraphNode> hideNodes = new HashSet<GraphNode>( graphViewer.getAllNodes() );
-            hideNodes.removeAll( directNeighbours );
-            hideNodesFilter.addNodesToHide( hideNodes );
-            drawGraphConditionally();
-        }
-        customFilterContext.activate();
+        return directNeighbours;
     }
 
     public void resetHiddenNodes() {
