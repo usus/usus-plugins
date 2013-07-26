@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.resources.IResource;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.IToolBarManager;
@@ -334,10 +333,10 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     void selectNodeFromActiveEditor( IEditorPart editorPart ) {
         IJavaElement javaElement = JavaUI.getEditorInputJavaElement( editorPart.getEditorInput() );
-        IResource resource = javaElement.getResource();
+
         List<GraphNode> nodesToSelect = new ArrayList<GraphNode>();
         for( GraphNode node : graphViewer.getAllNodes() ) {
-            if( resource.equals( node.getFile() ) ) {
+            if( node.represents( javaElement ) ) {
                 nodesToSelect.add( node );
             }
         }

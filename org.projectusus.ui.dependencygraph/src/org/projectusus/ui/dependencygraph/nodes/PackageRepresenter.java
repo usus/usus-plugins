@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.ui.ISharedImages;
 import org.eclipse.jdt.ui.JavaElementLabels;
 import org.projectusus.core.filerelations.model.PackageRelations;
@@ -111,6 +112,11 @@ public class PackageRepresenter implements GraphNode {
 
     public String getTooltipText() {
         return getDisplayText();
+    }
+
+    public boolean represents( IJavaElement javaElement ) {
+        IJavaElement pkg = javaElement.getAncestor( IJavaElement.PACKAGE_FRAGMENT );
+        return pkg != null && getRelatedPackage().getJavaElement().getElementName().equals( pkg.getElementName() );
     }
 
 }

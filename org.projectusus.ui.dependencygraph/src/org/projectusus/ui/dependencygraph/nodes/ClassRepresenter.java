@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.ui.ISharedImages;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Packagename;
@@ -166,5 +167,9 @@ public class ClassRepresenter implements GraphNode {
 
     public String getTooltipText() {
         return new PackageRepresenter( getRelatedPackage() ).getTooltipText();
+    }
+
+    public boolean represents( IJavaElement javaElement ) {
+        return javaElement.getResource().equals( getFile() );
     }
 }

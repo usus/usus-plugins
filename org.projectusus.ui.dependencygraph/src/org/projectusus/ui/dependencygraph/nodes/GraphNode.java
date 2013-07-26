@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jdt.core.IJavaElement;
 import org.projectusus.core.filerelations.model.Packagename;
 
 public interface GraphNode {
@@ -40,4 +41,6 @@ public interface GraphNode {
     boolean isInDifferentPackageThan( GraphNode destination );
 
     boolean isVisibleForLimitWithOtherNodes( boolean restricting, Set<GraphNode> others );
+
+    boolean represents( IJavaElement javaElement );
 }
