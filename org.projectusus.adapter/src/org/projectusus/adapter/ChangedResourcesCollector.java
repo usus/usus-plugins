@@ -12,6 +12,7 @@ import static org.projectusus.adapter.TracingOption.RESOURCE_CHANGES;
 import static org.projectusus.core.project2.UsusProjectSupport.asUsusProject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,18 +23,13 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
+import org.projectusus.core.util.FileSupport;
 
 class ChangedResourcesCollector implements IResourceDeltaVisitor {
 
-    private final List<IProject> removedProjects;
-    private final Map<IProject, List<IFile>> changes;
-    private final Map<IProject, List<IFile>> deletions;
-
-    ChangedResourcesCollector( List<IProject> removedProjects, Map<IProject, List<IFile>> changes, Map<IProject, List<IFile>> deletions ) {
-        this.changes = changes;
-        this.removedProjects = removedProjects;
-        this.deletions = deletions;
-    }
+    private final List<IProject> removedProjects = new ArrayList<IProject>();
+    private final Map<IProject, List<IFile>> changes = new HashMap<IProject, List<IFile>>();
+    private final Map<IProject, List<IFile>> deletions = new HashMap<IProject, List<IFile>>();
 
     public boolean visit( IResourceDelta delta ) throws CoreException {
         boolean result = true;
@@ -67,6 +63,9 @@ class ChangedResourcesCollector implements IResourceDeltaVisitor {
     }
 
     private void handleFileDelta( IResourceDelta delta, IFile file ) {
+        if( !FileSupport.isJavaFile( file ) )
+            return;
+
         if( isInteresting( delta ) ) {
             RESOURCE_CHANGES.trace( "Changed file " + file.getFullPath() ); //$NON-NLS-1$
             addToMap( file, changes );
@@ -113,5 +112,17 @@ class ChangedResourcesCollector implements IResourceDeltaVisitor {
             return false;
         }
         return true;
+    }
+
+    public List<IProject> getRemovedProjects() {
+        return removedProjects;
+    }
+
+    public Map<IProject, List<IFile>> getChanges() {
+        return changes;
+    }
+
+    public Map<IProject, List<IFile>> getDeletions() {
+        return deletions;
     }
 }

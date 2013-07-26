@@ -8,7 +8,6 @@ import static java.util.Collections.unmodifiableList;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -21,12 +20,16 @@ import org.eclipse.core.runtime.CoreException;
 
 public class DeltaCodeProportionComputationTarget implements ICodeProportionComputationTarget {
 
-    private final Map<IProject, List<IFile>> changes = new HashMap<IProject, List<IFile>>();
-    private final Map<IProject, List<IFile>> deletions = new HashMap<IProject, List<IFile>>();
-    private List<IProject> removedProjects = new ArrayList<IProject>();
+    private final Map<IProject, List<IFile>> changes;
+    private final Map<IProject, List<IFile>> deletions;
+    private final List<IProject> removedProjects;
 
     public DeltaCodeProportionComputationTarget( IResourceDelta delta ) throws CoreException {
-        compute( delta );
+        ChangedResourcesCollector changeCollector = new ChangedResourcesCollector();
+        delta.accept( changeCollector );
+        removedProjects = changeCollector.getRemovedProjects();
+        changes = changeCollector.getChanges();
+        deletions = changeCollector.getDeletions();
     }
 
     public Collection<IFile> getFiles( IProject project ) throws CoreException {
@@ -57,9 +60,5 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
             result.addAll( collector.get( project ) );
         }
         return result;
-    }
-
-    private void compute( IResourceDelta delta ) throws CoreException {
-        delta.accept( new ChangedResourcesCollector( removedProjects, changes, deletions ) );
     }
 }
