@@ -36,6 +36,7 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.part.IShowInTarget;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
@@ -251,10 +252,12 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     }
 
     public void registerEditorSynchronizationListener( boolean register ) {
+        IWorkbenchPage page = getSite().getPage();
         if( register ) {
-            getSite().getPage().addPartListener( partListener );
+            page.addPartListener( partListener );
+            selectNodeFromActiveEditor( page.getActiveEditor() );
         } else {
-            getSite().getPage().removePartListener( partListener );
+            page.removePartListener( partListener );
         }
     }
 
