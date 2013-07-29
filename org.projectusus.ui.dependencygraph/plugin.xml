@@ -281,16 +281,36 @@
             id="org.projectusus.ui.dependencygraph.command.ToggleEditorClassSynchronization"
             name="Link with Editor">
          <state
-               class="org.eclipse.ui.handlers.RegistryToggleState"
                id="org.eclipse.ui.commands.toggleState">
+            <class
+                  class="org.eclipse.ui.handlers.RegistryToggleState">
+               <parameter
+                     name="default"
+                     value="false">
+               </parameter>
+               <parameter
+                     name="persisted"
+                     value="false">
+               </parameter>
+            </class>
          </state>
       </command>
       <command
             id="org.projectusus.ui.dependencygraph.command.ToggleEditorPackageSynchronization"
             name="Link with Editor">
          <state
-               class="org.eclipse.ui.handlers.RegistryToggleState"
                id="org.eclipse.ui.commands.toggleState">
+            <class
+                  class="org.eclipse.ui.handlers.RegistryToggleState">
+               <parameter
+                     name="default"
+                     value="false">
+               </parameter>
+               <parameter
+                     name="persisted"
+                     value="false">
+               </parameter>
+            </class>
          </state>
       </command>
    </extension>
