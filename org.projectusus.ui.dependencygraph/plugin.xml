@@ -282,7 +282,7 @@
             name="Link with Editor">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState"
-               id="org.projectusus.ui.dependencygraph.state.ToggleEditorClassSynchronization">
+               id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
       <command
@@ -290,7 +290,7 @@
             name="Link with Editor">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState"
-               id="org.projectusus.ui.dependencygraph.state.ToggleEditorPackageSynchronization">
+               id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
    </extension>
