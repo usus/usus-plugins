@@ -50,7 +50,7 @@
             targetID="org.projectusus.ui.internal.proportions.cockpit.CockpitView">
          <action
                class="org.projectusus.ui.internal.proportions.actions.RefreshCockpit"
-               icon="icons/full/elcl16/refresh.gif"
+               icon="icons/full/elcl16/refresh.png"
                id="org.projectusus.ui.internal.proportions.actions.RefreshCockpit"
                label="Refresh"
                menubarPath="additions"

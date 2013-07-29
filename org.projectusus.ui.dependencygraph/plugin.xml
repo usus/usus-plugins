@@ -435,7 +435,7 @@
       </image>
       <image
             commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView"
-            icon="icons/refresh.gif">
+            icon="icons/refresh.png">
       </image>
       <image
             commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
