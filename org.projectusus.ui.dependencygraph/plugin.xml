@@ -455,11 +455,11 @@
       </image>
       <image
             commandId="org.projectusus.ui.dependencygraph.command.ToggleEditorClassSynchronization"
-            icon="icons/graph-cross-package.gif">
+            icon="icons/editor-synchronization.png">
       </image>
       <image
             commandId="org.projectusus.ui.dependencygraph.command.ToggleEditorPackageSynchronization"
-            icon="icons/graph-cross-package.gif">
+            icon="icons/editor-synchronization.png">
       </image>
    </extension>
    <extension
