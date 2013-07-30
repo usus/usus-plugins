@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.projectusus.core.basis.FileHotspot;
+import org.projectusus.core.basis.SourceCodeLocation;
 
 public class TestSortingOfDisplayHotspots {
 
@@ -112,11 +113,20 @@ public class TestSortingOfDisplayHotspots {
         assertEquals( -1, hotspots.get( 1 ).getTrend() );
     }
 
+    @Test
+    public void twoEqualHotspots_SameTrend_smallerNameIsFirst() {
+        List<FileDisplayHotspot> hotspots = createHotspotList( 5, 4, 5, 4 );
+        Collections.sort( hotspots );
+        assertEquals( "hotspot0", hotspots.get( 0 ).getName() );
+        assertEquals( "hotspot2", hotspots.get( 1 ).getName() );
+    }
+
     private List<FileDisplayHotspot> createHotspotList( int... oldAndNewPairs ) {
         List<FileDisplayHotspot> result = new ArrayList<FileDisplayHotspot>();
         for( int i = 0; i < oldAndNewPairs.length - 1; i = i + 2 ) {
-            FileHotspot oldHotspot = new FileHotspot( null, oldAndNewPairs[i], null );
-            FileHotspot newHotspot = new FileHotspot( null, oldAndNewPairs[i + 1], null );
+            SourceCodeLocation location = new SourceCodeLocation( "hotspot" + i, 0, 0 );
+            FileHotspot oldHotspot = new FileHotspot( location, oldAndNewPairs[i], null );
+            FileHotspot newHotspot = new FileHotspot( location, oldAndNewPairs[i + 1], null );
             result.add( new FileDisplayHotspot( oldHotspot, newHotspot ) );
         }
         return result;
