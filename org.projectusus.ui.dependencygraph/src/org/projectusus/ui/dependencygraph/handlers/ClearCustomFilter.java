@@ -9,9 +9,13 @@ import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
 public class ClearCustomFilter extends AbstractHandler {
 
     public Object execute( ExecutionEvent event ) throws ExecutionException {
+        // we get here when the user presses the eraser icon
         DependencyGraphView view = (DependencyGraphView)HandlerUtil.getActivePart( event );
         view.clearCustomFilter();
+        view.clearNeighboursFilter();
         view.resetHiddenNodes();
+        view.drawGraphConditionally();
+        view.applyLayout();
         return null;
     }
 }

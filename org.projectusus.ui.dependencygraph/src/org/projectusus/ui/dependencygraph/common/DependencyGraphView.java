@@ -44,6 +44,7 @@ import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.statistics.UsusModelProvider;
+import org.projectusus.ui.dependencygraph.filters.DirectNeighboursFilter;
 import org.projectusus.ui.dependencygraph.filters.HideNodesFilter;
 import org.projectusus.ui.dependencygraph.filters.IRestrictNodesFilterProvider;
 import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
@@ -60,10 +61,11 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     private final DependencyGraphModel model;
     private DependencyGraphViewer graphViewer;
     private IUsusModelListener listener;
-    private NodeAndEdgeFilter customFilter;
-    private final WorkbenchContext customFilterContext;
+    private NodeAndEdgeFilter customFilter; // selection of package, edge, package cycle, etc.
+    private final DirectNeighboursFilter neighboursFilter; // selects direct neighbours
+    private final WorkbenchContext customFilterContext; // this is connected to the eraser icon (activates and deactivates it)
     private DependencyGraphSelectionListener selectionListener;
-    private final HideNodesFilter hideNodesFilter = new HideNodesFilter();
+    private final HideNodesFilter hideNodesFilter = new HideNodesFilter(); // the nodes the user manually X-ed out
     private boolean restricting = false;
     private final IPartListener2 partListener = new SelectionSynchronizationListener( this );
 
@@ -72,6 +74,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         this.model = model;
         customFilterContext = new WorkbenchContext( getClass().getName() + ".context.customFilter" );
         initUsusModelListener();
+        neighboursFilter = new DirectNeighboursFilter();
     }
 
     @Override
@@ -197,6 +200,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         newCustomFilter.setFilterLimitProvider( this );
         graphViewer.replaceFilter( customFilter, newCustomFilter );
         customFilter = newCustomFilter;
+        graphViewer.removeFilter( neighboursFilter );
 
         setContentDescription( newCustomFilter.getDescription() );
         customFilterContext.activate();
@@ -211,16 +215,25 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         if( customFilter != null ) {
             graphViewer.removeFilter( customFilter );
             customFilter = null;
-            setContentDescription( "" );
+            clearContentDescription();
         }
         customFilterContext.deactivate();
+    }
+
+    private void clearContentDescription() {
+        setContentDescription( "" );
+    }
+
+    public synchronized void clearNeighboursFilter() {
+        graphViewer.removeFilter( neighboursFilter );
+        clearContentDescription();
     }
 
     public void refresh() {
         Display.getDefault().asyncExec( new Runnable() {
             public void run() {
                 drawGraphConditionally();
-                graphViewer.applyLayout();
+                applyLayout();
             }
         } );
     }
@@ -301,6 +314,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     }
 
     public void selectAllNodesInSamePackage( GraphNode selectedNode ) {
+        // this only modifies the selection, so we do not adjust the neighboursFilter!
         Set<GraphNode> allNodes = graphViewer.getAllNodes();
         List<GraphNode> nodesInSamePackage = new LinkedList<GraphNode>();
         for( GraphNode node : allNodes ) {
@@ -312,7 +326,15 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     }
 
     public void showAllDirectNeighbours() {
-        hideNodesAndRefresh( getAllNodesToHide( findAllDirectNeighboursOfSelectedNodes() ) );
+        neighboursFilter.setNodes( graphViewer.getSelectedNodes() );
+        graphViewer.addFilter( neighboursFilter );
+        setContentDescription( neighboursFilter.getDescription() );
+        resetHiddenNodes(); // do this last because it redraws
+        customFilterContext.activate();
+    }
+
+    public void applyLayout() {
+        graphViewer.applyLayout(); // redraw
     }
 
     // hides only those nodes that are passed to this method
@@ -327,16 +349,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         HashSet<GraphNode> hideNodes = new HashSet<GraphNode>( model.getGraphNodes() );
         hideNodes.removeAll( directNeighbours );
         return hideNodes;
-    }
-
-    public Set<GraphNode> findAllDirectNeighboursOfSelectedNodes() {
-        Set<GraphNode> directNeighbours = new HashSet<GraphNode>();
-        for( GraphNode selectedNode : graphViewer.getSelectedNodes() ) {
-            directNeighbours.add( selectedNode );
-            directNeighbours.addAll( selectedNode.getChildren() );
-            directNeighbours.addAll( selectedNode.getParents() );
-        }
-        return directNeighbours;
     }
 
     void selectNodeFromActiveEditor( IEditorPart editorPart ) {

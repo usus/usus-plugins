@@ -12,6 +12,7 @@ public class ShowAllDirectNeighbours extends AbstractHandler {
     public Object execute( ExecutionEvent event ) throws ExecutionException {
         DependencyGraphView view = (DependencyGraphView)getActivePartChecked( event );
         view.showAllDirectNeighbours();
+        view.applyLayout();
         return null;
     }
 }
