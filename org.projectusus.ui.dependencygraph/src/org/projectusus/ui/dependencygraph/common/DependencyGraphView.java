@@ -275,10 +275,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         UsusModelProvider.ususModel().addUsusModelListener( listener );
     }
 
-    protected int calcMaxFilterValue( int maxFilterValue ) {
-        return maxFilterValue;
-    }
-
     private void extendSelectionBehavior() {
         selectionListener = new DependencyGraphSelectionListener( graphViewer );
         graphViewer.getGraphControl().addSelectionListener( selectionListener );
@@ -293,6 +289,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         return true;
     }
 
+    // adds the selected nodes to the list of hidden nodes
     public void hideSelectedNodes() {
         Set<GraphNode> selectedNodes = graphViewer.getSelectedNodes();
         if( !selectedNodes.isEmpty() ) {
@@ -317,6 +314,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         hideNodesAndRefresh( getAllNodesToHide( findAllDirectNeighboursOfSelectedNodes() ) );
     }
 
+    // hides only those nodes that are passed to this method
     public void hideNodesAndRefresh( Set<GraphNode> hideNodes ) {
         hideNodesFilter.reset();
         hideNodesFilter.addNodesToHide( hideNodes );

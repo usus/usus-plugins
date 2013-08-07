@@ -26,11 +26,6 @@ public class ClassGraphView extends DependencyGraphView {
     }
 
     @Override
-    protected int calcMaxFilterValue( int maxFilterValue ) {
-        return maxFilterValue;
-    }
-
-    @Override
     public String getFilenameForScreenshot() {
         return "usus-class-graph";
     }
