@@ -78,7 +78,8 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     public void createPartControl( Composite parent ) {
         Composite composite = createComposite( parent );
         createFilterArea( composite );
-        createGraphArea( composite );
+        createGraphViewer( new DependencyGraphViewer( createGraphArea( composite ) ) );
+
         IViewSite site = getViewSite();
         site.setSelectionProvider( graphViewer );
         contributeTo( site.getActionBars() );
@@ -94,7 +95,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         site.registerContextMenu( menuManager, graphViewer );
     }
 
-    protected Composite createComposite( Composite parent ) {
+    private static Composite createComposite( Composite parent ) {
         Composite composite = new Composite( parent, SWT.NONE );
         GridLayout layout = new GridLayout( 1, false );
         layout.marginHeight = 0;
@@ -179,19 +180,19 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         return label;
     }
 
-    private Composite createGraphArea( Composite composite ) {
+    private static Composite createGraphArea( Composite composite ) {
         Composite graphArea = new Composite( composite, SWT.BORDER );
         graphArea.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true ) );
         graphArea.setLayout( new FillLayout() );
-        createGraphViewer( graphArea );
         return graphArea;
     }
 
-    private void createGraphViewer( Composite graphArea ) {
-        graphViewer = new DependencyGraphViewer( graphArea );
+    private void createGraphViewer( DependencyGraphViewer dependencyGraphViewer ) {
+        graphViewer = dependencyGraphViewer;
         graphViewer.setFilters( new ViewerFilter[] { new LimitNodeFilter( this ), hideNodesFilter } );
     }
 
+    // hier kommt man an, wenn man in den Hotspots einen Package Cycle doppelklickt:
     public synchronized void replaceCustomFilter( NodeAndEdgeFilter newCustomFilter ) {
         newCustomFilter.setFilterLimitProvider( this );
         graphViewer.replaceFilter( customFilter, newCustomFilter );
