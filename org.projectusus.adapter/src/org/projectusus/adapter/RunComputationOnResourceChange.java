@@ -12,9 +12,22 @@ import org.eclipse.core.runtime.IStatus;
 import org.projectusus.core.UsusCorePlugin;
 import org.projectusus.core.statistics.UsusModelProvider;
 
-class RunComputationOnResourceChange implements IResourceChangeListener {
+public class RunComputationOnResourceChange implements IResourceChangeListener {
+
+    private static boolean cockpitIsVisible = false;
+
+    public static void cockpitIsVisible() {
+        cockpitIsVisible = true;
+    }
+
+    public static void cockpitIsInvisible() {
+        cockpitIsVisible = false;
+    }
 
     public void resourceChanged( IResourceChangeEvent event ) {
+        if( !cockpitIsVisible )
+            return;
+
         IResourceDelta delta = event.getDelta();
         if( delta != null ) {
             try {

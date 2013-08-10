@@ -33,6 +33,7 @@ public class CockpitView extends ViewPart implements ISnapshotView {
     private CockpitTreeViewer treeViewer;
     private IDisplayModelListener listener;
     private SnapshotInfoUpdater updater;
+    private final CockpitVisibilityListener visibilityListener = new CockpitVisibilityListener( this );
 
     @Override
     public void createPartControl( Composite parent ) {
@@ -43,6 +44,7 @@ public class CockpitView extends ViewPart implements ISnapshotView {
         initModelListener();
         initSnapshotInfoUpdater();
         getViewSite().setSelectionProvider( treeViewer );
+        getSite().getPage().addPartListener( visibilityListener );
     }
 
     private void initSnapshotInfoUpdater() {
@@ -65,6 +67,8 @@ public class CockpitView extends ViewPart implements ISnapshotView {
     public void dispose() {
         updater.stop();
         displayModel().removeModelListener( listener );
+        getSite().getPage().removePartListener( visibilityListener );
+
         super.dispose();
     }
 
