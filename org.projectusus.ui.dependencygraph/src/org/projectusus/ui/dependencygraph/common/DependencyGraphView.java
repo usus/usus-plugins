@@ -67,7 +67,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     private DependencyGraphSelectionListener selectionListener;
     private final HideNodesFilter hideNodesFilter = new HideNodesFilter(); // the nodes the user manually X-ed out
     private boolean restricting = false;
-    private final IPartListener2 partListener = new SelectionSynchronizationListener( this );
+    private final IPartListener2 selectionSynchronizationListener = new SelectionSynchronizationListener( this );
 
     public DependencyGraphView( DependencyGraphModel model ) {
         super();
@@ -268,10 +268,10 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     public void registerEditorSynchronizationListener( boolean register ) {
         IWorkbenchPage page = getSite().getPage();
         if( register ) {
-            page.addPartListener( partListener );
+            page.addPartListener( selectionSynchronizationListener );
             selectNodeFromActiveEditor( page.getActiveEditor() );
         } else {
-            page.removePartListener( partListener );
+            page.removePartListener( selectionSynchronizationListener );
         }
     }
 
