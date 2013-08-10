@@ -4,6 +4,9 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.adapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
@@ -14,10 +17,12 @@ import org.projectusus.core.statistics.UsusModelProvider;
 
 public class RunComputationOnResourceChange implements IResourceChangeListener {
 
+    private static final List<IResourceDelta> collectedDeltas = new ArrayList<IResourceDelta>();
     private static boolean cockpitIsVisible = false;
 
     public static void cockpitIsVisible() {
         cockpitIsVisible = true;
+        runComputationJobOnCollectedDeltas();
     }
 
     public static void cockpitIsInvisible() {
@@ -25,31 +30,45 @@ public class RunComputationOnResourceChange implements IResourceChangeListener {
     }
 
     public void resourceChanged( IResourceChangeEvent event ) {
-        if( !cockpitIsVisible )
-            return;
+        collectDelta( event );
+        runComputationJobOnCollectedDeltas();
+    }
 
+    private void collectDelta( IResourceChangeEvent event ) {
         IResourceDelta delta = event.getDelta();
         if( delta != null ) {
-            try {
-                runComputationJob( delta );
-            } catch( CoreException cex ) {
-                log( cex.getStatus() );
-            }
+            collectedDeltas.add( delta );
         }
     }
 
-    private void runComputationJob( IResourceDelta delta ) throws CoreException {
+    private static void runComputationJobOnCollectedDeltas() {
+        if( !cockpitIsVisible ) {
+            return;
+        }
+
+        try {
+            runComputationJob( collectedDeltas );
+            collectedDeltas.clear();
+        } catch( CoreException cex ) {
+            log( cex.getStatus() );
+        }
+    }
+
+    private static void runComputationJob( List<IResourceDelta> deltas ) throws CoreException {
+        if( deltas.isEmpty() )
+            return;
+
         ICodeProportionComputationTarget target = null;
         if( UsusModelProvider.ususModel().needsFullRecompute() ) {
             target = new WorkspaceCodeProportionComputationTarget();
         } else {
-            target = new DeltaCodeProportionComputationTarget( delta );
+            target = new DeltaCodeProportionComputationTarget( deltas );
         }
         if( target.isNotEmpty() )
             new CodeProportionsComputerJob( target ).schedule();
     }
 
-    private void log( IStatus status ) {
+    private static void log( IStatus status ) {
         UsusCorePlugin.getDefault().getLog().log( status );
     }
 }

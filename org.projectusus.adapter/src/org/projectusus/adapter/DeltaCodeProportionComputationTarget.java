@@ -24,12 +24,24 @@ public class DeltaCodeProportionComputationTarget implements ICodeProportionComp
     private final Map<IProject, List<IFile>> deletions;
     private final List<IProject> removedProjects;
 
-    public DeltaCodeProportionComputationTarget( IResourceDelta delta ) throws CoreException {
+    public DeltaCodeProportionComputationTarget( List<IResourceDelta> deltas ) throws CoreException {
         ChangedResourcesCollector changeCollector = new ChangedResourcesCollector();
-        delta.accept( changeCollector );
+        for( IResourceDelta delta : deltas ) {
+            delta.accept( changeCollector );
+        }
         removedProjects = changeCollector.getRemovedProjects();
         changes = changeCollector.getChanges();
         deletions = changeCollector.getDeletions();
+    }
+
+    public DeltaCodeProportionComputationTarget( IResourceDelta delta ) throws CoreException {
+        this( createList( delta ) );
+    }
+
+    private static <T> List<T> createList( T element ) {
+        List<T> list = new ArrayList<T>();
+        list.add( element );
+        return list;
     }
 
     public Collection<IFile> getFiles( IProject project ) throws CoreException {
