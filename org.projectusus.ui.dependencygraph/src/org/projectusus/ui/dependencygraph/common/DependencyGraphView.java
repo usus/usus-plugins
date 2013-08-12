@@ -357,7 +357,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         return restricting;
     }
 
-    protected void setRestricting( boolean restricting ) {
+    private void setRestricting( boolean restricting ) {
         this.restricting = restricting;
     }
 
