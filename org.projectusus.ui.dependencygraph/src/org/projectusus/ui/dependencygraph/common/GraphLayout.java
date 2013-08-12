@@ -10,7 +10,7 @@ import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.VerticalLayoutAlgorithm;
 
-public enum GraphLayouts implements Comparable<GraphLayouts> {
+public enum GraphLayout {
 
     GRID( "Grid" ) {
         @Override
@@ -65,7 +65,7 @@ public enum GraphLayouts implements Comparable<GraphLayouts> {
 
     private final String title;
 
-    GraphLayouts( String title ) {
+    GraphLayout( String title ) {
         this.title = title;
     }
 
@@ -80,7 +80,7 @@ public enum GraphLayouts implements Comparable<GraphLayouts> {
 
     public abstract LayoutAlgorithm createAlgorithm();
 
-    public static GraphLayouts getDefault() {
+    public static GraphLayout getDefault() {
         return SPRING;
     }
 }

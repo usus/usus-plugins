@@ -1,7 +1,5 @@
 package org.projectusus.ui.dependencygraph.common;
 
-import static java.util.Arrays.sort;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -13,13 +11,8 @@ import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -31,7 +24,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
@@ -44,6 +36,7 @@ import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.statistics.UsusModelProvider;
+import org.projectusus.jfeet.selection.ElementFrom;
 import org.projectusus.ui.dependencygraph.filters.DirectNeighboursFilter;
 import org.projectusus.ui.dependencygraph.filters.HideNodesFilter;
 import org.projectusus.ui.dependencygraph.filters.IRestrictNodesFilterProvider;
@@ -54,8 +47,6 @@ import org.projectusus.ui.dependencygraph.handlers.ChangeZoom;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public abstract class DependencyGraphView extends ViewPart implements IRestrictNodesFilterProvider, IShowInTarget, IZoomableWorkbenchPart {
-
-    private static final String LAYOUT_LABEL = "Layout:";
 
     private final DependencyGraphModel model;
     private DependencyGraphViewer graphViewer;
@@ -127,30 +118,20 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         filterArea.setLayout( layout );
 
         createAdditionalWidget( filterArea );
-        createLayoutCombo( filterArea );
+        createLayoutComboViewer( filterArea );
 
         filterArea.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, false, false ) );
 
         return filterArea;
     }
 
-    private void createLayoutCombo( Composite filterArea ) {
-        Label label = createLabel( filterArea, LAYOUT_LABEL );
-        label.setLayoutData( new GridData( SWT.RIGHT, SWT.CENTER, true, false ) );
-        ComboViewer comboViewer = new ComboViewer( filterArea, SWT.READ_ONLY );
-        comboViewer.setContentProvider( new ArrayContentProvider() );
-        comboViewer.setLabelProvider( new LabelProvider() );
-        GraphLayouts[] layouts = GraphLayouts.values();
-        sort( layouts, new GraphLayoutsComparator() );
-        comboViewer.setInput( layouts );
-        comboViewer.setSelection( new StructuredSelection( GraphLayouts.getDefault() ) );
-        comboViewer.addSelectionChangedListener( new ISelectionChangedListener() {
+    private void createLayoutComboViewer( Composite filterArea ) {
+        new GraphLayoutComboViewer( filterArea, new ISelectionChangedListener() {
             public void selectionChanged( final SelectionChangedEvent event ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
-                        IStructuredSelection selection = (IStructuredSelection)event.getSelection();
-                        graphViewer.setLayout( (GraphLayouts)selection.getFirstElement() );
-                        drawGraphUnconditionally();
+                        GraphLayout newLayout = new ElementFrom( event.getSelection() ).as( GraphLayout.class );
+                        switchLayout( newLayout );
                     }
                 } );
             }
@@ -159,6 +140,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     protected void createAdditionalWidget( Composite filterArea ) {
         final Button checkbox = new Button( filterArea, SWT.CHECK );
+        checkbox.setLayoutData( new GridData( SWT.LEFT, SWT.CENTER, true, true ) );
         checkbox.setText( getCheckboxLabelName() );
         checkbox.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -173,12 +155,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
             }
         } );
         setRestricting( false );
-    }
-
-    protected Label createLabel( Composite parent, String labelText ) {
-        Label label = new Label( parent, SWT.NONE );
-        label.setText( labelText );
-        return label;
     }
 
     private static Composite createGraphArea( Composite composite ) {
@@ -329,6 +305,11 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         setContentDescription( neighboursFilter.getDescription() );
         resetHiddenNodes(); // do this last because it redraws
         customFilterContext.activate();
+    }
+
+    private void switchLayout( final GraphLayout newLayout ) {
+        graphViewer.setLayout( newLayout );
+        drawGraphUnconditionally();
     }
 
     public void applyLayout() {

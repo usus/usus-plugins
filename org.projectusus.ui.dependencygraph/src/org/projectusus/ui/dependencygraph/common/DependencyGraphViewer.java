@@ -1,6 +1,6 @@
 package org.projectusus.ui.dependencygraph.common;
 
-import static org.projectusus.ui.dependencygraph.common.GraphLayouts.getDefault;
+import static org.projectusus.ui.dependencygraph.common.GraphLayout.getDefault;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -54,7 +54,7 @@ public class DependencyGraphViewer extends GraphViewer {
         setLayout( getDefault() );
     }
 
-    public void setLayout( GraphLayouts layout ) {
+    public void setLayout( GraphLayout layout ) {
         setLayoutAlgorithm( layout.createAlgorithm(), false );
     }
 
