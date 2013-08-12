@@ -56,7 +56,6 @@ import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 public abstract class DependencyGraphView extends ViewPart implements IRestrictNodesFilterProvider, IShowInTarget, IZoomableWorkbenchPart {
 
     private static final String LAYOUT_LABEL = "Layout:";
-    private static final String SCALE_TOOLTIP_TEXT = "Change the number of visible nodes by moving the slider";
 
     private final DependencyGraphModel model;
     private DependencyGraphViewer graphViewer;
@@ -121,7 +120,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     private Composite createFilterArea( Composite composite ) {
         Composite filterArea = new Composite( composite, SWT.NONE );
-        filterArea.setToolTipText( SCALE_TOOLTIP_TEXT );
 
         GridLayout layout = new GridLayout( 5, false );
         layout.marginHeight = 0;
