@@ -325,7 +325,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     public void showAllDirectNeighbours() {
         neighboursFilter.setNodes( graphViewer.getSelectedNodes() );
-        graphViewer.addFilter( neighboursFilter );
+        graphViewer.addFilterIfNotAlreadyPresent( neighboursFilter );
         setContentDescription( neighboursFilter.getDescription() );
         resetHiddenNodes(); // do this last because it redraws
         customFilterContext.activate();

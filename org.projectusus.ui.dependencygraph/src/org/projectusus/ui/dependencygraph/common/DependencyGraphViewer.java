@@ -116,6 +116,10 @@ public class DependencyGraphViewer extends GraphViewer {
         return image;
     }
 
+    public void addFilterIfNotAlreadyPresent( ViewerFilter filter ) {
+        replaceFilter( filter, filter );
+    }
+
     public void replaceFilter( ViewerFilter existingFilter, ViewerFilter newFilter ) {
         List<ViewerFilter> filters = collectFiltersExcept( existingFilter );
         filters.add( newFilter );
