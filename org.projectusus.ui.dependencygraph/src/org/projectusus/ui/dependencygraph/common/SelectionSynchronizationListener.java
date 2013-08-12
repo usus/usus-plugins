@@ -2,12 +2,12 @@ package org.projectusus.ui.dependencygraph.common;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
+import org.projectusus.ui.util.PartAdapter;
 
-public class SelectionSynchronizationListener implements IPartListener2 {
+public class SelectionSynchronizationListener extends PartAdapter {
 
     private final DependencyGraphView graphView;
 
@@ -15,34 +15,27 @@ public class SelectionSynchronizationListener implements IPartListener2 {
         this.graphView = dependencyGraphView;
     }
 
+    @Override
     public void partActivated( IWorkbenchPartReference partRef ) {
         synchronizeWith( partRef );
     }
 
+    @Override
     public void partBroughtToTop( IWorkbenchPartReference partRef ) {
         synchronizeWith( partRef );
     }
 
-    public void partClosed( IWorkbenchPartReference partRef ) {
-        // do nothing
-    }
-
-    public void partDeactivated( IWorkbenchPartReference partRef ) {
-        // do nothing
-    }
-
+    @Override
     public void partOpened( IWorkbenchPartReference partRef ) {
         synchronizeWith( partRef );
     }
 
-    public void partHidden( IWorkbenchPartReference partRef ) {
-        // do nothing
-    }
-
+    @Override
     public void partVisible( IWorkbenchPartReference partRef ) {
         synchronizeWith( partRef );
     }
 
+    @Override
     public void partInputChanged( IWorkbenchPartReference partRef ) {
         synchronizeWith( partRef );
     }
