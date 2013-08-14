@@ -52,7 +52,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     private DependencyGraphViewer graphViewer;
     private IUsusModelListener listener;
     private NodeAndEdgeFilter customFilter; // selection of package, edge, package cycle, etc.
-    private final DirectNeighboursFilter neighboursFilter; // selects direct neighbours
     private final WorkbenchContext customFilterContext; // this is connected to the eraser icon (activates and deactivates it)
     private DependencyGraphSelectionListener selectionListener;
     private final HideNodesFilter hideNodesFilter = new HideNodesFilter(); // the nodes the user manually X-ed out
@@ -64,7 +63,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         this.model = model;
         customFilterContext = new WorkbenchContext( getClass().getName() + ".context.customFilter" );
         initUsusModelListener();
-        neighboursFilter = new DirectNeighboursFilter();
     }
 
     @Override
@@ -174,7 +172,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         newCustomFilter.setFilterLimitProvider( this );
         graphViewer.replaceFilter( customFilter, newCustomFilter );
         customFilter = newCustomFilter;
-        graphViewer.removeFilter( neighboursFilter );
 
         setContentDescription( newCustomFilter.getDescription() );
         customFilterContext.activate();
@@ -196,11 +193,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     private void clearContentDescription() {
         setContentDescription( "" );
-    }
-
-    public synchronized void clearNeighboursFilter() {
-        graphViewer.removeFilter( neighboursFilter );
-        clearContentDescription();
     }
 
     public void refresh() {
@@ -300,11 +292,10 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     }
 
     public void showAllDirectNeighbours() {
+        DirectNeighboursFilter neighboursFilter = new DirectNeighboursFilter();
         neighboursFilter.setNodes( graphViewer.getSelectedNodes() );
-        graphViewer.addFilterIfNotAlreadyPresent( neighboursFilter );
-        setContentDescription( neighboursFilter.getDescription() );
+        replaceCustomFilter( neighboursFilter );
         resetHiddenNodes(); // do this last because it redraws
-        customFilterContext.activate();
     }
 
     private void switchLayout( final GraphLayout newLayout ) {

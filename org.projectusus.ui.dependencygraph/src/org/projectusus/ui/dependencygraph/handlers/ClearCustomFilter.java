@@ -12,7 +12,6 @@ public class ClearCustomFilter extends AbstractHandler {
         // we get here when the user presses the eraser icon
         DependencyGraphView view = (DependencyGraphView)HandlerUtil.getActivePart( event );
         view.clearCustomFilter();
-        view.clearNeighboursFilter();
         view.resetHiddenNodes();
         view.drawGraphConditionally();
         view.applyLayout();
