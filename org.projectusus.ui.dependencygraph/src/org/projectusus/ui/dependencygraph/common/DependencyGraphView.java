@@ -292,9 +292,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     }
 
     public void showAllDirectNeighbours() {
-        DirectNeighboursFilter neighboursFilter = new DirectNeighboursFilter();
-        neighboursFilter.setNodes( graphViewer.getSelectedNodes() );
-        replaceCustomFilter( neighboursFilter );
+        replaceCustomFilter( new DirectNeighboursFilter( graphViewer.getSelectedNodes() ) );
         resetHiddenNodes(); // do this last because it redraws
     }
 

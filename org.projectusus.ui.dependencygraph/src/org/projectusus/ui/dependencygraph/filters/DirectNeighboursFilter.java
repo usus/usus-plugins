@@ -14,7 +14,7 @@ public class DirectNeighboursFilter extends NodeAndEdgeFilter {
     private Set<GraphNode> directNeighbours = new HashSet<GraphNode>();
     private List<String> selectedNodeNames = new ArrayList<String>();
 
-    public void setNodes( Set<GraphNode> selectedNodes ) {
+    public DirectNeighboursFilter( Set<GraphNode> selectedNodes ) {
         selectedNodeNames = new ArrayList<String>();
         directNeighbours = new HashSet<GraphNode>();
         for( GraphNode selectedNode : selectedNodes ) {
