@@ -2,7 +2,7 @@
 <feature
       id="org.projectusus.autotestsuite"
       label="Project Usus Multi-Project JUnit Runner"
-      version="0.7.3.qualifier"
+      version="0.7.4.qualifier"
       provider-name="projectusus.org">
 
    <description url="http://www.projectusus.org">
