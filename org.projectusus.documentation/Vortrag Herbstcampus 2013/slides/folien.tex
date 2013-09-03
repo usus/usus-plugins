@@ -1,0 +1,73 @@
+\documentclass[utf8]{beamer}
+\usecolortheme{seagull}
+\usecolortheme{herbstcampus}
+\useinnertheme{herbstcampus}
+\useoutertheme{herbstcampus}
+% \useoutertheme{split}
+\setbeamertemplate{navigation symbols}{}
+\setbeamercovered{dynamic}
+
+\usefonttheme{serif}
+
+\AtBeginPart{\frame{\partpage}}
+
+\author{Nicole Rauch}
+\title{Macht der Gewohnheit}
+\subtitle{Usus – ein Werkzeug zur Verbesserung der Code-Qualität}
+\institute{msgGillardon AG}
+\date{3. September 2013}
+
+\usepackage{ngerman}
+%\usepackage[utf8x,utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[scaled=0.82]{beramono} % bitstream vera sans mono
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,backgrounds,mindmap}
+
+\definecolor[named]{keywords}{HTML}{005D35}
+\definecolor[named]{comments}{HTML}{808080}
+\definecolor[named]{identifiers}{HTML}{FF0000}
+\colorlet{blockbackground}{black!10}
+\setbeamercolor{blockbackground}{bg=blockbackground}
+\definecolor[named]{strings}{HTML}{0000FF}
+\usepackage[final]{listings}
+\lstset{language=Java,
+	keywordstyle=,%\bfseries,%RoyalBlue
+	basicstyle=\footnotesize\ttfamily,
+	%identifierstyle=\color{identifiers},
+	commentstyle=\color{comments}\ttfamily\itshape,%Green
+	stringstyle=\color{strings},
+	%numbers=left,
+	%numberstyle=\scriptsize,%\tiny
+	%stepnumber=1,
+	%numbersep=8pt,
+	showstringspaces=false,
+	breaklines=true,
+	frameround=ffff,
+	frame=single,
+	tabsize=4,
+	backgroundcolor=\color{blockbackground},
+	rulecolor=\color{blockbackground},
+	inputencoding=latin1,
+	emphstyle=\color{red},
+	texcl=true,
+	literate={<R>}{{\textcolor{red}{{return new Random().nextInt();}}}}{30}
+	               {<D>}{{\textcolor{red}{{Date rightNow = new Date();}}}}{27}
+	               {<P>}{{\textcolor{red}{{System.out.println(}}}}{19}
+	               {<)>}{{\textcolor{red}{{);}}}}{2}
+	               {<T>}{{\textcolor{red}{{throw new RuntimeException();}}}}{29}
+}
+
+
+\begin{document}
+{
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight]{background-title.png}}
+	\begin{frame}[t,plain]
+		\titlepage
+	\end{frame}
+}
+\include{contents}
+\end{document}
+
