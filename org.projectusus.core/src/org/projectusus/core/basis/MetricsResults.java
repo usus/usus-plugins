@@ -14,6 +14,7 @@ public class MetricsResults {
     public static final String ABSTRACTNESS = "Abstractness";
     public static final String PUBLIC_FIELDS = "public fields"; //$NON-NLS-1$
     public static final String TRAIN_WRECKS = "TrainWrecks";
+    public static final String CP = "ConstantParameters";
 
     private Map<String, Object> results = new HashMap<String, Object>();
 
