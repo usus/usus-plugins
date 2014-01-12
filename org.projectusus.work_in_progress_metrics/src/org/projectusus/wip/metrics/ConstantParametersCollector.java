@@ -1,4 +1,4 @@
-package org.projectusus.metrics;
+package org.projectusus.wip.metrics;
 
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.Initializer;
@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.NullLiteral;
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.metrics.MetricsCollector;
+import org.projectusus.metrics.Counter;
 
 public class ConstantParametersCollector extends MetricsCollector {
 

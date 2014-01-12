@@ -6,11 +6,17 @@
       <metrics
             class="org.projectusus.wip.metrics.TrainWreckCollector">
       </metrics>
+      <metrics
+            class="org.projectusus.wip.metrics.ConstantParametersCollector">
+      </metrics>
    </extension>
    <extension
          point="org.projectusus.core.statistics">
       <statistics
             class="org.projectusus.wip.statistics.LinearTrainWreckStatistic">
+      </statistics>
+      <statistics
+            class="org.projectusus.wip.statistics.LinearConstantParametersStatistic">
       </statistics>
    </extension>
 

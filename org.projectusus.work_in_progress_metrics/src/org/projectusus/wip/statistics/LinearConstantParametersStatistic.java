@@ -1,4 +1,4 @@
-package org.projectusus.statistics;
+package org.projectusus.wip.statistics;
 
 import org.projectusus.core.basis.MetricsResults;
 import org.projectusus.core.basis.SourceCodeLocation;
