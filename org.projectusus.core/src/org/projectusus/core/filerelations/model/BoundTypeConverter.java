@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.SimpleType;
 
 public class BoundTypeConverter {
 
+    private final TypeBindingChecker bindingChecker = new TypeBindingChecker();
     private ASTNodeHelper nodeHelper;
 
     public BoundTypeConverter( ASTNodeHelper nodeHelper ) {
@@ -21,14 +22,14 @@ public class BoundTypeConverter {
 
     public WrappedTypeBinding wrap( AbstractTypeDeclaration node ) {
         if( node != null ) {
-            return new WrappedTypeBinding( nodeHelper.resolveBindingOf( node ) );
+            return wrap( nodeHelper.resolveBindingOf( node ) );
         }
         return null;
     }
 
     public WrappedTypeBinding wrap( SimpleType node ) {
         if( node != null ) {
-            return new WrappedTypeBinding( nodeHelper.resolveBindingOf( node ) );
+            return wrap( nodeHelper.resolveBindingOf( node ) );
         }
         return null;
     }
@@ -37,10 +38,10 @@ public class BoundTypeConverter {
         if( node != null ) {
             IBinding binding = nodeHelper.resolveBindingOf( node );
             if( binding instanceof ITypeBinding ) {
-                return new WrappedTypeBinding( ((ITypeBinding)binding) );
+                return wrap( ((ITypeBinding)binding) );
             }
             if( binding instanceof IVariableBinding ) {
-                return new WrappedTypeBinding( ((IVariableBinding)binding).getDeclaringClass() );
+                return wrap( ((IVariableBinding)binding).getDeclaringClass() );
             }
         }
         return null;
@@ -50,7 +51,7 @@ public class BoundTypeConverter {
         if( node != null ) {
             IMethodBinding methodBinding = node.resolveMethodBinding();
             if( methodBinding != null ) {
-                return new WrappedTypeBinding( methodBinding.getDeclaringClass() );
+                return wrap( methodBinding.getDeclaringClass() );
             }
         }
         return null;
@@ -58,15 +59,19 @@ public class BoundTypeConverter {
 
     public WrappedTypeBinding wrap( FieldAccess node ) {
         if( node != null ) {
-            return new WrappedTypeBinding( nodeHelper.resolveTypeBindingOf( node ) );
+            return wrap( nodeHelper.resolveTypeBindingOf( node ) );
         }
         return null;
     }
 
     public WrappedTypeBinding wrap( QualifiedName qualifier ) {
         if( qualifier != null ) {
-            return new WrappedTypeBinding( nodeHelper.resolveTypeBindingOf( qualifier ) );
+            return wrap( nodeHelper.resolveTypeBindingOf( qualifier ) );
         }
         return null;
+    }
+
+    private WrappedTypeBinding wrap( ITypeBinding binding ) {
+        return bindingChecker.checkForRelevanceAndWrap( binding );
     }
 }

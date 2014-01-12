@@ -47,7 +47,6 @@ public class ClassDescriptorContract extends UsusContractBase<ClassDescriptor> {
 
     public static void pre_of( WrappedTypeBinding type ) {
         C4JFileWriter.assertStatic( type != null, "type_not_null" );
-        C4JFileWriter.assertStatic( type.isValid(), "Wrapped type must be valid" );
         C4JFileWriter.assertStatic( type.getUnderlyingResource() != null, "Underlying Resource of type must not be null." );
         C4JFileWriter.assertStatic( type.getClassname() != null, "Classname of type must not be null" );
         C4JFileWriter.assertStatic( type.getPackagename() != null, "Packagename of type must not be null" );

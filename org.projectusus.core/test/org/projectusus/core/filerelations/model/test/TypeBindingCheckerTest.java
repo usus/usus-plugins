@@ -1,8 +1,8 @@
 package org.projectusus.core.filerelations.model.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -16,10 +16,12 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.junit.Before;
 import org.junit.Test;
 import org.projectusus.core.filerelations.model.Classname;
+import org.projectusus.core.filerelations.model.TypeBindingChecker;
 import org.projectusus.core.filerelations.model.WrappedTypeBinding;
 import org.projectusus.core.project2.IUSUSProject;
 
-public class WrappedTypeBindingTest {
+public class TypeBindingCheckerTest {
+
     private ITypeBinding binding = mock( ITypeBinding.class );
     private IFile resource = mock( IFile.class );
     private IJavaElement javaElement = mock( IJavaElement.class );
@@ -28,6 +30,8 @@ public class WrappedTypeBindingTest {
     private IPackageBinding packg = mock( IPackageBinding.class );
     private IJavaElement packageJavaElement = mock( IJavaElement.class );
 
+    private TypeBindingChecker checker = new TypeBindingChecker();
+
     @Before
     public void setup() throws JavaModelException {
         when( new Boolean( binding.isPrimitive() ) ).thenReturn( Boolean.FALSE );
@@ -35,6 +39,7 @@ public class WrappedTypeBindingTest {
         when( new Boolean( binding.isTypeVariable() ) ).thenReturn( Boolean.FALSE );
         when( new Boolean( binding.isCapture() ) ).thenReturn( Boolean.FALSE );
         when( new Boolean( binding.isWildcardType() ) ).thenReturn( Boolean.FALSE );
+        when( new Boolean( binding.isAnonymous() ) ).thenReturn( Boolean.FALSE );
         when( resource.getProject() ).thenReturn( project );
         when( resource.getFileExtension() ).thenReturn( "java" ); //$NON-NLS-1$
         when( binding.getJavaElement() ).thenReturn( javaElement );
@@ -51,69 +56,69 @@ public class WrappedTypeBindingTest {
 
     @Test
     public void nullTypeBindingYieldsInvalidWrapper() {
-        assertFalse( new WrappedTypeBinding( null ).isValid() );
+        assertNull( checker.checkForRelevanceAndWrap( null ) );
     }
 
     @Test
     public void primitiveTypeBindingYieldsInvalidWrapper() {
         when( new Boolean( binding.isPrimitive() ) ).thenReturn( Boolean.TRUE );
-        assertFalse( new WrappedTypeBinding( binding ).isValid() );
+        assertNull( checker.checkForRelevanceAndWrap( binding ) );
     }
 
     @Test
     public void erasedBindingYieldsInvalidWrapper() {
         when( binding.getErasure() ).thenReturn( null );
 
-        assertFalse( new WrappedTypeBinding( binding ).isValid() );
+        assertNull( checker.checkForRelevanceAndWrap( binding ) );
     }
 
     @Test
     public void erasedBindingTypeVariableYieldsInvalidWrapper() {
         when( new Boolean( binding.isTypeVariable() ) ).thenReturn( Boolean.TRUE );
 
-        assertFalse( new WrappedTypeBinding( binding ).isValid() );
+        assertNull( checker.checkForRelevanceAndWrap( binding ) );
     }
 
     @Test
     public void erasedBindingCaptureYieldsInvalidWrapper() {
         when( new Boolean( binding.isCapture() ) ).thenReturn( Boolean.TRUE );
 
-        assertFalse( new WrappedTypeBinding( binding ).isValid() );
+        assertNull( checker.checkForRelevanceAndWrap( binding ) );
     }
 
     @Test
     public void erasedBindingWildcardTypeYieldsInvalidWrapper() {
         when( new Boolean( binding.isWildcardType() ) ).thenReturn( Boolean.TRUE );
 
-        assertFalse( new WrappedTypeBinding( binding ).isValid() );
+        assertNull( checker.checkForRelevanceAndWrap( binding ) );
     }
 
     @Test
     public void erasedBindingNullJavaElementYieldsInvalidWrapper() {
         when( binding.getJavaElement() ).thenReturn( null );
 
-        assertFalse( new WrappedTypeBinding( binding ).isValid() );
+        assertNull( checker.checkForRelevanceAndWrap( binding ) );
     }
 
     @Test
     public void erasedBindingNullUnderlyingResourceYieldsInvalidWrapper() throws JavaModelException {
         when( javaElement.getUnderlyingResource() ).thenReturn( null );
 
-        assertFalse( new WrappedTypeBinding( binding ).isValid() );
+        assertNull( checker.checkForRelevanceAndWrap( binding ) );
     }
 
     @Test
     public void erasedBindingNonJavaFileYieldsInvalidWrapper() {
         when( resource.getFileExtension() ).thenReturn( "xyz" ); //$NON-NLS-1$
 
-        assertFalse( new WrappedTypeBinding( binding ).isValid() );
+        assertNull( checker.checkForRelevanceAndWrap( binding ) );
     }
 
     @Test
     public void erasedBindingProjectNotAccessibleYieldsInvalidWrapper() {
         when( new Boolean( project.isAccessible() ) ).thenReturn( Boolean.FALSE );
 
-        assertFalse( new WrappedTypeBinding( binding ).isValid() );
+        assertNull( checker.checkForRelevanceAndWrap( binding ) );
     }
 
     @Test
@@ -121,21 +126,21 @@ public class WrappedTypeBindingTest {
         Object wrongAdapter = mock( Object.class );
         when( project.getAdapter( any( Class.class ) ) ).thenReturn( wrongAdapter );
 
-        assertFalse( new WrappedTypeBinding( binding ).isValid() );
+        assertNull( checker.checkForRelevanceAndWrap( binding ) );
     }
 
     @Test
     public void erasedBindingNotInUsusProjectYieldsInvalidWrapper() {
         when( new Boolean( adapter.isUsusProject() ) ).thenReturn( Boolean.FALSE );
 
-        assertFalse( new WrappedTypeBinding( binding ).isValid() );
+        assertNull( checker.checkForRelevanceAndWrap( binding ) );
     }
 
     @Test
     public void erasedBindingInUsusProjectYieldsBoundType() {
 
-        WrappedTypeBinding boundType = new WrappedTypeBinding( binding );
-        assertTrue( boundType.isValid() );
+        WrappedTypeBinding boundType = checker.checkForRelevanceAndWrap( binding );
+        assertNotNull( boundType );
         assertEquals( resource, boundType.getUnderlyingResource() );
         assertEquals( new Classname( "BindingName" ), boundType.getClassname() ); //$NON-NLS-1$
     }

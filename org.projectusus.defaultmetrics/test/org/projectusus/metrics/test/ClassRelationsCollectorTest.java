@@ -1,6 +1,5 @@
 package org.projectusus.metrics.test;
 
-import static java.lang.Boolean.TRUE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
@@ -100,7 +99,6 @@ public class ClassRelationsCollectorTest {
         when( aType.getClassname() ).thenReturn( new Classname( classname ) );
         when( aType.getPackagename() ).thenReturn( Packagename.of( XYZ, null ) );
         when( aType.getUnderlyingResource() ).thenReturn( file );
-        when( Boolean.valueOf( aType.isValid() ) ).thenReturn( TRUE );
         return aType;
     }
 }

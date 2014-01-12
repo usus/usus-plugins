@@ -27,7 +27,6 @@ public class ClassDescriptorKeyContract extends UsusContractBase<ClassDescriptor
     public void pre_ClassDescriptorKey( WrappedTypeBinding type ) {
         // TODO Auto-generated pre-condition
         assertThat( type != null, "type_not_null" );
-        assertThat( type.isValid(), "Wrapped type must be valid" );
         assertThat( type.getUnderlyingResource() != null, "Underlying Resource of type must not be null." );
         assertThat( type.getClassname() != null, "Classname of type must not be null" );
         assertThat( type.getPackagename() != null, "Packagename of type must not be null" );

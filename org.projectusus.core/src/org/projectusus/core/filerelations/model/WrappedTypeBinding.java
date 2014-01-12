@@ -4,51 +4,17 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.dom.ITypeBinding;
-import org.projectusus.core.project2.UsusProjectSupport;
 
 public class WrappedTypeBinding {
 
-    private static final String JAVA = "java"; //$NON-NLS-1$
+    private final IFile underlyingResource;
+    private final Classname classname;
+    private final Packagename packagename;
 
-    private boolean isValid = false;
-    private IFile underlyingResource;
-    private Classname classname;
-    private Packagename packagename;
-
-    public WrappedTypeBinding( ITypeBinding typeBinding ) {
-        ITypeBinding binding = typeBinding;
-        if( binding == null || binding.isPrimitive() ) {
-            return;
-        }
-        binding = binding.getErasure();
-        if( binding == null || binding.isPrimitive() ) {
-            return;
-        }
-        if( binding.isTypeVariable() || binding.isCapture() || binding.isWildcardType() ) {
-            return;
-        }
-        while( binding.isAnonymous() ) {
-            binding = binding.getDeclaringClass();
-        }
-        try {
-            underlyingResource = (IFile)binding.getJavaElement().getUnderlyingResource();
-        } catch( Throwable t ) {
-            return;
-        }
-        if( underlyingResource == null || !underlyingResource.getFileExtension().equals( JAVA ) ) {
-            return;
-        }
-        if( !UsusProjectSupport.asUsusProject( underlyingResource.getProject() ).isUsusProject() ) {
-            return;
-        }
-
-        isValid = true;
+    WrappedTypeBinding( IFile underlyingResource, ITypeBinding binding ) {
+        this.underlyingResource = underlyingResource;
         classname = new Classname( binding.getName() );
         packagename = Packagename.of( binding.getPackage().getName(), binding.getPackage().getJavaElement() );
-    }
-
-    public boolean isValid() {
-        return isValid;
     }
 
     public IFile getUnderlyingResource() {

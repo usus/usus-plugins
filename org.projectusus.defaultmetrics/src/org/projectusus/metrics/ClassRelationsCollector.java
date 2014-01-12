@@ -46,7 +46,7 @@ public class ClassRelationsCollector extends MetricsCollector {
     }
 
     private void connectCurrentTypeAnd( WrappedTypeBinding targetType ) {
-        if( currentType() != null && targetType != null && targetType.isValid() && !currentType().equals( targetType ) ) {
+        if( currentType() != null && targetType != null && !currentType().equals( targetType ) ) {
             connectTypes( currentType(), targetType );
         }
     }

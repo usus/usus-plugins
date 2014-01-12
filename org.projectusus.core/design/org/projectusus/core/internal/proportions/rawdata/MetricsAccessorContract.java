@@ -70,8 +70,6 @@ public class MetricsAccessorContract extends UsusContractBase<MetricsAccessor> {
         // TODO Auto-generated pre-condition
         C4JFileWriter.assertStatic( sourceType != null, "sourceType_not_null" );
         C4JFileWriter.assertStatic( targetType != null, "targetType_not_null" );
-        C4JFileWriter.assertStatic( sourceType.isValid(), "Wrapped source type must be valid" );
-        C4JFileWriter.assertStatic( targetType.isValid(), "Wrapped target type must be valid" );
         C4JFileWriter.assertStatic( sourceType.getUnderlyingResource() != null, "Underlying Resource of source type must not be null." );
         C4JFileWriter.assertStatic( targetType.getUnderlyingResource() != null, "Underlying Resource of target type must not be null." );
         C4JFileWriter.assertStatic( !sourceType.equals( targetType ), fullString( "Source ", sourceType ) + " must not equal" + fullString( " Target ", targetType ) );

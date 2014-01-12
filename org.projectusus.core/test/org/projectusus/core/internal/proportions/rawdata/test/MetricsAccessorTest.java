@@ -24,8 +24,6 @@ public class MetricsAccessorTest {
         IFile file = mock( IFile.class );
         when( sourceBinding.getUnderlyingResource() ).thenReturn( file );
         when( targetBinding.getUnderlyingResource() ).thenReturn( file );
-        when( Boolean.valueOf( sourceBinding.isValid() ) ).thenReturn( Boolean.TRUE );
-        when( Boolean.valueOf( targetBinding.isValid() ) ).thenReturn( Boolean.TRUE );
 
         ClassDescriptor.of( sourceBinding ).addChild( ClassDescriptor.of( targetBinding ) );
 
