@@ -1,0 +1,89 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>projectusus</artifactId>
+    <groupId>org.projectusus</groupId>
+    <version>0.7.5-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>org.projectusus.updatesite-latest</artifactId>
+  <packaging>eclipse-repository</packaging>
+
+  <build>
+    <plugins>
+		<plugin>
+			<groupId>org.eclipse.tycho.extras</groupId>
+			<artifactId>tycho-p2-extras-plugin</artifactId>
+			<version>${tycho-version}</version>
+			<executions>
+				<execution>
+					<phase>prepare-package</phase>
+					<goals>
+						<goal>mirror</goal>
+					</goals>
+				</execution>
+			</executions>
+			<configuration>
+				<source>
+					<repository>
+						<url>http://projectusus.googlecode.com/svn/updates</url>
+						<layout>p2</layout>
+					</repository>
+					<repository>
+						<url>http://usus.github.com/JFeet</url>
+						<layout>p2</layout>
+					</repository>
+					<repository>
+						<url>http://usus.github.com/swtchart</url>
+						<layout>p2</layout>
+					</repository>
+				</source>
+
+				<!-- starting from here all configuration parameters are optional -->
+				<!-- they are only shown here with default values for documentation purpose -->
+
+				<!-- List of IUs to mirror. If omitted, allIUs will be mirrored. -->
+				<!-- Omitted IU version element means latest version of the IU -->
+<!--
+				<ius>
+					<iu>
+						<id>org.projectusus</id>
+					</iu>
+				</ius>
+-->
+				<!-- The destination directory to mirror to. -->
+				<destination>${project.build.directory}/repository</destination>
+				<!-- Whether only strict dependencies should be followed. -->
+				<!-- "strict" means perfect version match -->
+				<followStrictOnly>false</followStrictOnly>
+				<!-- Whether or not to follow optional requirements. -->
+				<includeOptional>true</includeOptional>
+				<!-- Whether or not to follow non-greedy requirements. -->
+				<includeNonGreedy>false</includeNonGreedy>
+				<!-- filter properties. E.g. filter only one platform -->
+<!--
+				<filter>
+					<osgi.os>linux</osgi.os>
+					<osgi.ws>gtk</osgi.ws>
+					<osgi.arch>x86_64</osgi.arch>
+				</filter>
+-->
+				<!-- Whether to filter the resulting set of IUs to only -->
+				<!-- include the latest version of each IU -->
+				<latestVersionOnly>true</latestVersionOnly>
+				<!-- don't mirror artifacts, only metadata -->
+				<mirrorMetadataOnly>false</mirrorMetadataOnly>
+				<!-- whether to compress the target repo -->
+				<compress>true</compress>
+				<!-- whether to append to the target repo content -->
+				<append>false</append>
+			</configuration>
+		</plugin>
+    </plugins>
+  </build>
+
+</project>

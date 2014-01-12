@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.projectusus_0.0.0.jar" id="org.projectusus" version="0.0.0">
+      <category name="org.projectusus"/>
+   </feature>
+   <feature url="features/org.projectusus.autotestsuite_0.0.0.jar" id="org.projectusus.autotestsuite" version="0.0.0">
+      <category name="org.projectusus"/>
+   </feature>
+   <category-def name="org.projectusus" label="Project Usus"/>
+</site>
