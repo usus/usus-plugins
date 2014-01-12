@@ -19,6 +19,7 @@ public class ClassRelations_PDETest extends PDETestForMetricsComputation {
         project.createFolder( "cr" );
         project.createFolder( "cr2" );
         IFile file = createJavaFile( "cr/ClassRelations.java" );
+        IFile anonymousClassBug = createJavaFile( "cr/AnonymousClassBug.java" );
         IFile methodStaticImport = createJavaFile( "cr/MethodStaticImport.java" );
         IFile fieldStaticImport = createJavaFile( "cr/FieldStaticImport.java" );
         IFile methodChainStaticImport = createJavaFile( "cr/MethodChainStaticImport.java" );
@@ -33,6 +34,7 @@ public class ClassRelations_PDETest extends PDETestForMetricsComputation {
 
         ClassRelationsInspector inspector = new ClassRelationsInspector();
         new JavaFileDriver( file ).compute( createSetWith( inspector ) );
+        new JavaFileDriver( anonymousClassBug ).compute( createSetWith( inspector ) );
         new JavaFileDriver( methodChainPublic ).compute( createSetWith( inspector ) );
         new JavaFileDriver( methodStaticImport ).compute( createSetWith( inspector ) );
         new JavaFileDriver( methodChainStaticImport ).compute( createSetWith( inspector ) );
@@ -44,6 +46,7 @@ public class ClassRelations_PDETest extends PDETestForMetricsComputation {
 
         Multimap<String, String> map = inspector.getTypeConnections();
 
+        assertThat( map.get( "cr/AnonymousClassBug" ), is( empty() ) );
         assertThat( map.get( "cr/ClassRelations" ), is( empty() ) );
         assertThat( map.get( "cr/ClassWithStrings" ), is( empty() ) );
         assertThat( map.get( "cr/EmptyClass" ), is( empty() ) );

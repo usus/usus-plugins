@@ -27,6 +27,9 @@ public class WrappedTypeBinding {
         if( binding.isTypeVariable() || binding.isCapture() || binding.isWildcardType() ) {
             return;
         }
+        while( binding.isAnonymous() ) {
+            binding = binding.getDeclaringClass();
+        }
         try {
             underlyingResource = (IFile)binding.getJavaElement().getUnderlyingResource();
         } catch( Throwable t ) {
