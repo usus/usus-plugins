@@ -105,7 +105,7 @@ public class ClassDescriptor {
     }
 
     public String qualifiedClassName() {
-        return key.getPackagename() + "." + key.getClassname(); //$NON-NLS-1$ 
+        return key.getPackagename() + "." + key.getClassname(); //$NON-NLS-1$
     }
 
     private void clearOwnAndParentsTransitiveChildrenCache() {
@@ -199,7 +199,7 @@ public class ClassDescriptor {
             source.children.remove( this );
         }
         parents.clear();
-        // eigentlich auch füŸr die outgoings, aber wir werden nur aufgerufen, wenn die outgoings schon leer sind
+        // also for outgoings, but we are only called when the outgoings are emptied already
         removeDescriptor( this.key );
     }
 

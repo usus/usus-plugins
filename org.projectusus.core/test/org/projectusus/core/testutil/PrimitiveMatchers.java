@@ -4,9 +4,9 @@ import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 
 /**
- * Hilfsklasse, um assertThat-Aufrufe auch mit Primitivtypen und ohne Auto-(Un-)Boxing zu ermöglichen.
- * 
- * 
+ * Utility class to allow calling <code>is</code> on primitive types and without auto boxing/unboxing.
+ *
+ *
  */
 public class PrimitiveMatchers {
 
