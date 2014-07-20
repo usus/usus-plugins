@@ -74,7 +74,7 @@
                class="org.projectusus.ui.internal.proportions.actions.ResetSort"
                icon="icons/full/elcl16/alphab_sort_co.gif"
                id="org.projectusus.ui.internal.proportions.actions.ResetSort"
-               label="ResetSort"
+               label="Reset sort order"
                menubarPath="additions"
                style="push"
                toolbarPath="additions"
