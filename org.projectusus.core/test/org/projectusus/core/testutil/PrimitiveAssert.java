@@ -4,8 +4,8 @@ import org.hamcrest.Matcher;
 import org.junit.Assert;
 
 /**
- * Hilfsklasse, um assertThat-Aufrufe auch mit Primitivtypen und ohne Auto-(Un-)Boxing zu ermöglichen.
- * 
+ * Utility class to allow calling <code>assertThat</code> on primitive types and without auto boxing/unboxing.
+ *
  */
 public class PrimitiveAssert {
 
