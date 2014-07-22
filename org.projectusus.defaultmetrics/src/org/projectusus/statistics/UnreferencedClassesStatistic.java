@@ -51,7 +51,7 @@ public class UnreferencedClassesStatistic extends CockpitExtension {
 
     @Override
     public String getLabel() {
-        return "Unreferenced Classes"; //$NON-NLS-1$
+        return "Unreferenced classes"; //$NON-NLS-1$
     }
 
     @Override
