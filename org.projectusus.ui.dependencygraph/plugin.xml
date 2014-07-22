@@ -112,14 +112,6 @@
       <handler
             class="org.projectusus.ui.dependencygraph.handlers.RefreshGraphView"
             commandId="org.projectusus.ui.dependencygraph.command.RefreshGraphView">
-         <activeWhen>
-            <with
-                  variable="activePart">
-               <instanceof
-                     value="org.projectusus.ui.dependencygraph.common.DependencyGraphView">
-               </instanceof>
-            </with>
-         </activeWhen>
       </handler>
       <handler
             class="org.projectusus.ui.dependencygraph.handlers.OpenHotspotInPackageGraph"
@@ -172,14 +164,6 @@
       <handler
             class="org.projectusus.ui.dependencygraph.handlers.SaveScreenshot"
             commandId="org.projectusus.ui.dependencygraph.command.SaveScreenshot">
-         <activeWhen>
-            <with
-                  variable="activePart">
-               <instanceof
-                     value="org.projectusus.ui.dependencygraph.common.DependencyGraphView">
-               </instanceof>
-            </with>
-         </activeWhen>
       </handler>
       <handler
             class="org.projectusus.ui.dependencygraph.handlers.SelectAllClassesInSamePackage"
@@ -216,26 +200,10 @@
       <handler
             class="org.projectusus.ui.dependencygraph.handlers.ToggleEditorSynchronization"
             commandId="org.projectusus.ui.dependencygraph.command.ToggleEditorClassSynchronization">
-         <activeWhen>
-               <with
-                     variable="activePartId">
-                  <equals
-                        value="org.projectusus.ui.dependencygraph.ClassGraphView">
-                  </equals>
-               </with>
-         </activeWhen>
       </handler>
       <handler
             class="org.projectusus.ui.dependencygraph.handlers.ToggleEditorSynchronization"
             commandId="org.projectusus.ui.dependencygraph.command.ToggleEditorPackageSynchronization">
-         <activeWhen>
-               <with
-                     variable="activePartId">
-                  <equals
-                        value="org.projectusus.ui.dependencygraph.PackageGraphView">
-                  </equals>
-               </with>
-         </activeWhen>
       </handler>
    </extension>
    <extension
