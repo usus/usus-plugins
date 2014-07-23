@@ -50,7 +50,7 @@ public class LinearPackageLocationSizeStatistic extends CockpitExtension {
     @Override
     protected String getTooltip() {
         return "The underlying metric determines the number of classes in each package of a project.\n" //$NON-NLS-1$
-                + "If a package occurs in multiple projects, it is counted multiply.\n" //$NON-NLS-1$
+                + "If a package occurs in multiple projects, it is counted several times.\n" //$NON-NLS-1$
                 + "The class visibility is not taken into account.\n" + getDescription(); //$NON-NLS-1$
     }
 
