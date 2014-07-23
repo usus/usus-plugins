@@ -22,11 +22,13 @@ import org.projectusus.ui.internal.yellowcount.YellowCountView;
 public class USUSPerspective implements IPerspectiveFactory {
 
     private static final List<String> INTERESTING_THIRD_PARTY_VIEWS = collectInterestingViews();
+    private static final List<String> INTERESTING_THIRD_PARTY_WIZARDS = collectInterestingNewWizards();
 
     public void createInitialLayout( IPageLayout layout ) {
         layoutViews( layout );
         createViewShortcuts( layout );
         createPerspectiveShortcuts( layout );
+        createNewWizardShortcuts( layout );
     }
 
     private void layoutViews( IPageLayout layout ) {
@@ -70,4 +72,23 @@ public class USUSPerspective implements IPerspectiveFactory {
         result.add( "org.eclipse.jdt.junit.ResultView" ); //$NON-NLS-1$
         return result;
     }
+
+    private void createNewWizardShortcuts( IPageLayout layout ) {
+        for( String wizardId : INTERESTING_THIRD_PARTY_WIZARDS ) {
+            layout.addNewWizardShortcut( wizardId );
+        }
+    }
+
+    private static List<String> collectInterestingNewWizards() {
+        List<String> result = new ArrayList<String>();
+        result.add( "org.eclipse.jdt.ui.wizards.JavaProjectWizard" ); //$NON-NLS-1$
+        result.add( "org.eclipse.jdt.ui.wizards.NewPackageCreationWizard" ); //$NON-NLS-1$
+        result.add( "org.eclipse.jdt.ui.wizards.NewClassCreationWizard" ); //$NON-NLS-1$
+        result.add( "org.eclipse.jdt.ui.wizards.NewInterfaceCreationWizard" ); //$NON-NLS-1$
+        result.add( "org.eclipse.jdt.ui.wizards.NewSourceFolderCreationWizard" ); //$NON-NLS-1$
+        result.add( "org.eclipse.jdt.ui.wizards.NewEnumCreationWizard" ); //$NON-NLS-1$
+        result.add( "org.eclipse.jdt.ui.wizards.NewAnnotationCreationWizard" ); //$NON-NLS-1$
+        return result;
+    }
+
 }
