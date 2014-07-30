@@ -466,11 +466,11 @@
          point="org.eclipse.ui.contexts">
       <context
             id="org.projectusus.ui.dependencygraph.ClassGraphView.context.customFilter"
-            name="org.projectusus.ui.dependencygraph.ClassGraphView.context.customFilter">
+            name="Filtered class graph">
       </context>
       <context
             id="org.projectusus.ui.dependencygraph.PackageGraphView.context.customFilter"
-            name="org.projectusus.ui.dependencygraph.PackageGraphView.context.customFilter">
+            name="Filtered package graph">
       </context>
    </extension>
    
