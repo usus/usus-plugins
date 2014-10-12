@@ -8,11 +8,15 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.ui.JavaUI;
+import org.eclipse.jdt.ui.actions.MoveAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -34,7 +38,9 @@ import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
+import org.eclipse.zest.core.widgets.GraphItem;
 import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.jfeet.selection.ElementFrom;
 import org.projectusus.ui.dependencygraph.filters.DirectNeighboursFilter;
@@ -44,6 +50,7 @@ import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
 import org.projectusus.ui.dependencygraph.filters.NodeAndEdgeFilter;
 import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
 import org.projectusus.ui.dependencygraph.handlers.ChangeZoom;
+import org.projectusus.ui.dependencygraph.nodes.ClassRepresenter;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public abstract class DependencyGraphView extends ViewPart implements IRestrictNodesFilterProvider, IShowInTarget, IZoomableWorkbenchPart {
@@ -57,6 +64,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     private final HideNodesFilter hideNodesFilter = new HideNodesFilter(); // the nodes the user manually X-ed out
     private boolean restricting = false;
     private final IPartListener2 selectionSynchronizationListener = new SelectionSynchronizationListener( this );
+    private MoveAction moveAction;
 
     public DependencyGraphView( DependencyGraphModel model ) {
         super();
@@ -77,6 +85,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         refresh();
         extendSelectionBehavior();
         registerContextMenu( site );
+        moveAction = new MoveAction( site );
     }
 
     private void registerContextMenu( IViewSite site ) {
@@ -352,4 +361,41 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     protected abstract String getCheckboxLabelName();
 
+    public void moveSelectedNodes() {
+        Set<GraphNode> selectedNodes = graphViewer.getSelectedNodes();
+        if( !selectedNodes.isEmpty() ) {
+            tryMove( selectedNodes );
+        }
+    }
+
+    private void tryMove( Set<GraphNode> selectedNodes ) {
+        if( isMultiPackageSelection( selectedNodes ) ) {
+            MessageDialog.openInformation( getViewSite().getShell(), "Operation disallowed", "Can only move classes from a single package." );
+        } else {
+            moveAction.run( convertToJavaElementSelection( graphViewer.getSelection() ) );
+            drawGraphConditionally();
+        }
+    }
+
+    private boolean isMultiPackageSelection( Set<GraphNode> selectedNodes ) {
+        Set<Packagename> selectedPackages = new HashSet<Packagename>();
+        for( GraphNode graphNode : selectedNodes ) {
+            selectedPackages.add( graphNode.getRelatedPackage() );
+        }
+        return selectedPackages.size() > 1;
+    }
+
+    private StructuredSelection convertToJavaElementSelection( ISelection viewerSelection ) {
+        List<?> selection = graphViewer.getGraphControl().getSelection();
+        List<IJavaElement> result = new LinkedList<IJavaElement>();
+        for( Object element : selection ) {
+            GraphItem item = (GraphItem)element;
+            GraphNode node = (GraphNode)item.getData();
+            if( node instanceof ClassRepresenter ) {
+                ClassRepresenter classNode = (ClassRepresenter)node;
+                result.add( classNode.getClassname().getJavaElement() );
+            }
+        }
+        return new StructuredSelection( result );
+    }
 }

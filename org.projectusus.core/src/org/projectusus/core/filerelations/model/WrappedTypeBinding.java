@@ -13,7 +13,7 @@ public class WrappedTypeBinding {
 
     WrappedTypeBinding( IFile underlyingResource, ITypeBinding binding ) {
         this.underlyingResource = underlyingResource;
-        classname = new Classname( binding.getName() );
+        classname = new Classname( binding.getName(), binding.getJavaElement() );
         packagename = Packagename.of( binding.getPackage().getName(), binding.getPackage().getJavaElement() );
     }
 

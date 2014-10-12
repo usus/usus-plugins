@@ -15,7 +15,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.core,
  org.eclipse.core.expressions,
  org.projectusus.jfeet,
- org.projectusus.externals.test;resolution:=optional
+ org.projectusus.externals.test;resolution:=optional,
+ org.eclipse.jface.text
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.projectusus.ui.dependencygraph;x-internal:=true,

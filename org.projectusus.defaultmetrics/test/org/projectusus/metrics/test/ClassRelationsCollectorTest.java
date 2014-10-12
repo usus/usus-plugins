@@ -96,7 +96,7 @@ public class ClassRelationsCollectorTest {
 
     private static WrappedTypeBinding createType( String classname ) {
         WrappedTypeBinding aType = mock( WrappedTypeBinding.class );
-        when( aType.getClassname() ).thenReturn( new Classname( classname ) );
+        when( aType.getClassname() ).thenReturn( new Classname( classname, null ) );
         when( aType.getPackagename() ).thenReturn( Packagename.of( XYZ, null ) );
         when( aType.getUnderlyingResource() ).thenReturn( file );
         return aType;

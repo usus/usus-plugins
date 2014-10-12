@@ -1,12 +1,15 @@
 package org.projectusus.core.filerelations.model;
 
+import org.eclipse.jdt.core.IJavaElement;
 
 public class Classname {
 
-    private String name;
+    private final String name;
+    private final IJavaElement javaElement;
 
-    public Classname( String name ) {
+    public Classname( String name, IJavaElement javaElement ) {
         this.name = name;
+        this.javaElement = javaElement;
     }
 
     @Override
@@ -22,5 +25,9 @@ public class Classname {
     @Override
     public String toString() {
         return name;
+    }
+
+    public IJavaElement getJavaElement() {
+        return javaElement;
     }
 }

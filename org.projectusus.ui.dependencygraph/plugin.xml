@@ -170,6 +170,22 @@
          </activeWhen>
       </handler>
       <handler
+            class="org.projectusus.ui.dependencygraph.handlers.MoveSelectedNodes"
+            commandId="org.projectusus.ui.dependencygraph.command.MoveSelectedNodes">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <instanceof
+                        value="org.projectusus.ui.dependencygraph.nodes.GraphNode">
+                  </instanceof>
+               </iterate>
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
             class="org.projectusus.ui.dependencygraph.handlers.SaveScreenshot"
             commandId="org.projectusus.ui.dependencygraph.command.SaveScreenshot">
          <activeWhen>
@@ -265,6 +281,11 @@
             name="Hide Selected Nodes">
       </command>
       <command
+            description="Moves the selected classes"
+            id="org.projectusus.ui.dependencygraph.command.MoveSelectedNodes"
+            name="Move Selected Classes">
+      </command>
+      <command
             description="Save a screenshot of the current graph"
             id="org.projectusus.ui.dependencygraph.command.SaveScreenshot"
             name="Save Screenshot">
@@ -329,6 +350,10 @@
          </separator>
          <command
                commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
+               style="push">
+         </command>
+		 <command
+               commandId="org.projectusus.ui.dependencygraph.command.MoveSelectedNodes"
                style="push">
          </command>
          <command
@@ -397,6 +422,10 @@
                style="push">
          </command>
          <command
+               commandId="org.projectusus.ui.dependencygraph.command.MoveSelectedNodes"
+               style="push">
+         </command>
+         <command
                commandId="org.projectusus.ui.dependencygraph.command.SelectAllClassesInSamePackage"
                style="push">
          </command>
@@ -440,6 +469,10 @@
       <image
             commandId="org.projectusus.ui.dependencygraph.command.HideSelectedNodes"
             icon="icons/hide-node.gif">
+      </image>
+      <image
+            commandId="org.projectusus.ui.dependencygraph.command.MoveSelectedNodes"
+            icon="icons/correction_move.gif">
       </image>
       <image
             commandId="org.projectusus.ui.dependencygraph.command.SaveScreenshot"

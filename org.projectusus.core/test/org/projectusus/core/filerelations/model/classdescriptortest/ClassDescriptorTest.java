@@ -20,8 +20,8 @@ public class ClassDescriptorTest {
     private static final String NAME_STRING = "name";
     private static final String PACKAGENAME_STRING = "packagename";
 
-    private Classname classname1 = new Classname( NAME_STRING );
-    private Classname classname2 = new Classname( NAME_STRING );
+    private Classname classname1 = new Classname( NAME_STRING, null );
+    private Classname classname2 = new Classname( NAME_STRING, null );
     private Packagename packagename1 = Packagename.of( PACKAGENAME_STRING, null );
     private Packagename packagename2 = Packagename.of( PACKAGENAME_STRING, null );
 
@@ -77,18 +77,18 @@ public class ClassDescriptorTest {
 
     @Test
     public void classIsNotAddedToItsChildren() {
-        ClassDescriptor descriptor = ClassDescriptor.of( mock( IFile.class ), new Classname( "classname" ), Packagename.of( NAME_STRING, null ) ); //$NON-NLS-1$ 
+        ClassDescriptor descriptor = ClassDescriptor.of( mock( IFile.class ), new Classname( "classname", null ), Packagename.of( NAME_STRING, null ) ); //$NON-NLS-1$ 
         assertEquals( 0, descriptor.getChildren().size() );
         descriptor.addChild( descriptor );
         assertEquals( 0, descriptor.getChildren().size() );
     }
 
     private static ClassDescriptor createDescriptor( IFile file ) {
-        return ClassDescriptor.of( file, new Classname( "classname1" ), Packagename.of( "packagename1", null ) ); //$NON-NLS-1$ //$NON-NLS-2$
+        return ClassDescriptor.of( file, new Classname( "classname1", null ), Packagename.of( "packagename1", null ) ); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private static ClassDescriptor createDescriptor( Packagename packagename ) {
-        return ClassDescriptor.of( mock( IFile.class ), new Classname( "classname1" ), packagename ); //$NON-NLS-1$
+        return ClassDescriptor.of( mock( IFile.class ), new Classname( "classname1", null ), packagename ); //$NON-NLS-1$
     }
 
 }

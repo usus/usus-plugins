@@ -16,8 +16,8 @@ public class MetricsAccessorTest {
     public void addFileRelation() {
         WrappedTypeBinding sourceBinding = mock( WrappedTypeBinding.class );
         WrappedTypeBinding targetBinding = mock( WrappedTypeBinding.class );
-        when( sourceBinding.getClassname() ).thenReturn( new Classname( "sourceName" ) ); //$NON-NLS-1$
-        when( targetBinding.getClassname() ).thenReturn( new Classname( "targetName" ) ); //$NON-NLS-1$
+        when( sourceBinding.getClassname() ).thenReturn( new Classname( "sourceName", null ) ); //$NON-NLS-1$
+        when( targetBinding.getClassname() ).thenReturn( new Classname( "targetName", null ) ); //$NON-NLS-1$
         Packagename packagename = Packagename.of( "package", null ); //$NON-NLS-1$
         when( sourceBinding.getPackagename() ).thenReturn( packagename );
         when( targetBinding.getPackagename() ).thenReturn( packagename );

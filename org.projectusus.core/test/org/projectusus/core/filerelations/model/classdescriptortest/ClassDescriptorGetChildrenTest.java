@@ -27,7 +27,7 @@ public class ClassDescriptorGetChildrenTest {
 
     public static ClassDescriptor createClassDescriptor( String name ) {
         IFile file = mock( IFile.class );
-        return ClassDescriptor.of( file, new Classname( name ), Packagename.of( name, null ) );
+        return ClassDescriptor.of( file, new Classname( name, null ), Packagename.of( name, null ) );
     }
 
     @Test

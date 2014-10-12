@@ -9,6 +9,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.ui.ISharedImages;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
+import org.projectusus.core.filerelations.model.Classname;
 import org.projectusus.core.filerelations.model.Packagename;
 
 import ch.akuhn.foreach.Collect;
@@ -128,6 +129,10 @@ public class ClassRepresenter implements GraphNode {
 
     public boolean isPackageOneOf( Collection<Packagename> packages ) {
         return packages.contains( getPackagename() );
+    }
+
+    public Classname getClassname() {
+        return clazz.getClassname();
     }
 
     public Packagename getPackagename() {
