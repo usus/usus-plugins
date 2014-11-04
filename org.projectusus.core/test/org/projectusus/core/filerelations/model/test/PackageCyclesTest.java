@@ -92,7 +92,7 @@ public class PackageCyclesTest {
     }
 
     private static ClassDescriptor createDescriptor( Packagename packagename ) {
-        return ClassDescriptor.of( mock( IFile.class ), new Classname( "classname1" ), packagename ); //$NON-NLS-1$
+        return ClassDescriptor.of( mock( IFile.class ), new Classname( "classname1", null ), packagename ); //$NON-NLS-1$
     }
 
 }

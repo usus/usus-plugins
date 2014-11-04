@@ -7,16 +7,14 @@ import static org.mockito.Mockito.mock;
 import org.eclipse.core.resources.IFile;
 import org.junit.Before;
 import org.junit.Test;
-import org.projectusus.core.filerelations.model.Classname;
-import org.projectusus.core.filerelations.model.Packagename;
 
 public class ClassDescriptorKeyTest {
 
     private static final String NAME_STRING = "name";
     private static final String PACKAGENAME_STRING = "packagename";
 
-    private Classname classname1 = new Classname( NAME_STRING );
-    private Classname classname2 = new Classname( NAME_STRING );
+    private Classname classname1 = new Classname( NAME_STRING, null );
+    private Classname classname2 = new Classname( NAME_STRING, null );
     private Packagename packagename1 = Packagename.of( PACKAGENAME_STRING, null );
     private Packagename packagename2 = Packagename.of( PACKAGENAME_STRING, null );
 

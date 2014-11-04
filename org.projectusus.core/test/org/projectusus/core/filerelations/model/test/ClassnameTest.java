@@ -9,8 +9,8 @@ import org.projectusus.core.filerelations.model.Classname;
 public class ClassnameTest {
     private static final String NAME_STRING = "name";
 
-    private Classname classname1 = new Classname( NAME_STRING );
-    private Classname classname2 = new Classname( NAME_STRING );
+    private Classname classname1 = new Classname( NAME_STRING, null );
+    private Classname classname2 = new Classname( NAME_STRING, null );
 
     @Test
     public void differentClassnamesWithTheSameStringAreEqualAndNotSame() {

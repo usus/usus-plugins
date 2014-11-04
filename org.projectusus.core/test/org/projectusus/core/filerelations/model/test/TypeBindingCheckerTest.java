@@ -142,6 +142,6 @@ public class TypeBindingCheckerTest {
         WrappedTypeBinding boundType = checker.checkForRelevanceAndWrap( binding );
         assertNotNull( boundType );
         assertEquals( resource, boundType.getUnderlyingResource() );
-        assertEquals( new Classname( "BindingName" ), boundType.getClassname() ); //$NON-NLS-1$
+        assertEquals( new Classname( "BindingName", null ), boundType.getClassname() ); //$NON-NLS-1$
     }
 }

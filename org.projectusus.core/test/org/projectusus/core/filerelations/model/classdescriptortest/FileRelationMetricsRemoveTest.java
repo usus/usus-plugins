@@ -34,7 +34,7 @@ public class FileRelationMetricsRemoveTest {
     }
 
     public static ClassDescriptor createClassDescriptor( IFile file, String name ) {
-        return ClassDescriptor.of( file, new Classname( name ), Packagename.of( name, null ) );
+        return ClassDescriptor.of( file, new Classname( name, null ), Packagename.of( name, null ) );
     }
 
     @Test

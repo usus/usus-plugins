@@ -18,9 +18,9 @@ public class AdditionAndRemovalOfClassDescriptorsTest {
 
     private IFile file = mock( IFile.class );
     private Packagename packagename = Packagename.of( "packagename", null ); //$NON-NLS-1$
-    private Classname classname1 = new Classname( "Name1" );
-    private Classname classname2 = new Classname( "Name2" );
-    private Classname classname3 = new Classname( "Name3" );
+    private Classname classname1 = new Classname( "Name1", null );
+    private Classname classname2 = new Classname( "Name2", null );
+    private Classname classname3 = new Classname( "Name3", null );
 
     @Before
     public void init() {
