@@ -7,7 +7,12 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.ui.IContextMenuConstants;
 import org.eclipse.jdt.ui.JavaUI;
+import org.eclipse.jdt.ui.actions.ConvertingSelectionProvider;
+import org.eclipse.jdt.ui.actions.RefactorActionGroup;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -46,7 +51,7 @@ import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
 import org.projectusus.ui.dependencygraph.handlers.ChangeZoom;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
-public abstract class DependencyGraphView extends ViewPart implements IRestrictNodesFilterProvider, IShowInTarget, IZoomableWorkbenchPart {
+public abstract class DependencyGraphView extends ViewPart implements IRestrictNodesFilterProvider, IShowInTarget, IZoomableWorkbenchPart, IMenuListener {
 
     private final DependencyGraphModel model;
     private DependencyGraphViewer graphViewer;
@@ -57,6 +62,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     private final HideNodesFilter hideNodesFilter = new HideNodesFilter(); // the nodes the user manually X-ed out
     private boolean restricting = false;
     private final IPartListener2 selectionSynchronizationListener = new SelectionSynchronizationListener( this );
+    private RefactorActionGroup refactorAction;
 
     public DependencyGraphView( DependencyGraphModel model ) {
         super();
@@ -77,6 +83,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         refresh();
         extendSelectionBehavior();
         registerContextMenu( site );
+        refactorAction = new RefactorActionGroup( getSite(), new ConvertingSelectionProvider( site.getSelectionProvider() ) );
     }
 
     private void registerContextMenu( IViewSite site ) {
@@ -84,6 +91,13 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         menuManager.add( new Separator( "nodeActions" ) );
         graphViewer.getGraphControl().setMenu( menuManager.createContextMenu( graphViewer.getControl() ) );
         site.registerContextMenu( menuManager, graphViewer );
+
+        createRefactoringMenu( menuManager );
+    }
+
+    private void createRefactoringMenu( MenuManager menuManager ) {
+        menuManager.add( new Separator( IContextMenuConstants.GROUP_REORGANIZE ) );
+        menuManager.addMenuListener( this );
     }
 
     private static Composite createComposite( Composite parent ) {
@@ -101,6 +115,12 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         separator.setVisible( false );
         toolBar.add( separator );
         toolBar.add( new ChangeZoom( this ) );
+    }
+
+    public void menuAboutToShow( IMenuManager manager ) {
+        if( manager.find( RefactorActionGroup.MENU_ID ) == null ) {
+            refactorAction.fillContextMenu( manager );
+        }
     }
 
     public AbstractZoomableViewer getZoomableViewer() {
@@ -228,6 +248,9 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         UsusModelProvider.ususModel().removeUsusModelListener( listener );
         graphViewer.getGraphControl().removeSelectionListener( selectionListener );
         registerEditorSynchronizationListener( false );
+        if( refactorAction != null ) {
+            refactorAction.dispose();
+        }
         super.dispose();
     }
 

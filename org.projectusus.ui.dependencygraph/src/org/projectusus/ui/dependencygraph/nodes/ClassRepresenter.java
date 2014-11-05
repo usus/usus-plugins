@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.ui.ISharedImages;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Packagename;
@@ -17,7 +19,7 @@ import ch.akuhn.foreach.ForEach;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 
-public class ClassRepresenter implements GraphNode {
+public class ClassRepresenter implements GraphNode, IAdaptable {
 
     private final ClassDescriptor clazz;
 
@@ -171,5 +173,12 @@ public class ClassRepresenter implements GraphNode {
 
     public boolean represents( IJavaElement javaElement ) {
         return javaElement.getResource().equals( getFile() );
+    }
+
+    public Object getAdapter( @SuppressWarnings( "rawtypes" ) Class adapter ) {
+        if( adapter.equals( IJavaElement.class ) ) {
+            return JavaCore.create( getFile() );
+        }
+        return null;
     }
 }
