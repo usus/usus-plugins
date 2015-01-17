@@ -1,13 +1,11 @@
-package org.projectusus.ui.dependencygraph;
+package org.projectusus.ui.dependencygraph.handlers;
 
 import static org.eclipse.jdt.ui.ISharedImages.IMG_OBJS_PACKFRAG_ROOT;
 import static org.eclipse.jface.window.Window.OK;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -19,21 +17,15 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.ui.dialogs.SelectionDialog;
 import org.projectusus.jfeet.selection.ElementsFrom;
+import org.projectusus.ui.dependencygraph.filters.SourceFolderFilter;
 
-final class SourceFolderFilterAction extends Action {
+public final class SourceFolderFilterAction extends Action {
 
-    private final List<IPath> allSourceFolders = new ArrayList<IPath>();
-    private List<IPath> visibleSourceFolders = new ArrayList<IPath>();
+    private final SourceFolderFilter filter;
 
-    {
-        allSourceFolders.add( Path.fromPortableString( "src/main/java" ) );
-        allSourceFolders.add( Path.fromPortableString( "src/test/java" ) );
-
-        visibleSourceFolders.add( Path.fromPortableString( "src/main/java" ) );
-    }
-
-    SourceFolderFilterAction() {
+    public SourceFolderFilterAction( SourceFolderFilter filter ) {
         super( "", AS_CHECK_BOX );
+        this.filter = filter;
         updateState();
     }
 
@@ -43,7 +35,7 @@ final class SourceFolderFilterAction extends Action {
 
         SelectionDialog dialog = createSelectionDialog( shell );
         if( dialog.open() == OK ) {
-            visibleSourceFolders = pathsFromResult( dialog );
+            filter.setVisibleSourceFolders( pathsFromResult( dialog ) );
         }
 
         updateState();
@@ -54,18 +46,18 @@ final class SourceFolderFilterAction extends Action {
     }
 
     private SelectionDialog createSelectionDialog( Shell shell ) {
-        ListSelectionDialog dialog = new ListSelectionDialog( shell, allSourceFolders, ArrayContentProvider.getInstance(), new SourceFolderLabelProvider(),
+        ListSelectionDialog dialog = new ListSelectionDialog( shell, filter.getAllSourceFolders(), ArrayContentProvider.getInstance(), new SourceFolderLabelProvider(),
                 "Please select visible source folders:" );
         dialog.setTitle( "Visible source folders" );
-        dialog.setInitialElementSelections( visibleSourceFolders );
+        dialog.setInitialElementSelections( filter.getVisibleSourceFolders() );
         dialog.setHelpAvailable( false );
         return dialog;
     }
 
     private void updateState() {
-        setChecked( allSourceFolders.size() > visibleSourceFolders.size() );
+        setChecked( filter.getAllSourceFolders().size() > filter.getVisibleSourceFolders().size() );
         if( isChecked() ) {
-            setText( visibleSourceFolders.size() + "/" + allSourceFolders.size() + " source folders" );
+            setText( filter.getVisibleSourceFolders().size() + "/" + filter.getAllSourceFolders().size() + " source folders" );
         } else {
             setText( "All source folders" );
         }

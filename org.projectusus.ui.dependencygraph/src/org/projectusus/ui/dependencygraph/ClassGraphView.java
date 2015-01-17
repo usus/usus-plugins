@@ -15,6 +15,7 @@ import org.eclipse.ui.IActionBars;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphModel;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
 import org.projectusus.ui.dependencygraph.filters.SourceFolderFilter;
+import org.projectusus.ui.dependencygraph.handlers.SourceFolderFilterAction;
 import org.projectusus.ui.dependencygraph.nodes.ClassRepresenter;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
@@ -34,13 +35,15 @@ public class ClassGraphView extends DependencyGraphView {
 
     private final ToolBarManager toolBarManager = new ToolBarManager( SWT.HORIZONTAL | SWT.FLAT );
 
+    private final SourceFolderFilter sourceFolderFilter = new SourceFolderFilter();
+
     public ClassGraphView() {
         super( classGraphModel );
     }
 
     @Override
     protected Collection<? extends ViewerFilter> createAdditionalFilters() {
-        return singleton( new SourceFolderFilter( "src/main/java" ) );
+        return singleton( sourceFolderFilter );
     }
 
     @Override
@@ -73,7 +76,7 @@ public class ClassGraphView extends DependencyGraphView {
     @Override
     protected void contributeTo( IActionBars actionBars ) {
         super.contributeTo( actionBars );
-        toolBarManager.add( new SourceFolderFilterAction() );
+        toolBarManager.add( new SourceFolderFilterAction( sourceFolderFilter ) );
         toolBarManager.update( true );
     }
 

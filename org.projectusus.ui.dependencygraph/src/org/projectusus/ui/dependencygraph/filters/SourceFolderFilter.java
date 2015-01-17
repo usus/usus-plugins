@@ -1,5 +1,9 @@
 package org.projectusus.ui.dependencygraph.filters;
 
+import static org.apache.commons.lang.StringUtils.join;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IPath;
@@ -12,15 +16,34 @@ import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public class SourceFolderFilter extends NodeAndEdgeFilter {
 
-    private final String sourceFolder;
+    private final List<IPath> allSourceFolders = new ArrayList<IPath>();
+    private List<IPath> visibleSourceFolders = new ArrayList<IPath>();
 
-    public SourceFolderFilter( String sourceFolder ) {
-        this.sourceFolder = sourceFolder;
+    {
+        getAllSourceFolders().add( Path.fromPortableString( "src/main/java" ) );
+        getAllSourceFolders().add( Path.fromPortableString( "src/test/java" ) );
+
+        getVisibleSourceFolders().add( Path.fromPortableString( "src/main/java" ) );
+    }
+
+    public SourceFolderFilter() {
+    }
+
+    public List<IPath> getAllSourceFolders() {
+        return allSourceFolders;
+    }
+
+    public List<IPath> getVisibleSourceFolders() {
+        return visibleSourceFolders;
+    }
+
+    public void setVisibleSourceFolders( List<IPath> visibleSourceFolders ) {
+        this.visibleSourceFolders = visibleSourceFolders;
     }
 
     @Override
     public String getDescription() {
-        return "Show only classes in source folder " + sourceFolder;
+        return "Show only classes in source folders " + join( visibleSourceFolders, ", " );
     }
 
     @Override
@@ -35,7 +58,7 @@ public class SourceFolderFilter extends NodeAndEdgeFilter {
         IPath relativePath = packagePath.makeRelativeTo( projectPath );
 
         // TODO aOSD Richtig implementieren und testen
-//        System.out.println( relativePath + ": " + relativePath.equals( Path.fromPortableString( sourceFolder ) ) );
+        // System.out.println( relativePath + ": " + relativePath.equals( Path.fromPortableString( sourceFolder ) ) );
 
         return true;
     }
