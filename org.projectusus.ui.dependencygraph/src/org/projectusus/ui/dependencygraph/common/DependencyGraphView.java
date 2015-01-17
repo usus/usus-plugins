@@ -31,6 +31,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
@@ -138,9 +139,10 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         layout.marginTop = 5;
         filterArea.setLayout( layout );
 
-        createAdditionalWidget( filterArea );
+        Control additionalWidgets = createAdditionalWidgets( filterArea );
         createLayoutComboViewer( filterArea );
 
+        additionalWidgets.setLayoutData( new GridData( SWT.LEFT, SWT.CENTER, true, true ) );
         filterArea.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, false, false ) );
 
         return filterArea;
@@ -159,9 +161,12 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         } );
     }
 
-    protected void createAdditionalWidget( Composite filterArea ) {
-        final Button checkbox = new Button( filterArea, SWT.CHECK );
-        checkbox.setLayoutData( new GridData( SWT.LEFT, SWT.CENTER, true, true ) );
+    protected Control createAdditionalWidgets( Composite filterArea ) {
+        return createRestrictingCheckBox( filterArea );
+    }
+
+    protected final Button createRestrictingCheckBox( Composite parent ) {
+        final Button checkbox = new Button( parent, SWT.CHECK );
         checkbox.setText( getCheckboxLabelName() );
         checkbox.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -176,6 +181,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
             }
         } );
         setRestricting( false );
+        return checkbox;
     }
 
     private static Composite createGraphArea( Composite composite ) {
