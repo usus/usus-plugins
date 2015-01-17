@@ -19,10 +19,10 @@ public class SourceFolderFilter extends NodeAndEdgeFilter {
     private List<IPath> visibleSourceFolders = new ArrayList<IPath>();
 
     {
-        getAllSourceFolders().add( Path.fromPortableString( "src/main/java" ) );
-        getAllSourceFolders().add( Path.fromPortableString( "src/test/java" ) );
+        getAllSourceFolders().add( Path.fromPortableString( "src" ) );
+        getAllSourceFolders().add( Path.fromPortableString( "test" ) );
 
-        getVisibleSourceFolders().add( Path.fromPortableString( "src/main/java" ) );
+        getVisibleSourceFolders().add( Path.fromPortableString( "src" ) );
     }
 
     public SourceFolderFilter() {
