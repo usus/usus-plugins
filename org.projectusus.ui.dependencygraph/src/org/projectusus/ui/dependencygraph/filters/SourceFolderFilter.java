@@ -3,11 +3,11 @@ package org.projectusus.ui.dependencygraph.filters;
 import static org.apache.commons.lang.StringUtils.join;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
@@ -15,21 +15,24 @@ import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public class SourceFolderFilter extends NodeAndEdgeFilter {
 
-    private final List<IPath> allSourceFolders = new ArrayList<IPath>();
+    private List<IPath> allSourceFolders = new ArrayList<IPath>();
     private List<IPath> visibleSourceFolders = new ArrayList<IPath>();
-
-    {
-        getAllSourceFolders().add( Path.fromPortableString( "src" ) );
-        getAllSourceFolders().add( Path.fromPortableString( "test" ) );
-
-        getVisibleSourceFolders().add( Path.fromPortableString( "src" ) );
-    }
-
-    public SourceFolderFilter() {
-    }
 
     public List<IPath> getAllSourceFolders() {
         return allSourceFolders;
+    }
+
+    public void updateSourceFolders( List<IPath> allSourceFolders ) {
+        this.visibleSourceFolders.retainAll( allSourceFolders );
+        this.visibleSourceFolders.addAll( addedSourceFolders( allSourceFolders ) );
+        this.allSourceFolders = new LinkedList<IPath>( allSourceFolders );
+    }
+
+    private LinkedList<IPath> addedSourceFolders( List<IPath> newSourceFolders ) {
+        List<IPath> oldSourceFolders = this.allSourceFolders;
+        LinkedList<IPath> result = new LinkedList<IPath>( newSourceFolders );
+        result.removeAll( oldSourceFolders );
+        return result;
     }
 
     public List<IPath> getVisibleSourceFolders() {
