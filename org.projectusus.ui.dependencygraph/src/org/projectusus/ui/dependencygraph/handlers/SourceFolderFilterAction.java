@@ -17,15 +17,18 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.ui.dialogs.SelectionDialog;
 import org.projectusus.jfeet.selection.ElementsFrom;
+import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
 import org.projectusus.ui.dependencygraph.filters.SourceFolderFilter;
 
 public final class SourceFolderFilterAction extends Action {
 
     private final SourceFolderFilter filter;
+    private final DependencyGraphView graphView;
 
-    public SourceFolderFilterAction( SourceFolderFilter filter ) {
+    public SourceFolderFilterAction( SourceFolderFilter filter, DependencyGraphView graphView ) {
         super( "", AS_CHECK_BOX );
         this.filter = filter;
+        this.graphView = graphView;
         updateState();
     }
 
@@ -36,6 +39,7 @@ public final class SourceFolderFilterAction extends Action {
         SelectionDialog dialog = createSelectionDialog( shell );
         if( dialog.open() == OK ) {
             filter.setVisibleSourceFolders( pathsFromResult( dialog ) );
+            graphView.refresh();
         }
 
         updateState();

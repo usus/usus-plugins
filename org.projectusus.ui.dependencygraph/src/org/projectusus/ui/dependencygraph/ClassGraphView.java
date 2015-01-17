@@ -76,7 +76,7 @@ public class ClassGraphView extends DependencyGraphView {
     @Override
     protected void contributeTo( IActionBars actionBars ) {
         super.contributeTo( actionBars );
-        toolBarManager.add( new SourceFolderFilterAction( sourceFolderFilter ) );
+        toolBarManager.add( new SourceFolderFilterAction( sourceFolderFilter, this ) );
         toolBarManager.update( true );
     }
 
