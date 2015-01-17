@@ -1,6 +1,9 @@
 package org.projectusus.ui.dependencygraph.common;
 
+import static java.util.Collections.emptyList;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -184,7 +187,15 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     private void createGraphViewer( DependencyGraphViewer dependencyGraphViewer ) {
         graphViewer = dependencyGraphViewer;
-        graphViewer.setFilters( new ViewerFilter[] { new LimitNodeFilter( this ), hideNodesFilter } );
+        List<ViewerFilter> filters = new ArrayList<ViewerFilter>();
+        filters.add( new LimitNodeFilter( this ) );
+        filters.add( hideNodesFilter );
+        filters.addAll( createAdditionalFilters() );
+        graphViewer.setFilters( filters.toArray( new ViewerFilter[filters.size()] ) );
+    }
+
+    protected Collection<? extends ViewerFilter> createAdditionalFilters() {
+        return emptyList();
     }
 
     // hier kommt man an, wenn man in den Hotspots einen Package Cycle doppelklickt:
