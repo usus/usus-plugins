@@ -10,7 +10,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
@@ -49,17 +48,13 @@ public class SourceFolderFilter extends NodeAndEdgeFilter {
     @Override
     protected boolean select( GraphNode node, Set<GraphNode> others ) {
         IJavaElement javaElement = JavaCore.create( node.getFile() );
-
-        IJavaProject javaProject = javaElement.getJavaProject();
-        IPackageFragmentRoot packageFragmentRoot = javaProject.getPackageFragmentRoot( node.getFile() );
+        IJavaElement packageFragmentRoot = javaElement.getAncestor( IJavaElement.PACKAGE_FRAGMENT_ROOT );
+        IJavaProject javaProject = packageFragmentRoot.getJavaProject();
 
         IPath packagePath = packageFragmentRoot.getPath();
         IPath projectPath = javaProject.getPath();
         IPath relativePath = packagePath.makeRelativeTo( projectPath );
 
-        // TODO aOSD Richtig implementieren und testen
-        // System.out.println( relativePath + ": " + relativePath.equals( Path.fromPortableString( sourceFolder ) ) );
-
-        return true;
+        return visibleSourceFolders.contains( relativePath );
     }
 }
