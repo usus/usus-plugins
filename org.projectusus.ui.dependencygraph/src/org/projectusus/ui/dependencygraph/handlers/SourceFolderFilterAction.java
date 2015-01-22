@@ -1,7 +1,9 @@
 package org.projectusus.ui.dependencygraph.handlers;
 
+import static org.apache.commons.lang.StringUtils.join;
 import static org.eclipse.jdt.ui.ISharedImages.IMG_OBJS_PACKFRAG_ROOT;
 import static org.eclipse.jface.window.Window.OK;
+import static org.projectusus.ui.dependencygraph.DependencyGraphPlugin.plugin;
 
 import java.util.List;
 
@@ -17,18 +19,17 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.ui.dialogs.SelectionDialog;
 import org.projectusus.jfeet.selection.ElementsFrom;
-import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
 import org.projectusus.ui.dependencygraph.filters.SourceFolderFilter;
 
 public final class SourceFolderFilterAction extends Action {
 
     private final SourceFolderFilter filter;
-    private final DependencyGraphView graphView;
+    private final Runnable refreshable;
 
-    public SourceFolderFilterAction( SourceFolderFilter filter, DependencyGraphView graphView ) {
+    public SourceFolderFilterAction( SourceFolderFilter filter, Runnable refreshable ) {
         super( "", AS_CHECK_BOX );
         this.filter = filter;
-        this.graphView = graphView;
+        this.refreshable = refreshable;
         updateState();
     }
 
@@ -37,12 +38,23 @@ public final class SourceFolderFilterAction extends Action {
         Shell shell = event.display.getActiveShell();
 
         SelectionDialog dialog = createSelectionDialog( shell );
+        boolean changed = false;
         if( dialog.open() == OK ) {
-            filter.setVisibleSourceFolders( pathsFromResult( dialog ) );
-            graphView.refresh();
+            List<IPath> newVisibleSourceFolders = pathsFromResult( dialog );
+            if( hasChanged( newVisibleSourceFolders ) ) {
+                filter.setVisibleSourceFolders( newVisibleSourceFolders );
+                changed = true;
+            }
         }
-
         updateState();
+
+        if( changed ) {
+            refreshable.run();
+        }
+    }
+
+    private boolean hasChanged( List<IPath> newVisibleSourceFolders ) {
+        return !newVisibleSourceFolders.equals( filter.getVisibleSourceFolders() );
     }
 
     private List<IPath> pathsFromResult( SelectionDialog dialog ) {
@@ -58,12 +70,16 @@ public final class SourceFolderFilterAction extends Action {
         return dialog;
     }
 
-    private void updateState() {
+    public void updateState() {
         setChecked( filter.getAllSourceFolders().size() > filter.getVisibleSourceFolders().size() );
         if( isChecked() ) {
+            setImageDescriptor( plugin().imageForPath( "icons/source_folder_filter_active.png" ) );
             setText( filter.getVisibleSourceFolders().size() + "/" + filter.getAllSourceFolders().size() + " source folders" );
+            setToolTipText( "Visible source folders: " + join( filter.getVisibleSourceFolders(), ", " ) );
         } else {
+            setImageDescriptor( plugin().imageForPath( "icons/source_folder_filter_inactive.png" ) );
             setText( "All source folders" );
+            setToolTipText( null );
         }
     }
 
