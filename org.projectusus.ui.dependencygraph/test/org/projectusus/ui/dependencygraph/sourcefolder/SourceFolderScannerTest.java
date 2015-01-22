@@ -1,5 +1,7 @@
 package org.projectusus.ui.dependencygraph.sourcefolder;
 
+import static org.eclipse.jdt.core.IPackageFragmentRoot.K_BINARY;
+import static org.eclipse.jdt.core.IPackageFragmentRoot.K_SOURCE;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
@@ -12,42 +14,23 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.JavaModelException;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.Before;
 import org.junit.Test;
 
 public class SourceFolderScannerTest {
 
-    private IJavaProject project1;
-
-    private IPackageFragmentRoot mainRoot;
-
-    private IJavaProject project2;
-
-    @Before
-    public void setup() {
-        project1 = mock( IJavaProject.class );
-        when( project1.getPath() ).thenReturn( new Path( "Bla" ) );
-
-        mainRoot = mock( IPackageFragmentRoot.class );
-        IPath mainPath = new Path( "Bla/src/main/java" );
-        when( mainRoot.getPath() ).thenReturn( mainPath );
-
-        project2 = mock( IJavaProject.class );
-        when( project2.getPath() ).thenReturn( new Path( "Foo" ) );
-    }
+    private final SourceFolderScanner sourceFolderScanner = new SourceFolderScanner();
 
     @SuppressWarnings( "unchecked" )
     @Test
     public void scanSingleProject() throws Exception {
-        IPackageFragmentRoot[] roots = new IPackageFragmentRoot[] { mainRoot };
-        when( project1.getPackageFragmentRoots() ).thenReturn( roots );
+        IPackageFragmentRoot root = packageFragmentRoot( new Path( "Bla/src/main/java" ), K_SOURCE );
+        IJavaProject project = javaProject( new Path( "Bla" ), root );
 
-        SourceFolderScanner sourceFolderScanner = new SourceFolderScanner();
-
-        Set<IPath> sourceFolders = sourceFolderScanner.scan( project1 );
+        Set<IPath> sourceFolders = sourceFolderScanner.scan( project );
 
         assertThat( sourceFolders, hasItems( path( "src/main/java" ) ) );
     }
@@ -55,16 +38,11 @@ public class SourceFolderScannerTest {
     @SuppressWarnings( "unchecked" )
     @Test
     public void scanSingleProjectWithMultipleFragmentRoots() throws Exception {
-        IPackageFragmentRoot testRoot = mock( IPackageFragmentRoot.class );
-        IPath testPath = new Path( "Bla/src/test/java" );
-        when( testRoot.getPath() ).thenReturn( testPath );
+        IPackageFragmentRoot mainRoot = packageFragmentRoot( new Path( "Bla/src/main/java" ), K_SOURCE );
+        IPackageFragmentRoot testRoot = packageFragmentRoot( new Path( "Bla/src/test/java" ), K_SOURCE );
+        IJavaProject project = javaProject( new Path( "Bla" ), mainRoot, testRoot );
 
-        IPackageFragmentRoot[] roots = new IPackageFragmentRoot[] { mainRoot, testRoot };
-        when( project1.getPackageFragmentRoots() ).thenReturn( roots );
-
-        SourceFolderScanner sourceFolderScanner = new SourceFolderScanner();
-
-        Set<IPath> sourceFolders = sourceFolderScanner.scan( project1 );
+        Set<IPath> sourceFolders = sourceFolderScanner.scan( project );
 
         assertThat( sourceFolders, hasItems( path( "src/main/java" ), path( "src/test/java" ) ) );
     }
@@ -72,34 +50,36 @@ public class SourceFolderScannerTest {
     @SuppressWarnings( "unchecked" )
     @Test
     public void scanMultipleProjects() throws Exception {
-        IPackageFragmentRoot[] roots1 = new IPackageFragmentRoot[] { mainRoot };
-        when( project1.getPackageFragmentRoots() ).thenReturn( roots1 );
+        IPackageFragmentRoot mainRoot = packageFragmentRoot( new Path( "Bla/src/main/java" ), K_SOURCE );
+        IJavaProject project1 = javaProject( new Path( "Bla" ), mainRoot );
 
-        IPackageFragmentRoot testRoot = mock( IPackageFragmentRoot.class );
-        IPath testPath = new Path( "Foo/src/test/java" );
-        when( testRoot.getPath() ).thenReturn( testPath );
-
-        IPackageFragmentRoot[] roots2 = new IPackageFragmentRoot[] { testRoot };
-        when( project2.getPackageFragmentRoots() ).thenReturn( roots2 );
-
-        SourceFolderScanner sourceFolderScanner = new SourceFolderScanner();
+        IPackageFragmentRoot testRoot = packageFragmentRoot( new Path( "Foo/src/test/java" ), K_SOURCE );
+        IJavaProject project2 = javaProject( new Path( "Foo" ), testRoot );
 
         Set<IPath> sourceFolders = sourceFolderScanner.scan( project1, project2 );
+
         assertThat( sourceFolders, hasItems( path( "src/main/java" ), path( "src/test/java" ) ) );
     }
 
     @Test
     public void testSetWithIPaths() throws Exception {
-        IPackageFragmentRoot secondMainRoot = mock( IPackageFragmentRoot.class );
-        IPath testPath = new Path( "Bla/src/main/java" );
-        when( secondMainRoot.getPath() ).thenReturn( testPath );
+        IPackageFragmentRoot mainRoot = packageFragmentRoot( new Path( "Bla/src/main/java" ), K_SOURCE );
+        IPackageFragmentRoot secondMainRoot = packageFragmentRoot( new Path( "Bla/src/main/java" ), K_SOURCE );
+        IJavaProject project = javaProject( new Path( "Bla" ), mainRoot, secondMainRoot );
 
-        IPackageFragmentRoot[] roots1 = new IPackageFragmentRoot[] { mainRoot, secondMainRoot };
-        when( project1.getPackageFragmentRoots() ).thenReturn( roots1 );
+        Set<IPath> sourceFolders = sourceFolderScanner.scan( project );
 
-        SourceFolderScanner sourceFolderScanner = new SourceFolderScanner();
+        assertThat( sourceFolders, contains( path( "src/main/java" ) ) );
+    }
 
-        Set<IPath> sourceFolders = sourceFolderScanner.scan( project1 );
+    @Test
+    public void ignoresBinaryPackageFragmentRoots() throws Exception {
+        IPackageFragmentRoot mainRoot = packageFragmentRoot( new Path( "Bla/src/main/java" ), K_SOURCE );
+        IPackageFragmentRoot secondMainRoot = packageFragmentRoot( new Path( "Bla/lib/some.jar" ), K_BINARY );
+        IJavaProject project = javaProject( new Path( "Bla" ), mainRoot, secondMainRoot );
+
+        Set<IPath> sourceFolders = sourceFolderScanner.scan( project );
+
         assertThat( sourceFolders, contains( path( "src/main/java" ) ) );
     }
 
@@ -115,6 +95,20 @@ public class SourceFolderScannerTest {
                 return pathAsString.equals( path.toPortableString() );
             }
         };
+    }
+
+    private static IJavaProject javaProject( Path path, IPackageFragmentRoot... roots ) throws Exception {
+        IJavaProject javaProject = mock( IJavaProject.class );
+        when( javaProject.getPath() ).thenReturn( path );
+        when( javaProject.getPackageFragmentRoots() ).thenReturn( roots );
+        return javaProject;
+    }
+
+    private static IPackageFragmentRoot packageFragmentRoot( IPath path, int kind ) throws JavaModelException {
+        IPackageFragmentRoot packageFragmentRoot = mock( IPackageFragmentRoot.class );
+        when( packageFragmentRoot.getPath() ).thenReturn( path );
+        when( Integer.valueOf( packageFragmentRoot.getKind() ) ).thenReturn( Integer.valueOf( kind ) );
+        return packageFragmentRoot;
     }
 
 }
