@@ -71,7 +71,7 @@ public final class SourceFolderFilterAction extends Action {
     }
 
     public void updateState() {
-        setChecked( filter.getAllSourceFolders().size() > filter.getVisibleSourceFolders().size() );
+        setChecked( filter.isFiltering() );
         if( isChecked() ) {
             setImageDescriptor( plugin().imageForPath( "icons/source_folder_filter_active.png" ) );
             setText( filter.getVisibleSourceFolders().size() + "/" + filter.getAllSourceFolders().size() + " source folders" );

@@ -2,8 +2,9 @@ package org.projectusus.ui.dependencygraph.sourcefolder;
 
 import static org.eclipse.jdt.core.IPackageFragmentRoot.K_BINARY;
 import static org.eclipse.jdt.core.IPackageFragmentRoot.K_SOURCE;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.empty;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -24,7 +25,6 @@ public class SourceFolderScannerTest {
 
     private final SourceFolderScanner sourceFolderScanner = new SourceFolderScanner();
 
-    @SuppressWarnings( "unchecked" )
     @Test
     public void scanSingleProject() throws Exception {
         IPackageFragmentRoot root = packageFragmentRoot( new Path( "Bla/src/main/java" ), K_SOURCE );
@@ -32,7 +32,16 @@ public class SourceFolderScannerTest {
 
         Set<IPath> sourceFolders = sourceFolderScanner.scan( project );
 
-        assertThat( sourceFolders, hasItems( path( "src/main/java" ) ) );
+        assertThat( sourceFolders, contains( path( "src/main/java" ) ) );
+    }
+
+    @Test
+    public void scanEmptyProject() throws Exception {
+        IJavaProject project = javaProject( new Path( "Bla" ) );
+
+        Set<IPath> sourceFolders = sourceFolderScanner.scan( project );
+
+        assertThat( sourceFolders, is( empty() ) );
     }
 
     @SuppressWarnings( "unchecked" )
@@ -44,7 +53,7 @@ public class SourceFolderScannerTest {
 
         Set<IPath> sourceFolders = sourceFolderScanner.scan( project );
 
-        assertThat( sourceFolders, hasItems( path( "src/main/java" ), path( "src/test/java" ) ) );
+        assertThat( sourceFolders, contains( path( "src/main/java" ), path( "src/test/java" ) ) );
     }
 
     @SuppressWarnings( "unchecked" )
@@ -58,7 +67,7 @@ public class SourceFolderScannerTest {
 
         Set<IPath> sourceFolders = sourceFolderScanner.scan( project1, project2 );
 
-        assertThat( sourceFolders, hasItems( path( "src/main/java" ), path( "src/test/java" ) ) );
+        assertThat( sourceFolders, contains( path( "src/main/java" ), path( "src/test/java" ) ) );
     }
 
     @Test

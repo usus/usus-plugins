@@ -60,4 +60,8 @@ public class SourceFolderFilter extends NodeAndEdgeFilter {
 
         return visibleSourceFolders.contains( relativePath );
     }
+
+    public boolean isFiltering() {
+        return getAllSourceFolders().size() > getVisibleSourceFolders().size();
+    }
 }

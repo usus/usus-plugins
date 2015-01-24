@@ -2,8 +2,9 @@ package org.projectusus.ui.dependencygraph.sourcefolder;
 
 import static org.eclipse.jdt.core.IPackageFragmentRoot.K_SOURCE;
 
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jdt.core.IJavaProject;
@@ -13,7 +14,7 @@ import org.eclipse.jdt.core.JavaModelException;
 public class SourceFolderScanner {
 
     public Set<IPath> scan( IJavaProject... projects ) throws JavaModelException {
-        Set<IPath> paths = new HashSet<IPath>();
+        Set<IPath> paths = newSet();
         for( IJavaProject project : projects ) {
             paths.addAll( scanProject( project ) );
         }
@@ -21,7 +22,7 @@ public class SourceFolderScanner {
     }
 
     private Set<IPath> scanProject( IJavaProject project ) throws JavaModelException {
-        Set<IPath> paths = new HashSet<IPath>();
+        Set<IPath> paths = newSet();
         for( IPackageFragmentRoot packageFragmentRoot : project.getPackageFragmentRoots() ) {
             if( isSourceFolder( packageFragmentRoot ) ) {
                 IPath sourceFolderPath = makeRelativeToBasePath( packageFragmentRoot.getPath(), project.getPath() );
@@ -39,4 +40,13 @@ public class SourceFolderScanner {
         return deepPath.makeRelativeTo( basePath );
     }
 
+    public final static Comparator<IPath> PATH_COMPARATOR = new Comparator<IPath>() {
+        public int compare( IPath path1, IPath path2 ) {
+            return path1.toPortableString().compareTo( path2.toPortableString() );
+        }
+    };
+
+    private <T extends IPath> Set<T> newSet() {
+        return new TreeSet<T>( PATH_COMPARATOR );
+    }
 }
