@@ -4,6 +4,7 @@ import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
 import static org.eclipse.jface.action.ActionContributionItem.MODE_FORCE_TEXT;
 import static org.projectusus.core.statistics.UsusModelProvider.ususModel;
+import static org.projectusus.ui.dependencygraph.sourcefolder.SourceFolderChangeDetector.detectSourceFolderChange;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -13,6 +14,8 @@ import java.util.Set;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.jdt.core.ElementChangedEvent;
+import org.eclipse.jdt.core.IElementChangedListener;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
@@ -74,7 +77,19 @@ public class ClassGraphView extends DependencyGraphView {
     public void createPartControl( Composite parent ) {
         super.createPartControl( parent );
         ususModel().addUsusModelListener( ususModelListener );
+        JavaCore.addElementChangedListener( recomputeOnSourceFolderChange() );
+
         recomputeSourceFolders();
+    }
+
+    private IElementChangedListener recomputeOnSourceFolderChange() {
+        return new IElementChangedListener() {
+            public void elementChanged( ElementChangedEvent event ) {
+                if( detectSourceFolderChange( event.getDelta() ) ) {
+                    recomputeSourceFolders();
+                }
+            }
+        };
     }
 
     @Override
