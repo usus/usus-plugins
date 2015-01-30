@@ -67,6 +67,14 @@ public class ClassGraphView extends DependencyGraphView {
         }
     };
 
+    private final IElementChangedListener elementChangedListener = new IElementChangedListener() {
+        public void elementChanged( ElementChangedEvent event ) {
+            if( detectSourceFolderChange( event.getDelta() ) ) {
+                recomputeSourceFolders();
+            }
+        }
+    };
+
     private Composite additionalWidgetsComposite;
 
     public ClassGraphView() {
@@ -77,19 +85,9 @@ public class ClassGraphView extends DependencyGraphView {
     public void createPartControl( Composite parent ) {
         super.createPartControl( parent );
         ususModel().addUsusModelListener( ususModelListener );
-        JavaCore.addElementChangedListener( recomputeOnSourceFolderChange() );
+        JavaCore.addElementChangedListener( elementChangedListener );
 
         recomputeSourceFolders();
-    }
-
-    private IElementChangedListener recomputeOnSourceFolderChange() {
-        return new IElementChangedListener() {
-            public void elementChanged( ElementChangedEvent event ) {
-                if( detectSourceFolderChange( event.getDelta() ) ) {
-                    recomputeSourceFolders();
-                }
-            }
-        };
     }
 
     @Override
@@ -109,6 +107,7 @@ public class ClassGraphView extends DependencyGraphView {
 
     @Override
     public void dispose() {
+        JavaCore.removeElementChangedListener( elementChangedListener );
         ususModel().removeUsusModelListener( ususModelListener );
         toolBarManager.dispose();
         super.dispose();
