@@ -1,6 +1,9 @@
 package org.projectusus.ui.dependencygraph.common;
 
+import static java.util.Collections.emptyList;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +31,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
@@ -48,10 +52,9 @@ import org.projectusus.ui.dependencygraph.filters.IRestrictNodesFilterProvider;
 import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
 import org.projectusus.ui.dependencygraph.filters.NodeAndEdgeFilter;
 import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
-import org.projectusus.ui.dependencygraph.handlers.ChangeZoom;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
-public abstract class DependencyGraphView extends ViewPart implements IRestrictNodesFilterProvider, IShowInTarget, IZoomableWorkbenchPart, IMenuListener {
+public abstract class DependencyGraphView extends ViewPart implements IRestrictNodesFilterProvider, IShowInTarget, IZoomableWorkbenchPart, IMenuListener, IRefreshable {
 
     private final DependencyGraphModel model;
     private DependencyGraphViewer graphViewer;
@@ -135,9 +138,10 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         layout.marginTop = 5;
         filterArea.setLayout( layout );
 
-        createAdditionalWidget( filterArea );
+        Control additionalWidgets = createAdditionalWidgets( filterArea );
         createLayoutComboViewer( filterArea );
 
+        additionalWidgets.setLayoutData( new GridData( SWT.LEFT, SWT.CENTER, true, true ) );
         filterArea.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, false, false ) );
 
         return filterArea;
@@ -156,9 +160,12 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         } );
     }
 
-    protected void createAdditionalWidget( Composite filterArea ) {
-        final Button checkbox = new Button( filterArea, SWT.CHECK );
-        checkbox.setLayoutData( new GridData( SWT.LEFT, SWT.CENTER, true, true ) );
+    protected Control createAdditionalWidgets( Composite filterArea ) {
+        return createRestrictingCheckBox( filterArea );
+    }
+
+    protected final Button createRestrictingCheckBox( Composite parent ) {
+        final Button checkbox = new Button( parent, SWT.CHECK );
         checkbox.setText( getCheckboxLabelName() );
         checkbox.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -173,6 +180,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
             }
         } );
         setRestricting( false );
+        return checkbox;
     }
 
     private static Composite createGraphArea( Composite composite ) {
@@ -184,7 +192,15 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     private void createGraphViewer( DependencyGraphViewer dependencyGraphViewer ) {
         graphViewer = dependencyGraphViewer;
-        graphViewer.setFilters( new ViewerFilter[] { new LimitNodeFilter( this ), hideNodesFilter } );
+        List<ViewerFilter> filters = new ArrayList<ViewerFilter>();
+        filters.add( new LimitNodeFilter( this ) );
+        filters.add( hideNodesFilter );
+        filters.addAll( createAdditionalFilters() );
+        graphViewer.setFilters( filters.toArray( new ViewerFilter[filters.size()] ) );
+    }
+
+    protected Collection<? extends ViewerFilter> createAdditionalFilters() {
+        return emptyList();
     }
 
     // hier kommt man an, wenn man in den Hotspots einen Package Cycle doppelklickt:

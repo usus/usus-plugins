@@ -2,12 +2,12 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension point="org.eclipse.ui.views">
-       <view class="org.projectusus.ui.dependencygraph.ClassGraphView"
+       <view class="org.projectusus.ui.dependencygraph.views.ClassGraphView"
             icon="icons/graph-class.gif"
             id="org.projectusus.ui.dependencygraph.ClassGraphView"
             category="org.projectusus.ui.viewCategory"
             name="Usus Class Graph"/>
-       <view class="org.projectusus.ui.dependencygraph.PackageGraphView"
+       <view class="org.projectusus.ui.dependencygraph.views.PackageGraphView"
             icon="icons/graph-package.gif"
             id="org.projectusus.ui.dependencygraph.PackageGraphView"
             category="org.projectusus.ui.viewCategory"

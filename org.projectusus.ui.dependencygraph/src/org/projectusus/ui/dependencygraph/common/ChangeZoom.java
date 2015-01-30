@@ -1,4 +1,4 @@
-package org.projectusus.ui.dependencygraph.handlers;
+package org.projectusus.ui.dependencygraph.common;
 
 import static org.projectusus.ui.dependencygraph.DependencyGraphPlugin.plugin;
 
