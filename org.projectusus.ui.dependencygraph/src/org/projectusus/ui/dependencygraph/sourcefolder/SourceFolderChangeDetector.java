@@ -1,5 +1,8 @@
 package org.projectusus.ui.dependencygraph.sourcefolder;
 
+import static org.eclipse.jdt.core.IJavaElement.JAVA_MODEL;
+import static org.eclipse.jdt.core.IJavaElement.JAVA_PROJECT;
+import static org.eclipse.jdt.core.IJavaElement.PACKAGE_FRAGMENT_ROOT;
 import static org.projectusus.core.project2.UsusProjectSupport.asUsusProject;
 
 import org.eclipse.jdt.core.IJavaElement;
@@ -14,20 +17,16 @@ public class SourceFolderChangeDetector {
 
     public boolean analyze( IJavaElementDelta delta ) {
         int elementType = delta.getElement().getElementType();
-        if( elementType == IJavaElement.PACKAGE_FRAGMENT_ROOT ) {
-            return true;
-        }
 
-        if( elementType == IJavaElement.JAVA_MODEL ) {
+        if( elementType == JAVA_MODEL ) {
             return checkModel( delta );
         }
-
-        if( elementType == IJavaElement.JAVA_PROJECT ) {
-            if( isCoveredProject( delta.getElement() ) ) {
-                return checkProject( delta );
-            }
+        if( elementType == JAVA_PROJECT ) {
+            return checkProject( delta );
         }
-
+        if( elementType == PACKAGE_FRAGMENT_ROOT ) {
+            return true;
+        }
         return false;
     }
 
@@ -40,7 +39,10 @@ public class SourceFolderChangeDetector {
     }
 
     private boolean checkProject( IJavaElementDelta delta ) {
-        return checkAll( delta.getAddedChildren() ) || checkAll( delta.getRemovedChildren() );
+        if( isCoveredProject( delta.getElement() ) ) {
+            return checkAll( delta.getAddedChildren() ) || checkAll( delta.getRemovedChildren() );
+        }
+        return false;
     }
 
     private boolean checkAll( IJavaElementDelta[] deltas ) {
