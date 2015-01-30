@@ -1,4 +1,4 @@
-package org.projectusus.ui.dependencygraph.handlers;
+package org.projectusus.ui.dependencygraph.sourcefolder;
 
 import static org.apache.commons.lang.StringUtils.join;
 import static org.eclipse.core.runtime.IStatus.OK;
@@ -11,7 +11,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 import org.projectusus.ui.dependencygraph.common.IRefreshable;
-import org.projectusus.ui.dependencygraph.filters.SourceFolderFilter;
 
 public final class SourceFolderFilterAction extends Action {
 

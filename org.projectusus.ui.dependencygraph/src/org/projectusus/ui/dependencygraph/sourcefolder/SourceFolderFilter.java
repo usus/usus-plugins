@@ -1,4 +1,4 @@
-package org.projectusus.ui.dependencygraph.filters;
+package org.projectusus.ui.dependencygraph.sourcefolder;
 
 import static org.apache.commons.lang.StringUtils.join;
 
@@ -11,6 +11,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
+import org.projectusus.ui.dependencygraph.filters.NodeAndEdgeFilter;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public class SourceFolderFilter extends NodeAndEdgeFilter {

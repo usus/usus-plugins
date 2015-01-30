@@ -1,4 +1,4 @@
-package org.projectusus.ui.dependencygraph.handlers;
+package org.projectusus.ui.dependencygraph.sourcefolder;
 
 import static org.eclipse.core.runtime.IStatus.ERROR;
 import static org.eclipse.jdt.ui.ISharedImages.IMG_OBJS_PACKFRAG_ROOT;
@@ -19,7 +19,6 @@ import org.eclipse.ui.dialogs.CheckedTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.projectusus.jfeet.selection.ElementsFrom;
 import org.projectusus.ui.dependencygraph.DependencyGraphPlugin;
-import org.projectusus.ui.dependencygraph.filters.SourceFolderFilter;
 
 public class SourceFolderFilterSelectionDialog extends CheckedTreeSelectionDialog {
 

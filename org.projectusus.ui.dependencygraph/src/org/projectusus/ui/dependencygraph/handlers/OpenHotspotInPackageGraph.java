@@ -11,8 +11,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.zest.core.viewers.EntityConnectionData;
 import org.projectusus.core.basis.PackageHotspot;
 import org.projectusus.core.filerelations.model.Packagename;
-import org.projectusus.ui.dependencygraph.PackageGraphView;
 import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
+import org.projectusus.ui.dependencygraph.views.PackageGraphView;
 import org.projectusus.ui.internal.DisplayHotspot;
 import org.projectusus.ui.internal.hotspots.commands.AbstractOpenHotspotHandler;
 

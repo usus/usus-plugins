@@ -1,4 +1,4 @@
-package org.projectusus.ui.dependencygraph;
+package org.projectusus.ui.dependencygraph.views;
 
 import java.util.Set;
 

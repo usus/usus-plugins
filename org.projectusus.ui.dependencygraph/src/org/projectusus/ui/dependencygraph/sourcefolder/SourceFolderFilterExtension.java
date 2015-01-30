@@ -23,8 +23,6 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.project.FindUsusProjects;
 import org.projectusus.ui.dependencygraph.common.IRefreshable;
-import org.projectusus.ui.dependencygraph.filters.SourceFolderFilter;
-import org.projectusus.ui.dependencygraph.handlers.SourceFolderFilterAction;
 import org.projectusus.ui.internal.UsusUIPlugin;
 
 public class SourceFolderFilterExtension {

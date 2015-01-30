@@ -52,7 +52,6 @@ import org.projectusus.ui.dependencygraph.filters.IRestrictNodesFilterProvider;
 import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
 import org.projectusus.ui.dependencygraph.filters.NodeAndEdgeFilter;
 import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
-import org.projectusus.ui.dependencygraph.handlers.ChangeZoom;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public abstract class DependencyGraphView extends ViewPart implements IRestrictNodesFilterProvider, IShowInTarget, IZoomableWorkbenchPart, IMenuListener, IRefreshable {

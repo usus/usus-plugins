@@ -9,8 +9,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.projectusus.core.basis.SinglePackageHotspot;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
-import org.projectusus.ui.dependencygraph.ClassGraphView;
 import org.projectusus.ui.dependencygraph.filters.ClassDescriptorNodeFilter;
+import org.projectusus.ui.dependencygraph.views.ClassGraphView;
 import org.projectusus.ui.internal.DisplayHotspot;
 import org.projectusus.ui.internal.hotspots.commands.AbstractOpenHotspotHandler;
 
