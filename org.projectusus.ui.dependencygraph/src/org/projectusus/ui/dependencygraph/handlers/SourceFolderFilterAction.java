@@ -19,14 +19,15 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.ui.dialogs.SelectionDialog;
 import org.projectusus.jfeet.selection.ElementsFrom;
+import org.projectusus.ui.dependencygraph.common.IRefreshable;
 import org.projectusus.ui.dependencygraph.filters.SourceFolderFilter;
 
 public final class SourceFolderFilterAction extends Action {
 
     private final SourceFolderFilter filter;
-    private final Runnable refreshable;
+    private final IRefreshable refreshable;
 
-    public SourceFolderFilterAction( SourceFolderFilter filter, Runnable refreshable ) {
+    public SourceFolderFilterAction( SourceFolderFilter filter, IRefreshable refreshable ) {
         super( "", AS_CHECK_BOX );
         this.filter = filter;
         this.refreshable = refreshable;
@@ -49,7 +50,7 @@ public final class SourceFolderFilterAction extends Action {
         updateState();
 
         if( changed ) {
-            refreshable.run();
+            refreshable.refresh();
         }
     }
 
