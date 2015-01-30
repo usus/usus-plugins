@@ -1,7 +1,8 @@
 package org.projectusus.ui.dependencygraph.sourcefolder;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IJavaElement;
@@ -20,17 +21,17 @@ public class SourceFolderChangeDetectorTest {
 
         IJavaElement project = javaProject();
         IJavaElementDelta projectDelta = javaElementDeltaFor( project );
-        Mockito.when( modelDelta.getChangedChildren() ).thenReturn( new IJavaElementDelta[] { projectDelta } );
+        when( modelDelta.getChangedChildren() ).thenReturn( new IJavaElementDelta[] { projectDelta } );
 
         IJavaElement fragmentRoot = javaElement( IJavaElement.PACKAGE_FRAGMENT_ROOT );
         IJavaElementDelta fragmentDelta = javaElementDeltaFor( fragmentRoot );
 
-        Mockito.when( projectDelta.getAddedChildren() ).thenReturn( new IJavaElementDelta[] { fragmentDelta } );
-        Mockito.when( projectDelta.getChangedChildren() ).thenReturn( new IJavaElementDelta[0] );
-        Mockito.when( projectDelta.getRemovedChildren() ).thenReturn( new IJavaElementDelta[0] );
+        when( projectDelta.getAddedChildren() ).thenReturn( new IJavaElementDelta[] { fragmentDelta } );
+        when( projectDelta.getChangedChildren() ).thenReturn( new IJavaElementDelta[0] );
+        when( projectDelta.getRemovedChildren() ).thenReturn( new IJavaElementDelta[0] );
 
         SourceFolderChangeDetector detector = new SourceFolderChangeDetector();
-        assertThat( detector.analyze( modelDelta ), is( true ) );
+        assertTrue( detector.analyze( modelDelta ) );
     }
 
     @Test
@@ -40,17 +41,17 @@ public class SourceFolderChangeDetectorTest {
 
         IJavaElement project = javaProject();
         IJavaElementDelta projectDelta = javaElementDeltaFor( project );
-        Mockito.when( modelDelta.getChangedChildren() ).thenReturn( new IJavaElementDelta[] { projectDelta } );
+        when( modelDelta.getChangedChildren() ).thenReturn( new IJavaElementDelta[] { projectDelta } );
 
         IJavaElement fragmentRoot = javaElement( IJavaElement.PACKAGE_FRAGMENT_ROOT );
         IJavaElementDelta fragmentDelta = javaElementDeltaFor( fragmentRoot );
 
-        Mockito.when( projectDelta.getAddedChildren() ).thenReturn( new IJavaElementDelta[0] );
-        Mockito.when( projectDelta.getChangedChildren() ).thenReturn( new IJavaElementDelta[0] );
-        Mockito.when( projectDelta.getRemovedChildren() ).thenReturn( new IJavaElementDelta[] { fragmentDelta } );
+        when( projectDelta.getAddedChildren() ).thenReturn( new IJavaElementDelta[0] );
+        when( projectDelta.getChangedChildren() ).thenReturn( new IJavaElementDelta[0] );
+        when( projectDelta.getRemovedChildren() ).thenReturn( new IJavaElementDelta[] { fragmentDelta } );
 
         SourceFolderChangeDetector detector = new SourceFolderChangeDetector();
-        assertThat( detector.analyze( modelDelta ), is( true ) );
+        assertTrue( detector.analyze( modelDelta ) );
     }
 
     @Test
@@ -60,39 +61,47 @@ public class SourceFolderChangeDetectorTest {
 
         IJavaElement project = javaProject();
         IJavaElementDelta projectDelta = javaElementDeltaFor( project );
-        Mockito.when( modelDelta.getChangedChildren() ).thenReturn( new IJavaElementDelta[] { projectDelta } );
+        when( modelDelta.getChangedChildren() ).thenReturn( new IJavaElementDelta[] { projectDelta } );
 
         IJavaElement fragmentRoot = javaElement( IJavaElement.PACKAGE_FRAGMENT_ROOT );
         IJavaElementDelta fragmentDelta = javaElementDeltaFor( fragmentRoot );
 
-        Mockito.when( projectDelta.getAddedChildren() ).thenReturn( new IJavaElementDelta[0] );
-        Mockito.when( projectDelta.getChangedChildren() ).thenReturn( new IJavaElementDelta[] { fragmentDelta } );
-        Mockito.when( projectDelta.getRemovedChildren() ).thenReturn( new IJavaElementDelta[0] );
+        when( projectDelta.getAddedChildren() ).thenReturn( new IJavaElementDelta[0] );
+        when( projectDelta.getChangedChildren() ).thenReturn( new IJavaElementDelta[] { fragmentDelta } );
+        when( projectDelta.getRemovedChildren() ).thenReturn( new IJavaElementDelta[0] );
 
         SourceFolderChangeDetector detector = new SourceFolderChangeDetector();
-        assertThat( detector.analyze( modelDelta ), is( false ) );
+        assertFalse( detector.analyze( modelDelta ) );
     }
 
     private static IJavaElement javaElement( int elementType ) {
         IJavaElement element = Mockito.mock( IJavaElement.class );
-        Mockito.when( element.getElementType() ).thenReturn( elementType );
+        intWhen( element.getElementType(), elementType );
         return element;
     }
 
     private static IJavaElement javaProject() {
         IJavaProject element = Mockito.mock( IJavaProject.class );
-        Mockito.when( element.getElementType() ).thenReturn( IJavaElement.JAVA_PROJECT );
+        intWhen( element.getElementType(), IJavaElement.JAVA_PROJECT );
         IProject project = Mockito.mock( IProject.class );
-        Mockito.when( element.getProject() ).thenReturn( project );
-        Mockito.when( project.isAccessible() ).thenReturn( true );
-        Mockito.when( project.getAdapter( IUSUSProject.class ) ).thenReturn( new DummyUsusProject() );
+        when( element.getProject() ).thenReturn( project );
+        booleanWhen( project.isAccessible(), true );
+        when( project.getAdapter( IUSUSProject.class ) ).thenReturn( new DummyUsusProject() );
         return element;
     }
 
     private static IJavaElementDelta javaElementDeltaFor( IJavaElement project2 ) {
         IJavaElementDelta delta = Mockito.mock( IJavaElementDelta.class );
-        Mockito.when( delta.getElement() ).thenReturn( project2 );
+        when( delta.getElement() ).thenReturn( project2 );
         return delta;
+    }
+
+    private static void intWhen( int methodCall, int value ) {
+        when( Integer.valueOf( methodCall ) ).thenReturn( Integer.valueOf( value ) );
+    }
+
+    private static void booleanWhen( boolean methodCall, boolean value ) {
+        when( Boolean.valueOf( methodCall ) ).thenReturn( Boolean.valueOf( value ) );
     }
 
     static class DummyUsusProject implements IUSUSProject {
