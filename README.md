@@ -8,6 +8,6 @@ These settings and metrics reflect the "usus" (common practice) in projects we'v
 
 For further information, please see http://www.projectusus.org.
 
-## Installation
+## Installation using Eclipse Marketplace
 
 <a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=1089" class="drag" title="Drag to your running Eclipse workspace to install Project Usus"><img src="https://marketplace.eclipse.org/sites/all/themes/solstice/_themes/solstice_marketplace/public/images/btn-install.png" alt="Drag to your running Eclipse workspace to install Project Usus" /></a>
