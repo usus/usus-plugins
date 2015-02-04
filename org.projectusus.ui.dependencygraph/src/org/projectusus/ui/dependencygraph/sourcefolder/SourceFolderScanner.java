@@ -40,7 +40,7 @@ public class SourceFolderScanner {
         return deepPath.makeRelativeTo( basePath );
     }
 
-    public final static Comparator<IPath> PATH_COMPARATOR = new Comparator<IPath>() {
+    private final static Comparator<IPath> PATH_COMPARATOR = new Comparator<IPath>() {
         public int compare( IPath path1, IPath path2 ) {
             return path1.toPortableString().compareTo( path2.toPortableString() );
         }
