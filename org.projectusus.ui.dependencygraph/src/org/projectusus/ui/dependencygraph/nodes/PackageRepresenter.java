@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.ui.ISharedImages;
 import org.eclipse.jdt.ui.JavaElementLabels;
@@ -15,7 +15,7 @@ import org.projectusus.core.filerelations.model.Packagename;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 
-public class PackageRepresenter implements GraphNode, IAdaptable {
+public class PackageRepresenter extends PlatformObject implements GraphNode {
 
     private final Packagename packagename;
     private static PackageRelations relations;
@@ -120,11 +120,12 @@ public class PackageRepresenter implements GraphNode, IAdaptable {
         return pkg != null && getRelatedPackage().getJavaElement().getElementName().equals( pkg.getElementName() );
     }
 
+    @Override
     public Object getAdapter( @SuppressWarnings( "rawtypes" ) Class adapter ) {
         if( adapter.equals( IJavaElement.class ) ) {
             return getPackagename().getJavaElement();
         }
-        return null;
+        return super.getAdapter( adapter );
     }
 
 }
