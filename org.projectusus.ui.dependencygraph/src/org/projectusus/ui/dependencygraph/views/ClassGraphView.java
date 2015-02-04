@@ -20,7 +20,7 @@ import org.projectusus.ui.dependencygraph.sourcefolder.SourceFolderFilterExtensi
 
 public class ClassGraphView extends DependencyGraphView {
 
-    public static final String VIEW_ID = ClassGraphView.class.getName();
+    public static final String VIEW_ID = "org.projectusus.ui.dependencygraph.ClassGraphView";
 
     private static final String ONLY_CROSS_PACKAGE = "Only cross-package relations";
 
@@ -39,7 +39,7 @@ public class ClassGraphView extends DependencyGraphView {
     private Composite additionalWidgetsComposite;
 
     public ClassGraphView() {
-        super( classGraphModel );
+        super( VIEW_ID, classGraphModel );
         sourceFolderFilterExtension = new SourceFolderFilterExtension( this );
     }
 
