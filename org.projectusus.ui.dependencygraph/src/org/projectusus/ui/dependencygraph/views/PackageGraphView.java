@@ -9,7 +9,7 @@ import org.projectusus.ui.dependencygraph.nodes.PackageRepresenter;
 
 public class PackageGraphView extends DependencyGraphView {
 
-    public static final String VIEW_ID = PackageGraphView.class.getName();
+    public static final String VIEW_ID = "org.projectusus.ui.dependencygraph.PackageGraphView";
 
     private static final String ONLY_IN_CYCLES = "Only cyclic dependencies";
 
@@ -22,7 +22,7 @@ public class PackageGraphView extends DependencyGraphView {
     };
 
     public PackageGraphView() {
-        super( packageGraphModel );
+        super( VIEW_ID, packageGraphModel );
     }
 
     @Override

@@ -67,10 +67,9 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     private final IPartListener2 selectionSynchronizationListener = new SelectionSynchronizationListener( this );
     private RefactorActionGroup refactorAction;
 
-    public DependencyGraphView( DependencyGraphModel model ) {
-        super();
+    public DependencyGraphView( String viewId, DependencyGraphModel model ) {
         this.model = model;
-        customFilterContext = new WorkbenchContext( getClass().getName() + ".context.customFilter" );
+        customFilterContext = new WorkbenchContext( viewId + ".context.customFilter" );
         initUsusModelListener();
     }
 
@@ -212,10 +211,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         setContentDescription( newCustomFilter.getDescription() );
         customFilterContext.activate();
         drawGraphUnconditionally();
-    }
-
-    protected String getCustomFilterContextId() {
-        return getClass().getName() + ".context.customFilter";
     }
 
     public synchronized void clearCustomFilter() {

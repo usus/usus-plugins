@@ -5,6 +5,7 @@ import static org.eclipse.jface.action.ActionContributionItem.MODE_FORCE_TEXT;
 import static org.projectusus.core.statistics.UsusModelProvider.ususModel;
 import static org.projectusus.ui.dependencygraph.sourcefolder.SourceFolderChangeDetector.detectSourceFolderChange;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -77,9 +78,11 @@ public class SourceFolderFilterExtension {
         IJavaProject[] ususJavaProjects = convertToJavaProjects( ususProjects );
         Set<IPath> allSourceFolders = scanForSourceFolders( ususJavaProjects );
 
-        filter.updateSourceFolders( new LinkedList<IPath>( allSourceFolders ) );
-        action.updateState();
-        refreshable.refresh();
+        boolean changed = filter.updateSourceFolders( new ArrayList<IPath>( allSourceFolders ) );
+        if( changed ) {
+            action.updateState();
+            refreshable.refresh();
+        }
     }
 
     private Set<IPath> scanForSourceFolders( IJavaProject[] ususJavaProjects ) {

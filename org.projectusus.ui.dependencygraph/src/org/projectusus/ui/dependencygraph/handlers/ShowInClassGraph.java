@@ -10,7 +10,7 @@ import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
 
 public class ShowInClassGraph extends AbstractHandler {
 
-    private static final String TARGET_VIEW_ID_PARAMETER = ShowInClassGraph.class.getName() + ".targetViewId";
+    private static final String TARGET_VIEW_ID_PARAMETER = "org.projectusus.ui.dependencygraph.handlers.ShowInClassGraph.targetViewId";
 
     public Object execute( ExecutionEvent event ) throws ExecutionException {
         PackagenameNodeFilter filter = createFilter( event );
