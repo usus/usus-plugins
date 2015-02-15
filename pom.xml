@@ -5,7 +5,7 @@
 
   <groupId>org.projectusus</groupId>
   <artifactId>projectusus</artifactId>
-  <version>0.7.7-SNAPSHOT</version>
+  <version>0.7.8-SNAPSHOT</version>
   <name>Project Usus</name>
   <packaging>pom</packaging>
 
