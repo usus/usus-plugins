@@ -49,8 +49,12 @@ public class CrossPackageClassRelationsTest {
         ClassDescriptor descriptor1 = createClassDescriptor( "Descriptor4" );
         ClassDescriptor descriptor2 = createClassDescriptor( "Descriptor5" );
         descriptor1.addChild( descriptor2 );
+        Set<ClassDescriptor> descriptors = ClassDescriptor.getAll();
 
-        checkTwoNodesWithOneChildEach( ClassDescriptor.getAll() );
+        assertEquals( 2, descriptors.size() );
+        assertEquals( 1, descriptor1.getChildren().size() );
+        assertEquals( 0, descriptor2.getChildren().size() );
+
         assertEquals( 1, new CrossPackageClassRelations().getAllDirectRelations().size() );
     }
 
