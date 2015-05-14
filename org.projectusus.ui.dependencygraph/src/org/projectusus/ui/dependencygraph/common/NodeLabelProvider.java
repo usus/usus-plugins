@@ -130,6 +130,7 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public int getLineWidth( Object src, Object dest ) {
+        // TODO aOSD Hier könnte die Anpassung für 'Proportional edges' gemacht werden
         if( areClassesInDifferentPackages( src, dest ) ) {
             return zoomed( 2 );
         }

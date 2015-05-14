@@ -1,5 +1,6 @@
 package org.projectusus.core.filerelations.model;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,5 +47,16 @@ public class PackageRelations extends Relations<Packagename> {
 
     public PackageCycles getPackageCycles() {
         return packageCycles;
+    }
+
+    public int getCrossLinkCount( Packagename source, Packagename target ) {
+        int crossLinkCount = 0;
+        Collection<Relation<Packagename>> relationsFromSource = getAllOutgoingRelationsFrom( source );
+        for( Relation<Packagename> relation : relationsFromSource ) {
+            if( relation.getTarget().equals( target ) ) {
+                crossLinkCount++;
+            }
+        }
+        return crossLinkCount;
     }
 }
