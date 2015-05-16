@@ -15,6 +15,7 @@
   
   <properties>
 	  <github.global.server>github</github.global.server>
+	  <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
 
   <build>
@@ -91,6 +92,14 @@
 			<groupId>com.github.github</groupId>
 			<artifactId>site-maven-plugin</artifactId>
 			<version>0.11</version>
+			<executions>
+				<execution>
+					<phase>deploy</phase>
+					<goals>
+						<goal>site</goal>
+					</goals>
+				</execution>
+			</executions>
 			<configuration>
 				<repositoryOwner>usus</repositoryOwner>
 				<repositoryName>usus-plugins</repositoryName>
