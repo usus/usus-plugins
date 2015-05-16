@@ -12,7 +12,7 @@ For further information, please see http://www.projectusus.org.
 
 ### Update Site
 
-http://projectusus.googlecode.com/svn/updates/
+http://www.projectusus.org/usus-plugins/updates/
 
 ### Eclipse Marketplace
 
