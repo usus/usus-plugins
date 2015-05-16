@@ -30,15 +30,15 @@
 			<configuration>
 				<source>
 					<repository>
-						<url>http://projectusus.googlecode.com/svn/updates</url>
+						<url>http://www.projectusus.org/usus-plugins/updates</url>
 						<layout>p2</layout>
 					</repository>
 					<repository>
-						<url>http://usus.github.com/JFeet</url>
+						<url>http://www.projectusus.org/JFeet</url>
 						<layout>p2</layout>
 					</repository>
 					<repository>
-						<url>http://usus.github.com/swtchart</url>
+						<url>http://www.projectusus.org/swtchart</url>
 						<layout>p2</layout>
 					</repository>
 				</source>
