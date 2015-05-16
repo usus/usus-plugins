@@ -12,6 +12,10 @@
 
   <artifactId>org.projectusus.updatesite</artifactId>
   <packaging>eclipse-repository</packaging>
+  
+  <properties>
+	  <github.global.server>github</github.global.server>
+  </properties>
 
   <build>
     <plugins>
@@ -81,6 +85,19 @@
 				<compress>true</compress>
 				<!-- whether to append to the target repo content -->
 				<append>true</append>
+			</configuration>
+		</plugin>
+		<plugin>
+			<groupId>com.github.github</groupId>
+			<artifactId>site-maven-plugin</artifactId>
+			<version>0.11</version>
+			<configuration>
+				<repositoryOwner>usus</repositoryOwner>
+				<repositoryName>usus-plugins</repositoryName>
+				<message>Release ${project.version}</message>
+				<merge>true</merge>
+				<outputDirectory>${project.build.directory}/repository</outputDirectory>
+				<path>updates</path>
 			</configuration>
 		</plugin>
     </plugins>
