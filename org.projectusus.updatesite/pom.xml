@@ -103,11 +103,34 @@
 			<configuration>
 				<repositoryOwner>usus</repositoryOwner>
 				<repositoryName>usus-plugins</repositoryName>
-				<message>Release ${project.version}</message>
+				<message>Release ${release.version}</message>
 				<merge>true</merge>
 				<outputDirectory>${project.build.directory}/repository</outputDirectory>
 				<path>updates</path>
 			</configuration>
+		</plugin>
+		<plugin>
+			<artifactId>maven-enforcer-plugin</artifactId>
+			<version>1.4</version>
+			<executions>
+				<execution>
+					<id>enforce-release-version</id>
+					<phase>deploy</phase>
+					<goals>
+						<goal>enforce</goal>
+					</goals>
+					<configuration>
+						<rules>
+							<requireProperty>
+								<property>release.version</property>
+								<message>Release version must be specified.</message>
+								<regex>^\d.*\d$</regex>
+								<regexMessage>Release version must begin and end in a number.</regexMessage>
+							</requireProperty>
+						</rules>
+					</configuration>
+				</execution>
+			</executions>
 		</plugin>
     </plugins>
   </build>
