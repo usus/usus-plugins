@@ -140,4 +140,8 @@ public class DependencyGraphViewer extends GraphViewer {
         setSelection( new StructuredSelection( nodesToSelect ) );
     }
 
+    public void setHighlightStrongConnections( boolean highlightStrongConnections ) {
+        labelProvider.setHighlightStrongConnections( highlightStrongConnections );
+    }
+
 }

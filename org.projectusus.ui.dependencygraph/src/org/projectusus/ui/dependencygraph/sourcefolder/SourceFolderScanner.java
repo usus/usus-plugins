@@ -23,6 +23,7 @@ public class SourceFolderScanner {
 
     private Set<IPath> scanProject( IJavaProject project ) throws JavaModelException {
         Set<IPath> paths = newSet();
+        // TODO aOSD Für Nicht-Java-Projekte fliegt hier eine Java Model Exception (nachstellen mit org.projectusus-feature)
         for( IPackageFragmentRoot packageFragmentRoot : project.getPackageFragmentRoots() ) {
             if( isSourceFolder( packageFragmentRoot ) ) {
                 IPath sourceFolderPath = makeRelativeToBasePath( packageFragmentRoot.getPath(), project.getPath() );

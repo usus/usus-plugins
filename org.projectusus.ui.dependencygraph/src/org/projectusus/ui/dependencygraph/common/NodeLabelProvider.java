@@ -7,6 +7,8 @@ import static org.projectusus.ui.colors.UsusColors.DARK_GREY;
 import static org.projectusus.ui.colors.UsusColors.DARK_RED;
 import static org.projectusus.ui.colors.UsusColors.getSharedColors;
 
+import java.util.function.ToDoubleBiFunction;
+
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.jdt.ui.JavaUI;
@@ -16,15 +18,28 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.zest.core.viewers.EntityConnectionData;
 import org.eclipse.zest.core.viewers.IEntityConnectionStyleProvider;
 import org.eclipse.zest.core.viewers.IEntityStyleProvider;
+import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.util.Defect;
+import org.projectusus.ui.colors.EdgeColorProvider;
 import org.projectusus.ui.colors.UsusColors;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
+import org.projectusus.ui.dependencygraph.nodes.PackageRepresenter;
 
 public class NodeLabelProvider extends LabelProvider implements IEntityStyleProvider, IEntityConnectionStyleProvider {
 
     private static final double DEFAULT_ZOOM = 1d;
     private double zoom = DEFAULT_ZOOM;
+    private PackageRelations packageRelations;
+    private boolean highlightStrongConnections;
+
+    // TODO aOSD Aktualisieren, wenn sich Model ändert
+    private PackageRelations getPackageRelations() {
+        if( packageRelations == null ) {
+            packageRelations = new PackageRelations();
+        }
+        return packageRelations;
+    }
 
     @Override
     public String getText( Object element ) {
@@ -119,10 +134,19 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public Color getColor( Object src, Object dest ) {
+    	// TODO aOSD Refactor
+        if( highlightStrongConnections && src instanceof PackageRepresenter && dest instanceof PackageRepresenter ) {
+            EdgeColorProvider edgeColorProvider = new EdgeColorProvider( getPackageRelations() );
+            return edgeColorProvider.getEdgeColor( getCrossLinkCount( (PackageRepresenter)src, (PackageRepresenter)dest ) );
+        }
         if( areClassesInDifferentPackages( src, dest ) ) {
             return getSharedColors().getColor( DARK_RED );
         }
         return getSharedColors().getColor( DARK_GREY );
+    }
+
+    private int getCrossLinkCount( PackageRepresenter src, PackageRepresenter target ) {
+        return getPackageRelations().getCrossLinkCount( src.getPackagename(), target.getPackagename() );
     }
 
     public Color getHighlightColor( Object src, Object dest ) {
@@ -130,7 +154,6 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public int getLineWidth( Object src, Object dest ) {
-        // TODO aOSD Hier könnte die Anpassung für 'Proportional edges' gemacht werden
         if( areClassesInDifferentPackages( src, dest ) ) {
             return zoomed( 2 );
         }
@@ -147,6 +170,12 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
 
     public void resetZoom() {
         setZoom( DEFAULT_ZOOM );
+    }
+
+    // TODO aOSD Über Listener realisieren
+    public void setHighlightStrongConnections( boolean highlightStrongConnections ) {
+        this.highlightStrongConnections = highlightStrongConnections;
+
     }
 
 }

@@ -78,4 +78,14 @@ public class UsusColors {
         return (int)Math.round( 360 * y );
     }
 
+    // TODO aOSD Parameter besser benennen. Zuerst get auf Registry, put falls nicht vorhanden
+    public Color adjustBrightness( String colorKey, float brightness ) {
+        Color color = getColor( colorKey );
+        float[] hsb = color.getRGB().getHSB();
+        ColorRegistry registry = getColorRegistry();
+        String name = colorKey + brightness;
+        registry.put( name, new RGB( hsb[0], Math.max( 0.2f, 1 - brightness ), hsb[2] ) );
+        return registry.get( name );
+    }
+
 }
