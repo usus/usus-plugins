@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.IElementChangedListener;
@@ -97,8 +98,19 @@ public class SourceFolderFilterExtension {
     private IJavaProject[] convertToJavaProjects( List<IProject> ususProjects ) {
         List<IJavaProject> result = new LinkedList<IJavaProject>();
         for( IProject project : ususProjects ) {
-            result.add( JavaCore.create( project ) );
+            if( canScanProject( project ) ) {
+                IJavaProject javaProject = JavaCore.create( project );
+                result.add( javaProject );
+            }
         }
         return result.toArray( new IJavaProject[result.size()] );
+    }
+
+    private boolean canScanProject( IProject project ) {
+        try {
+            return project.isOpen() && project.getProject().hasNature( JavaCore.NATURE_ID );
+        } catch( CoreException e ) {
+            return false;
+        }
     }
 }
