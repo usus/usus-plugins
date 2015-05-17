@@ -44,6 +44,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.jfeet.selection.ElementFrom;
 import org.projectusus.ui.dependencygraph.filters.DirectNeighboursFilter;
@@ -53,6 +54,9 @@ import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
 import org.projectusus.ui.dependencygraph.filters.NodeAndEdgeFilter;
 import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
+
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
 
 public abstract class DependencyGraphView extends ViewPart implements IRestrictNodesFilterProvider, IShowInTarget, IZoomableWorkbenchPart, IMenuListener, IRefreshable {
 
@@ -67,17 +71,28 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     private final IPartListener2 selectionSynchronizationListener = new SelectionSynchronizationListener( this );
     private RefactorActionGroup refactorAction;
 
+    private Supplier<PackageRelations> packageRelationSupplier;
+
     public DependencyGraphView( String viewId, DependencyGraphModel model ) {
         this.model = model;
         customFilterContext = new WorkbenchContext( viewId + ".context.customFilter" );
         initUsusModelListener();
+        initPackageRelationsSupplier();
+    }
+
+    private void initPackageRelationsSupplier() {
+        packageRelationSupplier = Suppliers.memoize( new Supplier<PackageRelations>() {
+            public PackageRelations get() {
+                return new PackageRelations();
+            }
+        } );
     }
 
     @Override
     public void createPartControl( Composite parent ) {
         Composite composite = createComposite( parent );
         createFilterArea( composite );
-        createGraphViewer( new DependencyGraphViewer( createGraphArea( composite ) ) );
+        createGraphViewer( new DependencyGraphViewer( createGraphArea( composite ), packageRelationSupplier ) );
 
         IViewSite site = getViewSite();
         site.setSelectionProvider( graphViewer );
@@ -165,7 +180,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     protected final Button createRestrictingCheckBox( Composite parent ) {
         final Button checkbox = new Button( parent, SWT.CHECK );
-        checkbox.setText( getCheckboxLabelName() );
+        checkbox.setText( getRestrictingCheckboxLabelName() );
         checkbox.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
@@ -282,6 +297,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
                     public void run() {
                         model.invalidate();
                         drawGraphConditionally();
+                        initPackageRelationsSupplier();
                     }
                 } );
             }
@@ -384,6 +400,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         this.restricting = restricting;
     }
 
-    protected abstract String getCheckboxLabelName();
+    protected abstract String getRestrictingCheckboxLabelName();
 
 }

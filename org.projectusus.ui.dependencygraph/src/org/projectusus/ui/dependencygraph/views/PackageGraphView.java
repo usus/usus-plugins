@@ -42,7 +42,7 @@ public class PackageGraphView extends DependencyGraphView {
     }
 
     @Override
-    protected String getCheckboxLabelName() {
+    protected String getRestrictingCheckboxLabelName() {
         return ONLY_IN_CYCLES;
     }
 

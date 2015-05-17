@@ -60,7 +60,7 @@ public class ClassGraphView extends DependencyGraphView {
     }
 
     @Override
-    protected String getCheckboxLabelName() {
+    protected String getRestrictingCheckboxLabelName() {
         return ONLY_CROSS_PACKAGE;
     }
 

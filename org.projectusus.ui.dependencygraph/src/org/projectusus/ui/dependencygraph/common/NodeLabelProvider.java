@@ -7,8 +7,6 @@ import static org.projectusus.ui.colors.UsusColors.DARK_GREY;
 import static org.projectusus.ui.colors.UsusColors.DARK_RED;
 import static org.projectusus.ui.colors.UsusColors.getSharedColors;
 
-import java.util.function.ToDoubleBiFunction;
-
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.jdt.ui.JavaUI;
@@ -26,19 +24,21 @@ import org.projectusus.ui.colors.UsusColors;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 import org.projectusus.ui.dependencygraph.nodes.PackageRepresenter;
 
+import com.google.common.base.Supplier;
+
 public class NodeLabelProvider extends LabelProvider implements IEntityStyleProvider, IEntityConnectionStyleProvider {
 
     private static final double DEFAULT_ZOOM = 1d;
     private double zoom = DEFAULT_ZOOM;
-    private PackageRelations packageRelations;
     private boolean highlightStrongConnections;
+    private final Supplier<PackageRelations> packageRelationsSupplier;
 
-    // TODO aOSD Aktualisieren, wenn sich Model ändert
+    public NodeLabelProvider( Supplier<PackageRelations> packageRelationsSupplier ) {
+        this.packageRelationsSupplier = packageRelationsSupplier;
+    }
+
     private PackageRelations getPackageRelations() {
-        if( packageRelations == null ) {
-            packageRelations = new PackageRelations();
-        }
-        return packageRelations;
+        return packageRelationsSupplier.get();
     }
 
     @Override
@@ -134,7 +134,8 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public Color getColor( Object src, Object dest ) {
-    	// TODO aOSD Refactor
+        // TODO aOSD Refactor: IEdgeColorProvider als Parameter in Konstruktor und dorthin delegieren
+        // Erstes if -> PackageGraphEdgeColorProvider. Restliche Zeilen -> ClassGraphEdgeColorProvider
         if( highlightStrongConnections && src instanceof PackageRepresenter && dest instanceof PackageRepresenter ) {
             EdgeColorProvider edgeColorProvider = new EdgeColorProvider( getPackageRelations() );
             return edgeColorProvider.getEdgeColor( getCrossLinkCount( (PackageRepresenter)src, (PackageRepresenter)dest ) );
