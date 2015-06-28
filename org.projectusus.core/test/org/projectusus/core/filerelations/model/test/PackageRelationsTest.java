@@ -69,6 +69,18 @@ public class PackageRelationsTest {
         assertEquals( 1, getCrossLinkCount( I, II ) );
     }
 
+    @Test
+    public void maxLinkCount() {
+        I_A.addChild( II_A );
+        I_A.addChild( II_B );
+        I_A.addChild( III_A );
+        II_A.addChild( I_A );
+        II_A.addChild( I_B );
+        III_A.addChild( II_A );
+
+        assertEquals( 2, new PackageRelations().getMaxLinkCount() );
+    }
+
     private int getCrossLinkCount( Packagename source, Packagename target ) {
         return new PackageRelations().getCrossLinkCount( source, target );
     }

@@ -1,11 +1,13 @@
 package org.projectusus.core.filerelations.model;
 
-import net.sourceforge.c4j.*;
+import net.sourceforge.c4j.ContractReference;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-@ContractReference(contractClassName = "RelationContract")
+import com.google.common.base.Function;
+
+@ContractReference( contractClassName = "RelationContract" )
 public class Relation<T> {
 
     protected final T source;
@@ -50,4 +52,11 @@ public class Relation<T> {
         return source + " -> " + target; //$NON-NLS-1$
     }
 
+    public final static <T> Function<Relation<T>, T> target() {
+        return new Function<Relation<T>, T>() {
+            public T apply( Relation<T> input ) {
+                return input.target;
+            }
+        };
+    }
 }
