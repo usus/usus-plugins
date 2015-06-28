@@ -61,6 +61,7 @@ public class PackageGraphView extends DependencyGraphView {
     private void createHighlightCheckbox( Composite composite ) {
         final Button checkbox = new Button( composite, SWT.CHECK );
         checkbox.setText( "Highlight strong connections" );
+        checkbox.setToolTipText( "Saturates edges based on the number of relations among packages" );
         checkbox.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( final SelectionEvent e ) {
