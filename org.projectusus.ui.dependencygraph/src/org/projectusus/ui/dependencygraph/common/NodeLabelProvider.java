@@ -134,7 +134,7 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public Color getColor( Object src, Object dest ) {
-        // TODO aOSD Refactor: IEdgeColorProvider als Parameter in Konstruktor und dorthin delegieren
+        // TODO aOSD Julia Refactor: IEdgeColorProvider als Parameter in Konstruktor und dorthin delegieren
         // Erstes if -> PackageGraphEdgeColorProvider. Restliche Zeilen -> ClassGraphEdgeColorProvider
         if( highlightStrongConnections && src instanceof PackageRepresenter && dest instanceof PackageRepresenter ) {
             EdgeColorProvider edgeColorProvider = new EdgeColorProvider( getPackageRelations() );
