@@ -18,7 +18,6 @@ public class PackageEdgeColorProvider implements IEdgeColorProvider {
 
     public Color getEdgeColor( Object src, Object dest, boolean hightlightStrongConnections ) {
         if( hightlightStrongConnections ) {
-            // REVIEW aOSD müssen die Package relations gecached werden?
             int crossLinkCount = getCrossLinkCount( (PackageRepresenter)src, (PackageRepresenter)dest, packageRelations );
 
             float maxCrossLinkCount = packageRelations.getMaxLinkCount();
