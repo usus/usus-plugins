@@ -3,8 +3,6 @@ package org.projectusus.ui.dependencygraph.common;
 import static org.eclipse.zest.core.widgets.ZestStyles.CONNECTIONS_DOT;
 import static org.eclipse.zest.core.widgets.ZestStyles.CONNECTIONS_SOLID;
 import static org.projectusus.ui.colors.UsusColors.BLACK;
-import static org.projectusus.ui.colors.UsusColors.DARK_GREY;
-import static org.projectusus.ui.colors.UsusColors.DARK_RED;
 import static org.projectusus.ui.colors.UsusColors.getSharedColors;
 
 import org.eclipse.draw2d.IFigure;
@@ -16,29 +14,22 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.zest.core.viewers.EntityConnectionData;
 import org.eclipse.zest.core.viewers.IEntityConnectionStyleProvider;
 import org.eclipse.zest.core.viewers.IEntityStyleProvider;
-import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.util.Defect;
-import org.projectusus.ui.colors.EdgeColorProvider;
 import org.projectusus.ui.colors.UsusColors;
+import org.projectusus.ui.dependencygraph.colorProvider.IEdgeColorProvider;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
-import org.projectusus.ui.dependencygraph.nodes.PackageRepresenter;
-
-import com.google.common.base.Supplier;
 
 public class NodeLabelProvider extends LabelProvider implements IEntityStyleProvider, IEntityConnectionStyleProvider {
 
     private static final double DEFAULT_ZOOM = 1d;
     private double zoom = DEFAULT_ZOOM;
     private boolean highlightStrongConnections;
-    private final Supplier<PackageRelations> packageRelationsSupplier;
 
-    public NodeLabelProvider( Supplier<PackageRelations> packageRelationsSupplier ) {
-        this.packageRelationsSupplier = packageRelationsSupplier;
-    }
+    private final IEdgeColorProvider edgeColorProvider;
 
-    private PackageRelations getPackageRelations() {
-        return packageRelationsSupplier.get();
+    public NodeLabelProvider( IEdgeColorProvider edgeColorProvider ) {
+        this.edgeColorProvider = edgeColorProvider;
     }
 
     @Override
@@ -134,20 +125,7 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public Color getColor( Object src, Object dest ) {
-        // TODO aOSD Julia Refactor: IEdgeColorProvider als Parameter in Konstruktor und dorthin delegieren
-        // Erstes if -> PackageGraphEdgeColorProvider. Restliche Zeilen -> ClassGraphEdgeColorProvider
-        if( highlightStrongConnections && src instanceof PackageRepresenter && dest instanceof PackageRepresenter ) {
-            EdgeColorProvider edgeColorProvider = new EdgeColorProvider( getPackageRelations() );
-            return edgeColorProvider.getEdgeColor( getCrossLinkCount( (PackageRepresenter)src, (PackageRepresenter)dest ) );
-        }
-        if( areClassesInDifferentPackages( src, dest ) ) {
-            return getSharedColors().getColor( DARK_RED );
-        }
-        return getSharedColors().getColor( DARK_GREY );
-    }
-
-    private int getCrossLinkCount( PackageRepresenter src, PackageRepresenter target ) {
-        return getPackageRelations().getCrossLinkCount( src.getPackagename(), target.getPackagename() );
+        return edgeColorProvider.getEdgeColor( src, dest, highlightStrongConnections );
     }
 
     public Color getHighlightColor( Object src, Object dest ) {

@@ -71,6 +71,7 @@ public class PackageRelations extends Relations<Packagename> {
         return crossLinkCount;
     }
 
+    // TODO aOSD rename zu getMaxCrossLinkCount?
     public int getMaxLinkCount() {
         if( maxLinkCountCached() ) {
             return maxLinkCount;

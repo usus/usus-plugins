@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.projectusus.ui.dependencygraph.colorProvider.PackageEdgeColorProvider;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphModel;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphViewer;
@@ -30,10 +31,12 @@ public class PackageGraphView extends DependencyGraphView {
         }
     };
 
+    private static final PackageEdgeColorProvider packageEdgeColorProvider = new PackageEdgeColorProvider();
+
     private boolean highlightStrongConnections = false;
 
     public PackageGraphView() {
-        super( VIEW_ID, packageGraphModel );
+        super( VIEW_ID, packageGraphModel, packageEdgeColorProvider );
     }
 
     @Override

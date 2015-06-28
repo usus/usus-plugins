@@ -12,6 +12,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.projectusus.ui.dependencygraph.colorProvider.ClassEdgeColorProvider;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphModel;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
 import org.projectusus.ui.dependencygraph.nodes.ClassRepresenter;
@@ -31,6 +32,7 @@ public class ClassGraphView extends DependencyGraphView {
             return ClassRepresenter.getAllClassRepresenters();
         }
     };
+    private final static ClassEdgeColorProvider classEdgeColorProvider = new ClassEdgeColorProvider();
 
     private final ToolBarManager toolBarManager = new ToolBarManager( SWT.HORIZONTAL | SWT.RIGHT );
 
@@ -39,7 +41,7 @@ public class ClassGraphView extends DependencyGraphView {
     private Composite additionalWidgetsComposite;
 
     public ClassGraphView() {
-        super( VIEW_ID, classGraphModel );
+        super( VIEW_ID, classGraphModel, classEdgeColorProvider );
         sourceFolderFilterExtension = new SourceFolderFilterExtension( this );
     }
 
