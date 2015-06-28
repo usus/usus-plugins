@@ -61,7 +61,7 @@ public class PackageRelations extends Relations<Packagename> {
     }
 
     public int getMaxLinkCount() {
-        // TODO aOSD refactor? Max. Wert zwischen zwei Packages berechnen?
+        // TODO aOSD Max refactor? Max. Wert zwischen zwei Packages berechnen?
         int max = 0;
         for( Packagename relations : outgoingRelations.keys() ) {
             Collection<Relation<Packagename>> collection = outgoingRelations.get( relations );
