@@ -1,4 +1,4 @@
-package org.projectusus.ui.dependencygraph.common;
+package org.projectusus.ui.dependencygraph.nodes;
 
 import static org.eclipse.zest.core.widgets.ZestStyles.CONNECTIONS_DOT;
 import static org.eclipse.zest.core.widgets.ZestStyles.CONNECTIONS_SOLID;
@@ -17,8 +17,6 @@ import org.eclipse.zest.core.viewers.IEntityStyleProvider;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.util.Defect;
 import org.projectusus.ui.colors.UsusColors;
-import org.projectusus.ui.dependencygraph.colorProvider.IEdgeColorProvider;
-import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public class NodeLabelProvider extends LabelProvider implements IEntityStyleProvider, IEntityConnectionStyleProvider {
 
@@ -111,17 +109,10 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     // From IEntityConnectionStyleProvider
 
     public int getConnectionStyle( Object src, Object dest ) {
-        if( areClassesInDifferentPackages( src, dest ) ) {
+        if( isCrossPackageRelation( src, dest ) ) {
             return CONNECTIONS_SOLID;
         }
         return CONNECTIONS_DOT;
-    }
-
-    private boolean areClassesInDifferentPackages( Object src, Object dest ) {
-        if( (src instanceof GraphNode) && dest instanceof GraphNode ) {
-            return ((GraphNode)src).isInDifferentPackageThan( (GraphNode)dest );
-        }
-        return false;
     }
 
     public Color getColor( Object src, Object dest ) {
@@ -133,7 +124,7 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public int getLineWidth( Object src, Object dest ) {
-        if( areClassesInDifferentPackages( src, dest ) ) {
+        if( isCrossPackageRelation( src, dest ) ) {
             return zoomed( 2 );
         }
         return zoomed( 1 );
@@ -157,4 +148,11 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
 
     }
 
+    // REVIEW aOSD Finde keinen besseren Ort
+    public static boolean isCrossPackageRelation( Object src, Object dest ) {
+        if( (src instanceof GraphNode) && dest instanceof GraphNode ) {
+            return ((GraphNode)src).isInDifferentPackageThan( (GraphNode)dest );
+        }
+        return false;
+    }
 }

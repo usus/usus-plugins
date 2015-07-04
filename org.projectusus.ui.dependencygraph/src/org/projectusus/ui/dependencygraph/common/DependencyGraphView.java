@@ -46,7 +46,6 @@ import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.projectusus.core.IUsusModelListener;
 import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.jfeet.selection.ElementFrom;
-import org.projectusus.ui.dependencygraph.colorProvider.IEdgeColorProvider;
 import org.projectusus.ui.dependencygraph.filters.DirectNeighboursFilter;
 import org.projectusus.ui.dependencygraph.filters.HideNodesFilter;
 import org.projectusus.ui.dependencygraph.filters.IRestrictNodesFilterProvider;
@@ -54,6 +53,7 @@ import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
 import org.projectusus.ui.dependencygraph.filters.NodeAndEdgeFilter;
 import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
+import org.projectusus.ui.dependencygraph.nodes.IEdgeColorProvider;
 
 public abstract class DependencyGraphView extends ViewPart implements IRestrictNodesFilterProvider, IShowInTarget, IZoomableWorkbenchPart, IMenuListener, IRefreshable {
 

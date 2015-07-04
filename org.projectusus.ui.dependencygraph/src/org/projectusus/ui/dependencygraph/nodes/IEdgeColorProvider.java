@@ -1,4 +1,4 @@
-package org.projectusus.ui.dependencygraph.colorProvider;
+package org.projectusus.ui.dependencygraph.nodes;
 
 import org.eclipse.swt.graphics.Color;
 

@@ -6,6 +6,7 @@ import static org.projectusus.ui.colors.UsusColors.getSharedColors;
 import org.eclipse.swt.graphics.Color;
 import org.projectusus.core.filerelations.model.PackageRelations;
 import org.projectusus.ui.colors.UsusColors;
+import org.projectusus.ui.dependencygraph.nodes.IEdgeColorProvider;
 import org.projectusus.ui.dependencygraph.nodes.PackageRepresenter;
 
 public class PackageEdgeColorProvider implements IEdgeColorProvider {
@@ -20,7 +21,7 @@ public class PackageEdgeColorProvider implements IEdgeColorProvider {
         if( hightlightStrongConnections ) {
             int crossLinkCount = getCrossLinkCount( (PackageRepresenter)src, (PackageRepresenter)dest, packageRelations );
 
-            float maxCrossLinkCount = packageRelations.getMaxLinkCount();
+            float maxCrossLinkCount = packageRelations.getMaxCrossLinkCount();
             float brightness = 1 - (crossLinkCount / maxCrossLinkCount);
             return getSharedColors().adjustBrightness( UsusColors.DARK_RED, brightness );
         }
@@ -32,6 +33,7 @@ public class PackageEdgeColorProvider implements IEdgeColorProvider {
     }
 
     public void refresh() {
+        // REVIEW aOSD Supplier mit memoize verwenden: Performance+. Könnte ConcurrentModificationEx beheben
         setPackageRelations();
     }
 

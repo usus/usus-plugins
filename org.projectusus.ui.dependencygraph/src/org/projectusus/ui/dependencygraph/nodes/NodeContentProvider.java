@@ -1,8 +1,7 @@
-package org.projectusus.ui.dependencygraph.common;
+package org.projectusus.ui.dependencygraph.nodes;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.zest.core.viewers.IGraphEntityContentProvider;
-import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public class NodeContentProvider extends ArrayContentProvider implements IGraphEntityContentProvider {
 
