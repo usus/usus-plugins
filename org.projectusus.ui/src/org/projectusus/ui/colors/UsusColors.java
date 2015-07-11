@@ -84,7 +84,7 @@ public class UsusColors {
         float[] hsb = color.getRGB().getHSB();
         ColorRegistry registry = getColorRegistry();
         String name = colorKey + brightness;
-        registry.put( name, new RGB( hsb[0], Math.max( 0.2f, 1 - brightness ), hsb[2] ) );
+        registry.put( name, new RGB( hsb[0], Math.max( 0.2f, brightness ), hsb[2] ) );
         return registry.get( name );
     }
 

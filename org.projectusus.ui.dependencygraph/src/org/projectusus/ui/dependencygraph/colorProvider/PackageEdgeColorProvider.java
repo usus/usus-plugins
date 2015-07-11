@@ -26,7 +26,7 @@ public class PackageEdgeColorProvider implements IEdgeColorProvider {
 
             int crossLinkCount = getCrossLinkCount( (PackageRepresenter)src, (PackageRepresenter)dest, packageRelations );
             float maxCrossLinkCount = packageRelations.getMaxCrossLinkCount();
-            float brightness = 1 - (crossLinkCount / maxCrossLinkCount);
+            float brightness = crossLinkCount / maxCrossLinkCount;
 
             return getSharedColors().adjustBrightness( UsusColors.DARK_RED, brightness );
         }
