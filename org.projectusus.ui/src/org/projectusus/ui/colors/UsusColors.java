@@ -84,6 +84,7 @@ public class UsusColors {
         float[] hsb = color.getRGB().getHSB();
         ColorRegistry registry = getColorRegistry();
         String name = colorKey + brightness;
+        // REVIEW aOSD shoudn't we adjust the brightness not the saturation!? or we should rename the method...
         registry.put( name, new RGB( hsb[0], Math.max( 0.2f, brightness ), hsb[2] ) );
         return registry.get( name );
     }
