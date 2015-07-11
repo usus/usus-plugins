@@ -9,9 +9,12 @@ import org.projectusus.ui.colors.UsusColors;
 import org.projectusus.ui.dependencygraph.nodes.IEdgeColorProvider;
 import org.projectusus.ui.dependencygraph.nodes.PackageRepresenter;
 
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
+
 public class PackageEdgeColorProvider implements IEdgeColorProvider {
 
-    private PackageRelations packageRelations;
+    private Supplier<PackageRelations> packageRelationsSupplier;
 
     public PackageEdgeColorProvider() {
         setPackageRelations();
@@ -19,10 +22,12 @@ public class PackageEdgeColorProvider implements IEdgeColorProvider {
 
     public Color getEdgeColor( Object src, Object dest, boolean hightlightStrongConnections ) {
         if( hightlightStrongConnections ) {
-            int crossLinkCount = getCrossLinkCount( (PackageRepresenter)src, (PackageRepresenter)dest, packageRelations );
+            PackageRelations packageRelations = packageRelationsSupplier.get();
 
+            int crossLinkCount = getCrossLinkCount( (PackageRepresenter)src, (PackageRepresenter)dest, packageRelations );
             float maxCrossLinkCount = packageRelations.getMaxCrossLinkCount();
             float brightness = 1 - (crossLinkCount / maxCrossLinkCount);
+
             return getSharedColors().adjustBrightness( UsusColors.DARK_RED, brightness );
         }
         return getSharedColors().getColor( DARK_RED );
@@ -33,11 +38,15 @@ public class PackageEdgeColorProvider implements IEdgeColorProvider {
     }
 
     public void refresh() {
-        // REVIEW aOSD Supplier mit memoize verwenden: Performance+. Könnte ConcurrentModificationEx beheben
         setPackageRelations();
     }
 
     private void setPackageRelations() {
-        packageRelations = new PackageRelations();
+        packageRelationsSupplier = Suppliers.memoize( new Supplier<PackageRelations>() {
+
+            public PackageRelations get() {
+                return new PackageRelations();
+            }
+        } );
     }
 }

@@ -284,7 +284,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         model.invalidate();
-                        // TODO aOSD ConcurrentModificationException bei refresh
                         edgeColorProvider.refresh();
                         drawGraphConditionally();
                     }
