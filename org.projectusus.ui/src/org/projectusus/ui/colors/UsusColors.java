@@ -4,6 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.colors;
 
+import static java.lang.Math.max;
+
 import java.util.Random;
 
 import org.eclipse.jface.resource.ColorRegistry;
@@ -18,7 +20,7 @@ public class UsusColors {
     public static final String BLACK = "BLACK"; //$NON-NLS-1$
     public static final String WHITE = "WHITE"; //$NON-NLS-1$
     public static final String USUS_LIGHT_BLUE = "USUS_LIGHT_BLUE"; //$NON-NLS-1$
-    private static final float MIN_SATURATION = 0.1f;
+    public static final float MIN_SATURATION = 0.1f;
 
     private static final UsusColors _instance = new UsusColors();
     private ColorRegistry colorRegistry;
@@ -80,10 +82,10 @@ public class UsusColors {
     }
 
     public Color adjustSaturation( String colorKey, float newSaturation ) {
-        String symbolicName = colorKey + newSaturation;
+        float saturation = max( MIN_SATURATION, newSaturation );
+        String symbolicName = colorKey + saturation;
         ColorRegistry registry = getColorRegistry();
         if( !registry.hasValueFor( symbolicName ) ) {
-            float saturation = Math.max( MIN_SATURATION, newSaturation );
             Color color = getColor( colorKey );
             registry.put( symbolicName, adjustSaturation( color, saturation ) );
         }

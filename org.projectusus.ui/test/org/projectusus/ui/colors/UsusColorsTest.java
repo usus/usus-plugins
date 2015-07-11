@@ -1,14 +1,12 @@
 package org.projectusus.ui.colors;
 
 import static org.junit.Assert.assertEquals;
+import static org.projectusus.ui.colors.UsusColors.MIN_SATURATION;
 import static org.projectusus.ui.colors.UsusColors.getSharedColors;
 
 import org.eclipse.swt.graphics.Color;
-import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
-// TODO aOSD Erweitern/Reparieren
 public class UsusColorsTest {
 
     @Test
@@ -21,14 +19,23 @@ public class UsusColorsTest {
     }
 
     @Test
-    public void adjustBrightness() {
-        Color black = getSharedColors().adjustSaturation( UsusColors.DARK_RED, 0 );
+    public void onlyAdjustTheSaturation() {
+        Color darkRed = getSharedColors().getColor( UsusColors.DARK_RED );
+        float[] hsbDarkRed = darkRed.getRGB().getHSB();
 
-        assertEquals( 0.0, black.getRGB().getHSB()[2], 0.01 );
+        Color newColor = getSharedColors().adjustSaturation( UsusColors.DARK_RED, 0.5f );
+        float[] hsbNewColor = newColor.getRGB().getHSB();
 
-        black = getSharedColors().adjustSaturation( UsusColors.DARK_RED, 20 );
-
-        assertEquals( 0.0, black.getRGB().getHSB()[2], 0.01 );
+        float newSaturation = hsbNewColor[1];
+        assertEquals( newSaturation, 0.5, 0 );
+        assertEquals( hsbNewColor[0], hsbDarkRed[0], 0 );
+        assertEquals( hsbNewColor[2], hsbDarkRed[2], 0 );
     }
 
+    @Test
+    public void adjustSaturationWithMinimum() {
+        Color color = getSharedColors().adjustSaturation( UsusColors.DARK_RED, 0.05f );
+        float saturation = color.getRGB().getHSB()[1];
+        assertEquals( saturation, MIN_SATURATION, 0.01 );
+    }
 }
