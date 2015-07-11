@@ -4,6 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.colors;
 
+import static java.lang.Math.max;
+
 import java.util.Random;
 
 import org.eclipse.jface.resource.ColorRegistry;
@@ -13,12 +15,12 @@ import org.eclipse.swt.widgets.Display;
 
 public class UsusColors {
 
-    static final float MINIMUM_SATURATION = 0.1f;
     public static final String DARK_RED = "DARK_RED"; //$NON-NLS-1$
     public static final String DARK_GREY = "DARK_GREY"; //$NON-NLS-1$
     public static final String BLACK = "BLACK"; //$NON-NLS-1$
     public static final String WHITE = "WHITE"; //$NON-NLS-1$
     public static final String USUS_LIGHT_BLUE = "USUS_LIGHT_BLUE"; //$NON-NLS-1$
+    static final float MIN_SATURATION = 0.1f;
 
     private static final UsusColors _instance = new UsusColors();
     private ColorRegistry colorRegistry;
@@ -79,14 +81,21 @@ public class UsusColors {
         return (int)Math.round( 360 * y );
     }
 
-    // TODO aOSD Zuerst get auf Registry, put falls nicht vorhanden
-    public Color adjustSaturation( String colorKey, float saturation ) {
-        Color color = getColor( colorKey );
-        float[] hsb = color.getRGB().getHSB();
+    // TODO aOSD Round saturation to 2 decimals, otherwise to many color resources might be allocated
+    public Color adjustSaturation( String colorKey, float newSaturation ) {
+        float saturation = max( MIN_SATURATION, newSaturation );
+        String symbolicName = colorKey + saturation;
         ColorRegistry registry = getColorRegistry();
-        String name = colorKey + saturation;
-        registry.put( name, new RGB( hsb[0], Math.max( MINIMUM_SATURATION, saturation ), hsb[2] ) );
-        return registry.get( name );
+        if( !registry.hasValueFor( symbolicName ) ) {
+            Color color = getColor( colorKey );
+            registry.put( symbolicName, adjustSaturation( color, saturation ) );
+        }
+        return registry.get( symbolicName );
+    }
+
+    private RGB adjustSaturation( Color color, float saturation ) {
+        float[] hsb = color.getRGB().getHSB();
+        return new RGB( hsb[0], saturation, hsb[2] );
     }
 
 }
