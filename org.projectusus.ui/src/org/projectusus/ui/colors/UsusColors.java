@@ -81,9 +81,8 @@ public class UsusColors {
         return (int)Math.round( 360 * y );
     }
 
-    // TODO aOSD Round saturation to 2 decimals, otherwise to many color resources might be allocated
     public Color adjustSaturation( String colorKey, float newSaturation ) {
-        float saturation = max( MIN_SATURATION, newSaturation );
+        float saturation = restrictSaturation( newSaturation );
         String symbolicName = colorKey + saturation;
         ColorRegistry registry = getColorRegistry();
         if( !registry.hasValueFor( symbolicName ) ) {
@@ -91,6 +90,11 @@ public class UsusColors {
             registry.put( symbolicName, adjustSaturation( color, saturation ) );
         }
         return registry.get( symbolicName );
+    }
+
+    float restrictSaturation( float newSaturation ) {
+        float nonNullSaturation = max( MIN_SATURATION, newSaturation );
+        return (Math.round( nonNullSaturation * 100 )) / 100.0f;
     }
 
     private RGB adjustSaturation( Color color, float saturation ) {

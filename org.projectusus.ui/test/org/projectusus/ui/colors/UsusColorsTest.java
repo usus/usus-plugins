@@ -48,6 +48,18 @@ public class UsusColorsTest {
         getSharedColors().adjustSaturation( UsusColors.BLACK, 1.1f );
     }
 
+    @Test
+    public void saturationIsRoundedToTwoDigitsAfterDecimalPoint() {
+        float saturation = getSharedColors().restrictSaturation( 0.449f );
+        assertEquals( 0.45f, saturation, 0.0f );
+
+        saturation = getSharedColors().restrictSaturation( 0.45f );
+        assertEquals( 0.45f, saturation, 0.0f );
+
+        saturation = getSharedColors().restrictSaturation( 0.45454545f );
+        assertEquals( 0.45f, saturation, 0.0f );
+    }
+
     private float getSaturation( Color color ) {
         return color.getRGB().getHSB()[1];
     }
