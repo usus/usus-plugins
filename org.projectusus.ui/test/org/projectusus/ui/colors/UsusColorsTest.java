@@ -22,11 +22,11 @@ public class UsusColorsTest {
 
     @Test
     public void adjustBrightness() {
-        Color black = getSharedColors().adjustBrightness( UsusColors.DARK_RED, 0 );
+        Color black = getSharedColors().adjustSaturation( UsusColors.DARK_RED, 0 );
 
         assertEquals( 0.0, black.getRGB().getHSB()[2], 0.01 );
 
-        black = getSharedColors().adjustBrightness( UsusColors.DARK_RED, 20 );
+        black = getSharedColors().adjustSaturation( UsusColors.DARK_RED, 20 );
 
         assertEquals( 0.0, black.getRGB().getHSB()[2], 0.01 );
     }

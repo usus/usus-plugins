@@ -18,6 +18,7 @@ public class UsusColors {
     public static final String BLACK = "BLACK"; //$NON-NLS-1$
     public static final String WHITE = "WHITE"; //$NON-NLS-1$
     public static final String USUS_LIGHT_BLUE = "USUS_LIGHT_BLUE"; //$NON-NLS-1$
+    private static final float MIN_SATURATION = 0.1f;
 
     private static final UsusColors _instance = new UsusColors();
     private ColorRegistry colorRegistry;
@@ -78,15 +79,20 @@ public class UsusColors {
         return (int)Math.round( 360 * y );
     }
 
-    // TODO aOSD Parameter besser benennen. Zuerst get auf Registry, put falls nicht vorhanden
-    public Color adjustBrightness( String colorKey, float brightness ) {
-        Color color = getColor( colorKey );
-        float[] hsb = color.getRGB().getHSB();
+    public Color adjustSaturation( String colorKey, float newSaturation ) {
+        String symbolicName = colorKey + newSaturation;
         ColorRegistry registry = getColorRegistry();
-        String name = colorKey + brightness;
-        // REVIEW aOSD shoudn't we adjust the brightness not the saturation!? or we should rename the method...
-        registry.put( name, new RGB( hsb[0], Math.max( 0.2f, brightness ), hsb[2] ) );
-        return registry.get( name );
+        if( !registry.hasValueFor( symbolicName ) ) {
+            float saturation = Math.max( MIN_SATURATION, newSaturation );
+            Color color = getColor( colorKey );
+            registry.put( symbolicName, adjustSaturation( color, saturation ) );
+        }
+        return registry.get( symbolicName );
+    }
+
+    private RGB adjustSaturation( Color color, float saturation ) {
+        float[] hsb = color.getRGB().getHSB();
+        return new RGB( hsb[0], saturation, hsb[2] );
     }
 
 }
