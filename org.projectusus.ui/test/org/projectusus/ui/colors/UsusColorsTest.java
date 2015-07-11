@@ -1,13 +1,12 @@
 package org.projectusus.ui.colors;
 
 import static org.junit.Assert.assertEquals;
+import static org.projectusus.ui.colors.UsusColors.MINIMUM_SATURATION;
 import static org.projectusus.ui.colors.UsusColors.getSharedColors;
 
 import org.eclipse.swt.graphics.Color;
-import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
 // TODO aOSD Erweitern/Reparieren
 public class UsusColorsTest {
 
@@ -21,14 +20,24 @@ public class UsusColorsTest {
     }
 
     @Test
-    public void adjustBrightness() {
-        Color black = getSharedColors().adjustBrightness( UsusColors.DARK_RED, 0 );
+    public void adjustSaturationBetweenMinAndMax() {
+        Color starkRed = getSharedColors().adjustSaturation( UsusColors.DARK_RED, 1 );
+        assertEquals( 1, getSaturation( starkRed ), 0.01 );
 
-        assertEquals( 0.0, black.getRGB().getHSB()[2], 0.01 );
+        Color fadingRed = getSharedColors().adjustSaturation( UsusColors.DARK_RED, 0 );
+        assertEquals( MINIMUM_SATURATION, getSaturation( fadingRed ), 0.01 );
 
-        black = getSharedColors().adjustBrightness( UsusColors.DARK_RED, 20 );
+        Color mediumRed = getSharedColors().adjustSaturation( UsusColors.DARK_RED, 0.6f );
+        assertEquals( 0.6, getSaturation( mediumRed ), 0.01 );
+    }
 
-        assertEquals( 0.0, black.getRGB().getHSB()[2], 0.01 );
+    @Test( expected = IllegalArgumentException.class )
+    public void saturationMustNotBeGreaterThanOne() {
+        getSharedColors().adjustSaturation( UsusColors.BLACK, 1.1f );
+    }
+
+    private float getSaturation( Color color ) {
+        return color.getRGB().getHSB()[1];
     }
 
 }

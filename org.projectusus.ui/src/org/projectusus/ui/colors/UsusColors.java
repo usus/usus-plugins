@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Display;
 
 public class UsusColors {
 
+    static final float MINIMUM_SATURATION = 0.1f;
     public static final String DARK_RED = "DARK_RED"; //$NON-NLS-1$
     public static final String DARK_GREY = "DARK_GREY"; //$NON-NLS-1$
     public static final String BLACK = "BLACK"; //$NON-NLS-1$
@@ -78,14 +79,13 @@ public class UsusColors {
         return (int)Math.round( 360 * y );
     }
 
-    // TODO aOSD Parameter besser benennen. Zuerst get auf Registry, put falls nicht vorhanden
-    public Color adjustBrightness( String colorKey, float brightness ) {
+    // TODO aOSD Zuerst get auf Registry, put falls nicht vorhanden
+    public Color adjustSaturation( String colorKey, float saturation ) {
         Color color = getColor( colorKey );
         float[] hsb = color.getRGB().getHSB();
         ColorRegistry registry = getColorRegistry();
-        String name = colorKey + brightness;
-        // REVIEW aOSD shoudn't we adjust the brightness not the saturation!? or we should rename the method...
-        registry.put( name, new RGB( hsb[0], Math.max( 0.2f, brightness ), hsb[2] ) );
+        String name = colorKey + saturation;
+        registry.put( name, new RGB( hsb[0], Math.max( MINIMUM_SATURATION, saturation ), hsb[2] ) );
         return registry.get( name );
     }
 

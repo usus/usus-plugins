@@ -41,10 +41,10 @@ public class DependencyGraphViewer extends GraphViewer {
     public DependencyGraphViewer( Composite composite, IEdgeColorProvider edgeColorProvider ) {
         super( composite, SWT.NONE );
         labelProvider = new NodeLabelProvider( edgeColorProvider );
+        setLabelProvider( labelProvider );
 
         setConnectionStyle( ZestStyles.CONNECTIONS_DIRECTED );
         setContentProvider( new NodeContentProvider() );
-        setLabelProvider( labelProvider );
         addDoubleClickListener( new IDoubleClickListener() {
             public void doubleClick( DoubleClickEvent event ) {
                 ISelection selection = getSelection();

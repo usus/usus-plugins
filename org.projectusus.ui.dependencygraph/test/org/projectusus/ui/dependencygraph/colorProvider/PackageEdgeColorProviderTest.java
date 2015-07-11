@@ -43,7 +43,7 @@ public class PackageEdgeColorProviderTest {
         SRC_A.addChild( DEST_A );
         Color edgeColor = provider.getEdgeColor( new PackageRepresenter( SRC ), new PackageRepresenter( DEST ), true );
 
-        assertThat( edgeColor, is( getSharedColors().adjustBrightness( UsusColors.DARK_RED, 1 ) ) );
+        assertThat( edgeColor, is( getSharedColors().adjustSaturation( UsusColors.DARK_RED, 1 ) ) );
     }
 
     @Test
@@ -53,7 +53,7 @@ public class PackageEdgeColorProviderTest {
         DEST_A.addChild( OTHER_PACKAGE_B );
         Color edgeColor = provider.getEdgeColor( new PackageRepresenter( SRC ), new PackageRepresenter( DEST ), true );
 
-        assertThat( edgeColor, is( getSharedColors().adjustBrightness( UsusColors.DARK_RED, 0.5f ) ) );
+        assertThat( edgeColor, is( getSharedColors().adjustSaturation( UsusColors.DARK_RED, 0.5f ) ) );
     }
 
     @Test

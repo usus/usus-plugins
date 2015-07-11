@@ -5,7 +5,6 @@ import static org.projectusus.ui.colors.UsusColors.getSharedColors;
 
 import org.eclipse.swt.graphics.Color;
 import org.projectusus.core.filerelations.model.PackageRelations;
-import org.projectusus.ui.colors.UsusColors;
 import org.projectusus.ui.dependencygraph.nodes.IEdgeColorProvider;
 import org.projectusus.ui.dependencygraph.nodes.PackageRepresenter;
 
@@ -17,20 +16,24 @@ public class PackageEdgeColorProvider implements IEdgeColorProvider {
     private Supplier<PackageRelations> packageRelationsSupplier;
 
     public PackageEdgeColorProvider() {
-        setPackageRelations();
+        initPackageRelations();
     }
 
-    public Color getEdgeColor( Object src, Object dest, boolean hightlightStrongConnections ) {
-        if( hightlightStrongConnections ) {
-            PackageRelations packageRelations = packageRelationsSupplier.get();
-
-            int crossLinkCount = getCrossLinkCount( (PackageRepresenter)src, (PackageRepresenter)dest, packageRelations );
-            float maxCrossLinkCount = packageRelations.getMaxCrossLinkCount();
-            float brightness = crossLinkCount / maxCrossLinkCount;
-
-            return getSharedColors().adjustBrightness( UsusColors.DARK_RED, brightness );
+    public Color getEdgeColor( Object src, Object dest, boolean highlightStrongConnections ) {
+        if( highlightStrongConnections ) {
+            float saturation = computeSaturation( src, dest );
+            return getSharedColors().adjustSaturation( DARK_RED, saturation );
         }
         return getSharedColors().getColor( DARK_RED );
+    }
+
+    private float computeSaturation( Object src, Object dest ) {
+        PackageRelations packageRelations = packageRelationsSupplier.get();
+
+        int crossLinkCount = getCrossLinkCount( (PackageRepresenter)src, (PackageRepresenter)dest, packageRelations );
+        float maxCrossLinkCount = packageRelations.getMaxCrossLinkCount();
+        float saturation = crossLinkCount / maxCrossLinkCount;
+        return saturation;
     }
 
     private int getCrossLinkCount( PackageRepresenter src, PackageRepresenter target, PackageRelations packageRelations ) {
@@ -38,10 +41,10 @@ public class PackageEdgeColorProvider implements IEdgeColorProvider {
     }
 
     public void refresh() {
-        setPackageRelations();
+        initPackageRelations();
     }
 
-    private void setPackageRelations() {
+    private void initPackageRelations() {
         packageRelationsSupplier = Suppliers.memoize( new Supplier<PackageRelations>() {
 
             public PackageRelations get() {

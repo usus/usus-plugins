@@ -36,6 +36,7 @@ public class PackageGraphView extends DependencyGraphView {
     private boolean highlightStrongConnections = false;
 
     public PackageGraphView() {
+        // REVIEW aOSD Base edge saturation on _visible_ (instead of all) nodes? See getZoomableViewer().getFilters()
         super( VIEW_ID, packageGraphModel, packageEdgeColorProvider );
     }
 

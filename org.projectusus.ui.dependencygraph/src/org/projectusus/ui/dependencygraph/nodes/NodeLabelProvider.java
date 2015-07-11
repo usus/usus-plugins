@@ -142,7 +142,6 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
         setZoom( DEFAULT_ZOOM );
     }
 
-    // TODO aOSD Über Listener realisieren
     public void setHighlightStrongConnections( boolean highlightStrongConnections ) {
         this.highlightStrongConnections = highlightStrongConnections;
 
