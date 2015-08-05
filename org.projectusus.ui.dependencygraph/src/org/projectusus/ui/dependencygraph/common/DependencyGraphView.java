@@ -59,14 +59,17 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     private final DependencyGraphModel model;
     private DependencyGraphViewer graphViewer;
+    private RefactorActionGroup refactorAction;
     private IUsusModelListener listener;
+
     private NodeAndEdgeFilter customFilter; // selection of package, edge, package cycle, etc.
     private final WorkbenchContext customFilterContext; // this is connected to the eraser icon (activates and deactivates it)
-    private DependencyGraphSelectionListener selectionListener;
     private final HideNodesFilter hideNodesFilter = new HideNodesFilter(); // the nodes the user manually X-ed out
+
     private boolean restricting = false;
+
+    private DependencyGraphSelectionListener selectionListener;
     private final IPartListener2 selectionSynchronizationListener = new SelectionSynchronizationListener( this );
-    private RefactorActionGroup refactorAction;
     private final IEdgeColorProvider edgeColorProvider;
 
     public DependencyGraphView( String viewId, DependencyGraphModel model, IEdgeColorProvider edgeColorProvider ) {
@@ -175,7 +178,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         setRestricting( checkbox.getSelection() );
-                        drawGraphConditionally();
                         refresh();
                     }
                 } );
@@ -205,7 +207,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         return emptyList();
     }
 
-    // hier kommt man an, wenn man in den Hotspots einen Package Cycle doppelklickt:
     public synchronized void replaceCustomFilter( NodeAndEdgeFilter newCustomFilter ) {
         newCustomFilter.setFilterLimitProvider( this );
         graphViewer.replaceFilter( customFilter, newCustomFilter );
@@ -242,14 +243,21 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         if( model.isChanged() ) {
             drawGraphUnconditionally();
         } else {
+            updateEdgeColorProvider();
             graphViewer.refresh();
         }
         graphViewer.fireSelectionChanged();
     }
 
     private void drawGraphUnconditionally() {
+        updateEdgeColorProvider();
         graphViewer.setInput( model.getGraphNodes() );
         model.resetChanged();
+    }
+
+    private void updateEdgeColorProvider() {
+        Set<GraphNode> visibleNodes = graphViewer.getVisibleNodes();
+        edgeColorProvider.recalculateColors( visibleNodes );
     }
 
     @Override
@@ -284,7 +292,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         model.invalidate();
-                        edgeColorProvider.refresh();
                         drawGraphConditionally();
                     }
                 } );
@@ -331,12 +338,13 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     public void showAllDirectNeighbours() {
         replaceCustomFilter( new DirectNeighboursFilter( graphViewer.getSelectedNodes() ) );
+        // TODO aOSD Warum hier resetHiddenNodes() (und nicht bei anderen Aufrufstellen von replaceCustomFilter)? -> 2x drawGraph...
         resetHiddenNodes(); // do this last because it redraws
     }
 
     private void switchLayout( final GraphLayout newLayout ) {
         graphViewer.setLayout( newLayout );
-        drawGraphUnconditionally();
+        applyLayout();
     }
 
     public void applyLayout() {

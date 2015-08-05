@@ -3,8 +3,11 @@ package org.projectusus.ui.dependencygraph.colorProvider;
 import static org.projectusus.ui.colors.UsusColors.DARK_RED;
 import static org.projectusus.ui.colors.UsusColors.getSharedColors;
 
+import java.util.Set;
+
 import org.eclipse.swt.graphics.Color;
 import org.projectusus.core.filerelations.model.PackageRelations;
+import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 import org.projectusus.ui.dependencygraph.nodes.IEdgeColorProvider;
 import org.projectusus.ui.dependencygraph.nodes.PackageRepresenter;
 
@@ -16,7 +19,7 @@ public class PackageEdgeColorProvider implements IEdgeColorProvider {
     private Supplier<PackageRelations> packageRelationsSupplier;
 
     public PackageEdgeColorProvider() {
-        initPackageRelations();
+        refreshPackageRelations();
     }
 
     public Color getEdgeColor( Object src, Object dest, boolean highlightStrongConnections ) {
@@ -40,13 +43,12 @@ public class PackageEdgeColorProvider implements IEdgeColorProvider {
         return packageRelations.getCrossLinkCount( src.getPackagename(), target.getPackagename() );
     }
 
-    public void refresh() {
-        initPackageRelations();
+    public void recalculateColors( Set<GraphNode> visibleNodes ) {
+        // TODO aOSD Calculate colors on PackageRelations restricted to visibleNodes, e.g. store set and pass it to getMaxCrossLinkCount()
     }
 
-    private void initPackageRelations() {
+    public void refreshPackageRelations() {
         packageRelationsSupplier = Suppliers.memoize( new Supplier<PackageRelations>() {
-
             public PackageRelations get() {
                 return new PackageRelations();
             }

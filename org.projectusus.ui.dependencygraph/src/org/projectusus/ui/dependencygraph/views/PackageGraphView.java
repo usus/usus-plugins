@@ -10,6 +10,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.ui.dependencygraph.colorProvider.PackageEdgeColorProvider;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphModel;
 import org.projectusus.ui.dependencygraph.common.DependencyGraphView;
@@ -35,9 +37,22 @@ public class PackageGraphView extends DependencyGraphView {
 
     private boolean highlightStrongConnections = false;
 
+    private final IUsusModelListener listener;
+
     public PackageGraphView() {
-        // REVIEW aOSD Base edge saturation on _visible_ (instead of all) nodes? See getZoomableViewer().getFilters()
         super( VIEW_ID, packageGraphModel, packageEdgeColorProvider );
+        listener = new IUsusModelListener() {
+            public void ususModelChanged() {
+                packageEdgeColorProvider.refreshPackageRelations();
+            }
+        };
+        UsusModelProvider.ususModel().addUsusModelListener( listener );
+    }
+
+    @Override
+    public void dispose() {
+        UsusModelProvider.ususModel().removeUsusModelListener( listener );
+        super.dispose();
     }
 
     @Override
@@ -66,7 +81,12 @@ public class PackageGraphView extends DependencyGraphView {
         final Button checkbox = new Button( composite, SWT.CHECK );
         checkbox.setText( "Highlight strong connections" );
         checkbox.setToolTipText( "Saturates edges based on the number of relations among packages" );
-        checkbox.addSelectionListener( new SelectionAdapter() {
+        checkbox.addSelectionListener( highlightCheckboxSelectionAdapter() );
+        checkbox.setSelection( highlightStrongConnections );
+    }
+
+    private SelectionAdapter highlightCheckboxSelectionAdapter() {
+        return new SelectionAdapter() {
             @Override
             public void widgetSelected( final SelectionEvent e ) {
                 Display.getDefault().asyncExec( new Runnable() {
@@ -75,11 +95,10 @@ public class PackageGraphView extends DependencyGraphView {
                         highlightStrongConnections = source.getSelection();
                         DependencyGraphViewer graphViewer = (DependencyGraphViewer)getZoomableViewer();
                         graphViewer.setHighlightStrongConnections( highlightStrongConnections );
-                        drawGraphConditionally();
+                        graphViewer.refresh();
                     }
                 } );
             }
-        } );
-        checkbox.setSelection( highlightStrongConnections );
+        };
     }
 }

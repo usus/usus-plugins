@@ -3,6 +3,8 @@ package org.projectusus.ui.dependencygraph.common;
 import static org.projectusus.ui.dependencygraph.common.GraphLayout.getDefault;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +35,8 @@ import org.projectusus.ui.dependencygraph.nodes.NodeContentProvider;
 import org.projectusus.ui.dependencygraph.nodes.NodeLabelProvider;
 import org.projectusus.ui.util.EditorOpener;
 
+import com.google.common.collect.FluentIterable;
+
 public class DependencyGraphViewer extends GraphViewer {
 
     private final List<ISelectionChangedListener> duplicatedSelectionChangedListeners = new ArrayList<ISelectionChangedListener>();
@@ -61,6 +65,13 @@ public class DependencyGraphViewer extends GraphViewer {
 
     public void setLayout( GraphLayout layout ) {
         setLayoutAlgorithm( layout.createAlgorithm(), false );
+    }
+
+    public Set<GraphNode> getVisibleNodes() {
+        Object[] allVisibleNodes = getFilteredChildren( getInput() );
+        FluentIterable.from( Arrays.asList( allVisibleNodes ) );
+        // TODO aOSD GraphNodes herausfiltern
+        return Collections.emptySet();
     }
 
     @Override

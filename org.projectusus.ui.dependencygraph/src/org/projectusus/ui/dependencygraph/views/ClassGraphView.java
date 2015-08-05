@@ -32,8 +32,6 @@ public class ClassGraphView extends DependencyGraphView {
             return ClassRepresenter.getAllClassRepresenters();
         }
     };
-    private final static ClassEdgeColorProvider classEdgeColorProvider = new ClassEdgeColorProvider();
-
     private final ToolBarManager toolBarManager = new ToolBarManager( SWT.HORIZONTAL | SWT.RIGHT );
 
     private final SourceFolderFilterExtension sourceFolderFilterExtension;
@@ -41,7 +39,7 @@ public class ClassGraphView extends DependencyGraphView {
     private Composite additionalWidgetsComposite;
 
     public ClassGraphView() {
-        super( VIEW_ID, classGraphModel, classEdgeColorProvider );
+        super( VIEW_ID, classGraphModel, new ClassEdgeColorProvider() );
         sourceFolderFilterExtension = new SourceFolderFilterExtension( this );
     }
 

@@ -5,19 +5,22 @@ import static org.projectusus.ui.colors.UsusColors.DARK_RED;
 import static org.projectusus.ui.colors.UsusColors.getSharedColors;
 import static org.projectusus.ui.dependencygraph.nodes.NodeLabelProvider.isCrossPackageRelation;
 
+import java.util.Set;
+
 import org.eclipse.swt.graphics.Color;
+import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 import org.projectusus.ui.dependencygraph.nodes.IEdgeColorProvider;
 
 public class ClassEdgeColorProvider implements IEdgeColorProvider {
 
-    public Color getEdgeColor( Object src, Object dest, boolean hightlightStrongConnections ) {
+    public Color getEdgeColor( Object src, Object dest, boolean highlightStrongConnections ) {
         if( isCrossPackageRelation( src, dest ) ) {
             return getSharedColors().getColor( DARK_RED );
         }
         return getSharedColors().getColor( DARK_GREY );
     }
 
-    public void refresh() {
+    public void recalculateColors( Set<GraphNode> visibleNodes ) {
         // nothing to refresh
     }
 }
