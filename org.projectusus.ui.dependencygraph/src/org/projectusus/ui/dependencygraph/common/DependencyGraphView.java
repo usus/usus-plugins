@@ -44,6 +44,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.jfeet.selection.ElementFrom;
 import org.projectusus.ui.dependencygraph.filters.DirectNeighboursFilter;
@@ -243,6 +244,8 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         if( model.isChanged() ) {
             drawGraphUnconditionally();
         } else {
+            // TODO aOSD andere Loesung
+            graphViewer.refresh();
             updateEdgeColorProvider();
             graphViewer.refresh();
         }
@@ -250,13 +253,13 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     }
 
     private void drawGraphUnconditionally() {
-        updateEdgeColorProvider();
         graphViewer.setInput( model.getGraphNodes() );
+        updateEdgeColorProvider();
         model.resetChanged();
     }
 
     private void updateEdgeColorProvider() {
-        Set<GraphNode> visibleNodes = graphViewer.getVisibleNodes();
+        Set<Packagename> visibleNodes = graphViewer.getVisibleNodes();
         edgeColorProvider.recalculateColors( visibleNodes );
     }
 

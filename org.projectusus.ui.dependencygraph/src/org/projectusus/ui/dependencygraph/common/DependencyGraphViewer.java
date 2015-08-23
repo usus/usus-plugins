@@ -3,8 +3,6 @@ package org.projectusus.ui.dependencygraph.common;
 import static org.projectusus.ui.dependencygraph.common.GraphLayout.getDefault;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,13 +27,13 @@ import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphItem;
 import org.eclipse.zest.core.widgets.ZestStyles;
+import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 import org.projectusus.ui.dependencygraph.nodes.IEdgeColorProvider;
 import org.projectusus.ui.dependencygraph.nodes.NodeContentProvider;
 import org.projectusus.ui.dependencygraph.nodes.NodeLabelProvider;
+import org.projectusus.ui.dependencygraph.nodes.PackageRepresenter;
 import org.projectusus.ui.util.EditorOpener;
-
-import com.google.common.collect.FluentIterable;
 
 public class DependencyGraphViewer extends GraphViewer {
 
@@ -67,11 +65,16 @@ public class DependencyGraphViewer extends GraphViewer {
         setLayoutAlgorithm( layout.createAlgorithm(), false );
     }
 
-    public Set<GraphNode> getVisibleNodes() {
+    public Set<Packagename> getVisibleNodes() {
         Object[] allVisibleNodes = getFilteredChildren( getInput() );
-        FluentIterable.from( Arrays.asList( allVisibleNodes ) );
         // TODO aOSD GraphNodes herausfiltern
-        return Collections.emptySet();
+        Set<Packagename> packageRepresenter = new HashSet<Packagename>();
+        for( Object object : allVisibleNodes ) {
+            if( object instanceof PackageRepresenter ) {
+                packageRepresenter.add( ((PackageRepresenter)object).getPackagename() );
+            }
+        }
+        return packageRepresenter;
     }
 
     @Override

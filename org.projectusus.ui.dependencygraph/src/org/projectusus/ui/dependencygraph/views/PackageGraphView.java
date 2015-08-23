@@ -43,7 +43,7 @@ public class PackageGraphView extends DependencyGraphView {
         super( VIEW_ID, packageGraphModel, packageEdgeColorProvider );
         listener = new IUsusModelListener() {
             public void ususModelChanged() {
-                packageEdgeColorProvider.refreshPackageRelations();
+                packageEdgeColorProvider.calculatePackageRelations();
             }
         };
         UsusModelProvider.ususModel().addUsusModelListener( listener );

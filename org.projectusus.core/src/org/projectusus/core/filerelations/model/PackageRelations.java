@@ -11,6 +11,8 @@ import java.util.Set;
 
 import org.jgrapht.alg.StrongConnectivityInspector;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import com.google.common.primitives.Ints;
@@ -22,14 +24,21 @@ public class PackageRelations extends Relations<Packagename> {
     private int maxLinkCount = -1;
 
     public PackageRelations() {
-        calcPackageRelations();
+        calcPackageRelations( Predicates.<Packagename> alwaysTrue() );
         calcPackageCycles();
     }
 
-    private void calcPackageRelations() {
+    public PackageRelations( Predicate<Packagename> isVisible ) {
+        calcPackageRelations( isVisible );
+        calcPackageCycles();
+    }
+
+    public void calcPackageRelations( Predicate<Packagename> isVisible ) {
         for( ClassDescriptor source : ClassDescriptor.getAll() ) {
             for( ClassDescriptor target : source.getChildrenInOtherPackages() ) {
-                this.add( source.getPackagename(), target.getPackagename() );
+                if( isVisible.apply( source.getPackagename() ) && isVisible.apply( target.getPackagename() ) ) {
+                    this.add( source.getPackagename(), target.getPackagename() );
+                }
             }
         }
     }

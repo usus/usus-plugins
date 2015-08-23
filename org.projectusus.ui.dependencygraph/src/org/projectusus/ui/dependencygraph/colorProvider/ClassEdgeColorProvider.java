@@ -8,7 +8,7 @@ import static org.projectusus.ui.dependencygraph.nodes.NodeLabelProvider.isCross
 import java.util.Set;
 
 import org.eclipse.swt.graphics.Color;
-import org.projectusus.ui.dependencygraph.nodes.GraphNode;
+import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.ui.dependencygraph.nodes.IEdgeColorProvider;
 
 public class ClassEdgeColorProvider implements IEdgeColorProvider {
@@ -20,7 +20,7 @@ public class ClassEdgeColorProvider implements IEdgeColorProvider {
         return getSharedColors().getColor( DARK_GREY );
     }
 
-    public void recalculateColors( Set<GraphNode> visibleNodes ) {
+    public void recalculateColors( Set<Packagename> visibleNodes ) {
         // nothing to refresh
     }
 }
