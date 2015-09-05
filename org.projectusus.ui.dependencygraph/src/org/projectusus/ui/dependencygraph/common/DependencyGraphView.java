@@ -244,8 +244,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         if( model.isChanged() ) {
             drawGraphUnconditionally();
         } else {
-            // TODO aOSD andere Loesung
-            graphViewer.refresh();
             updateEdgeColorProvider();
             graphViewer.refresh();
         }
@@ -352,14 +350,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     public void applyLayout() {
         graphViewer.applyLayout(); // redraw
-    }
-
-    // hides only those nodes that are passed to this method
-    public void hideNodesAndRefresh( Set<GraphNode> hideNodes ) {
-        hideNodesFilter.reset();
-        hideNodesFilter.addNodesToHide( hideNodes );
-        refresh();
-        customFilterContext.activate();
     }
 
     public Set<GraphNode> getAllNodesToHide( Set<GraphNode> directNeighbours ) {
