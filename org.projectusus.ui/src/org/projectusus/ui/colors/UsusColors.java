@@ -20,7 +20,7 @@ public class UsusColors {
     public static final String BLACK = "BLACK"; //$NON-NLS-1$
     public static final String WHITE = "WHITE"; //$NON-NLS-1$
     public static final String USUS_LIGHT_BLUE = "USUS_LIGHT_BLUE"; //$NON-NLS-1$
-    static final float MIN_SATURATION = 0.1f;
+    static final float MIN_SATURATION = 0.0f;
 
     private static final UsusColors _instance = new UsusColors();
     private ColorRegistry colorRegistry;
