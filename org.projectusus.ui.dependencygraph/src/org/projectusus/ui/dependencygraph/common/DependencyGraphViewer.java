@@ -67,14 +67,13 @@ public class DependencyGraphViewer extends GraphViewer {
 
     public Set<Packagename> getVisibleNodes() {
         Object[] allVisibleNodes = getFilteredChildren( getInput() );
-        // TODO aOSD GraphNodes herausfiltern
-        Set<Packagename> packageRepresenter = new HashSet<Packagename>();
-        for( Object object : allVisibleNodes ) {
-            if( object instanceof PackageRepresenter ) {
-                packageRepresenter.add( ((PackageRepresenter)object).getPackagename() );
+        Set<Packagename> packageNames = new HashSet<Packagename>();
+        for( Object node : allVisibleNodes ) {
+            if( node instanceof PackageRepresenter ) {
+                packageNames.add( ((PackageRepresenter)node).getPackagename() );
             }
         }
-        return packageRepresenter;
+        return packageNames;
     }
 
     @Override
