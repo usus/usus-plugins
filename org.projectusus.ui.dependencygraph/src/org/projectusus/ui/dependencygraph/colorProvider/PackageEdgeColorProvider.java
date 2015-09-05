@@ -48,8 +48,7 @@ public class PackageEdgeColorProvider implements IEdgeColorProvider {
     }
 
     public void recalculateColors( final Set<Packagename> visiblePackages ) {
-        this.isVisible = new Predicate<Packagename>() {
-
+        isVisible = new Predicate<Packagename>() {
             public boolean apply( Packagename packagename ) {
                 return visiblePackages.contains( packagename );
             }
