@@ -339,7 +339,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     public void showAllDirectNeighbours() {
         replaceCustomFilter( new DirectNeighboursFilter( graphViewer.getSelectedNodes() ) );
-        // TODO aOSD Warum hier resetHiddenNodes() (und nicht bei anderen Aufrufstellen von replaceCustomFilter)? -> 2x drawGraph...
+        // TODO Why resetHiddenNodes()? (which is not called by other callers of replaceCustomFilter)? -> 2x drawGraph...
         resetHiddenNodes(); // do this last because it redraws
     }
 

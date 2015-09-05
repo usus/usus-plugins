@@ -147,7 +147,6 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
 
     }
 
-    // REVIEW aOSD Finde keinen besseren Ort
     public static boolean isCrossPackageRelation( Object src, Object dest ) {
         if( (src instanceof GraphNode) && dest instanceof GraphNode ) {
             return ((GraphNode)src).isInDifferentPackageThan( (GraphNode)dest );
