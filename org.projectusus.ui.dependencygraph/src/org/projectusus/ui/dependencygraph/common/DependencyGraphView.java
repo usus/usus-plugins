@@ -253,6 +253,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     private void drawGraphUnconditionally() {
         graphViewer.setInput( model.getGraphNodes() );
         updateEdgeColorProvider();
+        graphViewer.refresh();
         model.resetChanged();
     }
 

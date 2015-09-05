@@ -66,6 +66,7 @@ public class DependencyGraphViewer extends GraphViewer {
     }
 
     public Set<Packagename> getVisibleNodes() {
+        refresh(); // Ensure all filters are applied
         Object[] allVisibleNodes = getFilteredChildren( getInput() );
         Set<Packagename> packageNames = new HashSet<Packagename>();
         for( Object node : allVisibleNodes ) {
