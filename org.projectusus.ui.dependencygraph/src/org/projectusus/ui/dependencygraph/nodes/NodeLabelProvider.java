@@ -1,10 +1,8 @@
-package org.projectusus.ui.dependencygraph.common;
+package org.projectusus.ui.dependencygraph.nodes;
 
 import static org.eclipse.zest.core.widgets.ZestStyles.CONNECTIONS_DOT;
 import static org.eclipse.zest.core.widgets.ZestStyles.CONNECTIONS_SOLID;
 import static org.projectusus.ui.colors.UsusColors.BLACK;
-import static org.projectusus.ui.colors.UsusColors.DARK_GREY;
-import static org.projectusus.ui.colors.UsusColors.DARK_RED;
 import static org.projectusus.ui.colors.UsusColors.getSharedColors;
 
 import org.eclipse.draw2d.IFigure;
@@ -19,12 +17,18 @@ import org.eclipse.zest.core.viewers.IEntityStyleProvider;
 import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.util.Defect;
 import org.projectusus.ui.colors.UsusColors;
-import org.projectusus.ui.dependencygraph.nodes.GraphNode;
 
 public class NodeLabelProvider extends LabelProvider implements IEntityStyleProvider, IEntityConnectionStyleProvider {
 
     private static final double DEFAULT_ZOOM = 1d;
     private double zoom = DEFAULT_ZOOM;
+    private boolean highlightStrongConnections;
+
+    private final IEdgeColorProvider edgeColorProvider;
+
+    public NodeLabelProvider( IEdgeColorProvider edgeColorProvider ) {
+        this.edgeColorProvider = edgeColorProvider;
+    }
 
     @Override
     public String getText( Object element ) {
@@ -105,24 +109,14 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     // From IEntityConnectionStyleProvider
 
     public int getConnectionStyle( Object src, Object dest ) {
-        if( areClassesInDifferentPackages( src, dest ) ) {
+        if( isCrossPackageRelation( src, dest ) ) {
             return CONNECTIONS_SOLID;
         }
         return CONNECTIONS_DOT;
     }
 
-    private boolean areClassesInDifferentPackages( Object src, Object dest ) {
-        if( (src instanceof GraphNode) && dest instanceof GraphNode ) {
-            return ((GraphNode)src).isInDifferentPackageThan( (GraphNode)dest );
-        }
-        return false;
-    }
-
     public Color getColor( Object src, Object dest ) {
-        if( areClassesInDifferentPackages( src, dest ) ) {
-            return getSharedColors().getColor( DARK_RED );
-        }
-        return getSharedColors().getColor( DARK_GREY );
+        return edgeColorProvider.getEdgeColor( src, dest, highlightStrongConnections );
     }
 
     public Color getHighlightColor( Object src, Object dest ) {
@@ -130,7 +124,7 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
     }
 
     public int getLineWidth( Object src, Object dest ) {
-        if( areClassesInDifferentPackages( src, dest ) ) {
+        if( isCrossPackageRelation( src, dest ) ) {
             return zoomed( 2 );
         }
         return zoomed( 1 );
@@ -148,4 +142,15 @@ public class NodeLabelProvider extends LabelProvider implements IEntityStyleProv
         setZoom( DEFAULT_ZOOM );
     }
 
+    public void setHighlightStrongConnections( boolean highlightStrongConnections ) {
+        this.highlightStrongConnections = highlightStrongConnections;
+
+    }
+
+    public static boolean isCrossPackageRelation( Object src, Object dest ) {
+        if( (src instanceof GraphNode) && dest instanceof GraphNode ) {
+            return ((GraphNode)src).isInDifferentPackageThan( (GraphNode)dest );
+        }
+        return false;
+    }
 }
