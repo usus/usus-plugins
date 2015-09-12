@@ -34,7 +34,7 @@ public class PackageRepresenter extends PlatformObject implements GraphNode {
         return new HashSet<GraphNode>( Collections2.transform( classes, function ) );
     }
 
-    protected PackageRepresenter( Packagename pkg ) {
+    public PackageRepresenter( Packagename pkg ) {
         this.packagename = pkg;
     }
 

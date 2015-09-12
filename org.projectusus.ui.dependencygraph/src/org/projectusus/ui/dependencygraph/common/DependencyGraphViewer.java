@@ -27,19 +27,26 @@ import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphItem;
 import org.eclipse.zest.core.widgets.ZestStyles;
+import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
+import org.projectusus.ui.dependencygraph.nodes.IEdgeColorProvider;
+import org.projectusus.ui.dependencygraph.nodes.NodeContentProvider;
+import org.projectusus.ui.dependencygraph.nodes.NodeLabelProvider;
+import org.projectusus.ui.dependencygraph.nodes.PackageRepresenter;
 import org.projectusus.ui.util.EditorOpener;
 
 public class DependencyGraphViewer extends GraphViewer {
 
     private final List<ISelectionChangedListener> duplicatedSelectionChangedListeners = new ArrayList<ISelectionChangedListener>();
-    private final NodeLabelProvider labelProvider = new NodeLabelProvider();
+    private final NodeLabelProvider labelProvider;
 
-    public DependencyGraphViewer( Composite composite ) {
+    public DependencyGraphViewer( Composite composite, IEdgeColorProvider edgeColorProvider ) {
         super( composite, SWT.NONE );
+        labelProvider = new NodeLabelProvider( edgeColorProvider );
+        setLabelProvider( labelProvider );
+
         setConnectionStyle( ZestStyles.CONNECTIONS_DIRECTED );
         setContentProvider( new NodeContentProvider() );
-        setLabelProvider( labelProvider );
         addDoubleClickListener( new IDoubleClickListener() {
             public void doubleClick( DoubleClickEvent event ) {
                 ISelection selection = getSelection();
@@ -56,6 +63,18 @@ public class DependencyGraphViewer extends GraphViewer {
 
     public void setLayout( GraphLayout layout ) {
         setLayoutAlgorithm( layout.createAlgorithm(), false );
+    }
+
+    public Set<Packagename> getVisibleNodes() {
+        refresh(); // Ensure all filters are applied
+        Object[] allVisibleNodes = getFilteredChildren( getInput() );
+        Set<Packagename> packageNames = new HashSet<Packagename>();
+        for( Object node : allVisibleNodes ) {
+            if( node instanceof PackageRepresenter ) {
+                packageNames.add( ((PackageRepresenter)node).getPackagename() );
+            }
+        }
+        return packageNames;
     }
 
     @Override
@@ -138,6 +157,10 @@ public class DependencyGraphViewer extends GraphViewer {
 
     void selectNodes( List<GraphNode> nodesToSelect ) {
         setSelection( new StructuredSelection( nodesToSelect ) );
+    }
+
+    public void setHighlightStrongConnections( boolean highlightStrongConnections ) {
+        labelProvider.setHighlightStrongConnections( highlightStrongConnections );
     }
 
 }

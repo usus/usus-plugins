@@ -4,30 +4,32 @@ import static com.google.common.collect.Sets.union;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.c4j.ContractReference;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.SetMultimap;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 
 @ContractReference( contractClassName = "RelationsContract" )
 public class Relations<K> {
 
-    protected final SetMultimap<K, Relation<K>> incomingRelations;
-    protected final SetMultimap<K, Relation<K>> outgoingRelations;
+    protected final Multimap<K, Relation<K>> incomingRelations;
+    protected final Multimap<K, Relation<K>> outgoingRelations;
 
     public Relations() {
-        incomingRelations = HashMultimap.create();
-        outgoingRelations = HashMultimap.create();
+        incomingRelations = ArrayListMultimap.create();
+        outgoingRelations = ArrayListMultimap.create();
     }
 
     public Set<Relation<K>> getDirectRelationsFrom( K sourceFile ) {
-        return outgoingRelations.get( sourceFile );
+        return getAsSet( outgoingRelations.get( sourceFile ) );
     }
 
     public Set<Relation<K>> getDirectRelationsTo( K targetFile ) {
-        return incomingRelations.get( targetFile );
+        return getAsSet( incomingRelations.get( targetFile ) );
     }
 
     public void removeDirectRelationsFrom( K sourceFile ) {
@@ -35,7 +37,7 @@ public class Relations<K> {
     }
 
     public Collection<Relation<K>> getAllDirectRelations() {
-        return Collections.unmodifiableCollection( outgoingRelations.values() );
+        return Collections.unmodifiableSet( getAsSet( outgoingRelations.values() ) );
     }
 
     protected void add( K sourceKey, K targetKey ) {
@@ -58,11 +60,15 @@ public class Relations<K> {
         return union( outgoingRelations.keySet(), incomingRelations.keySet() );
     }
 
-    protected Set<Relation<K>> getOutgoingRelationsFrom( K key ) {
+    protected Collection<Relation<K>> getAllOutgoingRelationsFrom( K key ) {
         return outgoingRelations.get( key );
     }
 
-    protected Set<Relation<K>> getIncomingRelationsTo( K key ) {
+    protected Collection<Relation<K>> getAllIncomingRelationsTo( K key ) {
         return incomingRelations.get( key );
+    }
+
+    private HashSet<Relation<K>> getAsSet( Collection<Relation<K>> collection ) {
+        return Sets.newHashSet( collection );
     }
 }

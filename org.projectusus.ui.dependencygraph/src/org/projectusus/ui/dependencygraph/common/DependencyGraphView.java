@@ -44,6 +44,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.projectusus.core.IUsusModelListener;
+import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.statistics.UsusModelProvider;
 import org.projectusus.jfeet.selection.ElementFrom;
 import org.projectusus.ui.dependencygraph.filters.DirectNeighboursFilter;
@@ -53,22 +54,28 @@ import org.projectusus.ui.dependencygraph.filters.LimitNodeFilter;
 import org.projectusus.ui.dependencygraph.filters.NodeAndEdgeFilter;
 import org.projectusus.ui.dependencygraph.filters.PackagenameNodeFilter;
 import org.projectusus.ui.dependencygraph.nodes.GraphNode;
+import org.projectusus.ui.dependencygraph.nodes.IEdgeColorProvider;
 
 public abstract class DependencyGraphView extends ViewPart implements IRestrictNodesFilterProvider, IShowInTarget, IZoomableWorkbenchPart, IMenuListener, IRefreshable {
 
     private final DependencyGraphModel model;
     private DependencyGraphViewer graphViewer;
+    private RefactorActionGroup refactorAction;
     private IUsusModelListener listener;
+
     private NodeAndEdgeFilter customFilter; // selection of package, edge, package cycle, etc.
     private final WorkbenchContext customFilterContext; // this is connected to the eraser icon (activates and deactivates it)
-    private DependencyGraphSelectionListener selectionListener;
     private final HideNodesFilter hideNodesFilter = new HideNodesFilter(); // the nodes the user manually X-ed out
-    private boolean restricting = false;
-    private final IPartListener2 selectionSynchronizationListener = new SelectionSynchronizationListener( this );
-    private RefactorActionGroup refactorAction;
 
-    public DependencyGraphView( String viewId, DependencyGraphModel model ) {
+    private boolean restricting = false;
+
+    private DependencyGraphSelectionListener selectionListener;
+    private final IPartListener2 selectionSynchronizationListener = new SelectionSynchronizationListener( this );
+    private final IEdgeColorProvider edgeColorProvider;
+
+    public DependencyGraphView( String viewId, DependencyGraphModel model, IEdgeColorProvider edgeColorProvider ) {
         this.model = model;
+        this.edgeColorProvider = edgeColorProvider;
         customFilterContext = new WorkbenchContext( viewId + ".context.customFilter" );
         initUsusModelListener();
     }
@@ -77,7 +84,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
     public void createPartControl( Composite parent ) {
         Composite composite = createComposite( parent );
         createFilterArea( composite );
-        createGraphViewer( new DependencyGraphViewer( createGraphArea( composite ) ) );
+        createGraphViewer( new DependencyGraphViewer( createGraphArea( composite ), edgeColorProvider ) );
 
         IViewSite site = getViewSite();
         site.setSelectionProvider( graphViewer );
@@ -165,14 +172,13 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     protected final Button createRestrictingCheckBox( Composite parent ) {
         final Button checkbox = new Button( parent, SWT.CHECK );
-        checkbox.setText( getCheckboxLabelName() );
+        checkbox.setText( getRestrictingCheckboxLabelName() );
         checkbox.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 Display.getDefault().asyncExec( new Runnable() {
                     public void run() {
                         setRestricting( checkbox.getSelection() );
-                        drawGraphConditionally();
                         refresh();
                     }
                 } );
@@ -202,7 +208,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         return emptyList();
     }
 
-    // hier kommt man an, wenn man in den Hotspots einen Package Cycle doppelklickt:
     public synchronized void replaceCustomFilter( NodeAndEdgeFilter newCustomFilter ) {
         newCustomFilter.setFilterLimitProvider( this );
         graphViewer.replaceFilter( customFilter, newCustomFilter );
@@ -239,6 +244,7 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         if( model.isChanged() ) {
             drawGraphUnconditionally();
         } else {
+            updateEdgeColorProvider();
             graphViewer.refresh();
         }
         graphViewer.fireSelectionChanged();
@@ -246,7 +252,14 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     private void drawGraphUnconditionally() {
         graphViewer.setInput( model.getGraphNodes() );
+        updateEdgeColorProvider();
+        graphViewer.refresh();
         model.resetChanged();
+    }
+
+    private void updateEdgeColorProvider() {
+        Set<Packagename> visibleNodes = graphViewer.getVisibleNodes();
+        edgeColorProvider.recalculateColors( visibleNodes );
     }
 
     @Override
@@ -327,24 +340,17 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
 
     public void showAllDirectNeighbours() {
         replaceCustomFilter( new DirectNeighboursFilter( graphViewer.getSelectedNodes() ) );
+        // TODO Why resetHiddenNodes()? (which is not called by other callers of replaceCustomFilter)? -> 2x drawGraph...
         resetHiddenNodes(); // do this last because it redraws
     }
 
     private void switchLayout( final GraphLayout newLayout ) {
         graphViewer.setLayout( newLayout );
-        drawGraphUnconditionally();
+        applyLayout();
     }
 
     public void applyLayout() {
         graphViewer.applyLayout(); // redraw
-    }
-
-    // hides only those nodes that are passed to this method
-    public void hideNodesAndRefresh( Set<GraphNode> hideNodes ) {
-        hideNodesFilter.reset();
-        hideNodesFilter.addNodesToHide( hideNodes );
-        refresh();
-        customFilterContext.activate();
     }
 
     public Set<GraphNode> getAllNodesToHide( Set<GraphNode> directNeighbours ) {
@@ -384,6 +390,6 @@ public abstract class DependencyGraphView extends ViewPart implements IRestrictN
         this.restricting = restricting;
     }
 
-    protected abstract String getCheckboxLabelName();
+    protected abstract String getRestrictingCheckboxLabelName();
 
 }
