@@ -4,6 +4,8 @@
 // See http://www.eclipse.org/legal/epl-v10.html for details.
 package org.projectusus.ui.colors;
 
+import static java.lang.Math.max;
+
 import java.util.Random;
 
 import org.eclipse.jface.resource.ColorRegistry;
@@ -18,6 +20,7 @@ public class UsusColors {
     public static final String BLACK = "BLACK"; //$NON-NLS-1$
     public static final String WHITE = "WHITE"; //$NON-NLS-1$
     public static final String USUS_LIGHT_BLUE = "USUS_LIGHT_BLUE"; //$NON-NLS-1$
+    static final float MIN_SATURATION = 0.0f;
 
     private static final UsusColors _instance = new UsusColors();
     private ColorRegistry colorRegistry;
@@ -76,6 +79,27 @@ public class UsusColors {
         long positive = ((long)value - Integer.MIN_VALUE) / 2;
         double y = (double)positive / Integer.MAX_VALUE;
         return (int)Math.round( 360 * y );
+    }
+
+    public Color adjustSaturation( String colorKey, float newSaturation ) {
+        float saturation = restrictSaturation( newSaturation );
+        String symbolicName = colorKey + saturation;
+        ColorRegistry registry = getColorRegistry();
+        if( !registry.hasValueFor( symbolicName ) ) {
+            Color color = getColor( colorKey );
+            registry.put( symbolicName, adjustSaturation( color, saturation ) );
+        }
+        return registry.get( symbolicName );
+    }
+
+    float restrictSaturation( float newSaturation ) {
+        float nonNullSaturation = max( MIN_SATURATION, newSaturation );
+        return (Math.round( nonNullSaturation * 100 )) / 100.0f;
+    }
+
+    private RGB adjustSaturation( Color color, float saturation ) {
+        float[] hsb = color.getRGB().getHSB();
+        return new RGB( hsb[0], saturation, hsb[2] );
     }
 
 }

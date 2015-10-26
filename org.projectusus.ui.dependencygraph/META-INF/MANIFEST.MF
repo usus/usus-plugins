@@ -22,3 +22,5 @@ Export-Package: org.projectusus.ui.dependencygraph;x-internal:=true,
  org.projectusus.ui.dependencygraph.common;x-internal:=true,
  org.projectusus.ui.dependencygraph.filters;x-internal:=true,
  org.projectusus.ui.dependencygraph.handlers;x-internal:=true
+Bundle-ClassPath: .,
+ lib/guava-r06.jar
