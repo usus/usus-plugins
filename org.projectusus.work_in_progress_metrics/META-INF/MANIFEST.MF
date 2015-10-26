@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Work_in_progress_metrics
 Bundle-SymbolicName: org.projectusus.work_in_progress_metrics;singleton:=true
-Bundle-Version: 0.7.8.qualifier
+Bundle-Version: 0.7.9.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.projectusus.core,
  org.eclipse.core.runtime;bundle-version="3.4.0",

@@ -5,7 +5,7 @@
   <parent>
     <artifactId>projectusus</artifactId>
     <groupId>org.projectusus</groupId>
-    <version>0.7.8-SNAPSHOT</version>
+    <version>0.7.9-SNAPSHOT</version>
   </parent>
   <groupId>org.projectusus</groupId>
   <artifactId>org.junit4</artifactId>
