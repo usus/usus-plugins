@@ -27,6 +27,7 @@
     <module>org.projectusus.core.test</module>
     <module>org.projectusus.defaultmetrics</module>
     <module>org.projectusus.externals.test</module>
+    <module>org.projectusus.projectdependencies</module>
     <module>org.projectusus.projectsettings.core</module>
     <module>org.projectusus.projectsettings.ui</module>
     <module>org.projectusus.ui</module>
