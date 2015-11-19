@@ -8,10 +8,10 @@
    label="Project Usus Project Dependencies"
    visible="true">
       <action
-         id="org.projectusus.projectdependencies.ProjectDependenciesGraphMLExportActionDelegate" 
-         label="Export project dependencies to GraphML file"
+         id="org.projectusus.projectdependencies.ProjectDependenciesGmlExportActionDelegate" 
+         label="Export project dependencies to GML file"
          toolbarPath="Normal/additions"
-         class="org.projectusus.projectdependencies.ProjectDependenciesGraphMLExportActionDelegate"> 
+         class="org.projectusus.projectdependencies.ProjectDependenciesGmlExportActionDelegate"> 
       </action>
    </actionSet> 
    </extension>
