@@ -3,6 +3,8 @@ package org.projectusus.projectdependencies;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -21,9 +23,17 @@ import org.projectusus.core.filerelations.model.Relation;
 import org.projectusus.core.filerelations.model.RelationGraph;
 import org.projectusus.core.filerelations.model.Relations;
 
-public class ProjectDependenciesGraphMLExportActionDelegate extends ActionDelegate implements IWorkbenchWindowActionDelegate {
+public class ProjectDependenciesGraphMLExportActionDelegate extends ActionDelegate
+		implements IWorkbenchWindowActionDelegate {
 
 	private Shell shell;
+	private IProjectFilter filter = new IProjectFilter() {
+
+		@Override
+		public boolean accept(IProject project) {
+			return !"c".equals(project.getName());
+		}
+	};
 
 	@Override
 	public void init(IWorkbenchWindow window) {
@@ -70,13 +80,27 @@ public class ProjectDependenciesGraphMLExportActionDelegate extends ActionDelega
 
 	private Relations<IProject> buildRelations() throws CoreException {
 		Relations<IProject> relations = new Relations<IProject>();
-		for (IProject sourceProject : getAllProjects()) {
+		Set<IProject> filteredProjects = getFilteredProjects();
+		for (IProject sourceProject : filteredProjects) {
 			IProject[] referencedProjects = sourceProject.getReferencedProjects();
 			for (IProject targetProject : referencedProjects) {
-				relations.add(sourceProject, targetProject);
+				if (filteredProjects.contains(targetProject)) {
+					relations.add(sourceProject, targetProject);
+				}
 			}
 		}
 		return relations;
+	}
+
+	private Set<IProject> getFilteredProjects() {
+		Set<IProject> result = new LinkedHashSet<IProject>();
+		IProject[] allProjects = getAllProjects();
+		for (IProject project : allProjects) {
+			if (filter.accept(project)) {
+				result.add(project);
+			}
+		}
+		return result;
 	}
 
 	private IProject[] getAllProjects() {
