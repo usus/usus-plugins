@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+         <actionSet
+      id="org.projectusus.projectdependencies.actionSet"
+   label="Project Usus Project Dependencies"
+   visible="true">
+      <action
+         id="org.projectusus.projectdependencies.ProjectDependenciesGraphMLExportActionDelegate" 
+         label="Export project dependencies to GraphML file"
+         toolbarPath="Normal/additions"
+         class="org.projectusus.projectdependencies.ProjectDependenciesGraphMLExportActionDelegate"> 
+      </action>
+   </actionSet> 
+   </extension>
+</plugin>

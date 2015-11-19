@@ -7,11 +7,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.c4j.ContractReference;
-
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+
+import net.sourceforge.c4j.ContractReference;
 
 @ContractReference( contractClassName = "RelationsContract" )
 public class Relations<K> {
@@ -40,7 +40,7 @@ public class Relations<K> {
         return Collections.unmodifiableSet( getAsSet( outgoingRelations.values() ) );
     }
 
-    protected void add( K sourceKey, K targetKey ) {
+    public void add( K sourceKey, K targetKey ) {
         Relation<K> relation = new Relation<K>( sourceKey, targetKey );
         outgoingRelations.put( sourceKey, relation );
         incomingRelations.put( targetKey, relation );
