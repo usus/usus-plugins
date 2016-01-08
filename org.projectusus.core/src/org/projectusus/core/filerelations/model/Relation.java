@@ -59,4 +59,8 @@ public class Relation<T> {
             }
         };
     }
+
+    public boolean isSelfReference() {
+        return source.equals( target );
+    }
 }

@@ -7,11 +7,15 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
-
 import net.sourceforge.c4j.ContractReference;
+
+import com.google.common.base.Function;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
 
 @ContractReference( contractClassName = "RelationsContract" )
 public class Relations<K> {
@@ -54,6 +58,33 @@ public class Relations<K> {
 
     public boolean containsKey( K key ) {
         return outgoingRelations.containsKey( key ) || incomingRelations.containsKey( key );
+    }
+
+    public <T> Relations<T> transform( Function<K, T> transformation ) {
+        Relations<T> result = new Relations<T>();
+        for( Relation<K> relation : outgoingRelations.values() ) {
+            result.add( transformation.apply( relation.getSource() ), transformation.apply( relation.getTarget() ) );
+        }
+        return result;
+    }
+
+    public void pruneDuplicates() {
+        pruneDuplicates( outgoingRelations );
+        pruneDuplicates( incomingRelations );
+    }
+
+    private void pruneDuplicates( Multimap<K, Relation<K>> relations ) {
+        SetMultimap<K, Relation<K>> newIncomingRelations = ImmutableSetMultimap.copyOf( relations );
+        relations.clear();
+        relations.putAll( newIncomingRelations );
+    }
+
+    public void pruneSelfReferences() {
+        for( Relation<K> relation : ImmutableList.copyOf( outgoingRelations.values() ) ) {
+            if( relation.isSelfReference() ) {
+                remove( relation.getSource(), relation.getTarget() );
+            }
+        }
     }
 
     public Set<K> keySet() {
