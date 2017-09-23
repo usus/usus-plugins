@@ -12,6 +12,7 @@ import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
 import com.google.common.collect.Multimap;
 
+// TODO #55/maxbechtold Add test for Java 8 lambdas & references? Would require to depend project on JRE 1.8
 public class ClassRelations_PDETest extends PDETestForMetricsComputation {
 
     @Test
