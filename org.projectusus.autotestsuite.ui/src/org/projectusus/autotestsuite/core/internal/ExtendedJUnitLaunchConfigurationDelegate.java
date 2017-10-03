@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMember;
+import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.internal.junit.launcher.ITestKind;
 import org.eclipse.jdt.junit.launcher.JUnitLaunchConfigurationDelegate;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
@@ -31,13 +32,13 @@ public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigu
 
     private IMember[] evaluateTests( ExtendedJUnitLaunchConfigurationReader config, IProgressMonitor monitor ) throws CoreException {
         Collection<IJavaProject> projects = collectProjects( config );
-        Set<IMember> result = collectTests( config, projects, monitor );
+        Set<? extends IMember> result = collectTests( config, projects, monitor );
         checkResult( config, result );
         return result.toArray( new IMember[result.size()] );
     }
 
-    private Set<IMember> collectTests( ExtendedJUnitLaunchConfigurationReader config, Collection<IJavaProject> projects, IProgressMonitor monitor ) throws CoreException {
-        Set<IMember> result = new HashSet<IMember>();
+    private Set<? extends IMember> collectTests( ExtendedJUnitLaunchConfigurationReader config, Collection<IJavaProject> projects, IProgressMonitor monitor ) throws CoreException {
+        Set<IType> result = new HashSet<IType>();
         ITestKind testKind = config.getTestKind();
         monitor.beginTask( "Looking for tests", projects.size() );
         for( IJavaProject project : projects ) {
@@ -61,7 +62,7 @@ public class ExtendedJUnitLaunchConfigurationDelegate extends JUnitLaunchConfigu
         return new RequiredJavaProjects( allProjects ).findFor( project );
     }
 
-    private void checkResult( ExtendedJUnitLaunchConfigurationReader config, Collection<IMember> result ) throws CoreException {
+    private void checkResult( ExtendedJUnitLaunchConfigurationReader config, Set<? extends IMember> result ) throws CoreException {
         if( result.isEmpty() ) {
             String pattern = "No tests found with test runner ''{0}''.";
             String message = MessageFormat.format( pattern, config.getTestKind().getDisplayName() );

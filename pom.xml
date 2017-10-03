@@ -10,9 +10,9 @@
   <packaging>pom</packaging>
 
   <properties>
-    <tycho-version>0.16.0</tycho-version>
+    <tycho-version>0.18.1</tycho-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <platform-version-name>indigo</platform-version-name>
+    <platform-version-name>luna</platform-version-name>
     <eclipse-site>http://download.eclipse.org/releases/${platform-version-name}</eclipse-site>
   </properties>
 
@@ -99,6 +99,19 @@
       <properties>
         <eclipse-site>http://download.eclipse.org/releases/juno</eclipse-site>
         <platform-version>[4.2,4.3)</platform-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>platform-luna</id>
+      <activation>
+        <property>
+          <name>platform-version-name</name>
+          <value>luna</value>
+        </property>
+      </activation>
+      <properties>
+        <eclipse-site>http://download.eclipse.org/releases/luna</eclipse-site>
+        <platform-version>[4.4,4.5)</platform-version>
       </properties>
     </profile>
   </profiles>
