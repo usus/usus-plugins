@@ -9,7 +9,6 @@ public class A {
     }
 
     public void lambdaReference() {
-        // Supplier<?> supplier = () -> new B();
-        new B();
+        Supplier<?> supplier = () -> new B();
     }
 }
