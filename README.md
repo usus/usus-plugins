@@ -16,4 +16,4 @@ http://www.projectusus.org/usus-plugins/updates/
 
 ### Eclipse Marketplace
 
-<a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=1089" class="drag" title="Drag to your running Eclipse workspace to install Project Usus"><img src="https://marketplace.eclipse.org/sites/all/themes/solstice/_themes/solstice_marketplace/public/images/btn-install.png" alt="Drag to your running Eclipse workspace to install Project Usus" /></a>
+[![Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client](https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png)](http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=1089 "Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client")
