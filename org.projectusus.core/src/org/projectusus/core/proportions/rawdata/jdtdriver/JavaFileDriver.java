@@ -42,7 +42,7 @@ public class JavaFileDriver {
     }
 
     private static CompilationUnit parse( ICompilationUnit unit ) {
-        ASTParser parser = newParser( AST.JLS3 );
+        ASTParser parser = newParser( AST.JLS8 );
         parser.setKind( ASTParser.K_COMPILATION_UNIT );
         parser.setResolveBindings( true );
         parser.setSource( unit );

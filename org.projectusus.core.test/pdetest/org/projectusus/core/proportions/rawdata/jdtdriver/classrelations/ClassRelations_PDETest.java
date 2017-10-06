@@ -15,6 +15,23 @@ import com.google.common.collect.Multimap;
 public class ClassRelations_PDETest extends PDETestForMetricsComputation {
 
     @Test
+    public void detectsRelationsThroughJava8Syntax() throws Exception {
+        project.createFolder( "java8relations" );
+        IFile fileA = createJavaFile( "java8relations/A.java" );
+        IFile fileB = createJavaFile( "java8relations/B.java" );
+
+        ClassRelationsInspector inspector = new ClassRelationsInspector();
+
+        new JavaFileDriver( fileA ).compute( createSetWith( inspector ) );
+        new JavaFileDriver( fileB ).compute( createSetWith( inspector ) );
+
+        Multimap<String, String> connections = inspector.getTypeConnections();
+
+        assertThat( connections.get( "java8relations/A" ), contains( "java8relations/B", "java8relations/B" ) );
+        assertThat( connections.get( "java8relations/B" ), contains( "java8relations/A" ) );
+    }
+
+    @Test
     public void assumptionsAreValid() throws Exception {
         project.createFolder( "cr" );
         project.createFolder( "cr2" );
@@ -98,8 +115,8 @@ public class ClassRelations_PDETest extends PDETestForMetricsComputation {
         assertThat( map.get( "cr2/Imports" ), is( empty() ) );
         assertThat( map.get( "cr2/ClassWithStaticImportInMethodParameter" ), contains( "cr/ClassRelations" ) );
 
-        // das gehört nicht hier hin!
-        // Stattdessen sicherstellen, dass beim Anlegen und Löschen die entsprechende Neuberechnung auch stattfindet!
+        // das gehÃ¶rt nicht hier hin!
+        // Stattdessen sicherstellen, dass beim Anlegen und LÃ¶schen die entsprechende Neuberechnung auch stattfindet!
         project.delete( unloadedFile2 );
         inspector = new ClassRelationsInspector();
         new JavaFileDriver( file ).compute( createSetWith( inspector ) );
