@@ -2,7 +2,7 @@
 <feature
       id="org.projectusus"
       label="Project Usus"
-      version="0.7.9.qualifier"
+      version="0.8.0.qualifier"
       provider-name="projectusus.org">
 
    <description url="http://projectusus.org">
