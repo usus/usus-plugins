@@ -1,2 +1,4 @@
 language: java
-
+branches:
+  only:
+  - travisci
