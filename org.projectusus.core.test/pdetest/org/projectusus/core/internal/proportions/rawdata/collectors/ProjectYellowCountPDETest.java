@@ -45,7 +45,7 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         workspace.buildFullyAndWait();
 
-        // TODO #56 Seems to be necessary to make Usus aware of the project changes...
+        // TODO #57 Seems to be necessary to make Usus aware of the project changes...
         new ForcedRecompute().schedule();
         Thread.sleep( 1000 );
 

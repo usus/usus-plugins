@@ -29,7 +29,7 @@ public class CheckPackagesCleanupTest extends PDETestForMetricsComputation {
         project.createFile( "mine/Acd_GameStateAI.java", loadResource( "Acd_GameStateAI.test" ) );
         workspace.buildFullyAndWait();
 
-        // TODO #56 Seems to be necessary to make Usus aware of the project changes...
+        // TODO #57 Seems to be necessary to make Usus aware of the project changes...
         new ForcedRecompute().schedule();
         Thread.sleep( 1000 );
 
