@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.projectusus.adapter.ForcedRecompute;
 import org.projectusus.core.statistics.test.PDETestForMetricsComputation;
 
 public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
@@ -39,10 +40,15 @@ public class ProjectYellowCountPDETest extends PDETestForMetricsComputation {
     }
 
     @Test
-    public void findMarkerOnJavaFile_FindsMarker() throws CoreException {
+    public void findMarkerOnJavaFile_FindsMarker() throws CoreException, InterruptedException {
         IFile file = project.createFile( "a.java", "no content" );
         file.createMarker( PROBLEM ).setAttribute( SEVERITY, SEVERITY_WARNING );
         workspace.buildFullyAndWait();
+
+        // TODO #56 Seems to be necessary to make Usus aware of the project changes...
+        new ForcedRecompute().schedule();
+        Thread.sleep( 1000 );
+
         assertEquals( 1, yellowCountCache().yellows() );
     }
 
