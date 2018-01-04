@@ -2,6 +2,8 @@ package org.projectusus.statistics;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.projectusus.core.basis.CodeProportion;
 import org.projectusus.core.basis.CodeStatistic;
@@ -14,16 +16,12 @@ import org.projectusus.core.filerelations.model.Packagename;
 import org.projectusus.core.statistics.CockpitExtension;
 import org.projectusus.core.statistics.visitors.PackageCountVisitor;
 
-import ch.akuhn.foreach.Collect;
-import ch.akuhn.foreach.ForEach;
-import ch.akuhn.foreach.Select;
-
 public class LackOfCohesionOfClassesStatistic extends CockpitExtension {
 
     private static final int LCOC_LIMIT = 1;
 
     public LackOfCohesionOfClassesStatistic() {
-        super( codeProportionUnit_PACKAGE_label, LCOC_LIMIT ); //$NON-NLS-1$
+        super( codeProportionUnit_PACKAGE_label, LCOC_LIMIT ); // $NON-NLS-1$
     }
 
     @Override
@@ -46,22 +44,20 @@ public class LackOfCohesionOfClassesStatistic extends CockpitExtension {
     }
 
     private List<Hotspot> createHotspots( IntraPackageComponents intraPackageComponents ) {
+        Stream<List<Set<ClassDescriptor>>> listen = zusammenhangskomponentenListenFuerMehrteiligePackages( intraPackageComponents );
 
-        List<List<Set<ClassDescriptor>>> listen = zusammenhangskomponentenListenFuerMehrteiligePackages( intraPackageComponents );
-
-        for( Collect<List<Set<ClassDescriptor>>> element : ForEach.collect( listen ) ) {
-            Set<ClassDescriptor> menge = element.value.iterator().next();
-            Packagename pkg = menge.iterator().next().getPackagename();
-            element.yield = new SinglePackageHotspot( pkg, element.value.size(), pkg.getOSPath(), pkg.getClassesInPackage() );
-        }
-        return ForEach.result();
+        return listen.map( this::createPackageHotspot ).collect( Collectors.toList() );
     }
 
-    private List<List<Set<ClassDescriptor>>> zusammenhangskomponentenListenFuerMehrteiligePackages( IntraPackageComponents intraPackageComponents ) {
-        for( Select<List<Set<ClassDescriptor>>> entry : ForEach.select( intraPackageComponents.getSetsPerPackage().values() ) ) {
-            entry.yield = entry.value.size() > LCOC_LIMIT;
-        }
-        return ForEach.<List<List<Set<ClassDescriptor>>>> result();
+    private SinglePackageHotspot createPackageHotspot( List<Set<ClassDescriptor>> element ) {
+        Set<ClassDescriptor> firstClassSet = element.stream().findFirst().get();
+        ClassDescriptor firstClass = firstClassSet.stream().findFirst().get();
+        Packagename hotspotPackage = firstClass.getPackagename();
+        return new SinglePackageHotspot( hotspotPackage, element.size(), hotspotPackage.getOSPath(), hotspotPackage.getClassesInPackage() );
+    }
+
+    private Stream<List<Set<ClassDescriptor>>> zusammenhangskomponentenListenFuerMehrteiligePackages( IntraPackageComponents intraPackageComponents ) {
+        return intraPackageComponents.getSetsPerPackage().values().stream().filter( list -> list.size() > LCOC_LIMIT );
     }
 
     @Override

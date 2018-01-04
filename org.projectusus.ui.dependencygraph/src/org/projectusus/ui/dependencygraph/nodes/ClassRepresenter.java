@@ -2,8 +2,8 @@ package org.projectusus.ui.dependencygraph.nodes;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.PlatformObject;
@@ -12,12 +12,6 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.ui.ISharedImages;
 import org.projectusus.core.filerelations.model.ClassDescriptor;
 import org.projectusus.core.filerelations.model.Packagename;
-
-import ch.akuhn.foreach.Collect;
-import ch.akuhn.foreach.ForEach;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
 
 public class ClassRepresenter extends PlatformObject implements GraphNode {
 
@@ -28,36 +22,7 @@ public class ClassRepresenter extends PlatformObject implements GraphNode {
     }
 
     public static Set<GraphNode> transformToRepresenterSet( Set<ClassDescriptor> classes ) {
-
-        // return foreachVersion( classes );
-
-        return standardJavaVersion( classes );
-
-        // return versionWithGoogleCollection( classes );
-    }
-
-    private static Set<GraphNode> foreachVersion( Set<ClassDescriptor> classes ) {
-        for( Collect<ClassDescriptor> each : ForEach.collect( classes ) ) {
-            each.yield = new ClassRepresenter( each.value );
-        }
-        return new HashSet<GraphNode>( ForEach.<List<GraphNode>> result() );
-    }
-
-    private static Set<GraphNode> standardJavaVersion( Set<ClassDescriptor> classes ) {
-        Set<GraphNode> result = new HashSet<GraphNode>();
-        for( ClassDescriptor classDescriptor : classes ) {
-            result.add( new ClassRepresenter( classDescriptor ) );
-        }
-        return result;
-    }
-
-    private static Set<GraphNode> versionWithGoogleCollection( Set<ClassDescriptor> classes ) {
-        Function<ClassDescriptor, ClassRepresenter> function = new Function<ClassDescriptor, ClassRepresenter>() {
-            public ClassRepresenter apply( ClassDescriptor descriptor ) {
-                return new ClassRepresenter( descriptor );
-            }
-        };
-        return new HashSet<GraphNode>( Collections2.transform( classes, function ) );
+        return classes.stream().map( ClassRepresenter::new ).collect( Collectors.toCollection( HashSet::new ) );
     }
 
     public ClassRepresenter( ClassDescriptor clazz ) {

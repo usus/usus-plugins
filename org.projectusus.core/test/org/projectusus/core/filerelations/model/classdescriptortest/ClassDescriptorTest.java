@@ -77,7 +77,7 @@ public class ClassDescriptorTest {
 
     @Test
     public void classIsNotAddedToItsChildren() {
-        ClassDescriptor descriptor = ClassDescriptor.of( mock( IFile.class ), new Classname( "classname" ), Packagename.of( NAME_STRING, null ) ); //$NON-NLS-1$ 
+        ClassDescriptor descriptor = ClassDescriptor.of( mock( IFile.class ), new Classname( "classname" ), Packagename.of( NAME_STRING, null ) ); //$NON-NLS-1$
         assertEquals( 0, descriptor.getChildren().size() );
         descriptor.addChild( descriptor );
         assertEquals( 0, descriptor.getChildren().size() );

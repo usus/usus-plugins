@@ -3,13 +3,11 @@ package org.projectusus.core.filerelations.model;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.DefaultDirectedGraph;
-
-import ch.akuhn.foreach.ForEach;
-import ch.akuhn.foreach.GroupBy;
 
 public class IntraPackageComponents {
 
@@ -26,10 +24,7 @@ public class IntraPackageComponents {
     }
 
     static Map<Packagename, List<Set<ClassDescriptor>>> setsPerPackage( List<Set<ClassDescriptor>> sets ) {
-        for( GroupBy<Set<ClassDescriptor>> set : ForEach.groupBy( sets ) ) {
-            set.yield = set.value.iterator().next().getPackagename();
-        }
-        return ForEach.result();
+        return sets.stream().collect( Collectors.groupingBy( set -> set.iterator().next().getPackagename() ) );
     }
 
     private DirectedGraph<ClassDescriptor, Relation<ClassDescriptor>> calcGraph() {

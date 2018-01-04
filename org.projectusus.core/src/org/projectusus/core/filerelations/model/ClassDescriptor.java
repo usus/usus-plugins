@@ -5,14 +5,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import net.sourceforge.c4j.ContractReference;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IFile;
-import org.projectusus.core.util.ForEach2;
-import org.projectusus.core.util.SelectUnique;
 
-import ch.akuhn.foreach.ForEach;
+import net.sourceforge.c4j.ContractReference;
 
 @ContractReference( contractClassName = "ClassDescriptorContract" )
 public class ClassDescriptor {
@@ -128,17 +125,19 @@ public class ClassDescriptor {
     }
 
     public Set<ClassDescriptor> getChildrenInOtherPackages() {
-        for( SelectUnique<ClassDescriptor> target : ForEach2.selectUnique( children ) ) {
-            target.yield = !this.getPackagename().equals( target.value.getPackagename() );
-        }
-        return ForEach.result();
+        return children.stream().distinct().filter( this::inDifferentPackage ).collect( Collectors.toSet() );
+    }
+
+    private boolean inDifferentPackage( ClassDescriptor target ) {
+        return !inSamePackage( target );
+    }
+
+    private boolean inSamePackage( ClassDescriptor target ) {
+        return this.getPackagename().equals( target.getPackagename() );
     }
 
     public Set<ClassDescriptor> getChildrenInSamePackage() {
-        for( SelectUnique<ClassDescriptor> target : ForEach2.selectUnique( children ) ) {
-            target.yield = this.getPackagename().equals( target.value.getPackagename() );
-        }
-        return ForEach.result();
+        return children.stream().distinct().filter( this::inSamePackage ).collect( Collectors.toSet() );
     }
 
     private Set<ClassDescriptor> getTransitiveChildren() {
@@ -214,7 +213,7 @@ public class ClassDescriptor {
     public Set<ClassDescriptor> getParentsInOtherPackages() {
         Set<ClassDescriptor> result = new HashSet<ClassDescriptor>();
         for( ClassDescriptor parent : parents ) {
-            if( !this.getPackagename().equals( parent.getPackagename() ) ) {
+            if( inDifferentPackage( parent ) ) {
                 result.add( parent );
             }
         }
